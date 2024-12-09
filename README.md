@@ -2,6 +2,8 @@
 
 ## Overview
 
+### Gindex, a Superior Git Index for Code-based Search Query
+
 This project aims to create a Retrieval-Augmented Generation (RAG) application that processes pull request (PR) data and uses a language model (LLM) to summarize the information. The goal is to develop a search engine that accurately retrieves PR data and provides concise summaries.
 
 ## Project Structure
