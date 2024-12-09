@@ -1,0 +1,141 @@
+Pull Request Number: 242
+Title: fix(textarea): top position on focused
+Base Branch: main
+Head Branch: fix_240/textarea-labelplaceholder
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/242
+State: MERGED
+Created At: 2022-02-06T19:44:42Z
+Merged At: 2022-02-06T19:55:13Z
+Participants: jrgarciadev, codecov-commenter
+
+Description:
+[nextui]/[textarea]
+Closes:  #240
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Textarea top position was being overridden by the input top position
+
+
+
+Screenshots - Animations
+
+Commits:
+- fix(textarea): top position on focused\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/242?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#242](https://codecov.io/gh/nextui-org/nextui/pull/242?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (6f6e7d7) into [main](https://codecov.io/gh/nextui-org/nextui/commit/5f558c0e651e0e6a6c73b4ffcbf8f69653d4787d?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (5f558c0) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/242/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/242?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main     #242   +/-   ##
+=======================================
+  Coverage   76.13%   76.13%           
+=======================================
+  Files         140      140           
+  Lines        2275     2275           
+  Branches      681      681           
+=======================================
+  Hits         1732     1732           
+  Misses        538      538           
+  Partials        5        5           
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/242?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/react/src/input/input.styles.ts](https://codecov.io/gh/nextui-org/nextui/pull/242/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2lucHV0L2lucHV0LnN0eWxlcy50cw==) | `100.00% <ø> (ø)` | |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/242?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/242?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [5f558c0...6f6e7d7](https://codecov.io/gh/nextui-org/nextui/pull/242?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- packages/react/src/input/input.styles.ts (modified, 7 changes)\n  Patch: @@ -586,6 +586,7 @@ export const StyledInputBlockLabel = styled('label', {
+       asPlaceholder: true,
+       focused: true,
+       underlined: false,
++      isTextarea: false,
+       css: {
+         top: '-72%',
+         left: '$2',
+@@ -597,6 +598,7 @@ export const StyledInputBlockLabel = styled('label', {
+       asPlaceholder: true,
+       focused: true,
+       underlined: true,
++      isTextarea: false,
+       css: {
+         top: '-72%',
+         left: '0px',
+@@ -608,6 +610,7 @@ export const StyledInputBlockLabel = styled('label', {
+       asPlaceholder: true,
+       withValue: true,
+       underlined: false,
++      isTextarea: false,
+       css: {
+         color: '$$inputTextColor',
+         top: '-72%',
+@@ -620,6 +623,7 @@ export const StyledInputBlockLabel = styled('label', {
+       asPlaceholder: true,
+       withValue: true,
+       underlined: true,
++      isTextarea: false,
+       css: {
+         color: '$$inputTextColor',
+         top: '-72%',
+@@ -649,7 +653,8 @@ export const StyledInputBlockLabel = styled('label', {
+       isTextarea: true,
+       focused: true,
+       css: {
+-        top: '-$10'
++        top: 'calc(-$space$10 - $space$3)',
++        left: '$2'
+       }
+     },
+     // asPlaceholder && isTextarea && withValue\n- packages/react/src/textarea/textarea.stories.tsx (modified, 14 changes)\n  Patch: @@ -15,7 +15,8 @@ export default {
+       <div
+         style={{
+           display: 'flex',
+-          flexDirection: 'column'
++          flexDirection: 'column',
++          padding: '20px'
+         }}
+       >
+         <Story />
+@@ -44,6 +45,17 @@ export const Rows = () => (
+   </>
+ );
+ 
++export const labelPlaceholder = () => (
++  <>
++    <Textarea
++      label="Write your thoughts"
++      placeholder="Enter your amazing thoughts."
++    />
++    <Spacer y={2} />
++    <Textarea labelPlaceholder="Write your thoughts" />
++  </>
++);
++
+ export const Types = () => (
+   <>
+     <Textarea label="Default" placeholder="Default Textarea" />\n

@@ -1,0 +1,1351 @@
+Pull Request Number: 1049
+Title: Feat/card tv migration
+Base Branch: feat/v2
+Head Branch: feat/card-tv-migration
+Author: gijsbotje
+URL: https://github.com/nextui-org/nextui/pull/1049
+State: CLOSED
+Created At: 2023-02-18T00:07:37Z
+Merged At: None
+Participants: gijsbotje, jrgarciadev
+
+Description:
+Hi there,
+I wanted to contribute to the V2 rewrite and decided to start on the Card component. I'm still a little unsure if i'm on the right track, so I got a few questions.
+Am I correct to use the tailwind state classes instead of the props?
+For example
+// packages/core/theme/src/components/card/index.ts
+isHoverable: {
+  true: "hover:drop-shadow-lg hover:-translate-y-0.5 transition",
+},
+isPressable: {
+  true: "cursor-pointer active:scale-95",
+},
+
+I've just seen the changes for the AvatarGroup on the feat/v2 branch. Do you expect a hook for the CardBody, CardFooter and CardHeader? Or is just adding the classes with clsx, in for example CardFooter.tsx, enough?
+Example:
+// packages/components/card/src/card-footer.tsx
+    <Component
+      ref={domRef}
+      {...otherProps}
+      className={clsx(
+        "w-full h-auto p-3 flex items-center overflow-hidden color-inherit rounded-b-xl",
+        {
+          "backdrop-blur-md backdrop-saturate-[1.8]": isBlurred,
+        },
+        className,
+      )}
+    >
+      {children}
+    </Component>
+
+any other guidance you can give me on how to migrate the components would be also welcome, I would love to help out on the other components!
+
+Commits:
+- feat: migrate Card to tv
+feat: migrate CardBody to tw
+feat: migrate CardFooter to tw
+feat: migrate CardHeader to tw
+feat: added extra border widths to align to v1 styles
+feat: add @nextui-org/theme to Card package\n- Merge branch 'feat/v2' into feat/card-tv-migration
+
+# Conflicts:
+#	packages/core/theme/src/components/index.ts\n- chore: reactivate withDivider story\n- Merge branch 'feat/v2' into feat/card-tv-migration
+
+# Conflicts:
+#	packages/components/storybook/.storybook/main.js
+#	packages/core/theme/src/components/index.ts\n- Merge branch 'feat/v2' into feat/card-tv-migration\n- chore: export use-card hook
+chore: convert all card stories to tailwind
+chore: add dark theme classes
+feat: improved states to support disableAnimation\n- Merge branch 'feat/v2' into feat/card-tv-migration\n- feat: use slots for card in theme
+feat: add styles to drip in card\n- fix: revert changes to button\n
+
+Labels:
+👀 Status: In Review
+
+Comments:
+- vercel: @gijsbotje is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%220a4969a4d0212cb3a05f36e6a98ffa4f8560e5ff%22%7D%2C%22id%22%3A%22QmZWTvtyAhFS9SRZAvPSMEqNjtWwZzVhYHGDx2Jnje3Sr7%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1049%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Hey @gijsbotje thank you so much for helping us with the migration, it looks good to me, you're in the right direction, the idea is to use the TailwindCSS states `hover` `active` instead of the `react-aria` so in the future we will be able to use the same styles in another framework,  regarding if I expect a hook for each card part, no, I don't, but it would be great to have the card splitter by slots, for example:
+
+
+```
+import {tv} from 'tailwind-variants'
+
+const card = tv({
+  slots: {
+     base: '....',
+     header: '...',
+     body: '...',
+     footer: '...'
+  }
+})
+```
+
+You could pass the classes to the children by using the utility [`pickChild`](https://github.com/nextui-org/nextui/blob/main/packages/react/src/utils/collections.ts#L27-L46) or by using a context, let me know if you have any question, feel free to reach me on Discord
+
+Thank you! 🙏🏻  
+
+
+\n- gijsbotje: @jrgarciadev aah yeah the slots was one of the things which I wasn't sure about. I'll change that up to use the slots. If I have more questions i'll ask them om Discord 👍🏻 \n- jrgarciadev: Hey @gijsbotje as I don't have access to your repository I had to commit directly to the feat/v2 branch with your changes, sorry about that https://github.com/nextui-org/nextui/commit/91cb12b8bdd8510933c0fecee23e95d8c3cb4206, I will include you in the release notes ❤️ \n
+
+Files Changed:
+- packages/components/card/package.json (modified, 1 changes)\n  Patch: @@ -37,6 +37,7 @@
+     "react": ">=16.8.0"
+   },
+   "dependencies": {
++    "@nextui-org/theme": "workspace:*",
+     "@nextui-org/system": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/shared-css": "workspace:*",\n- packages/components/card/src/card-body.tsx (added, 25 changes)\n  Patch: @@ -0,0 +1,25 @@
++import {forwardRef, HTMLNextUIProps} from "@nextui-org/system";
++import {useDOMRef} from "@nextui-org/dom-utils";
++import {clsx} from "@nextui-org/shared-utils";
++
++const CardBody = forwardRef<HTMLNextUIProps, "div">((props, ref) => {
++  const {as, className, children, ...otherProps} = props;
++
++  const Component = as || "div";
++  const domRef = useDOMRef(ref);
++
++  return (
++    <Component
++      ref={domRef}
++      {...otherProps}
++      className={clsx(
++        "relative flex flex-auto flex-col place-content-inherit align-items-inherit w-full h-auto py-5 px-3 text-left overflow-y-auto",
++        className,
++      )}
++    >
++      {children}
++    </Component>
++  );
++});
++
++export default CardBody;\n- packages/components/card/src/card-footer.tsx (added, 28 changes)\n  Patch: @@ -0,0 +1,28 @@
++import {forwardRef, HTMLNextUIProps} from "@nextui-org/system";
++import {useDOMRef} from "@nextui-org/dom-utils";
++import {clsx} from "@nextui-org/shared-utils";
++
++const CardFooter = forwardRef<HTMLNextUIProps & {isBlurred?: boolean}, "div">((props, ref) => {
++  const {as, className, children, isBlurred, ...otherProps} = props;
++
++  const Component = as || "div";
++  const domRef = useDOMRef(ref);
++
++  return (
++    <Component
++      ref={domRef}
++      {...otherProps}
++      className={clsx(
++        "w-full h-auto p-3 flex items-center overflow-hidden color-inherit rounded-b-xl",
++        {
++          "backdrop-blur-md backdrop-saturate-[1.8]": isBlurred,
++        },
++        className,
++      )}
++    >
++      {children}
++    </Component>
++  );
++});
++
++export default CardFooter;\n- packages/components/card/src/card-header.tsx (added, 27 changes)\n  Patch: @@ -0,0 +1,27 @@
++import {forwardRef, HTMLNextUIProps} from "@nextui-org/system";
++import {useDOMRef} from "@nextui-org/dom-utils";
++import {clsx} from "@nextui-org/shared-utils";
++
++const CardHeader = forwardRef<HTMLNextUIProps, "div">((props, ref) => {
++  const {as, className, children, ...otherProps} = props;
++  const Component = as || "div";
++
++  const domRef = useDOMRef(ref);
++
++  return (
++    <>
++      <Component
++        ref={domRef}
++        {...otherProps}
++        className={clsx(
++          "flex justify-start items-center shrink-0 w-full overflow-inherit color-inherit p-3 z-10",
++          className,
++        )}
++      >
++        {children}
++      </Component>
++    </>
++  );
++});
++
++export default CardHeader;\n- packages/components/card/src/card.styles.ts (modified, 50 changes)\n  Patch: @@ -1,22 +1,6 @@
+-import {styled, VariantProps} from "@nextui-org/system";
++import {styled} from "@nextui-org/system";
+ import {cssFocusVisible, cssNoBlurriness} from "@nextui-org/shared-css";
+ 
+-export const StyledCardBody = styled("div", {
+-  d: "flex",
+-  w: "100%",
+-  h: "auto",
+-  flex: "1 1 auto",
+-  fd: "column",
+-  jc: "inherit",
+-  ai: "inherit",
+-  ac: "inherit",
+-  py: "$lg",
+-  px: "$sm",
+-  oy: "auto",
+-  position: "relative",
+-  ta: "left",
+-});
+-
+ export const StyledCard = styled(
+   "div",
+   {
+@@ -158,35 +142,3 @@ export const StyledCard = styled(
+   cssNoBlurriness,
+   cssFocusVisible,
+ );
+-
+-export const StyledCardHeader = styled("div", {
+-  w: "100%",
+-  display: "flex",
+-  flexShrink: 0,
+-  zIndex: "$1",
+-  jc: "flex-start",
+-  ai: "center",
+-  overflow: "hidden",
+-  color: "inherit",
+-  p: "$sm",
+-});
+-
+-export const StyledCardFooter = styled("div", {
+-  w: "100%",
+-  h: "auto",
+-  p: "$sm",
+-  d: "flex",
+-  ai: "center",
+-  overflow: "hidden",
+-  color: "inherit",
+-  bblr: "$lg",
+-  bbrr: "$lg",
+-  variants: {
+-    isBlurred: {
+-      true: {
+-        bf: "saturate(180%) blur(10px)",
+-        bg: "$$cardColor",
+-      },
+-    },
+-  },
+-});\n- packages/components/card/src/card.tsx (modified, 87 changes)\n  Patch: @@ -1,55 +1,12 @@
+-import {forwardRef, HTMLNextUIProps} from "@nextui-org/system";
+-import {clsx, __DEV__} from "@nextui-org/shared-utils";
++import {forwardRef} from "@nextui-org/system";
++import {__DEV__} from "@nextui-org/shared-utils";
+ import {Image} from "@nextui-org/image";
+ import {Drip} from "@nextui-org/drip";
+-import {useDOMRef} from "@nextui-org/dom-utils";
+ 
+-import {StyledCard, StyledCardFooter, StyledCardHeader, StyledCardBody} from "./card.styles";
+-import {UseCardProps, useCard} from "./use-card";
+-
+-const CardHeader = forwardRef<HTMLNextUIProps, "div">((props, ref) => {
+-  const {className, children, ...otherProps} = props;
+-
+-  const domRef = useDOMRef(ref);
+-
+-  return (
+-    <StyledCardHeader
+-      ref={domRef}
+-      {...otherProps}
+-      className={clsx("nextui-card-header", className)}
+-    >
+-      {children}
+-    </StyledCardHeader>
+-  );
+-});
+-
+-const CardBody = forwardRef<HTMLNextUIProps, "div">((props, ref) => {
+-  const {className, children, ...otherProps} = props;
+-
+-  const domRef = useDOMRef(ref);
+-
+-  return (
+-    <StyledCardBody ref={domRef} {...otherProps} className={clsx("nextui-card-body", className)}>
+-      {children}
+-    </StyledCardBody>
+-  );
+-});
+-
+-const CardFooter = forwardRef<HTMLNextUIProps & {isBlurred?: boolean}, "div">((props, ref) => {
+-  const {className, children, ...otherProps} = props;
+-
+-  const domRef = useDOMRef(ref);
+-
+-  return (
+-    <StyledCardFooter
+-      ref={domRef}
+-      {...otherProps}
+-      className={clsx("nextui-card-footer", className)}
+-    >
+-      {children}
+-    </StyledCardFooter>
+-  );
+-});
++import CardHeader from "./card-header";
++import {useCard, UseCardProps} from "./use-card";
++import CardBody from "./card-body";
++import CardFooter from "./card-footer";
+ 
+ export interface CardProps extends Omit<UseCardProps, "ref"> {}
+ 
+@@ -65,36 +22,36 @@ const Card = forwardRef<CardProps, "div", CompoundCard>((props, ref) => {
+     cardRef,
+     children,
+     className,
+-    variant,
+-    isFocusVisible,
++    Component,
++    styles,
+     isPressable,
+-    isPressed,
+     disableAnimation,
+     disableRipple,
+-    borderWeight,
+-    isHovered,
+     dripBindings,
+     getCardProps,
+   } = useCard({ref, ...props});
+ 
++  const {base} = styles;
++
+   return (
+-    <StyledCard
++    <Component
+       ref={cardRef}
+-      borderWeight={borderWeight}
+-      className={clsx("nextui-card", className)}
+-      disableAnimation={disableAnimation}
+-      isFocusVisible={isFocusVisible}
+-      isHovered={isHovered}
+-      isPressable={isPressable}
+-      isPressed={isPressed}
++      className={base({class: className})}
+       role={isPressable ? "button" : "section"}
+       tabIndex={isPressable ? 0 : -1}
+-      variant={variant}
+       {...getCardProps()}
+     >
+-      {isPressable && !disableAnimation && !disableRipple && <Drip {...dripBindings} />}
++      {isPressable && !disableAnimation && !disableRipple && (
++        <Drip
++          {...dripBindings}
++          styles={{
++            base: "opacity-30 z-50",
++            svg: "text-inherit",
++          }}
++        />
++      )}
+       {children}
+-    </StyledCard>
++    </Component>
+   );
+ });
+ \n- packages/components/card/src/index.ts (modified, 3 changes)\n  Patch: @@ -1,5 +1,8 @@
+ // export types
+ export type {CardProps} from "./card";
+ 
++// export hooks
++export {useCard} from "./use-card";
++
+ // export component
+ export {default as Card} from "./card";\n- packages/components/card/src/use-card.ts (modified, 24 changes)\n  Patch: @@ -1,9 +1,10 @@
+-import type {PressEvents, PressEvent, FocusableProps} from "@react-types/shared";
++import type {FocusableProps, PressEvent, PressEvents} from "@react-types/shared";
+ 
+-import {MouseEvent, useCallback} from "react";
++import {card} from "@nextui-org/theme";
++import {MouseEvent, useCallback, useMemo} from "react";
+ import {mergeProps} from "@react-aria/utils";
+ import {useFocusRing} from "@react-aria/focus";
+-import {usePress, useHover} from "@react-aria/interactions";
++import {useHover, usePress} from "@react-aria/interactions";
+ import {HTMLNextUIProps} from "@nextui-org/system";
+ import {NormalWeights, ReactRef, warn} from "@nextui-org/shared-utils";
+ import {useDOMRef} from "@nextui-org/dom-utils";
+@@ -56,6 +57,7 @@ export interface UseCardProps extends HTMLNextUIProps<"div", PressEvents & Focus
+ export function useCard(props: UseCardProps) {
+   const {
+     ref,
++    as,
+     children,
+     disableAnimation = false,
+     disableRipple = false,
+@@ -72,6 +74,7 @@ export function useCard(props: UseCardProps) {
+   } = props;
+ 
+   const cardRef = useDOMRef<HTMLDivElement>(ref);
++  const Component = as || (isPressable ? "button" : "div");
+ 
+   const {onClick: onDripClickHandler, ...dripBindings} = useDrip(false, cardRef);
+ 
+@@ -110,6 +113,19 @@ export function useCard(props: UseCardProps) {
+     autoFocus,
+   });
+ 
++  const styles = useMemo(
++    () =>
++      card({
++        borderWeight,
++        className,
++        disableAnimation,
++        isPressable,
++        isHoverable,
++        variant,
++      }),
++    [disableAnimation, variant, borderWeight, isPressable, isHoverable],
++  );
++
+   const getCardProps = useCallback(
+     (props = {}) => {
+       return {
+@@ -126,6 +142,8 @@ export function useCard(props: UseCardProps) {
+ 
+   return {
+     cardRef,
++    Component,
++    styles,
+     variant,
+     children,
+     borderWeight,\n- packages/components/card/stories/card.stories.tsx (modified, 674 changes)\n  Patch: @@ -1,256 +1,216 @@
+ import React from "react";
+-import {styled} from "@nextui-org/system";
+-import {Meta} from "@storybook/react";
+-import {Text} from "@nextui-org/text";
+-import {Grid} from "@nextui-org/grid";
++import {ComponentMeta, ComponentStory} from "@storybook/react";
+ import {Link} from "@nextui-org/link";
+-import {Col} from "@nextui-org/col";
+-import {Row} from "@nextui-org/row";
+ import {Code} from "@nextui-org/code";
++import {styled} from "@nextui-org/system";
+ 
+-import {Card} from "../src";
++import {Card, CardProps} from "../src";
+ 
+ export default {
+   title: "General/Card",
+   component: Card,
+-} as Meta;
++  argTypes: {
++    variant: {
++      control: {
++        type: "radio",
++        options: ["shadow", "bordered", "flat"],
++      },
++    },
++    borderWeight: {
++      control: {
++        type: "radio",
++        options: ["light", "normal", "bold", "extrabold", "black"],
++      },
++    },
++    isPressable: {
++      control: {
++        type: "boolean",
++      },
++    },
++    disableAnimation: {
++      control: {
++        type: "boolean",
++      },
++    },
++    isHoverable: {
++      control: {
++        type: "boolean",
++      },
++    },
++  },
++} as ComponentMeta<typeof Card>;
+ 
+-export const Default = () => (
+-  <Card css={{w: "400px"}}>
+-    <Card.Body css={{py: "$lg"}}>
+-      <Text>A basic card</Text>
+-    </Card.Body>
++const Template: ComponentStory<typeof Card> = (args: CardProps) => (
++  <Card {...args} className="max-w-[50%]">
++    <Card.Body>A basic card</Card.Body>
+   </Card>
+ );
+ 
+-export const Hoverable = () => (
+-  <Card isHoverable css={{w: "400px"}} variant="bordered">
+-    <Card.Body css={{py: "$lg"}}>
+-      <Text>A basic card</Text>
+-    </Card.Body>
+-  </Card>
+-);
++export const Default = Template.bind({});
++Default.args = {
++  variant: "shadow",
++};
++
++export const Hoverable = Template.bind({});
++Hoverable.args = {
++  variant: "bordered",
++  isHoverable: true,
++};
+ 
+ export const Variants = () => (
+-  <Grid.Container gap={2}>
+-    <Grid xs={4}>
++  <div className="container flex gap-2">
++    <div className="w-4/12">
+       <Card>
+         <Card.Body>
+-          <Text>Default card. (shadow)</Text>
++          <p>Default card. (shadow)</p>
+         </Card.Body>
+       </Card>
+-    </Grid>
+-    <Grid xs={4}>
++    </div>
++    <div className="w-4/12">
+       <Card variant="flat">
+         <Card.Body>
+-          <Text>Flat card.</Text>
++          <p>Flat card.</p>
+         </Card.Body>
+       </Card>
+-    </Grid>
+-    <Grid xs={4}>
++    </div>
++    <div className="w-4/12">
+       <Card variant="bordered">
+         <Card.Body>
+-          <Text>Bordered card.</Text>
++          <p>Bordered card.</p>
+         </Card.Body>
+       </Card>
+-    </Grid>
+-  </Grid.Container>
++    </div>
++  </div>
+ );
+ 
+ export const WithFooter = () => (
+-  <Grid.Container gap={2}>
+-    <Grid xs={4}>
+-      <Card css={{p: "$6"}}>
+-        <Card.Header>
+-          <img
+-            alt="nextui logo"
+-            height="34px"
+-            src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
+-            width="34px"
+-          />
+-          <Grid.Container css={{pl: "$6"}}>
+-            <Grid xs={12}>
+-              <Text h4 css={{lineHeight: "$xs"}}>
+-                Next UI
+-              </Text>
+-            </Grid>
+-            <Grid xs={12}>
+-              <Text css={{color: "$accents8"}}>nextui.org</Text>
+-            </Grid>
+-          </Grid.Container>
+-        </Card.Header>
+-        <Card.Body css={{py: "$2"}}>
+-          <Text>Make beautiful websites regardless of your design experience.</Text>
+-        </Card.Body>
+-        <Card.Footer>
+-          <Link
+-            isExternal
+-            color="primary"
+-            href="https://github.com/nextui-org/nextui"
+-            target="_blank"
+-          >
+-            Visit source code on GitHub.
+-          </Link>
+-        </Card.Footer>
+-      </Card>
+-    </Grid>
+-  </Grid.Container>
++  <Card className="p-3 max-w-[400px]">
++    <Card.Header>
++      <img
++        alt="nextui logo"
++        height="34px"
++        src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
++        width="34px"
++      />
++      <div className="flex flex-col pl-3">
++        <h4 className="pb-2">Next UI</h4>
++        <p>nextui.org</p>
++      </div>
++    </Card.Header>
++    <Card.Body className="py-2">
++      <p>Make beautiful websites regardless of your design experience.</p>
++    </Card.Body>
++    <Card.Footer>
++      <Link isExternal color="primary" href="https://github.com/nextui-org/nextui" target="_blank">
++        Visit source code on GitHub.
++      </Link>
++    </Card.Footer>
++  </Card>
+ );
+ 
+ export const AbsImageWithHeader = () => {
+   return (
+-    <Grid.Container gap={1} justify="center">
+-      <Grid>
+-        <Card css={{w: "330px"}}>
+-          <Card.Header css={{position: "absolute", top: 5, zIndex: 1}}>
+-            <Col>
+-              <Text color="#ffffffAA" size={12} transform="uppercase" weight="bold">
+-                What to watch
+-              </Text>
+-              <Text h3 color="white">
+-                Stream the Apple event
+-              </Text>
+-            </Col>
+-          </Card.Header>
+-          <Card.Image
+-            alt="Apple event background"
+-            autoResize={false}
+-            height={440}
+-            src={require("./assets/apple-event.jpeg")}
+-            style={{objectFit: "cover"}}
+-            width="100%"
+-          />
+-        </Card>
+-      </Grid>
+-    </Grid.Container>
++    <div className="flex justify-center gap-2">
++      <Card className="w-[330px]">
++        <Card.Header className="absolute top-5 z-10">
++          <div className="grid-cols-2">
++            <p className="text-white/75 text-sm uppercase font-bold">What to watch</p>
++            <h3 className="text-white text-xl">Stream the Apple event</h3>
++          </div>
++        </Card.Header>
++        <Card.Image
++          alt="Apple event background"
++          autoResize={false}
++          height={440}
++          src={require("./assets/apple-event.jpeg")}
++          style={{objectFit: "cover"}}
++          width="100%"
++        />
++      </Card>
++    </div>
+   );
+ };
+ 
+ export const AbsImgWithHeaderFooter = () => {
+   return (
+-    <Grid.Container gap={2} justify="center">
+-      <Grid>
+-        <Card css={{w: "330px", bg: "$gray50"}}>
+-          <Card.Header css={{position: "absolute", top: 5, zIndex: 1}}>
+-            <Col>
+-              <Text color="#9E9E9E" size={12} transform="uppercase" weight="bold">
+-                New
+-              </Text>
+-              <Text h2 color="black">
+-                HomePod mini
+-              </Text>
+-              <Text size={14} style={{paddingRight: "10px"}}>
+-                Room-filling sound, Intelligent assistant. Smart home control. Works seamlessly with
+-                iPhone. Check it out
+-              </Text>
+-            </Col>
+-          </Card.Header>
+-          <Card.Image
+-            alt="Apple homedpods background"
+-            autoResize={false}
+-            height={440}
+-            src={require("./assets/homepod.jpeg")}
+-            style={{objectFit: "cover", paddingTop: "100px"}}
+-            width="100%"
+-          />
+-          <Card.Footer css={{m: 0}}>
+-            <Row>
+-              <Col>
+-                <Text size={12}>Available soon.</Text>
+-                <Text size={12}>Get notified.</Text>
+-              </Col>
+-              <Col>
+-                <Row justify="flex-end">
+-                  <Text size={12} transform="uppercase" weight="bold">
+-                    Notify Me
+-                  </Text>
+-                </Row>
+-              </Col>
+-            </Row>
+-          </Card.Footer>
+-        </Card>
+-      </Grid>
+-      <Grid>
+-        <Card css={{w: "630px"}}>
+-          <Card.Header css={{position: "absolute", top: 5, zIndex: 1}}>
+-            <Col>
+-              <Text color="#9E9E9E" size={12} transform="uppercase" weight="bold">
+-                Your day your way
+-              </Text>
+-              <Text h3 color="white">
+-                Your checklist for better sleep
+-              </Text>
+-            </Col>
+-          </Card.Header>
+-          <Card.Image
+-            alt="Apple homedpods background"
+-            autoResize={false}
+-            height={440}
+-            src={require("./assets/relaxing.jpeg")}
+-            style={{objectFit: "cover"}}
+-            width="100%"
+-          />
+-          <Card.Footer
+-            isBlurred
+-            css={{
+-              position: "absolute",
+-              bgBlur: "#0f111466",
+-              borderTop: "$borderWeights$light solid $gray500",
+-              bottom: 0,
+-              zIndex: 1,
+-            }}
+-          >
+-            <Row>
+-              <Col>
+-                <Row>
+-                  <Col span={3}>
+-                    <Card.Image
+-                      alt="Breathing app icon"
+-                      autoResize={false}
+-                      height={40}
+-                      src={require("./assets/breathing-app-icon.jpeg")}
+-                      style={{background: "black"}}
+-                      width={40}
+-                    />
+-                  </Col>
+-                  <Col>
+-                    <Text color="#d1d1d1" size={12}>
+-                      Breathing App
+-                    </Text>
+-                    <Text color="#d1d1d1" size={12}>
+-                      Get a good night&apos;s sleep.
+-                    </Text>
+-                  </Col>
+-                </Row>
+-              </Col>
+-              <Col>
+-                <Row justify="flex-end">
+-                  <Text size={12} transform="uppercase" weight="bold">
+-                    Get App
+-                  </Text>
+-                </Row>
+-              </Col>
+-            </Row>
+-          </Card.Footer>
+-        </Card>
+-      </Grid>
+-    </Grid.Container>
++    <div className="flex justify-center items-start gap-2">
++      <Card className="w-[330px] bg-neutral-100">
++        <Card.Header className="absolute top-5 z-10">
++          <div className="flex flex-col">
++            <p className="text-xs text-neutral-400 upper font-bold">New</p>
++            <h2 className="text-lg text-black">HomePod mini</h2>
++            <p className="text-xs text-foreground pr-1.5">
++              Room-filling sound, Intelligent assistant. Smart home control. Works seamlessly with
++              iPhone. Check it out
++            </p>
++          </div>
++        </Card.Header>
++        <Card.Image
++          alt="Apple homedpods background"
++          autoResize={false}
++          height={440}
++          src={require("./assets/homepod.jpeg")}
++          style={{objectFit: "cover", paddingTop: "100px"}}
++          width="100%"
++        />
++        <Card.Footer className="justify-between">
++          <div>
++            <p className="text-xs">Available soon.</p>
++            <p className="text-xs">Get notified.</p>
++          </div>
++          <div>
++            <div className="flex flex-wrap justify-end">
++              <p className="text-xs upper font-bold">Notify Me</p>
++            </div>
++          </div>
++        </Card.Footer>
++      </Card>
++      <Card className="w-[630px]">
++        <Card.Header className="absolute top-5 z-10">
++          <div className="flex flex-col">
++            <p className="text-neutral-300 upper font-bold">Your day your way</p>
++            <h3 className="text-white text-xl">Your checklist for better sleep</h3>
++          </div>
++        </Card.Header>
++        <Card.Image
++          alt="Apple homedpods background"
++          autoResize={false}
++          height={440}
++          src={require("./assets/relaxing.jpeg")}
++          style={{objectFit: "cover"}}
++          width="100%"
++        />
++        <Card.Footer isBlurred className="absolute bottom-0 z-10 border-t border-border-dark">
++          <div className="flex flex-grow items-start">
++            <div className="w-[40px] mr-2">
++              <Card.Image
++                alt="Breathing app icon"
++                autoResize={false}
++                height={40}
++                src={require("./assets/breathing-app-icon.jpeg")}
++                style={{background: "black"}}
++                width={40}
++              />
++            </div>
++            <div className="flex flex-col">
++              <p className="text-xs text-neutral-400">Breathing App</p>
++              <p className="text-xs text-neutral-400">Get a good night&apos;s sleep.</p>
++            </div>
++          </div>
++          <p className="text-white upper font-bold">Get App</p>
++        </Card.Footer>
++      </Card>
++    </div>
+   );
+ };
+ 
+ export const CoverImage = () => (
+-  <Grid.Container gap={2} justify="center">
+-    <Grid sm={4} xs={12}>
++  <div className="gap-2 grid grid-cols-12">
++    <div className="col-span-12 sm:col-span-4">
+       <Card>
+-        <Card.Header css={{position: "absolute", zIndex: 1, top: 5}}>
+-          <Col>
+-            <Text color="#ffffffAA" size={12} transform="uppercase" weight="bold">
+-              What to watch
+-            </Text>
+-            <Text h4 color="white">
+-              Stream the Acme event
+-            </Text>
+-          </Col>
++        <Card.Header className="absolute z-10 top-1 flex-col !items-start">
++          <p className="text-xs text-white/75 upper font-bold">What to watch</p>
++          <h4 className="text-white font-medium text-lg">Stream the Acme event</h4>
+         </Card.Header>
+         <Card.Image
+           alt="Card image background"
+@@ -260,18 +220,12 @@ export const CoverImage = () => (
+           width="100%"
+         />
+       </Card>
+-    </Grid>
+-    <Grid sm={4} xs={12}>
+-      <Card css={{w: "100%"}}>
+-        <Card.Header css={{position: "absolute", zIndex: 1, top: 5}}>
+-          <Col>
+-            <Text color="#ffffffAA" size={12} transform="uppercase" weight="bold">
+-              Plant a tree
+-            </Text>
+-            <Text h4 color="white">
+-              Contribute to the planet
+-            </Text>
+-          </Col>
++    </div>
++    <div className="col-span-12 sm:col-span-4">
++      <Card>
++        <Card.Header className="absolute z-10 top-1 flex-col !items-start">
++          <p className="text-xs text-white/75 upper font-bold">Plant a tree</p>
++          <h4 className="text-white font-medium text-lg">Contribute to the planet</h4>
+         </Card.Header>
+         <Card.Image
+           alt="Card image background"
+@@ -281,18 +235,12 @@ export const CoverImage = () => (
+           width="100%"
+         />
+       </Card>
+-    </Grid>
+-    <Grid sm={4} xs={12}>
+-      <Card css={{bg: "$black", w: "100%"}}>
+-        <Card.Header css={{position: "absolute", zIndex: 1, top: 5}}>
+-          <Col>
+-            <Text color="#ffffffAA" size={12} transform="uppercase" weight="bold">
+-              Supercharged
+-            </Text>
+-            <Text h4 color="white">
+-              Creates beauty like a beast
+-            </Text>
+-          </Col>
++    </div>
++    <div className="col-span-12 sm:col-span-4">
++      <Card className="bg-black">
++        <Card.Header className="absolute z-10 top-1 flex-col !items-start">
++          <p className="text-xs text-white/75 upper font-bold">Supercharged</p>
++          <h4 className="text-white font-medium text-lg">Creates beauty like a beast</h4>
+         </Card.Header>
+         <Card.Image
+           alt="Card image background"
+@@ -302,123 +250,70 @@ export const CoverImage = () => (
+           width="100%"
+         />
+       </Card>
+-    </Grid>
+-    <Grid sm={5} xs={12}>
+-      <Card css={{w: "100%", h: "400px"}}>
+-        <Card.Header css={{position: "absolute", zIndex: 1, top: 5}}>
+-          <Col>
+-            <Text color="#ffffffAA" size={12} transform="uppercase" weight="bold">
+-              New
+-            </Text>
+-            <Text h3 color="black">
+-              Acme camera
+-            </Text>
+-          </Col>
++    </div>
++    <div className="col-span-12 sm:col-span-5">
++      <Card className="w-full h-[400px]">
++        <Card.Header className="absolute z-10 top-1 flex-col !items-start">
++          <p className="text-xs text-white/75 upper font-bold">New</p>
++          <h3 className="text-black font-medium text-2xl">Acme camera</h3>
+         </Card.Header>
+-        <Card.Body css={{p: 0}}>
+-          <Card.Image
+-            alt="Card example background"
+-            height="100%"
+-            objectFit="cover"
+-            src="https://nextui.org/images/card-example-6.jpeg"
+-            width="100%"
+-          />
+-        </Card.Body>
++        <Card.Image
++          alt="Card example background"
++          height="100%"
++          objectFit="cover"
++          src="https://nextui.org/images/card-example-6.jpeg"
++          width="100%"
++        />
+         <Card.Footer
+           isBlurred
+-          css={{
+-            position: "absolute",
+-            bgBlur: "#ffffff66",
+-            borderTop: "$borderWeights$light solid rgba(255, 255, 255, 0.2)",
+-            bottom: 0,
+-            zIndex: 1,
+-          }}
++          className="absolute bg-white/50 bottom-0 border-t border-border-dark z-10"
+         >
+-          <Row>
+-            <Col>
+-              <Text color="#000" size={12}>
+-                Available soon.
+-              </Text>
+-              <Text color="#000" size={12}>
+-                Get notified.
+-              </Text>
+-            </Col>
+-            <Col>
+-              <Row justify="flex-end">
+-                <Text css={{color: "inherit"}} size={12} transform="uppercase" weight="bold">
+-                  Notify Me
+-                </Text>
+-              </Row>
+-            </Col>
+-          </Row>
++          <div>
++            <p className="text-black text-xs">Available soon.</p>
++            <p className="text-black text-xs">Get notified.</p>
++          </div>
++          <p className="text-xs upper font-bold text-inherit ml-auto">Notify Me</p>
+         </Card.Footer>
+       </Card>
+-    </Grid>
+-    <Grid sm={7} xs={12}>
+-      <Card css={{w: "100%", h: "400px"}}>
+-        <Card.Header css={{position: "absolute", zIndex: 1, top: 5}}>
+-          <Col>
+-            <Text color="#9E9E9E" size={12} transform="uppercase" weight="bold">
+-              Your day your way
+-            </Text>
+-            <Text h3 color="white">
+-              Your checklist for better sleep
+-            </Text>
+-          </Col>
++    </div>
++    <div className="col-span-12 sm:col-span-7">
++      <Card className="w-full h-[400px]">
++        <Card.Header className="absolute z-10 top-1 flex-col !items-start">
++          <p className="text-xs text-white/75 upper font-bold">Your day your way</p>
++          <h3 className="text-white font-medium text-2xl">Your checklist for better sleep</h3>
+         </Card.Header>
+-        <Card.Body css={{p: 0}}>
+-          <Card.Image
+-            alt="Relaxing app background"
+-            height="100%"
+-            objectFit="cover"
+-            src="https://nextui.org/images/card-example-5.jpeg"
+-            width="100%"
+-          />
+-        </Card.Body>
++        <Card.Image
++          alt="Relaxing app background"
++          height="100%"
++          objectFit="cover"
++          src="https://nextui.org/images/card-example-5.jpeg"
++          width="100%"
++        />
+         <Card.Footer
+           isBlurred
+-          css={{
+-            position: "absolute",
+-            bgBlur: "#0f111466",
+-            borderTop: "$borderWeights$light solid $gray700",
+-            bottom: 0,
+-            zIndex: 1,
+-          }}
++          className="absolute bottom-0 z-10 bg-black/50 border-t border-border-dark"
+         >
+-          <Row>
+-            <Col>
+-              <Row>
+-                <Col span={3}>
+-                  <Card.Image
+-                    alt="Breathing app icon"
+-                    css={{bg: "black", br: "50%"}}
+-                    height={40}
+-                    src="https://nextui.org/images/breathing-app-icon.jpeg"
+-                    width={40}
+-                  />
+-                </Col>
+-                <Col>
+-                  <Text color="#d1d1d1" size={12}>
+-                    Breathing App
+-                  </Text>
+-                  <Text color="#d1d1d1" size={12}>
+-                    Get a good night&apos;s sleep.
+-                  </Text>
+-                </Col>
+-              </Row>
+-            </Col>
+-            <Col>
+-              <Row justify="flex-end">
+-                <Text css={{color: "inherit"}} size={12} transform="uppercase" weight="bold">
+-                  Get App
+-                </Text>
+-              </Row>
+-            </Col>
+-          </Row>
++          <div className="flex flex-grow items-center">
++            <div className="w-[40px] mr-2">
++              <Card.Image
++                alt="Breathing app icon"
++                autoResize={false}
++                height={40}
++                src={require("./assets/breathing-app-icon.jpeg")}
++                style={{background: "black"}}
++                width={40}
++              />
++            </div>
++            <div className="flex flex-col">
++              <p className="text-xs text-neutral-400">Breathing App</p>
++              <p className="text-xs text-neutral-400">Get a good night&apos;s sleep.</p>
++            </div>
++          </div>
++          <p className="text-white upper font-bold">Get App</p>
+         </Card.Footer>
+       </Card>
+-    </Grid>
+-  </Grid.Container>
++    </div>
++  </div>
+ );
+ 
+ export const PrimaryAction = () => {
+@@ -466,29 +361,26 @@ export const PrimaryAction = () => {
+   ];
+ 
+   return (
+-    <Grid.Container gap={2} justify="flex-start">
++    <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
+       {list.map((item, index) => (
+-        <Grid key={index} sm={3} xs={6}>
+-          <Card isPressable onPress={() => console.log("item pressed", item)}>
+-            <Card.Body css={{p: 0}}>
+-              <Card.Image
+-                alt={item.title}
+-                height={140}
+-                objectFit="cover"
+-                src={"https://nextui.org" + item.img}
+-                width="100%"
+-              />
+-            </Card.Body>
+-            <Card.Footer css={{justifyItems: "flex-start"}}>
+-              <Row justify="space-between" wrap="wrap">
+-                <Text b>{item.title}</Text>
+-                <Text css={{color: "$accents7", fontWeight: "$semibold"}}>{item.price}</Text>
+-              </Row>
+-            </Card.Footer>
+-          </Card>
+-        </Grid>
++        // eslint-disable-next-line no-console
++        <Card key={index} isPressable onPress={() => console.log("item pressed", item)}>
++          <Card.Body className="!p-0">
++            <Card.Image
++              alt={item.title}
++              height={140}
++              src={"https://nextui.org" + item.img}
++              style={{objectFit: "cover"}}
++              width="100%"
++            />
++          </Card.Body>
++          <Card.Footer className="justify-between">
++            <strong>{item.title}</strong>
++            <p className="font-medium text-neutral-500">{item.price}</p>
++          </Card.Footer>
++        </Card>
+       ))}
+-    </Grid.Container>
++    </div>
+   );
+ };
+ 
+@@ -533,40 +425,36 @@ export const CenterImgWithHeader = () => {
+   ];
+ 
+   return (
+-    <Grid.Container gap={2} justify="center">
++    <div className="flex gap-2 justify-center flex-wrap">
+       {list.map((item, index) => (
+-        <Grid key={index}>
+-          <Card isHoverable isPressable css={{w: "200px", h: "220px"}}>
+-            <Card.Header css={{p: 0}}>
+-              <Text h5 style={{paddingLeft: "24px", paddingTop: "10px"}}>
+-                {item.title}
+-              </Text>
++        <div key={index}>
++          <Card isHoverable isPressable className="w-[200px] h-[200px]">
++            <Card.Header className="!p-0">
++              <h5 className="pl-6 pt-2.5">{item.title}</h5>
+             </Card.Header>
+-            <Card.Body css={{h: "100%", jc: "center"}}>
++            <Card.Body className="h-full justify-center">
+               <Card.Image alt={item.title} autoResize={false} src={item.img} width={180} />
+             </Card.Body>
+           </Card>
+-        </Grid>
++        </div>
+       ))}
+-    </Grid.Container>
++    </div>
+   );
+ };
+ 
+ export const WithDivider = () => (
+-  <Card css={{w: "400px"}}>
+-    <Card.Header>
+-      <Text b>Description</Text>
++  <Card className="w-max-[400px]" variant="bordered">
++    <Card.Header className="border-b border-border dark:border-border-dark">
++      <strong>Description</strong>
+     </Card.Header>
+-    <Card.Divider />
+     <Card.Body>
+-      <Text>The Object constructor creates an object wrapper for the given value.</Text>
++      <p>The Object constructor creates an object wrapper for the given value.</p>
+     </Card.Body>
+-    <Card.Divider />
+-    <Card.Footer>
+-      <Text>
++    <Card.Footer className="border-t border-border dark:border-border-dark">
++      <p>
+         When called in a non-constructor context, Object behaves identically to{" "}
+         <Code>new Object()</Code>.
+-      </Text>
++      </p>
+     </Card.Footer>
+   </Card>
+ );
+@@ -582,28 +470,28 @@ export const Shadows = () => {
+   const shadows = ["$xs", "$sm", "$md", "$lg", "$xl"];
+ 
+   return (
+-    <Grid.Container gap={3} justify="center">
+-      <Grid justify="center" xs={12}>
+-        <Text b>Drop shadows</Text>
+-      </Grid>
++    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 justify-center">
++      <div className="flex justify-center col-span-2 sm:col-span-5">
++        <strong>Drop shadows</strong>
++      </div>
+       {shadows.map((shadow, index) => (
+-        <Grid key={`${shadow}_${index}`} sm={2} xs={6}>
++        <div key={`${shadow}_${index}`}>
+           <Box css={{dropShadow: shadow}}>
+-            <Text>Shadow: {shadow}</Text>
++            <p>Shadow: {shadow}</p>
+           </Box>
+-        </Grid>
++        </div>
+       ))}
+-      <Grid justify="center" xs={12}>
+-        <Text b>Box shadows</Text>
+-      </Grid>
++      <div className="flex justify-center col-span-2 sm:col-span-5">
++        <strong>Box shadows</strong>
++      </div>
+       {shadows.map((shadow, index) => (
+-        <Grid key={`${shadow}_${index}`} sm={2} xs={6}>
++        <div key={`${shadow}_${index}`}>
+           <Box css={{boxShadow: shadow}}>
+-            <Text>Shadow: {shadow}</Text>
++            <p>Shadow: {shadow}</p>
+           </Box>
+-        </Grid>
++        </div>
+       ))}
+-    </Grid.Container>
++    </div>
+   );
+ };
+ \n- packages/components/storybook/.storybook/main.js (modified, 1 changes)\n  Patch: @@ -2,6 +2,7 @@ module.exports = {
+   stories: [
+     "../../link/stories/*.stories.@(js|jsx|ts|tsx)",
+     "../../avatar/stories/*.stories.@(js|jsx|ts|tsx)",
++    "../../card/stories/*.stories.@(js|jsx|ts|tsx)",
+     "../../user/stories/*.stories.@(js|jsx|ts|tsx)",
+     "../../button/stories/*.stories.@(js|jsx|ts|tsx)",
+     "../../spinner/stories/*.stories.@(js|jsx|ts|tsx)",\n- packages/core/theme/src/components/card/index.ts (added, 91 changes)\n  Patch: @@ -0,0 +1,91 @@
++import {tv, type VariantProps} from "tailwind-variants";
++
++import {focusVisibleClasses} from "../../utils";
++
++/**
++ * Card **Tailwind Variants** component
++ *
++ * @example
++ * <div className={card()}>A basic card</div>
++ */
++const card = tv({
++  slots: {
++    base: [
++      ...focusVisibleClasses,
++      "flex flex-col m-0 p-0 relative overflow-hidden w-full height-auto bg-white text-foreground rounded-xl box-border dark:bg-neutral-900 dark:text-foreground-dark",
++    ],
++    body: "",
++    footer: "",
++    header: "",
++  },
++  variants: {
++    variant: {
++      shadow: "drop-shadow-lg",
++      bordered: "border-border dark:border-border-dark",
++      flat: "bg-neutral-100",
++    },
++    borderWeight: {
++      light: "",
++      normal: "",
++      bold: "",
++      extrabold: "",
++      black: "",
++    },
++    isHoverable: {
++      true: "hover:drop-shadow-lg",
++    },
++    isPressable: {
++      true: "cursor-pointer",
++    },
++    disableAnimation: {
++      true: "",
++      false: "!transition motion-reduce:transition-none",
++    },
++  },
++  compoundVariants: [
++    {
++      isHoverable: true,
++      disableAnimation: false,
++      class: "hover:-translate-y-0.5",
++    },
++    {
++      isPressable: true,
++      disableAnimation: false,
++      class: "active:scale-95",
++    },
++    {
++      variant: "bordered",
++      borderWeight: "light",
++      class: "border",
++    },
++    {
++      variant: "bordered",
++      borderWeight: "normal",
++      class: "border-2",
++    },
++    {
++      variant: "bordered",
++      borderWeight: "bold",
++      class: "border-3",
++    },
++    {
++      variant: "bordered",
++      borderWeight: "extrabold",
++      class: "border-4",
++    },
++    {
++      variant: "bordered",
++      borderWeight: "black",
++      class: "border-5",
++    },
++  ],
++  defaultVariants: {
++    variant: "shadow",
++    isHoverable: false,
++  },
++});
++
++export type CardVariantProps = VariantProps<typeof card>;
++export type CardSlots = keyof ReturnType<typeof card>;
++
++export {card};\n- packages/core/theme/src/components/index.ts (modified, 3 changes)\n  Patch: @@ -1,6 +1,7 @@
+-export * from "./link";
+ export * from "./avatar";
+ export * from "./avatar-group";
++export * from "./card";
++export * from "./link";
+ export * from "./user";
+ export * from "./button";
+ export * from "./button-group";\n- packages/core/theme/src/plugin.js (modified, 4 changes)\n  Patch: @@ -71,6 +71,10 @@ module.exports = plugin(
+     darkMode: "class",
+     theme: {
+       extend: {
++        borderWidth: {
++          3: "3px",
++          5: "5px",
++        },
+         colors: {
+           transparent: "transparent",
+           white: "#ffffff",\n- pnpm-lock.yaml (modified, 2 changes)\n  Patch: @@ -424,6 +424,7 @@ importers:
+       '@nextui-org/shared-css': workspace:*
+       '@nextui-org/shared-utils': workspace:*
+       '@nextui-org/system': workspace:*
++      '@nextui-org/theme': workspace:*
+       '@react-aria/focus': ^3.9.0
+       '@react-aria/interactions': ^3.12.0
+       '@react-aria/utils': ^3.14.0
+@@ -437,6 +438,7 @@ importers:
+       '@nextui-org/shared-css': link:../../utilities/shared-css
+       '@nextui-org/shared-utils': link:../../utilities/shared-utils
+       '@nextui-org/system': link:../../core/system
++      '@nextui-org/theme': link:../../core/theme
+       '@react-aria/focus': 3.10.1_react@17.0.2
+       '@react-aria/interactions': 3.13.1_react@17.0.2
+       '@react-aria/utils': 3.14.2_react@17.0.2\n

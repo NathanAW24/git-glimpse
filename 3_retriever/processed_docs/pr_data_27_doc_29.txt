@@ -1,0 +1,261 @@
+Pull Request Number: 549
+Title: fix(react-table): Table.Pagination component doesn't update with Table.Body
+Base Branch: main
+Head Branch: fix--table-pagination
+Author: cyanxiao
+URL: https://github.com/nextui-org/nextui/pull/549
+State: CLOSED
+Created At: 2022-06-17T08:53:17Z
+Merged At: None
+Participants: cyanxiao, danielsimao, codecov-commenter, jrgarciadev
+
+Description:
+Closes #543
+📝 Description
+Updating <Table /> component can be a usual action, as mentioned in #543. However, <Table.Pagination> does not update synchronically with <Table.Body />, which results in two bugs:
+
+<Table.Pagination /> length doesn't change. So when rows number is larger after the update, some pages can not be selected via <Table.Pagination />.
+When rows number is smaller comparing to the previous table, the original page of <Table.Pagination /> is automatically selected and a blank table is showed.3.
+
+This is because:
+
+The table context collection never updates when rows data change.
+<Pagination /> is not properly controlled as it does not receive the page prop.
+
+⛳️ Current behavior (updates)
+#543 described it thoroughly. I've added a new story here so it would be clearer to test.
+
+🚀 New behavior
+
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- add switch data story\n- update collection automatically\n- page control\n- better illustration\n- keep packages import clean\n- fix(react-table): add test\n- story without selection\n
+
+Labels:
+👀 Status: In Review
+
+Comments:
+- danielsimao: As agreed with @imchell, I will add some test cases to his PR.\n- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/549?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#549](https://codecov.io/gh/nextui-org/nextui/pull/549?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (3421c4f) into [main](https://codecov.io/gh/nextui-org/nextui/commit/d3c7f5396e4b0262c71b0a2d0faecc7a020e9914?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (d3c7f53) will **increase** coverage by `1.25%`.
+> The diff coverage is `100.00%`.
+
+```diff
+@@            Coverage Diff             @@
+##             main     #549      +/-   ##
+==========================================
++ Coverage   74.75%   76.00%   +1.25%     
+==========================================
+  Files         200      200              
+  Lines        3090     3101      +11     
+  Branches      952      956       +4     
+==========================================
++ Hits         2310     2357      +47     
++ Misses        765      729      -36     
+  Partials       15       15              
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/549?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/react/src/table/table-pagination.tsx](https://codecov.io/gh/nextui-org/nextui/pull/549/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3RhYmxlL3RhYmxlLXBhZ2luYXRpb24udHN4) | `85.71% <ø> (+71.42%)` | :arrow_up: |
+| [packages/react/src/table/table-context.tsx](https://codecov.io/gh/nextui-org/nextui/pull/549/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3RhYmxlL3RhYmxlLWNvbnRleHQudHN4) | `84.00% <100.00%> (+2.18%)` | :arrow_up: |
+| [packages/react/src/card/card.tsx](https://codecov.io/gh/nextui-org/nextui/pull/549/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2NhcmQvY2FyZC50c3g=) | `100.00% <0.00%> (ø)` | |
+| [packages/react/src/button/button.tsx](https://codecov.io/gh/nextui-org/nextui/pull/549/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2J1dHRvbi9idXR0b24udHN4) | `94.00% <0.00%> (ø)` | |
+| [packages/react/src/popover/popover-trigger.tsx](https://codecov.io/gh/nextui-org/nextui/pull/549/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3BvcG92ZXIvcG9wb3Zlci10cmlnZ2VyLnRzeA==) | `100.00% <0.00%> (ø)` | |
+| [packages/react/src/dropdown/dropdown-trigger.tsx](https://codecov.io/gh/nextui-org/nextui/pull/549/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2Ryb3Bkb3duL2Ryb3Bkb3duLXRyaWdnZXIudHN4) | `100.00% <0.00%> (ø)` | |
+| [packages/react/src/utils/collections.ts](https://codecov.io/gh/nextui-org/nextui/pull/549/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3V0aWxzL2NvbGxlY3Rpb25zLnRz) | `83.07% <0.00%> (+1.53%)` | :arrow_up: |
+| [packages/react/src/use-pagination/index.ts](https://codecov.io/gh/nextui-org/nextui/pull/549/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3VzZS1wYWdpbmF0aW9uL2luZGV4LnRz) | `100.00% <0.00%> (+2.43%)` | :arrow_up: |
+| [packages/react/src/pagination/pagination.tsx](https://codecov.io/gh/nextui-org/nextui/pull/549/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3BhZ2luYXRpb24vcGFnaW5hdGlvbi50c3g=) | `68.42% <0.00%> (+2.63%)` | :arrow_up: |
+| [packages/react/src/table/table.tsx](https://codecov.io/gh/nextui-org/nextui/pull/549/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3RhYmxlL3RhYmxlLnRzeA==) | `93.54% <0.00%> (+3.22%)` | :arrow_up: |
+| ... and [7 more](https://codecov.io/gh/nextui-org/nextui/pull/549/diff?src=pr&el=tree-more&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/549?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/549?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [d3c7f53...3421c4f](https://codecov.io/gh/nextui-org/nextui/pull/549?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n- jrgarciadev: Fixed here https://github.com/nextui-org/nextui/pull/626\n
+
+Files Changed:
+- packages/react/src/table/__tests__/index.test.tsx (modified, 67 changes)\n  Patch: @@ -1,6 +1,8 @@
+ import React from 'react';
+ import { mount } from 'enzyme';
+ import Table from '../index';
++import { updateWrapper } from 'tests/utils';
++import { getKeyValue } from '../../utils/object';
+ 
+ const STITCHES_FACTOR = 2;
+ 
+@@ -351,4 +353,69 @@ describe('Table', () => {
+     expect(thirdColumnHeader.text()).toBe('DATE MODIFIED');
+     expect(thirdColumnHeader.props()['aria-sort']).toBe('none');
+   });
++
++  it('should reset pagination when amount of rows change', async () => {
++    const rows1 = [
++      { id: 1, name: 'Games', date: '6/7/2020', type: 'File folder' },
++      { id: 2, name: 'Program Files', date: '4/7/2021', type: 'File folder' },
++      { id: 3, name: 'bootmgr', date: '11/20/2010', type: 'System file' }
++    ];
++
++    const rows2 = [
++      ...rows1,
++      { id: 4, name: 'log.txt', date: '1/18/2016', type: 'Text Document' }
++    ];
++
++    const CustomRender: React.FC = () => {
++      const [moreRows, setMoreRows] = React.useState(true);
++
++      return (
++        <>
++          <button onClick={() => setMoreRows(!moreRows)}>Switch</button>
++          <Table
++            aria-label="Test sorting table"
++            sortDescriptor={{ column: 'type', direction: 'descending' }}
++          >
++            <Table.Header>
++              <Table.Column key="name">NAME</Table.Column>
++              <Table.Column key="type" allowsSorting>
++                TYPE
++              </Table.Column>
++              <Table.Column key="date_modified" allowsSorting>
++                DATE MODIFIED
++              </Table.Column>
++            </Table.Header>
++            <Table.Body items={moreRows ? rows2 : rows1}>
++              {(item) => (
++                <Table.Row>
++                  {(columnKey) => (
++                    <Table.Cell>{getKeyValue(item, columnKey)}</Table.Cell>
++                  )}
++                </Table.Row>
++              )}
++            </Table.Body>
++            <Table.Pagination rowsPerPage={2} />
++          </Table>
++        </>
++      );
++    };
++
++    const wrapper = mount(<CustomRender />);
++
++    const getPagination = () => wrapper.find('nav').at(0);
++    const getActivePaginationBtn = () =>
++      getPagination().find('button[aria-label*="active"]').at(0);
++
++    getPagination().find('button[aria-label="2 item"]').at(0).simulate('click');
++
++    await updateWrapper(wrapper);
++
++    expect(getActivePaginationBtn().props()['aria-label']).toMatch(/2 item/i);
++
++    wrapper.find('button').at(0).simulate('click');
++
++    await updateWrapper(wrapper);
++
++    expect(getActivePaginationBtn().props()['aria-label']).toMatch(/1 item/i);
++  });
+ });\n- packages/react/src/table/table-context.tsx (modified, 5 changes)\n  Patch: @@ -60,6 +60,11 @@ const Provider: React.FC<React.PropsWithChildren<ProviderProps>> = ({
+     defaultValues?.color
+   );
+ 
++  React.useEffect(() => {
++    setCollection(defaultValues?.collection);
++    setCurrentPage(defaultContext.currentPage);
++  }, [defaultValues?.collection]);
++
+   const providerValue = React.useMemo<TableConfig>(
+     () => ({
+       animated,\n- packages/react/src/table/table-pagination.tsx (modified, 2 changes)\n  Patch: @@ -30,6 +30,7 @@ const TablePagination: React.FC<TablePaginationProps> = ({
+     collection,
+     footerAlign,
+     rowsPerPage,
++    currentPage,
+     setFooterAlign,
+     setRowsPerPage,
+     setCurrentPage
+@@ -64,6 +65,7 @@ const TablePagination: React.FC<TablePaginationProps> = ({
+       total={totalPagination}
+       animated={animated}
+       onChange={handlePageChanged}
++      page={currentPage}
+       color={props.color || (color as PaginationProps['color'])}
+       className={clsx('nextui-table-pagination', props.className)}
+       {...props}\n- packages/react/src/table/table.stories.tsx (modified, 60 changes)\n  Patch: @@ -10,7 +10,9 @@ import {
+   Tooltip,
+   styled,
+   useAsyncList,
+-  useCollator
++  useCollator,
++  Button,
++  Spacer
+ } from '../index';
+ import { Eye, Edit, Delete } from '../utils/icons';
+ 
+@@ -415,6 +417,62 @@ export const Pagination = () => {
+   );
+ };
+ 
++export const SwitchPagination = () => {
++  const [moreRows, setMoreRows] = React.useState(true);
++  return (
++    <>
++      <Button
++        onPress={() => {
++          setMoreRows(!moreRows);
++        }}
++      >
++        Switch
++      </Button>
++      <Spacer />
++      <Table
++        bordered
++        shadow={false}
++        aria-label="Example table with dynamic content"
++        css={{
++          minWidth: '620px',
++          height: 'auto',
++          '@xsMax': {
++            minWidth: '100%'
++          }
++        }}
++        color="secondary"
++      >
++        <Table.Header columns={columns}>
++          {(column) => (
++            <Table.Column
++              key={column.uid}
++              align={column.uid === 'date' ? 'end' : 'start'}
++            >
++              {column.name}
++            </Table.Column>
++          )}
++        </Table.Header>
++        <Table.Body items={moreRows ? paginatedRows : rows}>
++          {(item) => (
++            <Table.Row>
++              {(columnKey) => (
++                <Table.Cell>{getKeyValue(item, columnKey)}</Table.Cell>
++              )}
++            </Table.Row>
++          )}
++        </Table.Body>
++        <Table.Pagination
++          shadow
++          noMargin
++          align="center"
++          rowsPerPage={3}
++          onPageChange={(page) => console.log({ page })}
++        />
++      </Table>
++    </>
++  );
++};
++
+ export const InfinityPagination = () => {
+   let scopedColumns = [
+     { name: 'Name', uid: 'name' },\n

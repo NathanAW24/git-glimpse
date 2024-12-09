@@ -1,0 +1,432 @@
+Pull Request Number: 13
+Title: chore: unnecessary stories removed
+Base Branch: main
+Head Branch: feat/loading
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/13
+State: MERGED
+Created At: 2021-05-04T00:18:26Z
+Merged At: 2021-05-04T00:18:30Z
+Participants: jrgarciadev
+
+Description:
+
+
+Commits:
+- chore: unnecessary stories removed\n
+
+Labels:
+
+
+Comments:
+- vercel: This pull request is being automatically deployed with Vercel ([learn more](https://vercel.link/github-learn-more)).  
+To see the status of your deployment, click below or on the icon next to each commit.
+
+🔍 Inspect: [https://vercel.com/jrgarciadev/nextui-storybook/38bGAzqFA9NgthcET97TGUikTijb](https://vercel.com/jrgarciadev/nextui-storybook/38bGAzqFA9NgthcET97TGUikTijb)  
+✅ Preview: [https://nextui-storybook-git-feat-loading-jrgarciadev.vercel.app](https://nextui-storybook-git-feat-loading-jrgarciadev.vercel.app)
+
+\n
+
+Files Changed:
+- packages/nextui/src/stories/Button.stories.tsx (removed, 37 changes)\n  Patch: @@ -1,37 +0,0 @@
+-import React from 'react';
+-import { Story, Meta } from '@storybook/react';
+-
+-import { Button, ButtonProps } from './Button';
+-
+-export default {
+-  title: 'Example/Button',
+-  component: Button,
+-  argTypes: {
+-    backgroundColor: { control: 'color' },
+-  },
+-} as Meta;
+-
+-const Template: Story<ButtonProps> = (args) => <Button {...args} />;
+-
+-export const Primary = Template.bind({});
+-Primary.args = {
+-  primary: true,
+-  label: 'Button',
+-};
+-
+-export const Secondary = Template.bind({});
+-Secondary.args = {
+-  label: 'Button',
+-};
+-
+-export const Large = Template.bind({});
+-Large.args = {
+-  size: 'large',
+-  label: 'Button',
+-};
+-
+-export const Small = Template.bind({});
+-Small.args = {
+-  size: 'small',
+-  label: 'Button',
+-};\n- packages/nextui/src/stories/Button.tsx (removed, 51 changes)\n  Patch: @@ -1,51 +0,0 @@
+-import React from 'react';
+-import './button.css';
+-export interface ButtonProps {
+-  /**
+-   * Is this the principal call to action on the page?
+-   */
+-  primary?: boolean;
+-  /**
+-   * What background color to use
+-   */
+-  backgroundColor?: string;
+-  /**
+-   * How large should the button be?
+-   */
+-  size?: 'small' | 'medium' | 'large';
+-  /**
+-   * Button contents
+-   */
+-  label: string;
+-  /**
+-   * Optional click handler
+-   */
+-  onClick?: () => void;
+-}
+-
+-/**
+- * Primary UI component for user interaction
+- */
+-export const Button: React.FC<ButtonProps> = ({
+-  primary = false,
+-  size = 'medium',
+-  backgroundColor,
+-  label,
+-  ...props
+-}) => {
+-  const mode = primary
+-    ? 'storybook-button--primary'
+-    : 'storybook-button--secondary';
+-  return (
+-    <button
+-      type="button"
+-      className={['storybook-button', `storybook-button--${size}`, mode].join(
+-        ' '
+-      )}
+-      style={{ backgroundColor }}
+-      {...props}
+-    >
+-      {label}
+-    </button>
+-  );
+-};\n- packages/nextui/src/stories/Header.stories.tsx (removed, 19 changes)\n  Patch: @@ -1,19 +0,0 @@
+-import React from 'react';
+-import { Story, Meta } from '@storybook/react';
+-
+-import { Header, HeaderProps } from './Header';
+-
+-export default {
+-  title: 'Example/Header',
+-  component: Header,
+-} as Meta;
+-
+-const Template: Story<HeaderProps> = (args) => <Header {...args} />;
+-
+-export const LoggedIn = Template.bind({});
+-LoggedIn.args = {
+-  user: {},
+-};
+-
+-export const LoggedOut = Template.bind({});
+-LoggedOut.args = {};\n- packages/nextui/src/stories/Header.tsx (removed, 47 changes)\n  Patch: @@ -1,47 +0,0 @@
+-import React from 'react';
+-
+-import { Button } from './Button';
+-import './header.css';
+-
+-export interface HeaderProps {
+-  user?: {};
+-  onLogin: () => void;
+-  onLogout: () => void;
+-  onCreateAccount: () => void;
+-}
+-
+-export const Header: React.FC<HeaderProps> = ({ user, onLogin, onLogout, onCreateAccount }) => (
+-  <header>
+-    <div className="wrapper">
+-      <div>
+-        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+-          <g fill="none" fillRule="evenodd">
+-            <path
+-              d="M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z"
+-              fill="#FFF"
+-            />
+-            <path
+-              d="M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z"
+-              fill="#555AB9"
+-            />
+-            <path
+-              d="M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z"
+-              fill="#91BAF8"
+-            />
+-          </g>
+-        </svg>
+-        <h1>Acme</h1>
+-      </div>
+-      <div>
+-        {user ? (
+-          <Button size="small" onClick={onLogout} label="Log out" />
+-        ) : (
+-          <>
+-            <Button size="small" onClick={onLogin} label="Log in" />
+-            <Button primary size="small" onClick={onCreateAccount} label="Sign up" />
+-          </>
+-        )}
+-      </div>
+-    </div>
+-  </header>
+-);\n- packages/nextui/src/stories/Introduction.stories.mdx (modified, 14 changes)\n  Patch: @@ -8,7 +8,7 @@ import Plugin from './assets/plugin.svg';
+ import Repo from './assets/repo.svg';
+ import StackAlt from './assets/stackalt.svg';
+ 
+-<Meta title="Example/Introduction" />
++<Meta title="Introduction" />
+ 
+ <style>{`
+   .subheading {
+@@ -182,14 +182,22 @@ We recommend building UIs with a [**component-driven**](https://componentdriven.
+       Configure, customize, and extend
+     </span>
+   </a>
+-  <a className="link-item" href="https://storybook.js.org/tutorials/" target="_blank">
++  <a
++    className="link-item"
++    href="https://storybook.js.org/tutorials/"
++    target="_blank"
++  >
+     <img src={Direction} alt="direction" />
+     <span>
+       <strong>In-depth guides</strong>
+       Best practices from leading teams
+     </span>
+   </a>
+-  <a className="link-item" href="https://github.com/storybookjs/storybook" target="_blank">
++  <a
++    className="link-item"
++    href="https://github.com/storybookjs/storybook"
++    target="_blank"
++  >
+     <img src={Code} alt="code" />
+     <span>
+       <strong>GitHub project</strong>\n- packages/nextui/src/stories/Page.stories.tsx (removed, 22 changes)\n  Patch: @@ -1,22 +0,0 @@
+-import React from 'react';
+-import { Story, Meta } from '@storybook/react';
+-
+-import { Page, PageProps } from './Page';
+-import * as HeaderStories from './Header.stories';
+-
+-export default {
+-  title: 'Example/Page',
+-  component: Page,
+-} as Meta;
+-
+-const Template: Story<PageProps> = (args) => <Page {...args} />;
+-
+-export const LoggedIn = Template.bind({});
+-LoggedIn.args = {
+-  ...HeaderStories.LoggedIn.args,
+-};
+-
+-export const LoggedOut = Template.bind({});
+-LoggedOut.args = {
+-  ...HeaderStories.LoggedOut.args,
+-};\n- packages/nextui/src/stories/Page.tsx (removed, 67 changes)\n  Patch: @@ -1,67 +0,0 @@
+-import React from 'react';
+-
+-import { Header } from './Header';
+-import './page.css';
+-
+-export interface PageProps {
+-  user?: {};
+-  onLogin: () => void;
+-  onLogout: () => void;
+-  onCreateAccount: () => void;
+-}
+-
+-export const Page: React.FC<PageProps> = ({ user, onLogin, onLogout, onCreateAccount }) => (
+-  <article>
+-    <Header user={user} onLogin={onLogin} onLogout={onLogout} onCreateAccount={onCreateAccount} />
+-
+-    <section>
+-      <h2>Pages in Storybook</h2>
+-      <p>
+-        We recommend building UIs with a{' '}
+-        <a href="https://componentdriven.org" target="_blank" rel="noopener noreferrer">
+-          <strong>component-driven</strong>
+-        </a>{' '}
+-        process starting with atomic components and ending with pages.
+-      </p>
+-      <p>
+-        Render pages with mock data. This makes it easy to build and review page states without
+-        needing to navigate to them in your app. Here are some handy patterns for managing page data
+-        in Storybook:
+-      </p>
+-      <ul>
+-        <li>
+-          Use a higher-level connected component. Storybook helps you compose such data from the
+-          "args" of child component stories
+-        </li>
+-        <li>
+-          Assemble data in the page component from your services. You can mock these services out
+-          using Storybook.
+-        </li>
+-      </ul>
+-      <p>
+-        Get a guided tutorial on component-driven development at{' '}
+-        <a href="https://storybook.js.org/tutorials/" target="_blank" rel="noopener noreferrer">
+-          Storybook tutorials
+-        </a>
+-        . Read more in the{' '}
+-        <a href="https://storybook.js.org/docs" target="_blank" rel="noopener noreferrer">
+-          docs
+-        </a>
+-        .
+-      </p>
+-      <div className="tip-wrapper">
+-        <span className="tip">Tip</span> Adjust the width of the canvas with the{' '}
+-        <svg width="10" height="10" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+-          <g fill="none" fillRule="evenodd">
+-            <path
+-              d="M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z"
+-              id="a"
+-              fill="#999"
+-            />
+-          </g>
+-        </svg>
+-        Viewports addon in the toolbar
+-      </div>
+-    </section>
+-  </article>
+-);\n- packages/nextui/src/stories/button.css (removed, 30 changes)\n  Patch: @@ -1,30 +0,0 @@
+-.storybook-button {
+-  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-  font-weight: 700;
+-  border: 0;
+-  border-radius: 3em;
+-  cursor: pointer;
+-  display: inline-block;
+-  line-height: 1;
+-}
+-.storybook-button--primary {
+-  color: white;
+-  background-color: #1ea7fd;
+-}
+-.storybook-button--secondary {
+-  color: #333;
+-  background-color: transparent;
+-  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
+-}
+-.storybook-button--small {
+-  font-size: 12px;
+-  padding: 10px 16px;
+-}
+-.storybook-button--medium {
+-  font-size: 14px;
+-  padding: 11px 20px;
+-}
+-.storybook-button--large {
+-  font-size: 16px;
+-  padding: 12px 24px;
+-}\n- packages/nextui/src/stories/header.css (removed, 26 changes)\n  Patch: @@ -1,26 +0,0 @@
+-.wrapper {
+-  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+-  padding: 15px 20px;
+-  display: flex;
+-  align-items: center;
+-  justify-content: space-between;
+-}
+-
+-svg {
+-  display: inline-block;
+-  vertical-align: top;
+-}
+-
+-h1 {
+-  font-weight: 900;
+-  font-size: 20px;
+-  line-height: 1;
+-  margin: 6px 0 6px 10px;
+-  display: inline-block;
+-  vertical-align: top;
+-}
+-
+-button + button {
+-  margin-left: 10px;
+-}\n- packages/nextui/src/stories/page.css (removed, 69 changes)\n  Patch: @@ -1,69 +0,0 @@
+-section {
+-  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-  font-size: 14px;
+-  line-height: 24px;
+-  padding: 48px 20px;
+-  margin: 0 auto;
+-  max-width: 600px;
+-  color: #333;
+-}
+-
+-h2 {
+-  font-weight: 900;
+-  font-size: 32px;
+-  line-height: 1;
+-  margin: 0 0 4px;
+-  display: inline-block;
+-  vertical-align: top;
+-}
+-
+-p {
+-  margin: 1em 0;
+-}
+-
+-a {
+-  text-decoration: none;
+-  color: #1ea7fd;
+-}
+-
+-ul {
+-  padding-left: 30px;
+-  margin: 1em 0;
+-}
+-
+-li {
+-  margin-bottom: 8px;
+-}
+-
+-.tip {
+-  display: inline-block;
+-  border-radius: 1em;
+-  font-size: 11px;
+-  line-height: 12px;
+-  font-weight: 700;
+-  background: #e7fdd8;
+-  color: #66bf3c;
+-  padding: 4px 12px;
+-  margin-right: 10px;
+-  vertical-align: top;
+-}
+-
+-.tip-wrapper {
+-  font-size: 13px;
+-  line-height: 20px;
+-  margin-top: 40px;
+-  margin-bottom: 40px;
+-}
+-
+-.tip-wrapper svg {
+-  display: inline-block;
+-  height: 12px;
+-  width: 12px;
+-  margin-right: 4px;
+-  vertical-align: top;
+-  margin-top: 3px;
+-}
+-
+-.tip-wrapper svg path {
+-  fill: #1ea7fd;
+-}\n

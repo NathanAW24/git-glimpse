@@ -1,0 +1,202 @@
+Pull Request Number: 599
+Title: fix(docs): Kbar change theme
+Base Branch: main
+Head Branch: docs/theme
+Author: danielsimao
+URL: https://github.com/nextui-org/nextui/pull/599
+State: MERGED
+Created At: 2022-07-05T14:38:54Z
+Merged At: 2022-07-12T12:21:55Z
+Participants: danielsimao, codecov-commenter, jrgarciadev, tianenpang
+
+Description:
+Closes #598
+📝 Description
+Kbar was using a function changeTheme that was not related to next-themes. This was create a misalignment in some part of the docs app.
+My approach was to make Kbar Change Theme functionality use next-themes hook to change theme.
+⛳️ Current behavior (updates)
+Some styles work not being correctly applied on theme change.
+🚀 New behavior
+Theme is applied correctly.
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- fix(docs): Kbar change theme\n- fix(docs): code review\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/599?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#599](https://codecov.io/gh/nextui-org/nextui/pull/599?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (d4b5c3a) into [main](https://codecov.io/gh/nextui-org/nextui/commit/8eff522748f8c9c17d90e9bf9341503b9439c74b?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (8eff522) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+```diff
+@@           Coverage Diff           @@
+##             main     #599   +/-   ##
+=======================================
+  Coverage   74.82%   74.82%           
+=======================================
+  Files         200      200           
+  Lines        3098     3098           
+  Branches      956      956           
+=======================================
+  Hits         2318     2318           
+  Misses        765      765           
+  Partials       15       15           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/599?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/599?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [8eff522...d4b5c3a](https://codecov.io/gh/nextui-org/nextui/pull/599?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- apps/docs/src/components/index.ts (modified, 1 changes)\n  Patch: @@ -28,6 +28,7 @@ export { default as ExampleBlock } from './templates/example-block';
+ export { default as ThemeToggle } from './theme-toggle';
+ export { default as ThemeSwitch } from './theme-switch';
+ export { default as KBar } from './kbar';
++export { default as KBarWrapper } from './kbar-wrapper';
+ export { default as Blockholder } from './blockholder';
+ export { default as LooperBG } from './looper-bg';
+ export { default as FeaturesGrid } from './features-grid';\n- apps/docs/src/components/kbar-wrapper/index.tsx (added, 33 changes)\n  Patch: @@ -0,0 +1,33 @@
++import { KBarProvider } from 'kbar';
++import dynamic from 'next/dynamic';
++import React from 'react';
++import useKbarActions from '@lib/kbar-actions';
++
++type KBARWrapperProps = {
++  children?: React.ReactNode;
++};
++
++const KbarComponent = dynamic(() => import('../kbar'), {
++  ssr: false
++});
++
++const KBARWrapper: React.FC<KBARWrapperProps> = ({ children }) => {
++  const kbarActions = useKbarActions();
++
++  return (
++    <KBarProvider
++      actions={kbarActions}
++      options={{
++        animations: {
++          enterMs: 250,
++          exitMs: 100
++        }
++      }}
++    >
++      <KbarComponent />
++      {children}
++    </KBarProvider>
++  );
++};
++
++export default KBARWrapper;\n- apps/docs/src/lib/kbar-actions.ts (modified, 19 changes)\n  Patch: @@ -1,9 +1,10 @@
+ import { Action } from 'kbar';
+-import { NextRouter } from 'next/router';
++import { NextRouter, useRouter } from 'next/router';
++import { ThemeType } from '@nextui-org/react';
++import { useTheme as useNextTheme } from 'next-themes';
+ import { Route } from '@lib/docs/page';
+ import { getId } from '../utils/collections';
+ import { removeFromLast } from '@utils/index';
+-import { ThemeType, changeTheme } from '@nextui-org/react';
+ // data imported from manifest
+ import docsManifest from '../../content/docs/manifest.json';
+ 
+@@ -57,14 +58,16 @@ const handleExternalLink = (href: string) => {
+   }).click();
+ };
+ 
+-const handleChangeTheme = (theme: ThemeType) => {
+-  changeTheme(theme);
+-};
+-
+-const getActions = (router: NextRouter): Action[] => {
++const useActions = (): Action[] => {
++  const router = useRouter();
++  const { setTheme } = useNextTheme();
+   const routes = docsManifest.routes;
+   buildDocsActions(router, routes);
+ 
++  const handleChangeTheme = (theme: ThemeType) => {
++    setTheme(theme);
++  };
++
+   const staticActions: Action[] = [
+     {
+       id: 'twitter',
+@@ -129,4 +132,4 @@ const getActions = (router: NextRouter): Action[] => {
+   return [...docsActions, ...staticActions];
+ };
+ 
+-export default getActions;
++export default useActions;\n- apps/docs/src/pages/_app.tsx (modified, 23 changes)\n  Patch: @@ -1,21 +1,19 @@
+ import React from 'react';
+ import { NextPage } from 'next';
+-import dynamic from 'next/dynamic';
+ import { debounce } from 'lodash';
+-import { NextRouter, Router, useRouter } from 'next/router';
++import { NextRouter, Router } from 'next/router';
+ import { NextUIProvider } from '@nextui-org/react';
+ import { ThemeProvider as NextThemesProvider } from 'next-themes';
+ import NProgress from 'nprogress';
+ import PlausibleProvider from 'next-plausible';
+ import { AppInitialProps } from 'next/app';
+ import { NextComponent } from '@lib/types';
+-import generateKbarActions from '@lib/kbar-actions';
+-import { KBarProvider } from 'kbar';
+ import { lightTheme, darkTheme } from '../theme/shared';
+ import { isProd } from '@utils/index';
+ import RouterEvents from '@lib/router-events';
+ import globalStyles from '../styles/globalStyles';
+ import '../styles/sandpack.css';
++import { KBarWrapper as KBarProvider } from '@components';
+ 
+ type AppPropsType<
+   R extends NextRouter = NextRouter,
+@@ -29,10 +27,6 @@ type AppPropsType<
+ 
+ type AppProps<P = {}> = AppPropsType<Router, P>;
+ 
+-const KbarComponent = dynamic(() => import('../components/kbar'), {
+-  ssr: false
+-});
+-
+ NProgress.configure({ parent: '#app-container' });
+ 
+ const start = debounce(NProgress.start, 100);
+@@ -48,8 +42,6 @@ RouterEvents.on('routeChangeError', () => {
+ });
+ 
+ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
+-  const router = useRouter();
+-  const kbarActions = generateKbarActions(router);
+   globalStyles();
+   return (
+     <NextThemesProvider
+@@ -62,16 +54,7 @@ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
+     >
+       <NextUIProvider>
+         <PlausibleProvider domain="nextui.org" enabled={isProd}>
+-          <KBarProvider
+-            actions={kbarActions}
+-            options={{
+-              animations: {
+-                enterMs: 250,
+-                exitMs: 100
+-              }
+-            }}
+-          >
+-            <KbarComponent />
++          <KBarProvider>
+             <Component {...pageProps} />
+           </KBarProvider>
+         </PlausibleProvider>\n

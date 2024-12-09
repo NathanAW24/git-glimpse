@@ -1,0 +1,547 @@
+Pull Request Number: 601
+Title: refactor(docs): default import -> named import
+Base Branch: main
+Head Branch: docs-import
+Author: Unknown
+URL: https://github.com/nextui-org/nextui/pull/601
+State: CLOSED
+Created At: 2022-07-05T21:40:57Z
+Merged At: None
+Participants: codecov-commenter, danielsimao, jrgarciadev
+
+Description:
+Closes #579
+📝 Description
+Refactor import code in document
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- docs: refactor home\n- docs: refactor guide\n- docs: refactor pagination\n- docs: refactor table/input\n- docs: refactor checkbox\n- docs: refactor radio\n- docs: refactor popover/tooltip\n- docs: refactor dropdown\n- docs: refactor modal\n- docs: refactor grid\n- docs: refactor etc\n- refactor: single -> double quote\n- Merge branch 'main' into docs-import\n- fix: react-live scope hooks\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/601?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#601](https://codecov.io/gh/nextui-org/nextui/pull/601?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (8cccb06) into [main](https://codecov.io/gh/nextui-org/nextui/commit/10c4c25bfd39b02987631a4a888ef820710a8c8d?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (10c4c25) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+```diff
+@@           Coverage Diff           @@
+##             main     #601   +/-   ##
+=======================================
+  Coverage   74.77%   74.77%           
+=======================================
+  Files         223      223           
+  Lines        3501     3501           
+  Branches     1105     1105           
+=======================================
+  Hits         2618     2618           
+  Misses        868      868           
+  Partials       15       15           
+```
+
+
+
+Help us with your feedback. Take ten seconds to tell us [how you rate us](https://about.codecov.io/nps?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Have a feature suggestion? [Share it here.](https://app.codecov.io/gh/feedback/?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+\n- danielsimao: @TroyTae is this change related to React 18.0.0? Just out of curiosity.\n- jrgarciadev: Hey @TroyTae sorry, could you please fix the conflicts?\n- vercel: @TroyTae is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228cccb06d225f81b8b0c3520166bba97615bd2c46%22%7D%2C%22id%22%3A%22QmSvjDjuSSay4n4VyYnrNdnD2i76GxhGREY1JhNCxumSaL%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A601%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/32ndoxYttfnxN7AV1rxckAKBzE1q)) | [Visit Preview](https://nextui-storybook-git-fork-troytae-docs-import-nextui-org.vercel.app) | Aug 29, 2022 at 2:44PM (UTC) |
+
+\n- jrgarciadev: Hey @TroyTae thank you!, I forgot to mention to you that for it to work we have to modify the `transformCode` function https://github.com/nextui-org/nextui/blob/main/apps/docs/src/components/playground/utils.ts#L9-L42 which is a mini transpiler that I wrote to join `sandpack` with `react-live`, 
+
+I'm getting this error because of that:
+
+![Screen Shot 2022-08-29 at 09 43 09](https://user-images.githubusercontent.com/30373425/187204544-30397b2c-e7d8-4e80-bd81-af443003aacf.png)
+
+\n
+
+Files Changed:
+- apps/docs/content/components/checkbox-group/controlled-vs-uncontrolled.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from "react";
++const App = `import { useState } from "react";
+ import { Checkbox, Grid } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [selected, setSelected] = React.useState(["buenos-aires", "sydney"]);
++  const [selected, setSelected] = useState(["buenos-aires", "sydney"]);
+ 
+   return (
+     <Grid.Container gap={2}>\n- apps/docs/content/components/checkbox-group/events.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from 'react'
++const App = `import { useState } from "react";
+ import { Checkbox, Text, Spacer } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [selected, setSelected] = React.useState([]);
++  const [selected, setSelected] = useState([]);
+ 
+   return (
+     <>\n- apps/docs/content/components/checkbox/controlled-vs-uncontrolled.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from "react";
++const App = `import { useState } from "react";
+ import { Checkbox, Spacer } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [selected, setSelected] = React.useState(true);
++  const [selected, setSelected] = useState(true);
+ 
+   return (
+     <>\n- apps/docs/content/components/dropdown/multiple-selection.ts (modified, 6 changes)\n  Patch: @@ -1,10 +1,10 @@
+-const App = `import React from "react";
++const App = `import { useState, useMemo } from "react";
+ import { Dropdown } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [selected, setSelected] = React.useState(new Set(["text"]));
++  const [selected, setSelected] = useState(new Set(["text"]));
+ 
+-  const selectedValue = React.useMemo(
++  const selectedValue = useMemo(
+     () => Array.from(selected).join(", ").replaceAll("_", " "),
+     [selected]
+   );\n- apps/docs/content/components/dropdown/single-selection.ts (modified, 6 changes)\n  Patch: @@ -1,10 +1,10 @@
+-const App = `import React from "react";
++const App = `import { useState, useMemo } from "react";
+ import { Dropdown } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [selected, setSelected] = React.useState(new Set(["text"]));
++  const [selected, setSelected] = useState(new Set(["text"]));
+ 
+-  const selectedValue = React.useMemo(
++  const selectedValue = useMemo(
+     () => Array.from(selected).join(", ").replaceAll("_", " "),
+     [selected]
+   );\n- apps/docs/content/components/dropdown/variants.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from "react";
++const App = `import { useState } from "react";
+ import { Grid, Dropdown, Radio } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [selectedColor, setSelectedColor] = React.useState("default");
++  const [selectedColor, setSelectedColor] = useState("default");
+   const colors = [
+     "default",
+     "primary",\n- apps/docs/content/components/grid/hideElement.ts (modified, 9 changes)\n  Patch: @@ -1,16 +1,17 @@
+-const useMediaQuery = `import React from 'react';\n
++const useMediaQuery = `import { useState, useCallback, useEffect } from "react";
+ 
+ export const useMediaQuery = (width)=> {
+-  const [targetReached, setTargetReached] = React.useState(false);
++  const [targetReached, setTargetReached] = useState(false);
+ 
+-  const updateTarget = React.useCallback((e) => {
++  const updateTarget = useCallback((e) => {
+     if (e.matches) {
+       setTargetReached(true);
+     } else {
+       setTargetReached(false);
+     }
+   }, []);
+-  React.useEffect(() => {
++
++  useEffect(() => {
+     const media = window.matchMedia(\`(max-width: \${width}px)\`);
+     media.addListener(updateTarget);
+ \n- apps/docs/content/components/grid/responsive.ts (modified, 9 changes)\n  Patch: @@ -1,16 +1,17 @@
+-const useMediaQuery = `import React from 'react';\n
++const useMediaQuery = `import { useState, useCallback, useEffect } from "react";
+ 
+ export const useMediaQuery = (width)=> {
+-  const [targetReached, setTargetReached] = React.useState(false);
++  const [targetReached, setTargetReached] = useState(false);
+ 
+-  const updateTarget = React.useCallback((e) => {
++  const updateTarget = useCallback((e) => {
+     if (e.matches) {
+       setTargetReached(true);
+     } else {
+       setTargetReached(false);
+     }
+   }, []);
+-  React.useEffect(() => {
++
++  useEffect(() => {
+     const media = window.matchMedia(\`(max-width: \${width}px)\`);
+     media.addListener(updateTarget);
+ \n- apps/docs/content/components/input/helper.ts (modified, 4 changes)\n  Patch: @@ -1,4 +1,4 @@
+-const App = `import React from "react";
++const App = `import { useMemo } from "react";
+ import { Input, useInput, Grid } from "@nextui-org/react";
+ 
+ 
+@@ -9,7 +9,7 @@ export default function App() {
+     return value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
+   };
+ 
+-  const helper = React.useMemo(() => {
++  const helper = useMemo(() => {
+     if (!value)
+       return {
+         text: "",\n- apps/docs/content/components/modal/blurBackground.ts (modified, 4 changes)\n  Patch: @@ -36,13 +36,13 @@ const Mail = `export const Mail = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const AppJs = `import React from "react";
++const AppJs = `import { useState } from "react";
+ import { Modal, Input, Row, Checkbox, Button, Text } from "@nextui-org/react";
+ import { Mail } from "./Mail";
+ import { Password } from "./Password";
+ 
+ export default function App() {
+-  const [visible, setVisible] = React.useState(false);
++  const [visible, setVisible] = useState(false);
+   const handler = () => setVisible(true);
+   const closeHandler = () => {
+     setVisible(false);\n- apps/docs/content/components/modal/default.ts (modified, 4 changes)\n  Patch: @@ -36,13 +36,13 @@ const Mail = `export const Mail = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const AppJs = `import React from "react";
++const AppJs = `import { useState } from "react";
+ import { Modal, Button, Text, Input, Row, Checkbox } from "@nextui-org/react";
+ import { Mail } from "./Mail";
+ import { Password } from "./Password";
+ 
+ export default function App() {
+-  const [visible, setVisible] = React.useState(false);
++  const [visible, setVisible] = useState(false);
+   const handler = () => setVisible(true);
+ 
+   const closeHandler = () => {\n- apps/docs/content/components/modal/noAnimated.ts (modified, 4 changes)\n  Patch: @@ -36,13 +36,13 @@ const Mail = `export const Mail = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const AppJs = `import React from "react";
++const AppJs = `import { useState } from "react";
+ import { Modal, Button, Text, Input, Row, Checkbox } from "@nextui-org/react";
+ import { Mail } from "./Mail";
+ import { Password } from "./Password";
+ 
+ export default function App() {
+-  const [visible, setVisible] = React.useState(false);
++  const [visible, setVisible] = useState(false);
+   const handler = () => setVisible(true);
+   const closeHandler = () => {
+     setVisible(false);\n- apps/docs/content/components/modal/preventClose.ts (modified, 4 changes)\n  Patch: @@ -36,13 +36,13 @@ const Mail = `export const Mail = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const AppJs = `import React from "react";
++const AppJs = `import { useState } from "react";
+ import { Modal, Button, Text, Input, Row, Checkbox } from "@nextui-org/react";
+ import { Mail } from "./Mail";
+ import { Password } from "./Password";
+ 
+ export default function App() {
+-  const [visible, setVisible] = React.useState(false);
++  const [visible, setVisible] = useState(false);
+   const handler = () => setVisible(true);
+   const closeHandler = () => {
+     setVisible(false);\n- apps/docs/content/components/modal/withoutPadding.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from "react";
++const App = `import { useState } from "react";
+ import { Modal, Button, Image, Text, Link } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [visible, setVisible] = React.useState(false);
++  const [visible, setVisible] = useState(false);
+   const handler = () => setVisible(true);
+   const closeHandler = () => {
+     setVisible(false);\n- apps/docs/content/components/pagination/color.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from "react";
++const App = `import { useState } from "react";
+ import { Pagination, Grid, Radio } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [selectedColor, setSelectedColor] = React.useState("primary");
++  const [selectedColor, setSelectedColor] = useState("primary");
+   const colors = [
+     "primary",
+     "secondary",\n- apps/docs/content/components/pagination/dots.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from "react";
++const App = `import { useState } from "react";
+ import { Pagination, Grid, Radio } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [selectedSize, setSelectedSize] = React.useState("md");
++  const [selectedSize, setSelectedSize] = useState("md");
+   const sizes = ["xs", "sm", "md", "lg", "xl"];
+   const capitalize = (str) => {
+     const lower = str.toLowerCase();\n- apps/docs/content/components/pagination/shadow.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from "react";
++const App = `import { useState } from "react";
+ import { Pagination, Grid, Radio } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [selectedColor, setSelectedColor] = React.useState("primary");
++  const [selectedColor, setSelectedColor] = useState("primary");
+   const colors = ["primary", "secondary", "success", "warning", "error"];
+   const capitalize = (str) => {
+     const lower = str.toLowerCase();\n- apps/docs/content/components/pagination/sizes.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from "react";
++const App = `import { useState } from "react";
+ import { Pagination, Grid, Radio } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [selectedSize, setSelectedSize] = React.useState("md");
++  const [selectedSize, setSelectedSize] = useState("md");
+   const sizes = ["xs", "sm", "md", "lg", "xl"];
+   const capitalize = (str) => {
+     const lower = str.toLowerCase();\n- apps/docs/content/components/popover/controlled-vs-uncontrolled.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from 'react';
++const App = `import { useState } from "react";
+ import { Popover, Button, Text, Grid } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [isOpen, setIsOpen] = React.useState(false);
++  const [isOpen, setIsOpen] = useState(false);
+ 
+   return (
+     <Grid.Container gap={2} alignContent="center">\n- apps/docs/content/components/popover/custom-content.ts (modified, 7 changes)\n  Patch: @@ -1,5 +1,4 @@
+-const DeleteUser = `import React from "react";
+-import { Text, Button, Grid, Row } from "@nextui-org/react";
++const DeleteUser = `import { Text, Button, Grid, Row } from "@nextui-org/react";
+ 
+ export const DeleteUser = () => {
+   return (
+@@ -31,11 +30,11 @@ export const DeleteUser = () => {
+   );
+ };`;
+ 
+-const UserTwitterCard = `import React from "react";
++const UserTwitterCard = `import { useState } from "react";
+ import { User, Row, Col, Text, Button, Spacer, Grid } from "@nextui-org/react";
+ 
+ export const UserTwitterCard = () => {
+-  const [following, setFollowing] = React.useState(false);
++  const [following, setFollowing] = useState(false);
+ 
+   return (
+     <Grid.Container\n- apps/docs/content/components/radio/controlled-vs-uncontrolled.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from 'react'
++const App = `import { useState } from "react";
+ import { Radio, Grid } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [checked, setChecked] = React.useState('B');
++  const [checked, setChecked] = useState('B');
+ 
+   return (
+     <Grid.Container gap={2}>\n- apps/docs/content/components/radio/events.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from 'react'
++const App = `import { useState } from "react";
+ import { Radio, Text, Spacer } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [checked, setChecked] = React.useState('');
++  const [checked, setChecked] = useState('');
+ 
+   return (
+     <>\n- apps/docs/content/components/table/colors.ts (modified, 4 changes)\n  Patch: @@ -1,8 +1,8 @@
+-const App = `import React from "react";
++const App = `import { useState } from "react";
+ import { Table, Grid, Radio } from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [selectedColor, setSelectedColor] = React.useState("primary");
++  const [selectedColor, setSelectedColor] = useState("primary");
+   const colors = ["primary", "secondary", "success", "warning", "error"];
+   const capitalize = (str) => {
+     const lower = str.toLowerCase();\n- apps/docs/content/components/textarea/controlledUncontrolled.ts (modified, 4 changes)\n  Patch: @@ -1,4 +1,4 @@
+-const App = `import React from "react";
++const App = `import { useRef } from "react";
+ import { Textarea, Grid, useInput, Spacer, Button } from "@nextui-org/react";
+ 
+ export default function App() {
+@@ -11,7 +11,7 @@ export default function App() {
+   } = useInput("Controlled Textarea");
+ 
+   // Uncontrolled
+-  const textareaRef = React.useRef(null);
++  const textareaRef = useRef(null);
+   const onClick = () => {
+     if (textareaRef.current) {
+       textareaRef.current.value = Math.random().toString(32);\n- apps/docs/content/components/tooltip/customContent.ts (modified, 7 changes)\n  Patch: @@ -1,5 +1,4 @@
+-const DeleteUser = `import React from "react";
+-import { Text, Button, Grid, Row } from "@nextui-org/react";
++const DeleteUser = `import { Text, Button, Grid, Row } from "@nextui-org/react";
+ 
+ export const DeleteUser = () => {
+   return (
+@@ -35,7 +34,7 @@ export const DeleteUser = () => {
+   );
+ };`;
+ 
+-const UserTwitterCard = `import React from "react"; 
++const UserTwitterCard = `import { useState } from "react"; 
+ import { Avatar, Row, Col, Text, Button, Spacer, Grid } from "@nextui-org/react";
+ 
+ export const UserTwitterCard = ({
+@@ -45,7 +44,7 @@ export const UserTwitterCard = ({
+   onClick,
+   ...props
+ }) => {
+-  const [following, setFollowing] = React.useState(false);
++  const [following, setFollowing] = useState(false);
+ 
+   return (
+     <Grid.Container\n- apps/docs/content/docs/guide/getting-started.mdx (modified, 6 changes)\n  Patch: @@ -39,8 +39,6 @@ For NextUI to work correctly, you need to set up the `NextUIProvider` at the roo
+ Go to the root of your application and do this:
+ 
+ ```jsx
+-import * as React from 'react';
+-
+ // 1. import `NextUIProvider` component
+ import { NextUIProvider } from '@nextui-org/react';
+ 
+@@ -77,7 +75,7 @@ export default MyApp;
+ 2. Go to `pages/_document.js` or `pages/_document.tsx` (create if it doesn't exist) and add this:
+ 
+ ```jsx
+-import React from 'react';
++import { Children } from 'react';
+ import Document, { Html, Head, Main, NextScript } from 'next/document';
+ import { CssBaseline } from '@nextui-org/react';
+ 
+@@ -86,7 +84,7 @@ class MyDocument extends Document {
+     const initialProps = await Document.getInitialProps(ctx);
+     return {
+       ...initialProps,
+-      styles: React.Children.toArray([initialProps.styles])
++      styles: Children.toArray([initialProps.styles])
+     };
+   }
+ \n- apps/docs/content/docs/guide/nextui-plus-nextjs.mdx (modified, 11 changes)\n  Patch: @@ -40,7 +40,7 @@ to create file `_document.js`.
+ Then we add the following code to the file:
+ 
+ ```jsx
+-import React from "react";
++import { Children } from "react";
+ import Document, { Html, Head, Main, NextScript } from "next/document";
+ import { CssBaseline } from "@nextui-org/react";
+ 
+@@ -49,7 +49,7 @@ class MyDocument extends Document {
+     const initialProps = await Document.getInitialProps(ctx);
+     return {
+       ...initialProps,
+-      styles: React.Children.toArray([initialProps.styles]),
++      styles: Children.toArray([initialProps.styles]),
+     };
+   }
+ 
+@@ -78,15 +78,14 @@ Here's an example of what your `_document.js` file should look like: <a target="
+ In the custom server, also get the style set from function `CssBaseline.flush` as shown below.
+ 
+ ```jsx
+-import React from "react";
+-import ReactDOM from "react-dom/server";
++import { renderToString, renderToStaticMarkup } from "react-dom/server";
+ import { CssBaseline } from "@nextui-org/react";
+ import App from "./app";
+ 
+ export default (req, res) => {
+-  const app = ReactDOM.renderToString(<App />);
++  const app = renderToString(<App />);
+   const styles = CssBaseline.flush();
+-  const html = ReactDOM.renderToStaticMarkup(
++  const html = renderToStaticMarkup(
+     <html>
+       <head>{styles}</head>
+       <body>\n- apps/docs/content/docs/theme/dark-mode.mdx (modified, 2 changes)\n  Patch: @@ -196,7 +196,7 @@ const darkTheme = createTheme({
+ 
+ // 3. Apply light or dark theme depending on localStorage and `getDocumentTheme` value
+ // App.jsx entry point of your app
+-import React, { useEffect, useState } from 'react';
++import { useEffect, useState } from 'react';
+ import { getDocumentTheme } from '@nextui-org/react'
+ 
+ const Main = () => {\n- apps/docs/content/landing/index.tsx (modified, 28 changes)\n  Patch: @@ -88,7 +88,7 @@ export default {
+       icon: <Magic fill="#FF4ECD" />,
+     },
+   ],
+-  themingCode: `import { createTheme } from '@nextui-org/react';
++  themingCode: `import { createTheme } from "@nextui-org/react";
+ 
+ const lightTheme = createTheme({
+   type: 'light',
+@@ -215,8 +215,7 @@ return (
+ 
+ `,
+   comparativeCode: {
+-    nextui: `import * as React from 'react';
+-import { Input } from '@nextui-org/react';
++    nextui: `import { Input } from "@nextui-org/react";
+ 
+ const MyComponent = () => {
+   return (
+@@ -226,17 +225,17 @@ const MyComponent = () => {
+ 
+ export default MyComponent
+ `,
+-    others: `import * as React from 'react';
+-import ButtonIcon from '@other-library/ButtonIcon';
+-import InputOutlined from '@other-library/InputOutlined';
+-import LabelInput from '@other-library/LabelInput';
+-import AdornmentInput from '@other-library/AdornmentInput';
+-import ControlForm from '@other-library/ControlForm';
+-import EyeIcon from '@other-library/icons/EyeIcon';
+-import EyeIconOff from '@other-library/icons/EyeIconOff';
++    others: `import { useState } from "react";
++import ButtonIcon from "@other-library/ButtonIcon";
++import InputOutlined from "@other-library/InputOutlined";
++import LabelInput from "@other-library/LabelInput";
++import AdornmentInput from "@other-library/AdornmentInput";
++import ControlForm from "@other-library/ControlForm";
++import EyeIcon from "@other-library/icons/EyeIcon";
++import EyeIconOff from "@other-library/icons/EyeIconOff";
+ 
+ const MyComponent = () => {
+-  const [values, setValues] = React.useState({
++  const [values, setValues] = useState({
+     password: '',
+     showPassword: false
+   });
+@@ -307,9 +306,8 @@ const App = () => {
+ 
+ export default App;
+ `,
+-  customizationCode: `import React from 'react';
+-import { Button } from '@nextui-org/react';
+-import confetti from 'canvas-confetti';
++  customizationCode: `import { Button } from "@nextui-org/react";
++import confetti from "canvas-confetti";
+ 
+ const CustomButton = () => {
+   const handleConfetti = () => {\n- apps/docs/src/components/playground/dynamic-live.tsx (modified, 13 changes)\n  Patch: @@ -1,4 +1,10 @@
+-import React, {useRef, useState, useEffect} from "react";
++import React, {
++  useCallback,
++  useEffect,
++  useMemo,
++  useRef,
++  useState,
++} from "react";
+ import {LivePreview, LiveProvider, LiveError} from "react-live";
+ import NextLink from "next/link";
+ import {useMediaQuery} from "@hooks/use-media-query";
+@@ -197,6 +203,11 @@ export const scope = {
+   Palette,
+   useMediaQuery,
+   validateEmail,
++  useCallback,
++  useEffect,
++  useMemo,
++  useRef,
++  useState,
+ };
+ 
+ const MIN_WIDTH = 400;\n

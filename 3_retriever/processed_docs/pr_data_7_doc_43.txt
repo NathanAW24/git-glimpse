@@ -1,0 +1,316 @@
+Pull Request Number: 3439
+Title: fix(docs): ripple props in button component for TSX Implementation
+Base Branch: canary
+Head Branch: docs/fix-button-component-tsx-ripple-props
+Author: ryxxn
+URL: https://github.com/nextui-org/nextui/pull/3439
+State: MERGED
+Created At: 2024-07-10T06:45:17Z
+Merged At: 2024-07-12T18:24:59Z
+Participants: ryxxn, jrgarciadev, wingkwong
+
+Description:
+📝 Description
+This PR fixes an inconsistency in the Custom Implementation section of the Button component's TSX example by including the onClear method from getRippleProps. The absence of the onClear method causes issues in the TSX implementation, which this PR aims to resolve.
+⛳️ Current behavior (updates)
+In the Custom Implementation section (TSX)
+// ...
+
+ const {ripples} = getRippleProps();
+
+  return (
+    <button ref={domRef} {...getButtonProps()}>
+      {startContent}
+      {isLoading && spinnerPlacement === "start" && spinner}
+      {children}
+      {isLoading && spinnerPlacement === "end" && spinner}
+      {endContent}
+      {!disableRipple && <Ripple ripples={ripples} />}
+    </button>
+  );
+
+// ...
+However, in VSCode:
+
+🚀 New behavior
+To fix this:
+// ...
+
+const {ripples, onClear} = getRippleProps();
+
+  return (
+    <button ref={domRef} {...getButtonProps()}>
+      {startContent}
+      {isLoading && spinnerPlacement === "start" && spinner}
+      {children}
+      {isLoading && spinnerPlacement === "end" && spinner}
+      {endContent}
+      {!disableRipple && <Ripple ripples={ripples} onClear={onClear} />}
+    </button>
+  );
+
+// ...
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+This change ensures that the TSX implementation of the Button component in the documentation matches the JSX implementation, improving consistency and accuracy.
+
+Summary by CodeRabbit
+
+New Features
+
+Introduced the onClear property to the ripple effect in the MyButton component, enhancing button interaction functionality.
+
+Commits:
+- fix: add onClear prop to Ripple component in button custom implementation\n
+
+Labels:
+📋 Scope : Docs
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: d5ed2fa819ccba53754e22a6e2613297b59972be
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/ryxxn/nextui/new/docs/fix-button-component-tsx-ripple-props?filename=.changeset/bright-timers-yawn.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Afix(docs)%3A%20ripple%20props%20in%20button%20component%20for%20TSX%20Implementation%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The introduced change involves adding an `onClear` property to the `Ripple` component within the `MyButton` component in `custom-impl.ts`. This facilitates the handling of ripple clearing logic through the `getRippleProps` function, enhancing the ripple effect’s control and customization.
+
+## Changes
+
+| File Path                              | Change Summary                                                                                               |
+|----------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| `apps/docs/content/components/button/...` | Added `onClear` property to the `Ripple` component in `MyButton`. Adjusted `getRippleProps` to include `onClear`. |
+
+## Sequence Diagrams
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant MyButton
+    participant Ripple
+    User->>MyButton: Click
+    MyButton->>getRippleProps: Retrieve ripple properties
+    getRippleProps-->>MyButton: ripples, onClear
+    MyButton->>Ripple: Create/Render with ripples and onClear
+    Ripple-->>MyButton: Ripple effect completed
+    MyButton-->>Ripple: onClear
+```
+
+This diagram depicts the sequence of events triggered by a user click, passing through the `MyButton` and `Ripple` components, incorporating the new `onClear` property.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+apps/docs/content/components/button/custom-impl.ts: ## Short Summary
+
+The change in functionality introduces the addition of the `onClear` property to the `Ripple` component within the `MyButton` component in `custom-impl.ts`.
+
+## Alterations to the declarations of exported or public entities
+- `const {ripples} = getRippleProps();` in `MyButton` in `custom-impl.ts` changed to `const {ripples, onClear} = getRippleProps();`
+- `!disableRipple && <Ripple ripples={ripples} />` in `MyButton` in `custom-impl.ts` changed to `!disableRipple && <Ripple ripples={ripples} onClear={onClear} />`
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+**Title**: fix(docs): ripple props in button component for TSX Implementation  
+**User**: ryxxn  
+**Number**: 3439  
+**URL**: [https://github.com/nextui-org/nextui/pull/3439](https://github.com/nextui-org/nextui/pull/3439)  
+
+**Description**:  
+
+This PR addresses an inconsistency in the Custom Implementation section of the Button component's TSX example in the documentation. The issue was the absence of the `onClear` method from `getRippleProps`, which caused problems in the TSX implementation. 
+
+**Current behavior (updates)**:  
+In the Custom Implementation section (TSX), the example code only included the `ripples` property from `getRippleProps`:
+
+```tsx
+const {ripples} = getRippleProps();
+
+return (
+  <button ref={domRef} {...getButtonProps()}>
+    {startContent}
+    {isLoading && spinnerPlacement === "start" && spinner}
+    {children}
+    {isLoading && spinnerPlacement === "end" && spinner}
+    {endContent}
+    {!disableRipple && <Ripple ripples={ripples} />}
+  </button>
+);
+```
+
+This resulted in issues within VSCode, as indicated by the provided screenshot link.
+
+**New behavior**:  
+The updated code now includes the `onClear` method:
+
+```tsx
+const {ripples, onClear} = getRippleProps();
+
+return (
+  <button ref={domRef} {...getButtonProps()}>
+    {startContent}
+    {isLoading && spinnerPlacement === "start" && spinner}
+    {children}
+    {isLoading && spinnerPlacement === "end" && spinner}
+    {endContent}
+    {!disableRipple && <Ripple ripples={ripples} onClear={onClear} />}
+  </button>
+);
+```
+
+This change ensures that the TSX implementation of the Button component in the documentation is consistent with the JSX implementation, thereby improving accuracy and consistency.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+## Summary of generated summaries
+
+The updates in the `custom-impl.ts` file of the `apps/docs/content/components/button` directory involve enhancing the `MyButton` component by adding the `onClear` property to the `Ripple` component. Specifically, the `getRippleProps` function now returns an additional `onClear` property alongside `ripples`. Consequently, the `Ripple` component within `MyButton` is now rendered with both `ripples` and `onClear` props, but only if the `disableRipple` flag is not set.
+
+## Alterations to the declarations of exported or public entities
+
+- Before:
+  ```typescript
+  const {ripples} = getRippleProps();
+  !disableRipple && <Ripple ripples={ripples} />
+  ```
+
+- After:
+  ```typescript
+  const {ripples, onClear} = getRippleProps();
+  !disableRipple && <Ripple ripples={ripples} onClear={onClear} />
+  ```
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- d5ed2fa819ccba53754e22a6e2613297b59972be -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: @ryxxn is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22d5ed2fa819ccba53754e22a6e2613297b59972be%22%7D%2C%22id%22%3A%22QmSihMYDDMQkiSLnHb3CufLbzKjbBZrky1CkuaUr7JSjZE%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3439%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #H4z4CQsLjCcLlPbn3ZxdUXqB2uvKnEnI+CVuohwwYzw=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvMmtpS2JUS0Nvb2FuOVlIc1ZGMVVKRkd3cVpWVyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXJ5eHhuLWRvY3MtZml4LWItMmJjNWFhLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXJ5eHhuLWRvY3MtZml4LWItMmJjNWFhLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/2kiKbTKCooan9YHsVF1UJFGwqZVW)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-ryxxn-docs-fix-b-2bc5aa-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-ryxxn-docs-fix-b-2bc5aa-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jul 10, 2024 6:47am |
+
+\n
+
+Files Changed:
+- apps/docs/content/components/button/custom-impl.ts (modified, 4 changes)\n  Patch: @@ -61,7 +61,7 @@ const MyButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+     ...props,
+   });
+ 
+-  const {ripples} = getRippleProps();
++  const {ripples, onClear} = getRippleProps();
+ 
+   return (
+     <button ref={domRef} {...getButtonProps()}>
+@@ -70,7 +70,7 @@ const MyButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+       {children}
+       {isLoading && spinnerPlacement === "end" && spinner}
+       {endContent}
+-      {!disableRipple && <Ripple ripples={ripples} />}
++      {!disableRipple && <Ripple ripples={ripples} onClear={onClear} />}
+     </button>
+   );
+ });\n

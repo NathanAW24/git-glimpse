@@ -1,0 +1,615 @@
+Pull Request Number: 3584
+Title: fix(calendar): vertical appearance in mobile devices
+Base Branch: canary
+Head Branch: fix/calendar-in-small-devices
+Author: awesome-pro
+URL: https://github.com/nextui-org/nextui/pull/3584
+State: CLOSED
+Created At: 2024-07-31T12:14:32Z
+Merged At: None
+Participants: awesome-pro, wingkwong
+
+Description:
+Closes #3173
+📝 Description
+Added the logic for the vertical appearance of calendars (if more than one) in case of mobile devices
+⛳️ Current behavior (updates)
+
+  
+    
+    
+
+    prev-calendar.mov
+    
+  
+
+  
+
+  
+
+
+🚀 New behavior
+
+Calendar
+
+
+  
+    
+    
+
+    new-calendar.mov
+    
+  
+
+  
+
+  
+
+
+
+Date Picker
+
+
+  
+    
+    
+
+    new-date-picker.mov
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No): NO
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced responsiveness of the calendar component for mobile devices.
+Added a new property to specify the calendar height, improving configurability for both calendar and date picker components.
+
+
+
+Bug Fixes
+
+Fixed navbar height issues for better visual consistency.
+
+
+
+Style Improvements
+
+Updated CSS styles for the calendar and date picker components to enhance layout and responsiveness across devices.
+
+Commits:
+- fix(navbar): fixed the height when style h-full\n- fix(navbar): fixed the height when style h-full\n- Merge branch 'nextui-org:canary' into canary\n- Merge branch 'nextui-org:canary' into canary\n- fix(calendar): vertical appearance in small deveices\n- fix(calendar): vertical appearance in small deveices\n- Delete .changeset/brown-days-applaud.md\n- Delete .changeset/angry-brooms-unite.md\n- chore(deps): pnpm-lock.yaml\n- chore(deps): pnpm-lock.yaml\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: ee32561953838b0f8e5fc33480d59a888bb7c426
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 4 packages</summary>
+
+  | Name                    | Type  |
+| ----------------------- | ----- |
+| @nextui-org/calendar    | Patch |
+| @nextui-org/date-picker | Patch |
+| @nextui-org/theme       | Patch |
+| @nextui-org/react       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/awesome-pro/nextui/new/fix/calendar-in-small-devices?filename=.changeset/dirty-singers-bow.md&value=---%0A%22%40nextui-org%2Fcalendar%22%3A%20patch%0A%22%40nextui-org%2Fdate-picker%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(calendar)%3A%20vertical%20appearance%20in%20mobile%20devices%0A)
+
+\n- vercel: @awesome-pro is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f1aa46e6f64f253bf44f15fe418aca83c527107e%22%7D%2C%22id%22%3A%22QmYwUQ2gtm2q979beGUjasasQ2kbZKVjb31XXRZ6ZP7n6p%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3584%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: skip review by coderabbit.ai -->
+
+> [!IMPORTANT]
+> ## Review skipped
+> 
+> Review was skipped due to path filters
+> 
+> <details>
+> <summary>Files ignored due to path filters (1)</summary>
+> 
+> * `pnpm-lock.yaml` is excluded by `!**/pnpm-lock.yaml`
+> 
+> </details>
+> 
+> You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file.
+
+<!-- end of auto-generated comment: skip review by coderabbit.ai --><!-- walkthrough_start -->
+
+## Walkthrough
+
+This update enhances the responsiveness and usability of the calendar and date picker components across various devices, particularly mobile. Key improvements include the addition of a `calendarHeight` property for better customization, integration of the `useIsMobile` hook for adaptive rendering, and CSS adjustments to optimize the layout on smaller screens. These changes collectively aim to provide a more visually appealing and user-friendly interface.
+
+## Changes
+
+| Files                                           | Change Summary                                                                                                                                  |
+|-------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| .changeset/angry-brooms-unite.md                | Introduced a patch for mobile responsiveness in calendar components; fixed navbar height issues.                                               |
+| packages/components/calendar/package.json        | Updated dependencies; added `@internationalized/date`, `@nextui-org/button`, and `@nextui-org/framer-utils`.                                   |
+| packages/components/calendar/src/calendar-base.tsx | Added `useIsMobile` hook to enhance mobile responsiveness in calendar rendering.                                                                |
+| packages/components/calendar/src/use-calendar-base.ts | Enhanced `Props` interface by adding `calendarHeight` for dynamic styling, improving component flexibility.                                      |
+| packages/components/date-picker/src/use-date-picker-base.ts | Added optional `calendarHeight` to improve configurability of the date picker component.                                                       |
+| packages/core/theme/src/components/calendar.ts    | Adjusted CSS class names and properties for better responsiveness in the calendar component.                                                    |
+| packages/core/theme/src/components/date-picker.ts  | Updated styling definitions for better layout and responsiveness in the date picker component.                                                   |
+
+## Sequence Diagram(s)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant CalendarComponent
+    participant MobileDetector
+    
+    User->>CalendarComponent: Open calendar
+    CalendarComponent->>MobileDetector: Check if mobile
+    MobileDetector-->>CalendarComponent: Return true/false
+    alt If mobile
+        CalendarComponent->>CalendarComponent: Adjust layout for mobile
+    else Not mobile
+        CalendarComponent->>CalendarComponent: Render standard layout
+    end
+```
+
+## Assessment against linked issues
+
+| Objective                                             | Addressed | Explanation                      |
+|------------------------------------------------------|-----------|----------------------------------|
+| It is not possible to change the calendar display on a mobile (#[3173]) | ✅         |                                  |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```
+.changeset/angry-brooms-unite.md: ## AI-generated summary of changes
+
+This update introduces a patch for the `@nextui-org/calendar`, `@nextui-org/date-picker`, and `@nextui-org/theme` packages, specifically addressing the appearance of the calendar component on small devices and fixing an issue related to the navbar height. The changes enhance the visual presentation and usability of the calendar interface, ensuring that it is more responsive and visually appealing on devices with limited screen space. The patch likely includes adjustments to CSS styles or layout configurations that optimize the calendar's rendering, contributing to a better user experience for mobile users. This improvement is part of an ongoing effort to refine the component's functionality and aesthetics, as indicated by the associated issues (#3173, #1694).
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made.
+
+---
+
+packages/components/calendar/package.json: ## AI-generated summary of changes
+
+The provided diff for `packages/components/calendar/package.json` reflects updates to the dependencies and devDependencies sections. Notably, new dependencies have been added, including `@internationalized/date`, `@nextui-org/button`, and `@nextui-org/framer-utils`, while the order of some existing dependencies has been rearranged. The dependency on `@nextui-org/shared-utils` has been retained, but the previous entry for `@nextui-org/framer-utils` has been removed, indicating a consolidation of dependencies. In the devDependencies section, `@nextui-org/system` and `@nextui-org/theme` have been added back after being removed in a previous iteration, while `framer-motion` has been moved to a new position. The overall structure and organization of dependencies have been refined, but the core functionality remains intact. These changes are primarily focused on dependency management rather than altering the underlying logic of the codebase.
+
+## Alterations to the declarations of exported or public entities
+
+- `@internationalized/date` added to `dependencies` in `packages/components/calendar/package.json`
+- `@nextui-org/button` added to `dependencies` in `packages/components/calendar/package.json`
+- `@nextui-org/framer-utils` added to `dependencies` in `packages/components/calendar/package.json`
+- `@nextui-org/system` added to `devDependencies` in `packages/components/calendar/package.json`
+- `@nextui-org/theme` added to `devDependencies` in `packages/components/calendar/package.json`
+- `framer-motion` added to `devDependencies` in `packages/components/calendar/package.json`
+
+---
+
+packages/components/calendar/src/calendar-base.tsx: ## AI-generated summary of changes
+
+The changes in the `calendar-base.tsx` file introduce a new dependency on the `useIsMobile` hook from the `@nextui-org/use-is-mobile` package, which enhances the responsiveness of the calendar component. This hook is utilized to determine if the current device is mobile, influencing the rendering logic of the calendar's header and buttons. The adjustments also modify the structure of the calendar's rendering logic, ensuring that the calendar adapts its interface based on the device type. These changes reflect a significant enhancement in the component's functionality, improving the user experience on mobile devices by providing appropriate navigation controls.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function CalendarBase(props: CalendarBaseProps)` in `packages/components/calendar/src/calendar-base.tsx` → No changes in the function signature.
+
+---
+
+packages/components/calendar/src/use-calendar-base.ts: ## AI-generated summary of changes
+
+The changes introduced in the diff enhance the `Props` interface and the `useCalendarBase` function in the `use-calendar-base.ts` file by adding a new property for calendar height. Specifically, a `calendarHeight` property is added to the `Props` interface, which allows users to specify the height of the calendar component. This integration allows for dynamic styling of the calendar component based on the specified height, enhancing its flexibility and usability. Overall, these changes improve the component's configurability by allowing developers to control both the width and height of the calendar.
+
+## Alterations to the declarations of exported or public entities
+
+- `calendarHeight?: number | string` in interface `Props` in `packages/components/calendar/src/use-calendar-base.ts` (added)  
+- `calendarHeight = 274` in function `useCalendarBase` in `packages/components/calendar/src/use-calendar-base.ts` (added)  
+- `"--calendar-height": ...` in function `useCalendarBase` in `packages/components/calendar/src/use-calendar-base.ts` (added)
+
+---
+
+packages/components/date-picker/src/use-date-picker-base.ts: ## AI-generated summary of changes
+
+The changes introduced in this diff enhance the `Props` interface and the `useDatePickerBase` function by adding a new optional property, `calendarHeight`, which specifies the height of the calendar component. This property is documented with a default value of 274. The modifications improve the configurability of the date picker component by allowing users to specify both width and height for the calendar.
+
+## Alterations to the declarations of exported or public entities
+
+- `calendarHeight?: number` in interface `Props<T extends DateValue>` in `packages/components/date-picker/src/use-date-picker-base.ts` → `calendarHeight?: number` in interface `Props<T extends DateValue>` in `packages/components/date-picker/src/use-date-picker-base.ts`
+- `export function useDatePickerBase<T extends DateValue>(originalProps: UseDatePickerBaseProps<T>, ...` in `packages/components/date-picker/src/use-date-picker-base.ts` → `export function useDatePickerBase<T extends DateValue>(originalProps: UseDatePickerBaseProps<T>, calendarHeight = 274, ...` in `packages/components/date-picker/src/use-date-picker-base.ts`
+
+---
+
+packages/core/theme/src/components/calendar.ts: ## AI-generated summary of changes
+
+The diff introduces several modifications to the styling properties of the `calendar` component in the `calendar.ts` file. Notable changes include adjustments to the CSS class names that enhance the layout and responsiveness of the calendar. The overall changes contribute to a more responsive and visually appealing calendar component, improving its usability across various devices.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made in `packages/core/theme/src/components/calendar.ts`.
+
+---
+
+packages/core/theme/src/components/date-picker.ts: ## AI-generated summary of changes
+
+The modifications in the `date-picker.ts` file primarily involve updates to the styling definitions of the `calendar` and `calendarContent` properties within the `datePicker` component. These changes represent a significant enhancement in the responsiveness and layout management of the date picker component.
+
+## Alterations to the declarations of exported or public entities
+
+- No changes to the declarations of exported or public entities were made in `packages/core/theme/src/components/date-picker.ts`.
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(calendar): vertical appearance in mobile devices" was submitted by the user `awesome-pro` and addresses an issue related to the display of calendars on mobile devices. The PR aims to implement logic that allows multiple calendars to be displayed vertically when viewed on mobile, enhancing usability in this context. The current behavior, as demonstrated in the provided screenshots, shows that the calendars do not stack vertically, leading to usability issues such as the presence of scrollbars. The new behavior proposed in the PR presents the calendars in a column format, eliminating the need for horizontal scrolling and improving the overall user experience. The PR does not introduce any breaking changes, ensuring that existing functionality remains intact for users of the NextUI library.
+
+## Objectives from Linked Issues
+
+The linked issue, titled "It is not possible to change the calendar display on a mobile," outlines specific problems encountered with the calendar display on mobile devices. The issue was reported for NextUI version 2.4.0 and describes the inability to view multiple calendars in a user-friendly manner when using the DateRangePicker component with two visible months. Users reported that when switching to mobile mode, the calendars would not align vertically, resulting in horizontal scrolling and a cumbersome interface. The expected behavior, as articulated in the issue, is for the calendars to be displayed one below the other in a column format, thereby eliminating scrollbars and enhancing accessibility. The PR directly addresses these objectives by implementing the necessary adjustments to ensure that calendars are presented vertically on mobile devices, aligning with user expectations and improving the overall experience.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- f1aa46e6f64f253bf44f15fe418aca83c527107e -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- awesome-pro: @wingkwong   sir, I just installed `@nextui-org/use-is-mobile` dependency in the `package/components/calendar`  project vai pnpm
+these changes are working fine in my machine without any fail 
+But I don't why build is failing here
+\n- wingkwong: @awesome-pro because you're using pnpm@v9 which is not supported currently. I updated it back to v8 at this moment. We plan to upgrade to v9 and I made a PR for that. Supposedly you won't see there are 10K+ changes in `pnpm-lock.yaml` if you just add one dependency. I'll review the rest when I got time.\n- awesome-pro: Thanks @wingkwong \n- wingkwong: Closing due to inactivity\n
+
+Files Changed:
+- .changeset/yellow-games-bow.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/calendar": patch
++"@nextui-org/date-picker": patch
++"@nextui-org/theme": patch
++---
++
++fixed the vertical appearance of calenadar in mobile devices (#3173)\n- packages/components/calendar/package.json (modified, 29 changes)\n  Patch: @@ -40,35 +40,36 @@
+     "react-dom": ">=18"
+   },
+   "dependencies": {
++    "@internationalized/date": "^3.5.4",
++    "@nextui-org/button": "workspace:*",
++    "@nextui-org/framer-utils": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+-    "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+-    "@nextui-org/framer-utils": "workspace:*",
++    "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/use-aria-button": "workspace:*",
+-    "@nextui-org/button": "workspace:*",
+-    "lodash.debounce": "^4.0.8",
+-    "@internationalized/date": "^3.5.4",
++    "@nextui-org/use-is-mobile": "^2.0.9",
+     "@react-aria/calendar": "3.5.8",
+     "@react-aria/focus": "3.17.1",
+     "@react-aria/i18n": "3.11.1",
+-    "@react-stately/calendar": "3.5.1",
+-    "@react-types/button": "3.9.4",
+-    "@react-aria/visually-hidden": "3.8.12",
++    "@react-aria/interactions": "3.21.3",
+     "@react-aria/utils": "3.24.1",
++    "@react-aria/visually-hidden": "3.8.12",
++    "@react-stately/calendar": "3.5.1",
+     "@react-stately/utils": "3.10.1",
++    "@react-types/button": "3.9.4",
+     "@react-types/calendar": "3.4.6",
+-    "@react-aria/interactions": "3.21.3",
+     "@react-types/shared": "3.23.1",
+-    "scroll-into-view-if-needed": "3.0.10",
+-    "@types/lodash.debounce": "^4.0.7"
++    "@types/lodash.debounce": "^4.0.7",
++    "lodash.debounce": "^4.0.8",
++    "scroll-into-view-if-needed": "3.0.10"
+   },
+   "devDependencies": {
+-    "@nextui-org/system": "workspace:*",
+-    "@nextui-org/theme": "workspace:*",
+     "@nextui-org/radio": "workspace:*",
++    "@nextui-org/system": "workspace:*",
+     "@nextui-org/test-utils": "workspace:*",
+-    "framer-motion": "^10.16.4",
++    "@nextui-org/theme": "workspace:*",
+     "clean-package": "2.2.0",
++    "framer-motion": "^10.16.4",
+     "react": "^18.0.0",
+     "react-dom": "^18.0.0"
+   },\n- packages/components/calendar/src/calendar-base.tsx (modified, 62 changes)\n  Patch: @@ -11,6 +11,7 @@ import {Button} from "@nextui-org/button";
+ import {chain, mergeProps} from "@react-aria/utils";
+ import {AnimatePresence, LazyMotion, domAnimation, MotionConfig} from "framer-motion";
+ import {ResizablePanel} from "@nextui-org/framer-utils";
++import {useIsMobile} from "@nextui-org/use-is-mobile";
+ 
+ import {ChevronLeftIcon} from "./chevron-left";
+ import {ChevronRightIcon} from "./chevron-right";
+@@ -62,6 +63,8 @@ export function CalendarBase(props: CalendarBaseProps) {
+   const headers: React.ReactNode[] = [];
+   const calendars: React.ReactNode[] = [];
+ 
++  const isMobile = useIsMobile();
++
+   for (let i = 0; i < visibleMonths; i++) {
+     let d = currentMonth.add({months: i});
+ 
+@@ -93,13 +96,42 @@ export function CalendarBase(props: CalendarBaseProps) {
+     );
+ 
+     const calendarMonthContent = (
+-      <CalendarMonth
+-        {...props}
+-        key={`calendar-month-${i}`}
+-        currentMonth={currentMonth.month}
+-        direction={direction}
+-        startDate={d}
+-      />
++      <div className="flex flex-col gap-0">
++        {isMobile && (
++          <Fragment key={`calendar-header-${i}`}>
++            {i === 0 && (
++              <div className="w-full flex items-center justify-between">
++                <Button
++                  {...prevButtonProps}
++                  onPress={chain(prevButtonProps.onPress, () => setDirection(-1))}
++                >
++                  {rtlDirection === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
++                </Button>
++
++                <Button
++                  {...nextButtonProps}
++                  onPress={chain(nextButtonProps.onPress, () => setDirection(1))}
++                >
++                  {rtlDirection === "rtl" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
++                </Button>
++              </div>
++            )}
++            <CalendarHeader
++              buttonPickerProps={buttonPickerProps}
++              currentMonth={currentMonth}
++              date={d}
++              direction={direction}
++            />
++          </Fragment>
++        )}
++        <CalendarMonth
++          {...props}
++          key={`calendar-month-${i}`}
++          currentMonth={currentMonth.month}
++          direction={direction}
++          startDate={d}
++        />
++      </div>
+     );
+ 
+     calendars.push(
+@@ -116,13 +148,15 @@ export function CalendarBase(props: CalendarBaseProps) {
+ 
+   const calendarContent = (
+     <>
+-      <div
+-        key="header-wrapper"
+-        className={slots?.headerWrapper({class: classNames?.headerWrapper})}
+-        data-slot="header-wrapper"
+-      >
+-        {headers}
+-      </div>
++      {!isMobile && (
++        <div
++          key="header-wrapper"
++          className={slots?.headerWrapper({class: classNames?.headerWrapper})}
++          data-slot="header-wrapper"
++        >
++          {headers}
++        </div>
++      )}
+       <div
+         key="grid-wrapper"
+         className={slots?.gridWrapper({class: classNames?.gridWrapper})}\n- packages/components/calendar/src/use-calendar-base.ts (modified, 10 changes)\n  Patch: @@ -48,6 +48,13 @@ interface Props extends NextUIBaseProps {
+    * @default 256
+    */
+   calendarWidth?: number | string;
++  /**
++   * The height to be applied to the calendar component. This value is multiplied by the number
++   * of visible months to determine the total height of the calendar.
++   *
++   * @default 274
++   */
++  calendarHeight?: number | string;
+   /**
+    * Props for the navigation button, prev button and next button.
+    */
+@@ -201,6 +208,7 @@ export function useCalendarBase(originalProps: UseCalendarBasePropsComplete) {
+     bottomContent,
+     showHelper = true,
+     calendarWidth = 256,
++    calendarHeight = 274,
+     visibleMonths: visibleMonthsProp = 1,
+     weekdayStyle = "narrow",
+     navButtonProps = {},
+@@ -281,6 +289,8 @@ export function useCalendarBase(originalProps: UseCalendarBasePropsComplete) {
+       // @ts-ignore
+       "--visible-months": typeof visibleMonths === "number" ? `${visibleMonths}` : visibleMonths,
+       "--calendar-width": typeof calendarWidth === "number" ? `${calendarWidth}px` : calendarWidth,
++      "--calendar-height":
++        typeof calendarHeight === "number" ? `${calendarHeight}px` : calendarHeight,
+     } as React.CSSProperties,
+   };
+ \n- packages/components/date-picker/src/use-date-picker-base.ts (modified, 8 changes)\n  Patch: @@ -46,6 +46,12 @@ interface Props<T extends DateValue> extends NextUIBaseProps<T> {
+    * @default 256
+    */
+   calendarWidth?: number;
++  /**
++   * The height to be applied to the calendar component.
++   *
++   * @default 274
++   */
++  calendarHeight?: number;
+   /**
+    * Top content to be rendered in the calendar component.
+    */
+@@ -133,6 +139,7 @@ export function useDatePickerBase<T extends DateValue>(originalProps: UseDatePic
+     visibleMonths = 1,
+     pageBehavior = "visible",
+     calendarWidth = 256,
++    calendarHeight = 274,
+     isDateUnavailable,
+     shouldForceLeadingZeros,
+     showMonthAndYearPickers = false,
+@@ -255,6 +262,7 @@ export function useDatePickerBase<T extends DateValue>(originalProps: UseDatePic
+   const calendarProps = {
+     ...slotsProps.calendarProps,
+     calendarWidth,
++    calendarHeight,
+     "data-slot": "calendar",
+   } as CalendarProps;
+ \n- packages/core/theme/src/components/calendar.ts (modified, 15 changes)\n  Patch: @@ -6,9 +6,10 @@ import {tv} from "../utils/tv";
+ const calendar = tv({
+   slots: {
+     base: [
+-      "relative w-fit max-w-full shadow-small inline-block overflow-y-hidden",
+-      "rounded-large overflow-x-auto bg-default-50 dark:bg-background",
+-      "w-[calc(var(--visible-months)_*_var(--calendar-width))]",
++      "relative w-fit max-w-full shadow-small inline-block overflow-x-hidden md:overflow-y-hidden",
++      "rounded-large overflow-y-auto md:overflow-x-auto bg-default-50 dark:bg-background",
++      "w-[var(--calendar-width)] md:w-[calc(var(--visible-months)_*_var(--calendar-width))]",
++      "h-[calc(var(--calendar-height)_*_var(--visible-months))] md:h-[var(--calendar-height)]",
+     ],
+     prevButton: [],
+     nextButton: [],
+@@ -23,8 +24,12 @@ const calendar = tv({
+     ],
+     header: "flex w-full items-center justify-center gap-2 z-10",
+     title: "text-default-500 text-small font-medium",
+-    content: "w-[calc(var(--visible-months)_*_var(--calendar-width))]",
+-    gridWrapper: "flex max-w-full overflow-hidden pb-2 h-auto relative",
++    content: [
++      "w-[var(--calendar-width)] md:w-[calc(var(--visible-months)_*_var(--calendar-width))]",
++      "h-[calc(var(--calendar-height)_*_var(--visible-months))] md:h-[var(--calendar-height)]",
++    ],
++    gridWrapper:
++      "flex flex-col md:flex-row max-w-full overflow-hidden pb-2 h-auto relative gap-2 md:gap-0",
+     grid: "w-full border-collapse z-0",
+     gridHeader: "bg-content1 shadow-[0px_20px_20px_0px_rgb(0_0_0/0.05)]",
+     gridHeaderRow: "px-4 pb-2 flex justify-center text-default-400",\n- packages/core/theme/src/components/date-picker.ts (modified, 10 changes)\n  Patch: @@ -13,8 +13,14 @@ const datePicker = tv({
+     selectorButton: "-mr-2 text-inherit",
+     selectorIcon: "text-lg text-inherit pointer-events-none flex-shrink-0",
+     popoverContent: "p-0 w-full",
+-    calendar: "w-[calc(var(--visible-months)_*_var(--calendar-width))] shadow-none",
+-    calendarContent: "w-[calc(var(--visible-months)_*_var(--calendar-width))]",
++    calendar: [
++      "w-[var(--calendar-width)] md:w-[calc(var(--visible-months)_*_var(--calendar-width))] shadow-none",
++      "h-[calc(var(--visible-months)_*_var(--calendar-height))] md:h-[var(--calendar-height)] overflow-y-scroll",
++    ],
++    calendarContent: [
++      "w-[var(--calendar-width)] md:w-[calc(var(--visible-months)_*_var(--calendar-width))]",
++      "h-[calc(var(--visible-months)_*_var(--calendar-height))] md:h-[var(--calendar-height)]",
++    ],
+     timeInputLabel: "font-medium",
+     timeInput: "px-5 pb-4 flex-wrap gap-x-6",
+   },\n- pnpm-lock.yaml (modified, 3 changes)\n  Patch: @@ -997,6 +997,9 @@ importers:
+       '@nextui-org/use-aria-button':
+         specifier: workspace:*
+         version: link:../../hooks/use-aria-button
++      '@nextui-org/use-is-mobile':
++        specifier: ^2.0.9
++        version: link:../../hooks/use-is-mobile
+       '@react-aria/calendar':
+         specifier: 3.5.8
+         version: 3.5.8(react-dom@18.2.0)(react@18.2.0)\n

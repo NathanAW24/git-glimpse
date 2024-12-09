@@ -1,0 +1,368 @@
+Pull Request Number: 3607
+Title: fix(hooks): ensure exposed functions wrap by `useCallback`
+Base Branch: canary
+Head Branch: fix/hooks
+Author: AnYiEE
+URL: https://github.com/nextui-org/nextui/pull/3607
+State: MERGED
+Created At: 2024-08-04T14:04:48Z
+Merged At: 2024-09-05T09:21:01Z
+Participants: AnYiEE, wingkwong, jrgarciadev
+
+Description:
+Closes #
+📝 Description
+In this commit, I made improvements to our custom React hooks by wrapping the exposed functions with useCallback. This change aims to enhance performance.
+⛳️ Current behavior (updates)
+N/A.
+🚀 New behavior
+N/A.
+💣 Is this a breaking change
+No.
+📝 Additional Information
+By wrapping functions with useCallback, we ensure that these functions are not recreated on every component re-render unless their dependencies change. This optimization can significantly reduce unnecessary renders and improve the application's performance, especially when these functions are passed as props to child components.
+By ensuring that the functions returned by our hooks are memoized, we provide a more consistent behavior, aligning with React's best practices. This consistency is particularly beneficial when dealing with complex state management or event handlers in components.
+With functions wrapped in useCallback, developers can more easily reason about when and why a component might re-render, improving code maintainability and debugging ease.
+
+Summary by CodeRabbit
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced performance of the application by optimizing hooks for clipboard handling, shape updates, and state management.
+Improved efficiency in React components by memoizing critical functions, reducing unnecessary re-renders.
+
+
+
+Bug Fixes
+
+Resolved issues related to function identity in props, ensuring stable behavior across component renders.
+
+Commits:
+- fix(hooks): ensure exposed functions wrap by `useCallback`\n- fix(hooks/use-real-shape): remove unnecessary dependency from `useCallback`\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 2702cb5f06e063cbd16bef74752966f6e3d7aac8
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 5 packages</summary>
+
+  | Name                       | Type  |
+| -------------------------- | ----- |
+| @nextui-org/use-clipboard  | Patch |
+| @nextui-org/use-real-shape | Patch |
+| @nextui-org/use-ref-state  | Patch |
+| @nextui-org/snippet        | Patch |
+| @nextui-org/react          | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/AnYiEE/nextui/new/fix/hooks?filename=.changeset/cuddly-dragons-kneel.md&value=---%0A%22%40nextui-org%2Fuse-clipboard%22%3A%20patch%0A%22%40nextui-org%2Fuse-real-shape%22%3A%20patch%0A%22%40nextui-org%2Fuse-ref-state%22%3A%20patch%0A---%0A%0Afix(hooks)%3A%20ensure%20exposed%20functions%20wrap%20by%20%60useCallback%60%0A)
+
+\n- vercel: @AnYiEE is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22e46bc183a44f72358002134dcab5d78611118fd0%22%7D%2C%22id%22%3A%22QmSn9nWDdoUYzNHki3gE7cjqaNQhGvJ4n37yfVtzy23RqK%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3607%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update enhances the performance of three hooks from the `@nextui-org` package by wrapping critical functions in `useCallback`. This change prevents unnecessary re-renders in React components and ensures stable function references across renders. The modifications focus on optimizing function identity management, which is essential for efficient component behavior when functions are passed as props.
+
+## Changes
+
+| Files                                         | Change Summary                                          |
+|-----------------------------------------------|--------------------------------------------------------|
+| `packages/hooks/use-clipboard/src/index.ts`, `packages/hooks/use-ref-state/src/index.ts`  | Wrapped functions in `useCallback` to enhance performance and prevent unnecessary re-renders. |
+| `packages/hooks/use-real-shape/src/index.ts` | Refactored `updateShape` to use `useCallback` and updated `useEffect` dependencies. |
+
+## Sequence Diagram(s)
+
+```mermaid
+sequenceDiagram
+    participant Component
+    participant useClipboard
+    participant useRealShape
+    participant useRefState
+
+    Component->>useClipboard: invoke copy()
+    useClipboard->>useCallback: memoize copy()
+    useClipboard->>Component: stable copy reference
+
+    Component->>useRealShape: invoke updateShape()
+    useRealShape->>useCallback: memoize updateShape()
+    useRealShape->>Component: stable updateShape reference
+
+    Component->>useRefState: invoke setValue()
+    useRefState->>useCallback: memoize setValue()
+    useRefState->>Component: stable setValue reference
+```
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+```
+.changeset/selfish-spies-visit.md: ## AI-generated summary of changes
+
+This update introduces a patch for three packages: `@nextui-org/use-clipboard`, `@nextui-org/use-real-shape`, and `@nextui-org/use-ref-state`. The primary functionality added is the enforcement of wrapping exposed functions with `useCallback`. This change is aimed at optimizing performance by preventing unnecessary re-renders in React components that utilize these hooks. By ensuring that the functions are memoized, the application can maintain stable references to these functions across renders, thus improving efficiency and potentially reducing the number of renders triggered by prop changes. The control flow is enhanced by this memoization, as it allows for better management of function identity, which is crucial in scenarios where functions are passed as props to child components. Overall, this update contributes to more efficient React component behavior through improved function handling.
+
+### Modifications Summary
+
+- **useClipboard**: Wrapped `onClearTimeout`, `handleCopyResult`, `copy`, and `reset` functions in `useCallback` to enhance performance by memoizing them.
+- **useRealShape**: Introduced `useCallback` for `updateShape`, optimizing performance by memoizing the function and updating the dependency array in `useEffect`.
+- **useRefState**: Added `useCallback` to `setValue`, optimizing its reference stability across re-renders.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useClipboard({timeout = 2000}: UseClipboardProps = {})` in `packages/hooks/use-clipboard/src/index.ts` → No changes to the function signature.
+- `export function useRealShape<T extends HTMLElement>(ref: RefObject<T | null>)` in `src/index.ts` → No change in signature, but internal logic modified.
+- `export function useRefState<S>(initialState: S | (() => S))` in `packages/hooks/use-ref-state/src/index.ts` → No signature change, but functionality modified with `useCallback`.
+```
+
+
+# New changesets
+
+packages/hooks/use-real-shape/src/index.ts: ## AI-generated summary of changes
+
+The changes in this diff introduce a modification to the `useRealShape` hook in the `index.ts` file. Notably, the `updateShape` function has been refactored to utilize the `useCallback` hook from React. This adjustment enhances performance by memoizing the `updateShape` function, preventing unnecessary re-creations on each render unless its dependencies change. Consequently, the dependency array for the `useEffect` hook has also been updated to include `updateShape` instead of `ref.current`, ensuring that the effect correctly responds to changes in the memoized function rather than the ref itself. These alterations improve the efficiency of the hook by minimizing function re-creations and optimizing the rendering process.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useRealShape<T extends HTMLElement>(ref: RefObject<T | null>)` in `packages/hooks/use-real-shape/src/index.ts` → No change in function signature.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR summary
+
+The pull request titled "fix(hooks): ensure exposed functions wrap by `useCallback`" focuses on improving custom React hooks by wrapping the exposed functions with `useCallback`. This change aims to enhance performance by preventing unnecessary re-creations of functions during component re-renders.
+
+The PR does not indicate any updates to current behavior or introduce new behavior, suggesting that the primary goal is optimization rather than changes in functionality. It is also noted that this modification does not constitute a breaking change.
+
+The rationale for using `useCallback` is to ensure that the functions returned by the hooks are memoized, meaning they are not recreated on every render unless their dependencies change. This optimization can lead to a reduction in unnecessary renders and improved performance, particularly when these functions are passed as props to child components. The author highlights that this approach aligns with React's best practices, providing more consistent behavior, especially in scenarios involving complex state management or event handling. Furthermore, wrapping functions in `useCallback` helps developers better understand when and why a component might re-render, thereby enhancing code maintainability and debugging.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- e46bc183a44f72358002134dcab5d78611118fd0 -->
+<!-- 2702cb5f06e063cbd16bef74752966f6e3d7aac8 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/selfish-spies-visit.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/use-clipboard": patch
++"@nextui-org/use-real-shape": patch
++"@nextui-org/use-ref-state": patch
++---
++
++ensure exposed functions wrap by `useCallback`\n- packages/hooks/use-clipboard/src/index.ts (modified, 52 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import {useState} from "react";
++import {useCallback, useState} from "react";
+ 
+ export interface UseClipboardProps {
+   /**
+@@ -18,34 +18,40 @@ export function useClipboard({timeout = 2000}: UseClipboardProps = {}) {
+   const [copied, setCopied] = useState(false);
+   const [copyTimeout, setCopyTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
+ 
+-  const onClearTimeout = () => {
++  const onClearTimeout = useCallback(() => {
+     if (copyTimeout) {
+       clearTimeout(copyTimeout);
+     }
+-  };
+-
+-  const handleCopyResult = (value: boolean) => {
+-    onClearTimeout();
+-    setCopyTimeout(setTimeout(() => setCopied(false), timeout));
+-    setCopied(value);
+-  };
+-
+-  const copy = (valueToCopy: any) => {
+-    if ("clipboard" in navigator) {
+-      navigator.clipboard
+-        .writeText(valueToCopy)
+-        .then(() => handleCopyResult(true))
+-        .catch((err) => setError(err));
+-    } else {
+-      setError(new Error("useClipboard: navigator.clipboard is not supported"));
+-    }
+-  };
+-
+-  const reset = () => {
++  }, [copyTimeout]);
++
++  const handleCopyResult = useCallback(
++    (value: boolean) => {
++      onClearTimeout();
++      setCopyTimeout(setTimeout(() => setCopied(false), timeout));
++      setCopied(value);
++    },
++    [onClearTimeout, timeout],
++  );
++
++  const copy = useCallback(
++    (valueToCopy: any) => {
++      if ("clipboard" in navigator) {
++        navigator.clipboard
++          .writeText(valueToCopy)
++          .then(() => handleCopyResult(true))
++          .catch((err) => setError(err));
++      } else {
++        setError(new Error("useClipboard: navigator.clipboard is not supported"));
++      }
++    },
++    [handleCopyResult],
++  );
++
++  const reset = useCallback(() => {
+     setCopied(false);
+     setError(null);
+     onClearTimeout();
+-  };
++  }, [onClearTimeout]);
+ 
+   return {copy, reset, error, copied};
+ }\n- packages/hooks/use-real-shape/src/index.ts (modified, 8 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import {RefObject, useState, useEffect} from "react";
++import {RefObject, useCallback, useState, useEffect} from "react";
+ import {ShapeType, getRealShape} from "@nextui-org/react-utils";
+ 
+ export type ShapeResult = [ShapeType, () => void];
+@@ -8,15 +8,15 @@ export function useRealShape<T extends HTMLElement>(ref: RefObject<T | null>) {
+     width: 0,
+     height: 0,
+   });
+-  const updateShape = () => {
++  const updateShape = useCallback(() => {
+     if (!ref?.current) return;
+ 
+     const {width, height} = getRealShape(ref.current);
+ 
+     setState({width, height});
+-  };
++  }, []);
+ 
+-  useEffect(() => updateShape(), [ref.current]);
++  useEffect(() => updateShape(), [updateShape]);
+ 
+   return [shape, updateShape] as ShapeResult;
+ }\n- packages/hooks/use-ref-state/src/index.ts (modified, 14 changes)\n  Patch: @@ -1,4 +1,12 @@
+-import {Dispatch, MutableRefObject, SetStateAction, useEffect, useRef, useState} from "react";
++import {
++  Dispatch,
++  MutableRefObject,
++  SetStateAction,
++  useCallback,
++  useEffect,
++  useRef,
++  useState,
++} from "react";
+ 
+ export type CurrentStateType<S> = [S, Dispatch<SetStateAction<S>>, MutableRefObject<S>];
+ 
+@@ -15,12 +23,12 @@ export function useRefState<S>(initialState: S | (() => S)) {
+     ref.current = state;
+   }, [state]);
+ 
+-  const setValue = (val: SetStateAction<S>) => {
++  const setValue = useCallback((val: SetStateAction<S>) => {
+     const result = typeof val === "function" ? (val as (prevState: S) => S)(ref.current) : val;
+ 
+     ref.current = result;
+     setState(result);
+-  };
++  }, []);
+ 
+   return [state, setValue, ref] as CurrentStateType<S>;
+ }\n

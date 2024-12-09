@@ -1,0 +1,293 @@
+Pull Request Number: 4197
+Title: fix(input): teaxtarea label squish
+Base Branch: canary
+Head Branch: fix/textarea-label-squish
+Author: Peterl561
+URL: https://github.com/nextui-org/nextui/pull/4197
+State: MERGED
+Created At: 2024-12-01T03:58:42Z
+Merged At: 2024-12-01T12:55:15Z
+Participants: Peterl561, jrgarciadev, wingkwong
+
+Description:
+Closes #4110
+📝 Description
+
+Textarea's inner-wrapper's h-full causes label to be squished
+can be reproduced in storybook by setting minRows on Textarea
+more prominent when minRows is set to a low value
+
+⛳️ Current behavior (updates)
+
+🚀 New behavior
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+useInput also affects Input but no visible changes are expected
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Resolved an issue with the textarea label being squished, ensuring proper display and alignment.
+
+
+
+New Features
+
+Added a new class to the input component to prevent the label from shrinking when space is limited, enhancing visual consistency.
+
+Commits:
+- fix(input): teaxtarea label squish\n- chore(changeset): add changeset for textarea label fix\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 5963ddf07bad5abd235fc28f4faf65209ef67157
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/input        | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/react        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/Peterl561/nextui/new/fix/textarea-label-squish?filename=.changeset/late-lamps-leave.md&value=---%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(input)%3A%20teaxtarea%20label%20squish%0A)
+
+\n- vercel: @Peterl561 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%225963ddf07bad5abd235fc28f4faf65209ef67157%22%7D%2C%22id%22%3A%22QmNzyG3N84yJcAgoRSkgwho5cZMVbaU8L95TemBaowbMxu%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A4197%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This pull request introduces a patch for the `@nextui-org/input` package, specifically targeting an issue where the textarea label was not fully displayed. The changes include the addition of a new class to the label slot in the input component's configuration to prevent the label from shrinking, thereby improving its visibility and alignment. No other alterations to the component's logic or exported entities were made.
+
+## Changes
+
+| File Path                                   | Change Summary                                                                                     |
+|---------------------------------------------|---------------------------------------------------------------------------------------------------|
+| .changeset/gorgeous-impalas-move.md        | Introduced a patch for the textarea label display issue in the `@nextui-org/input` package.      |
+| packages/core/theme/src/components/input.ts | Added `"flex-shrink-0"` class to the label slot in the input component's Tailwind Variants. Updated exports for `InputVariantProps`, `InputSlots`, and `input`. |
+
+## Assessment against linked issues
+
+| Objective                                          | Addressed | Explanation                                      |
+|---------------------------------------------------|-----------|--------------------------------------------------|
+| Fix the textarea label display issue (#4110)      | ✅        |                                                  |
+
+## Possibly related PRs
+- **#2038**: Improves RTL support for the input component, relevant to layout modifications.
+- **#2958**: Adds hover and focus states to the input component, related to label display.
+- **#3869**: Fixes label placement in input components, directly related to the label display issue.
+
+## Suggested labels
+`👀 Status: In Review`
+
+## Suggested reviewers
+- wingkwong
+- jrgarciadev
+
+<!-- walkthrough_end -->
+
+
+
+---
+
+<details>
+<summary>📜 Recent review details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>📥 Commits</summary>
+
+Reviewing files that changed from the base of the PR and between 1c460615536f24a77bfe6464ba5464157b86699e and 5963ddf07bad5abd235fc28f4faf65209ef67157.
+
+</details>
+
+<details>
+<summary>📒 Files selected for processing (2)</summary>
+
+* `.changeset/gorgeous-impalas-move.md` (1 hunks)
+* `packages/core/theme/src/components/input.ts` (1 hunks)
+
+</details>
+
+<details>
+<summary>✅ Files skipped from review due to trivial changes (1)</summary>
+
+* .changeset/gorgeous-impalas-move.md
+
+</details>
+
+<details>
+<summary>🔇 Additional comments (1)</summary>
+
+<details>
+<summary>packages/core/theme/src/components/input.ts (1)</summary>
+
+`32-32`: **LGTM! The fix for the textarea label squish issue looks good.**
+
+Adding `flex-shrink-0` to the label slot prevents it from shrinking when space is constrained, effectively addressing the issue where the textarea label wasn't fully displayed when `minRows` was set to a low value.
+
+
+Let's verify that this change doesn't conflict with any existing label styles:
+
+<details>
+<summary>✅ Verification successful</summary>
+
+Let's check the specific usage of flex-shrink utilities in the theme components to ensure there are no conflicts.
+
+---
+
+**The addition of `flex-shrink-0` to the input label is safe and consistent with the codebase patterns**
+
+The usage of `flex-shrink-0` in the input component's label slot aligns with existing patterns across other components where non-shrinking behavior is desired for key elements. Similar usage is found in other form components (checkbox, radio, toggle) and UI elements (chips, menu icons), confirming this is a standard approach for preventing element compression.
+
+
+
+</details>
+
+<details>
+<summary>🏁 Scripts executed</summary>
+
+The following scripts were executed for the analysis:
+
+Script:
+
+```shell
+#!/bin/bash
+# Check for any conflicting flex-shrink utilities on label elements
+rg -l "flex-shrink-\d+" --type ts
+
+```
+
+Length of output: 1395
+
+---
+
+Script:
+
+```shell
+#!/bin/bash
+# Check the specific flex-shrink usage in theme components
+rg "flex-shrink-\d+" packages/core/theme/src/components/ -A 2 -B 2
+
+```
+
+Length of output: 3773
+
+</details>
+
+</details>
+
+</details>
+
+</details>
+<!-- internal state start -->
+
+
+<!-- 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= -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- jrgarciadev: Thanks! @Peterl561 \n- vercel: [vc]: #IY+TKEwdrmu5banT8AqdLxZSQfcrzqDgnS77moCg9hE=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi85bnZoM2Z4UlhiWlFaN29ucENpWWJSY0RuS3dQIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLXBldGVybDU2MS1maXgtdGV4dGFyZS00NjAzYzgtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLXBldGVybDU2MS1maXgtdGV4dGFyZS00NjAzYzgtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/9nvh3fxRXbZQZ7onpCiYbRcDnKwP)) | [Visit Preview](https://nextui-docs-v2-git-fork-peterl561-fix-textare-4603c8-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-peterl561-fix-textare-4603c8-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 1, 2024 0:51am |
+
+\n
+
+Files Changed:
+- .changeset/gorgeous-impalas-move.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/input": patch
++---
++
++fixed textarea label squish\n- packages/core/theme/src/components/input.ts (modified, 1 changes)\n  Patch: @@ -29,6 +29,7 @@ const input = tv({
+       "z-10",
+       "pointer-events-none",
+       "origin-top-left",
++      "flex-shrink-0",
+       // Using RTL here as Tailwind CSS doesn't support `start` and `end` logical properties for transforms yet.
+       "rtl:origin-top-right",
+       "subpixel-antialiased",\n

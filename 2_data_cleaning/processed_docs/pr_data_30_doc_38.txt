@@ -1,0 +1,92 @@
+Pull Request Number: 218
+Title: Fixed Invisible Gradient Component When Highlighting it
+Base Branch: main
+Head Branch: Gradient_Component_Changes
+Author: Dhananjay-JSR
+URL: https://github.com/nextui-org/nextui/pull/218
+State: MERGED
+Created At: 2022-02-02T14:31:32Z
+Merged At: 2022-02-02T17:05:33Z
+Participants: Dhananjay-JSR, codecov-commenter, jrgarciadev
+
+Description:
+[LEVEL]/[COMPONENT]
+TASK: This PR Fixes #215
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+The Root Cause of this issue was that Gradient Component By Default Class was Set as Transparent which was causing Highlighted Part to Go Transparent too with Background Gradient . This was NextUI Component Based Issue hence this PR Fixes on PR on fixing every Gradient Component
+Latest Commit :- After the Latest Commit Changes are only applied to main website
+Screenshots -
+Before :-
+
+After :-
+
+Commits:
+- Fixed Invisible Gradient Component When Selecting it\n- Iteration #2\n- Reverted Core Gradient Component To Original State\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/218?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#218](https://codecov.io/gh/nextui-org/nextui/pull/218?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (4a177e7) into [main](https://codecov.io/gh/nextui-org/nextui/commit/aa7f0a0533ebade1946bd82efda0ec08352450af?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (aa7f0a0) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/218/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/218?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main     #218   +/-   ##
+=======================================
+  Coverage   76.13%   76.13%           
+=======================================
+  Files         140      140           
+  Lines        2275     2275           
+  Branches      681      681           
+=======================================
+  Hits         1732     1732           
+  Misses        538      538           
+  Partials        5        5           
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/218?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/react/src/theme/common.ts](https://codecov.io/gh/nextui-org/nextui/pull/218/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3RoZW1lL2NvbW1vbi50cw==) | `69.86% <ø> (ø)` | |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/218?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/218?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [aa7f0a0...4a177e7](https://codecov.io/gh/nextui-org/nextui/pull/218?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n- jrgarciadev: Thank you so much @Dhananjay-JSR  🙌🏼\n
+
+Files Changed:
+- apps/docs/src/components/hero/styles.ts (modified, 3 changes)\n  Patch: @@ -15,6 +15,9 @@ export const StyledTitle = styled('h1', {
+ });
+ 
+ export const StyledGradientTitle = styled(StyledTitle, {
++  '&::selection': {
++    WebkitTextFillColor: '$colors$text',
++  },
+   textGradient: '180deg, #FF1CF7 25%, #b249f8 100%'
+ });
+ \n- apps/docs/src/components/primitives/index.ts (modified, 3 changes)\n  Patch: @@ -2,6 +2,9 @@ import { styled, Link } from '@nextui-org/react';
+ import { lightTheme } from '@theme/shared';
+ 
+ export const Title = styled('h1', {
++  '&::selection': {
++    WebkitTextFillColor: '$colors$text',
++  },
+   display: 'inline',
+   fontWeight: '$bold',
+   color: '$text',\n

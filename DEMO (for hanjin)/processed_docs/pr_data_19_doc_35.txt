@@ -1,0 +1,158 @@
+Pull Request Number: 1682
+Title: fix(select): add placeholder dep for renderSelectedItem
+Base Branch: main
+Head Branch: fix/select
+Author: markyong
+URL: https://github.com/nextui-org/nextui/pull/1682
+State: MERGED
+Created At: 2023-09-23T13:36:34Z
+Merged At: 2023-10-04T14:54:15Z
+Participants: markyong, jguddas, jrgarciadev
+
+Description:
+Closes #1678
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- fix(select): add placeholder dep for renderSelectedItem\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 0a03d1ef453bbf2f6071ec32ea63d1dc7ecb6b32
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name               | Type  |
+| ------------------ | ----- |
+| @nextui-org/select | Patch |
+| @nextui-org/react  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/markyong/nextui/new/fix/select?filename=.changeset/selfish-horses-play.md&value=---%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A---%0A%0Afix(select)%3A%20add%20placeholder%20dep%20for%20renderSelectedItem%0A)
+
+\n- vercel: @markyong is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228f61dab4b1197768784c96069f603ddf29cd2143%22%7D%2C%22id%22%3A%22QmXLE647psRTiQ4NRXv2nNCeifpjoYVq8aQjTR25SECmYX%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1682%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #NrPua1ZtUlhPkPmeD94SEVI+W6Cm7iMEfDp4WAdfCPA=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRG9vNlQ0b2ZCM01pbTg2c2pWdzU5cGJKUE5qRSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1hcmt5b25nLWZpeC1zZWxlY3QtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstbWFya3lvbmctZml4LXNlbGVjdC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/Doo6T4ofB3Mim86sjVw59pbJPNjE)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-markyong-fix-select-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-markyong-fix-select-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 23, 2023 1:49pm |
+
+\n
+
+Files Changed:
+- .changeset/forty-vans-refuse.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/select": patch
++---
++
++fix #1678 Select component placeholder prop should be fresh\n- packages/components/select/__tests__/select.test.tsx (modified, 64 changes)\n  Patch: @@ -2,7 +2,7 @@ import * as React from "react";
+ import {act, render} from "@testing-library/react";
+ import userEvent from "@testing-library/user-event";
+ 
+-import {Select, SelectItem, SelectSection} from "../src";
++import {Select, SelectItem, SelectSection, type SelectProps} from "../src";
+ 
+ type Item = {
+   label: string;
+@@ -214,4 +214,66 @@ describe("Select", () => {
+       expect(onSelectionChange).toBeCalledTimes(2);
+     });
+   });
++
++  it("should work with dynamic placeholder and renderValue", async () => {
++    const SelectWrapper = (props: {
++      placeholder?: SelectProps["placeholder"];
++      renderValue?: SelectProps["renderValue"];
++    }) => {
++      const {placeholder, renderValue} = props;
++
++      return (
++        <Select
++          aria-label="Favorite Animal"
++          data-testid="render-selected-item-test"
++          label="Favorite Animal"
++          placeholder={placeholder}
++          renderValue={renderValue}
++        >
++          <SelectItem key="penguin" value="penguin">
++            Penguin
++          </SelectItem>
++          <SelectItem key="zebra" value="zebra">
++            Zebra
++          </SelectItem>
++          <SelectItem key="shark" value="shark">
++            Shark
++          </SelectItem>
++        </Select>
++      );
++    };
++
++    const wrapper = render(<SelectWrapper placeholder="Select an animal" />);
++
++    expect(wrapper.getByText("Select an animal")).toBeInTheDocument();
++
++    wrapper.rerender(<SelectWrapper placeholder="Select an favorite animal" />);
++
++    expect(wrapper.getByText("Select an favorite animal")).toBeInTheDocument();
++
++    const select = wrapper.getByTestId("render-selected-item-test");
++
++    await act(async () => {
++      await userEvent.click(select);
++    });
++
++    const listboxItems = wrapper.getAllByRole("option");
++
++    await act(async () => {
++      await userEvent.click(listboxItems[0]);
++    });
++
++    expect(select).toHaveTextContent("Penguin");
++    expect(wrapper.queryByText("Select an favorite animal")).toBe(null);
++
++    wrapper.rerender(
++      <SelectWrapper
++        placeholder="Select an favorite animal"
++        renderValue={(item) => `next ${item[0].textValue}`}
++      />,
++    );
++
++    expect(wrapper.getByText("next Penguin")).toBeInTheDocument();
++    expect(wrapper.queryByText("Select an favorite animal")).toBe(null);
++  });
+ });\n- packages/components/select/src/select.tsx (modified, 2 changes)\n  Patch: @@ -90,7 +90,7 @@ function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectE
+     }
+ 
+     return state.selectedItems.map((item) => item.textValue).join(", ");
+-  }, [state.selectedItems, renderValue]);
++  }, [state.selectedItems, renderValue, placeholder]);
+ 
+   const renderIndicator = useMemo(() => {
+     if (isLoading) {\n

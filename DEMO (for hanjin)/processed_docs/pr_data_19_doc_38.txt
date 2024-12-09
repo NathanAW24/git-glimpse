@@ -1,0 +1,104 @@
+Pull Request Number: 1677
+Title: button: add letter-spacing style for button children
+Base Branch: main
+Head Branch: btn-feat
+Author: li-jia-nan
+URL: https://github.com/nextui-org/nextui/pull/1677
+State: CLOSED
+Created At: 2023-09-22T10:02:37Z
+Merged At: None
+Participants: li-jia-nan, jguddas
+
+Description:
+📝 Description
+When the content of the button is in Chinese and has two characters, we can add a letter-spacing in the characters, be like https://ant.design/components/button#faq
+
+⛳️ Current behavior (updates)
+no have letter-spacing
+🚀 New behavior
+have letter-spacing
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- button: add letter-spacing style for button children\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 28a20180b523291830f90fe6288a707d08487398
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/li-jia-nan/nextui/new/btn-feat?filename=.changeset/perfect-ducks-relate.md&value=---%0A%22%40nextui-org%2Fbutton%22%3A%20patch%0A---%0A%0Abutton%3A%20add%20letter-spacing%20style%20for%20button%20children%0A)
+
+\n- vercel: [vc]: #Ch0mROyG8GUl7X8fO0NkbtB0O4gy9I0BvQ+qTbBnPqM=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRks0aXJ4TUNkYjJ3NVRMS2duTWhqMlJqZmhNWSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWxpLWppYS1uYW4tYnRuLWZlYXQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstbGktamlhLW5hbi1idG4tZmVhdC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/FK4irxMCdb2w5TLKgnMhj2RjfhMY)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-li-jia-nan-btn-feat-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-li-jia-nan-btn-feat-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 22, 2023 10:04am |
+
+\n- vercel: @li-jia-nan is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2228a20180b523291830f90fe6288a707d08487398%22%7D%2C%22id%22%3A%22QmUh57Bd3AA7ubuuDW5CA2y2oerfaPHNWmrmMrZSP16jmC%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1677%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jguddas: Why not create a new component called `SmartZnSpace` and use it inside the button?
+
+Maybe a bit out of scope for this library.
+
+\n- li-jia-nan: > Why not create a new component called `SmartZnSpace` and use it inside the button?
+> 
+> Maybe a bit out of scope for this library.
+
+I agree with you, I can definitely implement it externally, but it would be great if this feature could be added to the UI library\n- jguddas: > I agree with you, I can definitely implement it externally, but it would be great if this feature could be added to the UI library
+
+Can you do a little write-up or post a link to why there should be a spacing between two Chinese characters?\n
+
+Files Changed:
+- packages/components/button/src/button.tsx (modified, 18 changes)\n  Patch: @@ -3,8 +3,15 @@ import {Ripple} from "@nextui-org/ripple";
+ import {forwardRef} from "@nextui-org/system";
+ 
+ import {UseButtonProps, useButton} from "./use-button";
++import React from "react";
+ 
+-export interface ButtonProps extends UseButtonProps {}
++export interface ButtonProps extends UseButtonProps { }
++
++const twoCNChar = /^[\u4e00-\u9fa5]{2}$/;
++
++function isTwoCNChar(child: React.ReactNode) {
++  return React.Children.count(child) === 1 && typeof child === "string" && twoCNChar.test(child);
++}
+ 
+ const Button = forwardRef<"button", ButtonProps>((props, ref) => {
+   const {
+@@ -21,10 +28,15 @@ const Button = forwardRef<"button", ButtonProps>((props, ref) => {
+     disableRipple,
+     getButtonProps,
+     getRippleProps,
+-  } = useButton({...props, ref});
++  } = useButton({ ...props, ref });
++  
++  const mergedClassNames = React.useMemo<string>(
++    () => isTwoCNChar(children) ? [styles, 'tracking-[0.5em]'].join(" ") : styles,
++    [children, styles],
++  );
+ 
+   return (
+-    <Component ref={domRef} className={styles} {...getButtonProps()}>
++    <Component ref={domRef} className={mergedClassNames} {...getButtonProps()}>
+       {startContent}
+       {isLoading && spinnerPlacement === "start" && spinner}
+       {children}\n

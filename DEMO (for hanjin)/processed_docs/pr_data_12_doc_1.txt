@@ -1,0 +1,426 @@
+Pull Request Number: 2833
+Title: fix(date-picker): filter out non-DOM props to prevent console errors
+Base Branch: main
+Head Branch: fix/date-picker-props-cleanup
+Author: ryo-manba
+URL: https://github.com/nextui-org/nextui/pull/2833
+State: MERGED
+Created At: 2024-04-21T14:48:47Z
+Merged At: 2024-04-22T18:59:58Z
+Participants: ryo-manba, wingkwong, jrgarciadev
+
+Description:
+Closes #2823
+📝 Description
+This PR addresses console errors that appear when unrecognized props are passed to the DOM elements in the DatePicker. Props like placeholderValue and hideTimeZone are now handled to prevent them from being passed to the DOM.
+Test Steps
+
+Display a DatePicker with the following setup:
+
+  return (
+    <DatePicker
+      isRequired
+      hideTimeZone={true}
+      label="Activity date"
+      placeholderValue={now(getLocalTimeZone())}
+    />
+  );
+};
+
+Open the calendar and verify that no warnings are displayed.
+
+Before
+
+  
+    
+    
+
+    datepicker-warning-before-fix.mov
+    
+  
+
+  
+
+  
+
+
+After
+
+  
+    
+    
+
+    datepicker-no-warning-after-fix.mov
+    
+  
+
+  
+
+  
+
+
+⛳️ Current behavior (updates)
+Passing unrecognized props like placeholderValue and hideTimeZone to the DatePicker triggers console errors.
+🚀 New behavior
+Unrecognized props are now filtered out before rendering, preventing any console errors.
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Improved error handling in the DatePicker component to prevent console errors related to inappropriate prop types.
+
+
+Refactor
+
+Enhanced type declarations and function return types in DatePicker functionalities for better code clarity and reliability.
+Updated value handling in DatePicker to ensure more robust and fault-tolerant input processing.
+
+
+Tests
+
+Added new props and console spies for comprehensive testing coverage in the DatePicker component.
+
+Commits:
+- fix(date-picker): filter out non-DOM props to prevent console errors\n- chore: added test to confirm no warning\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 03b1d0cd352a785372de947eb94d77e650a8aa28
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                    | Type  |
+| ----------------------- | ----- |
+| @nextui-org/date-picker | Patch |
+| @nextui-org/react       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/date-picker-props-cleanup?filename=.changeset/quick-foxes-invent.md&value=---%0A%22%40nextui-org%2Fdate-picker%22%3A%20patch%0A---%0A%0Afix(date-picker)%3A%20filter%20out%20non-DOM%20props%20to%20prevent%20console%20errors%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The recent patch addresses errors related to non-DOM props in the `@nextui-org/date-picker` component. Changes include refining type declarations and explicitly specifying return types for several functions, alongside improved handling of `minValue` and `maxValue` using nullish coalescing operators. This ensures props are correctly filtered out before being passed to DOM elements, reducing console errors.
+
+## Changes
+
+| File Path                                        | Change Summary                                                                                     |
+|--------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| `.changeset/stale-cats-sell.md`                  | Introduced a patch for handling non-DOM props in the DatePicker component.                        |
+| `.../date-picker/src/use-date-picker-base.ts`    | Modified `popoverProps` with explicit type and adjusted `children` assignment.                     |
+| `.../date-picker/src/use-date-picker.ts`         | Specified return types for functions and updated handling of `minValue` and `maxValue`.           |
+
+## Assessment against linked issues
+
+| Objective                    | Addressed | Explanation                                                                                   |
+|------------------------------|-----------|-----------------------------------------------------------------------------------------------|
+| Prevent non-DOM prop errors in console [#2823] | ✅         |                                                                                               |
+| Ensure all passed props function correctly without causing console errors [#2823] | ✅         |                                                                                               |
+| Eliminate specific errors such as `placeholderValue` and `hideTimeZone` being unrecognized [#2823] | ❓         | The changes suggest a generic approach to filtering props, but specifics on these props are not detailed. |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/stale-cats-sell.md: The new file introduces a patch for "@nextui-org/date-picker" to fix console errors related to non-DOM props in the DatePicker component.
+
+---
+
+packages/components/date-picker/src/use-date-picker-base.ts: 
+- In the `useDatePickerBase` function in `use-date-picker-base.ts`, the change involves modifying the assignment of `popoverProps` to use a more explicit type declaration `PopoverProps` and adjusting the assignment of `children` within `popoverProps`.
+
+---
+
+packages/components/date-picker/src/use-date-picker.ts: 
+- In the `use-date-picker.ts` file, the changes involve specifying return types explicitly for functions `getTimeInputProps`, `getPopoverProps`, `getCalendarProps`, and `getSelectorButtonProps`. 
+- Additionally, the handling of `minValue` and `maxValue` in `getTimeInputProps` has been updated to use nullish coalescing operators.
+
+---
+
+packages/components/date-picker/__tests__/date-picker.test.tsx: 
+- Added `hideTimeZone` and `isRequired` props to the `<DatePicker>` component.
+- Introduced console warning and error spies for testing.
+- Ensured console warning and error spies were not called during the test.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+**Title:** fix(date-picker): filter out non-DOM props to prevent console errors
+
+**Description:**
+This pull request addresses issue #2823, resolving console errors in the NextUI DatePicker component caused by passing non-DOM props like `placeholderValue` and `hideTimeZone`. By filtering out these unrecognized props before rendering, the PR ensures a cleaner console output and a smoother user experience.
+
+**Comments Summary:**
+- Type constraints tightened in `useDatePicker` hooks without using `as` keyword to prevent future issues.
+- Suggestion to check `useCalendar` for similar improvements made in `useDatePicker`.
+- Collaboration between contributors to enhance type safety and code quality in the DatePicker component.
+
+### AI-Generated Summary of Generated Summaries
+
+The PR enhances the NextUI DatePicker component by refining prop handling to prevent console errors. Key changes include:
+- Refinement in `use-date-picker-base.ts` with explicit type declaration for `popoverProps` and adjusted assignment of `children`.
+- Explicit return types specified in `use-date-picker.ts` for functions like `getTimeInputProps`, `getPopoverProps`, `getCalendarProps`, and `getSelectorButtonProps`, with updated handling of `minValue` and `maxValue`.
+- Addition of a new changeset file (`stale-cats-sell.md`) documenting the patch for the DatePicker component to address console errors related to non-DOM props.
+
+These modifications collectively improve the robustness and user experience of the DatePicker component by ensuring only valid props are passed to the DOM, eliminating associated console errors.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai -->
+
+---
+
+<details>
+
+<summary>Recent Review Details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>Commits</summary>
+Files that changed from the base of the PR and between de9092890b04f7a601ae28f3ae6a3c0039474e1c and 03b1d0cd352a785372de947eb94d77e650a8aa28.
+</details>
+
+
+<details>
+<summary>Files selected for processing (1)</summary>
+
+* packages/components/date-picker/__tests__/date-picker.test.tsx (2 hunks)
+
+</details>
+
+
+
+<details>
+<summary>Files not reviewed due to errors (1)</summary>
+
+* packages/components/date-picker/__tests__/date-picker.test.tsx (no review received)
+
+</details>
+
+
+
+
+
+
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- de9092890b04f7a601ae28f3ae6a3c0039474e1c -->
+<!-- 03b1d0cd352a785372de947eb94d77e650a8aa28 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #DrkOSq9avp6DNlpAgGZVxmeespazYpaPQedX84dUC50=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9BalVQVW44OEJLc1RSTVlWQ1dBcHVVMTJHZVBCIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZGF0ZS1waWNrZXItcHJvcHMtY2xlYW51cC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZpeC1kYXRlLXBpY2tlci1wcm9wcy1jbGVhbnVwLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNnVDSGpuODVHdXBqTnNwa0hKbjE1Z2hWOHFQViIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1maXgtZGF0ZS1waWNrZXItcHJvcHMtMGEyYjU2LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1maXgtZGF0ZS1waWNrZXItcHJvcHMtMGEyYjU2LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/AjUPUn88BKsTRMYVCWApuU12GePB)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-date-picker-props-cleanup-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-date-picker-props-cleanup-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 22, 2024 1:59pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/6uCHjn85GupjNspkHJn15ghV8qPV)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-date-picker-props-0a2b56-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-date-picker-props-0a2b56-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 22, 2024 1:59pm |
+
+
+\n- ryo-manba: @wingkwong 
+I've tightened type constraints in the useDatePicker hooks without using the as keyword.
+This should statically prevent the problem in the future.\n- wingkwong: @ryo-manba maybe also check once in useCalendar\n- ryo-manba: @wingkwong 
+Thanks for the comment. I added a test.\n
+
+Files Changed:
+- .changeset/stale-cats-sell.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/date-picker": patch
++---
++
++Fixed console errors for non-DOM props in DatePicker (#2823)\n- packages/components/date-picker/__tests__/date-picker.test.tsx (modified, 16 changes)\n  Patch: @@ -372,8 +372,17 @@ describe("DatePicker", () => {
+   describe("Calendar popover", function () {
+     it("should emit onChange when selecting a date in the calendar in controlled mode", function () {
+       let onChange = jest.fn();
++      const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
++      const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
++
+       let {getByRole, getAllByRole, queryByLabelText} = render(
+-        <DatePicker label="Date" value={new CalendarDate(2019, 2, 3)} onChange={onChange} />,
++        <DatePicker
++          hideTimeZone
++          isRequired
++          label="Date"
++          value={new CalendarDate(2019, 2, 3)}
++          onChange={onChange}
++        />,
+       );
+ 
+       let combobox = getAllByRole("group")[0];
+@@ -406,6 +415,11 @@ describe("DatePicker", () => {
+       expect(onChange).toHaveBeenCalledTimes(1);
+       expect(onChange).toHaveBeenCalledWith(new CalendarDate(2019, 2, 4));
+       expect(getTextValue(combobox)).toBe("2/3/2019"); // controlled
++
++      expect(consoleWarnSpy).not.toHaveBeenCalled();
++      expect(consoleErrorSpy).not.toHaveBeenCalled();
++      consoleWarnSpy.mockRestore();
++      consoleErrorSpy.mockRestore();
+     });
+ 
+     it("should emit onChange when selecting a date in the calendar in uncontrolled mode", function () {\n- packages/components/date-picker/src/use-date-picker-base.ts (modified, 7 changes)\n  Patch: @@ -229,10 +229,11 @@ export function useDatePickerBase<T extends DateValue>(originalProps: UseDatePic
+     hideTimeZone: props.hideTimeZone,
+   } as TimeInputProps;
+ 
+-  const popoverProps = {
+-    ...mergeProps(slotsProps.popoverProps, props),
++  const popoverProps: PopoverProps = {
++    ...slotsProps.popoverProps,
++    children: slotsProps.popoverProps?.children ?? [],
+     triggerRef: domRef,
+-  } as PopoverProps;
++  };
+ 
+   const calendarProps = {
+     ...slotsProps.calendarProps,\n- packages/components/date-picker/src/use-date-picker.ts (modified, 21 changes)\n  Patch: @@ -131,16 +131,16 @@ export function useDatePicker<T extends DateValue>({
+     } as DateInputProps;
+   };
+ 
+-  const getTimeInputProps = () => {
++  const getTimeInputProps = (): TimeInputProps => {
+     if (!showTimeField) return {};
+ 
+     return {
+       ...timeInputProps,
+       value: state.timeValue,
+       onChange: state.setTimeValue,
+       granularity: timeGranularity,
+-      minValue: timeMinValue,
+-      maxValue: timeMaxValue,
++      minValue: timeMinValue ?? undefined,
++      maxValue: timeMaxValue ?? undefined,
+       classNames: {
+         base: slots.timeInput({
+           class: clsx(classNames?.timeInput, userTimeInputProps?.classNames?.base),
+@@ -149,15 +149,14 @@ export function useDatePicker<T extends DateValue>({
+           class: clsx(classNames?.timeInputLabel, userTimeInputProps?.classNames?.label),
+         }),
+       },
+-    } as TimeInputProps;
++    };
+   };
+ 
+-  const getPopoverProps = (props: DOMAttributes = {}) => {
++  const getPopoverProps = (props: DOMAttributes = {}): PopoverProps => {
+     return {
+       state,
+       dialogProps,
+       ...popoverProps,
+-      ...props,
+       classNames: {
+         content: slots.popoverContent({
+           class: clsx(
+@@ -167,26 +166,26 @@ export function useDatePicker<T extends DateValue>({
+           ),
+         }),
+       },
+-    } as PopoverProps;
++    };
+   };
+ 
+-  const getCalendarProps = () => {
++  const getCalendarProps = (): CalendarProps => {
+     return {
+       ...ariaCalendarProps,
+       ...calendarProps,
+       classNames: {
+         base: slots.calendar({class: classNames?.calendar}),
+         content: slots.calendarContent({class: classNames?.calendarContent}),
+       },
+-    } as CalendarProps;
++    };
+   };
+ 
+-  const getSelectorButtonProps = () => {
++  const getSelectorButtonProps = (): ButtonProps => {
+     return {
+       ...buttonProps,
+       ...selectorButtonProps,
+       className: slots.selectorButton({class: classNames?.selectorButton}),
+-    } as ButtonProps;
++    };
+   };
+ 
+   const getSelectorIconProps = () => {\n

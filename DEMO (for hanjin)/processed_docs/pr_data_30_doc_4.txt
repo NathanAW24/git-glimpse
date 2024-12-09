@@ -1,0 +1,83 @@
+Pull Request Number: 296
+Title: Fixed Copy Function in Live Editor on DOC Section of Next UI website
+Base Branch: main
+Head Branch: Live_Editor_Fixes
+Author: Dhananjay-JSR
+URL: https://github.com/nextui-org/nextui/pull/296
+State: MERGED
+Created At: 2022-02-21T18:48:18Z
+Merged At: 2022-02-21T18:55:30Z
+Participants: Dhananjay-JSR, jrgarciadev
+
+Description:
+[LEVEL]/[COMPONENT]
+TASK: This PR Fixes #289
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Clicking on live Editor Copy button doesn't do anything in DOC Section of website
+Screenshots - Animations
+
+Commits:
+- Fixed Copy Function in Live Editor on DOC Section of Next UI website\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/src/components/playground/dynamic-live.tsx (modified, 2 changes)\n  Patch: @@ -73,7 +73,7 @@ const DynamicLive: React.FC<Props> = ({
+         <LivePreview />
+         <LiveError />
+       </StyledWrapper>
+-      {showEditor && <Editor initialOpen={initialEditorOpen} />}
++      {showEditor && <Editor initialOpen={initialEditorOpen} code={code} />}
+     </LiveProvider>
+   );
+ };\n- apps/docs/src/components/playground/editor.tsx (modified, 9 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import React, { useState } from 'react';
+ import { useRouter } from 'next/router';
+ import { LiveEditor } from 'react-live';
+-import { useTheme, Row, Col, Tooltip } from '@nextui-org/react';
++import { useTheme, Row, Col, Tooltip, useClipboard } from '@nextui-org/react';
+ import { capitalize, join } from 'lodash';
+ import CopyIcon from '../icons/copy';
+ import BugIcon from '../icons/bug';
+@@ -10,15 +10,18 @@ import { ISSUE_REPORT_URL } from '../../lib/github/constants';
+ 
+ export interface Props {
+   initialOpen?: boolean;
++  code: string;
+ }
+ 
+-const Editor: React.FC<Props> = ({ initialOpen }) => {
++const Editor: React.FC<Props> = ({ initialOpen,code }) => {
+   const { theme, isDark } = useTheme();
+   const [visible, setVisible] = useState(initialOpen);
+   const [copied, setCopied] = useState(false);
+ 
+   const router = useRouter();
+ 
++  const { copy } = useClipboard();
++
+   const slug = router.query.slug || '';
+ 
+   const componentTitle = Array.isArray(slug)
+@@ -38,6 +41,8 @@ const Editor: React.FC<Props> = ({ initialOpen }) => {
+     event.stopPropagation();
+     event.preventDefault();
+     setCopied(true);
++    copy(code);
++    
+   };
+ 
+   const handleTooltipVisibleChange = () => {\n

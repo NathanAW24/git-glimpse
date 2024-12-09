@@ -1,0 +1,708 @@
+Pull Request Number: 2910
+Title: feat: pre-release workflow
+Base Branch: canary
+Head Branch: feat/eng-707
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2910
+State: MERGED
+Created At: 2024-04-29T11:31:41Z
+Merged At: 2024-11-04T15:06:40Z
+Participants: wingkwong, jrgarciadev, winchesHe
+
+Description:
+Assumptions:
+
+default branch is canary
+main branch only stores as a snapshot (current production)
+pre.json shouldn't be in main branch
+
+📝 Description
+Pre-release
+Example (beta/release-next):
+
+Example (canary): similar to above one
+
+Enter Pre-releaes
+
+Triggered manually in Github Action
+only support canary or beta/release-next
+pre.json will be created after the workflow
+
+
+Exit Pre-release
+
+Triggered manually in Github Action
+only support canary or beta/release-next
+pre.json will be removed after the workflow
+
+
+Additional Info
+
+
+requires read:user and repo:status permissions for exit prerelease
+
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced workflows for entering and exiting pre-release modes.
+Added scripts to package.json for managing changeset versions (canary and beta).
+
+
+
+Enhancements
+
+Updated GitHub Actions workflows to automate pre-release processes and simplify release strategies.
+Improved dependency version handling in the documentation components by transitioning to canary versions.
+
+Commits:
+- feat(workflow): pre-release\n- feat(workflow): exit pre-release\n- chore(workflow): update version & publish commands\n- fix(workflow): add missing attributes and use schangeset:beta cmd\n- feat(root): add changeset:beta\n- fix(workflows): revise pre-release logic\n- fix(workflows): add missing run\n- fix(workflows): use changeset:exit with version instead\n- feat(root): add changeset:exit cmd\n- refactor(workflows): add pths, id, and format\n- feat(workflows): enter pre-release mode\n- chore(workflows): remove pre.json only\n- refactor(workflows): remove enter-pre-release-mode\n- fix(workflows): incorrect url\n- refactor(root): remove unused exit command\n- refactor(workflows): add comments\n- Merge branch 'canary' into feat/eng-707\n- feat(changeset): change to main branch as baseBranch\n- feat(root): add changeset:canary\n- refactor(workflows): remove unused workflow\n- feat(workflow): support canary pre-release mode\n- refactor(docs): change to canary\n- Merge branch 'canary' into feat/eng-707\n- Merge branch 'canary' into feat/eng-707\n- Merge branch 'canary' into feat/eng-707\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-707/add-betaprerelease-commands">ENG-707 Add beta/prerelease commands</a></p>\n- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 9d06e2ead52b696ade9e56c49c45f5b0aee61eb0
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/feat/eng-707?filename=.changeset/neat-cherries-add.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Afeat%3A%20pre-release%20workflow%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update introduces several new GitHub Actions workflows for managing pre-release modes, including processes to enter and exit pre-release modes and handle beta and canary versions. Additionally, it updates scripts in `package.json` and modifies dependency versions in specific files to align with these new modes.
+
+## Changes
+
+| File/Path                                | Change Summary                                                             |
+|------------------------------------------|----------------------------------------------------------------------------|
+| `.github/workflows/enter-pre-release-mode.yaml`, `.github/workflows/exit-pre-release.yaml`, `.github/workflows/pre-release.yaml` | Introduces workflows for entering and exiting pre-release modes and managing pre-release processes. |
+| `.github/workflows/release.yaml`         | Modifies triggering conditions and removes steps related to syncing branches and canary releases. |
+| `package.json`                           | Adds new scripts for managing changeset versions.                          |
+| `apps/docs/components/sandpack/use-sandpack.ts` | Updates dependency versions from `dev-v2` to `canary`.                     |
+| `apps/docs/preinstall.js`                | Changes npm command to fetch the latest package version under the `canary` tag. |
+
+## Sequence Diagrams
+
+```mermaid
+sequenceDiagram
+    participant Developer as Developer
+    participant GitHub as GitHub Actions
+    participant Repository as Repository
+
+    Developer->>+GitHub: Manual dispatch for pre-release mode
+    GitHub->>GitHub: Trigger enter-pre-release-mode workflow
+
+    GitHub->>Repository: Check out branch
+    GitHub->>Repository: Install dependencies
+    GitHub->>Repository: Perform pre-release setup
+    GitHub->>Repository: Push changes
+
+    Note over GitHub,Repository: Pre-release mode is entered
+    
+    Developer->>GitHub: Push new changes to pre-release branch
+    GitHub->>Repository: Trigger pre-release workflow
+
+    GitHub->>Repository: Check for changesets and packages
+    GitHub->>Repository: Create pre-release PRs
+    GitHub->>NPM: Publish beta versions to NPM
+
+    Note over GitHub,Repository: Pre-release updates and versions published
+```
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```markdown
+.github/workflows/enter-pre-release-mode.yaml: ## Summary
+The new file `.github/workflows/enter-pre-release-mode.yaml` introduces a workflow that triggers when a manual workflow dispatch occurs. It includes steps to configure the repository for pre-release mode based on the branch being `beta/release-next` or `canary`.
+
+## Alterations to the declarations of exported or public entities
+No alterations to the declarations of exported or public entities were made in this file.
+
+---
+
+.github/workflows/exit-pre-release.yaml: ## Summary
+
+The new file `exit-pre-release.yaml` introduces a GitHub Actions workflow that automates the process of exiting pre-release mode on a beta release branch. It includes steps to checkout the branch, install dependencies, remove a specific file, and commit the changes to the repository.
+
+---
+
+.github/workflows/pre-release.yaml: ## Summary
+The `pre-release.yaml` workflow file introduces a pre-release process triggered by pushes to specific branches. It checks for changesets and packages, creates pre-release PRs, and publishes to NPM for beta versions.
+
+## Alterations to the declarations of exported or public entities
+- N/A
+
+---
+
+.github/workflows/release.yaml: ## Summary
+The changes in the `.github/workflows/release.yaml` file primarily involve modifications to the triggering conditions for the GitHub Actions workflow and the removal of specific job steps. The workflow is now set to trigger on the `main` branch instead of the `canary` branch, indicating a shift in the deployment strategy. Additionally, several steps related to syncing files from the `canary` branch to the `main` branch and creating a canary release have been removed, simplifying the release process.
+
+## Alterations to the declarations of exported or public entities
+- Removed: Syncing files from `canary` to `main` branch upon publish in the workflow.
+- Removed: Creation of canary release in the workflow.
+
+---
+
+package.json: ## Summary
+Added two new scripts `"changeset:canary": "changeset pre enter canary"` and `"changeset:beta": "changeset pre enter beta"` to the `package.json` file for managing changeset versions. This enhancement provides a more structured approach to versioning and release management.
+
+## Alterations to the declarations of exported or public entities
+- Added: `"changeset:canary": "changeset pre enter canary"` in `package.json`
+- Added: `"changeset:beta": "changeset pre enter beta"` in `package.json`
+
+---
+
+apps/docs/components/sandpack/use-sandpack.ts: ## Summary
+In the file `use-sandpack.ts` within the `apps/docs/components/sandpack` directory, the changes involve updating the dependency versions from `"dev-v2"` to `"canary"` for `@nextui-org/theme`, `@nextui-org/system`, and `@nextui-org/react`. This change indicates a shift from a development version to a canary version, which may impact the stability and features available in the Sandpack environment.
+
+## Alterations to the declarations of exported or public entities
+- Modified: Dependency versions in the `useSandpack` function in `apps/docs/components/sandpack/use-sandpack.ts` for the following packages:
+  - `@nextui-org/theme`: "dev-v2" → "canary"
+  - `@nextui-org/system`: "dev-v2" → "canary"
+  - `@nextui-org/react`: "dev-v2" → "canary"
+  - Dynamic dependencies for components in `nextUIComponents`: "dev-v2" → "canary"
+
+---
+
+apps/docs/preinstall.js: ## Summary
+
+In `apps/docs/preinstall.js`, the change involves updating the npm command from `npm show ${pkg}@dev-v2 version` to `npm show ${pkg}@canary version` to fetch the latest version of a package under a different tag.
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR summary
+
+**Title:** feat: pre-release workflow
+
+**User:** wingkwong
+
+**Number:** 2910
+
+**Description:**
+
+This pull request introduces a pre-release workflow with specific assumptions:
+- The default branch is `canary`.
+- The `main` branch is intended to serve as a snapshot of the current production.
+- The file `pre.json` should not exist in the `main` branch.
+
+### Pre-release
+
+The workflow includes two examples for pre-release processes:
+1. Beta/release-next
+2. Canary
+
+Images are provided to illustrate the pre-release workflow for both examples.
+
+### Enter Pre-release
+- The process is triggered manually through GitHub Actions.
+- It only supports the `canary` or `beta/release-next` branches.
+- A `pre.json` file will be generated upon entering the pre-release phase.
+
+### Exit Pre-release
+- This phase is also triggered manually via GitHub Actions.
+- It supports only the `canary` or `beta/release-next` branches.
+- The `pre.json` file will be deleted after exiting the pre-release phase.
+
+### Additional Info
+- The workflow requires `read:user` and `repo:status` permissions to successfully exit the pre-release phase.
+
+## Existing objectives summary to be updated
+
+
+## PR summary
+
+**Title:** feat: pre-release workflow
+
+**User:** wingkwong
+
+**Number:** 2910
+
+**Description:**
+
+This pull request introduces a pre-release workflow with the following assumptions:
+- The default branch is `canary`.
+- The `main` branch serves as a snapshot for the current production.
+- `pre.json` should not be present in the `main` branch.
+
+### Pre-release
+
+There are two examples provided for the pre-release workflow:
+1. Beta/release-next
+2. Canary
+
+Both examples include images illustrating the pre-release process.
+
+### Enter Pre-release
+- Triggered manually in GitHub Action.
+- Supports only `canary` or `beta/release-next`.
+- `pre.json` will be created after the workflow.
+
+### Exit Pre-release
+- Triggered manually in GitHub Action.
+- Supports only `canary` or `beta/release-next`.
+- `pre.json` will be removed after the workflow.
+
+### Additional Info
+- Requires `read:user` and `repo:status` permissions for exiting pre-release.
+
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 729615141b348d6db8e6e80b7eda2e7857345bac -->
+<!-- a5b28bb533dd38ad29735911532671036f51224a -->
+<!-- 08281f6ab86e2bcfc830c82d1f0d6de8962285b0 -->
+<!-- 990a9cd16f419beb968e9e7ba212757d5ac1be2e -->
+<!-- 9d06e2ead52b696ade9e56c49c45f5b0aee61eb0 -->
+
+<!-- commit_ids_reviewed_end -->
+
+---
+
+<details>
+<summary>Recent review details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>Commits</summary>
+
+Files that changed from the base of the PR and between 990a9cd16f419beb968e9e7ba212757d5ac1be2e and 9d06e2ead52b696ade9e56c49c45f5b0aee61eb0.
+
+</details>
+
+
+<details>
+<summary>Files selected for processing (3)</summary>
+
+* .github/workflows/release.yaml (2 hunks)
+* apps/docs/components/sandpack/use-sandpack.ts (2 hunks)
+* package.json (1 hunks)
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<details>
+<summary>Additional comments not posted (4)</summary><blockquote>
+
+<details>
+<summary>.github/workflows/release.yaml (2)</summary><blockquote>
+
+`9-9`: **LGTM!**
+
+The change in the trigger branch from `canary` to `main` aligns with the PR objective of using the `main` branch as a snapshot for the current production. This indicates a shift in the deployment strategy to focus on the `main` branch for releases.
+
+---
+
+`42-42`: **LGTM!**
+
+The addition of the `GITHUB_TOKEN` secret ensures that the workflow has the necessary permissions to interact with the GitHub API for creating release pull requests or publishing releases.
+
+</blockquote></details>
+<details>
+<summary>package.json (2)</summary><blockquote>
+
+`49-49`: **LGTM!**
+
+The `"changeset:canary": "changeset pre enter canary"` script aligns with the updated understanding of `canary` as a pre-release mode. Good job updating this based on the previous discussion!
+
+---
+
+`50-50`: **Looks good!**
+
+The `"changeset:beta": "changeset pre enter beta"` script follows the same pattern as the `changeset:canary` script and aligns with the PR objective of introducing scripts for managing pre-release modes. Nice work!
+
+</blockquote></details>
+
+</blockquote></details>
+
+</details><!-- This is an auto-generated comment: resource permission warning by coderabbit.ai -->
+
+> [!WARNING]
+> ## Review ran into problems
+> 
+> <details>
+> <summary>Problems</summary>
+> 
+> Git: Failed to clone repository. Please run the `@coderabbitai full review` command to re-trigger a full review.
+> 
+> </details>
+
+<!-- end of auto-generated comment: resource permission warning by coderabbit.ai --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+-- `I pushed a fix in commit <commit_id>, please review it.`
+-- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+-- `@coderabbitai generate unit testing code for this file.`
+--	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+-- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+-- `@coderabbitai read src/utils.ts and generate unit testing code.`
+-- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+-- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+
+
+<!-- tips_end -->\n- vercel: [vc]: #BZy1QXhyA/RcmgdRm0Ty7k5C1eP9L4ifz1uDMrVC2DI=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi81S0txOWtjeW1vVDRUZG9rc0ZCM2dWVlJyclFMIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mZWF0LWVuZy03MDctbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mZWF0LWVuZy03MDctbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi9BOGZqV0daYTJKRlcySEhrRTdxNDd1ZmNkVDRpIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZlYXQtZW5nLTcwNy1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZmVhdC1lbmctNzA3LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/5KKq9kcymoT4TdoksFB3gVVRrrQL)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-feat-eng-707-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-feat-eng-707-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 18, 2024 7:28am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/A8fjWGZa2JFW2HHkE7q47ufcdT4i)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-feat-eng-707-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-feat-eng-707-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 18, 2024 7:28am |
+
+
+\n
+
+Files Changed:
+- .changeset/config.json (modified, 2 changes)\n  Patch: @@ -8,7 +8,7 @@
+   "fixed": [],
+   "linked": [],
+   "access": "public",
+-  "baseBranch": "canary",
++  "baseBranch": "main",
+   "updateInternalDependencies": "patch",
+   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+     "onlyUpdatePeerDependentsWhenOutOfRange": true\n- .github/workflows/enter-pre-release-mode.yaml (added, 33 changes)\n  Patch: @@ -0,0 +1,33 @@
++name: Enter pre-release mode
++on: workflow_dispatch
++
++jobs:
++  enter-pre-release-mode:
++    if: ${{ github.ref == 'refs/heads/beta/release-next' || github.ref == 'refs/heads/canary' }}
++    runs-on: ubuntu-latest
++    permissions:
++      contents: write
++      pull-requests: write
++      id-token: write
++    steps:
++      - name: Checkout branch
++        uses: actions/checkout@v4
++        with:
++          fetch-depth: 0
++
++      - name: Install
++        uses: ./.github/common-actions/install
++
++      - name: Enter pre-release mode
++        id: enter-pre-release-mode
++        run: |
++          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
++          git config user.name "github-actions[bot]"
++          if [ ${{ github.ref }} == 'refs/heads/canary' ]; then
++            pnpm changeset:canary
++          else
++            pnpm changeset:beta
++          fi
++          git add -A
++          git commit -m 'chore(pre-release): enter pre-release mode'
++          git push
+\ No newline at end of file\n- .github/workflows/exit-pre-release.yaml (added, 37 changes)\n  Patch: @@ -0,0 +1,37 @@
++name: Exit pre-release mode
++
++on: workflow_dispatch
++jobs:
++  exit-pre-release-mode:
++    if: ${{ github.ref == 'refs/heads/beta/release-next' || github.ref == 'refs/heads/canary' }}
++    name: exit pre-release mode
++    runs-on: ubuntu-latest
++    permissions:
++      contents: write
++      pull-requests: write
++      id-token: write
++
++    steps:
++      - name: Checkout branch
++        uses: actions/checkout@v3
++        with:
++          ref: ${{ github.event.inputs.branch }}
++          fetch-depth: 0
++
++      - name: Install
++        uses: ./.github/common-actions/install
++
++      - name: remove pre.json
++        # we only remove .changeset/pre.json here 
++        # since we want to keep the changeset files introduced in beta/release-next or canary branch
++        # once we merge it to canary / main, those files will be removed in version PR in canary 
++        # and converted to corresponding changelogs
++        run: npx rimraf .changeset/pre.json
++
++      - name: Commit and push changes
++        run: |
++          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
++          git config user.name "github-actions[bot]"
++          git add -A
++          git commit -m "ci(changesets): exit pre-release mode"
++          git push
+\ No newline at end of file\n- .github/workflows/pre-release.yaml (added, 64 changes)\n  Patch: @@ -0,0 +1,64 @@
++name: Pre-release
++
++on:
++  push:
++    paths:
++      - ".changeset/**"
++      - "packages/**"
++    branches:
++      - "beta/release-next"
++      - "canary"
++
++concurrency: ${{ github.workflow }}-${{ github.ref }}
++
++jobs:
++  prerelease:
++    name: changesets pre-release
++    runs-on: ubuntu-latest
++    permissions:
++      contents: write
++      pull-requests: write
++      id-token: write
++    steps:
++      - name: Checkout branch
++        uses: actions/checkout@v4
++        with:
++          fetch-depth: 0
++
++      - name: Install
++        uses: ./.github/common-actions/install
++
++      - name: Check if pre.json exists
++        id: check_if_pre_json_exists
++        uses: andstor/file-existence-action@v3.0.0
++        with:
++          files: ".changeset/pre.json"
++
++      - name: Get pre-release changesets
++        id: get-pre-release-changesets
++        uses: notiz-dev/github-action-json-property@release
++        with:
++          path: ".changeset/pre.json"
++          prop_path: "changesets"
++
++      - name: Create pre-release PR
++        id: create-pre-release-pr
++        if: "${{ steps.check_if_pre_json_exists.outputs.files_exists == 'true' && !startsWith(github.event.head_commit.message, 'ci(changesets): version packages') }}"
++        uses: changesets/action@v1
++        with:
++          version: pnpm run version
++          title: "ci(changesets): :package: version packages"
++          commit: "ci(changesets): version packages"
++        env:
++          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
++
++      - name: Publish to NPM
++        id: publish-to-npm
++        if: "${{ steps.check_if_pre_json_exists.outputs.files_exists == 'true' && contains(github.event.head_commit.message, 'ci(changesets): :package: version packages') }}"
++        uses: changesets/action@v1
++        with:
++          publish: pnpm run release
++        env:
++          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
++          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
++          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+\ No newline at end of file\n- .github/workflows/release.yaml (modified, 23 changes)\n  Patch: @@ -6,7 +6,7 @@ on:
+       - ".changeset/**"
+       - "packages/**"
+     branches:
+-      - canary
++      - main
+ 
+ concurrency:
+   group: ${{ github.workflow }}-${{ github.ref }}
+@@ -39,23 +39,4 @@ jobs:
+         env:
+           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+-
+-      - name: Sync files from canary to main branch if a publish happens
+-        if: steps.changesets.outputs.published == 'true'
+-        run: |
+-          curl -X POST \
+-            -H "Accept: application/vnd.github.v3+json" \
+-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+-            https://api.github.com/repos/owner/repo/dispatches \
+-            -d '{"event_type":"sync-canary-to-main"}'
+-
+-      - name: Create canary release
+-        if: steps.changesets.outputs.published != 'true'
+-        run: |
+-          git checkout canary
+-          pnpm version:canary
+-          pnpm release:canary
+-        env:
+-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
++          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+\ No newline at end of file\n- .github/workflows/sync-canary-to-main.yaml (removed, 43 changes)\n  Patch: @@ -1,43 +0,0 @@
+-name: Sync Canary to Main
+-
+-on:
+-  # triggered manually in Github
+-  workflow_dispatch:
+-  # triggered by the type "sync-canary-to-main" (e.g. from release action after publishing)
+-  repository_dispatch:
+-    types: [sync-canary-to-main]
+-
+-jobs:
+-  create_pull_request:
+-    runs-on: ubuntu-latest
+-    steps:
+-      - name: Checkout code
+-        uses: actions/checkout@v4
+-        with:
+-          fetch-depth: 0  # Ensure all history is fetched
+-
+-      - name: Create Pull Request
+-        uses: repo-sync/pull-request@v2
+-        with:
+-          github_token: ${{ secrets.GITHUB_TOKEN }}
+-          source_branch: "canary"
+-          destination_branch: "main"
+-          pr_title: "Auto-sync Canary to Main"
+-          pr_body: |
+-            ## Automated: Sync from Canary to Main
+-
+-            This Pull Request is automatically generated to sync the changes from the Canary branch to the Main branch. Below are the included updates:
+-
+-            ###  Triggered by a Direct Push to Canary:
+-            - Please check the recent commits on the Canary branch directly as this sync may include multiple changes.
+-
+-            ### Triggered by a Pull Request Merge:
+-            - Merged Pull Request: [PR#${{ github.event.pull_request.number }}](${{ github.event.pull_request.html_url }}) - ${{ github.event.pull_request.title }}
+-              - PR Description: ${{ github.event.pull_request.body }}
+-              - Merged by: ${{ github.event.pull_request.merged_by.login }}
+-
+-            ### Action Required:
+-            - Please review the changes carefully.
+-            - Approve and merge the Pull Request if everything is in order.
+-
+-            Thank you for maintaining the Main branch updated and clean.\n- apps/docs/components/sandpack/use-sandpack.ts (modified, 8 changes)\n  Patch: @@ -148,14 +148,14 @@ export const useSandpack = ({
+ 
+   //   if (hasComponents) {
+   //     let deps = {
+-  //       "@nextui-org/theme": "dev-v2",
+-  //       "@nextui-org/system": "dev-v2",
++  //       "@nextui-org/theme": "canary",
++  //       "@nextui-org/system": "canary",
+   //     };
+ 
+   //     nextUIComponents.forEach((component) => {
+   //       deps = {
+   //         ...deps,
+-  //         [`@nextui-org/${component}`]: "dev-v2",
++  //         [`@nextui-org/${component}`]: "canary",
+   //       };
+   //     });
+ 
+@@ -164,7 +164,7 @@ export const useSandpack = ({
+ 
+   //   return {
+   //     ...deps,
+-  //     "@nextui-org/react": "dev-v2",
++  //     "@nextui-org/react": "canary",
+   //   };
+   // }, [hasComponents, nextUIComponents, component]);
+ \n- apps/docs/preinstall.js (modified, 2 changes)\n  Patch: @@ -26,7 +26,7 @@ fs.readFile("./package.json", "utf8", function (err, data) {
+     // Check if the package is in the @nextui-org namespace and has "workspace:*" as its version
+     if (pkg.startsWith("@nextui-org/") && packageJson.dependencies[pkg] === "workspace:*") {
+       // Get the latest version of the package under the specified tag
+-      const latestVersion = execSync(`npm show ${pkg}@dev-v2 version`, {encoding: "utf8"}).trim();
++      const latestVersion = execSync(`npm show ${pkg}@canary version`, {encoding: "utf8"}).trim();
+ 
+       // Replace the version in the package.json file
+       packageJson.dependencies[pkg] = latestVersion;\n- package.json (modified, 2 changes)\n  Patch: @@ -46,6 +46,8 @@
+     "create:cmp": "plop component",
+     "create:pkg": "plop package",
+     "create:hook": "plop hook",
++    "changeset:canary": "changeset pre enter canary",
++    "changeset:beta": "changeset pre enter beta",
+     "version": "changeset version",
+     "release": "changeset publish",
+     "version:canary": "changeset version --snapshot canary",\n

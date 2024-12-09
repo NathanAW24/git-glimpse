@@ -1,0 +1,159 @@
+Pull Request Number: 452
+Title: Update getting-started.mdx
+Base Branch: main
+Head Branch: patch-1
+Author: anoushk1234
+URL: https://github.com/nextui-org/nextui/pull/452
+State: MERGED
+Created At: 2022-05-04T07:43:23Z
+Merged At: 2022-05-08T13:14:30Z
+Participants: anoushk1234, jrgarciadev, antoinelin
+
+Description:
+fixes #441
+
+Commits:
+- Update getting-started.mdx\n
+
+Labels:
+🧱 Type: Refactoring
+
+Comments:
+- jrgarciadev: Hey @anoushk1234 thank you so much, could you please write it this way:
+
+```js
+import React from 'react';
+
+// ...
+   return {
+      ...initialProps,
+      styles: (
+        <React.Fragment>
+          {initialProps.styles}
+        </React.Fragment>
+      )
+    };
+
+// ...
+
+```\n- antoinelin: > Hey @anoushk1234 thank you so much, could you please write it this way:
+> 
+> ```js
+> import React from 'react';
+> 
+> // ...
+>    return {
+>       ...initialProps,
+>       styles: (
+>         <React.Fragment>
+>           {initialProps.styles}
+>         </React.Fragment>
+>       )
+>     };
+> 
+> // ...
+> ```
+
+Hey, got a TypeScript issue using `styles: (<Fragment>{initialProps.styles}</Fragment>)` instead of `styles: [<Fragment>{initialProps.styles}</Fragment>]` + `Fragment` should have a key for proper React rendering
+\n- jrgarciadev: > > Hey @anoushk1234 thank you so much, could you please write it this way:
+> > ```js
+> > import React from 'react';
+> > 
+> > // ...
+> >    return {
+> >       ...initialProps,
+> >       styles: (
+> >         <React.Fragment>
+> >           {initialProps.styles}
+> >         </React.Fragment>
+> >       )
+> >     };
+> > 
+> > // ...
+> > ```
+> 
+> Hey, got a TypeScript issue using `styles: (<Fragment>{initialProps.styles}</Fragment>)` instead of `styles: [<Fragment>{initialProps.styles}</Fragment>]` + `Fragment` should have a key for proper React rendering
+
+Hey @toinelin could you share your `tsconfig.json`?\n- antoinelin: > > > Hey @anoushk1234 thank you so much, could you please write it this way:
+> > > ```js
+> > > import React from 'react';
+> > > 
+> > > // ...
+> > >    return {
+> > >       ...initialProps,
+> > >       styles: (
+> > >         <React.Fragment>
+> > >           {initialProps.styles}
+> > >         </React.Fragment>
+> > >       )
+> > >     };
+> > > 
+> > > // ...
+> > > ```
+> > 
+> > 
+> > Hey, got a TypeScript issue using `styles: (<Fragment>{initialProps.styles}</Fragment>)` instead of `styles: [<Fragment>{initialProps.styles}</Fragment>]` + `Fragment` should have a key for proper React rendering
+> 
+> Hey @toinelin could you share your `tsconfig.json`?
+
+Sure here it is:
+```
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": [
+        "./components/*"
+      ],
+      "@/contexts/*": [
+        "./contexts/*"
+      ],
+      "@/hooks/*": [
+        "./hooks/*"
+      ],
+      "@/pages/*": [
+        "./pages/*"
+      ],
+      "@/styles/*": [
+        "./styles/*"
+      ]
+    },
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
+
+```\n- anoushk1234: > ```js
+> <React.Fragment>
+>           {initialProps.styles}
+>         </React.Fragment>
+> ```
+
+i'm getting this error ```Type 'Element' is not assignable to type 'ReactElement<any, string | JSXElementConstructor<any>>[] | ReactFragment | undefined'.```
+
+heres my tsconfig https://github.com/anoushk1234/anoushk.xyz/blob/main/tsconfig.json\n
+
+Files Changed:
+- apps/docs/content/docs/guide/getting-started.mdx (modified, 2 changes)\n  Patch: @@ -83,7 +83,7 @@ class MyDocument extends Document {
+     const initialProps = await Document.getInitialProps(ctx);
+     return {
+       ...initialProps,
+-      styles: <>{initialProps.styles}</>
++      styles: [<>{initialProps.styles}</>]
+     };
+   }
+ \n

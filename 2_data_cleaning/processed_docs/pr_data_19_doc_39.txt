@@ -1,0 +1,127 @@
+Pull Request Number: 1674
+Title: fix(select): setting padding top 0 if label and placeholder are both falsy
+Base Branch: main
+Head Branch: fix/select-with-falsy-label
+Author: ChiuMungZitAlexander
+URL: https://github.com/nextui-org/nextui/pull/1674
+State: CLOSED
+Created At: 2023-09-22T06:18:27Z
+Merged At: None
+Participants: ChiuMungZitAlexander, jguddas, jrgarciadev
+
+Description:
+📝 Description
+Adjust the padding of innerWrapper of select when label is undefined/falsy.
+⛳️ Current behavior (updates)
+Due to we set innerWrapper: "pt-4", if label and placeholder are both falsy, there will still have a padding top.
+{
+  isLabelPlaceholder: true,
+  labelPlacement: "inside",
+  size: "sm",
+  class: {
+    label: ["group-data-[filled=true]:-translate-y-[calc(50%_+_theme(fontSize.tiny)/2_-_3px)]"],
+    innerWrapper: "pt-4",
+  },
+},
+{
+  isLabelPlaceholder: true,
+  labelPlacement: "inside",
+  size: "md",
+  class: {
+    label: [
+      "group-data-[filled=true]:-translate-y-[calc(50%_+_theme(fontSize.small)/2_-_4px)]",
+    ],
+    innerWrapper: "pt-4",
+  },
+},
+
+⬇️ In this case, both placeholder and label are not provided.
+<Select classNames={{ label: 'hidden', popover: 'bg-white' }}>
+ {animals.map(animal => (
+    <SelectItem
+      key={animal.value}
+      value={animal.value}
+    >
+      {animal.label}
+    </SelectItem>
+  ))}
+</Select>
+
+
+🚀 New behavior
+Remove the padding top of innerWrapper if label and placeholder are both falsy, as neither of them is required.
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+No
+
+Commits:
+- fix(select): setting padding top 0 if label is falsy\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: de5e17e3fee2bd5347c60a5e4e1a6da512e00bf9
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/ChiuMungZitAlexander/nextui/new/fix/select-with-falsy-label?filename=.changeset/soft-walls-drum.md&value=---%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A---%0A%0Afix(select)%3A%20setting%20padding%20top%200%20if%20label%20and%20placeholder%20are%20both%20falsy%0A)
+
+\n- vercel: [vc]: #IIH94O6KYgMPhLiVzZJaMIm5lGJmyPzN+TT3COjQk8U=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvZldLSjlQOGNkZVI2alZmc2tQN0FmZVZ3cnVvbiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWNoaXVtdW5neml0YWxleGEtMTQ0YmJlLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWNoaXVtdW5neml0YWxleGEtMTQ0YmJlLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/fWKJ9P8cdeR6jVfskP7AfeVwruon)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-chiumungzitalexa-144bbe-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-chiumungzitalexa-144bbe-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 22, 2023 6:20am |
+
+\n- vercel: @ChiuMungZitAlexander is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22de5e17e3fee2bd5347c60a5e4e1a6da512e00bf9%22%7D%2C%22id%22%3A%22QmaBq1FBJsGWPYXhMTPpGd7LN9gkXWMj38ZWAp8Zu6YF6y%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1674%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jguddas: We have labels marked as optional even tough that violate [WCAG 3.3.2](https://www.w3.org/TR/WCAG21/#labels-or-instructions), we should throw atleast a type if not a proper error when `label`, `aria-label` and `aria-labledby` is not set.\n
+
+Files Changed:
+- packages/components/select/src/use-select.ts (modified, 2 changes)\n  Patch: @@ -463,7 +463,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+       return {
+         ...props,
+         className: slots.innerWrapper({
+-          class: clsx(classNames?.innerWrapper, props?.className),
++          class: clsx(classNames?.innerWrapper, !label && "pt-0", props?.className),
+         }),
+       };
+     },\n- packages/components/select/stories/select.stories.tsx (modified, 17 changes)\n  Patch: @@ -601,6 +601,23 @@ const LabelPlacementTemplate = ({color, variant, ...args}: SelectProps) => (
+         </Select>
+       </div>
+     </div>
++    <div className="w-full max-w-2xl flex flex-col gap-3">
++      <h3>With falsy label</h3>
++      <div className="w-full flex flex-row items-end gap-4">
++        <Select
++          className="w-1/3"
++          color={color}
++          placeholder="Select an animal"
++          variant={variant}
++          {...args}
++        >
++          {items}
++        </Select>
++        <Select className="w-1/3" color={color} variant={variant} {...args}>
++          {items}
++        </Select>
++      </div>
++    </div>
+   </div>
+ );
+ \n

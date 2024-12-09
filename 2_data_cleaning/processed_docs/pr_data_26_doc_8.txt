@@ -1,0 +1,95 @@
+Pull Request Number: 800
+Title: fix(react-dropdown): add react-stately/collections and react-stately/menu deps
+Base Branch: next
+Head Branch: fix/dropdown-deps
+Author: suguru
+URL: https://github.com/nextui-org/nextui/pull/800
+State: MERGED
+Created At: 2022-10-05T14:53:24Z
+Merged At: 2022-11-06T18:58:59Z
+Participants: suguru, jrgarciadev, beautyfree
+
+Description:
+📝 Description
+#616 added deps to packages/react, but somehow deps are removed in merge commit d7e7b90
+It is causing MODULE_NOT_FOUND error when using pnpm to compile the project using @nextui-org/react.
+⛳️ Current behavior (updates)
+Add @react-stately/collections and @react-stately/menu.
+🚀 New behavior
+@react-stately/collections and @react-stately/menu are in package.json of packages/react
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- fix(react-dropdown): add react-stately/collections and react-stately/menu\n
+
+Labels:
+
+
+Comments:
+- vercel: @suguru is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22874aabc6bf9d8896be881bfc53e6455c52c35f55%22%7D%2C%22id%22%3A%22QmeVsW6xCnj1iF47zS6HcQ6v74veS8FYC1YMK6Z5qpPH62%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A800%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/3HMBNGtgWFoMuWqKzn8x7Fvmp99E)) | [Visit Preview](https://nextui-storybook-git-fork-suguru-fix-dropdown-deps-nextui-org.vercel.app) | Oct 5, 2022 at 3:16PM (UTC) |
+
+\n- suguru: workaround for the issue is putting `.pnpmfile.cjs` in my repository.
+
+```js
+module.exports = {
+  hooks: {
+    readPackage
+  }
+}
+ 
+function readPackage (pkg, ctx) {
+  if (pkg.name === "@nextui-org/react") {
+    pkg.dependencies = {
+      ...pkg.dependencies,
+      "@react-stately/collections": "3.4.2",
+      "@react-stately/menu": "3.4.0",
+    }
+  }
+  return pkg
+}
+```\n- jrgarciadev: Huge thanks! @suguru 🙌🏼\n- beautyfree: also workaround for pnp. add these lines to `.yarnrn.yml`:
+```
+packageExtensions:
+  "@nextui-org/react@*":
+    dependencies:
+      "@react-stately/collections": "3.4.2"
+      "@react-stately/menu": "3.4.0"
+```      \n
+
+Files Changed:
+- packages/react/package.json (modified, 2 changes)\n  Patch: @@ -71,7 +71,9 @@
+     "@react-aria/utils": "3.13.2",
+     "@react-aria/visually-hidden": "3.4.0",
+     "@react-stately/checkbox": "3.2.0",
++    "@react-stately/collections": "3.4.2",
+     "@react-stately/data": "3.6.0",
++    "@react-stately/menu": "3.4.0",
+     "@react-stately/overlays": "3.4.0",
+     "@react-stately/radio": "3.5.0",
+     "@react-stately/table": "3.3.0",\n- yarn.lock (modified, 4 changes)\n  Patch: @@ -4005,7 +4005,7 @@
+     "@react-stately/utils" "^3.5.1"
+     "@react-types/checkbox" "^3.3.2"
+ 
+-"@react-stately/collections@^3.4.2":
++"@react-stately/collections@3.4.2", "@react-stately/collections@^3.4.2":
+   version "3.4.2"
+   resolved "https://registry.yarnpkg.com/@react-stately/collections/-/collections-3.4.2.tgz#b8625192b8cd5abe6cc2d5371643a071dc492e44"
+   integrity sha512-CmLVWtbX4r3QaTNdI6edtrRKIZRKPuxyD7TmVIaoZBdaOXStTP4wOgyPN1ELww9bvW0MoOaQBbUn5WAPrfifFw==
+@@ -4031,7 +4031,7 @@
+     "@react-types/grid" "^3.1.2"
+     "@react-types/shared" "^3.14.0"
+ 
+-"@react-stately/menu@^3.4.0":
++"@react-stately/menu@3.4.0", "@react-stately/menu@^3.4.0":
+   version "3.4.0"
+   resolved "https://registry.yarnpkg.com/@react-stately/menu/-/menu-3.4.0.tgz#ee535287229ab4b0561dfdca570d82180f8cc4ea"
+   integrity sha512-xdNS3K0PmSjpNhH/Xnskfexxyo909Jkkfux4zhP5Ivk4Vkp0eThb6v9AIomUAo163PuOnHQFen1ZmwFEs92xMw==\n

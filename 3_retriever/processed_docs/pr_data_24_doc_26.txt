@@ -1,0 +1,176 @@
+Pull Request Number: 1113
+Title: feat(table): add onRowAction and onCellAction handler props to table (feat #925)
+Base Branch: main
+Head Branch: feat/#925-add-action-handler-props-to-table
+Author: R-J-dev
+URL: https://github.com/nextui-org/nextui/pull/1113
+State: MERGED
+Created At: 2023-04-30T15:01:56Z
+Merged At: 2023-05-25T03:03:28Z
+Participants: R-J-dev, jrgarciadev
+
+Description:
+Closes #925
+📝 Description
+Add onRowAction and onCellAction handler props to table.
+When looking at the React Aria docs, I noticed that onRowAction and onCellAction are the most similar props as requested in #925. See for more info: https://react-spectrum.adobe.com/react-aria/useTable.html#row-actions.
+🚀 New behavior
+Action handlers can be used to handle actions that are performed on the table row or cell. You can handle for example a row selection action (clicking or tapping) by adding the following props:
+selectionMode="single"
+onRowAction={(key) => alert(`Opening row item ${key}`)}
+
+There are more ways to trigger an action and you can read more about that here: https://react-spectrum.adobe.com/react-aria/useTable.html#row-actions.
+💣 Is this a breaking change (Yes/No): No
+
+Commits:
+- feat(table): add onRowAction and onCellAction handler props to table
+
+Refs: #925\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #zxx6YSQBBqA9p3l3LcPrFUvAz/SH9fgky2499ZBB8CY=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLXItai1kZXYtZmVhdC05MjUtYWQtOTkwNDlkLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rL0h1NlZBNlE5ek1oMkhFeDZyUTg1VTJ1M2pQU2oiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay1naXQtZm9yay1yLWotZGV2LWZlYXQtOTI1LWFkLTk5MDQ5ZC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/Hu6VA6Q9zMh2HEx6rQ85U2u3jPSj)) | [Visit Preview](https://nextui-storybook-git-fork-r-j-dev-feat-925-ad-99049d-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-r-j-dev-feat-925-ad-99049d-nextui-org.vercel.app) | Apr 30, 2023 3:03pm |
+
+\n- vercel: @R-J-dev is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22383ed1c56f08642e6bae8f656c227a7fc8342352%22%7D%2C%22id%22%3A%22QmSaTCxniccCVgXWipzXqrxTSGu2cmLD2ABWh4x2tJEwzd%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1113%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- apps/docs/content/docs/components/table.mdx (modified, 2 changes)\n  Patch: @@ -188,6 +188,8 @@ import { Table } from '@nextui-org/react';
+ | **defaultSelectedKeys**           | [Selection](#selection)                                              | The initial selected keys in the collection (uncontrolled).                                                                                                                                    | -         |
+ | **disabledKeys**                  | `Set<Key>`                                                           | A set of keys for rows that are disabled.                                                                                                                                                      | -         |
+ | **disallowEmptySelection**        | `boolean`                                                            | Whether the collection allows empty selection.                                                                                                                                                 | -         |
++| **onCellAction**                  | <Code>(key: Key) => void</Code>                                      | Handler that is called when a user performs an action on the cell.                                                                                                                             | -         |
++| **onRowAction**                   | <Code>(key: Key) => void</Code>                                      | Handler that is called when a user performs an action on the row.                                                                                                                              | -         |
+ | **onSelectionChange**             | <Code>(keys: [Selection](#selection)) => any</Code>                  | Handler that is called when the selection changes.                                                                                                                                             | `false`   |
+ | **onSortChange**                  | <Code>(descriptor: [SortDescriptor](#sort-descriptor)) => any</Code> | Handler that is called when the sorted column or direction changes.                                                                                                                            | `false`   |
+ | **ref**                           | -                                                                    | forwardRef                                                                                                                                                                                     | -         |\n- packages/react/src/table/__tests__/index.test.tsx (modified, 73 changes)\n  Patch: @@ -94,6 +94,79 @@ describe("Table", () => {
+     expect(cells.length).toBe(2 * STITCHES_FACTOR);
+   });
+ 
++  it("should trigger an on row action when onRowAction is defined and an action has been performed", () => {
++    const onRowActionMock = jest.fn();
++    const wrapper = mount(
++      <Table
++        aria-label="Table with selection"
++        onRowAction={(key) => onRowActionMock(key)}
++        selectionMode="single"
++      >
++        <Table.Header>
++          <Table.Column>Foo</Table.Column>
++          <Table.Column>Bar</Table.Column>
++          <Table.Column>Baz</Table.Column>
++        </Table.Header>
++        <Table.Body>
++          <Table.Row>
++            <Table.Cell>Foo 1</Table.Cell>
++            <Table.Cell>Bar 1</Table.Cell>
++            <Table.Cell>Baz 1</Table.Cell>
++          </Table.Row>
++        </Table.Body>
++      </Table>,
++    );
++    const table = wrapper.find('[role="grid"]').first();
++    const bodyRowGroup = table.find('[role="rowgroup"]').at(1 * STITCHES_FACTOR);
++    const rows = bodyRowGroup.find('[role="row"]');
++
++    rows.first().getDOMNode().dispatchEvent(
++      new MouseEvent("click", {
++        view: window,
++        bubbles: true,
++      }),
++    );
++
++    expect(onRowActionMock).toHaveBeenCalledTimes(1);
++  });
++
++  it("should trigger an on cell action when onCellAction is defined and an action has been performed", () => {
++    const onCellActionMock = jest.fn();
++    const wrapper = mount(
++      <Table
++        aria-label="Table with selection"
++        onCellAction={(key) => onCellActionMock(key)}
++        selectionMode="multiple"
++      >
++        <Table.Header>
++          <Table.Column>Foo</Table.Column>
++          <Table.Column>Bar</Table.Column>
++          <Table.Column>Baz</Table.Column>
++        </Table.Header>
++        <Table.Body>
++          <Table.Row>
++            <Table.Cell>Foo 1</Table.Cell>
++            <Table.Cell>Bar 1</Table.Cell>
++            <Table.Cell>Baz 1</Table.Cell>
++          </Table.Row>
++        </Table.Body>
++      </Table>,
++    );
++    const table = wrapper.find('[role="grid"]').first();
++    const bodyRowGroup = table.find('[role="rowgroup"]').at(1 * STITCHES_FACTOR);
++    const rows = bodyRowGroup.find('[role="row"]');
++    const bodyFirstCell = rows.first().find('[role="rowheader"]').first();
++
++    bodyFirstCell.getDOMNode().dispatchEvent(
++      new MouseEvent("click", {
++        view: window,
++        bubbles: true,
++      }),
++    );
++
++    expect(onCellActionMock).toHaveBeenCalledTimes(1);
++  });
++
+   it("should render a table with selection", () => {
+     const wrapper = mount(
+       <Table aria-label="Table with selection" selectionMode="multiple">\n- packages/react/src/table/table.stories.tsx (modified, 18 changes)\n  Patch: @@ -685,3 +685,21 @@ export const CustomCells = () => {
+ export const NoAnimated = () => {
+   return <BaseTable animated={false} color="secondary" selectionMode="multiple" />;
+ };
++
++export const TableWithOnRowAction = () => {
++  return (
++    <BaseTable
++      selectionMode="single"
++      onRowAction={(key) => alert(`Opening row item ${key}`)}
++    />
++  );
++};
++
++export const TableWithOnCellAction = () => {
++  return (
++    <BaseTable
++      selectionMode="single"
++      onCellAction={(key) => alert(`Opening cell item ${key}`)}
++    />
++  );
++};
+\ No newline at end of file\n- packages/react/src/table/table.tsx (modified, 6 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import type {CSS} from "../theme/stitches.config";
+ 
+ import React, {useMemo, RefAttributes, PropsWithoutRef} from "react";
+-import {useTable} from "@react-aria/table";
++import {AriaTableProps, useTable} from "@react-aria/table";
+ import {useTableState, TableStateProps} from "@react-stately/table";
+ import {SelectionMode, SelectionBehavior, CollectionChildren} from "@react-types/shared";
+ import {mergeProps} from "@react-aria/utils";
+@@ -48,7 +48,9 @@ type NativeAttrs = Omit<React.TableHTMLAttributes<unknown>, keyof Props<object>>
+ export type TableProps<T = object> = Props<T> &
+   NativeAttrs &
+   Omit<TableVariantsProps, "isMultiple" | "shadow" | "hasPagination"> &
+-  TableContainerVariantsProps & {css?: CSS; containerCss?: CSS};
++  TableContainerVariantsProps &
++  {css?: CSS; containerCss?: CSS} &
++  Pick<AriaTableProps<T>, "onRowAction" | "onCellAction">;
+ 
+ const defaultProps = {
+   animated: true,\n

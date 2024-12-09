@@ -1,0 +1,1541 @@
+Pull Request Number: 3036
+Title: feat: add form component
+Base Branch: beta/release-next
+Head Branch: feat/form-component
+Author: ryo-manba
+URL: https://github.com/nextui-org/nextui/pull/3036
+State: MERGED
+Created At: 2024-05-21T15:37:09Z
+Merged At: 2024-11-27T19:51:01Z
+Participants: ryo-manba, jrgarciadev, Scholar01, wingkwong
+
+Description:
+📝 Description
+Added a Form component and upgraded the entire react-aria version to resolve typecheck errors from version mismatches.
+The details of the react-aria update are provided in the inline comments of the following PR.
+#3732
+⛳️ Current behavior (updates)
+Currently, there is no Form component available, and the version of react-aria does not support the latest features related to form handling.
+🚀 New behavior
+The new Form component has been added, allowing users to utilize features such as validation behavior switching and error handling through serverErrors. Additionally, the react-aria version has been updated to incorporate the latest form-related improvements.
+
+  
+    
+    
+
+    form-demo.mov
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+A guideline on how to use the new Form component will be added in a separate PR.
+It will be based on the following reference.
+React Aria Forms Guide
+Test
+Please verify the following in each story.
+
+The Form component allows toggling of validationBehavior.
+Error messages are correctly displayed based on the name field when provided via serverErrors.
+
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced form validation capabilities across various components including DatePicker, Autocomplete, and Dropdown.
+
+
+
+Bug Fixes
+
+Enhanced error handling and validation checks in the Dropdown and Autocomplete components.
+
+
+
+Documentation
+
+Updated stories in Storybook for DatePicker and DateRangePicker to demonstrate new server-side validation features.
+
+
+
+Chores
+
+Updated multiple dependencies across various packages to ensure compatibility and access to the latest features and fixes.
+
+Commits:
+- chore: add support validationBehavior aria\n- Merge branch 'canary' into chore/validation-behavior-external\n- chore: add validationBehavior to Provider\n- chore: add autocomplete validation test\n- chore: add checkbox validation test\n- fix(input): require condition\n- docs: add description of validationBehavior props\n- chore: add support validationBehavior props for date components\n- docs(dates): add description of validationBehavior props\n- chore: add changeset\n- chore: format\n- chore: fix test\n- fix: select validationBehavior is not support yet\n- fix: select validationBehavior not supported yet\n- feat: add form component with input support\n- feat: add support form context\n- Merge branch 'canary' into feat/form-component\n- Merge branch 'canary' into feat/form-component\n- chore: wip add support for  form server errors\n- chore: add support checkbox server validation\n- chore: add support radio server validation\n- chore: update pnpm-lock.yaml\n- chore: add support input server validation\n- chore: add support autocomplete server validation\n- Merge branch 'canary' into feat/form-component\n- chore(form): add server validation stories\n- Merge remote-tracking branch 'origin' into feat/form-component\n- chore: fix test\n- chore: add date-picker validation test\n- chore: update form stories\n- chore: add changeset\n- chore: update react-aria version\n- chore: add pnpm-lock.yaml\n- chore: update react-aria version\n- chore: add comment\n- chore: update react-aria version\n- chore: fix change set\n- Merge branch 'canary' into feat/form-component\n- Merge branch 'canary' into feat/form-component\n- chore: export form component in the main package\n- fix: conflicts\n- fix: conflicts\n- Merge branch 'canary' into feat/form-component\n- chore: upgrade react-aria\n- chore: fixed internationalized/date version\n- fix: build error\n- chore: upgrade docs react-aria version\n- fix: remove comment\n- fix: debug setting\n- Merge branch 'canary' into feat/form-component\n
+
+Labels:
+👀 Status: To Review
+
+Comments:
+- vercel: [vc]: #bhnc2i62NYzYTK1rrXdyP7vIW1Y5ryJq1j8a3NZ0Htc=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi83bXg2Skp5UmVMRm1ZN3FvNzdEUmtEZDZMYlJuIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mZWF0LWZvcm0tY29tcG9uZW50LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktZG9jcy12Mi1naXQtZmVhdC1mb3JtLWNvbXBvbmVudC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX0seyJuYW1lIjoibmV4dHVpLXN0b3J5Ym9vay12MiIsInJvb3REaXJlY3RvcnkiOiJwYWNrYWdlcy9zdG9yeWJvb2siLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLXYyLzM3cUxGYnAyYjNWQnE0Z0M5M29MWkdQTjJHVGEiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZmVhdC1mb3JtLWNvbXBvbmVudC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZmVhdC1mb3JtLWNvbXBvbmVudC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/7mx6JJyReLFmY7qo77DRkDd6LbRn)) | [Visit Preview](https://nextui-docs-v2-git-feat-form-component-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-feat-form-component-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 27, 2024 7:56pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/37qLFbp2b3VBq4gC93oLZGPN2GTa)) | [Visit Preview](https://nextui-storybook-v2-git-feat-form-component-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-feat-form-component-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 27, 2024 7:56pm |
+
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 1aab6281339e9f951a81510eb9eb7d04a379d7a8
+
+**The changes in this PR will be included in the next version bump.**
+
+
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/feat/form-component?filename=.changeset/wicked-ducks-collect.md&value=---%0A%22%40fake-scope%2Ffake-pkg%22%3A%20patch%0A---%0A%0Afeat%3A%20add%20form%20component%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: skip review by coderabbit.ai -->
+
+> [!IMPORTANT]
+> ## Review skipped
+> 
+> Auto reviews are disabled on base/target branches other than the default branch.
+> 
+> <details>
+> <summary>🗂️ Base branches to auto review (5)</summary>
+> 
+> * main
+> * canary
+> * fix/.*
+> * chore/.*
+> * feat/.*
+> 
+> </details>
+> 
+> Please check the settings in the CodeRabbit UI or the `.coderabbit.yaml` file in this repository. To trigger a single review, invoke the `@coderabbitai review` command.
+> 
+> You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file.
+
+<!-- end of auto-generated comment: skip review by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This pull request includes extensive updates to the `package.json` files across multiple packages in the `@nextui-org` project. The updates primarily focus on incrementing dependency versions for various `@react-aria`, `@react-stately`, and `@react-types` packages, as well as adding new dependencies like `@nextui-org/form` in several components. Additionally, some files introduce modifications to testing suites and type definitions, particularly enhancing type safety in the `useDropdown` hook.
+
+## Changes
+
+| File Path                                      | Change Summary                                                                                                               |
+|------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| apps/docs/package.json                         | Updated versions for dependencies, including `@internationalized/date` and several `@react-aria` packages.                |
+| package.json                                   | Updated to version `2.0.0`, modified `devDependencies` for `@react-types/link` and `@react-types/shared`.                 |
+| packages/components/checkbox/package.json      | Added dependency `@nextui-org/form`, updated several `@react-aria` and `@react-stately` packages.                        |
+| packages/components/date-picker/__tests__/date-picker.test.tsx | Added validation tests for the `DatePicker` component, including server-side validation checks.                             |
+| packages/components/date-picker/package.json   | Updated `@internationalized/date`, added `@nextui-org/form`, and updated several `@react-aria` and `@react-stately` packages. |
+| packages/components/date-picker/src/use-date-picker.ts | Enhanced `useDatePicker` hook with new validation behavior and optional classNames property.                                 |
+| packages/components/date-picker/src/use-date-range-picker.ts | Enhanced `useDateRangePicker` hook with new validation behavior and optional classNames property.                           |
+| packages/components/date-picker/stories/date-picker.stories.tsx | Added a new story for server-side validation in the `DatePicker`.                                                          |
+| packages/components/date-picker/stories/date-range-picker.stories.tsx | Added a new story for server-side validation in the `DateRangePicker`.                                                    |
+| packages/core/react/package.json               | Added `@nextui-org/form`, restored `@nextui-org/alert`, removed `@nextui-org/drawer`, updated `@react-aria/visually-hidden`. |
+| packages/core/react/src/index.ts               | Added export for `@nextui-org/form`.                                                                                       |
+| packages/core/system/package.json              | Updated `@internationalized/date`, added `@react-aria/i18n`, and updated several other dependencies.                       |
+| ...                                            | ... (similar updates for other packages like `accordion`, `alert`, `button`, etc.)                                        |
+| packages/hooks/use-draggable/package.json      | Updated `@react-aria/interactions` from `^3.21.1` to `3.22.4`.                                                             |
+| packages/hooks/use-intersection-observer/package.json | Updated versions for `@react-aria/utils`, `@react-aria/ssr`, and `@react-types/shared`.                                   |
+| packages/hooks/use-pagination/package.json      | Updated `@react-aria/i18n` from `3.12.2` to `3.12.3`.                                                                      |
+| packages/utilities/aria-utils/package.json     | Updated several dependencies, including `@react-aria/utils`, `@react-stately/collections`, and `@react-types/shared`.     |
+| .vscode/settings.json                          | Fixed JSON syntax for Tailwind CSS configuration.                                                                          |
+| packages/components/dropdown/src/use-dropdown.ts | Updated return type of `useDropdown` function to `UseDropdownReturn`, enhancing type clarity.                             |
+
+## Sequence Diagram(s)
+```mermaid
+sequenceDiagram
+    participant User
+    participant DatePicker
+    participant Form
+
+    User->>Form: Submit with DatePicker
+    Form->>DatePicker: Validate input
+    DatePicker-->>Form: Return validation result
+    Form-->>User: Display validation feedback
+```
+
+## Possibly related PRs
+- **#3302**: This PR introduces month and year pickers to the `DateRangePicker` and `RangeCalendar` components, which is directly related to the updates in the `package.json` for the `@nextui-org/date-picker` and `@nextui-org/calendar` packages in the main PR, as both involve enhancements to date selection functionalities.
+- **#3501**: This PR adds `@react-types/shared` to the dependencies of the `system-rsc` package, which is relevant as it reflects ongoing maintenance and updates to dependencies that may also affect the components in the main PR.
+- **#3843**: Although this PR focuses on fixing image URLs, it is part of the broader documentation and component updates that may relate to the overall maintenance and enhancement efforts reflected in the main PR.
+
+## Suggested labels
+`📋 Scope : Docs`
+
+## Suggested reviewers
+- jrgarciadev
+- wingkwong
+
+<!-- walkthrough_end -->
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- jrgarciadev: @ryo-manba please pull the changes from canary \n- jrgarciadev: @ryo-manba fix conflicts \n- ryo-manba: @jrgarciadev I've fixed it.
+\n- ryo-manba: When merging, please close the related issue in this PR.
+- https://github.com/nextui-org/nextui/pull/3732
+\n- Scholar01: Thank you for your contribution, I have been looking forward to this update for a long time!
+
+Because in nextjs, collection controls will fail in server-side components, which is painful for me.\n- Scholar01: 👀👀 🙏\n- jrgarciadev: @ryo-manba I uninstalled `react-aria-components` and moved only the needed types and functions to the `form` package this helps with decreasing the package size https://github.com/nextui-org/nextui/pull/3036/commits/3cf79887508b64e6a3efd4d319b51823598ee003, all tests passed\n
+
+Files Changed:
+- .changeset/fuzzy-lies-brush.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/table": patch
++---
++
++The `layoutNode` prop has been removed due to the update to react-aria.\n- .changeset/polite-mails-kneel.md (added, 47 changes)\n  Patch: @@ -0,0 +1,47 @@
++---
++"@nextui-org/accordion": patch
++"@nextui-org/avatar": patch
++"@nextui-org/breadcrumbs": patch
++"@nextui-org/button": patch
++"@nextui-org/calendar": patch
++"@nextui-org/card": patch
++"@nextui-org/chip": patch
++"@nextui-org/date-input": patch
++"@nextui-org/divider": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/kbd": patch
++"@nextui-org/link": patch
++"@nextui-org/listbox": patch
++"@nextui-org/menu": patch
++"@nextui-org/modal": patch
++"@nextui-org/navbar": patch
++"@nextui-org/pagination": patch
++"@nextui-org/popover": patch
++"@nextui-org/progress": patch
++"@nextui-org/select": patch
++"@nextui-org/slider": patch
++"@nextui-org/snippet": patch
++"@nextui-org/switch": patch
++"@nextui-org/tabs": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/user": patch
++"@nextui-org/react": patch
++"@nextui-org/system": patch
++"@nextui-org/system-rsc": patch
++"@nextui-org/use-aria-accordion": patch
++"@nextui-org/use-aria-accordion-item": patch
++"@nextui-org/use-aria-button": patch
++"@nextui-org/use-aria-link": patch
++"@nextui-org/use-aria-menu": patch
++"@nextui-org/use-aria-modal-overlay": patch
++"@nextui-org/use-aria-multiselect": patch
++"@nextui-org/use-aria-overlay": patch
++"@nextui-org/use-aria-toggle-button": patch
++"@nextui-org/use-disclosure": patch
++"@nextui-org/use-intersection-observer": patch
++"@nextui-org/use-is-mobile": patch
++"@nextui-org/use-pagination": patch
++"@nextui-org/aria-utils": patch
++---
++
++update react-aria version\n- .changeset/purple-berries-play.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/form": patch
++---
++
++add form component\n- .changeset/sharp-pianos-pump.md (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++---
++"@nextui-org/autocomplete": patch
++"@nextui-org/checkbox": patch
++"@nextui-org/date-picker": patch
++"@nextui-org/input": patch
++"@nextui-org/radio": patch
++---
++
++support server validation with form\n- .vscode/settings.json (modified, 2 changes)\n  Patch: @@ -10,5 +10,5 @@
+   },
+   "tailwindCSS.experimental.classRegex": [
+     ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
+-  ]
++  ],
+ }\n- apps/docs/package.json (modified, 18 changes)\n  Patch: @@ -20,7 +20,7 @@
+     "@emotion/is-prop-valid": "^1.3.1",
+     "@iconify/icons-solar": "^1.2.3",
+     "@iconify/react": "^4.1.1",
+-    "@internationalized/date": "3.5.5",
++    "@internationalized/date": "3.5.6",
+     "@mapbox/rehype-prism": "^0.6.0",
+     "@nextui-org/aria-utils": "workspace:*",
+     "@nextui-org/badge": "workspace:*",
+@@ -39,14 +39,14 @@
+     "@nextui-org/use-infinite-scroll": "workspace:*",
+     "@nextui-org/use-is-mobile": "workspace:*",
+     "@radix-ui/react-scroll-area": "^1.0.5",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/i18n": "3.11.1",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/selection": "3.18.1",
+-    "@react-aria/ssr": "3.9.4",
+-    "@react-aria/utils": "3.24.1",
++    "@react-aria/focus": "3.18.4",
++    "@react-aria/i18n": "3.12.3",
++    "@react-aria/interactions": "3.22.4",
++    "@react-aria/selection": "3.20.1",
++    "@react-aria/ssr": "3.9.6",
++    "@react-aria/utils": "3.25.3",
+     "@react-aria/virtualizer": "3.10.1",
+-    "@react-aria/visually-hidden": "3.8.12",
++    "@react-aria/visually-hidden": "3.8.17",
+     "@react-stately/data": "3.11.4",
+     "@react-stately/layout": "3.13.9",
+     "@react-stately/tree": "3.8.1",
+@@ -100,7 +100,7 @@
+     "@docusaurus/utils": "2.0.0-beta.3",
+     "@next/bundle-analyzer": "^13.4.6",
+     "@next/env": "^13.4.12",
+-    "@react-types/shared": "3.24.1",
++    "@react-types/shared": "3.25.0",
+     "@tailwindcss/typography": "^0.5.9",
+     "@types/canvas-confetti": "^1.4.2",
+     "@types/marked": "^5.0.0",\n- package.json (modified, 6 changes)\n  Patch: @@ -69,9 +69,9 @@
+     "@commitlint/cli": "^17.2.0",
+     "@commitlint/config-conventional": "^17.2.0",
+     "@react-bootstrap/babel-preset": "^2.1.0",
+-    "@react-types/link": "^3.4.4",
+-    "@react-types/shared": "3.24.1",
+-    "@storybook/react": "^8.4.5",
++    "@react-types/link": "3.5.7",
++    "@react-types/shared": "3.25.0",
++   "@storybook/react": "^8.4.5",
+     "@swc/core": "^1.3.35",
+     "@swc/jest": "^0.2.24",
+     "@testing-library/dom": "^10.4.0",\n- packages/components/accordion/package.json (modified, 14 changes)\n  Patch: @@ -55,13 +55,13 @@
+     "@nextui-org/divider": "workspace:*",
+     "@nextui-org/use-aria-accordion": "workspace:*",
+     "@nextui-org/dom-animation": "workspace:*",
+-    "@react-aria/interactions": "3.22.2",
+-    "@react-aria/focus": "3.18.2",
+-    "@react-aria/utils": "3.25.2",
+-    "@react-stately/tree": "3.8.4",
+-    "@react-aria/button": "3.9.8",
+-    "@react-types/accordion": "3.0.0-alpha.23",
+-    "@react-types/shared": "3.24.1"
++    "@react-aria/interactions": "3.22.4",
++    "@react-aria/focus": "3.18.4",
++    "@react-aria/utils": "3.25.3",
++    "@react-stately/tree": "3.8.5",
++    "@react-aria/button": "3.10.1",
++    "@react-types/accordion": "3.0.0-alpha.24",
++    "@react-types/shared": "3.25.0"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/alert/package.json (modified, 6 changes)\n  Patch: @@ -47,9 +47,9 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+-    "@nextui-org/button": "workspace:*",
+-    "@react-stately/utils": "3.10.1",
+-    "@react-aria/utils": "3.24.1"
++    "@react-stately/utils": "3.10.4",
++    "@react-aria/utils": "3.25.3",
++    "@nextui-org/button": "workspace:*"
+   },
+   "devDependencies": {
+     "@nextui-org/system": "workspace:*",\n- packages/components/autocomplete/__tests__/autocomplete.test.tsx (modified, 194 changes)\n  Patch: @@ -3,6 +3,7 @@ import * as React from "react";
+ import {within, render, renderHook, act} from "@testing-library/react";
+ import userEvent, {UserEvent} from "@testing-library/user-event";
+ import {useForm} from "react-hook-form";
++import {Form} from "@nextui-org/form";
+ 
+ import {Autocomplete, AutocompleteItem, AutocompleteProps, AutocompleteSection} from "../src";
+ import {Modal, ModalContent, ModalBody, ModalHeader, ModalFooter} from "../../modal/src";
+@@ -588,6 +589,60 @@ describe("Autocomplete", () => {
+     expect(autocomplete2).toHaveFocus();
+   });
+ 
++  it("should work when key equals textValue", async () => {
++    const wrapper = render(
++      <Autocomplete
++        aria-label="Favorite Animal"
++        data-testid="when-key-equals-textValue"
++        defaultSelectedKey="cat"
++        items={itemsData}
++        label="Favorite Animal"
++      >
++        {(item) => <AutocompleteItem key={item.value}>{item.value}</AutocompleteItem>}
++      </Autocomplete>,
++    );
++
++    const autocomplete = wrapper.getByTestId("when-key-equals-textValue");
++
++    const user = userEvent.setup();
++
++    await user.click(autocomplete);
++
++    expect(autocomplete).toHaveValue("cat");
++    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++
++    let listboxItems = wrapper.getAllByRole("option");
++
++    await user.click(listboxItems[1]);
++
++    expect(autocomplete).toHaveValue("dog");
++    expect(autocomplete).toHaveAttribute("aria-expanded", "false");
++  });
++
++  it("should work when key equals textValue (controlled)", async () => {
++    const wrapper = render(
++      <ControlledAutocomplete data-testid="when-key-equals-textValue" items={itemsData}>
++        {(item) => <AutocompleteItem key={item.value}>{item.value}</AutocompleteItem>}
++      </ControlledAutocomplete>,
++    );
++
++    const autocomplete = wrapper.getByTestId("when-key-equals-textValue");
++
++    const user = userEvent.setup();
++
++    await user.click(autocomplete);
++
++    expect(autocomplete).toHaveValue("cat");
++    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++
++    let listboxItems = wrapper.getAllByRole("option");
++
++    await user.click(listboxItems[1]);
++
++    expect(autocomplete).toHaveValue("dog");
++    expect(autocomplete).toHaveAttribute("aria-expanded", "false");
++  });
++
+   describe("validation", () => {
+     let user;
+ 
+@@ -598,9 +653,9 @@ describe("Autocomplete", () => {
+     describe("validationBehavior=native", () => {
+       it("supports isRequired", async () => {
+         const {getByTestId, getByRole, findByRole} = render(
+-          <form data-testid="form">
++          <Form data-testid="form">
+             <AutocompleteExample isRequired validationBehavior="native" />
+-          </form>,
++          </Form>,
+         );
+ 
+         const input = getByRole("combobox") as HTMLInputElement;
+@@ -628,15 +683,71 @@ describe("Autocomplete", () => {
+         await user.click(items[0]);
+         expect(input).toHaveAttribute("aria-describedby");
+       });
++
++      it("supports server validation", async () => {
++        function Test() {
++          const [serverErrors, setServerErrors] = React.useState({});
++          const onSubmit = (e) => {
++            e.preventDefault();
++            setServerErrors({
++              value: "Invalid value.",
++            });
++          };
++
++          return (
++            <Form validationErrors={serverErrors} onSubmit={onSubmit}>
++              <AutocompleteExample data-testid="input" name="value" validationBehavior="native" />
++              <button data-testid="submit" type="submit">
++                Submit
++              </button>
++            </Form>
++          );
++        }
++
++        const {getByTestId, getByRole} = render(<Test />);
++
++        const input = getByTestId("input") as HTMLInputElement;
++
++        expect(input).not.toHaveAttribute("aria-describedby");
++
++        await user.click(getByTestId("submit"));
++
++        expect(input).toHaveAttribute("aria-describedby");
++        expect(document.getElementById(input.getAttribute("aria-describedby")!)).toHaveTextContent(
++          "Invalid value.",
++        );
++        expect(input.validity.valid).toBe(false);
++
++        await user.tab({shift: true});
++        await user.keyboard("[ArrowRight]Ze");
++
++        act(() => {
++          jest.runAllTimers();
++        });
++
++        const listbox = getByRole("listbox");
++        const items = within(listbox).getAllByRole("option");
++
++        await user.click(items[0]);
++        act(() => {
++          jest.runAllTimers();
++        });
++
++        expect(input).toHaveAttribute("aria-describedby");
++        await user.tab();
++
++        expect(input).not.toHaveAttribute("aria-describedby");
++        expect(input.validity.valid).toBe(true);
++      });
+     });
+ 
+     describe("validationBehavior=aria", () => {
+       it("supports validate function", async () => {
+         let {getByRole, findByRole} = render(
+           <form data-testid="form">
+             <AutocompleteExample
+-              defaultInputValue="Penguin"
+-              validate={(v) => (v.inputValue === "Penguin" ? "Invalid value" : null)}
++              defaultSelectedKey="penguin"
++              validate={(v) => (v.selectedKey === "penguin" ? "Invalid value" : null)}
+               validationBehavior="aria"
+             />
+           </form>,
+@@ -664,61 +775,42 @@ describe("Autocomplete", () => {
+         expect(input).not.toHaveAttribute("aria-describedby");
+         expect(input).not.toHaveAttribute("aria-invalid");
+       });
+-    });
+-  });
+ 
+-  it("should work when key equals textValue", async () => {
+-    const wrapper = render(
+-      <Autocomplete
+-        aria-label="Favorite Animal"
+-        data-testid="when-key-equals-textValue"
+-        defaultSelectedKey="cat"
+-        items={itemsData}
+-        label="Favorite Animal"
+-      >
+-        {(item) => <AutocompleteItem key={item.value}>{item.value}</AutocompleteItem>}
+-      </Autocomplete>,
+-    );
+-
+-    const autocomplete = wrapper.getByTestId("when-key-equals-textValue");
+-
+-    const user = userEvent.setup();
+-
+-    await user.click(autocomplete);
+-
+-    expect(autocomplete).toHaveValue("cat");
+-    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
+-
+-    let listboxItems = wrapper.getAllByRole("option");
+-
+-    await user.click(listboxItems[1]);
+-
+-    expect(autocomplete).toHaveValue("dog");
+-    expect(autocomplete).toHaveAttribute("aria-expanded", "false");
+-  });
+-
+-  it("should work when key equals textValue (controlled)", async () => {
+-    const wrapper = render(
+-      <ControlledAutocomplete data-testid="when-key-equals-textValue" items={itemsData}>
+-        {(item) => <AutocompleteItem key={item.value}>{item.value}</AutocompleteItem>}
+-      </ControlledAutocomplete>,
+-    );
++      it("supports server validation", async () => {
++        const {getByTestId, getByRole} = render(
++          <Form validationErrors={{value: "Invalid value"}}>
++            <AutocompleteExample data-testid="input" name="value" />
++          </Form>,
++        );
+ 
+-    const autocomplete = wrapper.getByTestId("when-key-equals-textValue");
++        const input = getByTestId("input");
+ 
+-    const user = userEvent.setup();
++        expect(input).toHaveAttribute("aria-describedby");
++        expect(input).toHaveAttribute("aria-invalid", "true");
++        expect(document.getElementById(input.getAttribute("aria-describedby")!)).toHaveTextContent(
++          "Invalid value",
++        );
+ 
+-    await user.click(autocomplete);
++        await user.tab();
++        await user.keyboard("[ArrowRight]Ze");
+ 
+-    expect(autocomplete).toHaveValue("cat");
+-    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++        act(() => {
++          jest.runAllTimers();
++        });
+ 
+-    let listboxItems = wrapper.getAllByRole("option");
++        const listbox = getByRole("listbox");
++        const items = within(listbox).getAllByRole("option");
+ 
+-    await user.click(listboxItems[1]);
++        await user.click(items[0]);
++        act(() => {
++          jest.runAllTimers();
++        });
+ 
+-    expect(autocomplete).toHaveValue("dog");
+-    expect(autocomplete).toHaveAttribute("aria-expanded", "false");
++        await user.tab();
++        expect(input).not.toHaveAttribute("aria-describedby");
++        expect(input).not.toHaveAttribute("aria-invalid");
++      });
++    });
+   });
+ });
+ \n- packages/components/autocomplete/package.json (modified, 23 changes)\n  Patch: @@ -41,6 +41,7 @@
+     "react-dom": ">=18 || >=19.0.0-rc.0"
+   },
+   "dependencies": {
++    "@nextui-org/form": "workspace:*",
+     "@nextui-org/aria-utils": "workspace:*",
+     "@nextui-org/button": "workspace:*",
+     "@nextui-org/input": "workspace:*",
+@@ -53,15 +54,15 @@
+     "@nextui-org/spinner": "workspace:*",
+     "@nextui-org/use-aria-button": "workspace:*",
+     "@nextui-org/use-safe-layout-effect": "workspace:*",
+-    "@react-aria/combobox": "3.10.3",
+-    "@react-aria/focus": "3.18.2",
+-    "@react-aria/i18n": "3.12.2",
+-    "@react-aria/interactions": "3.22.2",
+-    "@react-aria/utils": "3.25.2",
+-    "@react-aria/visually-hidden": "3.8.15",
+-    "@react-stately/combobox": "3.9.2",
+-    "@react-types/combobox": "3.12.1",
+-    "@react-types/shared": "3.24.1"
++    "@react-aria/combobox": "3.10.5",
++    "@react-aria/focus": "3.18.4",
++    "@react-aria/i18n": "3.12.3",
++    "@react-aria/interactions": "3.22.4",
++    "@react-aria/utils": "3.25.3",
++    "@react-aria/visually-hidden": "3.8.17",
++    "@react-stately/combobox": "3.10.0",
++    "@react-types/combobox": "3.13.0",
++    "@react-types/shared": "3.25.0"
+   },
+   "devDependencies": {
+     "@nextui-org/avatar": "workspace:*",
+@@ -70,12 +71,12 @@
+     "@nextui-org/system": "workspace:*",
+     "@nextui-org/theme": "workspace:*",
+     "@nextui-org/use-infinite-scroll": "workspace:*",
+-    "@react-stately/data": "3.11.6",
++    "@react-stately/data": "3.11.7",
+     "clean-package": "2.2.0",
+     "framer-motion": "11.9.0",
+     "react": "^18.0.0",
+     "react-dom": "^18.0.0",
+     "react-hook-form": "^7.51.3"
+   },
+   "clean-package": "../../../clean-package.config.json"
+-}
+\ No newline at end of file
++}\n- packages/components/autocomplete/src/use-autocomplete.ts (modified, 4 changes)\n  Patch: @@ -18,6 +18,7 @@ import {chain, mergeProps} from "@react-aria/utils";
+ import {ButtonProps} from "@nextui-org/button";
+ import {AsyncLoadable, PressEvent} from "@react-types/shared";
+ import {useComboBox} from "@react-aria/combobox";
++import {FormContext, useSlottedContext} from "@nextui-org/form";
+ import {ariaShouldCloseOnInteractOutside} from "@nextui-org/aria-utils";
+ 
+ interface Props<T> extends Omit<HTMLNextUIProps<"input">, keyof ComboBoxProps<T>> {
+@@ -137,6 +138,7 @@ export type UseAutocompleteProps<T> = Props<T> &
+ 
+ export function useAutocomplete<T extends object>(originalProps: UseAutocompleteProps<T>) {
+   const globalContext = useProviderContext();
++  const {validationBehavior: formValidationBehavior} = useSlottedContext(FormContext) || {};
+ 
+   const [props, variantProps] = mapPropsVariants(originalProps, autocomplete.variantKeys);
+   const disableAnimation =
+@@ -178,7 +180,7 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     isVirtualized,
+     maxListboxHeight = 256,
+     itemHeight = 32,
+-    validationBehavior = globalContext?.validationBehavior ?? "aria",
++    validationBehavior = formValidationBehavior ?? globalContext?.validationBehavior ?? "aria",
+     className,
+     classNames,
+     errorMessage,\n- packages/components/autocomplete/stories/autocomplete.stories.tsx (modified, 35 changes)\n  Patch: @@ -18,6 +18,7 @@ import {useInfiniteScroll} from "@nextui-org/use-infinite-scroll";
+ import {PetBoldIcon, SearchLinearIcon, SelectorIcon} from "@nextui-org/shared-icons";
+ import {Avatar} from "@nextui-org/avatar";
+ import {Button} from "@nextui-org/button";
++import {Form} from "@nextui-org/form";
+ 
+ import {Autocomplete, AutocompleteItem, AutocompleteProps, AutocompleteSection} from "../src";
+ 
+@@ -855,6 +856,33 @@ const WithReactHookFormTemplate = (args: AutocompleteProps) => {
+   );
+ };
+ 
++const ServerValidationTemplate = (args: AutocompleteProps) => {
++  const [serverErrors, setServerErrors] = React.useState({});
++  const onSubmit = (e) => {
++    e.preventDefault();
++    setServerErrors({
++      animals: "Please select a valid animal.",
++    });
++  };
++
++  return (
++    <Form
++      className="flex flex-col items-start gap-2"
++      validationErrors={serverErrors}
++      onSubmit={onSubmit}
++    >
++      <Autocomplete {...args} className="max-w-xs" label="Favorite Animal" name="animals">
++        <AutocompleteItem key="red_panda">Red Panda</AutocompleteItem>
++        <AutocompleteItem key="cat">Cat</AutocompleteItem>
++        <AutocompleteItem key="dog">Dog</AutocompleteItem>
++      </Autocomplete>
++      <button className={button({color: "primary"})} type="submit">
++        Submit
++      </button>
++    </Form>
++  );
++};
++
+ export const Default = {
+   render: Template,
+   args: {
+@@ -1030,6 +1058,13 @@ export const WithValidation = {
+   },
+ };
+ 
++export const WithServerValidation = {
++  render: ServerValidationTemplate,
++  args: {
++    ...defaultProps,
++  },
++};
++
+ export const WithSections = {
+   render: WithSectionsTemplate,
+ \n- packages/components/avatar/package.json (modified, 6 changes)\n  Patch: @@ -43,9 +43,9 @@
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/use-image": "workspace:*",
+-    "@react-aria/interactions": "3.22.2",
+-    "@react-aria/focus": "3.18.2",
+-    "@react-aria/utils": "3.25.2"
++    "@react-aria/interactions": "3.22.4",
++    "@react-aria/focus": "3.18.4",
++    "@react-aria/utils": "3.25.3"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/breadcrumbs/package.json (modified, 10 changes)\n  Patch: @@ -43,11 +43,11 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+-    "@react-aria/focus": "3.18.2",
+-    "@react-aria/breadcrumbs": "3.5.16",
+-    "@react-aria/utils": "3.25.2",
+-    "@react-types/breadcrumbs": "3.7.7",
+-    "@react-types/shared": "3.24.1"
++    "@react-aria/focus": "3.18.4",
++    "@react-aria/breadcrumbs": "3.5.18",
++    "@react-aria/utils": "3.25.3",
++    "@react-types/breadcrumbs": "3.7.8",
++    "@react-types/shared": "3.25.0"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/button/package.json (modified, 12 changes)\n  Patch: @@ -46,12 +46,12 @@
+     "@nextui-org/use-aria-button": "workspace:*",
+     "@nextui-org/ripple": "workspace:*",
+     "@nextui-org/spinner": "workspace:*",
+-    "@react-aria/button": "3.9.8",
+-    "@react-aria/interactions": "3.22.2",
+-    "@react-aria/utils": "3.25.2",
+-    "@react-aria/focus": "3.18.2",
+-    "@react-types/shared": "3.24.1",
+-    "@react-types/button": "3.9.6"
++    "@react-aria/button": "3.10.1",
++    "@react-aria/interactions": "3.22.4",
++    "@react-aria/utils": "3.25.3",
++    "@react-aria/focus": "3.18.4",
++    "@react-types/shared": "3.25.0",
++    "@react-types/button": "3.10.0"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/calendar/package.json (modified, 26 changes)\n  Patch: @@ -48,18 +48,18 @@
+     "@nextui-org/use-aria-button": "workspace:*",
+     "@nextui-org/button": "workspace:*",
+     "@nextui-org/dom-animation": "workspace:*",
+-    "@internationalized/date": "3.5.5",
+-    "@react-aria/calendar": "3.5.11",
+-    "@react-aria/focus": "3.18.2",
+-    "@react-aria/i18n": "3.12.2",
+-    "@react-stately/calendar": "3.5.4",
+-    "@react-types/button": "3.9.6",
+-    "@react-aria/visually-hidden": "3.8.15",
+-    "@react-aria/utils": "3.25.2",
+-    "@react-stately/utils": "3.10.3",
+-    "@react-types/calendar": "3.4.9",
+-    "@react-aria/interactions": "3.22.2",
+-    "@react-types/shared": "3.24.1",
++    "@internationalized/date": "3.5.6",
++    "@react-aria/calendar": "3.5.13",
++    "@react-aria/focus": "3.18.4",
++    "@react-aria/i18n": "3.12.3",
++    "@react-stately/calendar": "3.5.5",
++    "@react-types/button": "3.10.0",
++    "@react-aria/visually-hidden": "3.8.17",
++    "@react-aria/utils": "3.25.3",
++    "@react-stately/utils": "3.10.4",
++    "@react-types/calendar": "3.4.10",
++    "@react-aria/interactions": "3.22.4",
++    "@react-types/shared": "3.25.0",
+     "scroll-into-view-if-needed": "3.0.10",
+     "@types/lodash.debounce": "^4.0.7"
+   },
+@@ -74,4 +74,4 @@
+     "react-dom": "^18.0.0"
+   },
+   "clean-package": "../../../clean-package.config.json"
+-}
+\ No newline at end of file
++}\n- packages/components/card/package.json (modified, 10 changes)\n  Patch: @@ -45,11 +45,11 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/use-aria-button": "workspace:*",
+     "@nextui-org/ripple": "workspace:*",
+-    "@react-aria/focus": "3.18.2",
+-    "@react-aria/utils": "3.25.2",
+-    "@react-aria/interactions": "3.22.2",
+-    "@react-aria/button": "3.9.8",
+-    "@react-types/shared": "3.24.1"
++    "@react-aria/focus": "3.18.4",
++    "@react-aria/utils": "3.25.3",
++    "@react-aria/interactions": "3.22.4",
++    "@react-aria/button": "3.10.1",
++    "@react-types/shared": "3.25.0"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/checkbox/__tests__/checkbox-group.test.tsx (modified, 84 changes)\n  Patch: @@ -1,5 +1,6 @@
+ import * as React from "react";
+ import {act, render} from "@testing-library/react";
++import {Form} from "@nextui-org/form";
+ import userEvent, {UserEvent} from "@testing-library/user-event";
+ 
+ import {CheckboxGroup, Checkbox} from "../src";
+@@ -281,6 +282,60 @@ describe("Checkbox.Group", () => {
+           expect(input.validity.valid).toBe(true);
+         }
+       });
++
++      it("supports server validation", async () => {
++        function Test() {
++          const [serverErrors, setServerErrors] = React.useState({});
++          const onSubmit = (e) => {
++            e.preventDefault();
++            setServerErrors({
++              terms: "You must accept the terms.",
++            });
++          };
++
++          return (
++            <Form validationErrors={serverErrors} onSubmit={onSubmit}>
++              <CheckboxGroup
++                label="Agree to the following"
++                name="terms"
++                validationBehavior="native"
++              >
++                <Checkbox value="terms">Terms and conditions</Checkbox>
++                <Checkbox value="cookies">Cookies</Checkbox>
++                <Checkbox value="privacy">Privacy policy</Checkbox>
++              </CheckboxGroup>
++              <button type="submit">Submit</button>
++            </Form>
++          );
++        }
++
++        const {getAllByRole, getByRole} = render(<Test />);
++
++        const group = getByRole("group");
++
++        expect(group).not.toHaveAttribute("aria-describedby");
++        const button = getByRole("button");
++
++        expect(button).toBeVisible();
++        await user.click(button);
++
++        expect(group).toHaveAttribute("aria-describedby");
++        expect(document.getElementById(group.getAttribute("aria-describedby")!)).toHaveTextContent(
++          "You must accept the terms.",
++        );
++
++        const checkboxes = getAllByRole("checkbox") as HTMLInputElement[];
++
++        for (let input of checkboxes) {
++          expect(input.validity.valid).toBe(false);
++        }
++
++        await user.click(checkboxes[0]);
++        expect(group).not.toHaveAttribute("aria-describedby");
++        for (let input of checkboxes) {
++          expect(input.validity.valid).toBe(true);
++        }
++      });
+     });
+ 
+     describe("validationBehavior=aria", () => {
+@@ -320,6 +375,35 @@ describe("Checkbox.Group", () => {
+         await user.click(checkboxes[2]);
+         expect(group).toHaveAttribute("aria-describedby");
+       });
++
++      it("supports server validation", async () => {
++        const {getAllByRole, getByRole} = render(
++          <Form validationBehavior="aria" validationErrors={{terms: "You must accept the terms"}}>
++            <CheckboxGroup label="Agree to the following" name="terms">
++              <Checkbox value="terms">Terms and conditions</Checkbox>
++              <Checkbox value="cookies">Cookies</Checkbox>
++              <Checkbox value="privacy">Privacy policy</Checkbox>
++            </CheckboxGroup>
++          </Form>,
++        );
++
++        const group = getByRole("group");
++
++        expect(group).toHaveAttribute("aria-describedby");
++        expect(document.getElementById(group.getAttribute("aria-describedby")!)).toHaveTextContent(
++          "You must accept the terms",
++        );
++
++        const checkboxes = getAllByRole("checkbox");
++
++        for (let input of checkboxes) {
++          expect(input).toHaveAttribute("aria-invalid", "true");
++        }
++
++        // TODO: Fix the following functions to work
++        // await user.click(checkboxes[0]);
++        // expect(group).not.toHaveAttribute("aria-describedby");
++      });
+     });
+   });
+ });\n- packages/components/checkbox/package.json (modified, 21 changes)\n  Patch: @@ -40,19 +40,20 @@
+     "react-dom": ">=18 || >=19.0.0-rc.0"
+   },
+   "dependencies": {
++    "@nextui-org/form": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/use-callback-ref": "workspace:*",
+     "@nextui-org/use-safe-layout-effect": "workspace:*",
+-    "@react-aria/checkbox": "3.14.6",
+-    "@react-aria/focus": "3.18.2",
+-    "@react-aria/interactions": "3.22.2",
+-    "@react-aria/utils": "3.25.2",
+-    "@react-aria/visually-hidden": "3.8.15",
+-    "@react-stately/checkbox": "3.6.8",
+-    "@react-stately/toggle": "3.7.7",
+-    "@react-types/checkbox": "3.8.3",
+-    "@react-types/shared": "3.24.1"
++    "@react-aria/checkbox": "3.14.8",
++    "@react-aria/focus": "3.18.4",
++    "@react-aria/interactions": "3.22.4",
++    "@react-aria/utils": "3.25.3",
++    "@react-aria/visually-hidden": "3.8.17",
++    "@react-stately/checkbox": "3.6.9",
++    "@react-stately/toggle": "3.7.8",
++    "@react-types/checkbox": "3.8.4",
++    "@react-types/shared": "3.25.0"
+   },
+   "devDependencies": {
+     "@nextui-org/chip": "workspace:*",
+@@ -67,4 +68,4 @@
+     "react-hook-form": "^7.51.3"
+   },
+   "clean-package": "../../../clean-package.config.json"
+-}
+\ No newline at end of file
++}\n- packages/components/checkbox/src/checkbox-group.tsx (modified, 7 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import {forwardRef} from "@nextui-org/system";
+-import {useMemo} from "react";
+ 
+ import {CheckboxGroupProvider} from "./checkbox-group-context";
+ import {UseCheckboxGroupProps, useCheckboxGroup} from "./use-checkbox-group";
+@@ -21,16 +20,14 @@ const CheckboxGroup = forwardRef<"div", CheckboxGroupProps>((props, ref) => {
+     getErrorMessageProps,
+   } = useCheckboxGroup({...props, ref});
+ 
+-  const errorMessageContent = useMemo(() => errorMessage, [isInvalid]);
+-
+   return (
+     <div {...getGroupProps()}>
+       {label && <span {...getLabelProps()}>{label}</span>}
+       <div {...getWrapperProps()}>
+         <CheckboxGroupProvider value={context}>{children}</CheckboxGroupProvider>
+       </div>
+-      {isInvalid && errorMessageContent ? (
+-        <div {...getErrorMessageProps()}>{errorMessageContent}</div>
++      {isInvalid && errorMessage ? (
++        <div {...getErrorMessageProps()}>{errorMessage}</div>
+       ) : description ? (
+         <div {...getDescriptionProps()}>{description}</div>
+       ) : null}\n- packages/components/checkbox/src/use-checkbox-group.ts (modified, 8 changes)\n  Patch: @@ -2,7 +2,6 @@ import type {CheckboxGroupSlots, SlotsToClasses} from "@nextui-org/theme";
+ import type {AriaCheckboxGroupProps} from "@react-types/checkbox";
+ import type {Orientation} from "@react-types/shared";
+ import type {ReactRef} from "@nextui-org/react-utils";
+-import type {CheckboxGroupProps} from "@react-types/checkbox";
+ import type {HTMLNextUIProps, PropGetter} from "@nextui-org/system";
+ 
+ import {useProviderContext} from "@nextui-org/system";
+@@ -13,6 +12,7 @@ import {useCheckboxGroup as useReactAriaCheckboxGroup} from "@react-aria/checkbo
+ import {CheckboxGroupState, useCheckboxGroupState} from "@react-stately/checkbox";
+ import {filterDOMProps, useDOMRef} from "@nextui-org/react-utils";
+ import {clsx, safeAriaLabel} from "@nextui-org/shared-utils";
++import {FormContext, useSlottedContext} from "@nextui-org/form";
+ 
+ import {CheckboxProps} from "./index";
+ 
+@@ -71,6 +71,7 @@ export type ContextType = {
+ 
+ export function useCheckboxGroup(props: UseCheckboxGroupProps) {
+   const globalContext = useProviderContext();
++  const {validationBehavior: formValidationBehavior} = useSlottedContext(FormContext) || {};
+ 
+   const {
+     as,
+@@ -89,7 +90,7 @@ export function useCheckboxGroup(props: UseCheckboxGroupProps) {
+     orientation = "vertical",
+     lineThrough = false,
+     isDisabled = false,
+-    validationBehavior = globalContext?.validationBehavior ?? "aria",
++    validationBehavior = formValidationBehavior ?? globalContext?.validationBehavior ?? "aria",
+     disableAnimation = globalContext?.disableAnimation ?? false,
+     isReadOnly,
+     isRequired,
+@@ -105,7 +106,7 @@ export function useCheckboxGroup(props: UseCheckboxGroupProps) {
+ 
+   const domRef = useDOMRef(ref);
+ 
+-  const checkboxGroupProps = useMemo<CheckboxGroupProps>(() => {
++  const checkboxGroupProps = useMemo(() => {
+     return {
+       ...otherProps,
+       value,
+@@ -136,7 +137,6 @@ export function useCheckboxGroup(props: UseCheckboxGroupProps) {
+   ]);
+ 
+   const groupState = useCheckboxGroupState(checkboxGroupProps);
+-
+   const {
+     labelProps,
+     groupProps,\n- packages/components/checkbox/src/use-checkbox.ts (modified, 6 changes)\n  Patch: @@ -18,6 +18,7 @@ import {
+ } from "@react-aria/checkbox";
+ import {useSafeLayoutEffect} from "@nextui-org/use-safe-layout-effect";
+ import {mergeRefs} from "@nextui-org/react-utils";
++import {FormContext, useSlottedContext} from "@nextui-org/form";
+ 
+ import {useCheckboxGroupContext} from "./checkbox-group-context";
+ 
+@@ -75,6 +76,7 @@ export type UseCheckboxProps = Omit<Props, "defaultChecked"> &
+ export function useCheckbox(props: UseCheckboxProps = {}) {
+   const globalContext = useProviderContext();
+   const groupContext = useCheckboxGroupContext();
++  const {validationBehavior: formValidationBehavior} = useSlottedContext(FormContext) || {};
+   const isInGroup = !!groupContext;
+ 
+   const {
+@@ -97,7 +99,9 @@ export function useCheckbox(props: UseCheckboxProps = {}) {
+     validationState,
+     isInvalid = validationState ? validationState === "invalid" : groupContext?.isInvalid ?? false,
+     isIndeterminate = false,
+-    validationBehavior = groupContext?.validationBehavior ?? "aria",
++    validationBehavior = isInGroup
++      ? groupContext.validationBehavior
++      : formValidationBehavior ?? globalContext?.validationBehavior ?? "aria",
+     defaultSelected,
+     classNames,
+     className,\n- packages/components/checkbox/stories/checkbox-group.stories.tsx (modified, 45 changes)\n  Patch: @@ -4,6 +4,7 @@ import React from "react";
+ import {Meta} from "@storybook/react";
+ import {checkbox} from "@nextui-org/theme";
+ import {button} from "@nextui-org/theme";
++import {Form} from "@nextui-org/form";
+ 
+ import {CheckboxGroup, Checkbox, CheckboxGroupProps} from "../src";
+ 
+@@ -90,7 +91,7 @@ const InvalidTemplate = (args: CheckboxGroupProps) => {
+ const FormTemplate = (args: CheckboxGroupProps) => {
+   return (
+     <form
+-      className="flex flex-col items-start gap-4"
++      className="flex flex-col items-start gap-2"
+       onSubmit={(e) => {
+         const formData = new FormData(e.currentTarget);
+         const selectedCities = formData.getAll("favorite-cities");
+@@ -135,6 +136,40 @@ const ControlledTemplate = (args: CheckboxGroupProps) => {
+   );
+ };
+ 
++const ServerValidationTemplate = (args: CheckboxGroupProps) => {
++  const [serverErrors, setServerErrors] = React.useState({});
++
++  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
++    e.preventDefault();
++
++    setServerErrors({
++      terms: "Please select a valid animal.",
++    });
++  };
++
++  return (
++    <Form
++      className="flex flex-col items-start gap-2"
++      validationErrors={serverErrors}
++      onSubmit={onSubmit}
++    >
++      <CheckboxGroup
++        {...args}
++        label="Agree to the following"
++        name="terms"
++        validationBehavior="native"
++      >
++        <Checkbox value="terms">Terms and conditions</Checkbox>
++        <Checkbox value="cookies">Cookies</Checkbox>
++        <Checkbox value="privacy">Privacy policy</Checkbox>
++      </CheckboxGroup>
++      <button className={button({color: "primary"})} type="submit">
++        Submit
++      </button>
++    </Form>
++  );
++};
++
+ export const Default = {
+   render: Template,
+ 
+@@ -253,6 +288,14 @@ export const WithValidation = {
+   },
+ };
+ 
++export const WithServerValidation = {
++  render: ServerValidationTemplate,
++
++  args: {
++    ...defaultProps,
++  },
++};
++
+ export const DisableAnimation = {
+   render: Template,
+ \n- packages/components/checkbox/stories/checkbox.stories.tsx (modified, 2 changes)\n  Patch: @@ -75,7 +75,7 @@ const ControlledTemplate = (args: CheckboxProps) => {
+ const FormTemplate = (args: CheckboxProps) => {
+   return (
+     <form
+-      className="flex flex-col items-start gap-4"
++      className="flex flex-col items-start gap-2"
+       onSubmit={(e) => {
+         e.preventDefault();
+         const checkbox = e.target["check"] as HTMLInputElement;\n- packages/components/chip/package.json (modified, 8 changes)\n  Patch: @@ -43,10 +43,10 @@
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+-    "@react-aria/focus": "3.18.2",
+-    "@react-aria/interactions": "3.22.2",
+-    "@react-aria/utils": "3.25.2",
+-    "@react-types/checkbox": "3.8.3"
++    "@react-aria/focus": "3.18.4",
++    "@react-aria/interactions": "3.22.4",
++    "@react-aria/utils": "3.25.3",
++    "@react-types/checkbox": "3.8.4"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/date-input/package.json (modified, 17 changes)\n  Patch: @@ -40,15 +40,16 @@
+     "react-dom": ">=18 || >=19.0.0-rc.0"
+   },
+   "dependencies": {
++    "@nextui-org/form": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+-    "@internationalized/date": "3.5.5",
+-    "@react-aria/datepicker": "3.11.2",
+-    "@react-aria/i18n": "3.12.2",
+-    "@react-stately/datepicker": "3.10.2",
+-    "@react-types/datepicker": "3.8.2",
+-    "@react-types/shared": "3.24.1",
+-    "@react-aria/utils": "3.25.2"
++    "@internationalized/date": "3.5.6",
++    "@react-aria/datepicker": "3.11.4",
++    "@react-aria/i18n": "3.12.3",
++    "@react-stately/datepicker": "3.10.3",
++    "@react-types/datepicker": "3.8.3",
++    "@react-types/shared": "3.25.0",
++    "@react-aria/utils": "3.25.3"
+   },
+   "devDependencies": {
+     "@nextui-org/system": "workspace:*",
+@@ -60,4 +61,4 @@
+     "react-dom": "^18.0.0"
+   },
+   "clean-package": "../../../clean-package.config.json"
+-}
+\ No newline at end of file
++}\n- packages/components/date-input/src/use-date-input.ts (modified, 4 changes)\n  Patch: @@ -18,6 +18,7 @@ import {useDateFieldState} from "@react-stately/datepicker";
+ import {objectToDeps, clsx, dataAttr, getGregorianYearOffset} from "@nextui-org/shared-utils";
+ import {dateInput, cn} from "@nextui-org/theme";
+ import {useMemo} from "react";
++import {FormContext, useSlottedContext} from "@nextui-org/form";
+ 
+ type NextUIBaseProps<T extends DateValue> = Omit<
+   HTMLNextUIProps<"div">,
+@@ -115,6 +116,7 @@ export type UseDateInputProps<T extends DateValue> = Props<T> &
+ 
+ export function useDateInput<T extends DateValue>(originalProps: UseDateInputProps<T>) {
+   const globalContext = useProviderContext();
++  const {validationBehavior: formValidationBehavior} = useSlottedContext(FormContext) || {};
+ 
+   const [props, variantProps] = mapPropsVariants(originalProps, dateInput.variantKeys);
+ 
+@@ -144,7 +146,7 @@ export function useDateInput<T extends DateValue>(originalProps: UseDateInputPro
+     innerWrapperProps: innerWrapperPropsProp,
+     errorMessageProps: errorMessagePropsProp,
+     descriptionProps: descriptionPropsProp,
+-    validationBehavior = globalContext?.validationBehavior ?? "aria",
++    validationBehavior = formValidationBehavior ?? globalContext?.validationBehavior ?? "aria",
+     shouldForceLeadingZeros = true,
+     minValue = globalContext?.defaultDates?.minDate ??
+       new CalendarDate(calendarProp, 1900 + gregorianYearOffset, 1, 1),\n- packages/components/date-input/src/use-time-input.ts (modified, 4 changes)\n  Patch: @@ -14,6 +14,7 @@ import {useTimeFieldState} from "@react-stately/datepicker";
+ import {objectToDeps, clsx, dataAttr} from "@nextui-org/shared-utils";
+ import {dateInput} from "@nextui-org/theme";
+ import {useMemo} from "react";
++import {FormContext, useSlottedContext} from "@nextui-org/form";
+ 
+ type NextUIBaseProps<T extends TimeValue> = Omit<
+   HTMLNextUIProps<"div">,
+@@ -74,6 +75,7 @@ export type UseTimeInputProps<T extends TimeValue> = Props<T> &
+ 
+ export function useTimeInput<T extends TimeValue>(originalProps: UseTimeInputProps<T>) {
+   const globalContext = useProviderContext();
++  const {validationBehavior: formValidationBehavior} = useSlottedContext(FormContext) || {};
+ 
+   const [props, variantProps] = mapPropsVariants(originalProps, dateInput.variantKeys);
+ 
+@@ -92,7 +94,7 @@ export function useTimeInput<T extends TimeValue>(originalProps: UseTimeInputPro
+     fieldProps: fieldPropsProp,
+     errorMessageProps: errorMessagePropsProp,
+     descriptionProps: descriptionPropsProp,
+-    validationBehavior = globalContext?.validationBehavior ?? "aria",
++    validationBehavior = formValidationBehavior ?? globalContext?.validationBehavior ?? "aria",
+     shouldForceLeadingZeros = true,
+     minValue,
+     maxValue,\n- packages/components/date-picker/__tests__/date-picker.test.tsx (modified, 220 changes)\n  Patch: @@ -1,10 +1,11 @@
+ /* eslint-disable jsx-a11y/no-autofocus */
+ import * as React from "react";
+-import {render, act, fireEvent, waitFor} from "@testing-library/react";
++import {render, act, fireEvent, waitFor, within} from "@testing-library/react";
+ import {pointerMap, triggerPress} from "@nextui-org/test-utils";
+ import userEvent from "@testing-library/user-event";
+ import {CalendarDate, CalendarDateTime} from "@internationalized/date";
+ import {NextUIProvider} from "@nextui-org/system";
++import {Form} from "@nextui-org/form";
+ 
+ import {DatePicker as DatePickerBase, DatePickerProps} from "../src";
+ 
+@@ -232,7 +233,7 @@ describe("DatePicker", () => {
+     });
+ 
+     it("should apply custom dateInput classNames", function () {
+-      const {getByRole, getByText} = render(
++      const {getByText} = render(
+         <DatePicker
+           dateInputClassNames={{
+             inputWrapper: "border-green-500",
+@@ -246,7 +247,9 @@ describe("DatePicker", () => {
+ 
+       expect(label).toHaveClass("text-green-500");
+ 
+-      const inputWrapper = getByRole("group");
++      const inputWrapper = document.querySelector<HTMLButtonElement>(
++        `div[data-slot="input-wrapper"]`,
++      )!;
+ 
+       expect(inputWrapper).toHaveClass("border-green-500");
+     });
+@@ -739,4 +742,215 @@ describe("DatePicker", () => {
+       expect(dialog).not.toBeVisible();
+     });
+   });
++
++  describe("validation", () => {
++    describe("validationBehavior=native", () => {
++      it("supports isRequired", async () => {
++        const {getByRole, getByTestId} = render(
++          <form data-testid="form">
++            <DatePicker isRequired label="Date" name="date" validationBehavior="native" />
++          </form>,
++        );
++
++        const group = getByRole("group");
++        const input = document.querySelector("input[name=date]") as HTMLInputElement;
++
++        expect(input).toHaveAttribute("required");
++        expect(input.validity.valid).toBe(false);
++        expect(group).not.toHaveAttribute("aria-describedby");
++
++        act(() => {
++          (getByTestId("form") as HTMLFormElement).checkValidity();
++        });
++
++        expect(group).toHaveAttribute("aria-describedby");
++        const getDescription = () =>
++          group
++            .getAttribute("aria-describedby")
++            ?.split(" ")
++            .map((d) => document.getElementById(d)?.textContent)
++            .join(" ");
++
++        expect(getDescription()).toContain("Constraints not satisfied");
++        expect(document.activeElement).toBe(within(group).getAllByRole("spinbutton")[0]);
++
++        await user.keyboard("[ArrowUp][Tab][ArrowUp][Tab][ArrowUp]");
++
++        expect(getDescription()).toContain("Constraints not satisfied");
++        expect(input.validity.valid).toBe(true);
++      });
++    });
++
++    it("supports validate function", async () => {
++      const {getByRole, getByTestId} = render(
++        <Form data-testid="form">
++          <DatePicker
++            defaultValue={new CalendarDate(2020, 2, 3)}
++            label="Value"
++            name="date"
++            validate={(v) => (v.year < 2022 ? "Invalid value" : null)}
++            validationBehavior="native"
++          />
++        </Form>,
++      );
++
++      const group = getByRole("group");
++      const input = document.querySelector("input[name=date]") as HTMLInputElement;
++      const getDescription = () =>
++        group
++          .getAttribute("aria-describedby")
++          ?.split(" ")
++          .map((d) => document.getElementById(d)?.textContent)
++          .join(" ");
++
++      expect(getDescription()).not.toContain("Invalid value");
++      expect(input.validity.valid).toBe(false);
++
++      act(() => {
++        (getByTestId("form") as HTMLFormElement).checkValidity();
++      });
++
++      expect(group).toHaveAttribute("aria-describedby");
++      expect(getDescription()).toContain("Invalid value");
++      expect(document.activeElement).toBe(within(group).getAllByRole("spinbutton")[0]);
++
++      await user.keyboard("[ArrowRight][ArrowRight]2024");
++
++      expect(getDescription()).toContain("Invalid value");
++      expect(input.validity.valid).toBe(true);
++    });
++
++    it("supports server validation", async () => {
++      function Test() {
++        const [serverErrors, setServerErrors] = React.useState({});
++        const onSubmit = (e) => {
++          e.preventDefault();
++          setServerErrors({
++            date: "Invalid value",
++          });
++        };
++
++        return (
++          <Form validationErrors={serverErrors} onSubmit={onSubmit}>
++            <DatePicker label="Value" name="date" validationBehavior="native" />
++            <button data-testid="submit" type="submit">
++              Submit
++            </button>
++          </Form>
++        );
++      }
++
++      const {getByTestId, getByRole} = render(<Test />);
++
++      const group = getByRole("group");
++      const input = document.querySelector("input[name=date]") as HTMLInputElement;
++
++      expect(group).not.toHaveAttribute("aria-describedby");
++
++      await user.click(getByTestId("submit"));
++
++      const getDescription = () =>
++        group
++          .getAttribute("aria-describedby")
++          ?.split(" ")
++          .map((d) => document.getElementById(d)?.textContent)
++          .join(" ");
++
++      expect(getDescription()).toContain("Invalid value");
++      expect(input.validity.valid).toBe(false);
++
++      await user.tab({shift: true});
++      await user.tab({shift: true});
++      await user.keyboard("2024[ArrowLeft]2[ArrowLeft]2");
++      act(() => (document.activeElement as HTMLInputElement)?.blur());
++
++      expect(getDescription()).not.toContain("Invalid value");
++      expect(input.validity.valid).toBe(true);
++    });
++
++    describe("validationBehavior=aria", () => {
++      it("supports minValue and maxValue", async () => {
++        const {getByRole} = render(
++          <Form data-testid="form">
++            <DatePicker
++              defaultValue={new CalendarDate(2019, 2, 3)}
++              label="Date"
++              maxValue={new CalendarDate(2024, 2, 3)}
++              minValue={new CalendarDate(2020, 2, 3)}
++              name="date"
++            />
++          </Form>,
++        );
++
++        const group = getByRole("group");
++        const getDescription = () =>
++          group
++            .getAttribute("aria-describedby")
++            ?.split(" ")
++            .map((d) => document.getElementById(d)?.textContent)
++            .join(" ");
++
++        expect(getDescription()).toContain("Value must be 2/3/2020 or later.");
++
++        await user.keyboard("[Tab][Tab][Tab][ArrowUp]");
++        expect(getDescription()).not.toContain("Value must be 2/3/2020 or later.");
++
++        await user.keyboard("[ArrowUp][ArrowUp][ArrowUp][ArrowUp][ArrowUp]");
++        expect(getDescription()).toContain("Value must be 2/3/2024 or earlier.");
++
++        await user.keyboard("[ArrowDown]");
++        expect(getDescription()).not.toContain("Value must be 2/3/2024 or earlier.");
++      });
++
++      it("supports validate function", async () => {
++        const {getByRole} = render(
++          <Form data-testid="form">
++            <DatePicker
++              defaultValue={new CalendarDate(2020, 2, 3)}
++              label="Value"
++              validate={(v) => (v.year < 2022 ? "Invalid value" : null)}
++            />
++          </Form>,
++        );
++
++        const group = getByRole("group");
++
++        expect(group).toHaveAttribute("aria-describedby");
++        const getDescription = () =>
++          group
++            .getAttribute("aria-describedby")
++            ?.split(" ")
++            .map((d) => document.getElementById(d)?.textContent)
++            .join(" ");
++
++        expect(getDescription()).toContain("Invalid value");
++
++        await user.keyboard("[Tab][ArrowRight][ArrowRight]2024");
++        expect(getDescription()).not.toContain("Invalid value");
++      });
++
++      it("supports server validation", async () => {
++        const {getByRole} = render(
++          <Form validationErrors={{value: "Invalid value"}}>
++            <DatePicker defaultValue={new CalendarDate(2020, 2, 3)} label="Value" name="value" />
++          </Form>,
++        );
++
++        const group = getByRole("group");
++
++        expect(group).toHaveAttribute("aria-describedby");
++        const getDescription = () =>
++          group
++            .getAttribute("aria-describedby")
++            ?.split(" ")
++            .map((d) => document.getElementById(d)?.textContent)
++            .join(" ");
++
++        expect(getDescription()).toContain("Invalid value");
++
++        await user.keyboard("[Tab][ArrowRight][ArrowRight]2024[Tab]");
++        expect(getDescription()).not.toContain("Invalid value");
++      });
++    });
++  });
+ });\n

@@ -1,0 +1,225 @@
+Pull Request Number: 4194
+Title: fix: accordion item focus effect input focus
+Base Branch: canary
+Head Branch: fix/input-focus
+Author: chioio
+URL: https://github.com/nextui-org/nextui/pull/4194
+State: CLOSED
+Created At: 2024-11-30T19:16:20Z
+Merged At: None
+Participants: chioio
+
+Description:
+📝 Description
+Fix: input focus error when using in accordion with selected/default expand keys on page loaded.
+Mini-reproduction: nextui-input-focus-error
+⛳️ Current behavior (updates)
+Change input wrapper onClick property, removed condition e.currentTarget === e.target
+🚀 New behavior
+Input component focus behavior normal in accordion component with selected/default expand keys
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+Nothing!
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Improved click event handling for input components, streamlining focus logic.
+
+
+
+Refactor
+
+Simplified internal code structure for clarity and conciseness while maintaining backward compatibility.
+
+Commits:
+- fix: input focus error in accordion\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 58f5226d5616d2169595f95bd9f1cf93f0a05fa9
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/chioio/nextui/new/fix/input-focus?filename=.changeset/fluffy-cups-collect.md&value=---%0A%22%40nextui-org%2Finput%22%3A%20patch%0A---%0A%0Afix%3A%20input%20focus%20error%20in%20accordion%0A)
+
+\n- vercel: @chioio is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22abadc48edaea94c35c01723a787f2c7b55d544cc%22%7D%2C%22id%22%3A%22QmWVMYHTvwR3pHz3ma5UbhPTWCvfbUUboCDW3gH4DgTTRH%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A4194%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The changes in this pull request enhance the `useInput` hook within the `use-input.ts` file by simplifying the click event handling for the `getInputWrapperProps` and `getInnerWrapperProps` functions. The `onClick` handlers now directly call `focus()` on the `domRef` without checking if the clicked target is the current target. Minor adjustments were also made to props handling and code structure, but the core functionality and API remain unchanged, ensuring backward compatibility.
+
+## Changes
+
+| File Path                                   | Change Summary                                                                                     |
+|---------------------------------------------|---------------------------------------------------------------------------------------------------|
+| packages/components/input/src/use-input.ts | Enhanced click event handling in `getInputWrapperProps` and `getInnerWrapperProps` functions. Simplified `onClick` logic by removing target checks and directly calling `focus()` on `domRef`. Minor adjustments to props handling and code structure without altering existing API. |
+
+## Possibly related issues
+- **nextui-org/nextui#3478**: The changes may address the issue where clicking on an input inside an accordion requires two clicks to focus, as the new handling improves focus behavior.
+
+## Possibly related PRs
+- **#2958**: Modifies the `useInput` hook in the same file, adding hover and focus behavior, which is directly related to this PR's changes.
+- **#3774**: Addresses focus behavior of the clear button when the input is disabled, relevant to the overall focus management discussed in this PR.
+
+## Suggested reviewers
+- jrgarciadev
+- wingkwong
+
+<!-- walkthrough_end -->
+
+
+
+
+
+---
+
+<details>
+<summary>📜 Recent review details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>📥 Commits</summary>
+
+Reviewing files that changed from the base of the PR and between dc5b4f30ae88c0f5847dc5fa5133f88cb7000125 and 58f5226d5616d2169595f95bd9f1cf93f0a05fa9.
+
+</details>
+
+<details>
+<summary>📒 Files selected for processing (1)</summary>
+
+* `packages/components/input/src/use-input.ts` (2 hunks)
+
+</details>
+
+<details>
+<summary>🚧 Files skipped from review as they are similar to previous changes (1)</summary>
+
+* packages/components/input/src/use-input.ts
+
+</details>
+
+</details>
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- chioio: Fixed focus, and still error with validator trigger. When page loaded, focus field trigger validator bug execute normal without accordion
+
+With accordion component and default selected key:
+<img width="351" alt="image" src="https://github.com/user-attachments/assets/5164c865-7c70-42f9-85de-b9f0fa38a69b">
+
+Without accordion component:
+<img width="236" alt="image" src="https://github.com/user-attachments/assets/7cfe6ef2-5d08-4506-85a2-a4780fb315f6">
+
+\n
+
+Files Changed:
+- packages/components/input/src/use-input.ts (modified, 8 changes)\n  Patch: @@ -417,8 +417,8 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+           class: clsx(classNames?.inputWrapper, isFilled ? "is-filled" : ""),
+         }),
+         ...mergeProps(props, hoverProps),
+-        onClick: (e) => {
+-          if (domRef.current && e.currentTarget === e.target) {
++        onClick: () => {
++          if (domRef.current) {
+             domRef.current.focus();
+           }
+         },
+@@ -445,8 +445,8 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+         ...props,
+         ref: innerWrapperRef,
+         "data-slot": "inner-wrapper",
+-        onClick: (e) => {
+-          if (domRef.current && e.currentTarget === e.target) {
++        onClick: () => {
++          if (domRef.current) {
+             domRef.current.focus();
+           }
+         },\n

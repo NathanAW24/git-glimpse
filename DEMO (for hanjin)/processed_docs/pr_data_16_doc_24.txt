@@ -1,0 +1,147 @@
+Pull Request Number: 2332
+Title: chore(storybook): improve preview.tsx
+Base Branch: main
+Head Branch: update/improve-preview
+Author: sudongyuer
+URL: https://github.com/nextui-org/nextui/pull/2332
+State: MERGED
+Created At: 2024-02-10T17:32:40Z
+Merged At: 2024-02-11T13:26:40Z
+Participants: sudongyuer, jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+
+Add a brief description
+
+improve storybook preview file to avoid type error
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+No
+
+📝 Additional Information
+
+Commits:
+- chore(storybook): improve preview.tsx\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 71d8064b4bfeab914119f6b70abc0458e350ac9f
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/sudongyuer/nextui/new/update/improve-preview?filename=.changeset/four-chicken-shake.md&value=---%0A%22%40nextui-org%2Fstorybook%22%3A%20patch%0A---%0A%0Achore(storybook)%3A%20improve%20preview.tsx%0A)
+
+\n- vercel: [vc]: #NjvlzZtRWKU8yFnyoZQqwWATLFrHDfSaQxBYUI652EE=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRFJTaDNmcEF1cnpZM2ZSajVMU2NlamttNXRRcyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXN1ZG9uZ3l1ZXItdXBkYXQtNzhlMmQwLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXN1ZG9uZ3l1ZXItdXBkYXQtNzhlMmQwLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/DRSh3fpAurzY3fRj5LScejkm5tQs)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-sudongyuer-updat-78e2d0-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-sudongyuer-updat-78e2d0-nextui-org.vercel.app?via=pr-comment-feedback-link) | Feb 10, 2024 5:35pm |
+
+\n- vercel: @sudongyuer is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2271d8064b4bfeab914119f6b70abc0458e350ac9f%22%7D%2C%22id%22%3A%22QmVUXxnxkAxKBrq3x4yERQpD5tcnHiBe55NWBaPFAAiMqi%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2332%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/storybook/.storybook/preview.tsx (modified, 54 changes)\n  Patch: @@ -1,33 +1,33 @@
+ import React from "react";
+ import {themes} from "@storybook/theming";
+ import {NextUIProvider} from "@nextui-org/system/src/provider";
+-import type { Preview } from '@storybook/react';
++import type {Preview} from "@storybook/react";
+ 
+-import './style.css'
++import "./style.css";
+ 
+-const decorators: Preview['decorators'] = [
+-    (Story, {globals: {locale}}) => {
+-      const direction =
+-        // @ts-ignore
+-        locale && new Intl.Locale(locale)?.textInfo?.direction === "rtl" ? "rtl" : undefined;
++const decorators: Preview["decorators"] = [
++  (Story, {globals: {locale}}) => {
++    const direction =
++      // @ts-ignore
++      locale && new Intl.Locale(locale)?.textInfo?.direction === "rtl" ? "rtl" : undefined;
+ 
+-      return (
+-        <NextUIProvider locale={locale}>
+-          <div className="bg-dark" lang={locale} dir={direction}>
+-            <Story />
+-          </div>
+-        </NextUIProvider>
+-      );
+-    },
+-  ]
++    return (
++      <NextUIProvider locale={locale}>
++        <div className="bg-dark" lang={locale} dir={direction}>
++          <Story />
++        </div>
++      </NextUIProvider>
++    );
++  },
++];
+ 
+-  const commonTheme = {
+-    brandTitle: "NextUI",
+-    brandUrl: "https://nextui.org",
+-    brandTarget: "_self",
+-  }
++const commonTheme = {
++  brandTitle: "NextUI",
++  brandUrl: "https://nextui.org",
++  brandTarget: "_self",
++};
+ 
+-const parameters: Preview['parameters'] = {
++const parameters: Preview["parameters"] = {
+   actions: {argTypesRegex: "^on[A-Z].*"},
+   options: {
+     storySort: {
+@@ -103,7 +103,7 @@ const locales = [
+   "zh-TW",
+ ];
+ 
+-const globalTypes: Preview['globalTypes'] = {
++const globalTypes: Preview["globalTypes"] = {
+   locale: {
+     toolbar: {
+       icon: "globe",
+@@ -117,8 +117,10 @@ const globalTypes: Preview['globalTypes'] = {
+   },
+ };
+ 
+-export default {
++const preview: Preview = {
+   decorators,
+   parameters,
+-  globalTypes
+-} satisfies Preview;
++  globalTypes,
++};
++
++export default preview;\n

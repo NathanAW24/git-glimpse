@@ -1,0 +1,138 @@
+Pull Request Number: 1187
+Title: test: added contrast test for variants
+Base Branch: main
+Head Branch: test/added-contrast-test-for-variants
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1187
+State: CLOSED
+Created At: 2023-07-09T15:44:20Z
+Merged At: None
+Participants: jguddas
+
+Description:
+● colorVariants › light › ghost › warning › warning(rgb(245, 165, 36)) has enough contrast with background(rgb(255, 255, 255)) to be readable
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 3
+    Received:    2.040811594987513
+
+      66 |
+      67 |               it(`${textName}(${solidText}) has enough contrast with ${bgName}(${solidBg}) to be ${targetGuideline}`, () => {
+    > 68 |                 expect(getContrast(solidText, solidBg)).toBeGreaterThanOrEqual(
+         |                                                         ^
+      69 |                   guidelines[targetGuideline],
+      70 |                 );
+      71 |               });
+
+      at Object.toBeGreaterThanOrEqual (packages/core/theme/__tests__/variants.test.ts:68:57)
+
+Test Suites: 1 failed, 1 total
+Tests:       6 failed, 64 passed, 70 total
+Snapshots:   0 total
+Time:        2.212 s
+Ran all test suites matching /variants.test.ts/i.
+
+Commits:
+- test: added contrast test for variants\n- chore: renamed variable\n- chore: renamed variable\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228e2e9e8741c93090b6d158fc223516303f6f0857%22%7D%2C%22id%22%3A%22QmS21p31XBbvzkb585uMfUUmfEbPiCksaaeb4VqijRoqTS%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1187%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/core/theme/__tests__/variants.test.ts (added, 88 changes)\n  Patch: @@ -0,0 +1,88 @@
++import {getContrast, parseToRgba, transparentize} from "color2k";
++
++import {semanticColors} from "../src/colors/semantic";
++import {colorVariants} from "../src/utils/variants";
++
++type Guideline = keyof typeof guidelines;
++
++const guidelines = {decorative: 1.5, readable: 3, aa: 4.5, aaa: 7};
++const targetGuideline: Guideline = "readable";
++
++// this translates something like `primary-foreground/10` to an rgb value
++function getColorFromName(c: string, mode: string) {
++  const [name, lightness] = c.split("/");
++  const [group, shade = "DEFAULT"] = name.split("-");
++  let color = semanticColors?.[mode]?.[group]?.[shade];
++
++  if (!color) return undefined;
++  if (!lightness) return color;
++
++  return transparentize(color, 1 - parseInt(lightness) / 100);
++}
++
++// This function merges two colors the same way using the
++// eyedropper tool to get the resulting color would do
++function mergeColors(
++  added: [number, number, number, number],
++  base: [number, number, number, number],
++) {
++  const alpha = 1 - (1 - added[3]) * (1 - base[3]);
++  const red = Math.round(
++    (added[0] * added[3]) / alpha + (base[0] * base[3] * (1 - added[3])) / alpha,
++  );
++  const green = Math.round(
++    (added[1] * added[3]) / alpha + (base[1] * base[3] * (1 - added[3])) / alpha,
++  );
++  const blue = Math.round(
++    (added[2] * added[3]) / alpha + (base[2] * base[3] * (1 - added[3])) / alpha,
++  );
++
++  if (alpha === 1) return `rgb(${red}, ${green}, ${blue})`;
++
++  return `rgba(${red}, ${green}, ${blue} ,${alpha})`;
++}
++
++describe("colorVariants", () => {
++  ["light", "dark"].forEach((mode) => {
++    const mergedPageBackground = mergeColors(
++      parseToRgba(getColorFromName("background", mode)),
++      parseToRgba("#FFF"),
++    );
++
++    describe(mode, () => {
++      Object.keys(colorVariants).forEach((variant) => {
++        describe(variant, () => {
++          Object.keys(colorVariants[variant]).forEach((color) => {
++            describe(color, () => {
++              const classes = colorVariants[variant][color].split(" ").reverse() as string[];
++
++              const backgroundName =
++                classes.find((val) => val.startsWith("background-"))?.replace("background-", "") ||
++                "background";
++              const textName = classes.find((val) => val.startsWith("text-"))?.replace("text-", "");
++
++              if (!textName) return;
++
++              const background = getColorFromName(backgroundName, mode);
++              const text = getColorFromName(textName, mode);
++
++              if (!background || !text) return;
++
++              const mergedBackground = mergeColors(
++                parseToRgba(background),
++                parseToRgba(mergedPageBackground),
++              );
++              const mergedText = mergeColors(parseToRgba(text), parseToRgba(mergedBackground));
++
++              it(`${textName}(${mergedText}) has enough contrast with ${backgroundName}(${mergedBackground}) to be ${targetGuideline}`, () => {
++                expect(getContrast(mergedText, mergedBackground)).toBeGreaterThanOrEqual(
++                  guidelines[targetGuideline],
++                );
++              });
++            });
++          });
++        });
++      });
++    });
++  });
++});\n

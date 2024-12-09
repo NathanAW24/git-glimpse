@@ -1,0 +1,365 @@
+Pull Request Number: 1743
+Title: fix(docs): scrollbar added to the sidebar
+Base Branch: main
+Head Branch: fix/1707
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/1743
+State: MERGED
+Created At: 2023-10-05T19:45:13Z
+Merged At: 2023-10-05T19:45:37Z
+Participants: jrgarciadev
+
+Description:
+Closes #1707
+Closes #1742
+📝 Description
+Scroll Area component added to the documentation project
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(docs): scrollbar added to the sidebar\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 8e8bcd31036f5de5e3d82cf2fa2682920934439c
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/fix/1707?filename=.changeset/curvy-badgers-compete.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Afix(docs)%3A%20scrollbar%20added%20to%20the%20sidebar%0A)
+
+\n- vercel: [vc]: #8oRt1ZzFjsbgHAN2aOA8gOgT4z1icZ9sTjJv5zye308=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9FcWJ2cFpTVjNxVzJRZXdqSzZnYnVBaEt5MXM3IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtMTcwNy1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiUEVORElORyJ9LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi83c1c5b1ZXNXBHVWl6WW9ZUTE4a1JINWRqV21mIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC0xNzA3LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJQRU5ESU5HIn1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated (UTC) |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/EqbvpZSV3qW2QewjK6gbuAhKy1s7)) | [Visit Preview](https://nextui-docs-v2-git-fix-1707-nextui-org.vercel.app) | Oct 5, 2023 7:45pm |
+| **nextui-storybook-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/7sW9oVW5pGUizYoYQ18kRH5djWmf)) | [Visit Preview](https://nextui-storybook-v2-git-fix-1707-nextui-org.vercel.app) | Oct 5, 2023 7:45pm |
+
+
+\n
+
+Files Changed:
+- apps/docs/app/docs/layout.tsx (modified, 2 changes)\n  Patch: @@ -12,7 +12,7 @@ export default function DocsLayout({children}: DocsLayoutProps) {
+     <>
+       <main className="relative container mx-auto max-w-7xl z-10 px-6 min-h-[calc(100vh_-_64px_-_108px)] mb-12 flex-grow">
+         <div className="grid grid-cols-12">
+-          <div className="hidden relative z-10 lg:block lg:col-span-2 mt-8 pr-4">
++          <div className="hidden overflow-visible relative z-10 lg:block lg:col-span-2 mt-8 pr-4">
+             <DocsSidebar routes={manifest.routes} />
+           </div>
+           {children}\n- apps/docs/components/docs/sidebar.tsx (modified, 30 changes)\n  Patch: @@ -21,11 +21,12 @@ import Link from "next/link";
+ import {isEmpty} from "lodash";
+ import {usePathname, useRouter} from "next/navigation";
+ 
++import {ScrollArea} from "../scroll-area";
++
+ import {getRoutePaths} from "./utils";
+ 
+ import {Route} from "@/libs/docs/page";
+ import {TreeKeyboardDelegate} from "@/utils/tree-keyboard-delegate";
+-import {useScrollPosition} from "@/hooks/use-scroll-position";
+ import {trackEvent} from "@/utils/va";
+ 
+ export interface Props<T> extends Omit<ItemProps<T>, "title">, Route {
+@@ -108,7 +109,9 @@ function TreeItem<T>(props: TreeItemProps<T>) {
+       aria-expanded={dataAttr(hasChildNodes ? isExpanded : undefined)}
+       aria-selected={dataAttr(isSelected)}
+       className={clsx(
+-        "flex flex-col gap-3 outline-none w-full tap-highlight-transparent",
++        "flex flex-col gap-3outline-none w-full tap-highlight-transparent",
++
++        hasChildNodes ? "mb-4" : "first:mt-4",
+         // focus ring
+         ...dataFocusVisibleClasses,
+       )}
+@@ -157,17 +160,19 @@ function TreeItem<T>(props: TreeItemProps<T>) {
+               {rendered}
+             </span>
+             {isNew && (
+-              <Chip className="ml-2" color="primary" size="sm" variant="flat">
++              <Chip className="ml-1 py-1 text-tiny" color="primary" size="sm" variant="flat">
+                 New
+               </Chip>
+             )}
+             {item.props?.comingSoon && (
+-              <Chip className="ml-2" color="default" size="sm" variant="flat">
++              <Chip className="ml-1 py-1 text-tiny" color="default" size="sm" variant="flat">
+                 Coming soon
+               </Chip>
+             )}
+           </NextUILink>
+         )}
++        {/* Workaround to avoid scrollbar overlapping */}
++        <Spacer x={4} />
+       </div>
+       {isExpanded && hasChildNodes && (
+         <div className="flex flex-col gap-3 items-start" role="group">
+@@ -196,9 +201,7 @@ function TreeHeading({item}: {item: any}) {
+ function Tree<T extends object>(props: CollectionBase<T> & Expandable & MultipleSelection) {
+   let state = useTreeState(props);
+ 
+-  let ref = useRef<HTMLUListElement>(null);
+-
+-  const scrollPosition = useScrollPosition(ref);
++  let ref = useRef<HTMLDivElement>(null);
+ 
+   let keyboardDelegate = useMemo(
+     // @ts-expect-error
+@@ -213,16 +216,11 @@ function Tree<T extends object>(props: CollectionBase<T> & Expandable & Multiple
+   });
+ 
+   return (
+-    <ul
+-      {...collectionProps}
++    <ScrollArea
+       ref={ref}
+-      className="flex flex-col gap-4 scrollbar-hide lg:overflow-y-scroll lg:max-h-[calc(100vh_-_64px)] pb-28"
++      className="h-full lg:max-h-[calc(100vh_-_64px)]"
+       role="tree"
+-      style={{
+-        WebkitMaskImage: `linear-gradient(to top, transparent 0%, #000 100px, #000 ${
+-          scrollPosition > 30 ? "90%" : "100%"
+-        }, transparent 100%)`,
+-      }}
++      {...collectionProps}
+     >
+       {[...state.collection].map((item) => {
+         if (item.type === "section") {
+@@ -231,7 +229,7 @@ function Tree<T extends object>(props: CollectionBase<T> & Expandable & Multiple
+ 
+         return <TreeItem key={item.key} item={item} state={state} />;
+       })}
+-    </ul>
++    </ScrollArea>
+   );
+ }
+ \n- apps/docs/components/scroll-area.tsx (added, 54 changes)\n  Patch: @@ -0,0 +1,54 @@
++"use client";
++
++import * as React from "react";
++import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
++import {cn} from "@nextui-org/react";
++
++const ScrollArea = React.forwardRef<
++  React.ElementRef<typeof ScrollAreaPrimitive.Root>,
++  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
++>(({className, children, ...props}, ref) => {
++  return (
++    <ScrollAreaPrimitive.Root
++      ref={ref}
++      className={cn("relative overflow-hidden", className)}
++      {...props}
++    >
++      <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit] pb-28">
++        {children}
++      </ScrollAreaPrimitive.Viewport>
++      <ScrollBar />
++      <ScrollAreaPrimitive.Corner />
++    </ScrollAreaPrimitive.Root>
++  );
++});
++
++ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName;
++
++const ScrollBar = React.forwardRef<
++  React.ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
++  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>
++>(({className, orientation = "vertical", ...props}, ref) => (
++  <ScrollAreaPrimitive.ScrollAreaScrollbar
++    ref={ref}
++    className={cn(
++      "flex touch-none select-none transition-colors",
++      orientation === "vertical" && "h-full w-2.5 border-l border-l-transparent p-[1px]",
++      orientation === "horizontal" && "h-2.5 border-t border-t-transparent p-[1px]",
++      className,
++    )}
++    orientation={orientation}
++    {...props}
++  >
++    <ScrollAreaPrimitive.ScrollAreaThumb
++      className={cn(
++        "relative rounded-full bg-default-400/50",
++        orientation === "vertical" && "flex-1",
++      )}
++    />
++  </ScrollAreaPrimitive.ScrollAreaScrollbar>
++));
++
++ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName;
++
++export {ScrollArea, ScrollBar};\n- apps/docs/package.json (modified, 1 changes)\n  Patch: @@ -32,6 +32,7 @@
+     "@nextui-org/use-clipboard": "workspace:*",
+     "@nextui-org/use-infinite-scroll": "workspace:*",
+     "@nextui-org/use-is-mobile": "workspace:*",
++    "@radix-ui/react-scroll-area": "^1.0.5",
+     "@react-aria/focus": "^3.14.0",
+     "@react-aria/interactions": "^3.17.0",
+     "@react-aria/selection": "^3.16.1",\n- pnpm-lock.yaml (modified, 64 changes)\n  Patch: @@ -321,6 +321,9 @@ importers:
+       '@nextui-org/use-is-mobile':
+         specifier: workspace:*
+         version: link:../../packages/hooks/use-is-mobile
++      '@radix-ui/react-scroll-area':
++        specifier: ^1.0.5
++        version: 1.0.5(@types/react-dom@18.2.4)(@types/react@18.2.8)(react-dom@18.2.0)(react@18.2.0)
+       '@react-aria/focus':
+         specifier: ^3.14.0
+         version: 3.14.1(react@18.2.0)
+@@ -8062,7 +8065,6 @@ packages:
+     resolution: {integrity: sha512-T5gIdVO2mmPW3NNhjNgEP3cqMXjXL9UbO0BzWcXfvdBs+BohbQxvd/K5hSVKmn9/lbTdsQVKbUcP5WLCwvUbBg==}
+     dependencies:
+       '@babel/runtime': 7.22.15
+-    dev: true
+ 
+   /@radix-ui/primitive@1.0.0:
+     resolution: {integrity: sha512-3e7rn8FDMin4CgeL7Z/49smCA3rFYY3Ha2rUQ7HRWFadS5iCRw08ZgVT1LaNTCNqgvrUiyczLflrVrF0SRQtNA==}
+@@ -8074,7 +8076,6 @@ packages:
+     resolution: {integrity: sha512-yQ8oGX2GVsEYMWGxcovu1uGWPCxV5BFfeeYxqPmuAzUyLT9qmaMXSAhXpb0WrspIeqYzdJpkh2vHModJPgRIaw==}
+     dependencies:
+       '@babel/runtime': 7.22.15
+-    dev: true
+ 
+   /@radix-ui/react-arrow@1.0.3(@types/react-dom@18.2.4)(@types/react@18.2.8)(react-dom@18.2.0)(react@18.2.0):
+     resolution: {integrity: sha512-wSP+pHsB/jQRaL6voubsQ/ZlrGBHHrOjmBnr19hxYgtS0WvAFwZhK2WP/YY5yF9uKECCEEDGxuLxq1NBK51wFA==}
+@@ -8142,7 +8143,6 @@ packages:
+       '@babel/runtime': 7.22.15
+       '@types/react': 18.2.8
+       react: 18.2.0
+-    dev: true
+ 
+   /@radix-ui/react-context@1.0.0(react@18.2.0):
+     resolution: {integrity: sha512-1pVM9RfOQ+n/N5PJK33kRSKsr1glNxomxONs5c49MliinBY6Yw2Q995qfBUUo0/Mbg05B/sGA0gkgPI7kmSHBg==}
+@@ -8165,7 +8165,6 @@ packages:
+       '@babel/runtime': 7.22.15
+       '@types/react': 18.2.8
+       react: 18.2.0
+-    dev: true
+ 
+   /@radix-ui/react-dialog@1.0.0(@types/react@18.2.8)(react-dom@18.2.0)(react@18.2.0):
+     resolution: {integrity: sha512-Yn9YU+QlHYLWwV1XfKiqnGVpWYWk6MeBVM6x/bcoyPvxgjQGoeT35482viLPctTMWoMw0PoHgqfSox7Ig+957Q==}
+@@ -8206,7 +8205,6 @@ packages:
+       '@babel/runtime': 7.22.15
+       '@types/react': 18.2.8
+       react: 18.2.0
+-    dev: true
+ 
+   /@radix-ui/react-dismissable-layer@1.0.0(react-dom@18.2.0)(react@18.2.0):
+     resolution: {integrity: sha512-n7kDRfx+LB1zLueRDvZ1Pd0bxdJWDUZNQ/GWoxDn2prnuJKRdxsjulejX/ePkOsLi2tTm6P24mDqlMSgQpsT6g==}
+@@ -8410,6 +8408,28 @@ packages:
+       react-dom: 18.2.0(react@18.2.0)
+     dev: false
+ 
++  /@radix-ui/react-presence@1.0.1(@types/react-dom@18.2.4)(@types/react@18.2.8)(react-dom@18.2.0)(react@18.2.0):
++    resolution: {integrity: sha512-UXLW4UAbIY5ZjcvzjfRFo5gxva8QirC9hF7wRE4U5gz+TP0DbRk+//qyuAQ1McDxBt1xNMBTaciFGvEmJvAZCg==}
++    peerDependencies:
++      '@types/react': '*'
++      '@types/react-dom': '*'
++      react: ^18.2.0
++      react-dom: ^18.2.0
++    peerDependenciesMeta:
++      '@types/react':
++        optional: true
++      '@types/react-dom':
++        optional: true
++    dependencies:
++      '@babel/runtime': 7.22.15
++      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.8)(react@18.2.0)
++      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.8)(react@18.2.0)
++      '@types/react': 18.2.8
++      '@types/react-dom': 18.2.4
++      react: 18.2.0
++      react-dom: 18.2.0(react@18.2.0)
++    dev: false
++
+   /@radix-ui/react-primitive@1.0.0(react-dom@18.2.0)(react@18.2.0):
+     resolution: {integrity: sha512-EyXe6mnRlHZ8b6f4ilTDrXmkLShICIuOTTj0GX4w1rp+wSxf3+TD05u1UOITC8VsJ2a9nwHvdXtOXEOl0Cw/zQ==}
+     peerDependencies:
+@@ -8441,7 +8461,6 @@ packages:
+       '@types/react-dom': 18.2.4
+       react: 18.2.0
+       react-dom: 18.2.0(react@18.2.0)
+-    dev: true
+ 
+   /@radix-ui/react-roving-focus@1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.8)(react-dom@18.2.0)(react@18.2.0):
+     resolution: {integrity: sha512-2mUg5Mgcu001VkGy+FfzZyzbmuUWzgWkj3rvv4yu+mLw03+mTzbxZHvfcGyFp2b8EkQeMkpRQ5FiA2Vr2O6TeQ==}
+@@ -8472,6 +8491,35 @@ packages:
+       react-dom: 18.2.0(react@18.2.0)
+     dev: true
+ 
++  /@radix-ui/react-scroll-area@1.0.5(@types/react-dom@18.2.4)(@types/react@18.2.8)(react-dom@18.2.0)(react@18.2.0):
++    resolution: {integrity: sha512-b6PAgH4GQf9QEn8zbT2XUHpW5z8BzqEc7Kl11TwDrvuTrxlkcjTD5qa/bxgKr+nmuXKu4L/W5UZ4mlP/VG/5Gw==}
++    peerDependencies:
++      '@types/react': '*'
++      '@types/react-dom': '*'
++      react: ^18.2.0
++      react-dom: ^18.2.0
++    peerDependenciesMeta:
++      '@types/react':
++        optional: true
++      '@types/react-dom':
++        optional: true
++    dependencies:
++      '@babel/runtime': 7.22.15
++      '@radix-ui/number': 1.0.1
++      '@radix-ui/primitive': 1.0.1
++      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.8)(react@18.2.0)
++      '@radix-ui/react-context': 1.0.1(@types/react@18.2.8)(react@18.2.0)
++      '@radix-ui/react-direction': 1.0.1(@types/react@18.2.8)(react@18.2.0)
++      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.4)(@types/react@18.2.8)(react-dom@18.2.0)(react@18.2.0)
++      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.4)(@types/react@18.2.8)(react-dom@18.2.0)(react@18.2.0)
++      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.8)(react@18.2.0)
++      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.8)(react@18.2.0)
++      '@types/react': 18.2.8
++      '@types/react-dom': 18.2.4
++      react: 18.2.0
++      react-dom: 18.2.0(react@18.2.0)
++    dev: false
++
+   /@radix-ui/react-select@1.2.2(@types/react-dom@18.2.4)(@types/react@18.2.8)(react-dom@18.2.0)(react@18.2.0):
+     resolution: {integrity: sha512-zI7McXr8fNaSrUY9mZe4x/HC0jTLY9fWNhO1oLWYMQGDXuV4UCivIGTxwioSzO0ZCYX9iSLyWmAh/1TOmX3Cnw==}
+     peerDependencies:
+@@ -8557,7 +8605,6 @@ packages:
+       '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.8)(react@18.2.0)
+       '@types/react': 18.2.8
+       react: 18.2.0
+-    dev: true
+ 
+   /@radix-ui/react-toggle-group@1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.8)(react-dom@18.2.0)(react@18.2.0):
+     resolution: {integrity: sha512-Uaj/M/cMyiyT9Bx6fOZO0SAG4Cls0GptBWiBmBxofmDbNVnYYoyRWj/2M/6VCi/7qcXFWnHhRUfdfZFvvkuu8A==}
+@@ -8657,7 +8704,6 @@ packages:
+       '@babel/runtime': 7.22.15
+       '@types/react': 18.2.8
+       react: 18.2.0
+-    dev: true
+ 
+   /@radix-ui/react-use-controllable-state@1.0.0(react@18.2.0):
+     resolution: {integrity: sha512-FohDoZvk3mEXh9AWAVyRTYR4Sq7/gavuofglmiXB2g1aKyboUD4YtgWxKj8O5n+Uak52gXQ4wKz5IFST4vtJHg==}
+@@ -8730,7 +8776,6 @@ packages:
+       '@babel/runtime': 7.22.15
+       '@types/react': 18.2.8
+       react: 18.2.0
+-    dev: true
+ 
+   /@radix-ui/react-use-previous@1.0.1(@types/react@18.2.8)(react@18.2.0):
+     resolution: {integrity: sha512-cV5La9DPwiQ7S0gf/0qiD6YgNqM5Fk97Kdrlc5yBcrF3jyEZQwm7vYFqMo4IfeHgJXsRaMvLABFtd0OVEmZhDw==}
+@@ -11518,7 +11563,6 @@ packages:
+     resolution: {integrity: sha512-G2mHoTMTL4yoydITgOGwWdWMVd8sNgyEP85xVmMKAPUBwQWm9wBPQUmvbeF4V3WBY1P7mmL4BkjQ0SqUpf1snw==}
+     dependencies:
+       '@types/react': 18.2.8
+-    dev: true
+ 
+   /@types/react@16.14.46:
+     resolution: {integrity: sha512-Am4pyXMrr6cWWw/TN3oqHtEZl0j+G6Up/O8m65+xF/3ZaUgkv1GAtTPWw4yNRmH0HJXmur6xKCKoMo3rBGynuw==}\n

@@ -1,0 +1,110 @@
+Pull Request Number: 865
+Title: fix(react-navbar)[#838]: firefox navbar issue
+Base Branch: main
+Head Branch: fix/firefox-navbar-width
+Author: hyesungoh
+URL: https://github.com/nextui-org/nextui/pull/865
+State: CLOSED
+Created At: 2022-11-08T16:03:00Z
+Merged At: None
+Participants: hyesungoh, jrgarciadev
+
+Description:
+Closes #838
+📝 Description
+Firefox does not render expected
+
+
+firefox in docs
+
+
+
+firefox in storybook
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+This issue comes from link.styles.ts > maxW: max-content
+
+  
+    
+      nextui/packages/react/src/link/link.styles.ts
+    
+    
+         Line 26
+      in
+      f85a569
+    
+  
+  
+    
+
+        
+          
+           maxW: "max-content", 
+        
+    
+  
+
+
+
+I do not know exactly why firefox does render this way
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+
+
+firefox in docs
+
+
+
+firefox in storybook
+
+
+
+chrome in docs
+
+
+
+chrome in storybook
+
+set maxW: none !important where under the Navbar Item
+💣 Is this a breaking change (Yes/No):
+
+No. because same render result where chrome and other browsers.
+📝 Additional Information
+I thought diffrent way to disable maxW: max-content at link.styles.ts. but I think this way cause another issue. what do you think about it?
+
+Commits:
+- fix: set under navbar-item elements max-width to none\n
+
+Labels:
+
+
+Comments:
+- vercel: @hyesungoh is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2225f9c298c7163be51397fb8224d1b8f3c3962899%22%7D%2C%22id%22%3A%22QmdDEjfKT7eHDkMCHshzKry78xHiStG1N2Ko6g6oZPkfoj%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A865%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/9p43c8QbDngiuqFdgpN1mWYBnfdX)) | [Visit Preview](https://nextui-storybook-git-fork-hyesungoh-fix-firef-45965a-nextui-org.vercel.app) | Nov 8, 2022 at 4:03PM (UTC) |
+
+\n- jrgarciadev: Hey @hyesungoh thank you so much for contributing, however, this issue was already fixed here https://github.com/nextui-org/nextui/pull/810, and it will be available in the next version v11\n
+
+Files Changed:
+- packages/react/src/navbar/navbar.styles.ts (modified, 3 changes)\n  Patch: @@ -237,6 +237,9 @@ export const StyledNavbarItem = styled(
+     fontSize: "$$navbarItemFontSize",
+     fontWeight: "$$navbarItemFontWeight",
+     position: "relative",
++    "& *": {
++      maxW: "none !important",
++    },
+     "> *": {
+       zIndex: "$2",
+       fontSize: "inherit !important",\n

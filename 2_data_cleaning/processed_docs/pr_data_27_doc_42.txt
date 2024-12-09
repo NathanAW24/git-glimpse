@@ -1,0 +1,74 @@
+Pull Request Number: 520
+Title: fix: card text selection
+Base Branch: next
+Head Branch: card-fix
+Author: cyanxiao
+URL: https://github.com/nextui-org/nextui/pull/520
+State: MERGED
+Created At: 2022-06-08T16:34:40Z
+Merged At: 2022-06-09T01:23:54Z
+Participants: cyanxiao, codecov-commenter, jrgarciadev
+
+Description:
+📝 Description
+Texts on card components can not be selected by mouse when they are not pressable.
+⛳️ Current behavior (updates)
+Texts can not be selected nor copied.
+🚀 New behavior
+Texts can be selected and copied.
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+This is a bug invoked by react-aria usePress. According to the author of usePress() (explained here, which also involved the card implementation), we should avoid it when the card is not pressable. Correct me if I'm wrong 😂 not a pro of react-aria
+
+Commits:
+- fix: card text selection\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/520?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#520](https://codecov.io/gh/nextui-org/nextui/pull/520?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (015fd12) into [main](https://codecov.io/gh/nextui-org/nextui/commit/aa7c285ecbbe5b30eafd5624c14a79afdba3c965?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (aa7c285) will **increase** coverage by `0.02%`.
+> The diff coverage is `100.00%`.
+
+```diff
+@@            Coverage Diff             @@
+##             main     #520      +/-   ##
+==========================================
++ Coverage   74.75%   74.78%   +0.02%     
+==========================================
+  Files         200      200              
+  Lines        3090     3093       +3     
+  Branches      952      955       +3     
+==========================================
++ Hits         2310     2313       +3     
+  Misses        765      765              
+  Partials       15       15              
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/520?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/react/src/card/card.tsx](https://codecov.io/gh/nextui-org/nextui/pull/520/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2NhcmQvY2FyZC50c3g=) | `100.00% <100.00%> (ø)` | |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/520?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/520?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [aa7c285...015fd12](https://codecov.io/gh/nextui-org/nextui/pull/520?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- packages/react/src/card/card.tsx (modified, 4 changes)\n  Patch: @@ -55,7 +55,9 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
+         isHovered={isHovered}
+         tabIndex={isPressable ? 0 : -1}
+         isFocusVisible={isFocusVisible}
+-        {...mergeProps(pressProps, focusProps, hoverProps, otherProps)}
++        {...(isPressable
++          ? mergeProps(pressProps, focusProps, hoverProps, otherProps)
++          : mergeProps(focusProps, hoverProps, otherProps))}
+       >
+         {isPressable && !disableAnimation && !disableRipple && (
+           <Drip {...dripBindings} />\n

@@ -1,0 +1,457 @@
+Pull Request Number: 3246
+Title: fix(tabs): set tab panel id correctly
+Base Branch: canary
+Head Branch: fix/tab-panel-id
+Author: ryo-manba
+URL: https://github.com/nextui-org/nextui/pull/3246
+State: MERGED
+Created At: 2024-06-13T06:30:20Z
+Merged At: 2024-06-14T02:07:34Z
+Participants: ryo-manba, jrgarciadev
+
+Description:
+Closes #2809
+📝 Description
+Fixes the issue where tab panel IDs were not set correctly.
+⛳️ Current behavior (updates)
+Tab panel IDs are incorrect, causing ARIA attribute issues.
+
+🚀 New behavior
+Tab panel IDs are now set correctly.
+
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Corrected the setting of tab panel IDs in tabs module to ensure proper functionality.
+Removed unnecessary orientation="top" attribute from the RadioGroup component declaration.
+
+
+
+Tests
+
+Updated test cases to enhance clarity and added new tests for improved coverage.
+
+
+
+Refactor
+
+Improved the logic for handling the aria-controls attribute based on the presence of children in the Tab component.
+
+Commits:
+- fix(tabs): set tab panel id correctly\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 5970fdae21adb475c6cdb7f1173944392a513652
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/tabs  | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/tab-panel-id?filename=.changeset/thin-spies-perform.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Ftabs%22%3A%20patch%0A---%0A%0Afix(tabs)%3A%20set%20tab%20panel%20id%20correctly%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The implemented changes primarily focus on improving the accessibility and functionality of the `@nextui-org/tabs` component. This includes setting the tab panel ID correctly, removing unnecessary attributes, refining test cases for consistency, and enhancing ARIA properties to address accessibility issues.
+
+## Changes
+
+| File Path                                         | Change Summary                                                                                                         |
+|--------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| `.../rich-shirts-turn.md`                        | Introduced a patch to set the tab panel ID correctly in `@nextui-org/tabs`.                                            |
+| `.../placement.ts`                               | Removed `orientation="top"` attribute from `RadioGroup` component declaration.                                         |
+| `.../tabs.test.tsx`                              | Updated to use `within` import, renamed `tabs` to `defaultItems`, and added a new test case for tab properties.        |
+| `.../tab-panel.tsx`                              | Modified `useTabPanel` call to include `{...props, id: String(tabKey)}`, ensuring the `id` property is set.            |
+| `.../tab.tsx`                                    | Conditionally deleted `aria-controls` from `tabProps` if `props.children` is `null` to improve ARIA attribute handling.|
+
+## Assessment against linked issues
+
+| Objective                                                                 | Addressed | Explanation                                                         |
+|-------------------------------------------------------------------------- |---------- |-------------------------------------------------------------------- |
+| Fix accessibility issue with `[aria-*] attributes not having valid values` (#2809) | ✅        |                                                                    |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+.changeset/rich-shirts-turn.md: ## Summary
+
+The file `rich-shirts-turn.md` introduces a patch for the `@nextui-org/tabs` module, specifically addressing the issue of setting the tab panel ID correctly.
+
+## Alterations to the declarations of exported or public entities
+
+No alterations to the declarations of exported or public entities were made in this file.
+
+---
+
+apps/docs/content/components/tabs/placement.ts: ## Short Summary
+
+The change in functionality involves removing the `orientation="top"` attribute from the `RadioGroup` component's declaration within the `App` function.
+
+## Alterations to the declarations of exported or public entities
+
+- `orientation="top"` removed from the `RadioGroup` component's declaration in the `App` function in `placement.ts`
+
+---
+
+packages/components/tabs/__tests__/tabs.test.tsx: ### Summary
+
+The changes in the `tabs.test.tsx` file include adding the `within` import from "@testing-library/react," renaming the `tabs` variable to `defaultItems`, and modifying test cases to use `defaultItems` instead of `tabs`. Additionally, a new test case `it("renders property", () => { ... })` was added that utilizes `defaultItems` for rendering tabs and performing assertions based on the tab properties.
+
+### Alterations to the declarations of exported or public entities
+
+- `import {act, render, fireEvent, within} from "@testing-library/react";`
+- `let tabs: Item[] = [` changed to `let defaultItems: Item[] = [`
+- `<Tabs aria-label="Tabs static test" items={tabs}>` changed to `<Tabs aria-label="Tabs static test" items={defaultItems}>`
+
+---
+
+packages/components/tabs/src/tab-panel.tsx: ## Short Summary
+The change in functionality involves modifying the `useTabPanel` function call by adding `{...props, id: String(tabKey)}` as an argument, likely to include an `id` property. This change affects the behavior of the `TabPanel` component in `tab-panel.tsx`.
+
+## Alterations to the declarations of exported or public entities
+- `useTabPanel(props, state, domRef)` in `tab-panel.tsx` → `useTabPanel({...props, id: String(tabKey)}, state, domRef)`
+
+---
+
+packages/components/tabs/src/tab.tsx: ### Summary
+
+In the `tab.tsx` file, a change was made to conditionally delete the `aria-controls` attribute from `tabProps` if `props.children` is `null`. This alteration introduces a logic change in handling the `aria-controls` attribute based on the presence of `props.children`.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+### PR Summary
+
+**Title:** fix(tabs): set tab panel id correctly  
+**User:** ryo-manba  
+**Number:** 3246  
+
+**Description:**  
+This pull request addresses the issue where tab panel IDs were not set correctly, causing ARIA attribute issues. The current behavior results in incorrect tab panel IDs, negatively impacting accessibility. The new behavior ensures that tab panel IDs are set correctly, resolving the ARIA attribute issues.
+
+### Objectives from Linked Issues
+
+**Linked Issue:** #2809
+
+**Title:** [BUG] - Tabs has accessibility (aria-*) issue  
+
+**Description:**  
+The issue pertains to accessibility problems with the `aria-*` attributes in the tabs component of NextUI version 2.3.5. Specifically, the `aria-*` attributes do not have valid values, which affects SEO optimization.
+
+**Steps to Reproduce the Bug or Issue:**
+1. Visit the NextUI tabs documentation page.
+2. Open the Chrome console and perform a Lighthouse performance report.
+
+**Expected Behavior:**  
+The `aria-*` attributes should be valid to ensure proper SEO optimization.
+
+**Operating System:** Ubuntu 23.04 (Linux - Kernel 6.5.0-26-generic)  
+**Browser:** Chrome
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated summary of generated summaries
+
+The changes span multiple files and primarily focus on improving the functionality and maintainability of the `@nextui-org/tabs` module. Key modifications include:
+
+1. **Patch for Tab Panel ID**:
+   - A patch was introduced to the `@nextui-org/tabs` module to correctly set the tab panel ID, ensuring proper identification and accessibility of tab panels.
+
+2. **Removal of `orientation="top"` Attribute**:
+   - In `placement.ts`, the `orientation="top"` attribute was removed from the `RadioGroup` component within the `App` function, altering its configuration and likely its layout or behavior.
+
+3. **Test Case Updates**:
+   - The `tabs.test.tsx` file saw several updates:
+     - The `within` import from "@testing-library/react" was added.
+     - The `tabs` variable was renamed to `defaultItems`.
+     - Test cases were updated to use `defaultItems` instead of `tabs`.
+     - A new test case was added to validate the rendering of tab properties using `defaultItems`.
+
+4. **Modification of `useTabPanel` Function Call**:
+   - In `tab-panel.tsx`, the `useTabPanel` function call was modified to include `{...props, id: String(tabKey)}` as an argument, adding an `id` property to the props passed to the function. This change ensures that each tab panel has a unique ID based on `tabKey`.
+
+5. **Conditional Deletion of `aria-controls` Attribute**:
+   - In `tab.tsx`, a conditional logic was added to delete the `aria-controls` attribute from `tabProps` if `props.children` is `null`. This change helps manage the accessibility attributes dynamically based on the presence of child elements.
+
+### Alterations to the declarations of exported or public entities
+
+#### apps/docs/content/components/tabs/placement.ts
+
+**Before:**
+```tsx
+<RadioGroup orientation="top" ... />
+```
+
+**After:**
+```tsx
+<RadioGroup ... />
+```
+
+#### packages/components/tabs/__tests__/tabs.test.tsx
+
+**Before:**
+```tsx
+import { act, render, fireEvent } from "@testing-library/react";
+let tabs: Item[] = [
+    // items
+];
+<Tabs aria-label="Tabs static test" items={tabs} />
+```
+
+**After:**
+```tsx
+import { act, render, fireEvent, within } from "@testing-library/react";
+let defaultItems: Item[] = [
+    // items
+];
+<Tabs aria-label="Tabs static test" items={defaultItems} />
+```
+
+#### packages/components/tabs/src/tab-panel.tsx
+
+**Before:**
+```tsx
+useTabPanel(props, state, domRef)
+```
+
+**After:**
+```tsx
+useTabPanel({...props, id: String(tabKey)}, state, domRef)
+```
+
+#### packages/components/tabs/src/tab.tsx
+
+**Before:**
+```tsx
+const tabProps = {
+    // other props
+    'aria-controls': someValue,
+    // other props
+};
+```
+
+**After:**
+```tsx
+const tabProps = {
+    // other props
+    'aria-controls': someValue,
+    // other props
+};
+if (props.children === null) {
+    delete tabProps['aria-controls'];
+}
+```
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 5970fdae21adb475c6cdb7f1173944392a513652 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #4POPMtXZMQV4MKLEGlzYmvXdKi62JQ34oFOAG0AfPEo=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZpeC10YWItcGFuZWwtaWQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn0sImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1kb2NzLXYyL0NSc1R6djNhRldXNG5CMXpjdUxMS1JOWGgzS2MiLCJwcmV2aWV3VXJsIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZpeC10YWItcGFuZWwtaWQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIn0seyJuYW1lIjoibmV4dHVpLXN0b3J5Ym9vay12MiIsInJvb3REaXJlY3RvcnkiOiJwYWNrYWdlcy9zdG9yeWJvb2siLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZml4LXRhYi1wYW5lbC1pZC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifSwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi85VnBRTnFReGM3dnQ4eHZrOExweUJOcHNmWk41IiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC10YWItcGFuZWwtaWQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIn1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/CRsTzv3aFWW4nB1zcuLLKRNXh3Kc)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-tab-panel-id-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-tab-panel-id-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jun 13, 2024 6:31am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/9VpQNqQxc7vt8xvk8LpyBNpsfZN5)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-tab-panel-id-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-tab-panel-id-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jun 13, 2024 6:31am |
+
+
+\n
+
+Files Changed:
+- .changeset/rich-shirts-turn.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/tabs": patch
++---
++
++Fixed set tab panel id correctly (#2809)\n- apps/docs/content/components/tabs/placement.ts (modified, 1 changes)\n  Patch: @@ -7,7 +7,6 @@ export default function App() {
+       <RadioGroup
+         className="mb-4"
+         label="Placement"
+-        orientation="top"
+         value={placement}
+         onValueChange={(value) => setPlacement(value)}
+       >\n- packages/components/tabs/__tests__/tabs.test.tsx (modified, 40 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import * as React from "react";
+-import {act, render, fireEvent} from "@testing-library/react";
++import {act, render, fireEvent, within} from "@testing-library/react";
+ import userEvent from "@testing-library/user-event";
+ import {focus} from "@nextui-org/test-utils";
+ 
+@@ -11,7 +11,7 @@ type Item = {
+   content?: React.ReactNode;
+ };
+ 
+-let tabs: Item[] = [
++let defaultItems: Item[] = [
+   {
+     id: "item1",
+     label: "Item1 ",
+@@ -76,7 +76,7 @@ describe("Tabs", () => {
+ 
+   it("should render correctly (dynamic)", () => {
+     const wrapper = render(
+-      <Tabs aria-label="Tabs static test" items={tabs}>
++      <Tabs aria-label="Tabs static test" items={defaultItems}>
+         {(item) => (
+           <Tab key={item.id} title={item.label}>
+             <div>{item.content}</div>
+@@ -88,6 +88,40 @@ describe("Tabs", () => {
+     expect(() => wrapper.unmount()).not.toThrow();
+   });
+ 
++  it("renders property", () => {
++    const wrapper = render(
++      <Tabs aria-label="Tabs property test">
++        {defaultItems.map((item) => (
++          <Tab key={item.id} title={item.label}>
++            <div>{item.content}</div>
++          </Tab>
++        ))}
++      </Tabs>,
++    );
++    const tablist = wrapper.getByRole("tablist");
++
++    expect(tablist).toBeTruthy();
++    const tabs = within(tablist).getAllByRole("tab");
++
++    expect(tabs.length).toBe(3);
++
++    for (let tab of tabs) {
++      expect(tab).toHaveAttribute("tabindex");
++      expect(tab).toHaveAttribute("aria-selected");
++      const isSelected = tab.getAttribute("aria-selected") === "true";
++
++      if (isSelected) {
++        expect(tab).toHaveAttribute("aria-controls");
++        const tabpanel = document.getElementById(tab.getAttribute("aria-controls")!);
++
++        expect(tabpanel).toBeTruthy();
++        expect(tabpanel).toHaveAttribute("aria-labelledby", tab.id);
++        expect(tabpanel).toHaveAttribute("role", "tabpanel");
++        expect(tabpanel).toHaveTextContent(defaultItems[0]?.content as string);
++      }
++    }
++  });
++
+   it("ref should be forwarded", () => {
+     const ref = React.createRef<HTMLDivElement>();
+ \n- packages/components/tabs/src/tab-panel.tsx (modified, 2 changes)\n  Patch: @@ -47,7 +47,7 @@ const TabPanel = forwardRef<"div", TabPanelProps>((props, ref) => {
+ 
+   const domRef = useDOMRef(ref);
+ 
+-  const {tabPanelProps} = useTabPanel(props, state, domRef);
++  const {tabPanelProps} = useTabPanel({...props, id: String(tabKey)}, state, domRef);
+ 
+   const {focusProps, isFocused, isFocusVisible} = useFocusRing();
+ \n- packages/components/tabs/src/tab.tsx (modified, 4 changes)\n  Patch: @@ -61,6 +61,10 @@ const Tab = forwardRef<"button", TabItemProps>((props, ref) => {
+     isPressed,
+   } = useTab({key, isDisabled: isDisabledProp, shouldSelectOnPressUp}, state, domRef);
+ 
++  if (props.children == null) {
++    delete tabProps["aria-controls"];
++  }
++
+   const isDisabled = isDisabledProp || isDisabledItem;
+ 
+   const {focusProps, isFocused, isFocusVisible} = useFocusRing();\n

@@ -1,0 +1,291 @@
+Pull Request Number: 3643
+Title: fix(input): prevent clearable when input is readonly
+Base Branch: canary
+Head Branch: fix/readonly-clearable-interaction
+Author: ryxxn
+URL: https://github.com/nextui-org/nextui/pull/3643
+State: MERGED
+Created At: 2024-08-12T09:50:02Z
+Merged At: 2024-09-03T11:48:06Z
+Participants: ryxxn, wingkwong, jrgarciadev
+
+Description:
+📝 Description
+This PR addresses the issue where the clear button (isClearable) should not be displayed when the input field is read-only (isReadOnly). The useInput hook has been modified to automatically set isClearable to false when isReadOnly is true.
+⛳️ Current behavior (updates)
+
+Currently, the clear button can still be shown even if the input field is read-only. This is not the desired behavior because users should not be able to clear a read-only input field.
+🚀 New behavior
+With this PR, when the input field is set to read-only (isReadOnly), the clear button (isClearable) will automatically be hidden, ensuring that read-only fields cannot be cleared by the user.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+The useInput hook has been updated to check the isReadOnly property and conditionally set the isClearable property. This change ensures consistency and improves the user experience by preventing unintended actions on read-only fields.
+
+Summary by CodeRabbit
+
+
+New Features
+
+Improved usability of the input component by ensuring the clear button is disabled when the input is read-only.
+
+
+
+Bug Fixes
+
+Resolved an issue where the clear button was incorrectly enabled on read-only input fields.
+
+
+
+Tests
+
+Added new test cases to validate the behavior of the clear button when the input is in read-only mode.
+
+Commits:
+- fix(input): prevent clearable when input is readonly\n- test(input): add tests for isReadOnly and isClearable interaction\n- chore(changeset): add changeset for fixing clear button visibility with isReadOnly\n- fix(input): disable clear button from input is readonly\n- test(input): disable clear button when input is readonly\n- chore(changeset): update changeset\n- chore(changeset): revise message\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 87ae28bbe1b9c348edb562453080989deb441104
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/input        | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/react        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/ryxxn/nextui/new/fix/readonly-clearable-interaction?filename=.changeset/two-years-warn.md&value=---%0A%22%40nextui-org%2Finput%22%3A%20patch%0A---%0A%0Afix(input)%3A%20prevent%20clearable%20when%20input%20is%20readonly%0A)
+
+\n- vercel: @ryxxn is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22faacd6be5349b774083c0b48f2ade93ff7063fb0%22%7D%2C%22id%22%3A%22QmNy8s8TY8gR8tRZ4xY8jy49kMuCmpEENmabD8Jrj5k1gs%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3643%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The update enhances the `@nextui-org/input` component by disabling the clear button when the input field is in a read-only state. This change improves usability by preventing user confusion in scenarios where the input should not be modified. Additionally, the logic in the `useInput` function has been refined, and new tests ensure the clear button behaves correctly based on the input's state.
+
+## Changes
+
+| Files                                  | Change Summary                                                                                      |
+|----------------------------------------|----------------------------------------------------------------------------------------------------|
+| .changeset/soft-wombats-wash.md       | Introduced a patch for clear button visibility in `@nextui-org/input`, addressing usability issues.|
+| .../use-input.ts                       | Modified `useInput` logic to ensure clear button is disabled when input is read-only.             |
+| .../tests/Input.test.js                | Added tests to verify clear button behavior when `isReadOnly` is set to `true`.                  |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+```
+.changeset/soft-wombats-wash.md: ## AI-generated summary of changes
+
+The new file introduces a patch for the `@nextui-org/input` component, specifically addressing an issue where the clear button was incorrectly enabled when the input field was set to read-only. This patch enhances the component's functionality by ensuring that the clear button is only active when the input is editable, thus improving the overall user experience and preventing confusion. The logic flow has been modified to include a check for the read-only state of the input, ensuring that the component behaves correctly across different usage scenarios.
+
+Additionally, the changes in the `useInput` function of the `use-input.ts` file modify the logic that determines whether the input is clearable. The updated logic ensures that the input must not be read-only for it to be considered clearable, linking the clearability of the input to both its disabled state and its read-only status. This adjustment enhances usability by preventing unintended interactions in scenarios where the input should remain unmodifiable.
+
+The diff also introduces a new test case within the existing test suite for the `Input` component, specifically checking the behavior of the clear button when the `isReadOnly` prop is set to `true`. The test ensures that the clear button is not clickable and does not trigger the `onClear` callback when in read-only mode, thereby refining the component's usability and expected behavior.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made.
+```
+
+
+# New changesets
+
+.changeset/soft-wombats-wash.md: ## AI-generated summary of changes
+
+The new file introduces a patch for the `@nextui-org/input` component, specifically addressing an issue where the clear button was incorrectly enabled when the input field was set to read-only. This patch enhances the component's functionality by ensuring that the clear button is disabled when the input is in a read-only state, thereby improving the overall user experience and preventing confusion. The logic flow has been modified to incorporate a check for the read-only status of the input, ensuring that the component behaves correctly in various usage scenarios.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(input): prevent clearable when input is readonly" addresses an issue with the input component in the NextUI library. The identified problem was that the clear button, controlled by the `isClearable` property, could still be displayed even when the input field was set to read-only (`isReadOnly`). This behavior was not ideal, as users should not be able to clear a read-only input field.
+
+To resolve this issue, the `useInput` hook has been modified to ensure that when `isReadOnly` is set to `true`, the `isClearable` property is automatically set to `false`. This change prevents the clear button from appearing in read-only input fields, thereby improving the user experience and maintaining consistency in the component's behavior.
+
+The pull request does not introduce any breaking changes, and the implementation aims to enhance the functionality of the input component without affecting existing features.
+
+## Comments Summary
+
+In the comments on the pull request, the user `ryxxn` provided feedback requesting two specific additions: a changeset and a test to validate the new behavior. This feedback underscores the importance of maintaining documentation and ensuring that new features are properly tested.
+
+In response to this feedback, the author of the pull request acknowledged the suggestions and confirmed that they have added both a changeset and a test. This indicates a collaborative effort to improve the quality and reliability of the code before it is merged into the main codebase.
+
+Additionally, `ryxxn` raised a question regarding the visibility of the clear button when the input is read-only. They noted that while the clear button should not be clickable when `isReadOnly` is true, there was a consideration of whether the button should be completely hidden or simply disabled. They referenced the existing behavior of the clear button when `isDisabled` is set, where the button remains visible but is non-functional. 
+
+In response, the author clarified that they have opted to disable the click action for the clear button when `isReadOnly` is true, maintaining consistency with the behavior of the `isDisabled` property. This decision aims to ensure that users are not confused by the presence of a non-functional button while still adhering to the principle that read-only fields should not allow any alterations.
+
+Overall, the comments reflect a constructive review process where contributors are encouraged to enhance their pull requests by including necessary documentation and tests. This practice is essential for maintaining the integrity of the codebase and ensuring that new changes do not introduce regressions or unintended side effects.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- b06b0795667e93d2f84bcd11f14121fd0cb126d6 -->
+<!-- 125ab66381a91938bd8cdf84ebba1a1d47aa9e36 -->
+<!-- 87ae28bbe1b9c348edb562453080989deb441104 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #vZ6OnHqtcnPkLc7ayfoVYT7p9U1BLr3amDDTD/F7o+U=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvM1NNSEZaTU5CelRnQTJyTGZZaUFVV0VOVThLOSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXJ5eHhuLWZpeC1yZWFkb24tY2NjZmU3LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXJ5eHhuLWZpeC1yZWFkb24tY2NjZmU3LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/3SMHFZMNBzTgA2rLfYiAUWENU8K9)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-ryxxn-fix-readon-cccfe7-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-ryxxn-fix-readon-cccfe7-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 13, 2024 5:35am |
+
+\n- ryxxn: > 1. please add changeset since you've modified file under packages
+> 2. please include a test
+
+Thank you for the feedback!
+
+I've added a changeset and included test.\n- ryxxn: > > Currently, the clear button can still be shown even if the input field is read-only. This is not the desired behavior because users should not be able to clear a read-only input field.
+> 
+> I agree users should not able to click it but i'm thinking if we should make it hidden or not. If you look at `isDisabled` + `isClearable`, the clear button is here but not able to click.
+> 
+> ![image](https://private-user-images.githubusercontent.com/35857179/357289330-31cd25fa-8187-4e85-954e-fac47d89ee9f.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjM1MzUxMzIsIm5iZiI6MTcyMzUzNDgzMiwicGF0aCI6Ii8zNTg1NzE3OS8zNTcyODkzMzAtMzFjZDI1ZmEtODE4Ny00ZTg1LTk1NGUtZmFjNDdkODllZTlmLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA4MTMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwODEzVDA3NDAzMlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTQ1OTlmOWFlY2VmNWZhOTY4NzFlN2NjNTAzOWI3MmQzMjY1MGJmYWEwOWMwMTZhYjU5YTNjZmI3NDFlN2Y4ZjEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.Il4_cSA8PfTfbGV32OlnVxAICOc1dfybLhS9GI-1iA8)
+
+To maintain consistency with the behavior when isDisabled, I have disabled the click action for the clear button when isReadOnly is true.\n
+
+Files Changed:
+- .changeset/soft-wombats-wash.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/input": patch
++---
++
++disable clear button when input is read-only\n- packages/components/input/__tests__/input.test.tsx (modified, 27 changes)\n  Patch: @@ -180,6 +180,33 @@ describe("Input", () => {
+ 
+     expect(inputs[1]).toBeVisible();
+   });
++
++  it("should disable clear button when isReadOnly is true", async () => {
++    const onClear = jest.fn();
++
++    const ref = React.createRef<HTMLInputElement>();
++
++    const {getByRole} = render(
++      <Input
++        ref={ref}
++        isClearable
++        isReadOnly
++        defaultValue="readOnly test for clear button"
++        label="test input"
++        onClear={onClear}
++      />,
++    );
++
++    const clearButton = getByRole("button");
++
++    expect(clearButton).not.toBeNull();
++
++    const user = userEvent.setup();
++
++    await user.click(clearButton);
++
++    expect(onClear).toHaveBeenCalledTimes(0);
++  });
+ });
+ 
+ describe("Input with React Hook Form", () => {\n- packages/components/input/src/use-input.ts (modified, 2 changes)\n  Patch: @@ -214,7 +214,7 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+   });
+ 
+   const {pressProps: clearPressProps} = usePress({
+-    isDisabled: !!originalProps?.isDisabled,
++    isDisabled: !!originalProps?.isDisabled || !!originalProps?.isReadOnly,
+     onPress: handleClear,
+   });
+ \n

@@ -1,0 +1,86 @@
+Pull Request Number: 939
+Title: fix: sticky navbar style in large screen
+Base Branch: next
+Head Branch: joeltaam/fix/nav-bar
+Author: joeltaam
+URL: https://github.com/nextui-org/nextui/pull/939
+State: CLOSED
+Created At: 2022-12-08T15:39:44Z
+Merged At: None
+Participants: joeltaam, jrgarciadev
+
+Description:
+📝 Description
+
+fix: sticky navbar style in large screen
+
+⛳️ Current behavior (updates)
+Removed StyledNavbarContainer background-color and backdrop-filter, added to StyledNavbar
+before:
+
+after:
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- fix: sticky navbar style in large screen\n
+
+Labels:
+
+
+Comments:
+- vercel: @joeltaam is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%227f97994af53094077ceba04b4801aed11eb56769%22%7D%2C%22id%22%3A%22QmTEyENnbAFM3X9a33PFM3CCiiuAbk5tVnoLa9n2JEDxUE%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A939%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/4CmF51iyN7A3Y8ZiYDs5PLYuFnRk)) | [Visit Preview](https://nextui-docs-git-fork-joeltaam-joeltaam-fixnav-bar-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-docs-git-fork-joeltaam-joeltaam-fixnav-bar-nextui-org.vercel.app) | Jan 2, 2023 at 2:38AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/x9ML6PsqoJwPpuZnuXnc7qxFFGzu)) | [Visit Preview](https://nextui-storybook-git-fork-joeltaam-joeltaam-f-de349e-nextui-org.vercel.app) |  | Jan 2, 2023 at 2:38AM (UTC) |
+
+
+\n- jrgarciadev: Hey @joeltaam I appreciate your contribution,  however, couldn't replicate this issue on the NextUI production page 🤔 , on the other hand, the PR you sent has this issue with the `floating` variant:
+
+![Screenshot 2023-01-02 at 00 15 17](https://user-images.githubusercontent.com/30373425/210192939-491eb192-1e07-4f35-bda3-ed62904c3832.png)
+\n
+
+Files Changed:
+- packages/react/src/navbar/navbar.styles.ts (modified, 7 changes)\n  Patch: @@ -489,7 +489,6 @@ export const StyledNavbarContainer = styled("div", {
+   boxSizing: "border-box",
+   color: "inherit",
+   px: "$$navbarPadding",
+-  bg: "$$navbarBackgroundColor",
+   maxW: "$$navbarContainerMaxWidth",
+   zIndex: "$5",
+   "@xsMax": {
+@@ -505,6 +504,7 @@ export const StyledNavbar = styled("nav", {
+   height: "auto",
+   color: "$$navbarTextColor",
+   zIndex: "$2",
++  bg: "$$navbarBackgroundColor",
+   variants: {
+     variant: {
+       static: {
+@@ -575,12 +575,11 @@ export const StyledNavbar = styled("nav", {
+     },
+     disableBlur: {
+       false: {
+-        "@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none))": {
+-          [`& ${StyledNavbarContainer}`]: {
++        "@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none))":
++          {
+             bg: "$$navbarBlurBackgroundColor",
+             backdropFilter: "saturate(180%) blur($$navbarBlur)",
+           },
+-        },
+       },
+     },
+   },\n

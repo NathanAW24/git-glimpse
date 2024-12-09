@@ -1,0 +1,138 @@
+Pull Request Number: 226
+Title: Full width prop for Button component.
+Base Branch: main
+Head Branch: ful-width-button
+Author: andrew3009
+URL: https://github.com/nextui-org/nextui/pull/226
+State: CLOSED
+Created At: 2022-02-03T15:16:23Z
+Merged At: None
+Participants: andrew3009, jrgarciadev
+
+Description:
+[react]/[Button]
+TASK:
+Types of changes
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+Added the prop fullWidth to the Button component.
+Updated Components documentation to include an example of a button with the fullWidth prop.
+
+This allows the user to make the button full width of its container without needing css={{ width: "100%" }} whilst also being able to use the size prop for height and font size.
+
+Screenshots - Animations
+Storybook preview:
+
+
+Documentation preview:
+
+Commits:
+- feat: :sparkles: fullWidth prop
+
+Added fullWidth boolean prop\n- feat: :sparkles: fullWidth prop styling
+
+When the fullWidth prop is true width: 100% is applied, when false it's set to auto\n- test: :white_check_mark: fullWidth test
+
+Added fullWidth button to the "should render different variants" test\n- docs: :memo: Add fullWidth button to sizes
+
+Added the fullWidth button to the Sizes function\n- docs: :memo: Full width button to docs
+
+Added the full width button to the button Sizes documentation.\n- Merge branch 'main' into ful-width-button\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- jrgarciadev: Hey @andrew3009 thanks for this contribution I left you some comments 🙌🏻 \n
+
+Files Changed:
+- apps/docs/content/docs/components/button.mdx (modified, 2 changes)\n  Patch: @@ -48,6 +48,8 @@ import { Button } from '@nextui-org/react';
+     <Button size="xl">xlarge</Button>
+     <Spacer y={0.5}/>
+     <Button auto>auto width</Button>
++    <Spacer y={0.5}/>
++    <Button fullWidth>full width</Button>
+ </>
+ `}
+ />\n- packages/react/src/button/__tests__/index.test.tsx (modified, 1 changes)\n  Patch: @@ -97,6 +97,7 @@ describe('Button', () => {
+         {/* <Button ghost>button</Button>
+         <Button bordered>button</Button> */}
+         <Button auto>button</Button>
++        <Button fullWidth>button</Button>
+         <Button animated={false}>button</Button>
+       </div>
+     );\n- packages/react/src/button/button.stories.tsx (modified, 4 changes)\n  Patch: @@ -39,6 +39,10 @@ export const Sizes = () => (
+       Extra Large
+     </Button>
+     <Spacer y={0.5} />
++    <Button fullWidth color="gradient">
++      Full width
++    </Button>
++    <Spacer y={0.5} />
+     <Button auto color="gradient">
+       Auto width
+     </Button>\n- packages/react/src/button/button.styles.ts (modified, 13 changes)\n  Patch: @@ -219,7 +219,15 @@ export const StyledButton = styled(
+         true: {
+           br: '$pill'
+         }
+-      }
++      },
++      fullWidth: {
++        true: {
++          width: '100%'
++        },
++        false: {
++          width: 'auto'
++        }
++      },
+     },
+     compoundVariants: [
+       // size / auto
+@@ -773,7 +781,8 @@ export const StyledButton = styled(
+       color: 'default',
+       borderWeight: 'normal',
+       animated: true,
+-      size: 'md'
++      size: 'md',
++      fullWidth: false,
+     }
+   },
+   sharedFocus\n- packages/react/src/button/button.tsx (modified, 4 changes)\n  Patch: @@ -36,6 +36,7 @@ export interface Props {
+   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+   as?: keyof JSX.IntrinsicElements;
+   className?: string;
++  fullWidth?: boolean;
+ }
+ 
+ const defaultProps = {
+@@ -46,6 +47,7 @@ const defaultProps = {
+   animated: true,
+   disabled: false,
+   auto: false,
++  fullWidth: false,
+   className: ''
+ };
+ 
+@@ -80,6 +82,7 @@ const Button = React.forwardRef<
+     ghost,
+     clickable,
+     className,
++    fullWidth,
+     ...props
+   } = filteredProps;
+   /* eslint-enable @typescript-eslint/no-unused-vars */
+@@ -123,6 +126,7 @@ const Button = React.forwardRef<
+       animated={animated}
+       onClick={clickHandler}
+       className={clsx('nextui-button', `nextui-button--${getState}`, className)}
++      fullWidth={fullWidth}
+       {...props}
+     >
+       {React.Children.count(children) === 0 ? (\n

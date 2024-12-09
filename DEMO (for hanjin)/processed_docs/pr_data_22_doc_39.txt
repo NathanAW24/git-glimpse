@@ -1,0 +1,79 @@
+Pull Request Number: 1333
+Title: fix: moved sr only modal close buttons to not show unnecessary scroll bar
+Base Branch: main
+Head Branch: fix/moved-sr-only-modal-close-buttons-to-not-show-unnecessary-scroll-bar
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1333
+State: MERGED
+Created At: 2023-08-09T17:42:37Z
+Merged At: 2023-08-10T00:36:15Z
+Participants: jguddas, jrgarciadev
+
+Description:
+This pr removes the 2px overflow from the modal in mobile view and consequently removes the scroll bar.
+This was the result of visually hidden elements being 1x1px in size.
+
+Commits:
+- fix: moved sr only modal close buttons to not show unnecessary scroll bar\n- Create sour-lizards-allow.md\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: b7676cca5eb32290d85fc8626ed357c05793da85
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/modal | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/jguddas/nextui/new/fix/moved-sr-only-modal-close-buttons-to-not-show-unnecessary-scroll-bar?filename=.changeset/rude-eagles-obey.md&value=---%0A%22%40nextui-org%2Fmodal%22%3A%20patch%0A---%0A%0Afix%3A%20moved%20sr%20only%20modal%20close%20buttons%20to%20not%20show%20unnecessary%20scroll%20bar%0A)
+
+\n- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22dc3023bb2cf76be15338f99040da747b728b6468%22%7D%2C%22id%22%3A%22QmZAJfSZ3gKzJYZPnETMx16v1G8RaZmsYH4wdm8MqpfygU%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1333%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #UhWdbBV7oTSaQxYP2+R3sx5vxjOW/uwlPJ47EPjzvEk=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNjJub2NyQlNCcW1wczNWM1ZvR2ltZmp6RkZlZiIsInByZXZpZXdVcmwiOiIiLCJuZXh0Q29tbWl0U3RhdHVzIjoiRkFJTEVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6IiJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/62nocrBSBqmps3V3VoGimfjzFFef)) |  |  | Aug 9, 2023 5:45pm |
+
+\n- jrgarciadev: Good catch! @jguddas could you please create the changeset as well?\n
+
+Files Changed:
+- .changeset/sour-lizards-allow.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/modal": patch
++---
++
++fix: moved sr only modal close buttons to not show unnecessary scroll bar\n- packages/components/modal/src/modal-content.tsx (modified, 10 changes)\n  Patch: @@ -60,14 +60,12 @@ const ModalContent = forwardRef<"div", ModalContentProps, KeysToOmit>((props, _)
+   );
+ 
+   const content = (
+-    <>
++    <Component {...getDialogProps(mergeProps(dialogProps, otherProps))}>
+       <DismissButton onDismiss={onClose} />
+-      <Component {...getDialogProps(mergeProps(dialogProps, otherProps))}>
+-        {!hideCloseButton && closeButtonContent}
+-        {typeof children === "function" ? children(onClose) : children}
+-      </Component>
++      {!hideCloseButton && closeButtonContent}
++      {typeof children === "function" ? children(onClose) : children}
+       <DismissButton onDismiss={onClose} />
+-    </>
++    </Component>
+   );
+ 
+   const backdropContent = useMemo(() => {\n

@@ -1,0 +1,95 @@
+Pull Request Number: 459
+Title: fix(react-popover): The content of the popover appears blurred Closes…
+Base Branch: next
+Head Branch: fix_458/blurred-popover-content
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/459
+State: MERGED
+Created At: 2022-05-06T17:17:12Z
+Merged At: 2022-05-06T17:18:39Z
+Participants: jrgarciadev
+
+Description:
+Closes #458
+📝 Description
+Blurred popover content fixed
+⛳️ Current behavior (updates)
+The content of the popover appears blurred
+🚀 New behavior
+The content of the popover is no longer looks blurry
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(react-popover): The content of the popover appears blurred Closes: #458\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/react/src/popover/popover-content.tsx (modified, 15 changes)\n  Patch: @@ -7,7 +7,10 @@ import { CSS } from '../theme/stitches.config';
+ import CSSTransition from '../utils/css-transition';
+ import { __DEV__ } from '../utils/assertion';
+ import { mergeRefs, ReactRef } from '../utils/refs';
+-import { StyledPopoverContent } from './popover.styles';
++import {
++  StyledPopoverContentContainer,
++  StyledPopoverContent
++} from './popover.styles';
+ import { usePopoverContext } from './popover-context';
+ import { getTransformOrigin } from './utils';
+ import clsx from '../utils/clsx';
+@@ -67,7 +70,7 @@ export const PopoverContent = React.forwardRef(
+     const { isFocusVisible, focusProps } = useFocusRing();
+ 
+     const contents = (
+-      <StyledPopoverContent
++      <StyledPopoverContentContainer
+         ref={mergeRefs(overlayRef, ref)}
+         {...getPopoverProps(
+           mergeProps(
+@@ -78,7 +81,7 @@ export const PopoverContent = React.forwardRef(
+             otherProps
+           )
+         )}
+-        className={clsx('nextui-popover-content', className)}
++        className={clsx('nextui-popover-content-container', className)}
+         isFocusVisible={isFocusVisible}
+         as={as}
+         css={{
+@@ -87,9 +90,11 @@ export const PopoverContent = React.forwardRef(
+         }}
+       >
+         <DismissButton onDismiss={onClose} />
+-        {children}
++        <StyledPopoverContent className="nextui-popover-content">
++          {children}
++        </StyledPopoverContent>
+         <DismissButton onDismiss={onClose} />
+-      </StyledPopoverContent>
++      </StyledPopoverContentContainer>
+     );
+ 
+     return (\n- packages/react/src/popover/popover.styles.ts (modified, 8 changes)\n  Patch: @@ -26,7 +26,7 @@ export const appearanceOut = keyframes({
+   }
+ });
+ 
+-export const StyledPopoverContent = styled(
++export const StyledPopoverContentContainer = styled(
+   'div',
+   {
+     /* variables */
+@@ -73,3 +73,9 @@ export const StyledPopoverContent = styled(
+   },
+   cssFocusVisible
+ );
++
++export const StyledPopoverContent = styled('div', {
++  /* Avoid blurriness */
++  transform: 'translateZ(0)',
++  backfaceVisibility: 'hidden'
++});\n

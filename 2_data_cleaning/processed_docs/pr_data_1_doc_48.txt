@@ -1,0 +1,472 @@
+Pull Request Number: 4125
+Title: fix: label placement when the select has a placeholder or description
+Base Branch: beta/release-next
+Head Branch: fix/select-outside-label-placement
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/4125
+State: CLOSED
+Created At: 2024-11-20T19:25:21Z
+Merged At: None
+Participants: tianenpang, wingkwong, CanRau
+
+Description:
+Closes # 
+📝 Description
+Fixed label placement when the Select has a placeholder or description.
+⛳️ Current behavior (updates)
+Corrected the rendering position and elements nesting.
+🚀 New behavior
+Updated the conditions for shouldLabelBeOutside.
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+Related to PR#3853.
+Before
+
+After
+
+
+Summary by CodeRabbit
+Release Notes
+
+
+New Features
+
+Improved label placement for the Select component when using placeholders or descriptions.
+Added support for multiline labels in the Select component.
+
+
+
+Bug Fixes
+
+Enhanced responsiveness of the popover position based on selected items.
+
+
+
+Documentation
+
+Updated storybook with new templates showcasing the Select component with descriptions and placeholders for better user context.
+
+Commits:
+- fix(docs): invalid canary storybook link (#4030)\n- fix(use-image): image ReferenceError in SSR (#4122)
+
+* fix(use-image): image ReferenceError in SSR
+
+* fix(use-image): sync with beta
+
+* fix(use-image): sync with beta
+
+* chore(use-image): remove unnecessary comments\n- fix(docs): buildLocation expects an object  (#4118)
+
+* fix(docs): routing.mdx
+
+* Delete .changeset/pre.json\n- fix: label placement when the select has a placeholder or description\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 95728e609e4fe0ce9c48b2fe0f6bff76d0cfd547
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name               | Type  |
+| ------------------ | ----- |
+| @nextui-org/select | Patch |
+| @nextui-org/react  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/tianenpang/nextui/new/fix/select-outside-label-placement?filename=.changeset/ninety-otters-join.md&value=---%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A---%0A%0Afix%3A%20label%20placement%20when%20the%20select%20has%20a%20placeholder%20or%20description%0A)
+
+\n- vercel: @tianenpang is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2295728e609e4fe0ce9c48b2fe0f6bff76d0cfd547%22%7D%2C%22id%22%3A%22QmbEmuDM8wE89Swzx7mpQn18PGKcCukWGaWXFmPY1WZHUg%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A4125%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This pull request introduces a patch for the `@nextui-org/select` package, focusing on improving label placement in the `Select` component when a `placeholder` or `description` is present. The changes include updates to the `useSelect` function to refine label positioning logic, adjustments to the test suite to account for the new multiline label feature, and enhancements to storybook templates to demonstrate the new functionality.
+
+## Changes
+
+| File Path                                      | Change Summary                                                                                                           |
+|------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| .changeset/odd-tomatoes-call.md                | Introduced a patch for the `@nextui-org/select` package to fix label placement issues with `placeholder` or `description`. |
+| packages/components/select/__tests__/select.test.tsx | Updated tests for the `Select` component to include conditions for the `isMultiline` prop and enhanced test coverage.    |
+| packages/components/select/src/use-select.ts   | Modified `useSelect` function for improved label placement logic and updated popover behavior based on selected items.   |
+| packages/components/select/stories/select.stories.tsx | Added new templates and descriptions for `Select` components in storybook, enhancing contextual information.             |
+
+## Possibly related PRs
+- **#3081**: Addresses the display of placeholder text in the `Select` component, relevant to label placement.
+- **#3568**: Modifies the `useSelect` function, related to label placement logic in the `Select` component.
+- **#3853**: Specifically addresses label placement discrepancies in the `Select` component.
+- **#3869**: Fixes label placement in both the `Select` and `Input` components, relevant to the main PR's modifications.
+- **#3881**: Aims to make styles of the `Select` component consistent with the `Input` component, relating to usability improvements.
+
+## Suggested labels
+`👀 Status: In Review`, `📋 Scope : Docs`
+
+## Suggested reviewers
+- wingkwong
+- jrgarciadev
+
+<!-- walkthrough_end -->
+
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/odd-tomatoes-call.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/select": patch
++---
++
++Fix the label placement when the `Select` has a `placeholder` or `description`.\n- .changeset/wild-jobs-explain.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/use-image": patch
++---
++
++fix Image ReferenceError in SSR
+\ No newline at end of file\n- apps/docs/content/docs/guide/routing.mdx (modified, 2 changes)\n  Patch: @@ -269,7 +269,7 @@ function RootRoute() {
+   return (
+     <NextUIProvider 
+       navigate={(to, options) => router.navigate({ to, ...options })}
+-      useHref={(to) => router.buildLocation(to).href}
++      useHref={(to) => router.buildLocation({ to }).href}
+     >
+       {/* You app here... */}
+     </NextUIProvider>\n- packages/components/select/__tests__/select.test.tsx (modified, 3 changes)\n  Patch: @@ -723,11 +723,12 @@ describe("Select", () => {
+     expect(onChange).toHaveBeenCalledTimes(1);
+   });
+ 
+-  it("should place the label outside when labelPlacement is outside", () => {
++  it("should place the label outside when labelPlacement is outside and isMultiline enabled", () => {
+     const labelContent = "Favorite Animal Label";
+ 
+     render(
+       <Select
++        isMultiline
+         aria-label="Favorite Animal"
+         data-testid="select"
+         label={labelContent}\n- packages/components/select/src/use-select.ts (modified, 3 changes)\n  Patch: @@ -314,7 +314,8 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+   const hasPlaceholder = !!placeholder;
+   const shouldLabelBeOutside =
+     labelPlacement === "outside-left" ||
+-    (labelPlacement === "outside" && (hasPlaceholder || !!originalProps.isMultiline));
++    (labelPlacement === "outside" &&
++      (!(hasPlaceholder || !!description) || !!originalProps.isMultiline));
+   const shouldLabelBeInside = labelPlacement === "inside";
+   const isOutsideLeft = labelPlacement === "outside-left";
+ \n- packages/components/select/stories/select.stories.tsx (modified, 37 changes)\n  Patch: @@ -357,6 +357,43 @@ const LabelPlacementTemplate = ({color, variant, ...args}: SelectProps) => (
+         </Select>
+       </div>
+     </div>
++    <div className="w-full max-w-2xl flex flex-col gap-3">
++      <h3>With placeholder and description</h3>
++      <div className="w-full flex flex-row items-end gap-4">
++        <Select
++          color={color}
++          description="Select your favorite animal"
++          label="Favorite Animal"
++          placeholder="Select an animal"
++          variant={variant}
++          {...args}
++        >
++          {items}
++        </Select>
++        <Select
++          color={color}
++          description="Select your favorite animal"
++          label="Favorite Animal"
++          placeholder="Select an animal"
++          variant={variant}
++          {...args}
++          labelPlacement="outside"
++        >
++          {items}
++        </Select>
++        <Select
++          color={color}
++          description="Select your favorite animal"
++          label="Favorite Animal"
++          placeholder="Select an animal"
++          variant={variant}
++          {...args}
++          labelPlacement="outside-left"
++        >
++          {items}
++        </Select>
++      </div>
++    </div>
+   </div>
+ );
+ \n- packages/core/react/README.md (modified, 2 changes)\n  Patch: @@ -39,7 +39,7 @@ Visit [https://storybook.nextui.org](https://storybook.nextui.org/) to view the
+ Canary versions are available after every merge into `canary` branch. You can install the packages with the tag `canary` in npm to use the latest changes before the next production release.
+ 
+ - [Documentation](https://canary.nextui.org/docs)
+-- [Storybook](https://canary-storybook.nextui.org)
++- [Storybook](https://canary-sb.nextui.org)
+ 
+ ## Community
+ \n- packages/hooks/use-image/__tests__/use-image.test.tsx (modified, 25 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import {renderHook} from "@testing-library/react-hooks";
++import {renderHook, waitFor} from "@testing-library/react";
+ import {mocks} from "@nextui-org/test-utils";
+ 
+ import {useImage} from "../src";
+@@ -14,31 +14,24 @@ describe("use-image hook", () => {
+   });
+ 
+   it("can handle missing src", () => {
+-    const rendered = renderHook(() => useImage({}));
++    const {result} = renderHook(() => useImage({}));
+ 
+-    expect(rendered.result.current).toEqual("pending");
++    expect(result.current).toEqual("pending");
+   });
+ 
+   it("can handle loading image", async () => {
+-    const rendered = renderHook(() => useImage({src: "/test.png"}));
++    const {result} = renderHook(() => useImage({src: "/test.png"}));
+ 
+-    expect(rendered.result.current).toEqual("loading");
++    expect(result.current).toEqual("loading");
+     mockImage.simulate("loaded");
+-    await rendered.waitForValueToChange(() => rendered.result.current === "loaded");
++    await waitFor(() => expect(result.current).toBe("loaded"));
+   });
+ 
+   it("can handle error image", async () => {
+     mockImage.simulate("error");
+-    const rendered = renderHook(() => useImage({src: "/test.png"}));
++    const {result} = renderHook(() => useImage({src: "/test.png"}));
+ 
+-    expect(rendered.result.current).toEqual("loading");
+-    await rendered.waitForValueToChange(() => rendered.result.current === "failed");
+-  });
+-
+-  it("can handle cached image", async () => {
+-    mockImage.simulate("loaded");
+-    const rendered = renderHook(() => useImage({src: "/test.png"}));
+-
+-    expect(rendered.result.current).toEqual("loaded");
++    expect(result.current).toEqual("loading");
++    await waitFor(() => expect(result.current).toBe("failed"));
+   });
+ });\n- packages/hooks/use-image/src/index.ts (modified, 91 changes)\n  Patch: @@ -1,9 +1,10 @@
+ /**
+  * Part of this code is taken from @chakra-ui/react package ❤️
+  */
+-import type {ImgHTMLAttributes, MutableRefObject, SyntheticEvent} from "react";
+ 
+-import {useEffect, useRef, useState} from "react";
++import type {ImgHTMLAttributes, SyntheticEvent} from "react";
++
++import {useCallback, useEffect, useRef, useState} from "react";
+ import {useSafeLayoutEffect} from "@nextui-org/use-safe-layout-effect";
+ 
+ type NativeImageProps = ImgHTMLAttributes<HTMLImageElement>;
+@@ -46,7 +47,6 @@ type Status = "loading" | "failed" | "pending" | "loaded";
+ export type FallbackStrategy = "onError" | "beforeLoadOrError";
+ 
+ type ImageEvent = SyntheticEvent<HTMLImageElement, Event>;
+-
+ /**
+  * React hook that loads an image in the browser,
+  * and lets us know the `status` so we can show image
+@@ -63,40 +63,44 @@ type ImageEvent = SyntheticEvent<HTMLImageElement, Event>;
+  * }
+  * ```
+  */
++
+ export function useImage(props: UseImageProps = {}) {
+   const {loading, src, srcSet, onLoad, onError, crossOrigin, sizes, ignoreFallback} = props;
+ 
++  const [status, setStatus] = useState<Status>("pending");
++
++  useEffect(() => {
++    setStatus(src ? "loading" : "pending");
++  }, [src]);
++
+   const imageRef = useRef<HTMLImageElement | null>();
+-  const firstMount = useRef<boolean>(true);
+-  const [status, setStatus] = useState<Status>(() => setImageAndGetInitialStatus(props, imageRef));
+ 
+-  useSafeLayoutEffect(() => {
+-    if (firstMount.current) {
+-      firstMount.current = false;
++  const load = useCallback(() => {
++    if (!src) return;
+ 
+-      return;
+-    }
++    flush();
+ 
+-    setStatus(setImageAndGetInitialStatus(props, imageRef));
++    const img = new Image();
+ 
+-    return () => {
+-      flush();
+-    };
+-  }, [src, crossOrigin, srcSet, sizes, loading]);
++    img.src = src;
++    if (crossOrigin) img.crossOrigin = crossOrigin;
++    if (srcSet) img.srcset = srcSet;
++    if (sizes) img.sizes = sizes;
++    if (loading) img.loading = loading;
+ 
+-  useEffect(() => {
+-    if (!imageRef.current) return;
+-    imageRef.current.onload = (event) => {
++    img.onload = (event) => {
+       flush();
+       setStatus("loaded");
+       onLoad?.(event as unknown as ImageEvent);
+     };
+-    imageRef.current.onerror = (error) => {
++    img.onerror = (error) => {
+       flush();
+       setStatus("failed");
+       onError?.(error as any);
+     };
+-  }, [imageRef.current]);
++
++    imageRef.current = img;
++  }, [src, crossOrigin, srcSet, sizes, onLoad, onError, loading]);
+ 
+   const flush = () => {
+     if (imageRef.current) {
+@@ -106,40 +110,25 @@ export function useImage(props: UseImageProps = {}) {
+     }
+   };
+ 
++  useSafeLayoutEffect(() => {
++    /**
++     * If user opts out of the fallback/placeholder
++     * logic, let's bail out.
++     */
++    if (ignoreFallback) return undefined;
++
++    if (status === "loading") {
++      load();
++    }
++
++    return () => {
++      flush();
++    };
++  }, [status, load, ignoreFallback]);
++
+   /**
+    * If user opts out of the fallback/placeholder
+    * logic, let's just return 'loaded'
+    */
+   return ignoreFallback ? "loaded" : status;
+ }
+-
+-function setImageAndGetInitialStatus(
+-  props: UseImageProps,
+-  imageRef: MutableRefObject<HTMLImageElement | null | undefined>,
+-): Status {
+-  const {loading, src, srcSet, crossOrigin, sizes, ignoreFallback} = props;
+-
+-  if (!src) return "pending";
+-  if (ignoreFallback) return "loaded";
+-
+-  const img = new Image();
+-
+-  img.src = src;
+-  if (crossOrigin) img.crossOrigin = crossOrigin;
+-  if (srcSet) img.srcset = srcSet;
+-  if (sizes) img.sizes = sizes;
+-  if (loading) img.loading = loading;
+-
+-  imageRef.current = img;
+-  if (img.complete && img.naturalWidth) {
+-    return "loaded";
+-  }
+-
+-  return "loading";
+-}
+-
+-export const shouldShowFallbackImage = (status: Status, fallbackStrategy: FallbackStrategy) =>
+-  (status !== "loaded" && fallbackStrategy === "beforeLoadOrError") ||
+-  (status === "failed" && fallbackStrategy === "onError");
+-
+-export type UseImageReturn = ReturnType<typeof useImage>;\n

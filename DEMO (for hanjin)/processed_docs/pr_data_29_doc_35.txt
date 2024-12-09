@@ -1,0 +1,2135 @@
+Pull Request Number: 341
+Title: Feat/table
+Base Branch: next
+Head Branch: feat/table
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/341
+State: MERGED
+Created At: 2022-03-16T13:22:52Z
+Merged At: 2022-03-16T13:23:24Z
+Participants: jrgarciadev
+
+Description:
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+New component: Table
+New docs code editor based on Sandpack which supports Typescript and Javascript, multiples files tabs and provides a generated Codesandbox link
+Bug fixes
+
+
+
+
+Screenshots - Animations
+
+Commits:
+- chore(table): initial files\n- feat(table): table base improved\n- feat(table): storybook table data improved\n- feat(table): API improved, new types added\n- fix(checkbox): checkbox hover blinking\n- feat(table): caption and compact mode\n- Merge branch 'staging' of github.com:nextui-org/nextui into feat/table\n- Merge branch 'main' of github.com:nextui-org/nextui into feat/table\n- fix(user): undefined exports\n- feat(table): table caption added\n- Merge branch 'main' of github.com:nextui-org/nextui into feat/table\n- chore(root): typescript version updated to 4.4.3\n- feat(table): table base components in progress base on react-aria/table components\n- feat[react](table): missing reat-aria/table components created and adapted\n- chore[storybook](version): version upgraded\n- feat[react](table): table component improved\n- feat[react](table): lined and headerLined variants added\n- fix(table-ssr); react aria packages updated in order to fix table ssr issue\n- fix(table-ssr); react aria packages updated in order to fix table ssr issue\n- fix(checkbox): checkbox animated styles collision solved\n- feat(table): animated prop added\n- fix(storybook): version updated in order to use webpack5 and prevent table issues\n- chore(table): new table examples added to storybook\n- feat(table): background opacity improved\n- feat[react](table): bordered and sticked table added\n- feat(table): sticked prop implemented, dynamic table implemented\n- feat[react](table): table footer initialized\n- feat[react](table):  table pagination initialized\n- feat[react](table): table context added in order to managed separated props\n- chore[react](table): nextui classname added to all table components\n- chore[react](table): animated prop added to table context\n- feat[react](table): pagination logic implemented, styles improved\n- fix[react](pagination): perf issues, dynamic variable stored as a css var\n- fix[react](pagination): classname added to highlight pagination\n- refactor[react](pagination): transform animation on active added\n- fix[react](pagination): console.log removed\n- chore[react](pagination): pagination animated improved\n- feat[react](table): pagination props passed, color taken from table selected color\n- chore[react](pagination): sizes increased\n- chore[react](table): disabled row logic removed, waiting for react-aria team\n- feat[react](table): infinity scroll table initialized\n- feat[react](table): disabled rows implemented\n- chore[react](table): disabled rows className\n- feat[react](table): infinity scroll enhaced\n- Merge branch 'main' of github.com:nextui-org/nextui into feat/table\n- fix[react](table): div cannot be a child of a table component\n- fix[react](table): spacer moved to the head to avoid styles misunderstanding\n- Merge branch 'main' of github.com:nextui-org/nextui into feat/table\n- feat[react](table): custom cells story implemented, align and hide header columns is now possible\n- Merge branch 'main' of github.com:nextui-org/nextui into feat/table\n
+
+Labels:
+⏳ Status: Waiting for Next Release
+
+Comments:
+No comments.
+
+Files Changed:
+- CONTRIBUTING.MD (modified, 2 changes)\n  Patch: @@ -97,7 +97,7 @@ You can run the nest command for component specific tests.
+ yarn test:update # or npm run test:update
+ 
+ # Test isolated component code
+-yarn test src/button  # or npm run test src/button
++yarn test:update src/button  # or npm run test:update src/button
+ 
+ ```
+ \n- apps/docs/.babelrc (removed, 21 changes)\n  Patch: @@ -1,21 +0,0 @@
+-{
+-  "presets": ["next/babel"],
+-  "plugins": [
+-    [
+-      "module-resolver",
+-      {
+-        "root": ["./"],
+-        "alias": {
+-          "@content": "./content",
+-          "@components": "./src/components",
+-          "@primitives": "./src/components/primitives",
+-          "@layouts": "./src/layouts",
+-          "@hooks": "./src/hooks",
+-          "@utils": "./src/utils",
+-          "@theme": "./src/theme",
+-          "@lib": "./src/lib"
+-        }
+-      }
+-    ]
+-  ]
+-}\n- apps/docs/content/components/index.ts (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++import tableContent from './table';
++
++export default {
++  tableContent
++};\n- apps/docs/content/components/table/bordered.ts (added, 51 changes)\n  Patch: @@ -0,0 +1,51 @@
++const App = `import { Table } from '@nextui-org/react';
++    
++export default function App() {
++  return <Table
++      bordered
++      shadow={false}
++      selectionMode="multiple"
++      aria-label="Example static collection table"
++      css={{
++        height: 'auto',
++        minWidth: '100%',
++      }}
++    >
++      <Table.Header>
++        <Table.Column>NAME</Table.Column>
++        <Table.Column>ROLE</Table.Column>
++        <Table.Column>STATUS</Table.Column>
++      </Table.Header>
++      <Table.Body>
++        <Table.Row key="1">
++          <Table.Cell>Tony Reichert</Table.Cell>
++          <Table.Cell>CEO</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="2">
++          <Table.Cell>Zoey Lang</Table.Cell>
++          <Table.Cell>Technical Lead</Table.Cell>
++          <Table.Cell>Paused</Table.Cell>
++        </Table.Row>
++        <Table.Row key="3">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="4">
++          <Table.Cell>William Howard</Table.Cell>
++          <Table.Cell>Community Manager</Table.Cell>
++          <Table.Cell>Vacation</Table.Cell>
++        </Table.Row>
++      </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/colors.ts (added, 98 changes)\n  Patch: @@ -0,0 +1,98 @@
++const App = `import React from 'react';
++import { Table, Grid, Radio } from '@nextui-org/react';
++    
++export default function App() {
++  const [selectedColor, setSelectedColor] = React.useState('primary');
++  const colors = ['primary', 'secondary', 'success', 'warning', 'error'];
++  const capitalize = (str) => {
++    const lower = str.toLowerCase();
++    return str.charAt(0).toUpperCase() + lower.slice(1);
++  }
++  const columns = [
++    {
++      key: 'name',
++      label: 'Name',
++    },
++    {
++      key: 'role',
++      label: 'Role',
++    },
++    {
++      key: 'status',
++      label: 'Status',
++    },
++  ];
++  const rows = [
++    {
++      key: '1',
++      name: 'Tony Reichert',
++      role: 'CEO',
++      status: 'Active',
++    },
++    {
++      key: '2',
++      name: 'Zoey Lang',
++      role: 'Technical Lead',
++      status: 'Paused',
++    },
++    {
++      key: '3',
++      name: 'Jane Fisher',
++      role: 'Senior Developer',
++      status: 'Active',
++    },
++    {
++      key: '4',
++      name: 'William Howard',
++      role: 'Community Manager',
++      status: 'Vacation',
++    },
++  ];
++  return <Grid.Container gap={2}>
++  <Grid xs={12}>
++    <Table
++        aria-label="Example dynamic collection table"
++        color={selectedColor}
++        selectionMode="multiple"
++        defaultSelectedKeys={['2']}
++        css={{
++          height: 'auto',
++          minWidth: '100%',
++        }}
++      >
++      <Table.Header columns={columns}>
++          {(column) => (
++            <Table.Column key={column.key}>{column.label}</Table.Column>
++          )}
++        </Table.Header>
++        <Table.Body items={rows}>
++          {(item) => (
++            <Table.Row key={item.key}>
++              {(columnKey) => (
++                <Table.Cell>{item[columnKey]}</Table.Cell>
++              )}
++            </Table.Row>
++          )}
++        </Table.Body>
++    </Table>
++  </Grid>
++  <Grid xs={12}>
++    <Radio.Group row size="sm" value={selectedColor} onChange={setSelectedColor}>
++      {colors.map((color) => (
++        <Radio key={color} value={color} color={selectedColor}>
++          {capitalize(color)}
++        </Radio>
++      ))}
++    </Radio.Group>
++  </Grid>    
++</Grid.Container>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/compact.ts (added, 50 changes)\n  Patch: @@ -0,0 +1,50 @@
++const App = `import { Table } from '@nextui-org/react';
++    
++export default function App() {
++  return <Table
++      compact
++      aria-label="Example static collection table"
++      selectionMode="multiple"
++      css={{
++        height: 'auto',
++        minWidth: '100%',
++      }}
++    >
++      <Table.Header>
++        <Table.Column>NAME</Table.Column>
++        <Table.Column>ROLE</Table.Column>
++        <Table.Column>STATUS</Table.Column>
++      </Table.Header>
++      <Table.Body>
++        <Table.Row key="1">
++          <Table.Cell>Tony Reichert</Table.Cell>
++          <Table.Cell>CEO</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="2">
++          <Table.Cell>Zoey Lang</Table.Cell>
++          <Table.Cell>Technical Lead</Table.Cell>
++          <Table.Cell>Paused</Table.Cell>
++        </Table.Row>
++        <Table.Row key="3">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="4">
++          <Table.Cell>William Howard</Table.Cell>
++          <Table.Cell>Community Manager</Table.Cell>
++          <Table.Cell>Vacation</Table.Cell>
++        </Table.Row>
++      </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/custom-cells.ts (added, 720 changes)\n  Patch: @@ -0,0 +1,720 @@
++const StyledBadge = `import { styled } from '@nextui-org/react';\n
++// Badge component will be available as part of the core library soon
++export const StyledBadge = styled('span', {
++  display: 'inline-block',
++  textTransform: 'uppercase',
++  padding: '$2 $3',
++  margin: '0 2px',
++  fontSize: '10px',
++  fontWeight: '$bold',
++  borderRadius: '14px',
++  letterSpacing: '0.6px',
++  lineHeight: 1,
++  boxShadow: '1px 2px 5px 0px rgb(0 0 0 / 5%)',
++  alignItems: 'center',
++  alignSelf: 'center',
++  color: '$white',
++  variants: {
++    type: {
++      active: {
++        bg: '$successLight',
++        color: '$success'
++      },
++      paused: {
++        bg: '$errorLight',
++        color: '$error'
++      },
++      vacation: {
++        bg: '$warningLight',
++        color: '$warning'
++      }
++    }
++  },
++  defaultVariants: {
++    type: 'active'
++  }
++});
++    `;
++
++const IconButton = `import { styled } from '@nextui-org/react';\n
++// IconButton component will be available as part of the core library soon
++export const IconButton = styled('button', {
++  dflex: 'center',
++  border: 'none',
++  outline: 'none',
++  cursor: 'pointer',
++  padding: '0',
++  margin: '0',
++  bg: 'transparent',
++  transition: '$default',
++  '&:hover': {
++    opacity: '0.8'
++  },
++  '&:active': {
++    opacity: '0.6'
++  }
++});
++`;
++
++const EyeIconTs = `import { React } from '@nextui-org/react';\n
++type IconProps = {
++  fill?: string;
++  size?: string | number;
++  height?: string | number;
++  width?: string | number;
++  label?: string;
++}
++export const EyeIcon: React.FC<IconProps> = ({
++  fill,
++  size,
++  height,
++  width,
++  ...props
++}) => {
++  return (
++    <svg
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 20 20"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M12.9833 10C12.9833 11.65 11.65 12.9833 10 12.9833C8.35 12.9833 7.01666 11.65 7.01666 10C7.01666 8.35 8.35 7.01666 10 7.01666C11.65 7.01666 12.9833 8.35 12.9833 10Z"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M9.99999 16.8916C12.9417 16.8916 15.6833 15.1583 17.5917 12.1583C18.3417 10.9833 18.3417 9.00831 17.5917 7.83331C15.6833 4.83331 12.9417 3.09998 9.99999 3.09998C7.05833 3.09998 4.31666 4.83331 2.40833 7.83331C1.65833 9.00831 1.65833 10.9833 2.40833 12.1583C4.31666 15.1583 7.05833 16.8916 9.99999 16.8916Z"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++    </svg>
++  );
++};`;
++
++const EditIconTs = `import { React } from '@nextui-org/react';\n
++type IconProps = {
++  fill?: string;
++  size?: string | number;
++  height?: string | number;
++  width?: string | number;
++  label?: string;
++}
++export const EditIcon: React.FC<IconProps> = ({
++  fill,
++  size,
++  height,
++  width,
++  ...props
++}) => {
++  return (
++    <svg
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 20 20"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M11.05 3.00002L4.20835 10.2417C3.95002 10.5167 3.70002 11.0584 3.65002 11.4334L3.34169 14.1334C3.23335 15.1084 3.93335 15.775 4.90002 15.6084L7.58335 15.15C7.95835 15.0834 8.48335 14.8084 8.74168 14.525L15.5834 7.28335C16.7667 6.03335 17.3 4.60835 15.4583 2.86668C13.625 1.14168 12.2334 1.75002 11.05 3.00002Z"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeMiterlimit={10}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M9.90833 4.20831C10.2667 6.50831 12.1333 8.26665 14.45 8.49998"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeMiterlimit={10}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M2.5 18.3333H17.5"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeMiterlimit={10}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++    </svg>
++  );
++};`;
++
++const DeleteIconTs = `import { React } from '@nextui-org/react';\n
++type IconProps = {
++  fill?: string;
++  size?: string | number;
++  height?: string | number;
++  width?: string | number;
++  label?: string;
++}
++export const DeleteIcon: React.FC<IconProps> = ({
++  fill,
++  size,
++  height,
++  width,
++  ...props
++}) => {
++  return (
++    <svg
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 20 20"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M17.5 4.98332C14.725 4.70832 11.9333 4.56665 9.15 4.56665C7.5 4.56665 5.85 4.64998 4.2 4.81665L2.5 4.98332"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M7.08331 4.14169L7.26665 3.05002C7.39998 2.25835 7.49998 1.66669 8.90831 1.66669H11.0916C12.5 1.66669 12.6083 2.29169 12.7333 3.05835L12.9166 4.14169"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M15.7084 7.61664L15.1667 16.0083C15.075 17.3166 15 18.3333 12.675 18.3333H7.32502C5.00002 18.3333 4.92502 17.3166 4.83335 16.0083L4.29169 7.61664"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M8.60834 13.75H11.3833"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M7.91669 10.4167H12.0834"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++    </svg>
++  );
++};`;
++
++const EyeIconJs = `import { React } from '@nextui-org/react';\n
++export const EyeIcon = ({
++  fill,
++  size,
++  height,
++  width,
++  ...props
++}) => {
++  return (
++    <svg
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 20 20"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M12.9833 10C12.9833 11.65 11.65 12.9833 10 12.9833C8.35 12.9833 7.01666 11.65 7.01666 10C7.01666 8.35 8.35 7.01666 10 7.01666C11.65 7.01666 12.9833 8.35 12.9833 10Z"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M9.99999 16.8916C12.9417 16.8916 15.6833 15.1583 17.5917 12.1583C18.3417 10.9833 18.3417 9.00831 17.5917 7.83331C15.6833 4.83331 12.9417 3.09998 9.99999 3.09998C7.05833 3.09998 4.31666 4.83331 2.40833 7.83331C1.65833 9.00831 1.65833 10.9833 2.40833 12.1583C4.31666 15.1583 7.05833 16.8916 9.99999 16.8916Z"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++    </svg>
++  );
++};`;
++
++const EditIconJs = `import { React } from '@nextui-org/react';\n
++export const EditIcon = ({
++  fill,
++  size,
++  height,
++  width,
++  ...props
++}) => {
++  return (
++    <svg
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 20 20"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M11.05 3.00002L4.20835 10.2417C3.95002 10.5167 3.70002 11.0584 3.65002 11.4334L3.34169 14.1334C3.23335 15.1084 3.93335 15.775 4.90002 15.6084L7.58335 15.15C7.95835 15.0834 8.48335 14.8084 8.74168 14.525L15.5834 7.28335C16.7667 6.03335 17.3 4.60835 15.4583 2.86668C13.625 1.14168 12.2334 1.75002 11.05 3.00002Z"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeMiterlimit={10}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M9.90833 4.20831C10.2667 6.50831 12.1333 8.26665 14.45 8.49998"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeMiterlimit={10}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M2.5 18.3333H17.5"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeMiterlimit={10}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++    </svg>
++  );
++};`;
++
++const DeleteIconJs = `import { React } from '@nextui-org/react';\n
++export const DeleteIcon = ({
++  fill,
++  size,
++  height,
++  width,
++  ...props
++}) => {
++  return (
++    <svg
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 20 20"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M17.5 4.98332C14.725 4.70832 11.9333 4.56665 9.15 4.56665C7.5 4.56665 5.85 4.64998 4.2 4.81665L2.5 4.98332"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M7.08331 4.14169L7.26665 3.05002C7.39998 2.25835 7.49998 1.66669 8.90831 1.66669H11.0916C12.5 1.66669 12.6083 2.29169 12.7333 3.05835L12.9166 4.14169"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M15.7084 7.61664L15.1667 16.0083C15.075 17.3166 15 18.3333 12.675 18.3333H7.32502C5.00002 18.3333 4.92502 17.3166 4.83335 16.0083L4.29169 7.61664"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M8.60834 13.75H11.3833"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++      <path
++        d="M7.91669 10.4167H12.0834"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++    </svg>
++  );
++};`;
++
++const AppJs = `import { Table, Row, Col, Tooltip, User, Text } from '@nextui-org/react';
++import { StyledBadge } from './StyledBadge';
++import { IconButton } from './IconButton';
++import { EyeIcon } from './EyeIcon';
++import { EditIcon } from './EditIcon';
++import { DeleteIcon } from './DeleteIcon';
++        
++export default function App() {
++  const columns = [
++    { name: 'NAME', uid: 'name' },
++    { name: 'ROLE', uid: 'role' },
++    { name: 'STATUS', uid: 'status' },
++    { name: 'ACTIONS', uid: 'actions' }
++  ];
++  const users = [
++    {
++      id: 1,
++      name: 'Tony Reichert',
++      role: 'CEO',
++      team: 'Management',
++      status: 'active',
++      age: '29',
++      avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026024d',
++      email: 'tony.reichert@example.com'
++    },
++    {
++      id: 2,
++      name: 'Zoey Lang',
++      role: 'Technical Lead',
++      team: 'Development',
++      status: 'paused',
++      age: '25',
++      avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
++      email: 'zoey.lang@example.com'
++    },
++    {
++      id: 3,
++      name: 'Jane Fisher',
++      role: 'Senior Developer',
++      team: 'Development',
++      status: 'active',
++      age: '22',
++      avatar: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
++      email: 'jane.fisher@example.com'
++    },
++    {
++      id: 4,
++      name: 'William Howard',
++      role: 'Community Manager',
++      team: 'Marketing',
++      status: 'vacation',
++      age: '28',
++      avatar: 'https://i.pravatar.cc/150?u=a048581f4e29026701d',
++      email: 'william.howard@example.com'
++    },
++    {
++      id: 5,
++      name: 'Kristen Copper',
++      role: 'Sales Manager',
++      team: 'Sales',
++      status: 'active',
++      age: '24',
++      avatar: 'https://i.pravatar.cc/150?u=a092581d4ef9026700d',
++      email: 'kristen.cooper@example.com'
++    }
++  ];
++  const renderCell = (user, columnKey) => {
++    const cellValue = user[columnKey];
++    switch (columnKey) {
++      case 'name':
++        return (
++          <User
++            squared
++            src={user.avatar}
++            name={cellValue}
++            css={{ p: 0 }}
++          >
++            {user.email}
++          </User>
++        );
++      case 'role':
++        return (
++          <Col>
++            <Row>
++              <Text b size={14} css={{ tt: 'capitalize' }}>
++                {cellValue}
++              </Text>
++            </Row>
++            <Row>
++              <Text b size={13} css={{ tt: 'capitalize', color: '$accents3' }}>
++                {user.team}
++              </Text>
++            </Row>
++          </Col>
++        );
++      case 'status':
++        return <StyledBadge type={user.status}>{cellValue}</StyledBadge>;
++
++      case 'actions':
++        return (
++          <Row justify="center" align="center">
++            <Col css={{ d: 'flex' }}>
++              <Tooltip content="Details">
++                <IconButton
++                  onClick={() => console.log('View user', user.id)}
++                >
++                  <EyeIcon size={20} fill="#979797" />
++                </IconButton>
++              </Tooltip>
++            </Col>
++            <Col css={{ d: 'flex' }}>
++              <Tooltip content="Edit user">
++                <IconButton
++                  onClick={() => console.log('Edit user', user.id)}
++                >
++                  <EditIcon size={20} fill="#979797" />
++                </IconButton>
++              </Tooltip>
++            </Col>
++            <Col css={{ d: 'flex' }}>
++              <Tooltip
++                content="Delete user"
++                color="error"
++                onClick={() => console.log('Delete user', user.id)}
++              >
++                <IconButton>
++                  <DeleteIcon size={20} fill="#FF0080" />
++                </IconButton>
++              </Tooltip>
++            </Col>
++          </Row>
++        );
++      default:
++        return cellValue;
++    }
++  };
++  return <Table
++    aria-label="Example table with custom cells"
++    css={{  
++      height: 'auto',
++      minWidth: '100%'
++    }}
++    selectionMode="none"
++  >
++    <Table.Header columns={columns}>
++      {(column) => (
++        <Table.Column
++          key={column.uid}
++          hideHeader={column.uid === 'actions'}
++          align={column.uid === 'actions' ? 'center' : 'start'}
++        >
++          {column.name}
++        </Table.Column>
++      )}
++    </Table.Header>
++    <Table.Body items={users}>
++      {(item) => (
++        <Table.Row>
++          {(columnKey) => (
++            <Table.Cell>{renderCell(item, columnKey)}</Table.Cell>
++          )}
++        </Table.Row>
++      )}
++    </Table.Body>
++  </Table>;
++}
++    `;
++
++const AppTs = `import { Table, Row, Col, Tooltip, User, Text } from '@nextui-org/react';
++import { StyledBadge } from './StyledBadge';
++import { IconButton } from './IconButton';
++import { EyeIcon } from './EyeIcon';
++import { EditIcon } from './EditIcon';
++import { DeleteIcon } from './DeleteIcon';
++
++type UserType = {
++  id: string | number;
++  name?: string;
++  email?: string;
++  role?: string;
++  team?: string;
++  status: 'active' | 'paused' | 'vacation';
++  age?: string;
++  avatar?: string;
++};
++
++export default function App() {
++  const columns = [
++    { name: 'NAME', uid: 'name' },
++    { name: 'ROLE', uid: 'role' },
++    { name: 'STATUS', uid: 'status' },
++    { name: 'ACTIONS', uid: 'actions' }
++  ];
++  const users: UserType[] = [
++    {
++      id: 1,
++      name: 'Tony Reichert',
++      role: 'CEO',
++      team: 'Management',
++      status: 'active',
++      age: '29',
++      avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026024d',
++      email: 'tony.reichert@example.com'
++    },
++    {
++      id: 2,
++      name: 'Zoey Lang',
++      role: 'Technical Lead',
++      team: 'Development',
++      status: 'paused',
++      age: '25',
++      avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
++      email: 'zoey.lang@example.com'
++    },
++    {
++      id: 3,
++      name: 'Jane Fisher',
++      role: 'Senior Developer',
++      team: 'Development',
++      status: 'active',
++      age: '22',
++      avatar: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
++      email: 'jane.fisher@example.com'
++    },
++    {
++      id: 4,
++      name: 'William Howard',
++      role: 'Community Manager',
++      team: 'Marketing',
++      status: 'vacation',
++      age: '28',
++      avatar: 'https://i.pravatar.cc/150?u=a048581f4e29026701d',
++      email: 'william.howard@example.com'
++    },
++    {
++      id: 5,
++      name: 'Kristen Copper',
++      role: 'Sales Manager',
++      team: 'Sales',
++      status: 'active',
++      age: '24',
++      avatar: 'https://i.pravatar.cc/150?u=a092581d4ef9026700d',
++      email: 'kristen.cooper@example.com'
++    }
++  ];
++  const renderCell = (user: UserType, columnKey: React.Key) => {
++    const cellValue = user[columnKey];
++    switch (columnKey) {
++      case 'name':
++        return (
++          <User
++            squared
++            src={user?.avatar}
++            name={cellValue}
++            css={{ p: 0 }}
++          >
++            {user?.email}
++          </User>
++        );
++      case 'role':
++        return (
++          <Col>
++            <Row>
++              <Text b size={14} css={{ tt: 'capitalize' }}>
++                {cellValue}
++              </Text>
++            </Row>
++            <Row>
++              <Text b size={13} css={{ tt: 'capitalize', color: '$accents3' }}>
++                {user?.team}
++              </Text>
++            </Row>
++          </Col>
++        );
++      case 'status':
++        return <StyledBadge type={user?.status}>{cellValue}</StyledBadge>;
++
++      case 'actions':
++        return (
++          <Row justify="center" align="center">
++            <Col css={{ d: 'flex' }}>
++              <Tooltip content="Details">
++                <IconButton
++                  onClick={() => console.log('View user', user?.id)}
++                >
++                  <EyeIcon size={20} fill="#979797" />
++                </IconButton>
++              </Tooltip>
++            </Col>
++            <Col css={{ d: 'flex' }}>
++              <Tooltip content="Edit user">
++                <IconButton
++                  onClick={() => console.log('Edit user', user?.id)}
++                >
++                  <EditIcon size={20} fill="#979797" />
++                </IconButton>
++              </Tooltip>
++            </Col>
++            <Col css={{ d: 'flex' }}>
++              <Tooltip
++                content="Delete user"
++                color="error"
++                onClick={() => console.log('Delete user', user?.id)}
++              >
++                <IconButton>
++                  <DeleteIcon size={20} fill="#FF0080" />
++                </IconButton>
++              </Tooltip>
++            </Col>
++          </Row>
++        );
++      default:
++        return cellValue;
++    }
++  };
++  return <Table
++    aria-label="Example table with custom cells"
++    css={{  
++      height: 'auto',
++      minWidth: '100%'
++    }}
++    selectionMode="none"
++  >
++    <Table.Header columns={columns}>
++      {(column) => (
++        <Table.Column
++          key={column.uid}
++          hideHeader={column.uid === 'actions'}
++          align={column.uid === 'actions' ? 'center' : 'start'}
++        >
++          {column.name}
++        </Table.Column>
++      )}
++    </Table.Header>
++    <Table.Body items={users}>
++      {(item: UserType) => (
++        <Table.Row>
++          {(columnKey) => (
++            <Table.Cell>{renderCell(item, columnKey)}</Table.Cell>
++          )}
++        </Table.Row>
++      )}
++    </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/StyledBadge.js': StyledBadge,
++  '/IconButton.js': IconButton,
++  '/EyeIcon.js': EyeIconJs,
++  '/EditIcon.js': EditIconJs,
++  '/DeleteIcon.js': DeleteIconJs,
++  '/App.js': AppJs
++};
++
++const reactTs = {
++  '/StyledBadge.tsx': StyledBadge,
++  '/IconButton.tsx': IconButton,
++  '/EyeIcon.tsx': EyeIconTs,
++  '/EditIcon.tsx': EditIconTs,
++  '/DeleteIcon.tsx': DeleteIconTs,
++  '/App.tsx': AppTs
++};
++
++export default {
++  ...react,
++  ...reactTs
++};\n- apps/docs/content/components/table/disabled-keys.ts (added, 50 changes)\n  Patch: @@ -0,0 +1,50 @@
++const App = `import { Table } from '@nextui-org/react';
++    
++export default function App() {
++  return <Table
++      aria-label="Example disabled keys collection table"
++      css={{
++        height: 'auto',
++        minWidth: '100%',
++      }}
++      disabledKeys={['2']}
++      selectionMode="multiple"
++    >
++      <Table.Header>
++        <Table.Column>NAME</Table.Column>
++        <Table.Column>ROLE</Table.Column>
++        <Table.Column>STATUS</Table.Column>
++      </Table.Header>
++      <Table.Body>
++        <Table.Row key="1">
++          <Table.Cell>Tony Reichert</Table.Cell>
++          <Table.Cell>CEO</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="2">
++          <Table.Cell>Zoey Lang</Table.Cell>
++          <Table.Cell>Technical Lead</Table.Cell>
++          <Table.Cell>Paused</Table.Cell>
++        </Table.Row>
++        <Table.Row key="3">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="4">
++          <Table.Cell>William Howard</Table.Cell>
++          <Table.Cell>Community Manager</Table.Cell>
++          <Table.Cell>Vacation</Table.Cell>
++        </Table.Row>
++      </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/disallow-empty-selection.ts (added, 52 changes)\n  Patch: @@ -0,0 +1,52 @@
++const App = `import { Table } from '@nextui-org/react';
++    
++export default function App() {
++  return <Table
++      aria-label="Example disabled keys collection table"
++      css={{
++        height: 'auto',
++        minWidth: '100%',
++      }}
++      disallowEmptySelection
++      defaultSelectedKeys={['2']}
++      selectionMode="multiple"
++      color="secondary"
++    >
++      <Table.Header>
++        <Table.Column>NAME</Table.Column>
++        <Table.Column>ROLE</Table.Column>
++        <Table.Column>STATUS</Table.Column>
++      </Table.Header>
++      <Table.Body>
++        <Table.Row key="1">
++          <Table.Cell>Tony Reichert</Table.Cell>
++          <Table.Cell>CEO</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="2">
++          <Table.Cell>Zoey Lang</Table.Cell>
++          <Table.Cell>Technical Lead</Table.Cell>
++          <Table.Cell>Paused</Table.Cell>
++        </Table.Row>
++        <Table.Row key="3">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="4">
++          <Table.Cell>William Howard</Table.Cell>
++          <Table.Cell>Community Manager</Table.Cell>
++          <Table.Cell>Vacation</Table.Cell>
++        </Table.Row>
++      </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/dynamic.ts (added, 75 changes)\n  Patch: @@ -0,0 +1,75 @@
++const App = `import { Table } from '@nextui-org/react';
++    
++export default function App() {
++  const columns = [
++    {
++      key: 'name',
++      label: 'NAME',
++    },
++    {
++      key: 'role',
++      label: 'ROLE',
++    },
++    {
++      key: 'status',
++      label: 'STATUS',
++    },
++  ];
++  const rows = [
++    {
++      key: '1',
++      name: 'Tony Reichert',
++      role: 'CEO',
++      status: 'Active',
++    },
++    {
++      key: '2',
++      name: 'Zoey Lang',
++      role: 'Technical Lead',
++      status: 'Paused',
++    },
++    {
++      key: '3',
++      name: 'Jane Fisher',
++      role: 'Senior Developer',
++      status: 'Active',
++    },
++    {
++      key: '4',
++      name: 'William Howard',
++      role: 'Community Manager',
++      status: 'Vacation',
++    },
++  ];
++  return <Table
++      aria-label="Example table with dynamic content"
++      css={{
++        height: 'auto',
++        minWidth: '100%',
++      }}
++    >
++     <Table.Header columns={columns}>
++        {(column) => (
++          <Table.Column key={column.key}>{column.label}</Table.Column>
++        )}
++      </Table.Header>
++      <Table.Body items={rows}>
++        {(item) => (
++          <Table.Row key={item.key}>
++            {(columnKey) => (
++              <Table.Cell>{item[columnKey]}</Table.Cell>
++            )}
++          </Table.Row>
++        )}
++      </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/index.ts (added, 35 changes)\n  Patch: @@ -0,0 +1,35 @@
++import staticTable from './static';
++import dynamicTable from './dynamic';
++import customCellsTable from './custom-cells';
++import singleSelectionTable from './single-selection';
++import multipleSelectionTable from './multiple-selection';
++import colorsTable from './colors';
++import borderedTable from './bordered';
++import linedTable from './lined';
++import stickedTable from './sticked';
++import compactTable from './compact';
++import paginationTable from './pagination';
++import infinityPaginationTable from './infinity-pagination';
++import sortableTable from './sortable';
++import disabledKeysTable from './disabled-keys';
++import disallowEmptySelectionTable from './disallow-empty-selection';
++import noAnimatedTable from './no-animated';
++
++export default {
++  staticTable,
++  dynamicTable,
++  customCellsTable,
++  singleSelectionTable,
++  multipleSelectionTable,
++  colorsTable,
++  borderedTable,
++  linedTable,
++  stickedTable,
++  compactTable,
++  paginationTable,
++  infinityPaginationTable,
++  sortableTable,
++  disabledKeysTable,
++  disallowEmptySelectionTable,
++  noAnimatedTable
++};\n- apps/docs/content/components/table/infinity-pagination.ts (added, 57 changes)\n  Patch: @@ -0,0 +1,57 @@
++const App = `import { Table, useAsyncList } from '@nextui-org/react';
++    
++export default function App() {
++  const columns = [
++    { name: 'Name', uid: 'name' },
++    { name: 'Height', uid: 'height' },
++    { name: 'Mass', uid: 'mass' },
++    { name: 'Birth Year', uid: 'birth_year' }
++  ];
++  async function load({ signal, cursor }) {
++    // If no cursor is available, then we're loading the first page.
++    // Otherwise, the cursor is the next URL to load, as returned from the previous page.
++    const res = await fetch(
++      cursor || 'https://swapi.py4e.com/api/people/?search=',
++      { signal }
++    );
++    const json = await res.json();
++    return {
++      items: json.results,
++      cursor: json.next
++    };
++  }
++  const list = useAsyncList({ load });
++  return <Table
++      bordered
++      shadow={false}
++      aria-label="Example table with dynamic content & infinity pagination"
++      css={{ minWidth: '100%', height: 'calc($space$14 * 10)' }}
++      color="secondary"
++    >
++      <Table.Header columns={columns}>
++        {(column) => (
++          <Table.Column key={column.uid}>{column.name}</Table.Column>
++        )}
++      </Table.Header>
++      <Table.Body
++        items={list.items}
++        loadingState={list.loadingState}
++        onLoadMore={list.loadMore}
++      >
++        {(item) => (
++          <Table.Row key={item.name}>
++            {(key) => <Table.Cell>{item[key]}</Table.Cell>}
++          </Table.Row>
++        )}
++      </Table.Body>
++    </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/lined.ts (added, 52 changes)\n  Patch: @@ -0,0 +1,52 @@
++const App = `import { Table } from '@nextui-org/react';
++    
++export default function App() {
++  return <Table
++      lined
++      headerLined
++      shadow={false}
++      selectionMode="multiple"
++      aria-label="Example static collection table"
++      css={{
++        height: 'auto',
++        minWidth: '100%',
++      }}
++    >
++      <Table.Header>
++        <Table.Column>NAME</Table.Column>
++        <Table.Column>ROLE</Table.Column>
++        <Table.Column>STATUS</Table.Column>
++      </Table.Header>
++      <Table.Body>
++        <Table.Row key="1">
++          <Table.Cell>Tony Reichert</Table.Cell>
++          <Table.Cell>CEO</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="2">
++          <Table.Cell>Zoey Lang</Table.Cell>
++          <Table.Cell>Technical Lead</Table.Cell>
++          <Table.Cell>Paused</Table.Cell>
++        </Table.Row>
++        <Table.Row key="3">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="4">
++          <Table.Cell>William Howard</Table.Cell>
++          <Table.Cell>Community Manager</Table.Cell>
++          <Table.Cell>Vacation</Table.Cell>
++        </Table.Row>
++      </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/multiple-selection.ts (added, 49 changes)\n  Patch: @@ -0,0 +1,49 @@
++const App = `import { Table } from '@nextui-org/react';
++    
++export default function App() {
++  return <Table
++      aria-label="Example static collection table"
++      css={{
++        height: 'auto',
++        minWidth: '100%',
++      }}
++      selectionMode="multiple"
++    >
++      <Table.Header>
++        <Table.Column>NAME</Table.Column>
++        <Table.Column>ROLE</Table.Column>
++        <Table.Column>STATUS</Table.Column>
++      </Table.Header>
++      <Table.Body>
++        <Table.Row key="1">
++          <Table.Cell>Tony Reichert</Table.Cell>
++          <Table.Cell>CEO</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="2">
++          <Table.Cell>Zoey Lang</Table.Cell>
++          <Table.Cell>Technical Lead</Table.Cell>
++          <Table.Cell>Paused</Table.Cell>
++        </Table.Row>
++        <Table.Row key="3">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="4">
++          <Table.Cell>William Howard</Table.Cell>
++          <Table.Cell>Community Manager</Table.Cell>
++          <Table.Cell>Vacation</Table.Cell>
++        </Table.Row>
++      </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/no-animated.ts (added, 51 changes)\n  Patch: @@ -0,0 +1,51 @@
++const App = `import { Table } from '@nextui-org/react';
++    
++export default function App() {
++  return <Table
++      aria-label="Example no animated collection table"
++      css={{
++        height: 'auto',
++        minWidth: '100%',
++      }}
++      animated={false}
++      selectionMode="multiple"
++      color="secondary"
++    >
++      <Table.Header>
++        <Table.Column>NAME</Table.Column>
++        <Table.Column>ROLE</Table.Column>
++        <Table.Column>STATUS</Table.Column>
++      </Table.Header>
++      <Table.Body>
++        <Table.Row key="1">
++          <Table.Cell>Tony Reichert</Table.Cell>
++          <Table.Cell>CEO</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="2">
++          <Table.Cell>Zoey Lang</Table.Cell>
++          <Table.Cell>Technical Lead</Table.Cell>
++          <Table.Cell>Paused</Table.Cell>
++        </Table.Row>
++        <Table.Row key="3">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="4">
++          <Table.Cell>William Howard</Table.Cell>
++          <Table.Cell>Community Manager</Table.Cell>
++          <Table.Cell>Vacation</Table.Cell>
++        </Table.Row>
++      </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/pagination.ts (added, 79 changes)\n  Patch: @@ -0,0 +1,79 @@
++const App = `import { Table } from '@nextui-org/react';
++    
++export default function App() {
++  return <Table
++      bordered
++      shadow={false}
++      color="secondary"
++      aria-label="Example pagination  table"
++      css={{
++        height: 'auto',
++        minWidth: '100%',
++      }}
++      selectionMode="multiple"
++    >
++      <Table.Header>
++        <Table.Column>NAME</Table.Column>
++        <Table.Column>ROLE</Table.Column>
++        <Table.Column>STATUS</Table.Column>
++      </Table.Header>
++      <Table.Body>
++        <Table.Row key="1">
++          <Table.Cell>Tony Reichert</Table.Cell>
++          <Table.Cell>CEO</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="2">
++          <Table.Cell>Zoey Lang</Table.Cell>
++          <Table.Cell>Technical Lead</Table.Cell>
++          <Table.Cell>Paused</Table.Cell>
++        </Table.Row>
++        <Table.Row key="3">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="4">
++          <Table.Cell>William Howard</Table.Cell>
++          <Table.Cell>Community Manager</Table.Cell>
++          <Table.Cell>Vacation</Table.Cell>
++        </Table.Row>
++        <Table.Row key="5">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="6">
++          <Table.Cell>Zoey Lang</Table.Cell>
++          <Table.Cell>Technical Lead</Table.Cell>
++          <Table.Cell>Paused</Table.Cell>
++        </Table.Row>
++        <Table.Row key="7">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="8">
++          <Table.Cell>William Howard</Table.Cell>
++          <Table.Cell>Community Manager</Table.Cell>
++          <Table.Cell>Vacation</Table.Cell>
++        </Table.Row>
++      </Table.Body>
++      <Table.Pagination
++        shadow
++        noMargin
++        align="center"
++        rowsPerPage={3}
++        onPageChange={(page) => console.log({ page })}
++      />
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/single-selection.ts (added, 49 changes)\n  Patch: @@ -0,0 +1,49 @@
++const App = `import { Table } from '@nextui-org/react';
++    
++export default function App() {
++  return <Table
++      aria-label="Example static collection table"
++      css={{
++        height: 'auto',
++        minWidth: '100%',
++      }}
++      selectionMode="single"
++    >
++      <Table.Header>
++        <Table.Column>NAME</Table.Column>
++        <Table.Column>ROLE</Table.Column>
++        <Table.Column>STATUS</Table.Column>
++      </Table.Header>
++      <Table.Body>
++        <Table.Row key="1">
++          <Table.Cell>Tony Reichert</Table.Cell>
++          <Table.Cell>CEO</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="2">
++          <Table.Cell>Zoey Lang</Table.Cell>
++          <Table.Cell>Technical Lead</Table.Cell>
++          <Table.Cell>Paused</Table.Cell>
++        </Table.Row>
++        <Table.Row key="3">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="4">
++          <Table.Cell>William Howard</Table.Cell>
++          <Table.Cell>Community Manager</Table.Cell>
++          <Table.Cell>Vacation</Table.Cell>
++        </Table.Row>
++      </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/sortable.ts (added, 67 changes)\n  Patch: @@ -0,0 +1,67 @@
++const App = `import { Table, useAsyncList, useCollator } from '@nextui-org/react';
++    
++export default function App() {
++  const collator = useCollator({ numeric: true });
++  async function load({ signal }) {
++    const res = await fetch('https://swapi.py4e.com/api/people/?search', {
++      signal
++    });
++    const json = await res.json();
++    return {
++      items: json.results
++    };
++  }
++  async function sort({ items, sortDescriptor }) {
++    return {
++      items: items.sort((a, b) => {
++        let first = a[sortDescriptor.column];
++        let second = b[sortDescriptor.column];
++        let cmp = collator.compare(first, second);
++        if (sortDescriptor.direction === 'descending') {
++          cmp *= -1;
++        }
++        return cmp;
++      })
++    };
++  }
++  const list = useAsyncList({ load, sort });
++  return <Table
++    aria-label="Example static collection table"
++    css={{ minWidth: '100%', height: 'calc($space$14 * 10)' }}
++    sortDescriptor={list.sortDescriptor}
++    onSortChange={list.sort}
++  >
++    <Table.Header>
++      <Table.Column key="name" allowsSorting>
++        Name
++      </Table.Column>
++      <Table.Column key="height" allowsSorting>
++        Height
++      </Table.Column>
++      <Table.Column key="mass" allowsSorting>
++        Mass
++      </Table.Column>
++      <Table.Column key="birth_year" allowsSorting>
++        Birth Year
++      </Table.Column>
++    </Table.Header>
++    <Table.Body items={list.items} loadingState={list.loadingState}>
++      {(item) => (
++        <Table.Row key={item.name}>
++          {(columnKey) => (
++            <Table.Cell>{item[columnKey]}</Table.Cell>
++          )}
++        </Table.Row>
++      )}
++    </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/static.ts (added, 48 changes)\n  Patch: @@ -0,0 +1,48 @@
++const App = `import { Table } from '@nextui-org/react';
++    
++export default function App() {
++  return <Table
++      aria-label="Example table with static content"
++      css={{
++        height: 'auto',
++        minWidth: '100%',
++      }}
++    >
++      <Table.Header>
++        <Table.Column>NAME</Table.Column>
++        <Table.Column>ROLE</Table.Column>
++        <Table.Column>STATUS</Table.Column>
++      </Table.Header>
++      <Table.Body>
++        <Table.Row key="1">
++          <Table.Cell>Tony Reichert</Table.Cell>
++          <Table.Cell>CEO</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="2">
++          <Table.Cell>Zoey Lang</Table.Cell>
++          <Table.Cell>Technical Lead</Table.Cell>
++          <Table.Cell>Paused</Table.Cell>
++        </Table.Row>
++        <Table.Row key="3">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="4">
++          <Table.Cell>William Howard</Table.Cell>
++          <Table.Cell>Community Manager</Table.Cell>
++          <Table.Cell>Vacation</Table.Cell>
++        </Table.Row>
++      </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/table/sticked.ts (added, 50 changes)\n  Patch: @@ -0,0 +1,50 @@
++const App = `import { Table } from '@nextui-org/react';
++    
++export default function App() {
++  return <Table
++      sticked
++      aria-label="Example static collection table"
++      selectionMode="multiple"
++      css={{
++        height: 'auto',
++        minWidth: '100%',
++      }}
++    >
++      <Table.Header>
++        <Table.Column>NAME</Table.Column>
++        <Table.Column>ROLE</Table.Column>
++        <Table.Column>STATUS</Table.Column>
++      </Table.Header>
++      <Table.Body>
++        <Table.Row key="1">
++          <Table.Cell>Tony Reichert</Table.Cell>
++          <Table.Cell>CEO</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="2">
++          <Table.Cell>Zoey Lang</Table.Cell>
++          <Table.Cell>Technical Lead</Table.Cell>
++          <Table.Cell>Paused</Table.Cell>
++        </Table.Row>
++        <Table.Row key="3">
++          <Table.Cell>Jane Fisher</Table.Cell>
++          <Table.Cell>Senior Developer</Table.Cell>
++          <Table.Cell>Active</Table.Cell>
++        </Table.Row>
++        <Table.Row key="4">
++          <Table.Cell>William Howard</Table.Cell>
++          <Table.Cell>Community Manager</Table.Cell>
++          <Table.Cell>Vacation</Table.Cell>
++        </Table.Row>
++      </Table.Body>
++  </Table>;
++}
++`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/docs/components/avatar.mdx (modified, 50 changes)\n  Patch: @@ -264,36 +264,36 @@ import { Avatar } from '@nextui-org/react';
+ 
+ #### Avatar Props
+ 
+-| Attribute        | Type                           | Accepted values                          | Description                            | Default   |
+-| ---------------- | ------------------------------ | ---------------------------------------- | -------------------------------------- | --------- |
+-| **color**        | `NormalColors` `string`        | [NormalColors](#normal-colors)           | Change avatar color                    | `default` |
+-| **textColor**    | `SimpleColors` `string`        | [SimpleColors](#simple-colors)           | Change avatar text color               | `default` |
+-| **src**          | `string`                       | -                                        | Image source (local or remote)         | -         |
+-| **text**         | `string`                       | -                                        | Display text when image is missing     | -         |
+-| **alt**          | `string`                       | -                                        | Display alt text when image is missing | -         |
+-| **size**         | `NormalSizes` `number`         | [NormalSizes](#normal-sizes)             | Avatar size                            | `medium`  |
+-| **bordered**     | `boolean`                      | `true/false`                             | Bordered avatar                        | `false`   |
+-| **borderWeight** | `NormalWeights`                | [NormalWeights](#normal-weights)         | Border weight for `bordered` avatar    | `normal`  |
+-| **pointer**      | `boolean`                      | `true/false`                             | Display pointer cursor on hover        | `false`   |
+-| **stacked**      | `boolean`                      | `true/false`                             | Stacked display group                  | `false`   |
+-| **zoomed**       | `boolean`                      | `true/false`                             | Zoomed avatar                          | `false`   |
+-| **squared**      | `boolean`                      | `true/false`                             | Squared avatar                         | `false`   |
+-| **icon**         | `ReactNode`                    | -                                        | Show icon in avatar                    | -         |
+-| **css**          | `Stitches.CSS`                 | -                                        | Override Default CSS style             | -         |
+-| **as**           | `keyof JSX.IntrinsicElements`  | -                                        | Changes which tag component outputs    | `span`    |
+-| ...              | `ImgHTMLAttributes`            | `'alt', 'crossOrigin', 'className', ...` | Native props                           | -         |
++| Attribute        | Type                          | Accepted values                          | Description                            | Default   |
++| ---------------- | ----------------------------- | ---------------------------------------- | -------------------------------------- | --------- |
++| **color**        | `NormalColors` `string`       | [NormalColors](#normal-colors)           | Change avatar color                    | `default` |
++| **textColor**    | `SimpleColors` `string`       | [SimpleColors](#simple-colors)           | Change avatar text color               | `default` |
++| **src**          | `string`                      | -                                        | Image source (local or remote)         | -         |
++| **text**         | `string`                      | -                                        | Display text when image is missing     | -         |
++| **alt**          | `string`                      | -                                        | Display alt text when image is missing | -         |
++| **size**         | `NormalSizes` `number`        | [NormalSizes](#normal-sizes)             | Avatar size                            | `medium`  |
++| **bordered**     | `boolean`                     | `true/false`                             | Bordered avatar                        | `false`   |
++| **borderWeight** | `NormalWeights`               | [NormalWeights](#normal-weights)         | Border weight for `bordered` avatar    | `normal`  |
++| **pointer**      | `boolean`                     | `true/false`                             | Display pointer cursor on hover        | `false`   |
++| **stacked**      | `boolean`                     | `true/false`                             | Stacked display group                  | `false`   |
++| **zoomed**       | `boolean`                     | `true/false`                             | Zoomed avatar                          | `false`   |
++| **squared**      | `boolean`                     | `true/false`                             | Squared avatar                         | `false`   |
++| **icon**         | `ReactNode`                   | -                                        | Show icon in avatar                    | -         |
++| **css**          | `Stitches.CSS`                | -                                        | Override Default CSS style             | -         |
++| **as**           | `keyof JSX.IntrinsicElements` | -                                        | Changes which tag component outputs    | `span`    |
++| ...              | `ImgHTMLAttributes`           | `'alt', 'crossOrigin', 'className', ...` | Native props                           | -         |
+ 
+ <Spacer y={2} />
+ 
+ #### Avatar Group Props
+ 
+-| Attribute    | Type                             | Accepted values                  | Description                             | Default        |
+-| ------------ | -------------------------------- | -------------------------------- | --------------------------------------- | -------------- |
+-| **count**    | `number`                         | -                                | Total count of avatars                  | -              |
+-| **animated** | `boolean`                        | -                                | Display translations animation on hover | `false`        |
+-| **css**      | `Stitches.CSS`                   | -                                | Override Default CSS style              | -              |
+-| **as**       | `keyof JSX.IntrinsicElements`    | -                                | Changes which tag component outputs     | `div`         |
+-| ...          | `HTMLAttributes`                 | `'id', 'name', 'className', ...` | Native props                            | -              |
++| Attribute    | Type                          | Accepted values                  | Description                             | Default |
++| ------------ | ----------------------------- | -------------------------------- | --------------------------------------- | ------- |
++| **count**    | `number`                      | -                                | Total count of avatars                  | -       |
++| **animated** | `boolean`                     | -                                | Display translations animation on hover | `false` |
++| **css**      | `Stitches.CSS`                | -                                | Override Default CSS style              | -       |
++| **as**       | `keyof JSX.IntrinsicElements` | -                                | Changes which tag component outputs     | `div`   |
++| ...          | `HTMLAttributes`              | `'id', 'name', 'className', ...` | Native props                            | -       |
+ 
+ <Spacer y={2} />
+ \n- apps/docs/content/docs/components/button.mdx (modified, 4 changes)\n  Patch: @@ -370,11 +370,11 @@ import { Button } from '@nextui-org/react';
+       Notifications
+     </Button>
+     <Spacer y={1} />
+-    <Button icon={<User  fill="currentColor" />} color="error" flat>
++    <Button icon={<UserIcon fill="currentColor" />} color="error" flat>
+       Delete User
+     </Button>
+     <Spacer y={1} />
+-    <Button icon={<User/>} disabled>
++    <Button icon={<UserIcon />} disabled>
+       Delete User
+     </Button>
+ </>\n- apps/docs/content/docs/components/link.mdx (modified, 2 changes)\n  Patch: @@ -143,7 +143,7 @@ return (
+ 
+ <Spacer y={2} />
+ 
+-### Switch types
++### Link types
+ 
+ <Spacer y={1} />
+ \n- apps/docs/content/docs/components/table.mdx (added, 138 changes)\n  Patch: @@ -0,0 +1,138 @@
++---
++title: 'Table'
++description: 'Tables are used to display tabular data using rows and columns. hey allow users to quickly scan, sort, compare, and take action on large amounts of data.'
++url: https://nextui.org/docs/components/table
++---
++
++# Table
++
++Tables are used to display tabular data using rows and columns. They allow users to quickly scan, sort, compare, and take action on large amounts of data.
++The Table implementation is based on <a href="https://react-spectrum.adobe.com/react-aria/useTable.html" rel="noreferrer" target="_blank">
++@react-aria/table</a>
++
++```jsx
++import { Table } from '@nextui-org/react';
++```
++
++<CarbonAd />
++
++<Spacer y={2} />
++
++<Playground
++  title="Static"
++  desc="A simple example with static `rows` and `columns`, `cells` can also be statically defined as children."
++  files={tableContent.staticTable}
++/>
++
++<Playground
++  title="Dynamic"
++  desc="Table generated dynamically using a function based on the data passed to the `columns` or `items` prop respectively."
++  files={tableContent.dynamicTable}
++/>
++
++<Playground
++  title="Custom cells"
++  desc="You can render any React component in the `cells` prop. The `row` and `column` props are passed to the component."
++  files={tableContent.customCellsTable}
++/>
++
++<Playground
++  title="Single selection"
++  desc="You can set the `singleSelection` property as `single` to limit users to select only a single item at a time."
++  highlightedLines="10"
++  files={tableContent.singleSelectionTable}
++/>
++
++<Playground
++  title="Multiple selection"
++  desc="You can set the `singleSelection` property as `multiple` to allow users to select multiple items at a time."
++  highlightedLines="10"
++  files={tableContent.multipleSelectionTable}
++/>
++
++<Playground
++  title="Colors"
++  overflow="auto"
++  desc="`Table` component allows you to change the color of the selected rows, checkbox, loading and sort icon by passing the `color` prop."
++  highlightedLines="55"
++  files={tableContent.colorsTable}
++/>
++
++<Playground
++  title="Bordered"
++  highlightedLines="5-6"
++  desc="You can change the full style to a bordered `Table` with the `bordered` property."
++  files={tableContent.borderedTable}
++/>
++
++<Playground
++  title="Lined"
++  desc="You can change the full style to a lined `Table` with the `lined` and `headerLined` properties."
++  highlightedLines="5-7"
++  files={tableContent.linedTable}
++/>
++
++<Playground
++  title="Sticked"
++  desc="You can remove the padding of the `Table` with the `sticked` property."
++  highlightedLines="5"
++  files={tableContent.stickedTable}
++/>
++
++<Playground
++  title="Compact"
++  desc="You can reduce the amount of vertical padding that each row contains by using the `compact` property."
++  highlightedLines="5"
++  files={tableContent.compactTable}
++/>
++
++<Playground
++  title="Pagination"
++  desc="You can paginate the `Table` data by using the `Table.Pagination` component."
++  highlightedLines="62-68"
++  files={tableContent.paginationTable}
++/>
++
++<Playground
++  title="Infinty Pagination"
++  desc="Table supports loading data asynchronously, and will display a progress loading set by the loadingState prop. 
++  It also supports infinite scrolling to load more data on demand as the user scrolls, via the `onLoadMore` prop."
++  highlightedLines="37-39"
++  files={tableContent.infinityPaginationTable}
++/>
++
++> **Note:** This example performs client side async loading thanks to [@react-stately/async-list](https://react-spectrum.adobe.com/react-stately/useAsyncList.html) hook, you can also create a custom implementation of it to fetch the data asynchronously.
++
++<Playground
++  title="Sortable"
++  desc="Table supports sorting its data when a column header is pressed, to set a column as sortable, you can use the `allowsSorting` property to the `column` prop."
++  highlightedLines="35"
++  files={tableContent.sortableTable}
++/>
++
++> **Note**: This example performs client side sorting by passing **load** and **sort** functions to the [@react-stately/async-list](https://react-spectrum.adobe.com/react-stately/useAsyncList.html) hook and by comparing the data using [@react-aria/i18n](https://react-spectrum.adobe.com/react-aria/useCollator.html) **useCollector** hook. See the docs for more information on how to perform server side sorting.
++
++<Playground
++  title="Disabled keys"
++  desc="You can disable specific rows by providing an array of keys to `Table` through the `disabledKeys` prop. This will prevent rows from being selectable as shown in the example below."
++  highlightedLines="10"
++  files={tableContent.disabledKeysTable}
++/>
++
++> **Note**: Its important to have a unique key for each row, otherwise the disabled keys will not work.
++
++<Playground
++  title="Disallow empty selection"
++  desc="Table also supports a `disallowEmptySelection` prop which forces the user to have at least one row selected all the time. In this mode, if a single row is selected and the user presses it, it will not be deselected."
++  highlightedLines="10"
++  files={tableContent.disallowEmptySelectionTable}
++/>
++
++> **Note**: Its important to have a unique key for each row, otherwise the default selected keys will not work.
++
++<Playground
++  title="No animated"
++  desc="You can disable the animation of the entire `Table` by using `animated={false}` property."
++  highlightedLines="10"
++  files={tableContent.noAnimatedTable}
++/>\n- apps/docs/content/docs/layout/container.mdx (modified, 66 changes)\n  Patch: @@ -136,46 +136,52 @@ import { Container, Row, Col } from '@nextui-org/react';
+ 
+ #### Container Props
+ 
+-| Attribute        | Type             | Accepted values                | Description                                      | Default |
+-| ---------------- | ---------------- | ------------------------------ | ------------------------------------------------ | ------- |
+-| **fluid**        | `boolean`        | `true / false`                 | `width: 100%` at all breakpoints                 | `false` |
+-| **responsive**   | `boolean`        | `true / false`                 | Sets a `max-width` at each responsive breakpoint | `true`  |
+-| **xs**           | `boolean`        | `true / false`                 | Extra small devices (<650px)                     | `false` |
+-| **sm**           | `boolean`        | `true / false`                 | Small devices (≥650px)                           | `false` |
+-| **md**           | `boolean`        | `true / false`                 | Medium devices (≥960px)                          | `false` |
+-| **lg**           | `boolean`        | `true / false`                 | Large devices (≥1280px)                          | `false` |
+-| **xl**           | `boolean`        | `true / false`                 | Extra large devices (≥1400px)                    | `false` |
+-| **gap**          | `number`         | -                              | Children's spacing                               | 2       |
+-| **wrap**         | `Wrap`           | [Wrap](#wrap)                  | CSS "flex-wrap"                                  | `wrap`  |
+-| **display**      | `Display`        | [Display](#display)            | CSS "display"                                    | `block` |
+-| **justify**      | `Justify`        | [Justify](#justify)            | CSS "justify-content"                            | -       |
+-| **direction**    | `Direction`      | [Direction](#direction)        | CSS "flex-direction"                             | -       |
+-| **alignItems**   | `AlignItems`     | [AlignItems](#align-items)     | CSS "align-items"                                | -       |
+-| **alignContent** | `AlignContent`   | [AlignContent](#align-content) | CSS "align-content"                              | -       |
+-| ...              | `HTMLAttributes` | `'id', 'className', ...`       | Native element props                             | -       |
++| Attribute        | Type                          | Accepted values                | Description                                      | Default |
++| ---------------- | ----------------------------- | ------------------------------ | ------------------------------------------------ | ------- |
++| **fluid**        | `boolean`                     | `true / false`                 | `width: 100%` at all breakpoints                 | `false` |
++| **responsive**   | `boolean`                     | `true / false`                 | Sets a `max-width` at each responsive breakpoint | `true`  |
++| **xs**           | `boolean`                     | `true / false`                 | Extra small devices (<650px)                     | `false` |
++| **sm**           | `boolean`                     | `true / false`                 | Small devices (≥650px)                           | `false` |
++| **md**           | `boolean`                     | `true / false`                 | Medium devices (≥960px)                          | `false` |
++| **lg**           | `boolean`                     | `true / false`                 | Large devices (≥1280px)                          | `false` |
++| **xl**           | `boolean`                     | `true / false`                 | Extra large devices (≥1400px)                    | `false` |
++| **gap**          | `number`                      | -                              | Children's spacing                               | 2       |
++| **wrap**         | `Wrap`                        | [Wrap](#wrap)                  | CSS "flex-wrap"                                  | `wrap`  |
++| **display**      | `Display`                     | [Display](#display)            | CSS "display"                                    | `block` |
++| **justify**      | `Justify`                     | [Justify](#justify)            | CSS "justify-content"                            | -       |
++| **direction**    | `Direction`                   | [Direction](#direction)        | CSS "flex-direction"                             | -       |
++| **alignItems**   | `AlignItems`                  | [AlignItems](#align-items)     | CSS "align-items"                                | -       |
++| **alignContent** | `AlignContent`                | [AlignContent](#align-content) | CSS "align-content"                              | -       |
++| **css**          | `Stitches.CSS`                | -                              | Override Default CSS style                       | -       |
++| **as**           | `keyof JSX.IntrinsicElements` | -                              | Changes which tag component outputs              | `div`   |
++| ...              | `HTMLAttributes`              | `'id', 'className', ...`       | Native element props                             | -       |
+ 
+ <Spacer y={1} />
+ 
+ #### Row Props
+ 
+-| Attribute   | Type             | Accepted values            | Description                    | Default      |
+-| ----------- | ---------------- | -------------------------- | ------------------------------ | ------------ |
+-| **fluid**   | `boolean`        | `true / false`             | `width: 100%`                  | `true`       |
+-| **gap**     | `number`         | -                          | Children's spacing             | 0            |
+-| **wrap**    | `Wrap`           | [Wrap](#wrap)              | CSS "flex-wrap" property       | `nowrap`     |
+-| **justify** | `Justify`        | [Justify](#justify)        | CSS "justify-content" property | `flex-start` |
+-| **align**   | `AlignItems`     | [AlignItems](#align-items) | CSS "align-items" property     | `flex-start` |
+-| ...         | `HTMLAttributes` | `'id', 'className', ...`   | Native element props           | -            |
++| Attribute   | Type                          | Accepted values            | Description                         | Default      |
++| ----------- | ----------------------------- | -------------------------- | ----------------------------------- | ------------ |
++| **fluid**   | `boolean`                     | `true / false`             | `width: 100%`                       | `true`       |
++| **gap**     | `number`                      | -                          | Children's spacing                  | 0            |
++| **wrap**    | `Wrap`                        | [Wrap](#wrap)              | CSS "flex-wrap" property            | `nowrap`     |
++| **justify** | `Justify`                     | [Justify](#justify)        | CSS "justify-content" property      | `flex-start` |
++| **align**   | `AlignItems`                  | [AlignItems](#align-items) | CSS "align-items" property          | `flex-start` |
++| **css**     | `Stitches.CSS`                | -                          | Override Default CSS style          | -            |
++| **as**      | `keyof JSX.IntrinsicElements` | -                          | Changes which tag component outputs | `div`        |
++| ...         | `HTMLAttributes`              | `'id', 'className', ...`   | Native element props                | -            |
+ 
+ <Spacer y={1} />
+ 
+ #### Col Props
+ 
+-| Attribute  | Type             | Accepted values          | Description               | Default |
+-| ---------- | ---------------- | ------------------------ | ------------------------- | ------- |
+-| **span**   | `number`         | `0 - 12`                 | Column's width            | `12`    |
+-| **offset** | `number`         | -                        | Move columns to the right | `0`     |
+-| ...        | `HTMLAttributes` | `'id', 'className', ...` | Native element props      | -       |
++| Attribute  | Type                          | Accepted values          | Description                         | Default |
++| ---------- | ----------------------------- | ------------------------ | ----------------------------------- | ------- |
++| **span**   | `number`                      | `0 - 12`                 | Column's width                      | `12`    |
++| **offset** | `number`                      | -                        | Move columns to the right           | `0`     |
++| **css**    | `Stitches.CSS`                | -                        | Override Default CSS style          | -       |
++| **as**     | `keyof JSX.IntrinsicElements` | -                        | Changes which tag component outputs | `div`   |
++| ...        | `HTMLAttributes`              | `'id', 'className', ...` | Native element props                | -       |
+ 
+ <Spacer y={2} />
+ \n- apps/docs/content/docs/layout/grid.mdx (modified, 38 changes)\n  Patch: @@ -195,28 +195,32 @@ return (<Grid.Container gap={2} justify="center">
+ 
+ #### Grid Props
+ 
+-| Attribute        | Type             | Accepted values                | Description                    | Default |
+-| ---------------- | ---------------- | ------------------------------ | ------------------------------ | ------- |
+-| **xs**           | `boolean`        | `true / false`                 | extra small devices (<650px)   | `false` |
+-| **sm**           | `boolean`        | `true / false`                 | small devices (≥650px)         | `false` |
+-| **md**           | `boolean`        | `true / false`                 | medium devices (≥960px)        | `false` |
+-| **lg**           | `boolean`        | `true / false`                 | large devices (≥1280px)        | `false` |
+-| **xl**           | `boolean`        | `true / false`                 | extra large devices (≥1400px)  | `false` |
+-| **direction**    | `Direction`      | [Direction](#direction)        | CSS "flex-direction" property  | -       |
+-| **justify**      | `Justify`        | [Justify](#justify)            | CSS "justify-content" property | -       |
+-| **alignItems**   | `AlignItems`     | [AlignItems](#align-items)     | CSS "align-items" property     | -       |
+-| **alignContent** | `AlignContent`   | [AlignContent](#align-content) | CSS "align-content" property   | -       |
+-| ...              | `HTMLAttributes` | `'id', 'className', ...`       | Native element props           | -       |
++| Attribute        | Type                          | Accepted values                | Description                         | Default |
++| ---------------- | ----------------------------- | ------------------------------ | ----------------------------------- | ------- |
++| **xs**           | `boolean`                     | `true / false`                 | extra small devices (<650px)        | `false` |
++| **sm**           | `boolean`                     | `true / false`                 | small devices (≥650px)              | `false` |
++| **md**           | `boolean`                     | `true / false`                 | medium devices (≥960px)             | `false` |
++| **lg**           | `boolean`                     | `true / false`                 | large devices (≥1280px)             | `false` |
++| **xl**           | `boolean`                     | `true / false`                 | extra large devices (≥1400px)       | `false` |
++| **direction**    | `Direction`                   | [Direction](#direction)        | CSS "flex-direction" property       | -       |
++| **justify**      | `Justify`                     | [Justify](#justify)            | CSS "justify-content" property      | -       |
++| **alignItems**   | `AlignItems`                  | [AlignItems](#align-items)     | CSS "align-items" property          | -       |
++| **alignContent** | `AlignContent`                | [AlignContent](#align-content) | CSS "align-content" property        | -       |
++| **css**          | `Stitches.CSS`                | -                              | Override Default CSS style          | -       |
++| **as**           | `keyof JSX.IntrinsicElements` | -                              | Changes which tag component outputs | `div`   |
++| ...              | `HTMLAttributes`              | `'id', 'className', ...`       | Native element props                | -       |
+ 
+ <Spacer y={2} />
+ 
+ #### Grid.Container Props
+ 
+-| Attribute | Type             | Accepted values          | Description              | Default |
+-| --------- | ---------------- | ------------------------ | ------------------------ | ------- |
+-| **gap**   | `number`         | -                        | spacing of children      | 0       |
+-| **wrap**  | `Wrap`           | [Wrap](#wrap)            | CSS "flex-wrap" property | `wrap`  |
+-| ...       | `HTMLAttributes` | `'id', 'className', ...` | Native element props     | -       |
++| Attribute | Type                          | Accepted values          | Description                         | Default |
++| --------- | ----------------------------- | ------------------------ | ----------------------------------- | ------- |
++| **gap**   | `number`                      | -                        | spacing of children                 | 0       |
++| **wrap**  | `Wrap`                        | [Wrap](#wrap)            | CSS "flex-wrap" property            | `wrap`  |
++| **css**   | `Stitches.CSS`                | -                        | Override Default CSS style          | -       |
++| **as**    | `keyof JSX.IntrinsicElements` | -                        | Changes which tag component outputs | `div`   |
++| ...       | `HTMLAttributes`              | `'id', 'className', ...` | Native element props                | -       |
+ 
+ ### Grid types
+ \n- apps/docs/content/docs/layout/spacer.mdx (modified, 14 changes)\n  Patch: @@ -54,9 +54,11 @@ import { Spacer } from '@nextui-org/react';
+ 
+ #### Spacer Props
+ 
+-| Attribute  | Type               | Accepted values          | Description    | Default |
+-| ---------- | ------------------ | ------------------------ | -------------- | ------- |
+-| **x**      | `number` / `float` | -                        | x-axis spacing | 1       |
+-| **y**      | `number` / `float` | -                        | y-axis spacing | 1       |
+-| **inline** | `boolean`          | -                        | inline space   | `false` |
+-| ...        | `HTMLAttributes`   | `'id', 'className', ...` | native props   | -       |
++| Attribute  | Type                          | Accepted values          | Description                         | Default |
++| ---------- | ----------------------------- | ------------------------ | ----------------------------------- | ------- |
++| **x**      | `number` / `float`            | -                        | x-axis spacing                      | 1       |
++| **y**      | `number` / `float`            | -                        | y-axis spacing                      | 1       |
++| **inline** | `boolean`                     | -                        | inline space                        | `false` |
++| **css**    | `Stitches.CSS`                | -                        | Override Default CSS style          | -       |
++| **as**     | `keyof JSX.IntrinsicElements` | -                        | Changes which tag component outputs | `div`   |
++| ...        | `HTMLAttributes`              | `'id', 'className', ...` | native props                        | -       |\n- apps/docs/content/docs/manifest.json (modified, 8 changes)\n  Patch: @@ -31,7 +31,6 @@
+                     "keywords": "themeable, theme, customize, palette",
+                     "icon": "/category.svg",
+                     "open": true,
+-                    "updated": true,
+                     "routes": [
+                         {
+                             "title": "Default theme",
+@@ -115,12 +114,13 @@
+                         {
+                             "title": "Pagination",
+                             "keywords": "pagination, paginate, table pagination, pages, navigate",
+-                            "path": "/docs/components/pagination.mdx",
+-                            "newPost": true
++                            "path": "/docs/components/pagination.mdx"
+                         },
+                         {
+                             "title": "Table",
+-                            "comingSoon": true
++                            "keywords":"table, data table, grid, data grid",
++                            "path": "/docs/components/table.mdx",
++                            "newPost": true
+                         },
+                         {
+                             "title": "Collapse",\n- apps/docs/next.config.js (modified, 2 changes)\n  Patch: @@ -1,7 +1,7 @@
+ module.exports = {
+-  target: 'serverless',
+   pageExtensions: ['jsx', 'js', 'mdx', 'md', 'ts', 'tsx'],
+   redirects: require('./next-redirect'),
++  reactStrictMode: false,
+   eslint: {
+     ignoreDuringBuilds: true
+   },\n- apps/docs/package.json (modified, 5 changes)\n  Patch: @@ -12,6 +12,8 @@
+     "postbuild": "next-sitemap"
+   },
+   "dependencies": {
++    "@code-hike/classer": "0.3.0",
++    "@codesandbox/sandpack-react": "0.14.3",
+     "@mapbox/rehype-prism": "^0.6.0",
+     "@mdx-js/react": "^1.6.22",
+     "@nextui-org/react": "^1.0.2-beta.4",
+@@ -25,7 +27,7 @@
+     "kbar": "0.1.0-beta.6",
+     "lodash": "^4.17.21",
+     "match-sorter": "^6.3.0",
+-    "next": "^12.0.10",
++    "next": "^12.1.0",
+     "next-mdx-remote": "^3.0.2",
+     "next-themes": "^0.0.15",
+     "parse-numeric-range": "1.2.0",
+@@ -44,6 +46,7 @@
+     "rehype-parse": "7.0.1",
+     "remark-autolink-headings": "^6.0.1",
+     "remark-slug": "^6.0.0",
++    "scroll-into-view-if-needed": "2.2.29",
+     "shelljs": "^0.8.4",
+     "styled-jsx": "^4.0.1",
+     "unified": "9.2.1",\n

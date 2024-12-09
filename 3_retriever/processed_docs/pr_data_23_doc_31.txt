@@ -1,0 +1,83 @@
+Pull Request Number: 1211
+Title: fix: update accordion on child change
+Base Branch: feat/v2
+Head Branch: fix/update-accordion-on-child-change
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1211
+State: MERGED
+Created At: 2023-07-19T21:07:59Z
+Merged At: 2023-07-23T21:17:34Z
+Participants: jguddas, jrgarciadev
+
+Description:
+
+
+Commits:
+- fix: update accordion on child change\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22c80f1153372c558051320ae09876724f968f53d6%22%7D%2C%22id%22%3A%22QmVQiVtgNwkT7eqpso7KybwowFg63e9HdZaMYcp83kcJkL%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1211%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/accordion/src/accordion.tsx (modified, 2 changes)\n  Patch: @@ -45,7 +45,7 @@ const AccordionGroup = forwardRef<AccordionProps, "div">((props, ref) => {
+         </Fragment>
+       );
+     });
+-  }, [values, itemClasses, handleFocusChanged, isSplitted, showDivider]);
++  }, [values, itemClasses, handleFocusChanged, isSplitted, showDivider, state.collection]);
+ 
+   return (
+     <Component {...getBaseProps()}>\n- packages/components/accordion/src/use-accordion.ts (modified, 40 changes)\n  Patch: @@ -112,24 +112,28 @@ export function useAccordion<T extends object>(props: UseAccordionProps<T>) {
+   );
+ 
+   // TODO: Remove this once the issue is fixed.
+-  let treeChildren: any = [];
+-
+-  /**
+-   * This is a workaround for rendering ReactNode children in the AccordionItem.
+-   * @see https://github.com/adobe/react-spectrum/issues/3882
+-   */
+-  React.Children.map(children, (child) => {
+-    if (React.isValidElement(child) && typeof child.props?.children !== "string") {
+-      const clonedChild = React.cloneElement(child, {
+-        // @ts-ignore
+-        hasChildItems: false,
+-      });
+-
+-      treeChildren.push(clonedChild);
+-    } else {
+-      treeChildren.push(child);
+-    }
+-  });
++  const treeChildren = useMemo(() => {
++    let treeChildren: any = [];
++
++    /**
++     * This is a workaround for rendering ReactNode children in the AccordionItem.
++     * @see https://github.com/adobe/react-spectrum/issues/3882
++     */
++    React.Children.map(children, (child) => {
++      if (React.isValidElement(child) && typeof child.props?.children !== "string") {
++        const clonedChild = React.cloneElement(child, {
++          // @ts-ignore
++          hasChildItems: false,
++        });
++
++        treeChildren.push(clonedChild);
++      } else {
++        treeChildren.push(child);
++      }
++    });
++
++    return treeChildren;
++  }, [children]);
+ 
+   const commonProps = {
+     children: treeChildren,\n

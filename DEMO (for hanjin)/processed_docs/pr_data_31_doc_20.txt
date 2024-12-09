@@ -1,0 +1,99 @@
+Pull Request Number: 129
+Title: Added somewhat of a start for a tablist
+Base Branch: main
+Head Branch: main
+Author: TheEpicFace007
+URL: https://github.com/nextui-org/nextui/pull/129
+State: CLOSED
+Created At: 2021-12-27T03:04:56Z
+Merged At: None
+Participants: TheEpicFace007, jrgarciadev
+
+Description:
+[LEVEL]/[COMPONENT]
+TASK: #88
+Types of changes
+
+
+ New feature (non-breaking change which adds functionality)
+ Bug fix (non-breaking change which fixes an issue)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+I added an start of an component for an tablist. I don't know if I did the thbing right however it is my first time contributing to a open source repo of an serious javascript project.
+Screenshots - Animations
+
+Commits:
+- Added somewhat of a start for a tablist\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Hey @PissMan420 I really appreciate you took the time for doing this but unfortunately, we are not accepting PR's on new components because we make the design first, then we think about the API and how to do it according to the project guidelines, you can start fixing bugs o improving the docs 👍🏻 \n
+
+Files Changed:
+- packages/nextui/src/tabs/style.css (added, 13 changes)\n  Patch: @@ -0,0 +1,13 @@
++.nextui-tablist-buttons {
++  display: flex;
++  flex-direction: row;
++}
++
++.nextui-tablist-button, .nextui-tablist-button-active {
++  margin: 5px;
++}
++
++.nextui-tablist-button-active {
++  /* darken the button using css transform */
++  transform: scale(1.1);
++}
+\ No newline at end of file\n- packages/nextui/src/tabs/tab.stories.tsx (added, 14 changes)\n  Patch: @@ -0,0 +1,14 @@
++import TabList from './tablist';
++import { Meta } from '@storybook/react';
++
++export default {
++  title: 'Layout/TabList'  
++} as Meta;
++
++export const TabListPreview = () => {
++  return (<TabList buttons={[
++    { text: 'Tab 1', onClick: () => {}, isActive: true },
++    { text: 'Tab 2', onClick: () => {}, isActive: false },
++    { text: 'Tab 3', onClick: () => {}, isActive: false },
++  ]} />)
++}
+\ No newline at end of file\n- packages/nextui/src/tabs/tablist.tsx (added, 31 changes)\n  Patch: @@ -0,0 +1,31 @@
++import React from 'react';
++import { NormalColors } from 'src';
++import Button from '../button';
++import "./style.css";
++
++interface Props {
++  theme?: NormalColors;
++  buttons: { text: string; onClick: () => void, isActive: boolean; content?: JSX.Element }[];
++}
++
++const TabList: React.FC<Props> = ({ buttons, theme }) => {
++
++  return (
++    <div className="nextui-tablist">
++      <div className="nextui-tablist-buttons">
++        {buttons.map((button, index) => {
++          return (
++            <Button
++              key={`tab-${index}-${button.text}`}
++              onClick={button.onClick}
++              className={`nextui-tablist-button${button.isActive ? "-active" : ""}`}
++              color={theme}
++            >{button.text}</Button>
++          )
++        })}
++      </div>
++    </div>
++  )
++};
++
++export default TabList;
+\ No newline at end of file\n

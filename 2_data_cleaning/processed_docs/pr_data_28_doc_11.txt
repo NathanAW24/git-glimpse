@@ -1,0 +1,46 @@
+Pull Request Number: 478
+Title: fix(docs): missing key in code examples
+Base Branch: main
+Head Branch: main
+Author: ShellarFX
+URL: https://github.com/nextui-org/nextui/pull/478
+State: MERGED
+Created At: 2022-05-17T21:23:51Z
+Merged At: 2022-06-07T01:28:08Z
+Participants: ShellarFX, jrgarciadev
+
+Description:
+📝 Description
+Fix missing key at getting started and NextUI + Next.js pages
+⛳️ Current behavior (updates)
+Add React.Children.toArray()
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- fix missing key in code examples\n
+
+Labels:
+👀 Status: In Review
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/content/docs/guide/getting-started.mdx (modified, 2 changes)\n  Patch: @@ -83,7 +83,7 @@ class MyDocument extends Document {
+     const initialProps = await Document.getInitialProps(ctx);
+     return {
+       ...initialProps,
+-      styles: [<>{initialProps.styles}</>]
++      styles: React.Children.toArray([initialProps.styles])
+     };
+   }
+ \n- apps/docs/content/docs/guide/nextui-plus-nextjs.mdx (modified, 2 changes)\n  Patch: @@ -58,7 +58,7 @@ class MyDocument extends Document {
+     const initialProps = await Document.getInitialProps(ctx);
+     return {
+       ...initialProps,
+-      styles: <>{initialProps.styles}</>
++      styles: React.Children.toArray([initialProps.styles])
+     };
+   }
+ \n

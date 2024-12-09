@@ -1,0 +1,70 @@
+Pull Request Number: 741
+Title: fix: Input should not change value itself when value props is set (fix #737
+Base Branch: next
+Head Branch: fix/controlledInputValue
+Author: sun0day
+URL: https://github.com/nextui-org/nextui/pull/741
+State: MERGED
+Created At: 2022-09-06T03:23:18Z
+Merged At: 2022-11-05T20:03:33Z
+Participants: sun0day, OrhanTozan, jrgarciadev
+
+Description:
+Closes #737
+📝 Description
+The controlled Input value should not be changed by Input when value prop is set.
+⛳️ Current behavior (updates)
+When a non-undefined value prop is passed to Input, the changeHandler and clearHandler internal code will directly call setSelfValue to change value.
+🚀 New behavior
+When a non-undefined value prop is passed to Input, the changeHandler and clearHandler internal code will not call setSelfValue to change value.
+💣 Is this a breaking change (Yes/No):
+
+No
+📝 Additional Information
+
+Commits:
+- fix: Input should not change value itself when value props is set (fix #737)\n- Merge branch 'next' into fix/controlledInputValue\n
+
+Labels:
+
+
+Comments:
+- vercel: @sun0day is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f9748dd67416eb907db5953d39f96a24f5b412e0%22%7D%2C%22id%22%3A%22QmdXjjZPuB2mGSDN7ayjK4NpVMZYhTRUvCaL22LYopGCPm%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A741%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/A64sjvUjnhv727XYeQDYTHX8PMda)) | [Visit Preview](https://nextui-storybook-git-fork-sun0day-fix-control-3e3a47-nextui-org.vercel.app) | Nov 5, 2022 at 8:02PM (UTC) |
+
+\n- OrhanTozan: Can we please merge this? @jrgarciadev \n
+
+Files Changed:
+- packages/react/src/input/input.tsx (modified, 4 changes)\n  Patch: @@ -127,7 +127,7 @@ const Input = React.forwardRef<FormElement, InputProps>(
+ 
+     const changeHandler = (event: React.ChangeEvent<FormElement>) => {
+       if (disabled || readOnly) return;
+-      setSelfValue(event.target.value);
++      isControlledComponent || setSelfValue(event.target.value);
+       onChange && onChange(event);
+     };
+ 
+@@ -136,7 +136,7 @@ const Input = React.forwardRef<FormElement, InputProps>(
+       event.stopPropagation();
+       event.nativeEvent.stopImmediatePropagation();
+ 
+-      setSelfValue("");
++      isControlledComponent || setSelfValue("");
+       onClearClick && onClearClick(event);
+       /* istanbul ignore next */
+       if (!inputRef.current) return;\n- packages/storybook/storybook-static/iframe.html (modified, 3 changes)\n  Patch: @@ -361,4 +361,5 @@
+           
+       
+           
+-            window['STORIES'] = [{"titlePrefix":"","directory":"../react/src","files":"**/*.stories.mdx","importPathMatcher":"^(?:\\.\\.\\/react\\/src(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.mdx)$"},{"titlePrefix":"","directory":"../react/src","files":"**/*.stories.@(js|jsx|ts|tsx)","importPathMatcher":"^(?:\\.\\.\\/react\\/src(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.(js|jsx|ts|tsx))$"}];</script><script src="runtime~main.e6244631.iframe.bundle.js"></script><script src="107.02592e15.iframe.bundle.js"></script><script src="main.0039f79a.iframe.bundle.js"></script></body></html>
++
++            window['STORIES'] = [{"titlePrefix":"","directory":"../react/src","files":"**/*.stories.mdx","importPathMatcher":"^(?:\\.\\.\\/react\\/src(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.mdx)$"},{"titlePrefix":"","directory":"../react/src","files":"**/*.stories.@(js|jsx|ts|tsx)","importPathMatcher":"^(?:\\.\\.\\/react\\/src(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.(js|jsx|ts|tsx))$"}];</script><script src="runtime~main.e6244631.iframe.bundle.js"></script><script src="107.02592e15.iframe.bundle.js"></script><script src="main.70564690.iframe.bundle.js"></script></body></html>\n- packages/storybook/storybook-static/main.0039f79a.iframe.bundle.js (removed, 2 changes)\n  Patch: No patch available\n- packages/storybook/storybook-static/main.70564690.iframe.bundle.js (added, 2 changes)\n  Patch: No patch available\n- packages/storybook/storybook-static/main.70564690.iframe.bundle.js.LICENSE.txt (renamed)\n  Previous Filename: packages/storybook/storybook-static/main.0039f79a.iframe.bundle.js.LICENSE.txt\n- packages/storybook/storybook-static/project.json (modified, 2 changes)\n  Patch: @@ -1 +1 @@
+-{"generatedAt":1661952863456,"builder":{"name":"webpack5"},"hasCustomBabel":false,"hasCustomWebpack":false,"hasStaticDirs":false,"hasStorybookEslint":false,"refCount":0,"monorepo":"Turborepo","packageManager":{"type":"yarn","version":"1.22.19"},"typescriptOptions":{"reactDocgen":"none"},"storybookVersion":"6.5.10","language":"javascript","storybookPackages":{"@storybook/addon-actions":{"version":"6.5.10"},"@storybook/addon-essentials":{"version":"6.5.10"},"@storybook/addon-links":{"version":"6.5.10"},"@storybook/addon-storysource":{"version":"6.5.10"},"@storybook/builder-webpack5":{"version":"6.5.10"},"@storybook/manager-webpack5":{"version":"6.5.10"},"@storybook/react":{"version":"6.5.10"}},"framework":{"name":"react"},"addons":{"@storybook/addon-a11y":{"version":"6.5.10"},"storybook-dark-mode":{"version":"1.1.0"}}}
++{"generatedAt":1662433618584,"builder":{"name":"webpack5"},"hasCustomBabel":false,"hasCustomWebpack":false,"hasStaticDirs":false,"hasStorybookEslint":false,"refCount":0,"monorepo":"Turborepo","packageManager":{"type":"yarn","version":"1.22.17"},"typescriptOptions":{"reactDocgen":"none"},"storybookVersion":"6.5.10","language":"javascript","storybookPackages":{"@storybook/addon-actions":{"version":"6.5.10"},"@storybook/addon-essentials":{"version":"6.5.10"},"@storybook/addon-links":{"version":"6.5.10"},"@storybook/addon-storysource":{"version":"6.5.10"},"@storybook/builder-webpack5":{"version":"6.5.10"},"@storybook/manager-webpack5":{"version":"6.5.10"},"@storybook/react":{"version":"6.5.10"}},"framework":{"name":"react"},"addons":{"@storybook/addon-a11y":{"version":"6.5.10"},"storybook-dark-mode":{"version":"1.1.0"}}}\n

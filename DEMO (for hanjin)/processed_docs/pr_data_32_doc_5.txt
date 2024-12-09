@@ -1,0 +1,105 @@
+Pull Request Number: 65
+Title: fix: options buttons only shows up when the live editor is open
+Base Branch: main
+Head Branch: fix_64/hoverable-code-options
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/65
+State: MERGED
+Created At: 2021-10-03T19:52:32Z
+Merged At: 2021-10-03T19:58:55Z
+Participants: jrgarciadev, codecov-commenter
+
+Description:
+[docs]/[live-editor]
+#64
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Display mode changed to none when live-editor is not open and flex-inline when it is
+
+
+
+Screenshots - Animations
+
+Commits:
+- fix: options buttons only shows up when the live editor is open\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/65?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#65](https://codecov.io/gh/nextui-org/nextui/pull/65?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (20c7f2e) into [main](https://codecov.io/gh/nextui-org/nextui/commit/b6343f4e84e94309487513977985dbfeb676534f?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (b6343f4) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/65/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/65?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main      #65   +/-   ##
+=======================================
+  Coverage   86.73%   86.73%           
+=======================================
+  Files          93       93           
+  Lines        1546     1546           
+  Branches      525      525           
+=======================================
+  Hits         1341     1341           
+  Misses        200      200           
+  Partials        5        5           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/65?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/65?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [b6343f4...20c7f2e](https://codecov.io/gh/nextui-org/nextui/pull/65?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- packages/docs/src/components/playground/editor.tsx (modified, 15 changes)\n  Patch: @@ -45,13 +45,13 @@ const Editor: React.FC = () => {
+   return (
+     <div className="editor">
+       <details open={visible}>
+-        <summary>
++        <summary onClick={clickHandler}>
+           <Row
+             justify="space-between"
+             align="center"
+             style={{ height: '100%', width: '100%' }}
+           >
+-            <Col className="action" onClick={clickHandler}>
++            <Col className="action left-side">
+               <span className="arrow">
+                 <RightIcon size={16} fill={theme.palette.accents_6} />
+               </span>
+@@ -109,13 +109,14 @@ const Editor: React.FC = () => {
+           overflow: hidden;
+           border-radius: ${theme.layout.radius};
+         }
+-        :global(.right-side) {
+-          opacity: 0;
+-          transition: opacity 0.25s ease;
+-        }
+         details[open] :global(.right-side) {
+-          opacity: 1;
++          display: inline-flex !important;
++        }
++
++        :global(.right-side) {
++          display: none !important;
+         }
++
+         summary {
+           display: flex;
+           justify-content: space-between;\n

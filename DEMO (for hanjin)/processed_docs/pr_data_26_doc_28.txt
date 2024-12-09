@@ -1,0 +1,99 @@
+Pull Request Number: 718
+Title: fix(docs-sidebar): contrast blur
+Base Branch: main
+Head Branch: fix_635/light-theme-mobile-sidebar-contrast
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/718
+State: MERGED
+Created At: 2022-08-30T13:31:18Z
+Merged At: 2022-08-30T13:31:43Z
+Participants: jrgarciadev
+
+Description:
+Closes #635
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+Not enough contrast on mobile sidebar
+🚀 New behavior
+Mobile sidebar contrast improved
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(docs-sidebar): contrast blur\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/G3PqfamC74ipNHWLab7Nqw18ug4Y)) | [Visit Preview](https://nextui-docs-git-fix635-light-theme-mobile-sid-562183-nextui-org.vercel.app) | Aug 30, 2022 at 1:31PM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/EXNLDsaGjcpze99m2DaPNSqtG9bp)) | [Visit Preview](https://nextui-storybook-git-fix635-light-theme-mobil-f732e2-nextui-org.vercel.app) | Aug 30, 2022 at 1:31PM (UTC) |
+
+
+\n
+
+Files Changed:
+- apps/docs/src/components/mobile-navigation/index.tsx (modified, 13 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import React from "react";
+-import {usePortal} from "@nextui-org/react";
++import {usePortal, useTheme} from "@nextui-org/react";
+ import cn from "classnames";
+ import withDefaults from "@utils/with-defaults";
+ import {Route} from "@lib/docs/page";
+@@ -22,6 +22,8 @@ const defaultProps = {
+ const MobileNavigation: React.FC<Props> = ({opened, detached, hasNotify, routes, onClose}) => {
+   const portal = usePortal("mobile-navigation");
+ 
++  const {isDark} = useTheme();
++
+   const handlePostClick = () => {
+     onClose && onClose();
+   };
+@@ -33,6 +35,7 @@ const MobileNavigation: React.FC<Props> = ({opened, detached, hasNotify, routes,
+             opened,
+             detached,
+             hasNotify,
++            isDark,
+           })}
+         >
+           <div className="mobile-navigation__wrapper">
+@@ -75,8 +78,12 @@ const MobileNavigation: React.FC<Props> = ({opened, detached, hasNotify, routes,
+             @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+               .mobile-navigation__wrapper {
+                 background: var(--nextui-colors-menuBackground);
+-                backdrop-filter: saturate(180%) blur(10px);
+-                --webkit-backdrop-filter: saturate(180%) blur(10px);
++                backdrop-filter: saturate(180%) blur(60px);
++                --webkit-backdrop-filter: saturate(180%) blur(34px);
++              }
++              .mobile-navigation__container.isDark {
++                backdrop-filter: saturate(180%) blur(24px);
++                --webkit-backdrop-filter: saturate(180%) blur(20px);
+               }
+             }
+             .mobile-navigation__list {\n- apps/docs/src/theme/shared.ts (modified, 4 changes)\n  Patch: @@ -12,7 +12,7 @@ export const lightTheme = createTheme({
+     fonts,
+     colors: {
+       headerBackground: "hsla(0,0%,100%,0.8)",
+-      menuBackground: "rgba(255, 255, 255, 0.5)",
++      menuBackground: "rgba(255, 255, 255, 0.7)",
+       headerIconColor: "$accents4",
+       codeBackground: "#363449",
+       codeComment: "$accents7",
+@@ -33,7 +33,7 @@ export const darkTheme = createTheme({
+   theme: {
+     fonts,
+     colors: {
+-      menuBackground: "rgba(0,0,0,0.8)",
++      menuBackground: "rgba(0,0,0,0.7)",
+       headerBackground: "rgba(0,0,0,0.5)",
+       headerIconColor: "$accents8",
+       codeBackground: "#111111",\n

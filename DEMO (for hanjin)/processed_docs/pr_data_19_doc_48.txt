@@ -1,0 +1,98 @@
+Pull Request Number: 1643
+Title: fix(docs): button custom implement
+Base Branch: main
+Head Branch: btn-example
+Author: li-jia-nan
+URL: https://github.com/nextui-org/nextui/pull/1643
+State: MERGED
+Created At: 2023-09-16T21:10:43Z
+Merged At: 2023-09-16T21:12:14Z
+Participants: li-jia-nan, jrgarciadev
+
+Description:
+📝 Description
+Button custom implementation example fixed
+
+Commits:
+- fix(docs): button custom implement\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 7af3598bb431e9e47ed031849dff6b0f1ec229bc
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/li-jia-nan/nextui/new/btn-example?filename=.changeset/rotten-carpets-pay.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Afix(docs)%3A%20button%20custom%20implement%0A)
+
+\n- vercel: [vc]: #IhdYNFk9ghAoNfTQYXPa0G7LDKHvmb5Ao3zwuIgCSPg=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNnVwZ3h0Sm9yZW56THNDbU02eVdCV2E4VG82ViIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWxpLWppYS1uYW4tYnRuLWV4YW1wbGUtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstbGktamlhLW5hbi1idG4tZXhhbXBsZS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/6upgxtJorenzLsCmM6yWBWa8To6V)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-li-jia-nan-btn-example-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-li-jia-nan-btn-example-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 16, 2023 9:12pm |
+
+\n- vercel: @li-jia-nan is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%227af3598bb431e9e47ed031849dff6b0f1ec229bc%22%7D%2C%22id%22%3A%22QmYcfbDewFpPLGi2cT2m7QpHuG75MGvcUZTGtZTnSdpXj6%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1643%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Good catch @li-jia-nan  thanks!\n
+
+Files Changed:
+- apps/docs/content/components/button/custom-impl.ts (modified, 8 changes)\n  Patch: @@ -6,7 +6,6 @@ const MyButton = forwardRef((props, ref) => {
+   const {
+     domRef,
+     children,
+-    ripples,
+     spinnerSize,
+     spinner = <Spinner color="current" size={spinnerSize} />,
+     spinnerPlacement,
+@@ -15,11 +14,14 @@ const MyButton = forwardRef((props, ref) => {
+     isLoading,
+     disableRipple,
+     getButtonProps,
++    getRippleProps,
+   } = useButton({
+     ref,
+     ...props,
+   });
+ 
++  const {ripples} = getRippleProps();
++
+   return (
+     <button ref={domRef} {...getButtonProps()}>
+       {startContent}
+@@ -45,7 +47,6 @@ const MyButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+   const {
+     domRef,
+     children,
+-    ripples,
+     spinnerSize,
+     spinner = <Spinner color="current" size={spinnerSize} />,
+     spinnerPlacement,
+@@ -54,11 +55,14 @@ const MyButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+     isLoading,
+     disableRipple,
+     getButtonProps,
++    getRippleProps,
+   } = useButton({
+     ref,
+     ...props,
+   });
+ 
++  const {ripples} = getRippleProps();
++
+   return (
+     <button ref={domRef} {...getButtonProps()}>
+       {startContent}\n

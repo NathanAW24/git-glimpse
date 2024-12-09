@@ -1,0 +1,151 @@
+Pull Request Number: 631
+Title: Fix: Docs navbar height issue in tablet size
+Base Branch: next
+Head Branch: fix/tablet-nav-height
+Author: nerdjfpb
+URL: https://github.com/nextui-org/nextui/pull/631
+State: MERGED
+Created At: 2022-07-23T22:16:20Z
+Merged At: 2022-11-05T01:54:52Z
+Participants: nerdjfpb, jrgarciadev, cyanxiao, situ2001
+
+Description:
+Closes #615
+📝 Description
+Some route buttons are hiding on width 1280 to lower
+⛳️ Current behavior (updates)
+Now route buttons items will take as much space they needed.
+🚀 New behavior
+Can use all the route buttons properly now
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- Fix: Docs navbar height issue in tablet size\n- Chores: removing props from upper level and remove unnecessary import\n- Fix typos in card component docs and storybook\n- Merge pull request #799 from Hdanzo/fix/component-card-docs-typo
+
+Fix typos in card component docs and storybook (fix #792)\n- fix: playground `isExternal` in link component\n- Merge pull request #801 from yuriwithowsky/fix/link-external-icon\n- fix(docs-card): add missing import for code example\n- Merge pull request #812 from situ2001/docs/fix-card-example\n- Merge branch 'main' into fix/tablet-nav-height\n
+
+Labels:
+
+
+Comments:
+- vercel: @jrgarciadev is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228dcb5cf1a4ebc2a0fbaa66a158298e2c146f54d0%22%7D%2C%22id%22%3A%22QmfYF7kCW7niSTw6RbWnGFuYxuatA7fkx5vNHvdj9pRdQK%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A631%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/DkWF8x8xP4MC93jPxfpFePW3Qsqf)) | [Visit Preview](https://nextui-storybook-git-fork-nerdjfpb-fix-tablet-35da13-nextui-org.vercel.app) | Nov 5, 2022 at 1:53AM (UTC) |
+
+\n
+
+Files Changed:
+- apps/docs/content/components/card/action.ts (modified, 4 changes)\n  Patch: @@ -13,7 +13,7 @@ export default function App() {
+       price: "$3.00",
+     },
+     {
+-      title: "Raspberry",
++      title: "Cherry",
+       img: "/images/fruit-3.jpeg",
+       price: "$10.00",
+     },
+@@ -23,7 +23,7 @@ export default function App() {
+       price: "$5.30",
+     },
+     {
+-      title: "Advocato",
++      title: "Avocado",
+       img: "/images/fruit-5.jpeg",
+       price: "$15.70",
+     },\n- apps/docs/content/components/card/default.ts (modified, 2 changes)\n  Patch: @@ -1,4 +1,4 @@
+-const App = `import { Card } from "@nextui-org/react";
++const App = `import { Card, Text } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (\n- apps/docs/content/components/link/icon.ts (modified, 4 changes)\n  Patch: @@ -3,11 +3,11 @@ const App = `import { Link, Spacer } from "@nextui-org/react";
+ export default function App() {
+   return (
+     <>
+-      <Link href="#" icon>
++      <Link href="#" isExternal>
+         "First solve the problem. Then, write the code." - Jon Johnson.
+       </Link>
+       <Spacer />
+-      <Link href="#" icon color>
++      <Link href="#" isExternal color="success">
+         "First solve the problem. Then, write the code." - Jon Johnson.
+       </Link>
+     </>\n- apps/docs/src/components/sidebar/category.tsx (modified, 12 changes)\n  Patch: @@ -1,17 +1,15 @@
+-import React, {useRef, useMemo, useState, useEffect} from "react";
++import React, {useRef, useState, useEffect} from "react";
+ import cn from "classnames";
+ import Image from "next/image";
+ import withDefaults from "@utils/with-defaults";
+ import {useTheme} from "@nextui-org/react";
+-import {Route} from "@lib/docs/page";
+ import {Badge} from "@components";
+ 
+ import ArrowRight from "../icons/arrow-right";
+ 
+ export interface Props {
+   level: number;
+   title: string;
+-  routes: Route[];
+   iconUrl?: string;
+   isMobile: boolean;
+   selected: boolean;
+@@ -35,7 +33,6 @@ const Category: React.FC<React.PropsWithChildren<CategoryProps>> = ({
+   level = 1,
+   title,
+   selected,
+-  routes,
+   iconUrl,
+   updated,
+   opened,
+@@ -54,11 +51,6 @@ const Category: React.FC<React.PropsWithChildren<CategoryProps>> = ({
+   const levelClass = `level-${level}`;
+   const margin = 18;
+ 
+-  const postsHeight = useMemo(
+-    () => routes.length * (isMobile ? 32 : 26) + margin * (routes.length - 1),
+-    [routes, isMobile],
+-  );
+-
+   // If a category is selected indirectly, open it. This can happen when using the search input
+   useEffect(() => {
+     if (selected) {
+@@ -170,7 +162,7 @@ const Category: React.FC<React.PropsWithChildren<CategoryProps>> = ({
+           transition: height 200ms ease;
+         }
+         .open .posts {
+-          height: ${postsHeight}px;
++          height: 100%;
+         }
+ 
+         @keyframes appear {\n- apps/docs/src/components/sidebar/index.tsx (modified, 1 changes)\n  Patch: @@ -66,7 +66,6 @@ const Sidebar: React.FC<SidebarProps> = ({routes, level, tag, slug, onPostClick}
+               isMobile={isMobile}
+               level={level}
+               opened={opened}
+-              routes={routes}
+               selected={categorySelected}
+               title={title}
+               updated={updated}\n- packages/react/src/card/card.stories.tsx (modified, 4 changes)\n  Patch: @@ -443,7 +443,7 @@ export const PrimaryAction = () => {
+       price: "$3.00",
+     },
+     {
+-      title: "Raspberry",
++      title: "Cherry",
+       img: "/images/fruit-3.jpeg",
+       price: "$10.00",
+     },
+@@ -453,7 +453,7 @@ export const PrimaryAction = () => {
+       price: "$5.30",
+     },
+     {
+-      title: "Advocato",
++      title: "Avocado",
+       img: "/images/fruit-5.jpeg",
+       price: "$15.70",
+     },\n

@@ -1,0 +1,1492 @@
+Pull Request Number: 19
+Title: Feat/docs landing page
+Base Branch: main
+Head Branch: feat/docs-landing-page
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/19
+State: MERGED
+Created At: 2021-05-22T00:50:36Z
+Merged At: 2021-05-22T00:50:40Z
+Participants: jrgarciadev
+
+Description:
+
+
+Commits:
+- feat: theme provider added, docs page layout created and more..\n- fix: theme provider default theme merge\n- feat: logo component added\n- feat: new component  Container added\n- feat: lading page and components improvements\n- feat: improve landing page\n
+
+Labels:
+
+
+Comments:
+- vercel: This pull request is being automatically deployed with Vercel ([learn more](https://vercel.link/github-learn-more)).  
+To see the status of your deployment, click below or on the icon next to each commit.
+
+🔍 Inspect: [https://vercel.com/jrgarciadev/nextui-storybook/GBdN7m2tXQf3hJZTBNCsXeXKEdt4](https://vercel.com/jrgarciadev/nextui-storybook/GBdN7m2tXQf3hJZTBNCsXeXKEdt4)  
+✅ Preview: [https://nextui-storybook-git-feat-docs-landing-page-jrgarciadev.vercel.app](https://nextui-storybook-git-feat-docs-landing-page-jrgarciadev.vercel.app)
+
+\n
+
+Files Changed:
+- .eslintrc.json (modified, 2 changes)\n  Patch: @@ -44,7 +44,7 @@
+       }
+     ],
+     "@typescript-eslint/no-explicit-any": [
+-      "error",
++      "warn",
+       {
+         "ignoreRestArgs": true
+       }\n- packages/docs/.babelrc (modified, 1 changes)\n  Patch: @@ -7,6 +7,7 @@
+         "root": ["./"],
+         "alias": {
+           "@components": "./src/components",
++          "@layouts": "./src/layouts",
+           "@hooks": "./src/hooks",
+           "@utils": "./src/utils",
+           "@theme": "./src/theme"\n- packages/docs/src/components/Logo/index.tsx (added, 57 changes)\n  Patch: @@ -0,0 +1,57 @@
++import React from 'react';
++import { NextUIThemes, useTheme } from '@nextui/react';
++
++export interface LogoProps {
++  size?: number;
++  width?: number;
++  height?: number;
++  small?: boolean;
++  dark?: boolean;
++}
++
++const Logo: React.FC<LogoProps> = ({
++  size,
++  width,
++  height,
++  dark,
++  small,
++  ...props
++}) => {
++  const theme = useTheme() as NextUIThemes;
++
++  if (small) {
++    return (
++      <svg
++        xmlns="http://www.w3.org/2000/svg"
++        width={width || size || 40}
++        height={height || size || 40}
++        viewBox="0 0 43 43"
++        {...props}
++      >
++        <path
++          fill={dark ? '#000000' : theme.palette.foreground}
++          d="M32 43H11a10.928 10.928 0 01-7.778-3.222A10.928 10.928 0 010 32V11a10.928 10.928 0 013.222-7.778A10.928 10.928 0 0111 0h21a10.929 10.929 0 017.779 3.222A10.927 10.927 0 0143 11v21a10.927 10.927 0 01-3.222 7.778A10.929 10.929 0 0132 43zM11.314 12.293v12.033a6.35 6.35 0 00.87 3.31 6.243 6.243 0 002.422 2.3 7.458 7.458 0 003.595.843 7.474 7.474 0 003.6-.839 6.2 6.2 0 002.418-2.3 6.381 6.381 0 00.869-3.315V12.292h-1.659V24.21a5.149 5.149 0 01-.643 2.578 4.6 4.6 0 01-1.824 1.779 5.668 5.668 0 01-2.759.648 5.646 5.646 0 01-2.756-.648 4.64 4.64 0 01-1.823-1.779 5.116 5.116 0 01-.648-2.578V12.292zm18.6 0v18.175h1.66V12.293z"
++        />
++      </svg>
++    );
++  }
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={100}
++      height={24.48}
++      viewBox="0 0 100 24.48"
++      {...props}
++    >
++      <path
++        data-name="Path 14"
++        d="M18.745 0v24.069h-2.139L2.386 3.914h-.188v20.155H0V0h2.127l14.267 20.179h.188V0zm13.256 24.445a7.934 7.934 0 01-4.371-1.181 7.79 7.79 0 01-2.85-3.279 11.069 11.069 0 01-1-4.836 11.2 11.2 0 011-4.848 8.1 8.1 0 012.785-3.326 7.175 7.175 0 014.119-1.2 7.689 7.689 0 012.832.535 7.042 7.042 0 012.45 1.634 7.836 7.836 0 011.722 2.756 11.015 11.015 0 01.635 3.931v1.034h-12.1V13.82h9.963a6.882 6.882 0 00-.7-3.132 5.55 5.55 0 00-1.939-2.2 5.11 5.11 0 00-2.862-.811 5.121 5.121 0 00-3.02.917 6.251 6.251 0 00-2.039 2.421 7.513 7.513 0 00-.746 3.291v1.1a8.822 8.822 0 00.746 3.755 5.751 5.751 0 002.124 2.487 5.9 5.9 0 003.255.881 5.873 5.873 0 002.251-.4 4.843 4.843 0 001.634-1.075 4.729 4.729 0 001-1.487l1.986.646a5.885 5.885 0 01-1.346 2.1 6.889 6.889 0 01-2.327 1.545 8.251 8.251 0 01-3.202.587zm12.74-18.428l4.654 7.7 4.654-7.7h2.433l-5.806 9.026 5.806 9.026H54.05l-4.654-7.451-4.655 7.451H42.32l5.735-9.026-5.735-9.026zm23.246 0v1.822h-8.615V6.017zm-5.923-4.325h2.1v17.664a3.414 3.414 0 00.388 1.769 2.159 2.159 0 001.011.9 3.363 3.363 0 001.328.264 4.045 4.045 0 00.705-.053q.294-.053.517-.112l.447 1.892a5.433 5.433 0 01-.752.217 5.162 5.162 0 01-1.1.1 5.1 5.1 0 01-2.215-.505 4.337 4.337 0 01-1.743-1.499 4.3 4.3 0 01-.682-2.48zM89.211 0h2.2v15.936a8.411 8.411 0 01-1.152 4.389 8.18 8.18 0 01-3.2 3.044 9.854 9.854 0 01-4.77 1.111 9.82 9.82 0 01-4.76-1.116 8.225 8.225 0 01-3.208-3.044 8.379 8.379 0 01-1.152-4.384V0h2.2v15.783a6.747 6.747 0 00.858 3.414 6.13 6.13 0 002.415 2.356 7.444 7.444 0 003.649.858 7.478 7.478 0 003.655-.858 6.08 6.08 0 002.413-2.353 6.784 6.784 0 00.852-3.414zM100 0v24.069h-2.2V0z"
++        fill={dark ? '#000000' : theme.palette.foreground}
++      />
++    </svg>
++  );
++};
++
++const MemoLogo = React.memo(Logo);
++
++export default MemoLogo;\n- packages/docs/src/components/hero/index.tsx (added, 40 changes)\n  Patch: @@ -0,0 +1,40 @@
++import React from 'react';
++import { Text, Row, Col } from '@nextui/react';
++import { ImageBrowser } from '@components';
++
++const Hero: React.FC = () => {
++  return (
++    <>
++      <Row className="hero-container">
++        <Col span={6}>
++          <Text h1 className="hero__title" size="4.2rem">
++            Beautiful, fast and
++          </Text>
++          <Text h1 size="4.2rem" className="hero__title hero__title-smooth">
++            modern React UI library.
++          </Text>
++        </Col>
++        <Col span={6} className="hero__image-container">
++          <ImageBrowser className="hero__image" />
++        </Col>
++      </Row>
++      <style jsx>{`
++        :global(.hero-container) {
++          padding: 20vh 0;
++        }
++        :global(.hero__title) {
++          margin-bottom: 0rem;
++          line-height: 1.2;
++        }
++        :global(.hero__title-smooth) {
++          color: #c1c1c1 !important;
++        }
++        :global(.hero__image) {
++          transform: translate3d(0, -50px, 0);
++        }
++      `}</style>
++    </>
++  );
++};
++
++export default Hero;\n- packages/docs/src/components/image-browser/index.tsx (added, 660 changes)\n  Patch: @@ -0,0 +1,660 @@
++import * as React from 'react';
++import withDefaults from '@utils/with-defaults';
++
++interface Props {
++  width?: number;
++  height?: number;
++  className?: string;
++}
++
++const defaultProps = {
++  width: 721,
++  height: 424,
++  className: '',
++};
++
++type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
++
++export type ImageBrowserProps = Props & typeof defaultProps & NativeAttrs;
++
++const ImageBrowser: React.FC<Props> = ({
++  width,
++  height,
++  className,
++  ...props
++}) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={width}
++      height={height}
++      className={className}
++      viewBox="0 0 1048 608"
++      {...props}
++    >
++      <defs>
++        <style>
++          {
++            '.prefix__cls-1{fill:rgba(23,23,23)}.prefix__cls-2{fill:rgba(43,43,43)}.prefix__cls-3{fill:#f21361}.prefix__cls-4{fill:#f5a623}.prefix__cls-5{fill:#17c964}.prefix__cls-7{fill:#666}.prefix__cls-8{fill:#0070f3}.prefix__cls-9{fill:#999}.prefix__cls-10{fill:#eaeaea}.prefix__cls-11{fill:#888}.prefix__cls-12{fill:#7928ca}.prefix__cls-13{fill:#fff}.prefix__cls-15{fill:#444}'
++          }
++        </style>
++      </defs>
++      <g id="prefix__Group_26" transform="translate(-1072 -228)">
++        <g id="prefix__front-square" transform="translate(144 -166)">
++          <path
++            id="prefix__Rectangle_48"
++            className="prefix__cls-2"
++            d="M0 0h870v395a15 15 0 01-15 15H15a15 15 0 01-15-15V0z"
++            transform="translate(1106 449)"
++          />
++          <g id="prefix__Component_1_3" transform="translate(1106 394)">
++            <path
++              id="prefix__Rectangle_23"
++              d="M15 0h840a15 15 0 0115 15v40H0V15A15 15 0 0115 0z"
++              fill="#f6f6f6"
++            />
++            <circle
++              id="prefix__Ellipse_1"
++              className="prefix__cls-3"
++              cx={8.5}
++              cy={8.5}
++              r={8.5}
++              transform="translate(28 19)"
++            />
++            <circle
++              id="prefix__Ellipse_2"
++              className="prefix__cls-4"
++              cx={8.5}
++              cy={8.5}
++              r={8.5}
++              transform="translate(62 19)"
++            />
++            <circle
++              id="prefix__Ellipse_3"
++              className="prefix__cls-5"
++              cx={8.5}
++              cy={8.5}
++              r={8.5}
++              transform="translate(96 19)"
++            />
++            <path
++              id="prefix__Path_7"
++              d="M8.5 0h265a8.5 8.5 0 010 17H8.5a8.5 8.5 0 010-17z"
++              transform="translate(294 19)"
++              fill="#d6d6d6"
++            />
++          </g>
++          <rect
++            id="prefix__Rectangle_32"
++            className="prefix__cls-7"
++            width={384}
++            height={22}
++            rx={11}
++            transform="translate(1346 483)"
++          />
++          <g id="prefix__Group_22" transform="translate(1146 553)">
++            <circle
++              id="prefix__Ellipse_4"
++              className="prefix__cls-8"
++              cx={8.5}
++              cy={8.5}
++              r={8.5}
++            />
++            <rect
++              id="prefix__Rectangle_34"
++              className="prefix__cls-9"
++              width={65}
++              height={17}
++              rx={8.5}
++              transform="translate(34)"
++            />
++          </g>
++          <g id="prefix__Group_19" transform="translate(1146 729)">
++            <rect
++              id="prefix__Rectangle_30"
++              className="prefix__cls-9"
++              width={82}
++              height={17}
++              rx={8.5}
++              transform="translate(34)"
++            />
++            <circle
++              id="prefix__Ellipse_7"
++              className="prefix__cls-8"
++              cx={8.5}
++              cy={8.5}
++              r={8.5}
++            />
++          </g>
++          <g id="prefix__Group_21" transform="translate(1146 597)">
++            <rect
++              id="prefix__Rectangle_28"
++              className="prefix__cls-9"
++              width={100}
++              height={17}
++              rx={8.5}
++              transform="translate(34)"
++            />
++            <circle
++              id="prefix__Ellipse_5"
++              className="prefix__cls-8"
++              cx={8.5}
++              cy={8.5}
++              r={8.5}
++            />
++          </g>
++          <g id="prefix__Group_20" transform="translate(1146 641)">
++            <rect
++              id="prefix__Rectangle_29"
++              className="prefix__cls-9"
++              width={65}
++              height={17}
++              rx={8.5}
++              transform="translate(34)"
++            />
++            <circle
++              id="prefix__Ellipse_6"
++              className="prefix__cls-8"
++              cx={8.5}
++              cy={8.5}
++              r={8.5}
++            />
++          </g>
++          <g id="prefix__Group_23" transform="translate(1146 685)">
++            <rect
++              id="prefix__Rectangle_29-2"
++              className="prefix__cls-9"
++              width={47}
++              height={17}
++              rx={8.5}
++              transform="translate(34)"
++            />
++            <circle
++              id="prefix__Ellipse_6-2"
++              className="prefix__cls-8"
++              cx={8.5}
++              cy={8.5}
++              r={8.5}
++            />
++          </g>
++          <g id="prefix__Group_15" transform="translate(1745.941 553)">
++            <rect
++              id="prefix__Rectangle_33"
++              className="prefix__cls-9"
++              width={184}
++              height={83}
++              rx={15}
++              transform="translate(.059)"
++            />
++            <rect
++              id="prefix__Rectangle_41"
++              className="prefix__cls-7"
++              width={52}
++              height={48}
++              rx={7}
++              transform="translate(17.059 18)"
++            />
++            <path
++              id="prefix__Rectangle_42"
++              className="prefix__cls-10"
++              transform="translate(84.059 18)"
++              d="M0 0h54v9H0z"
++            />
++            <path
++              id="prefix__Rectangle_44"
++              className="prefix__cls-11"
++              transform="translate(84.059 37)"
++              d="M0 0h43v9H0z"
++            />
++            <path
++              id="prefix__Rectangle_43"
++              className="prefix__cls-10"
++              transform="translate(84.059 54)"
++              d="M0 0h81v8H0z"
++            />
++          </g>
++          <g id="prefix__Group_16" transform="translate(1745.941 663.435)">
++            <rect
++              id="prefix__Rectangle_33-2"
++              className="prefix__cls-9"
++              width={184}
++              height={83}
++              rx={15}
++              transform="translate(.059 -.435)"
++            />
++            <rect
++              id="prefix__Rectangle_41-2"
++              className="prefix__cls-7"
++              width={52}
++              height={48}
++              rx={7}
++              transform="translate(17.059 17.565)"
++            />
++            <path
++              id="prefix__Rectangle_42-2"
++              className="prefix__cls-10"
++              transform="translate(84.059 17.565)"
++              d="M0 0h54v9H0z"
++            />
++            <path
++              id="prefix__Rectangle_44-2"
++              className="prefix__cls-11"
++              transform="translate(84.059 36.565)"
++              d="M0 0h43v9H0z"
++            />
++            <path
++              id="prefix__Rectangle_43-2"
++              className="prefix__cls-10"
++              transform="translate(84.059 56.565)"
++              d="M0 0h81v9H0z"
++            />
++          </g>
++          <g id="prefix__Big_card">
++            <rect
++              id="prefix__Rectangle_31"
++              className="prefix__cls-10"
++              width={384}
++              height={226}
++              rx={15}
++              transform="translate(1346 553)"
++            />
++            <rect
++              id="prefix__Rectangle_40"
++              className="prefix__cls-9"
++              width={332}
++              height={87}
++              rx={7}
++              transform="translate(1372 635)"
++            />
++            <rect
++              id="prefix__Rectangle_36"
++              className="prefix__cls-8"
++              width={56}
++              height={21}
++              rx={6}
++              transform="translate(1648 738)"
++            />
++            <path
++              id="prefix__Rectangle_37"
++              className="prefix__cls-10"
++              transform="translate(1581 745)"
++              d="M0 0h42v8H0z"
++            />
++            <path
++              id="prefix__Rectangle_39"
++              className="prefix__cls-9"
++              transform="translate(1372 602)"
++              d="M0 0h170v8H0z"
++            />
++            <path
++              id="prefix__Rectangle_38"
++              className="prefix__cls-9"
++              transform="translate(1372 584)"
++              d="M0 0h113v8H0z"
++            />
++          </g>
++          <circle
++            id="prefix__Ellipse_8"
++            className="prefix__cls-12"
++            cx={17}
++            cy={17}
++            r={17}
++            transform="translate(1896 482)"
++          />
++          <circle
++            id="prefix__Ellipse_9"
++            className="prefix__cls-7"
++            cx={8.5}
++            cy={8.5}
++            r={8.5}
++            transform="translate(1858 491)"
++          />
++          <circle
++            id="prefix__Ellipse_10"
++            className="prefix__cls-9"
++            cx={8.5}
++            cy={8.5}
++            r={8.5}
++            transform="translate(1827 491)"
++          />
++          <circle
++            id="prefix__Ellipse_11"
++            className="prefix__cls-9"
++            cx={8.5}
++            cy={8.5}
++            r={8.5}
++            transform="translate(1796 491)"
++          />
++          <g id="prefix__Group_25" transform="translate(371.382 130.382)">
++            <rect
++              id="prefix__Rectangle_1"
++              className="prefix__cls-13"
++              width={43}
++              height={43}
++              rx={11}
++              transform="translate(772.618 352.618)"
++            />
++            <path
++              id="prefix__Path_2"
++              d="M33.3-159.273h1.66v12.063a6.366 6.366 0 01-.872 3.323 6.192 6.192 0 01-2.424 2.3 7.459 7.459 0 01-3.607.841 7.434 7.434 0 01-3.6-.845 6.226 6.226 0 01-2.429-2.3 6.343 6.343 0 01-.872-3.318v-12.063h1.664v11.947a5.107 5.107 0 00.649 2.584 4.64 4.64 0 001.828 1.784 5.635 5.635 0 002.762.649 5.66 5.66 0 002.767-.649 4.6 4.6 0 001.828-1.784 5.135 5.135 0 00.645-2.584zm8.166 0v18.218H39.8v-18.218z"
++              transform="translate(763.081 524.487)"
++            />
++          </g>
++          <path
++            id="prefix__Rectangle_37-2"
++            className="prefix__cls-13"
++            transform="translate(1581 745)"
++            d="M0 0h42v8H0z"
++          />
++        </g>
++        <g id="prefix__Group_17" transform="translate(20 -86)">
++          <g id="prefix__front-square-2" transform="translate(-54 55)">
++            <path
++              id="prefix__Rectangle_3"
++              className="prefix__cls-1"
++              d="M0 0h870v403a15 15 0 01-15 15H15a15 15 0 01-15-15V0z"
++              transform="translate(1106 448)"
++            />
++            <g id="prefix__Group_2" transform="translate(373 130)">
++              <rect
++                id="prefix__Rectangle_1-2"
++                width={43}
++                height={43}
++                rx={11}
++                transform="translate(773 353)"
++              />
++              <path
++                id="prefix__Path_2-2"
++                className="prefix__cls-13"
++                d="M33.267-159.273h1.659v12.033a6.351 6.351 0 01-.87 3.315 6.177 6.177 0 01-2.418 2.3 7.441 7.441 0 01-3.6.839 7.416 7.416 0 01-3.594-.843 6.211 6.211 0 01-2.423-2.3 6.328 6.328 0 01-.87-3.31v-12.033h1.659v11.918a5.1 5.1 0 00.648 2.578A4.629 4.629 0 0025.284-143a5.621 5.621 0 002.755.648A5.647 5.647 0 0030.8-143a4.591 4.591 0 001.824-1.779 5.123 5.123 0 00.643-2.578zm8.147 0v18.173h-1.66v-18.174z"
++                transform="translate(763.161 524.565)"
++              />
++            </g>
++            <g id="prefix__Component_1_1" transform="translate(1106 394)">
++              <path
++                id="prefix__Rectangle_23-2"
++                d="M15 0h840a15 15 0 0115 15v40H0V15A15 15 0 0115 0z"
++                fill="#111"
++              />
++              <circle
++                id="prefix__Ellipse_1-2"
++                className="prefix__cls-3"
++                cx={8.5}
++                cy={8.5}
++                r={8.5}
++                transform="translate(28 19)"
++              />
++              <circle
++                id="prefix__Ellipse_2-2"
++                className="prefix__cls-4"
++                cx={8.5}
++                cy={8.5}
++                r={8.5}
++                transform="translate(62 19)"
++              />
++              <circle
++                id="prefix__Ellipse_3-2"
++                className="prefix__cls-5"
++                cx={8.5}
++                cy={8.5}
++                r={8.5}
++                transform="translate(96 19)"
++              />
++              <rect
++                id="prefix__Rectangle_24"
++                className="prefix__cls-15"
++                width={282}
++                height={17}
++                rx={8.5}
++                transform="translate(294 19)"
++              />
++            </g>
++            <rect
++              id="prefix__Rectangle_32-2"
++              className="prefix__cls-15"
++              width={384}
++              height={22}
++              rx={11}
++              transform="translate(1346 483)"
++            />
++            <g id="prefix__Group_22-2" transform="translate(1146 553)">
++              <circle
++                id="prefix__Ellipse_4-2"
++                className="prefix__cls-8"
++                cx={8.5}
++                cy={8.5}
++                r={8.5}
++              />
++              <rect
++                id="prefix__Rectangle_34-2"
++                className="prefix__cls-15"
++                width={65}
++                height={17}
++                rx={8.5}
++                transform="translate(34)"
++              />
++            </g>
++            <g id="prefix__Group_19-2" transform="translate(1146 729)">
++              <rect
++                id="prefix__Rectangle_30-2"
++                className="prefix__cls-15"
++                width={82}
++                height={17}
++                rx={8.5}
++                transform="translate(34)"
++              />
++              <circle
++                id="prefix__Ellipse_7-2"
++                className="prefix__cls-8"
++                cx={8.5}
++                cy={8.5}
++                r={8.5}
++              />
++            </g>
++            <g id="prefix__Group_21-2" transform="translate(1146 597)">
++              <rect
++                id="prefix__Rectangle_28-2"
++                className="prefix__cls-15"
++                width={100}
++                height={17}
++                rx={8.5}
++                transform="translate(34)"
++              />
++              <circle
++                id="prefix__Ellipse_5-2"
++                className="prefix__cls-8"
++                cx={8.5}
++                cy={8.5}
++                r={8.5}
++              />
++            </g>
++            <g id="prefix__Group_20-2" transform="translate(1146 641)">
++              <rect
++                id="prefix__Rectangle_29-3"
++                className="prefix__cls-15"
++                width={65}
++                height={17}
++                rx={8.5}
++                transform="translate(34)"
++              />
++              <circle
++                id="prefix__Ellipse_6-3"
++                className="prefix__cls-8"
++                cx={8.5}
++                cy={8.5}
++                r={8.5}
++              />
++            </g>
++            <g id="prefix__Group_23-2" transform="translate(1146 685)">
++              <rect
++                id="prefix__Rectangle_29-4"
++                className="prefix__cls-15"
++                width={47}
++                height={17}
++                rx={8.5}
++                transform="translate(34)"
++              />
++              <circle
++                id="prefix__Ellipse_6-4"
++                className="prefix__cls-8"
++                cx={8.5}
++                cy={8.5}
++                r={8.5}
++              />
++            </g>
++            <g id="prefix__Group_15-2" transform="translate(1745.941 553)">
++              <rect
++                id="prefix__Rectangle_33-3"
++                className="prefix__cls-15"
++                width={184}
++                height={83}
++                rx={15}
++                transform="translate(.059)"
++              />
++              <rect
++                id="prefix__Rectangle_41-3"
++                className="prefix__cls-9"
++                width={52}
++                height={48}
++                rx={7}
++                transform="translate(17.059 18)"
++              />
++              <path
++                id="prefix__Rectangle_42-3"
++                className="prefix__cls-10"
++                transform="translate(84.059 18)"
++                d="M0 0h54v9H0z"
++              />
++              <path
++                id="prefix__Rectangle_44-3"
++                className="prefix__cls-9"
++                transform="translate(84.059 37)"
++                d="M0 0h43v9H0z"
++              />
++              <path
++                id="prefix__Rectangle_43-3"
++                className="prefix__cls-10"
++                transform="translate(84.059 54)"
++                d="M0 0h81v8H0z"
++              />
++            </g>
++            <g id="prefix__Group_16-2" transform="translate(1745.941 663.435)">
++              <rect
++                id="prefix__Rectangle_33-4"
++                className="prefix__cls-15"
++                width={184}
++                height={83}
++                rx={15}
++                transform="translate(.059 -.435)"
++              />
++              <rect
++                id="prefix__Rectangle_41-4"
++                className="prefix__cls-9"
++                width={52}
++                height={48}
++                rx={7}
++                transform="translate(17.059 17.565)"
++              />
++              <path
++                id="prefix__Rectangle_42-4"
++                className="prefix__cls-10"
++                transform="translate(84.059 17.565)"
++                d="M0 0h54v9H0z"
++              />
++              <path
++                id="prefix__Rectangle_44-4"
++                className="prefix__cls-9"
++                transform="translate(84.059 36.565)"
++                d="M0 0h43v9H0z"
++              />
++              <path
++                id="prefix__Rectangle_43-4"
++                className="prefix__cls-10"
++                transform="translate(84.059 56.565)"
++                d="M0 0h81v9H0z"
++              />
++            </g>
++            <g id="prefix__Big_card-2">
++              <rect
++                id="prefix__Rectangle_31-2"
++                className="prefix__cls-15"
++                width={384}
++                height={226}
++                rx={15}
++                transform="translate(1346 553)"
++              />
++              <rect
++                id="prefix__Rectangle_40-2"
++                className="prefix__cls-9"
++                width={332}
++                height={87}
++                rx={7}
++                transform="translate(1372 635)"
++              />
++              <rect
++                id="prefix__Rectangle_36-2"
++                className="prefix__cls-8"
++                width={56}
++                height={21}
++                rx={6}
++                transform="translate(1648 738)"
++              />
++              <path
++                id="prefix__Rectangle_37-3"
++                className="prefix__cls-10"
++                transform="translate(1581 745)"
++                d="M0 0h42v8H0z"
++              />
++              <path
++                id="prefix__Rectangle_39-2"
++                className="prefix__cls-11"
++                transform="translate(1372 602)"
++                d="M0 0h170v8H0z"
++              />
++              <path
++                id="prefix__Rectangle_38-2"
++                className="prefix__cls-10"
++                transform="translate(1372 584)"
++                d="M0 0h113v8H0z"
++              />
++            </g>
++            <circle
++              id="prefix__Ellipse_8-2"
++              className="prefix__cls-12"
++              cx={17}
++              cy={17}
++              r={17}
++              transform="translate(1896 482)"
++            />
++            <circle
++              id="prefix__Ellipse_9-2"
++              className="prefix__cls-15"
++              cx={8.5}
++              cy={8.5}
++              r={8.5}
++              transform="translate(1858 491)"
++            />
++            <circle
++              id="prefix__Ellipse_10-2"
++              className="prefix__cls-15"
++              cx={8.5}
++              cy={8.5}
++              r={8.5}
++              transform="translate(1827 491)"
++            />
++            <circle
++              id="prefix__Ellipse_11-2"
++              className="prefix__cls-15"
++              cx={8.5}
++              cy={8.5}
++              r={8.5}
++              transform="translate(1796 491)"
++            />
++          </g>
++        </g>
++      </g>
++    </svg>
++  );
++};
++
++export default withDefaults(ImageBrowser, defaultProps);\n- packages/docs/src/components/index.ts (added, 3 changes)\n  Patch: @@ -0,0 +1,3 @@
++export { default as Logo } from './logo';
++export { default as Hero } from './hero';
++export { default as ImageBrowser } from './image-browser';\n- packages/docs/src/hooks/use-dom-clean.ts (added, 10 changes)\n  Patch: @@ -0,0 +1,10 @@
++import { useEffect } from 'react';
++
++const useDomClean = (): void => {
++  useEffect(() => {
++    document.documentElement.removeAttribute('style');
++    document.body.removeAttribute('style');
++  }, []);
++};
++
++export default useDomClean;\n- packages/docs/src/layouts/base.tsx (added, 49 changes)\n  Patch: @@ -0,0 +1,49 @@
++import React from 'react';
++import Head from 'next/head';
++
++const BaseLayout: React.FC<React.PropsWithChildren<unknown>> = ({
++  children,
++}) => {
++  return (
++    <div id="main">
++      <Head>
++        <title>NextUI | Beautiful, fast, modern React UI Library</title>
++        <link rel="icon" href="/favicon.ico" />
++        <link rel="manifest" href="/manifest.json" />
++        <link
++          rel="apple-touch-icon"
++          sizes="180x180"
++          href="/apple-touch-icon.png"
++        />
++        <link
++          rel="icon"
++          type="image/png"
++          sizes="32x32"
++          href="/favicon-32x32.png"
++        />
++        <link
++          rel="icon"
++          type="image/png"
++          sizes="16x16"
++          href="/favicon-16x16.png"
++        />
++        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#181818" />
++        <meta name="msapplication-TileColor" content="#ffffff" />
++        <meta name="theme-color" content="#ffffff" />
++        <meta
++          name="viewport"
++          key="viewport"
++          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
++        />
++        <link rel="preconnect" href="https://fonts.gstatic.com" />
++        <link
++          href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
++          rel="stylesheet"
++        />
++      </Head>
++      {children}
++    </div>
++  );
++};
++
++export default BaseLayout;\n- packages/docs/src/layouts/default.tsx (added, 31 changes)\n  Patch: @@ -0,0 +1,31 @@
++import React from 'react';
++import BaseLayout from './base';
++import Footer from './footer';
++import Navbar from './navbar';
++import { Container } from '@nextui/react';
++
++const DefaultLayout: React.FC<React.PropsWithChildren<unknown>> = ({
++  children,
++}) => {
++  return (
++    <BaseLayout>
++      <Container className="main-container">
++        <Navbar />
++        {children}
++        <Footer />
++      </Container>
++      <style jsx>{`
++        :global(.main-container) {
++          min-height: 100vh;
++          --dot-size: 1px;
++          --dot-space: 22px;
++          background: linear-gradient(90deg, #000 21px, transparent 1%) 50%,
++            linear-gradient(#000 21px, transparent 1%) 50%, #444;
++          background-size: var(--dot-space) var(--dot-space);
++        }
++      `}</style>
++    </BaseLayout>
++  );
++};
++
++export default DefaultLayout;\n- packages/docs/src/layouts/footer.tsx (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++import React from 'react';
++
++const Footer: React.FC = () => {
++  return <b>Footer</b>;
++};
++
++export default Footer;\n- packages/docs/src/layouts/navbar.tsx (added, 13 changes)\n  Patch: @@ -0,0 +1,13 @@
++import React from 'react';
++import { Logo } from '@components';
++import { Container } from '@nextui/react';
++
++const Navbar: React.FC = () => {
++  return (
++    <Container as="nav" gap={0} style={{ padding: '20px 0' }}>
++      <Logo />
++    </Container>
++  );
++};
++
++export default Navbar;\n- packages/docs/src/pages/_app.tsx (modified, 58 changes)\n  Patch: @@ -1,17 +1,55 @@
+-import React from 'react';
+-import Head from 'next/head';
+-import { NextPage } from 'next';
+-import { AppProps } from 'next/app';
+-import { CssBaseline } from '@nextui/react';
++import React, { useState, useEffect } from 'react';
++import { NextPage, NextComponentType, NextPageContext } from 'next';
++import { NextRouter, Router } from 'next/router';
++import { CssBaseline, NextUIThemes, ThemeProvider } from '@nextui/react';
++import { AppInitialProps } from 'next/app';
++import DefaultLayout from '@layouts/default';
++import { DeepPartial } from '@utils/types';
++import useDomClean from '@hooks/use-dom-clean';
++import sharedTheme from '@theme/shared';
++
++export type ComponentLayout<P = {}> = React.NamedExoticComponent<P> & {
++  Layout: React.FC;
++};
++
++type AppPropsType<
++  R extends NextRouter = NextRouter,
++  P = {}
++> = AppInitialProps & {
++  Component: NextComponentType<NextPageContext, unknown, P> & ComponentLayout;
++  router: R;
++  __N_SSG?: boolean;
++  __N_SSP?: boolean;
++};
++
++type AppProps<P = {}> = AppPropsType<Router, P>;
+ 
+ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
++  const [customTheme, setCustomTheme] = useState<DeepPartial<NextUIThemes>>({
++    ...sharedTheme,
++    type: 'dark',
++  });
++  const themeChangeHandle = (theme: DeepPartial<NextUIThemes>) => {
++    setCustomTheme(theme);
++  };
++
++  useEffect(() => {
++    const theme = window.localStorage.getItem('theme');
++    if (theme !== 'dark') return;
++    themeChangeHandle({ type: 'dark' });
++  }, []);
++
++  useDomClean();
++  const Layout = Component.Layout || DefaultLayout;
++
+   return (
+     <>
+-      <Head>
+-        <title>Next UI</title>
+-      </Head>
+-      <CssBaseline />
+-      <Component {...pageProps} />
++      <ThemeProvider theme={customTheme}>
++        <Layout>
++          <CssBaseline />
++          <Component {...pageProps} />
++        </Layout>
++      </ThemeProvider>
+     </>
+   );
+ };\n- packages/docs/src/pages/_document.tsx (modified, 14 changes)\n  Patch: @@ -23,12 +23,24 @@ class MyDocument extends Document {
+       ),
+     };
+   }
+-
+   render() {
+     return (
+       <Html>
+         <Head />
+         <body>
++          <script
++            dangerouslySetInnerHTML={{
++              __html: `
++            (function(){
++              if (!window.localStorage) return;
++              if (window.localStorage.getItem('theme') === 'dark') {
++                document.documentElement.style.background = '#000';
++                document.body.style.background = '#000';
++              };
++            })()
++          `,
++            }}
++          />
+           <Main />
+           <NextScript />
+         </body>\n- packages/docs/src/pages/index.tsx (modified, 35 changes)\n  Patch: @@ -1,38 +1,11 @@
+ import React from 'react';
+-import { Checkbox } from '@nextui/react';
++import { Hero } from '@components';
+ 
+ const IndexPage = () => {
+   return (
+-    <div>
+-      <h1>Checkbox</h1>
+-      <Checkbox className="com" checked={true} size="mini">
+-        mini
+-      </Checkbox>
+-      <Checkbox checked={true} size="small">
+-        small
+-      </Checkbox>
+-      <Checkbox size="medium">medium</Checkbox>
+-      <Checkbox color="error" checked={true} size="large">
+-        large
+-      </Checkbox>
+-      <Checkbox color="warning" checked={true} size="xlarge">
+-        xlarge
+-      </Checkbox>
+-      <Checkbox checked={true}>default</Checkbox>
+-      <Checkbox.Group color="warning" value={['sydney']}>
+-        <Checkbox value="sydney">Sydney</Checkbox>
+-        <Checkbox value="beijing">Bei Jing</Checkbox>
+-        <Checkbox value="london">London</Checkbox>
+-        <Checkbox value="tokyo">Tokyo</Checkbox>
+-      </Checkbox.Group>
+-      <style jsx>{`
+-        div {
+-          display: flex;
+-          margin: 1rem;
+-          flex-direction: column;
+-        }
+-      `}</style>
+-    </div>
++    <>
++      <Hero />
++    </>
+   );
+ };
+ \n- packages/docs/src/theme/shared.ts (added, 12 changes)\n  Patch: @@ -0,0 +1,12 @@
++import { NextUIThemesFont } from '@nextui/react';
++
++const themeFont: NextUIThemesFont = {
++  sans:
++    'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
++  mono:
++    'Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace',
++};
++
++export default {
++  font: themeFont,
++};\n- packages/docs/src/utils/types.d.ts (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++export type DeepPartial<T> = {
++    [P in keyof T]?: T[P] extends 
++    Record<string, unknown> ? DeepPartial<T[P]> : T[P]
++  }
++  
+\ No newline at end of file\n- packages/docs/src/utils/with-defaults.ts (added, 12 changes)\n  Patch: @@ -0,0 +1,12 @@
++import React from 'react';
++
++const withDefaults = <P, DP>(
++  component: React.ComponentType<P>,
++  defaultProps: DP
++) => {
++  type Props = Partial<DP> & Omit<P, keyof DP>;
++  component.defaultProps = defaultProps;
++  return component as React.ComponentType<Props>;
++};
++
++export default withDefaults;\n- packages/docs/tsconfig.json (modified, 8 changes)\n  Patch: @@ -2,6 +2,14 @@
+     "extends": "../../tsconfig.base.json",
+     "compilerOptions": {
+       "baseUrl": ".",
++      "paths": {
++        "@components": ["./src/components/index.ts"],
++        "@components/": ["./src/components/*"],
++        "@layouts/*": ["./src/layouts/*"],
++        "@hooks/*": ["./src/hooks/*"],
++        "@utils/*": ["./src/utils/*"],
++        "@theme/*": ["./src/theme/*"]
++    },
+       "jsx": "preserve",
+       "allowJs": true,
+       "esModuleInterop": true,\n- packages/nextui/package.json (modified, 4 changes)\n  Patch: @@ -31,9 +31,9 @@
+     "clear:packages": "rm -rf ./dist/packages",
+     "build:types": "tsc -p ./buildconfig",
+     "build:prod": "yarn clear && microbundle build --jsx React.createElement --jsxFragment React.Fragment --tsconfig tsconfig.build.json --compress --strict --format modern,cjs",
+-    "build:watch": "yarn clear && microbundle watch --jsx React.createElement --jsxFragment React.Fragment --no-compress --format modern,cjs",
++    "build:watch": "microbundle watch --jsx React.createElement --jsxFragment React.Fragment --no-compress --format modern,cjs",
+     "build": "yarn build:prod && yarn build:types && yarn clear:packages",
+-    "watch": "yarn build:watch",
++    "watch": "yarn clear && yarn build:types && yarn build:watch",
+     "storybook": "start-storybook -p 6006 --no-manager-cache",
+     "build-storybook": "build-storybook",
+     "start-storybook": "yarn build-storybook && http-server ./storybook-static",\n- packages/nextui/src/components/col/col.tsx (modified, 6 changes)\n  Patch: @@ -9,7 +9,7 @@ interface Props {
+ }
+ 
+ const defaultProps = {
+-  span: 24,
++  span: 12,
+   offset: 0,
+   component: 'div' as keyof JSX.IntrinsicElements,
+   className: '',
+@@ -37,8 +37,8 @@ const Col: React.FC<React.PropsWithChildren<ColProps>> = ({
+           box-sizing: border-box;
+           padding-left: calc(var(--row-gap) / 2);
+           padding-right: calc(var(--row-gap) / 2);
+-          width: ${(100 / 24) * span}%;
+-          margin-left: ${(100 / 24) * offset}%;
++          width: ${(100 / 12) * span}%;
++          margin-left: ${(100 / 12) * offset}%;
+         }
+       `}</style>
+     </Component>\n- packages/nextui/src/components/container/container.tsx (added, 194 changes)\n  Patch: @@ -0,0 +1,194 @@
++import React, { useMemo, ReactNode } from 'react';
++import useTheme from '@hooks/use-theme';
++import {
++  BreakpointsValue,
++  Wrap,
++  Display,
++  Justify,
++  Direction,
++  AlignItems,
++  AlignContent,
++} from '@utils/prop-types';
++
++interface Props {
++  fluid?: boolean;
++  gap: number;
++  xs?: BreakpointsValue;
++  sm?: BreakpointsValue;
++  md?: BreakpointsValue;
++  lg?: BreakpointsValue;
++  xl?: BreakpointsValue;
++  wrap?: Wrap;
++  display?: Display;
++  justify?: Justify;
++  direction?: Direction;
++  alignItems?: AlignItems;
++  alignContent?: AlignContent;
++  children: ReactNode;
++  as: keyof JSX.IntrinsicElements;
++  className?: string;
++  style?: object;
++}
++
++const defaultProps = {
++  gap: 2,
++  fluid: false,
++  wrap: 'wrap' as Wrap,
++  as: 'div' as keyof JSX.IntrinsicElements,
++  xs: false as BreakpointsValue,
++  sm: false as BreakpointsValue,
++  md: false as BreakpointsValue,
++  lg: false as BreakpointsValue,
++  xl: false as BreakpointsValue,
++  className: '',
++};
++
++type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
++
++export type ContainerProps = Props & typeof defaultProps & NativeAttrs;
++
++const Container: React.FC<React.PropsWithChildren<ContainerProps>> = ({
++  fluid,
++  xs,
++  sm,
++  md,
++  lg,
++  xl,
++  wrap,
++  gap,
++  as,
++  display,
++  justify,
++  direction,
++  alignItems,
++  alignContent,
++  children,
++  className,
++  style,
++  ...props
++}) => {
++  const theme = useTheme();
++  const classes = useMemo(() => {
++    const aligns: { [key: string]: unknown } = {
++      fluid,
++      xs,
++      sm,
++      md,
++      lg,
++      xl,
++      wrap,
++      display,
++      justify,
++      direction,
++      alignItems,
++      alignContent,
++    };
++    const classString = Object.keys(aligns).reduce((pre, name) => {
++      if (aligns[name] !== undefined && aligns[name] !== false)
++        return `${pre} ${name}`;
++      return pre;
++    }, '');
++    return classString.trim();
++  }, [
++    xs,
++    sm,
++    md,
++    lg,
++    xl,
++    fluid,
++    wrap,
++    display,
++    justify,
++    direction,
++    alignItems,
++    alignContent,
++  ]);
++  const gapUnit = useMemo(() => {
++    return `calc(${gap} * ${theme.layout.gapQuarter})`;
++  }, [gap, theme.layout.gapQuarter]);
++
++  const Component = as;
++
++  return (
++    <Component
++      className={`container ${classes} ${className}`}
++      style={style}
++      {...props}
++    >
++      {children}
++      <style jsx>{`
++        .container {
++          width: 100%;
++          margin-right: auto;
++          margin-left: auto;
++          padding-right: ${gapUnit};
++          padding-left: ${gapUnit};
++        }
++        .fluid {
++          max-width: 100% !important;
++        }
++        .wrap {
++          flex-wrap: ${wrap};
++        }
++        .display {
++          display: ${display};
++        }
++        .justify {
++          justify-content: ${justify};
++        }
++        .direction {
++          flex-direction: ${direction};
++        }
++        .alignContent {
++          align-content: ${alignContent};
++        }
++        .alignItems {
++          align-items: ${alignItems};
++        }
++        @media only screen and (max-width: ${theme.breakpoints.xs.max}) {
++          .container {
++            max-width: ${theme.breakpoints.xs.max};
++          }
++        }
++        @media only screen and (min-width: ${theme.breakpoints.sm.min}) {
++          .container {
++            max-width: ${theme.breakpoints.sm.min};
++          }
++          .md {
++            max-width: 100%;
++          }
++        }
++        @media only screen and (min-width: ${theme.breakpoints.md.min}) {
++          .container {
++            max-width: ${theme.breakpoints.md.min};
++          }
++          .lg {
++            max-width: 100%;
++          }
++        }
++        @media only screen and (min-width: ${theme.breakpoints.lg.min}) {
++          .container {
++            max-width: ${theme.breakpoints.lg.min};
++          }
++          .xl {
++            max-width: 100%;
++          }
++        }
++        @media only screen and (min-width: ${theme.breakpoints.xl.min}) {
++          .container {
++            max-width: ${theme.breakpoints.xl.min};
++          }
++        }
++      `}</style>
++    </Component>
++  );
++};
++
++type MemoContainerComponent<P = {}> = React.NamedExoticComponent<P>;
++
++type ComponentProps = Partial<typeof defaultProps> &
++  Omit<Props, keyof typeof defaultProps>;
++
++Container.defaultProps = defaultProps;
++
++export default React.memo(Container) as MemoContainerComponent<ComponentProps>;\n- packages/nextui/src/components/container/index.ts (added, 3 changes)\n  Patch: @@ -0,0 +1,3 @@
++import Container from './container';
++
++export default Container;\n- packages/nextui/src/components/grid/basic-item.tsx (modified, 10 changes)\n  Patch: @@ -1,8 +1,12 @@
+ import React, { useMemo } from 'react';
+ import useTheme from '@hooks/use-theme';
+-import { Justify, Direction, AlignItems, AlignContent } from './grid-types';
+-
+-type BreakpointsValue = number | boolean;
++import {
++  BreakpointsValue,
++  Justify,
++  Direction,
++  AlignItems,
++  AlignContent,
++} from '@utils/prop-types';
+ 
+ interface Props {
+   xs?: BreakpointsValue;\n- packages/nextui/src/components/grid/grid-container.tsx (modified, 3 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import React, { useMemo } from 'react';
+ import useTheme from '@hooks/use-theme';
+ import GridBasicItem, { GridBasicItemComponentProps } from './basic-item';
+-import { Wrap } from './grid-types';
++import { Wrap } from '@utils/prop-types';
+ import { css } from 'styled-jsx/css';
+ 
+ interface Props {
+@@ -31,6 +31,7 @@ const GridContainer: React.FC<React.PropsWithChildren<GridContainerProps>> = ({
+   const gapUnit = useMemo(() => {
+     return `calc(${gap} * ${theme.layout.gapQuarter})`;
+   }, [gap, theme.layout.gapQuarter]);
++
+   const { className: resolveClassName, styles } = css.resolve`
+     --grid-gap-unit: ${gapUnit};
+     display: flex;\n- packages/nextui/src/components/grid/grid-types.ts (removed, 41 changes)\n  Patch: @@ -1,41 +0,0 @@
+-import { tuple } from '@utils/prop-types';
+-
+-const justify = tuple(
+-  'flex-start',
+-  'center',
+-  'flex-end',
+-  'space-between',
+-  'space-around',
+-  'space-evenly'
+-);
+-
+-export type Justify = typeof justify[number];
+-
+-const alignItems = tuple(
+-  'flex-start',
+-  'center',
+-  'flex-end',
+-  'stretch',
+-  'baseline'
+-);
+-
+-export type AlignItems = typeof alignItems[number];
+-
+-const alignContent = tuple(
+-  'stretch',
+-  'center',
+-  'flex-start',
+-  'flex-end',
+-  'space-between',
+-  'space-around'
+-);
+-
+-export type AlignContent = typeof alignContent[number];
+-
+-const direction = tuple('row', 'row-reverse', 'column', 'column-reverse');
+-
+-export type Direction = typeof direction[number];
+-
+-const wrap = tuple('nowrap', 'wrap', 'wrap-reverse');
+-
+-export type Wrap = typeof wrap[number];\n- packages/nextui/src/components/image/image-browser.tsx (modified, 6 changes)\n  Patch: @@ -128,7 +128,7 @@ const ImageBrowser = React.forwardRef<
+     }, [url, showFullLink, title, colors, anchorProps]);
+ 
+     return (
+-      <div className={`bowser ${className}`} ref={ref} {...props}>
++      <div className={`browser ${className}`} ref={ref} {...props}>
+         <header>
+           <div className="traffic">
+             <span className="close" />
+@@ -139,7 +139,7 @@ const ImageBrowser = React.forwardRef<
+         </header>
+         {children}
+         <style jsx>{`
+-          .bowser {
++          .browser {
+             background-color: transparent;
+             box-shadow: ${theme.expressiveness.shadowLarge};
+             width: max-content;
+@@ -149,7 +149,7 @@ const ImageBrowser = React.forwardRef<
+             overflow: hidden;
+           }
+ 
+-          .bowser :global(.image) {
++          .browser :global(.image) {
+             border-top-left-radius: 0;
+             border-top-right-radius: 0;
+           }\n- packages/nextui/src/components/index.ts (modified, 1 changes)\n  Patch: @@ -16,3 +16,4 @@ export { default as Row } from './row';
+ export { default as Col } from './col';
+ export { default as Divider } from './divider';
+ export { default as Code } from './code';
++export { default as Container } from './container';\n- packages/nextui/src/hooks/index.ts (added, 4 changes)\n  Patch: @@ -0,0 +1,4 @@
++export { default as useCurrentState } from './use-current-state';
++export { default as useRealShape } from './use-real-shape';
++export { default as resize } from './use-resize';
++export { default as useTheme } from './use-theme';\n- packages/nextui/src/index.ts (modified, 2 changes)\n  Patch: @@ -1 +1,3 @@
+ export * from './components/index';
++export * from './theme/index';
++export * from './hooks/index';\n- packages/nextui/src/theme/common.ts (added, 64 changes)\n  Patch: @@ -0,0 +1,64 @@
++export interface NextUIThemesCommon {
++  white: string;
++  selection: string;
++  primary: string;
++  secondary: string;
++  success: string;
++  gradient: string;
++  successLighter: string;
++  successLight: string;
++  successDark: string;
++  error: string;
++  errorLighter: string;
++  errorLight: string;
++  errorDark: string;
++  warning: string;
++  warningLighter: string;
++  warningLight: string;
++  warningDark: string;
++  cyan: string;
++  cyanLighter: string;
++  cyanLight: string;
++  cyanDark: string;
++  violet: string;
++  violetLighter: string;
++  violetLight: string;
++  violetDark: string;
++  link: string;
++  purple: string;
++  magenta: string;
++  alert: string;
++}
++
++export default {
++  white: '#fff',
++  selection: '#5AC8FA',
++  primary: '#0070f3',
++  secondary: '#7928ca',
++  error: '#f21361',
++  errorLight: '#e85186',
++  errorLighter: '#f59aba',
++  errorDark: '#e3001e',
++  success: '#17c964',
++  gradient:
++    'linear-gradient(45deg, #ffa95f 5%, #f99c4a 15%, #f47838 30%, #e75157 45%, #d92d7a 70%, #cc2a92 80%, #c32e92 95%)',
++  successLight: '#6ec293',
++  successLighter: '#9bc7ae',
++  successDark: '#009c22',
++  warning: '#f5a623',
++  warningLight: '#f7b955',
++  warningLighter: '#ffefcf',
++  warningDark: '#ab570a',
++  cyan: '#50e3c2',
++  cyanLighter: '#aaffec',
++  cyanLight: '#79ffe1',
++  cyanDark: '#29bc9b',
++  violet: '#7928ca',
++  violetLighter: '#e3d7fc',
++  violetLight: '#8a63d2',
++  violetDark: '#4c2889',
++  purple: '#f81ce5',
++  alert: '#ff0080',
++  magenta: '#eb367f',
++  link: '#0070f3',
++};\n

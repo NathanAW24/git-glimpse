@@ -1,0 +1,287 @@
+Pull Request Number: 1012
+Title: Feat/select
+Base Branch: v1
+Head Branch: feat/select
+Author: amauryfischer
+URL: https://github.com/nextui-org/nextui/pull/1012
+State: CLOSED
+Created At: 2023-01-14T22:03:32Z
+Merged At: None
+Participants: amauryfischer, ShellarFX, hmbrg, renanmachad, jrgarciadev
+
+Description:
+📝 Description
+
+Add a Select Component to next-ui
+
+💣 Is this a breaking change (Yes/No):
+It's not a breaking change
+📝 Additional Information
+This is just a proposal for now there is a lot of remaining work to get something usable.
+
+Commits:
+- :sparkles: [Feature] Select : first iteration of working select using react-stately
+
+*\n- :sparkles: [Feature] Select : Example of select usage and working primite with react-stately\n- :bug: [Fix debugger] remove useless debugger\n- :sparkles: [Feature] remove react-aria and react-stately dependencies\n
+
+Labels:
+
+
+Comments:
+- vercel: @amauryfischer is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22eecf59f3cd7c92674cd4127f52af0c43729b8709%22%7D%2C%22id%22%3A%22QmaBwtshRKQc3FJRrDjqsaVhzQebpiksGxRUhmmuPPwcVW%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1012%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #WKm6d5wCt5HXuW29m6CiOItzxpafLJ1nOWvWM1uB/z0=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiIifSwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay8yNEZEM3g0NXpKVkJ2aG1CQ3VIcWJMODV1ZFBSIiwicHJldmlld1VybCI6IiIsIm5leHRDb21taXRTdGF0dXMiOiJGQUlMRUQifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-storybook/24FD3x45zJVBvhmBCuHqbL85udPR)) |  |  | Jan 16, 2023 at 7:57AM (UTC) |
+
+\n- amauryfischer: @jrgarciadev this is a first approach to get a Select on next-ui, as this is my first contribution, i supposed there is a lot to change before the PR will be accepted, i'm open to any comment ! :) feel free to review\n- ShellarFX: @amauryfischer i think it might be better to use `react-aria` instead of `react-stately` since NextUI migrates to `react-aria`
+https://github.com/orgs/nextui-org/projects/2/views/2?pane=issue&itemId=13762964
+\n- hmbrg: > @amauryfischer i think it might be better to use `react-aria` instead of `react-stately` since NextUI migrates to `react-aria` https://github.com/orgs/nextui-org/projects/2/views/2?pane=issue&itemId=13762964
+
+@ShellarFX  `react-stately` is part of `react-aria`: https://react-spectrum.adobe.com/react-stately/index.html\n- ShellarFX: > > @amauryfischer i think it might be better to use `react-aria` instead of `react-stately` since NextUI migrates to `react-aria` https://github.com/orgs/nextui-org/projects/2/views/2?pane=issue&itemId=13762964
+> 
+> @ShellarFX `react-stately` is part of `react-aria`: https://react-spectrum.adobe.com/react-stately/index.html
+
+ohh okay, my bad, I think it’s okay then\n- renanmachad: @jrgarciadev  What is make to add this feature to library? How i can help this PR to main version
+?\n- jrgarciadev: Hey @amauryfischer I appreciate the effort you put to send this PR, however as you might know we migrated from Stitches to TailwindCSS, here's the in-progress Select based on top of TailwindCSS and the new structure https://github.com/nextui-org/nextui/pull/1313, Thanks!\n- amauryfischer: @jrgarciadev No problem ! i love the new nextuiv2 and i'm glad to see that you worked on Select Feature :)\n
+
+Files Changed:
+- packages/react/package.json (modified, 6 changes)\n  Patch: @@ -63,6 +63,7 @@
+     "@react-aria/interactions": "3.12.0",
+     "@react-aria/label": "3.4.2",
+     "@react-aria/link": "3.3.4",
++    "@react-aria/listbox": "^3.7.2",
+     "@react-aria/menu": "3.6.2",
+     "@react-aria/overlays": "3.11.0",
+     "@react-aria/radio": "3.4.0",
+@@ -76,6 +77,7 @@
+     "@react-stately/menu": "3.4.2",
+     "@react-stately/overlays": "3.4.2",
+     "@react-stately/radio": "3.6.0",
++    "@react-stately/select": "^3.3.4",
+     "@react-stately/table": "3.5.0",
+     "@react-stately/toggle": "3.4.2",
+     "@react-stately/tree": "3.3.4",
+@@ -84,8 +86,8 @@
+     "@react-types/grid": "3.1.4",
+     "@react-types/menu": "3.7.2",
+     "@react-types/overlays": "3.6.4",
+-    "@stitches/react": "1.2.8",
+-    "@react-types/shared": "3.15.0"
++    "@react-types/shared": "3.15.0",
++    "@stitches/react": "1.2.8"
+   },
+   "peerDependencies": {
+     "react": ">=16.8.0",\n- packages/react/src/select/index.ts (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++import Select from "./select";
++import SelectOption from "./select-option";
++
++Select.Option = SelectOption;
++
++export default Select;\n- packages/react/src/select/select-context.tsx (added, 10 changes)\n  Patch: @@ -0,0 +1,10 @@
++import {SelectState} from "react-stately";
++
++import {createContext} from "../utils/context";
++const [SelectProvider, useSelectContext] = createContext<SelectState<object>>({
++  name: "SelectContext",
++  errorMessage:
++    "useSelectContext: `context` is undefined. Seems you forgot to wrap select components in `<Select />`",
++});
++
++export {SelectProvider, useSelectContext};\n- packages/react/src/select/select-menu.tsx (added, 34 changes)\n  Patch: @@ -0,0 +1,34 @@
++import React, {useRef} from "react";
++import {useListBox} from "react-aria";
++
++import {usePopoverContext} from "../popover/popover-context";
++
++import {StyledSelectMenu, StyledSelectOption} from "./select.styles";
++
++const SelectMenu = (props: any) => {
++  let ref = useRef();
++  const {listBoxRef = ref, state} = props;
++  let {listBoxProps} = useListBox(props, state, listBoxRef);
++  const popoverContext = usePopoverContext();
++
++  return (
++    <StyledSelectMenu {...listBoxProps} ref={listBoxRef}>
++      {[...state.collection].map((item) => {
++        return (
++          <StyledSelectOption
++            key={item.key}
++            isSelected={state.selectionManager.isSelected(item.key)}
++            onClick={() => {
++              state.selectionManager.select(item.key);
++              popoverContext.onClose();
++            }}
++          >
++            {item.rendered}
++          </StyledSelectOption>
++        );
++      })}
++    </StyledSelectMenu>
++  );
++};
++
++export default SelectMenu;\n- packages/react/src/select/select-option.tsx (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++import React from "react";
++import {Item} from "react-stately";
++
++const SelectOption = Item;
++
++export default SelectOption;\n- packages/react/src/select/select.stories.tsx (added, 45 changes)\n  Patch: @@ -0,0 +1,45 @@
++import React from "react";
++
++import User from "../user";
++
++import Select from "./index";
++
++export const Default = () => (
++  <Select>
++    <Select.Option textValue="banane">Banane</Select.Option>
++    <Select.Option>Orange</Select.Option>
++    <Select.Option>Pomme</Select.Option>
++  </Select>
++);
++
++export const Bordered = () => (
++  <Select inputProps={{bordered: true}}>
++    <Select.Option>Banane</Select.Option>
++    <Select.Option>Orange</Select.Option>
++    <Select.Option>Pomme</Select.Option>
++  </Select>
++);
++export const Exotic = () => (
++  <Select inputProps={{bordered: true}}>
++    <Select.Option textValue="Amaury Fischer">
++      <User
++        name="Amaury Fischer"
++        src="https://media.licdn.com/dms/image/C4E03AQE-DLIIEdQhCA/profile-displayphoto-shrink_100_100/0/1649493319975?e=1678924800&v=beta&t=Jff2k7A7m3cO2wWGiFCw1CG-MC3GyrQJXRETb23nWo4"
++      >
++        <User.Link href="https://nextui.org/">@amaufischer</User.Link>
++      </User>
++    </Select.Option>
++    <Select.Option textValue="Linh-dan Tran">
++      <User
++        name="Linh-dan Tran"
++        src="https://media.licdn.com/dms/image/C5603AQFV-BEU-qlG_A/profile-displayphoto-shrink_100_100/0/1578136442382?e=1678924800&v=beta&t=5uj_qf7__BxWg96KZ2muQUonZBtgQTFlSdVqISKkY0Y"
++      >
++        <User.Link href="https://nextui.org/">@linhdantran</User.Link>
++      </User>
++    </Select.Option>
++  </Select>
++);
++export default {
++  title: "Other/Select",
++  component: Select,
++} as any;\n- packages/react/src/select/select.styles.ts (added, 60 changes)\n  Patch: @@ -0,0 +1,60 @@
++import {Item} from "react-stately";
++
++import {styled, VariantProps} from "../theme/stitches.config";
++
++export const StyledSelectMenu = styled("ul", {
++  $$dropdownItemHeight: "$space$13",
++  $$dropdownMenuPadding: "$space$4",
++  $$dropdownMenuWidth: "250px",
++  $$dropdownMenuMinWidth: "250px",
++  listStyle: "none",
++  position: "relative",
++  maxWidth: "$$dropdownMenuWidth",
++  minWidth: "$$dropdownMenuMinWidth",
++  width: "100%",
++  p: "$$dropdownMenuPadding",
++  m: 0,
++  outline: "none",
++});
++
++export const StyledSelectOption = styled(
++  "li",
++  {
++    $$dropdownItemPressedScale: 0.9,
++    transition: "all 100ms ease-out",
++    display: "flex",
++    alignItems: "center",
++    justifyContent: "space-between",
++    padding: "$space$4",
++    cursor: "pointer",
++    borderRadius: "$rounded",
++    $$dropdownItemBorderRadius: "$radii$sm",
++    br: "$$dropdownItemBorderRadius",
++    "&:hover": {
++      backgroundColor: "$gray100",
++    },
++    "&:active": {
++      transform: "scale($$dropdownItemPressedScale)",
++    },
++  },
++  {
++    variants: {
++      isSelected: {
++        true: {
++          backgroundColor: "$primary100",
++        },
++      },
++      isFocused: {
++        true: {
++          backgroundColor: "$gray100",
++        },
++      },
++      isDisabled: {
++        true: {
++          cursor: "not-allowed",
++          opacity: 0.5,
++        },
++      },
++    },
++  },
++);\n- packages/react/src/select/select.tsx (added, 46 changes)\n  Patch: @@ -0,0 +1,46 @@
++import React from "react";
++import {useSelectState, SelectProps as StatelySelectProps} from "@react-stately/select";
++
++import DropdownIcon from "../dropdown/dropdown-icon";
++import Input from "../input";
++import {InputProps} from "../input/input";
++import Popover from "../popover";
++
++import {SelectProvider} from "./select-context";
++import SelectMenu from "./select-menu";
++import SelectOption from "./select-option";
++interface SelectProps {
++  inputProps?: Partial<InputProps>;
++}
++
++// Select
++function Select(props: StatelySelectProps<object> & SelectProps) {
++  const {inputProps} = props;
++  let state = useSelectState(props);
++  let ref = React.useRef<any>();
++
++  return (
++    <SelectProvider value={state}>
++      <Popover>
++        <Popover.Trigger>
++          <Input
++            {...inputProps}
++            contentRight={<DropdownIcon fill="currentColor" size={14} />}
++            initialValue="Select a value"
++            label="salut"
++            placeholder="select"
++            value={state.selectedItem?.textValue || "Séléctionner"}
++          />
++        </Popover.Trigger>
++        <Popover.Content>
++          <SelectMenu state={state} />
++        </Popover.Content>
++      </Popover>
++    </SelectProvider>
++  );
++}
++
++type SelectComponent = typeof Select & {
++  Option: typeof SelectOption;
++};
++export default Select as SelectComponent;\n

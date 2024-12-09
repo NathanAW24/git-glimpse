@@ -1,0 +1,145 @@
+Pull Request Number: 114
+Title: fix(input): focus styles removed
+Base Branch: main
+Head Branch: fix_113/input-double-border
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/114
+State: MERGED
+Created At: 2021-11-06T18:54:15Z
+Merged At: 2021-11-06T18:58:47Z
+Participants: jrgarciadev, codecov-commenter
+
+Description:
+[nextui]/[input]
+Closing:
+#113
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Focus styles removed
+
+
+
+Screenshots - Animations
+
+Commits:
+- fix(inpu): focus styles removed\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/114?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#114](https://codecov.io/gh/nextui-org/nextui/pull/114?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (0c5009b) into [main](https://codecov.io/gh/nextui-org/nextui/commit/20fa8f54cb3482e54a6645c35815be00859a8f48?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (20fa8f5) will **decrease** coverage by `0.01%`.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/114/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/114?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@            Coverage Diff             @@
+##             main     #114      +/-   ##
+==========================================
+- Coverage   84.06%   84.05%   -0.02%     
+==========================================
+  Files         123      123              
+  Lines        2278     2276       -2     
+  Branches      776      775       -1     
+==========================================
+- Hits         1915     1913       -2     
+  Misses        351      351              
+  Partials       12       12              
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/114?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/nextui/src/input/index.ts](https://codecov.io/gh/nextui-org/nextui/pull/114/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvbmV4dHVpL3NyYy9pbnB1dC9pbmRleC50cw==) | `100.00% <ø> (ø)` | |
+| [packages/nextui/src/input/input.tsx](https://codecov.io/gh/nextui-org/nextui/pull/114/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvbmV4dHVpL3NyYy9pbnB1dC9pbnB1dC50c3g=) | `93.26% <ø> (-0.13%)` | :arrow_down: |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/114?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/114?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [20fa8f5...0c5009b](https://codecov.io/gh/nextui-org/nextui/pull/114?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- packages/nextui/src/index.ts (modified, 1 changes)\n  Patch: @@ -82,6 +82,7 @@ export { default as Snippet } from './snippet';
+ export { default as Tooltip } from './tooltip';
+ 
+ export { default as Input } from './input';
++export * from './input';
+ 
+ export { default as Textarea } from './textarea';
+ \n- packages/nextui/src/input/index.ts (modified, 3 changes)\n  Patch: @@ -1,7 +1,10 @@
++import { FormElement } from './input-props';
+ import Input from './input';
+ import Textarea from '../textarea';
+ import InputPassword from './input-password';
+ 
++export type { FormElement };
++
+ Input.Textarea = Textarea;
+ Input.Password = InputPassword;
+ \n- packages/nextui/src/input/input.tsx (modified, 11 changes)\n  Patch: @@ -20,7 +20,6 @@ import { getId } from '../utils/collections';
+ import { Props, FormElement, defaultProps } from './input-props';
+ import { getNormalRadius, getNormalWeight } from '../utils/dimensions';
+ import clsx from '../utils/clsx';
+-import { getFocusStyles } from '../utils/styles';
+ import { isEmpty } from '../utils/assertion';
+ import useWarning from '../use-warning';
+ import { __DEV__ } from '../utils/assertion';
+@@ -95,9 +94,6 @@ const Input = React.forwardRef<FormElement, InputProps>(
+ 
+     const isControlledComponent = useMemo(() => value !== undefined, [value]);
+ 
+-    const { className: focusClassName, styles: focusStyles } =
+-      getFocusStyles(theme);
+-
+     const inputLabel = useMemo(
+       () => label || labelPlaceholder,
+       [label, labelPlaceholder]
+@@ -258,7 +254,6 @@ const Input = React.forwardRef<FormElement, InputProps>(
+           />
+         )}
+         <div
+-          tabIndex={disabled ? -1 : 0}
+           className={clsx(
+             'container',
+             {
+@@ -267,8 +262,7 @@ const Input = React.forwardRef<FormElement, InputProps>(
+               'read-only': readOnly,
+               hover
+             },
+-            className,
+-            focusClassName
++            className
+           )}
+         >
+           <ComponentWrapper
+@@ -501,7 +495,9 @@ const Input = React.forwardRef<FormElement, InputProps>(
+             border: none;
+             color: ${color};
+             border-radius: 0;
++            outline: none;
+             width: 100%;
++            height: 100%;
+             min-width: 0;
+             -webkit-appearance: none;
+           }
+@@ -536,7 +532,6 @@ const Input = React.forwardRef<FormElement, InputProps>(
+             -webkit-text-fill-color: ${color} !important;
+           }
+         `}</style>
+-        {focusStyles}
+       </div>
+     );
+   }\n

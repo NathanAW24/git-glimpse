@@ -1,0 +1,273 @@
+Pull Request Number: 740
+Title: fix(react-dropdown): supports popover content custom css, safari anim…
+Base Branch: next
+Head Branch: fix_730/dropdown-position-and-safari-animation
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/740
+State: MERGED
+Created At: 2022-09-06T02:16:51Z
+Merged At: 2022-09-06T02:17:24Z
+Participants: jrgarciadev
+
+Description:
+…ation fixed
+
+Closes #730
+📝 Description
+The navbar dropdown loses the position on scroll
+⛳️ Current behavior (updates)
+The navbar dropdown loses the position on scroll
+🚀 New behavior
+
+Dropdown is now able to use the Popover.Content CSS prop to set the desired position
+Safari dropdown animation fixed
+
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+Dropdown new prop:
+containerCss: Override the dropdown mmenu container (Popover.Content) CSS style.
+
+Commits:
+- fix(react-dropdown): supports popover content custom css, safari animation fixed\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/GYEkpPt65vee3nXXntaoLsBfikpB)) | [Visit Preview](https://nextui-docs-git-fix730-dropdown-position-and-4276ec-nextui-org.vercel.app) | Sep 6, 2022 at 2:16AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/DHzFi4woCV87HzQe8Wd7wB2txdd4)) | [Visit Preview](https://nextui-storybook-git-fix730-dropdown-position-f8d545-nextui-org.vercel.app) | Sep 6, 2022 at 2:16AM (UTC) |
+
+
+\n
+
+Files Changed:
+- apps/docs/content/docs/components/dropdown.mdx (modified, 1 changes)\n  Patch: @@ -207,6 +207,7 @@ import { Dropdown } from "@nextui-org/react";
+ | **autoFocus**              | `boolean` [FocusStrategyType](#focus-strategy-type)                                                          | Where the focus should be set.                                                                          | `false`   |
+ | **shouldFocusWrap**        | `boolean`                                                                                                    | Whether keyboard navigation is circular.                                                                | `false`   |
+ | **css**                    | `Stitches.CSS`                                                                                               | Override Default CSS style.                                                                             | -         |
++| **containerCss** `new`     | `Stitches.CSS`                                                                                               | Override the dropdown mmenu container (`Popover.Content`) CSS style.                                    | -         |
+ | **as**                     | `keyof JSX.IntrinsicElements`                                                                                | Changes which tag component outputs.                                                                    | `ul`      |
+ 
+ <Spacer y={1} />\n- apps/docs/src/pages/examples/navbar/with-dropdown-menu.tsx (modified, 4 changes)\n  Patch: @@ -46,6 +46,10 @@ export default function NavbarWithDropdownMenuExample() {
+             </Navbar.Item>
+             <Dropdown.Menu
+               aria-label="ACME features"
++              containerCss={{
++                position: "fixed",
++                top: "64px",
++              }}
+               css={{
+                 $$dropdownMenuWidth: "340px",
+                 $$dropdownItemHeight: "70px",\n- packages/react/src/dropdown/dropdown-menu.tsx (modified, 67 changes)\n  Patch: @@ -7,6 +7,7 @@ import {useMenu} from "@react-aria/menu";
+ import {useTreeState} from "@react-stately/tree";
+ import {mergeProps} from "@react-aria/utils";
+ 
++import Popover from "../popover";
+ import {useDOMRef, useSyncRef} from "../utils/dom";
+ import {CSS} from "../theme/stitches.config";
+ import clsx from "../utils/clsx";
+@@ -34,6 +35,7 @@ interface Props<T> extends AriaMenuProps<T>, DOMProps, AriaLabelingProps {
+    * @default 'default'
+    */
+   textColor?: SimpleColors;
++  containerCss?: CSS;
+ }
+ 
+ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props<object>>;
+@@ -48,6 +50,7 @@ const DropdownMenu = React.forwardRef(
+       color = "default",
+       textColor = "default",
+       variant = "flat",
++      containerCss,
+       ...otherProps
+     } = props;
+ 
+@@ -63,17 +66,30 @@ const DropdownMenu = React.forwardRef(
+     useSyncRef(context, domRef);
+ 
+     return (
+-      <StyledDropdownMenu
+-        ref={domRef}
+-        as={as}
+-        className={clsx("nextui-dropdown-menu", props.className)}
+-        css={{...(css as any)}}
+-        {...menuProps}
+-      >
+-        {[...state.collection].map((item) => {
+-          if (item.type === "section") {
+-            return (
+-              <DropdownSection
++      <Popover.Content css={containerCss}>
++        <StyledDropdownMenu
++          ref={domRef}
++          as={as}
++          className={clsx("nextui-dropdown-menu", props.className)}
++          css={{...(css as any)}}
++          {...menuProps}
++        >
++          {[...state.collection].map((item) => {
++            if (item.type === "section") {
++              return (
++                <DropdownSection
++                  key={item.key}
++                  color={color}
++                  item={item}
++                  state={state}
++                  textColor={textColor}
++                  variant={variant}
++                  onAction={completeProps.onAction}
++                />
++              );
++            }
++            let dropdownItem = (
++              <DropdownItem
+                 key={item.key}
+                 color={color}
+                 item={item}
+@@ -83,26 +99,15 @@ const DropdownMenu = React.forwardRef(
+                 onAction={completeProps.onAction}
+               />
+             );
+-          }
+-          let dropdownItem = (
+-            <DropdownItem
+-              key={item.key}
+-              color={color}
+-              item={item}
+-              state={state}
+-              textColor={textColor}
+-              variant={variant}
+-              onAction={completeProps.onAction}
+-            />
+-          );
+-
+-          if (item.wrapper) {
+-            dropdownItem = item.wrapper(dropdownItem);
+-          }
+-
+-          return dropdownItem;
+-        })}
+-      </StyledDropdownMenu>
++
++            if (item.wrapper) {
++              dropdownItem = item.wrapper(dropdownItem);
++            }
++
++            return dropdownItem;
++          })}
++        </StyledDropdownMenu>
++      </Popover.Content>
+     );
+   },
+ );\n- packages/react/src/dropdown/dropdown.tsx (modified, 2 changes)\n  Patch: @@ -41,7 +41,7 @@ const Dropdown = (props: DropdownProps) => {
+         onClose={context.state.close}
+       >
+         {menuTrigger}
+-        <Popover.Content>{menu}</Popover.Content>
++        {menu}
+       </Popover>
+     </DropdownProvider>
+   );\n- packages/react/src/popover/popover-content.tsx (modified, 10 changes)\n  Patch: @@ -51,6 +51,11 @@ const PopoverContent = React.forwardRef(
+ 
+     const transformOrigin = getTransformOrigin(placement);
+ 
++    const popoverCss = {
++      transformOrigin,
++      ...css,
++    };
++
+     // Hide content outside the modal from screen readers.
+     const {modalProps} = useModal({isDisabled: true});
+ 
+@@ -82,13 +87,10 @@ const PopoverContent = React.forwardRef(
+         ref={mergeRefs(overlayRef, ref)}
+         {...getPopoverProps(
+           mergeProps(overlayProps, modalProps, dialogProps, focusProps, completeProps),
++          popoverCss,
+         )}
+         as={as}
+         className={clsx("nextui-popover-content-container", className)}
+-        css={{
+-          transformOrigin,
+-          ...(css as any),
+-        }}
+         isFocusVisible={isFocusVisible}
+       >
+         <DismissButton onDismiss={onClose} />\n- packages/react/src/popover/popover.styles.ts (modified, 5 changes)\n  Patch: @@ -4,7 +4,7 @@ import {cssFocusVisible} from "../theme/shared-css";
+ export const appearanceIn = keyframes({
+   "0%": {
+     opacity: 0,
+-    transform: "scale(0.95)",
++    transform: "translateZ(0)  scale(0.95)",
+   },
+   "60%": {
+     opacity: 0.75,
+@@ -15,6 +15,7 @@ export const appearanceIn = keyframes({
+   },
+   "100%": {
+     opacity: 1,
++    transform: "translateZ(0) scale(1)",
+   },
+ });
+ 
+@@ -67,7 +68,7 @@ export const StyledPopoverContentContainer = styled(
+       animationName: appearanceIn,
+       animationTimingFunction: "ease-out",
+       animationDirection: "normal",
+-      animationDuration: "250ms",
++      animationDuration: "300ms",
+     },
+ 
+     "&.nextui-popover-content-leave": {\n- packages/react/src/popover/use-popover.ts (modified, 31 changes)\n  Patch: @@ -7,6 +7,7 @@ import {useOverlayPosition, useOverlayTrigger} from "@react-aria/overlays";
+ import {useOverlayTriggerState} from "@react-stately/overlays";
+ 
+ import {mergeRefs} from "../utils/refs";
++import {isObject} from "../utils/object";
+ 
+ import {PopoverPlacement, getAriaPlacement} from "./utils";
+ import {PopoverContentVariantsProps} from "./popover.styles";
+@@ -152,11 +153,37 @@ export function usePopover(props: UsePopoverProps = {}) {
+   );
+ 
+   const getPopoverProps = useCallback(
+-    (props = {}) => {
++    (props = {}, css = {}) => {
++      const positionKeys = positionProps.style ? Object.keys(positionProps.style) : [];
++      let positionCss = {};
++
++      positionKeys.forEach((key) => {
++        const value = isObject(css) && css[key];
++
++        if (value) {
++          positionCss = {
++            ...positionCss,
++            [key]: value,
++          };
++        }
++      });
++
++      const realPositionProps =
++        Object.keys(positionCss).length > 0
++          ? {
++              ...positionProps,
++              style: {
++                ...positionProps.style,
++                ...positionCss,
++              },
++            }
++          : positionProps;
++
+       return {
++        css,
+         ...props,
+         ...overlayProps,
+-        ...positionProps,
++        ...realPositionProps,
+         "data-state": getState,
+         "data-placement": placement,
+       };\n

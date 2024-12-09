@@ -1,0 +1,44 @@
+Pull Request Number: 502
+Title: Prevent anchor links from hiding behind navbar
+Base Branch: main
+Head Branch: fix_website
+Author: cyanxiao
+URL: https://github.com/nextui-org/nextui/pull/502
+State: MERGED
+Created At: 2022-05-28T16:48:30Z
+Merged At: 2022-05-29T22:58:49Z
+Participants: cyanxiao, jrgarciadev
+
+Description:
+📝 Description
+When clicking any section title (rendered by LinkedHeading()) in doc, the page jump to where a part of the section is hiding behind the navbar.
+This is a common problem caused by sticky navbar, which can be solved by CSS scroll snap module.
+⛳️ Current behavior (updates)
+
+Note that Size section actually hides behind navbar.
+🚀 New behavior
+
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix: scroll position\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/src/styles/globalStyles.ts (modified, 3 changes)\n  Patch: @@ -1,6 +1,9 @@
+ import { globalCss } from '@nextui-org/react';
+ 
+ export default globalCss({
++  html: {
++    scrollPaddingTop: '80px'
++  },
+   // css baseline overrides
+   blockquote: {
+     mb: '$14 !important',\n

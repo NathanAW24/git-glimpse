@@ -1,0 +1,218 @@
+Pull Request Number: 1145
+Title: feat: added locale prop to NextUIProvider
+Base Branch: feat/v2
+Head Branch: feat/added-locale-prop-to-NextUIProvider
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1145
+State: MERGED
+Created At: 2023-06-05T20:56:21Z
+Merged At: 2023-06-20T23:08:49Z
+Participants: jguddas, jrgarciadev
+
+Description:
+📝 Description
+
+When using server side rendering, the application should be wrapped in an I18nProvider with an explicit locale prop, rather than relying on automatic locale selection. This ensures that the locale of the content rendered on the server matches the locale expected by the browser.
+
+https://react-spectrum.adobe.com/react-aria/ssr.html#locale-selection
+⛳️ Current behavior (updates)
+A11y currently does not work for pages that are not lang="en".
+🚀 New behavior
+People are now forced to provide the locale to the theme provider, who internally uses the I18nProvider from @react-aria/i18n
+💣 Is this a breaking change (Yes/No):
+⚠️  YES! This is a breaking change for developers, users are not affected.
+📝 Additional Information
+Stuff that's still in English:
+
+Modal close button aria-label
+Kbd abbr titles
+
+Commits:
+- feat: added locale prop to NextUIProvider\n- fix: added missing locale prop in storybook config\n- chore: resolved PR comments\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22ef2253c764ca4948cc6f5e69ebdbbcd713ee2e63%22%7D%2C%22id%22%3A%22QmZAVv4uJXQ3AQULTJWZmkHnH7evGZ5BkgY6yhqib1BwVr%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1145%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jguddas: #### Example for the modal `aria-label`
+
+https://github.com/jguddas/nextui/commit/f5e17181e56c998095bb1c879a46f42ecd2eb76f#diff-e532952bd45c32acb074f9fe7720015070f7ba4de8ef0fa3a5fce5b0e4a7c3de\n- jguddas: We could also add a dropdown to the toolbar for people to select a `lang` and `dir`.
+
+https://github.com/nextui-org/nextui/assets/25524993/d4d8d30b-281b-4b1c-b234-7bbc3fe6eb45
+
+\n
+
+Files Changed:
+- packages/core/system/package.json (modified, 5 changes)\n  Patch: @@ -50,7 +50,8 @@
+     ]
+   },
+   "dependencies": {
+-    "@react-aria/ssr": "^3.6.0",
+-    "@react-aria/overlays": "^3.14.1"
++    "@react-aria/i18n": "^3.7.2",
++    "@react-aria/overlays": "^3.14.1",
++    "@react-aria/ssr": "^3.6.0"
+   }
+ }\n- packages/core/system/src/provider.tsx (modified, 8 changes)\n  Patch: @@ -1,14 +1,18 @@
+ import {SSRProvider} from "@react-aria/ssr";
++import {I18nProvider, I18nProviderProps} from "@react-aria/i18n";
+ import {OverlayProvider} from "@react-aria/overlays";
+ 
+ export interface NextUIProviderProps {
+   children: React.ReactNode;
++  locale?: I18nProviderProps["locale"];
+ }
+ 
+-export const NextUIProvider: React.FC<NextUIProviderProps> = ({children}) => {
++export const NextUIProvider: React.FC<NextUIProviderProps> = ({children, locale = "en"}) => {
+   return (
+     <SSRProvider>
+-      <OverlayProvider>{children}</OverlayProvider>
++      <I18nProvider locale={locale}>
++        <OverlayProvider>{children}</OverlayProvider>
++      </I18nProvider>
+     </SSRProvider>
+   );
+ };\n- pnpm-lock.yaml (modified, 104 changes)\n  Patch: @@ -2000,6 +2000,9 @@ importers:
+ 
+   packages/core/system:
+     dependencies:
++      '@react-aria/i18n':
++        specifier: ^3.7.2
++        version: 3.7.2(react@18.2.0)
+       '@react-aria/overlays':
+         specifier: ^3.14.1
+         version: 3.14.1(react-dom@18.2.0)(react@18.2.0)
+@@ -2383,6 +2386,104 @@ importers:
+         specifier: ^18.2.0
+         version: 18.2.0
+ 
++  packages/react/lib/avatar: {}
++
++  packages/react/lib/backdrop: {}
++
++  packages/react/lib/badge: {}
++
++  packages/react/lib/button: {}
++
++  packages/react/lib/card: {}
++
++  packages/react/lib/checkbox: {}
++
++  packages/react/lib/code: {}
++
++  packages/react/lib/col: {}
++
++  packages/react/lib/collapse: {}
++
++  packages/react/lib/container: {}
++
++  packages/react/lib/css-baseline: {}
++
++  packages/react/lib/divider: {}
++
++  packages/react/lib/dropdown: {}
++
++  packages/react/lib/grid: {}
++
++  packages/react/lib/image: {}
++
++  packages/react/lib/input: {}
++
++  packages/react/lib/link: {}
++
++  packages/react/lib/loading: {}
++
++  packages/react/lib/modal: {}
++
++  packages/react/lib/navbar: {}
++
++  packages/react/lib/pagination: {}
++
++  packages/react/lib/popover: {}
++
++  packages/react/lib/progress: {}
++
++  packages/react/lib/radio: {}
++
++  packages/react/lib/row: {}
++
++  packages/react/lib/snippet: {}
++
++  packages/react/lib/spacer: {}
++
++  packages/react/lib/switch: {}
++
++  packages/react/lib/table: {}
++
++  packages/react/lib/text: {}
++
++  packages/react/lib/textarea: {}
++
++  packages/react/lib/tooltip: {}
++
++  packages/react/lib/use-body-scroll: {}
++
++  packages/react/lib/use-click-anywhere: {}
++
++  packages/react/lib/use-click-away: {}
++
++  packages/react/lib/use-clipboard: {}
++
++  packages/react/lib/use-current-state: {}
++
++  packages/react/lib/use-drip: {}
++
++  packages/react/lib/use-input: {}
++
++  packages/react/lib/use-intersection-observer: {}
++
++  packages/react/lib/use-keyboard: {}
++
++  packages/react/lib/use-portal: {}
++
++  packages/react/lib/use-real-shape: {}
++
++  packages/react/lib/use-resize: {}
++
++  packages/react/lib/use-scroll-position: {}
++
++  packages/react/lib/use-ssr: {}
++
++  packages/react/lib/use-theme: {}
++
++  packages/react/lib/user: {}
++
++  packages/react/lib/utils: {}
++
+   packages/storybook:
+     dependencies:
+       '@nextui-org/react':
+@@ -11472,6 +11573,7 @@ packages:
+ 
+   /bindings@1.5.0:
+     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
++    requiresBuild: true
+     dependencies:
+       file-uri-to-path: 1.0.0
+     dev: true
+@@ -15069,6 +15171,7 @@ packages:
+ 
+   /file-uri-to-path@1.0.0:
+     resolution: {integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==}
++    requiresBuild: true
+     dev: true
+     optional: true
+ 
+@@ -18964,6 +19067,7 @@ packages:
+ 
+   /nan@2.17.0:
+     resolution: {integrity: sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==}
++    requiresBuild: true
+     dev: true
+     optional: true
+ \n

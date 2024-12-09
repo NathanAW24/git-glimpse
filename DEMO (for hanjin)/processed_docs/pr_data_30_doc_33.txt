@@ -1,0 +1,230 @@
+Pull Request Number: 225
+Title: Fix - Make the titles of the card components under "Primary Action" r…
+Base Branch: staging
+Head Branch: fix_217/responsive-title-card-component
+Author: ReangeloJ
+URL: https://github.com/nextui-org/nextui/pull/225
+State: MERGED
+Created At: 2022-02-03T12:14:04Z
+Merged At: 2022-02-08T18:34:25Z
+Participants: ReangeloJ, jrgarciadev
+
+Description:
+Card component examples in docs.
+Fixes: #217
+Types of changes
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+I made changes to the example Card components on the website.
+The titles of the cards under the "Primary Action" section were not responsive on moible. I added flex-wrap to break it on a new line when viewing on mobile.
+The cards under the section "With Footer" and "With Divider" were also not responsive on mobile. I made the width responsive so that it scales with the screen size.
+Screenshots - Animations
+Before:
+
+After:
+
+Before:
+
+After:
+
+Before:
+
+After:
+
+Commits:
+- Fix - Make the titles of the card components under "Primary Action" responsive by using flex wrap. Make the width of the cards under the "With Footer" and "With Divider" section responsive.\n- Fix - Change grid from width:100% to sm={12} md={5}\n
+
+Labels:
+👀 Status: In Review
+
+Comments:
+- jrgarciadev: Hey @ReangeloJ could you please solve the comments? I would like to deploy this,  thanks 🚀 \n- ReangeloJ: @jrgarciadev Yes I would but ive been searching through github but see the comments nowhere xD. Can you tag me in it?\n- jrgarciadev: Hey @ReangeloJ you are already tagged -> https://github.com/nextui-org/nextui/pull/225/files/f6ffec0eb8d333e1f1bbb746fe634a37996b78ff
+
+Go to the Conversation tab:
+![Screenshot 2022-02-06 at 11 28 02](https://user-images.githubusercontent.com/30373425/152685592-f1bc3a4d-479f-498e-b5d7-f128bdc084bb.png)
+
+\n- ReangeloJ: I added the fixes!
+ For some reason I do not see that you started a review...
+![image](https://user-images.githubusercontent.com/25207023/153038503-3e20afc9-45d4-454b-81d9-d6e6eddd531e.png)
+\n
+
+Files Changed:
+- apps/docs/content/docs/components/card.mdx (modified, 54 changes)\n  Patch: @@ -19,7 +19,7 @@ import { Card } from '@nextui-org/react';
+ <Playground
+   title="Default"
+   desc="NextUI will wrap your content in a `Card.Body` component."
+-  code={` 
++  code={`
+ <Card css={{ mw: "400px" }}>
+   <p>A basic card.</p>
+ </Card>`}
+@@ -28,7 +28,7 @@ import { Card } from '@nextui-org/react';
+ <Playground
+   title="Bordered"
+   desc="You can change the full style towards a bodered `Card` with the `bordered` property."
+-  code={` 
++  code={`
+ <Card bordered shadow={false} css={{ mw: "400px" }}>
+   <p>A bordered card.</p>
+ </Card>`}
+@@ -37,17 +37,17 @@ import { Card } from '@nextui-org/react';
+ <Playground
+   title="Hoverable"
+   desc="You can apply a fancy hover animation with the `hoverable` property."
+-  code={` 
++  code={`
+ <Card bordered shadow={false} hoverable css={{ mw: "400px" }}>
+   <p>A hoverable card.</p>
+ </Card>`}
+ />
+ 
+ <Playground
+   title="Clickable"
+-  desc="You can use the `clickable` property to allow users to interact with the entirety of its surface 
++  desc="You can use the `clickable` property to allow users to interact with the entirety of its surface
+   to trigger its main action, be it an expansion, a link to another screen or some other behavior."
+-  code={` 
++  code={`
+ <Card clickable bordered css={{ mw: "400px" }}>
+   <p>A clickable card.</p>
+ </Card>`}
+@@ -79,17 +79,17 @@ return (
+       </Grid>
+     ))}
+   </Grid.Container>
+-);    
++);
+ }`}
+ />
+ 
+ <Playground
+   title="With divider"
+   desc="You can use the `Divider` component to split the `Card` sections."
+-  code={` 
+-<Grid.Container gap={2}> 
+-  <Grid>  
+-    <Card css={{ w: "330px" }}>
++  code={`
++<Grid.Container gap={2}>
++  <Grid sm={12} md={5}>
++    <Card css={{ mw: "330px" }}>
+         <Card.Header>
+           <Text b>Card Title</Text>
+         </Card.Header>
+@@ -107,9 +107,9 @@ return (
+           </Row>
+         </Card.Footer>
+     </Card>
+-  </Grid>  
+-  <Grid>  
+-    <Card css={{ w: "330px" }}>
++  </Grid>
++  <Grid sm={12} md={5}>
++    <Card css={{ mw: "330px" }}>
+         <Card.Header>
+           <Text b>Card Title</Text>
+         </Card.Header>
+@@ -127,18 +127,18 @@ return (
+           </Row>
+         </Card.Footer>
+     </Card>
+-  </Grid> 
++  </Grid>
+ </Grid.Container>
+ `}
+ />
+ 
+ <Playground
+   title="With Footer"
+   desc="You can use the `Card.Footer` component to add actions, details or another information to the `Card`."
+-  code={` 
++  code={`
+ <Grid.Container gap={2}>
+-    <Grid>
+-      <Card css={{ w: "330px" }}>
++    <Grid sm={12} md={5}>
++      <Card css={{ mw: "330px" }}>
+         <Text h4>Next UI</Text>
+         <Text>🚀  Beautiful and modern React UI library.</Text>
+         <Card.Footer>
+@@ -147,9 +147,9 @@ return (
+           </Link>
+         </Card.Footer>
+       </Card>
+-    </Grid>  
+-    <Grid> 
+-        <Card css={{ w: "330px" }} color="primary">
++    </Grid>
++    <Grid sm={12} md={5}>
++        <Card css={{ mw: "330px" }} color="primary">
+           <Text h4 color="white">Next UI</Text>
+           <Text color="white">🚀  Beautiful and modern React UI library.</Text>
+           <Card.Footer>
+@@ -158,15 +158,15 @@ return (
+             </Link>
+           </Card.Footer>
+         </Card>
+-    </Grid>  
++    </Grid>
+ </Grid.Container>`}
+ />
+ 
+ <Playground
+   title="Cover Image"
+   desc="You can use the `cover` prop and `Card.Image` component to add a coverred image to the `Card.Body`. NextUI automatically
+   applies `object-fit: cover` to the inner image."
+-  code={` 
++  code={`
+ <Grid.Container gap={2} justify="center">
+     <Grid xs={12} sm={4}>
+       <Card cover>
+@@ -242,7 +242,7 @@ return (
+           alt="Card image background"
+         />
+       </Card>
+-    </Grid>  
++    </Grid>
+     <Grid xs={12} sm={5}>
+       <Card cover css={{ w: '100%' }}>
+         <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
+@@ -268,7 +268,7 @@ return (
+             alt="Card example background"
+           />
+         </Card.Body>
+-        <Card.Footer             
++        <Card.Footer
+           blur
+           css={{
+             position: 'absolute',
+@@ -295,7 +295,7 @@ return (
+           </Row>
+         </Card.Footer>
+       </Card>
+-    </Grid>    
++    </Grid>
+     <Grid xs={12} sm={7}>
+       <Card cover css={{ w: '100%', p: 0 }}>
+         <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
+@@ -431,14 +431,14 @@ return (
+           />
+         </Card.Body>
+         <Card.Footer justify="flex-start">
+-          <Row justify="space-between">
++          <Row wrap='wrap' justify="space-between">
+             <Text b>
+               {item.title}
+             </Text>
+             <Text css={{ color: "$accents4", fontWeight: "$semibold" }}>
+               {item.price}
+             </Text>
+-          </Row>        
++          </Row>
+         </Card.Footer>
+       </Card>
+     </Grid>\n

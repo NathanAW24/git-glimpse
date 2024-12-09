@@ -1,0 +1,324 @@
+Pull Request Number: 3768
+Title: fix(theme): fullWidth in input and select
+Base Branch: canary
+Head Branch: macci001/fix-full-width-variant
+Author: macci001
+URL: https://github.com/nextui-org/nextui/pull/3768
+State: MERGED
+Created At: 2024-09-16T13:55:26Z
+Merged At: 2024-10-03T16:21:30Z
+Participants: macci001, wingkwong, ryo-manba
+
+Description:
+Closes #3745
+📝 Description
+
+Fixes the full width functionality.
+
+⛳️ Current behavior (updates)
+Even when the full-width is set to false, the component takes the full-width of the parent. This should not be the case.
+Examples for the bug are:
+
+Input:
+
+
+  
+    
+    
+
+    Screen.Recording.2024-09-16.at.7.20.38.PM.mov
+    
+  
+
+  
+
+  
+
+
+
+Select:
+
+
+  
+    
+    
+
+    Screen.Recording.2024-09-16.at.7.19.18.PM.mov
+    
+  
+
+  
+
+  
+
+
+🚀 New behavior
+The PR fixes the full-width functionality:
+
+Input
+
+
+  
+    
+    
+
+    Screen.Recording.2024-09-16.at.7.21.23.PM.mov
+    
+  
+
+  
+
+  
+
+
+
+Select:
+
+
+  
+    
+    
+
+    Screen.Recording.2024-09-16.at.7.22.51.PM.mov
+    
+  
+
+  
+
+  
+
+
+In select the min-w-40 is added so that the select component has atleast width of 10rem.
+💣 Is this a breaking change (Yes/No): No
+
+Summary by CodeRabbit
+
+
+New Features
+
+No new features introduced in this update.
+
+
+
+Bug Fixes
+
+Resolved issues with the rendering of the fullWidth variant in input and select components for improved functionality.
+
+
+
+Documentation
+
+Enhanced visual presentation and functionality of dateInput, input, and select components for a better user experience.
+
+Commits:
+- fix(input): fixing the fullWidth functionality\n- chore(changeset): add issue number\n- chore(changeset): revise changeset message\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 9fec81dcd47af279189de30bcc561ed95dca8e4e
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/theme | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/macci001/nextui/new/macci001/fix-full-width-variant?filename=.changeset/spicy-beans-attack.md&value=---%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(input)%3A%20fixing%20the%20fullWidth%20functionality%20in%20input%20and%20select%0A)
+
+\n- vercel: Someone is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22794188e28d1cfba20dac0ed5c99c4384066727ac%22%7D%2C%22id%22%3A%22Qmf41gq9qv9k6Bp725FvggwEk4p6MPsJuWjXJPzagk1n7E%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3768%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes in this pull request focus on a patch for the `@nextui-org/theme` package, specifically addressing the `fullWidth` variant in the input and select components. The update resolves issues related to the rendering and behavior of the `fullWidth` property, ensuring correct visual presentation. Modifications include adding empty objects for certain states in the `dateInput`, `input`, and `select` components, as well as styling adjustments to enhance functionality.
+
+## Changes
+
+| Files                                                                 | Change Summary                                                                                     |
+|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| `packages/core/theme/src/components/date-input.ts`                   | Added `false: {}` in the `dateInput` configuration object.                                       |
+| `packages/core/theme/src/components/input.ts`                        | Added `false: {}` in the `isClearable` property of the `input` component.                       |
+| `packages/core/theme/src/components/select.ts`                       | Added `isFullWidth: false` styling option in the `select` component configuration.              |
+
+## Assessment against linked issues
+
+| Objective                                              | Addressed | Explanation                            |
+|-------------------------------------------------------|-----------|----------------------------------------|
+| fullWidth prop of Select component does nothing (#3745) | ✅         |                                        |
+
+## Possibly related PRs
+
+- **#2041**: Improves RTL support for the select component, relevant to the styling adjustments.
+- **#2097**: Enhances RTL support for the table component, indicating a broader focus on UI improvements.
+- **#3568**: Addresses color discrepancies in the select component, relevant to the main PR's modifications.
+- **#3663**: Modifies the styling configuration of the select component, aligning with the changes made in this PR.
+
+## Suggested reviewers
+
+- jrgarciadev
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```
+.changeset/fast-horses-explode.md: ## AI-generated summary of changes
+
+This diff introduces a patch for the `@nextui-org/theme` package, specifically addressing an issue with the `fullWidth` variant in the input and select components. The change is aimed at fixing the functionality related to how the `fullWidth` variant is rendered or behaves within these components. The details of the implementation are not provided, but the patch indicates a resolution to a previously identified problem, referenced by issue number #3745. Additionally, styling adjustments were made to enhance the visual presentation and functionality of these components, ensuring that they render correctly when the `fullWidth` property is applied. This improvement is crucial for maintaining a consistent user interface and providing a better user experience across applications utilizing these components.
+
+The patch does not introduce new features or alter existing functionalities beyond the styling adjustments. It aims to resolve any issues related to the appearance of the `fullWidth` variant, thereby ensuring that it behaves as expected in various contexts. This change is essential for developers relying on the `@nextui-org/theme` package to deliver a polished and responsive design in their applications.
+
+## Alterations to the declarations of exported or public entities
+
+- Added: `false: {}` in the `dateInput` configuration object in `packages/core/theme/src/components/date-input.ts`
+- Added: `false: {}` in the `isClearable` property of the `input` component in `packages/core/theme/src/components/input.ts`
+- Added: `isFullWidth: false` styling option in the `select` component configuration in `packages/core/theme/src/components/select.ts`
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(input): fixing the fullWidth functionality in input and select" by user macci001 addresses an issue related to the `fullWidth` functionality in both Input and Select components of the NextUI library. This PR closes issue #3745. The current behavior was that even when the `fullWidth` property was set to `false`, the components still occupied the full width of their parent containers, which was not the intended functionality. The PR provides examples of the bug for both Input and Select components, demonstrating the issue visually.
+
+The new behavior introduced by this PR ensures that the `fullWidth` functionality works as expected. Specifically, when `fullWidth` is set to `false`, the Input and Select components will no longer take the full width of their parent. Additionally, for the Select component, a minimum width of 10rem is enforced by adding a `min-w-40` class. The PR confirms that this change is not a breaking change.
+
+## Objectives from Linked Issues
+
+The linked issue #3745 describes a bug where the `fullWidth` prop of the Select component does not function as intended. According to the documentation, the `fullWidth` prop should determine whether the Select component occupies the full width of its parent, with a default value of `true`. However, users reported that setting `fullWidth={false}` had no effect, as the Select component continued to take the full width of its parent container.
+
+To reproduce the issue, users were instructed to place a Select component inside a wrapper with a fixed width and set the `fullWidth` prop to `false`. The expected behavior was that this would remove the `w-full` class from the component, allowing it to respect the specified width. The issue was confirmed to occur on Windows using the Chrome browser, and a CodeSandbox link was provided for demonstration.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 01a34e6b287593db54b7a36cbe443f7dfd91fb63 -->
+<!-- b6254a06fa638a8e4b1d971a31023e8b593adf3c -->
+<!-- 9fec81dcd47af279189de30bcc561ed95dca8e4e -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #9iHTJ2u+lg4PB1wCoU0AII7XPbFKYEKeVQ3oQhHe+NY=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRVVkdDlGMnk1NFkyVnllOEdKYmNYN2k1OXV1SCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAtODk5NDBkLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAtODk5NDBkLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi8ycWIxYktuTjFjRGpLVDU3UVYyZTI3RkJ2YXdTIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAxLWZpeC0wZjkyYTEtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAxLWZpeC0wZjkyYTEtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/2qb1bKnN1cDjKT57QV2e27FBvawS)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-macci001-macci001-fix-0f92a1-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-macci001-macci001-fix-0f92a1-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 3, 2024 3:42pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/EUdt9F2y54Y2Vye8GJbcX7i59uuH)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-macci001-macci00-89940d-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-macci001-macci00-89940d-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 3, 2024 3:42pm |
+
+
+\n
+
+Files Changed:
+- .changeset/fast-horses-explode.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/theme": patch
++---
++
++fix the fullWidth variant in input and select component. (#3745)\n- packages/core/theme/src/components/input.ts (modified, 1 changes)\n  Patch: @@ -185,6 +185,7 @@ const input = tv({
+       true: {
+         base: "w-full",
+       },
++      false: {},
+     },
+     isClearable: {
+       true: {\n- packages/core/theme/src/components/select.ts (modified, 5 changes)\n  Patch: @@ -5,7 +5,7 @@ import {tv} from "../utils/tv";
+ 
+ const select = tv({
+   slots: {
+-    base: ["group inline-flex flex-col relative w-full"],
++    base: ["group inline-flex flex-col relative"],
+     label: [
+       "block",
+       "absolute",
+@@ -146,6 +146,9 @@ const select = tv({
+       true: {
+         base: "w-full",
+       },
++      false: {
++        base: "min-w-40",
++      },
+     },
+     isDisabled: {
+       true: {\n

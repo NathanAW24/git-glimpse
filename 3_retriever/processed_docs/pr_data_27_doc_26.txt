@@ -1,0 +1,101 @@
+Pull Request Number: 562
+Title: fix(react-avatar): imgRef prop added
+Base Branch: next
+Head Branch: fix/add-avatar-img-ref
+Author: danielsimao
+URL: https://github.com/nextui-org/nextui/pull/562
+State: MERGED
+Created At: 2022-06-22T07:43:36Z
+Merged At: 2022-09-18T18:45:33Z
+Participants: danielsimao, jrgarciadev, cyanxiao, chainerprince, denniskigen
+
+Description:
+Closes #476 
+📝 Description
+Finalise the development from #475. The PR owner seems to not respond, so just finished his pending changes.
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Commits:
+- change title\n- docs: fix grammar in loading docs
+
+The property color should be changed to color property.\n- Fix typo\n- fix(react-avatar): imgRef prop added\n- fix(react-avatar): format\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Hey @danielsimao thanks a lot for sending this PR 🙏🏻, could you please fix the conflicts and format the code using the new eslint rules?\n- danielsimao: @jrgarciadev ready!\n- jrgarciadev: Huge thanks! @danielsimao 🙌🏻 \n
+
+Files Changed:
+- packages/react/src/avatar/__tests__/index.test.tsx (modified, 12 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import React from "react";
++import React, {createRef} from "react";
+ import {mount, render, shallow} from "enzyme";
+ 
+ import Avatar from "../index";
+@@ -106,4 +106,14 @@ describe("Avatar", () => {
+ 
+     expect(avatar).toMatchSnapshot();
+   });
++
++  it("should populate imgRef", () => {
++    const imgRef = createRef<HTMLImageElement>();
++    const wrapper = mount(
++      <Avatar imgRef={imgRef} src="https://i.pravatar.cc/300?u=a042581f4e29026705d" />,
++    );
++
++    expect(imgRef.current).not.toBeNull();
++    expect(() => wrapper.unmount()).not.toThrow();
++  });
+ });\n- packages/react/src/avatar/avatar.tsx (modified, 7 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import type {FocusRingAria} from "@react-aria/focus";
+ 
+ import {useFocusRing} from "@react-aria/focus";
+-import React, {useMemo, useState, useRef, useEffect} from "react";
++import React, {useMemo, useState, useEffect} from "react";
+ import {mergeProps} from "@react-aria/utils";
+ 
+ import {CSS} from "../theme/stitches.config";
+@@ -19,6 +19,7 @@ interface Props {
+   icon?: React.ReactNode;
+   alt?: string;
+   className?: string;
++  imgRef?: ReactRef<HTMLImageElement>;
+   as?: keyof JSX.IntrinsicElements;
+ }
+ 
+@@ -40,14 +41,14 @@ const safeText = (text: string): string => {
+ };
+ 
+ export const Avatar = React.forwardRef((props: AvatarProps, ref: ReactRef<HTMLSpanElement>) => {
+-  const {as, src, css, text, icon, alt, className, ...otherProps} = props;
++  const {as, src, css, text, icon, alt, className, imgRef: imgRefProp, ...otherProps} = props;
+ 
+   const domRef = useDOMRef(ref);
+ 
+   const showText = !src;
+   const [ready, setReady] = useState(false);
+ 
+-  const imgRef = useRef<HTMLImageElement>(null);
++  const imgRef = useDOMRef(imgRefProp);
+ 
+   const {isFocusVisible, focusProps}: IFocusRingAria = useFocusRing();
+ \n- packages/react/src/utils/dom.ts (modified, 2 changes)\n  Patch: @@ -119,7 +119,7 @@ export function createFocusableRef<T extends HTMLElement = HTMLElement>(
+ }
+ 
+ export function useDOMRef<T extends HTMLElement = HTMLElement>(
+-  ref: RefObject<T | null> | Ref<T | null>,
++  ref?: RefObject<T | null> | Ref<T | null>,
+ ) {
+   const domRef = useRef<T>(null);
+ \n

@@ -1,0 +1,83 @@
+Pull Request Number: 1214
+Title: [Feat/v2] - fix(Chip): style issue 
+Base Branch: feat/v2
+Head Branch: feat/v2
+Author: camcam2605
+URL: https://github.com/nextui-org/nextui/pull/1214
+State: MERGED
+Created At: 2023-07-20T17:22:30Z
+Merged At: 2023-07-24T17:57:34Z
+Participants: camcam2605, jguddas, jrgarciadev
+
+Description:
+Fix style issue of Chip component #1035 (comment)
+
+Commits:
+- Update chip.ts
+
+fix(Chip): fixed chip style issue one char with close button\n- Update use-chip.ts
+
+fix(Chip): added isCloseable variant\n
+
+Labels:
+
+
+Comments:
+- vercel: @camcam2605 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%229ade2a657931fd3b2d5bb375ed38be0f9c6d08c8%22%7D%2C%22id%22%3A%22QmbrsCD8NmJK3W8KCN8hra82K3JYGYwAF8au1vq4yYwfA4%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1214%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/chip/src/use-chip.ts (modified, 2 changes)\n  Patch: @@ -99,6 +99,7 @@ export function useChip(originalProps: UseChipProps) {
+         hasStartContent,
+         hasEndContent,
+         isOneChar,
++        isCloseable,
+         isCloseButtonFocusVisible,
+       }),
+     [
+@@ -107,6 +108,7 @@ export function useChip(originalProps: UseChipProps) {
+       hasStartContent,
+       hasEndContent,
+       isOneChar,
++      isCloseable,
+     ],
+   );
+ \n- packages/core/theme/src/components/chip.ts (modified, 22 changes)\n  Patch: @@ -120,12 +120,6 @@ const chip = tv({
+     hasEndContent: {
+       true: {},
+     },
+-    isOneChar: {
+-      true: {
+-        base: "px-0 justify-center",
+-        content: "px-0 flex-none",
+-      },
+-    },
+     isDisabled: {
+       true: {base: "opacity-disabled pointer-events-none"},
+     },
+@@ -423,6 +417,22 @@ const chip = tv({
+         base: "w-7 h-7 min-w-unit-7 min-h-7",
+       },
+     },
++    // isOneChar / isCloseable
++    {
++      isOneChar: true,
++      isCloseable: false,
++      class: {
++        base: "px-0 justify-center",
++        content: "px-0 flex-none",        
++      }
++    },
++    {
++      isOneChar: true,
++      isCloseable: true,
++      class: {
++        base: "w-auto",
++      }
++    },    
+     // hasStartContent / size
+     {
+       hasStartContent: true,\n

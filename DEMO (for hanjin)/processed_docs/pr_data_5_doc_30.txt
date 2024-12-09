@@ -1,0 +1,587 @@
+Pull Request Number: 3746
+Title: feat(select): add isClearable
+Base Branch: beta/release-next
+Head Branch: adding-isClearable-to-select
+Author: abhinav700
+URL: https://github.com/nextui-org/nextui/pull/3746
+State: CLOSED
+Created At: 2024-09-13T13:00:29Z
+Merged At: None
+Participants: abhinav700, wingkwong, ryo-manba, jrgarciadev
+
+Description:
+Closes #2239 
+📝 Description
+Added clear button functionality to select component.
+
+
+
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced a selection component for choosing favorite animals with a clearable feature.
+Added a PetBoldIcon component to enhance the dropdown menu.
+Users can now reset their selection easily with the clearable functionality.
+Documentation updated to include the new isClearable property and onClear event handler for the Select component.
+
+
+
+Bug Fixes
+
+Enhanced the styling and responsiveness of the clear button across different component sizes.
+
+Commits:
+- feat(select): add core logic for isClearable\n- fix: fix alignment for clear button in select component\n- docs: add docs for clear button, isClearable, onClear\n- Merge branch 'nextui-org:canary' into adding-isClearable-to-select\n- chore: lint the code\n- chore: add changeset\n- chore: remove case for isClearable=false from docs and story\n- chore(select): code refactor\n- Merge branch 'nextui-org:canary' into adding-isClearable-to-select\n- Merge branch 'nextui-org:canary' into adding-isClearable-to-select\n- chore(select): update logic for clear button and add docs\n- Merge branch 'canary' into adding-isClearable-to-select\n- chore(select): implement wingkwong's suggestions\n- docs(select): pass onclear property to clear button\n- chore(select): theme version update, docs update\n- Merge branch 'nextui-org:canary' into adding-isClearable-to-select\n- fix(select): fix the focus behaviour of the clear button\n- Merge branch 'canary' into adding-isClearable-to-select\n- Merge branch 'nextui-org:canary' into adding-isClearable-to-select\n- fix(select): fix hover, remove endContent, remove onClear\n- Merge branch 'beta/release-next' into pr/3746\n- Merge branch 'beta/release-next' into pr/3746\n- chore(changeset): change to patch\n- refactor(docs): apply new structure to docs\n
+
+Labels:
+👀 Status: To Review
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: c221d078b1e4ebb56780b4887a646e0842a2ab60
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name               | Type  |
+| ------------------ | ----- |
+| @nextui-org/select | Patch |
+| @nextui-org/theme  | Patch |
+| @nextui-org/react  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/abhinav700/nextui/new/adding-isClearable-to-select?filename=.changeset/wicked-birds-cross.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afeat(select)%3A%20add%20isClearable%0A)
+
+\n- vercel: @abhinav700 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22c6836948465799463ff216b89f6e0c4b5e063ae6%22%7D%2C%22id%22%3A%22Qmd1AtnaaPbEYi1FNeL8Z3WyYNZRF8GrVxSb7qSEukfyhq%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3746%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: skip review by coderabbit.ai -->
+
+> [!IMPORTANT]
+> ## Review skipped
+> 
+> Auto reviews are disabled on base/target branches other than the default branch.
+> 
+> <details>
+> <summary>🗂️ Base branches to auto review (5)</summary>
+> 
+> * main
+> * canary
+> * fix/.*
+> * chore/.*
+> * feat/.*
+> 
+> </details>
+> 
+> Please check the settings in the CodeRabbit UI or the `.coderabbit.yaml` file in this repository. To trigger a single review, invoke the `@coderabbitai review` command.
+> 
+> You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file.
+
+<!-- end of auto-generated comment: skip review by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The pull request introduces a new module for a selection component that allows users to choose their favorite animals, featuring a clearable option. It exports a list of animal objects, a `PetBoldIcon` component for rendering an SVG icon, and an `App` component that utilizes these elements. The `Select` component is configured to be clearable, enabling users to reset their selection, with a console log triggered upon clearing. The overall structure is organized into a single export object that includes the `App`, `data`, and `PetBoldIcon` components.
+
+## Changes
+
+| Files                                             | Change Summary                                                                                                 |
+|---------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| `apps/docs/content/components/select/is-clearable.ts` | Introduced a selection component for favorite animals with a clearable feature, including animal objects and an SVG icon. |
+| `apps/docs/content/docs/components/select.mdx`   | Added documentation for the `isClearable` property and `onClear` event handler for the Select component.       |
+| `packages/components/select/package.json`         | Updated peer dependency version for `@nextui-org/theme` from `>=2.1.0` to `>=2.3.0`.                        |
+| `packages/components/select/src/use-select.ts`    | Enhanced `use-select` functionality with `onClear` callback and clear button properties.                       |
+| `packages/components/select/stories/select.stories.tsx` | Added a new story for the `Select` component demonstrating the clearable functionality.                       |
+| `packages/components/select/src/select.tsx`      | Modified `Select` component to include `isClearable` prop and conditional rendering for the clear button.     |
+
+## Assessment against linked issues
+
+| Objective                                             | Addressed | Explanation                                     |
+|------------------------------------------------------|-----------|-------------------------------------------------|
+| Add `isClearable` option for Select (#2239)          | ✅        |                                                 |
+| Allow users to clear selection easily (#2239)        | ✅        |                                                 |
+| Provide a way to handle clear action (#2239)         | ✅        |                                                 |
+
+## Possibly related PRs
+- **#2854**: The changes in `use-select.ts` enhance the select component's functionality by introducing a clear action feature, which is directly related to the clearable functionality introduced in the main PR.
+- **#3568**: This PR modifies the `useSelect` function to manage click events on the label, which could impact how the select component behaves when interacting with the clearable feature.
+- **#3788**: This PR ensures that the autocomplete dropdown remains open after clicking the clear button, which is relevant to the clearable functionality being implemented in the main PR.
+
+## Suggested reviewers
+- ryo-manba
+- jrgarciadev
+
+<!-- walkthrough_end -->
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- abhinav700: @wingkwong for the tests that are failing, I don't think they are related to the changes that I have made.
+
+When I tried to run the tests on the canary branch( which is in sync and I have pulled those changes locally), the same tests are failing there also even though I have not made any changes to it.\n- vercel: [vc]: #P/3TtYvmN47rKfN0P1mBg+YO59IFpxb9NSffdzJUOUc=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRFJpQml6Sll2R0oxWHpYcDltWVlmUU5FTWkzaiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFiaGluYXY3MDAtYWRkaW4tZjVjNzcyLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFiaGluYXY3MDAtYWRkaW4tZjVjNzcyLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9BazRGREJjQmlmazQ5WlhzNkptR1Nmdm9vSzV4IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLWFiaGluYXY3MDAtYWRkaW5nLWlzYy1iNTAyMGMtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLWFiaGluYXY3MDAtYWRkaW5nLWlzYy1iNTAyMGMtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/Ak4FDBcBifk49ZXs6JmGSfvooK5x)) | [Visit Preview](https://nextui-docs-v2-git-fork-abhinav700-adding-isc-b5020c-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-abhinav700-adding-isc-b5020c-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 29, 2024 6:09am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/DRiBizJYvGJ1XzXp9mYYfQNEMi3j)) | [Visit Preview](https://nextui-storybook-v2-git-fork-abhinav700-addin-f5c772-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-abhinav700-addin-f5c772-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 29, 2024 6:09am |
+
+
+\n- abhinav700: > 5. click somewhere else to blur, then press tab. select is focused, close button is focused (which is not expected)
+
+Given that tabIndex is set to -1, that shouldn't happen. WIll look into it.
+\n- abhinav700: > clear button shouldn't be focused.
+
+@wingkwong I have fixed this issue
+can you check again?
+\n- wingkwong: mark it on hold until the doc structure revamp pr got merged to beta branch\n- abhinav700: ok\n
+
+Files Changed:
+- .changeset/olive-buckets-own.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/select": patch
++"@nextui-org/theme": patch
++---
++
++add `isClearable` and `onClear` prop to Select component (#2239)\n- apps/docs/content/components/select/index.ts (modified, 2 changes)\n  Patch: @@ -27,6 +27,7 @@ import multipleControlledOnChange from "./multiple-controlled-onchange";
+ import multipleWithChips from "./multiple-chips";
+ import customSelectorIcon from "./custom-selector-icon";
+ import customStyles from "./custom-styles";
++import isClearable from "./is-clearable";
+ 
+ export const selectContent = {
+   usage,
+@@ -58,4 +59,5 @@ export const selectContent = {
+   multipleWithChips,
+   customSelectorIcon,
+   customStyles,
++  isClearable,
+ };\n- apps/docs/content/components/select/is-clearable.raw.jsx (added, 65 changes)\n  Patch: @@ -0,0 +1,65 @@
++import {Select, SelectItem} from "@nextui-org/react";
++
++export const animals = [
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"},
++];
++
++export const PetBoldIcon = (props) => {
++  return (
++    <svg
++      aria-hidden="true"
++      fill="none"
++      focusable="false"
++      height="1em"
++      role="presentation"
++      viewBox="0 0 24 24"
++      width="1em"
++      {...props}
++    >
++      <path
++        d="M19.0803 15.7203C18.4903 12.1903 15.1003 9.32031 11.5203 9.32031C7.63028 9.32031 4.21028 12.4703 3.88028 16.3503C3.75028 17.8503 4.23028 19.2703 5.22028 20.3403C6.20028 21.4103 7.58028 22.0003 9.08028 22.0003H13.7603C15.4503 22.0003 16.9303 21.3403 17.9403 20.1503C18.9503 18.9603 19.3503 17.3803 19.0803 15.7203Z"
++        fill="currentColor"
++      />
++      <path
++        d="M10.2796 7.86C11.8978 7.86 13.2096 6.54819 13.2096 4.93C13.2096 3.31181 11.8978 2 10.2796 2C8.66141 2 7.34961 3.31181 7.34961 4.93C7.34961 6.54819 8.66141 7.86 10.2796 7.86Z"
++        fill="currentColor"
++      />
++      <path
++        d="M16.94 9.02844C18.2876 9.02844 19.38 7.93601 19.38 6.58844C19.38 5.24086 18.2876 4.14844 16.94 4.14844C15.5924 4.14844 14.5 5.24086 14.5 6.58844C14.5 7.93601 15.5924 9.02844 16.94 9.02844Z"
++        fill="currentColor"
++      />
++      <path
++        d="M20.5496 12.9313C21.6266 12.9313 22.4996 12.0582 22.4996 10.9812C22.4996 9.90429 21.6266 9.03125 20.5496 9.03125C19.4727 9.03125 18.5996 9.90429 18.5996 10.9812C18.5996 12.0582 19.4727 12.9313 20.5496 12.9313Z"
++        fill="currentColor"
++      />
++      <path
++        d="M3.94 10.9816C5.28757 10.9816 6.38 9.88914 6.38 8.54156C6.38 7.19399 5.28757 6.10156 3.94 6.10156C2.59243 6.10156 1.5 7.19399 1.5 8.54156C1.5 9.88914 2.59243 10.9816 3.94 10.9816Z"
++        fill="currentColor"
++      />
++    </svg>
++  );
++};
++
++export default function App() {
++  return (
++    <div className="flex w-screen justify-center items-center">
++      <Select className="max-w-xs my-5" isClearable={true} label="Favorite Animal">
++        {animals.map((animal) => (
++          <SelectItem key={animal.key}>{animal.label}</SelectItem>
++        ))}
++      </Select>
++    </div>
++  );
++}\n- apps/docs/content/components/select/is-clearable.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./is-clearable.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/docs/components/select.mdx (modified, 9 changes)\n  Patch: @@ -148,6 +148,12 @@ You can combine the `isInvalid` and `errorMessage` properties to show an invalid
+ 
+ <CodeDemo title="With Error Message" files={selectContent.errorMessage} />
+ 
++### Clear Button
++
++If you pass the `isClearable` property to the select, it will have a clear button which will be visible only when a value is selected.
++
++<CodeDemo title="Clear Button" files={selectContent.isClearable} />
++
+ ### Controlled
+ 
+ You can use the `selectedKeys` and `onSelectionChange` / `onChange` properties to control the select value.
+@@ -383,6 +389,7 @@ the popover and listbox components.
+ | isDisabled                  | `boolean`                                                                                                                                                                                                              | Whether the select is disabled.                                                                                        | `false`            |
+ | isMultiline                 | `boolean`                                                                                                                                                                                                              | Whether the select should allow multiple lines of text.                                                                | `false`            |
+ | isInvalid                   | `boolean`                                                                                                                                                                                                              | Whether the select is invalid.                                                                                         | `false`            |
++| isClearable                 | `boolean`                                                                                                                                                                                                              | Whether the select should have a clear button.                                                                         | `false`            |
+ | validationState             | `valid` \| `invalid`                                                                                                                                                                                                   | Whether the select should display its "valid" or "invalid" visual styling. (**Deprecated**) use **isInvalid** instead. | -                  |
+ | showScrollIndicators        | `boolean`                                                                                                                                                                                                              | Whether the select should show scroll indicators when the listbox is scrollable.                                       | `true`             |
+ | autoFocus                   | `boolean`                                                                                                                                                                                                              | Whether the select should be focused on the first mount.                                                               | `false`            |
+@@ -403,7 +410,7 @@ the popover and listbox components.
+ | onSelectionChange | `(keys: "all" \| Set<React.Key> & {anchorKey?: string; currentKey?: string}) => void`                 | Callback fired when the selected keys change.                                        |
+ | onChange          | `React.ChangeEvent<HTMLSelectElement>`        | Native select change event, fired when the selected value changes.                   |
+ | renderValue       | [RenderValueFunction](#render-value-function) | Function to render the value of the select. It renders the selected item by default. |
+-
++| onClear           | `() => void`                                  | Handler that is called when the clear button is clicked.
+ ---
+ 
+ ### SelectItem Props\n- packages/components/select/src/select.tsx (modified, 27 changes)\n  Patch: @@ -1,6 +1,6 @@
+ import {Listbox} from "@nextui-org/listbox";
+ import {FreeSoloPopover} from "@nextui-org/popover";
+-import {ChevronDownIcon} from "@nextui-org/shared-icons";
++import {ChevronDownIcon, CloseFilledIcon} from "@nextui-org/shared-icons";
+ import {Spinner} from "@nextui-org/spinner";
+ import {forwardRef} from "@nextui-org/system";
+ import {ScrollShadow} from "@nextui-org/scroll-shadow";
+@@ -29,8 +29,10 @@ function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectE
+     endContent,
+     placeholder,
+     renderValue,
++    isClearable,
+     shouldLabelBeOutside,
+     disableAnimation,
++    getClearButtonProps,
+     getBaseProps,
+     getLabelProps,
+     getTriggerProps,
+@@ -52,6 +54,27 @@ function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectE
+ 
+   const clonedIcon = cloneElement(selectorIcon as ReactElement, getSelectorIconProps());
+ 
++  const clearButton = useMemo(() => {
++    if (isClearable && state.selectedItems?.length) {
++      return <button {...getClearButtonProps()}>{<CloseFilledIcon />}</button>;
++    }
++
++    return null;
++  }, [isClearable, getClearButtonProps, state.selectedItems?.length]);
++
++  const end = useMemo(() => {
++    if (clearButton) {
++      return (
++        <div className="flex end-18">
++          {clearButton}
++          {endContent && <span className="ms-3">{endContent}</span>}
++        </div>
++      );
++    }
++
++    return endContent && <span className="mb-4">{endContent}</span>;
++  }, [clearButton, endContent]);
++
+   const helperWrapper = useMemo(() => {
+     const shouldShowError = isInvalid && errorMessage;
+     const hasContent = shouldShowError || description;
+@@ -130,7 +153,7 @@ function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectE
+             {endContent && state.selectedItems && (
+               <VisuallyHidden elementType="span">,</VisuallyHidden>
+             )}
+-            {endContent}
++            {end}
+           </div>
+           {renderIndicator}
+         </Component>\n- packages/components/select/src/use-select.ts (modified, 50 changes)\n  Patch: @@ -17,7 +17,7 @@ import {useAriaButton} from "@nextui-org/use-aria-button";
+ import {useFocusRing} from "@react-aria/focus";
+ import {clsx, dataAttr, objectToDeps} from "@nextui-org/shared-utils";
+ import {mergeProps} from "@react-aria/utils";
+-import {useHover} from "@react-aria/interactions";
++import {useHover, usePress} from "@react-aria/interactions";
+ import {PopoverProps} from "@nextui-org/popover";
+ import {ScrollShadowProps} from "@nextui-org/scroll-shadow";
+ import {
+@@ -133,6 +133,11 @@ interface Props<T> extends Omit<HTMLNextUIProps<"select">, keyof SelectVariantPr
+    * Handler that is called when the selection changes.
+    */
+   onSelectionChange?: (keys: SharedSelection) => void;
++  /**
++   * Callback fired when the value is cleared.
++   * if you pass this prop, the clear button will be shown.
++   */
++  onClear?: () => void;
+ }
+ 
+ interface SelectData {
+@@ -187,6 +192,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+     validationState,
+     onChange,
+     onClose,
++    onClear,
+     className,
+     classNames,
+     ...otherProps
+@@ -297,11 +303,24 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+     triggerRef,
+   );
+ 
++  const handleClear = useCallback(() => {
++    state.setSelectedKeys(new Set([]));
++    onClear?.();
++    domRef.current?.focus();
++  }, [onClear, state]);
++
++  const {pressProps: clearPressProps} = usePress({
++    isDisabled: !!originalProps?.isDisabled,
++    onPress: handleClear,
++  });
++
+   const isInvalid = originalProps.isInvalid || validationState === "invalid" || isAriaInvalid;
+ 
+   const {isPressed, buttonProps} = useAriaButton(triggerProps, triggerRef);
+ 
+   const {focusProps, isFocused, isFocusVisible} = useFocusRing();
++  const {focusProps: clearFocusProps, isFocusVisible: isClearButtonFocusVisible} = useFocusRing();
++
+   const {isHovered, hoverProps} = useHover({isDisabled: originalProps.isDisabled});
+ 
+   const labelPlacement = useMemo<SelectVariantProps["labelPlacement"]>(() => {
+@@ -319,6 +338,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+       (!(hasPlaceholder || !!description) || !!originalProps.isMultiline));
+   const shouldLabelBeInside = labelPlacement === "inside";
+   const isOutsideLeft = labelPlacement === "outside-left";
++  const isClearable = originalProps.isClearable;
+ 
+   const isFilled =
+     state.isOpen ||
+@@ -337,11 +357,19 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+       select({
+         ...variantProps,
+         isInvalid,
++        isClearable,
+         labelPlacement,
+         disableAnimation,
+         className,
+       }),
+-    [objectToDeps(variantProps), isInvalid, labelPlacement, disableAnimation, className],
++    [
++      objectToDeps(variantProps),
++      isClearable,
++      isInvalid,
++      labelPlacement,
++      disableAnimation,
++      className,
++    ],
+   );
+ 
+   // scroll the listbox to the selected item
+@@ -636,6 +664,22 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+     [slots, spinnerRef, spinnerProps, classNames?.spinner],
+   );
+ 
++  const getClearButtonProps: PropGetter = useCallback(
++    (props = {}) => {
++      return {
++        ...props,
++        role: "button",
++        tabIndex: -1,
++        "aria-label": "clear selection",
++        "data-slot": "clear-button",
++        "data-focus-visible": dataAttr(isClearButtonFocusVisible),
++        className: slots.clearButton({class: clsx(classNames?.clearButton, props?.className)}),
++        ...mergeProps(clearPressProps, clearFocusProps),
++      };
++    },
++    [slots, isClearButtonFocusVisible, clearPressProps, clearFocusProps, classNames?.clearButton],
++  );
++
+   // store the data to be used in useHiddenSelect
+   selectData.set(state, {
+     isDisabled: originalProps?.isDisabled,
+@@ -653,6 +697,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+     name,
+     triggerRef,
+     isLoading,
++    isClearable,
+     placeholder,
+     startContent,
+     endContent,
+@@ -671,6 +716,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+     errorMessage,
+     getBaseProps,
+     getTriggerProps,
++    getClearButtonProps,
+     getLabelProps,
+     getValueProps,
+     getListboxProps,\n- packages/components/select/stories/select.stories.tsx (modified, 8 changes)\n  Patch: @@ -1043,3 +1043,11 @@ export const CustomStyles = {
+     },
+   },
+ };
++
++export const Clearable = {
++  render: Template,
++  args: {
++    ...defaultProps,
++    isClearable: true,
++  },
++};\n- packages/core/theme/src/components/select.ts (modified, 27 changes)\n  Patch: @@ -29,6 +29,24 @@ const select = tv({
+     listboxWrapper: "scroll-py-6 max-h-64 w-full",
+     listbox: "",
+     popoverContent: "w-full p-1 overflow-hidden",
++    clearButton: [
++      "w-4",
++      "h-4",
++      "z-10",
++      "mb-4",
++      "relative",
++      "start-auto",
++      "appearance-none",
++      "outline-none",
++      "select-none",
++      "opacity-70",
++      "hover:!opacity-100",
++      "cursor-pointer",
++      "active:!opacity-70",
++      "rounded-full",
++      // focus ring
++      ...dataFocusVisibleClasses,
++    ],
+     helperWrapper: "p-1 flex relative flex-col gap-1.5",
+     description: "text-tiny text-foreground-400",
+     errorMessage: "text-tiny text-danger",
+@@ -101,14 +119,17 @@ const select = tv({
+         label: "text-tiny",
+         trigger: "h-8 min-h-8 px-2 rounded-small",
+         value: "text-small",
++        clearButton: "text-medium",
+       },
+       md: {
+         trigger: "h-10 min-h-10 rounded-medium",
+         value: "text-small",
++        clearButton: "text-large",
+       },
+       lg: {
+         trigger: "h-12 min-h-12 rounded-large",
+         value: "text-medium",
++        clearButton: "text-large",
+       },
+     },
+     radius: {
+@@ -149,6 +170,11 @@ const select = tv({
+         base: "min-w-40",
+       },
+     },
++    isClearable: {
++      true: {
++        clearButton: "peer-data-[filled=true]:opacity-70 peer-data-[filled=true]:block",
++      },
++    },
+     isDisabled: {
+       true: {
+         base: "opacity-disabled pointer-events-none",
+@@ -196,6 +222,7 @@ const select = tv({
+           "motion-reduce:transition-none",
+         ],
+         selectorIcon: "transition-transform duration-150 ease motion-reduce:transition-none",
++        clearButton: ["transition-opacity", "motion-reduce:transition-none"],
+       },
+     },
+     disableSelectorIconRotation: {\n
