@@ -1,21 +1,62 @@
 import os
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.schema import Document
 
-# Argument to control whether to use the local database or re-index
-USE_LOCAL_DB = False  # Set to True to use existing local database, False to re-index
 
-# Directory paths
-# Folder containing processed PR data files in .txt format
-PR_FOLDER = "processed_docs"
-# Directory to save/load the vector database
-VECTOR_DB_DIR = "1_gte_small_demo_hanjin"
+def prompt_with_default(prompt, default):
+    """
+    Prompt the user for input, showing a default value.
 
-# Model name for HuggingFace embeddings
-MODEL_NAME = "thenlper/gte-small"
+    Args:
+        prompt (str): The question to display to the user.
+        default (str): The default value to use if the user provides no input.
 
-# Function to load PR data
+    Returns:
+        str: User's input or the default value if no input is provided.
+    """
+    user_input = input(f"{prompt} (Default: {default}): ").strip()
+    return user_input if user_input else default
+
+
+def confirm_with_default(prompt, default):
+    """
+    Prompt the user with a yes/no question, showing a default value.
+
+    Args:
+        prompt (str): The question to display to the user.
+        default (str): Default response ('y' or 'n').
+
+    Returns:
+        bool: True if the user confirms ('y'), False otherwise.
+    """
+    default = default.lower()
+    user_input = input(
+        f"{prompt} (y/n, Default: {default}) - Press Enter to use default: ").strip().lower()
+    if not user_input:
+        user_input = default
+    return user_input == 'y'
+
+
+# Prompt the user to decide whether to use the local database
+USE_LOCAL_DB = confirm_with_default(
+    "Do you want to use the existing local database? If this is your first run, answer 'n'",
+    "n"
+)
+
+# Prompt for directory paths and model name with default values
+PR_FOLDER = prompt_with_default(
+    "Enter the path to the folder containing processed PR data files",
+    "processed_docs"
+)
+VECTOR_DB_DIR = prompt_with_default(
+    "Enter the directory path to save/load the vector database",
+    "1_gte_small_demo_hanjin"
+)
+MODEL_NAME = prompt_with_default(
+    "Enter the model name for HuggingFace embeddings",
+    "thenlper/gte-small"
+)
 
 
 def load_pr_data(pr_folder):
@@ -90,8 +131,6 @@ else:
 # Retriever setup
 retriever = vectorstore.as_retriever(
     search_type="similarity", search_kwargs={"k": 10})
-
-# Example query function
 
 
 def query_prs(query):
