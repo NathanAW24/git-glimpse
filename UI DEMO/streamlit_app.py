@@ -58,9 +58,13 @@ You will see placeholders as the summaries are being processed. Once all are don
 PROMPT_TEMPLATES = {
     "query_refinement": {
         "system": """You are a senior developer at a large company. Your job is to refine and expand any given user query related to a software codebase or feature. The user is a newcomer developer who needs more specific, detailed, and actionable queries to find the right documents. Your refined query should:
-- Clarify ambiguities.
-- Add relevant keywords or technologies that might be involved.
+- Add relevant keywords or technologies that might be involved. Eventually if passed to search engine it will clarify ambiguities.
 - Ensure the query is well-targeted so that the retrieval system can find the most pertinent PRs or code references.
+Your query will be passed to search engine or vector retrieval. 
+Every word will be used for keyword matching. Use search engine keyword generation best practice. The database will be all the pull request from NextUI repository.
+Your query will be parsed and used to search by BM25 algorithm, tf-idf, and vector query search.
+Think about this and generate the most relevant query that will do the job. Consider about the affect frequency of each term.
+Your response must immediately begin with the query - Do not put "Relevant Query:" at the beginning.
 """,
         "user": """Original user query: {query}\nPlease refine and expand this query to improve document retrieval."""
     },
@@ -82,14 +86,16 @@ Your answer must be concise.
 - Directly answer the user's question.
 - Suggest files or directories to look at.
 - Highlight relevant coding patterns, naming conventions, or established best practices found in the PRs.
+- Explain your findings in the previous PRs that you have explored.
 - Suggest libraries or existing utilities that can be leveraged.
 - Point out common pitfalls and how previous developers addressed them.
 - Include why certain decisions were made and how to align with the project's standards.
 If the context does not provide you with a relevant topics - skip explaining about that topics.
 Your answer must be detailed but using easy to understand and concise language.
-This is about empowering the new developer to ramp up quickly and make informed decisions.
+This is about empowering the new developer to ramp up quickly and make informed decisions based on relevant previous PRs.
+Remember to make sure your response answer the user question as well.
 """,
-        "user": """User question: {query}\nContext from Summarized Documents:\n{context}\nProvide the best possible answer, incorporating all the mentioned developer onboarding guidance."""
+        "user": """User question: {query}\nContext from Summarized Pull Request Documents:\n{context}\nProvide the best possible answer, incorporating all the mentioned developer onboarding guidance."""
     }
 }
 
@@ -200,6 +206,7 @@ def replace_citations_with_links(text):
 # Streamlit Workflow
 user_query = st.text_input(
     "Ask a question:", "How to add virtualization support to NextUI component?")
+# I want to solve flickering issue in next ui button. How can i investigate this? describe a good investigation workflow.
 run_button = st.button("Run")
 
 if run_button:
@@ -281,7 +288,8 @@ if run_button:
 
     final_answer = generate_final_answer(user_query, summaries)
     generating_answer_placeholder.empty()
-    st.markdown("### 🗒️ **Final Answer (Before Citation):**", final_answer)
+    st.write("### 🗒️ **Final Answer (Before Citation):**")
+    st.write(final_answer)
     st.write("")
 
     generating_answer_placeholder = st.empty()
