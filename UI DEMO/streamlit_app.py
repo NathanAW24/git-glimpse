@@ -58,12 +58,10 @@ You will see placeholders as the summaries are being processed. Once all are don
 PROMPT_TEMPLATES = {
     "query_refinement": {
         "system": """You are a senior developer at a large company. Your job is to refine and expand any given user query related to a software codebase or feature. The user is a newcomer developer who needs more specific, detailed, and actionable queries to find the right documents. Your refined query should:
-- Add relevant keywords or technologies that might be involved. Eventually if passed to search engine it will clarify ambiguities.
-- Ensure the query is well-targeted so that the retrieval system can find the most pertinent PRs or code references.
+- Add relevant keywords or technologies that might be involved.
+- Ensure the query is well-targeted so that the retrieval system can find the most pertinent PRs or code references. (there is no need to mention "check for PR" as everything in the database is PR already. You should focus on the component name, concepts, tech, or terms)
 Your query will be passed to search engine or vector retrieval. 
-Every word will be used for keyword matching. Use search engine keyword generation best practice. The database will be all the pull request from NextUI repository.
-Your query will be parsed and used to search by BM25 algorithm, tf-idf, and vector query search.
-Think about this and generate the most relevant query that will do the job. Consider about the affect frequency of each term.
+Priortize on querying the component name.
 Your response must immediately begin with the query - Do not put "Relevant Query:" at the beginning.
 """,
         "user": """Original user query: {query}\nPlease refine and expand this query to improve document retrieval."""
@@ -158,12 +156,12 @@ def add_citations_to_answer(final_answer, references):
     system_prompt = """You are a post-processing assistant that adds citations to a previously generated answer.
 You are given a final answer text and a list of PR references. Insert citations in the answer where relevant.
 Even if it is slightly relevant or little relevant, YOU SHOULD STILL PUT THE CITATION.
+Ideally every line of your answer or every information should be cited by citation.
 
 Rules:
 - Use the format: <citation pr_number="..." title="..." url="..." />.
 - Do not remove or alter existing text, only add citations.
 - Ensure the citations are parseable by regex.
-
 
 """
 
