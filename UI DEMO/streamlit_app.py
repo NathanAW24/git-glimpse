@@ -78,6 +78,7 @@ PROMPT_TEMPLATES = {
     "summarization": {
         "system": """You are a senior developer summarizing a document (e.g., a PR). The summary should:
 - Focus on the context relevant to the given query.
+- Highlight code changes that might be helpful or good to know.
 - Highlight which files or modules are touched.
 - Mention coding conventions, library usage, or patterns observed.
 - Note any pitfalls, best practices, or insights from PR discussions.
@@ -159,9 +160,52 @@ def extract_pr_info(text):
     return None
 
 
+def add_citations_to_answer(final_answer, references):
+    # references is a list of dicts: [{"pr_number":..., "title":..., "url":...}, ...]
+    # Convert references to a string for the LLM
+    refs_str = "\n".join(
+        [f"PR Number: {ref['pr_number']}, Title: {ref['title']}, URL: {ref['url']}" for ref in references]
+    )
+
+    system_prompt = """You are a post-processing assistant that adds citations to a previously generated answer.
+You are given a final answer text and a list of PR references. Insert citations in the answer where relevant.
+
+Rules:
+- Use the format: <citation pr_number="..." title="..." url="..." />.
+- If a specific part of the answer references a concept or improvement derived from a particular PR, insert the citation tag right after that mention.
+- If no obvious place in the text aligns with a PR, add them at the end under a "References:" section.
+- Do not remove or alter existing text, only add citations.
+- Ensure the citations are parseable by regex.
+"""
+
+    user_prompt = f"""
+Final Answer Text:
+{final_answer}
+
+References (PRs):
+{refs_str}
+
+Please insert citations as instructed.
+"""
+
+    annotated_answer = call_llm(
+        system_prompt, user_prompt, model="gpt-4o", temperature=0)
+    return annotated_answer
+
+
+def parse_citations(annotated_answer):
+    # Example regex to find citation tags
+    pattern = r'<citation\s+pr_number="([^"]+)"\s+title="([^"]+)"\s+url="([^"]+)"\s*/>'
+    matches = re.findall(pattern, annotated_answer)
+    citations = []
+    for pr_number, title, url in matches:
+        citations.append({"pr_number": pr_number, "title": title, "url": url})
+    return citations
+
+
 # Streamlit Workflow
 user_query = st.text_input(
-    "Ask a question:", "How can I enhance the validation capabilities of a Select component?")
+    "Ask a question:", "How to add virtualization support to NextUI component? How to support virtualization for DROPDOWN component?")
 run_button = st.button("Run")
 
 if run_button:
@@ -198,20 +242,34 @@ if run_button:
         with st.expander("View Summary"):
             st.write(summary)
 
-        # Extract PR info again for display (already done above, but here we show inline if needed)
-        prs = extract_pr_info(content)
-        if prs:
-            pr_num, pr_title, pr_url = prs
-            st.markdown("**Relevant PR:**")
-            st.markdown(f"- **PR #{pr_num}:** [{pr_title}]({pr_url})")
-        else:
-            st.write("No PRs found in this document.")
-
         # Collapsible full content
         with st.expander("View Full Content"):
             st.write(content)
 
     # Step 4: Generate Final Answer
-    st.markdown("**Step 4: Generate Final Answer**")
+    st.markdown("**Step 4: Generate Answer Without Citation**")
     final_answer = generate_final_answer(user_query, summaries)
     st.write("**Final Answer:**", final_answer)
+
+    references = []
+    for fname, content in retrieved_docs.items():
+        pr_info = extract_pr_info(content)
+        if pr_info:
+            pr_num, pr_title, pr_url = pr_info
+            references.append(
+                {"pr_number": pr_num, "title": pr_title, "url": pr_url})
+
+    # Second LLM call for adding citations
+    annotated_answer = add_citations_to_answer(final_answer, references)
+
+    # Now parse the citations
+    citations = parse_citations(annotated_answer)
+
+    # Display the annotated answer with citations in Streamlit
+    st.markdown("# **Final Answer (Annotated with Citations):**")
+    st.write(annotated_answer)
+
+    if citations:
+        st.markdown("**References Found in Answer:**")
+        for c in citations:
+            st.markdown(f"- PR #{c['pr_number']}: [{c['title']}]({c['url']})")
