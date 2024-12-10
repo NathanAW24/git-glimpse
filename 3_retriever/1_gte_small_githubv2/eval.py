@@ -10,7 +10,6 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from pydantic import BaseModel, Field
 import json
-from index import BM25Retriever, _read_documents_from_folder
 
 
 # Load environment variables
@@ -102,9 +101,21 @@ questions = [[
 ]]
 
 # Step 2: Load vector database
-folder_path = "processed_docs"  # Ensure the path matches your folder structure
-documents = _read_documents_from_folder(folder_path)
-retriever = BM25Retriever(documents)
+VECTOR_DB_DIR = "vector_db"
+MODEL_NAME = "thenlper/gte-small"
+# Use OpenAI embeddings if applicable
+embedding_model = HuggingFaceEmbeddings(
+    model_name=MODEL_NAME,
+    # Ensure the device matches the previous setup
+    model_kwargs={"device": "mps"},
+    encode_kwargs={"normalize_embeddings": True}
+)
+vectorstore = Chroma(
+    persist_directory=VECTOR_DB_DIR,
+    embedding_function=embedding_model
+)
+retriever = vectorstore.as_retriever(
+    search_type="similarity", search_kwargs={"k": 5})
 
 # Step 3: Initialize the LLM judge using GPT-4
 
@@ -192,12 +203,12 @@ for [file_name_query, question] in questions:
     print("Evaluating: ", question)
 
     # Retrieve top N documents using BM25
-    retrieved_docs = retriever.retrieve(question, top_n=5)
-
+    retrieved_docs = retriever.invoke(question)
     doc_scores = []
-    for doc_index, score in retrieved_docs:
+    for doc in retrieved_docs:
         # Get the document content using index
-        [file_name, content] = documents[doc_index]
+        print(doc.metadata)
+        file_name, content = doc.metadata["file_name"], doc.page_content
         if file_name == file_name_query:
             doc_scores.append(10)
             print("Match found!", file_name)

@@ -15,7 +15,7 @@ def _read_documents_from_folder(folder_path):
             if file.endswith(".txt"):
                 file_path = os.path.join(root, file)
                 with open(file_path, 'r', encoding='utf-8') as f:
-                    documents.append(f.read())
+                    documents.append([file, f.read()])
     return documents
 
 
@@ -26,7 +26,8 @@ class BM25Retriever:
 
         :param documents: List of documents (each document is a string).
         """
-        self.tokenized_documents = [doc.split() for doc in documents]
+        self.tokenized_documents = [doc.split()
+                                    for [file_name, doc] in documents]
         self.bm25 = BM25Okapi(self.tokenized_documents)
 
     def retrieve(self, query, top_n=5):

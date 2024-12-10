@@ -47,7 +47,8 @@ def generate_question(pr_content):
     Normally a developer will be start querying the old PRs to see how others have done it or not.
     
     Write the exact question you would ask that, if answered, the answer would directly be the content of this PR.
-    The question should reflect a developer's perspective and be highly relevant to the PR's content. It should be 1-3 sentences.
+    The question should reflect a developer's perspective and be highly relevant to the PR's content.
+    BE CONCISE. MAX 1 SENTENCE with few words.
     """
     try:
         response = client.chat.completions.create(
@@ -91,7 +92,8 @@ if __name__ == "__main__":
     results = process_samples(samples, BASE_PATH)
 
     # Transform results to only include questions as a list of strings
-    questions_list = [result["question"] for result in results]
+    questions_list = [[result["file"], result["question"]]
+                      for result in results]
 
     # Save results to a JSON file
     with open(RESULT_JSON_FILE, "w") as json_file:
