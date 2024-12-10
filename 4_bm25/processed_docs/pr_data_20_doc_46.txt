@@ -1,0 +1,98 @@
+Pull Request Number: 1542
+Title: Fix/1298
+Base Branch: main
+Head Branch: fix/1298
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/1542
+State: MERGED
+Created At: 2023-09-01T20:28:11Z
+Merged At: 2023-09-01T20:42:09Z
+Participants: jrgarciadev
+
+Description:
+Closes #1298
+📝 Description
+Navbar Menu lacks focus trapping
+⛳️ Current behavior (updates)
+Navbar Menu lacks focus trapping
+🚀 New behavior
+Dismissable buttons added to trap navbar menu focus
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(modal): focus trap added\n- chore(navbar): changeset added\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 7f3c242a31e02ee4a8990d3ea8387828fd05d95b
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name               | Type  |
+| ------------------ | ----- |
+| @nextui-org/navbar | Patch |
+| @nextui-org/react  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/1298?filename=.changeset/strange-spies-sin.md&value=---%0A%22%40nextui-org%2Fnavbar%22%3A%20patch%0A---%0A%0AFix%2F1298%0A)
+
+\n- vercel: [vc]: #oN+kTs00S4cnTeCz64pvvmcDApovoXQUeyma6y0UGr8=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9DUzNyd0wyemRZM1phVkEzbmtFUzZaYWJkVFBLIiwibmV4dENvbW1pdFN0YXR1cyI6IkZBSUxFRCIsInByZXZpZXdVcmwiOiIifSx7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvR0VHOUdqOGFWZ1p4R0VwYWhENFd2VTZEUE11ciIsIm5leHRDb21taXRTdGF0dXMiOiJGQUlMRUQiLCJwcmV2aWV3VXJsIjoiIn1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated (UTC) |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs-v2** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/CS3rwL2zdY3ZaVA3nkES6ZabdTPK)) |  | Sep 1, 2023 8:28pm |
+| **nextui-storybook-v2** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/GEG9Gj8aVgZxGEpahD4WvU6DPMur)) |  | Sep 1, 2023 8:28pm |
+
+
+\n
+
+Files Changed:
+- .changeset/blue-days-work.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/navbar": patch
++---
++
++Fix #1298 navbar-menu focus trapping fixed\n- packages/components/navbar/src/navbar-menu.tsx (modified, 11 changes)\n  Patch: @@ -5,7 +5,7 @@ import {AnimatePresence, HTMLMotionProps, motion} from "framer-motion";
+ import {mergeProps} from "@react-aria/utils";
+ import {ReactElement, useCallback} from "react";
+ import {RemoveScroll} from "react-remove-scroll";
+-import {Overlay} from "@react-aria/overlays";
++import {Overlay, DismissButton} from "@react-aria/overlays";
+ 
+ import {menuVariants} from "./navbar-menu-transitions";
+ import {useNavbarContext} from "./navbar-context";
+@@ -27,15 +27,20 @@ const NavbarMenu = forwardRef<"ul", NavbarMenuProps>((props, ref) => {
+   const {className, children, portalContainer, motionProps, style, ...otherProps} = props;
+   const domRef = useDOMRef(ref);
+ 
+-  const {slots, isMenuOpen, height, disableAnimation, classNames} = useNavbarContext();
++  const {slots, isMenuOpen, setIsMenuOpen, height, disableAnimation, classNames} =
++    useNavbarContext();
+ 
+   const styles = clsx(classNames?.menu, className);
+ 
+   const MenuWrapper = useCallback(
+     ({children}: {children: ReactElement}) => {
+       return (
+         <RemoveScroll forwardProps enabled={isMenuOpen} removeScrollBar={false}>
+-          {children}
++          <>
++            <DismissButton onDismiss={() => setIsMenuOpen(false)} />
++            {children}
++            <DismissButton onDismiss={() => setIsMenuOpen(false)} />
++          </>
+         </RemoveScroll>
+       );
+     },\n

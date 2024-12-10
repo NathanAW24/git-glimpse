@@ -1,0 +1,118 @@
+Pull Request Number: 1070
+Title: fix deprecated `MediaQueryList`
+Base Branch: main
+Head Branch: fix/1068-mediaquery
+Author: acald-creator
+URL: https://github.com/nextui-org/nextui/pull/1070
+State: MERGED
+Created At: 2023-03-13T17:14:50Z
+Merged At: 2023-05-25T02:45:20Z
+Participants: acald-creator, Yuri-Lima, jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+
+Minor fix to rename two methods addListener and removeListener to addEventListener and removeEventListener
+
+⛳️ Current behavior (updates)
+
+Refer to open issue #1068 about the deprecated method via Typescript code.
+
+🚀 New behavior
+
+Renamed the deprecated methods to the new ones
+
+💣 Is this a breaking change (Yes/No):
+
+no, it does not JS, but only affects TS
+
+
+📝 Additional Information
+
+Commits:
+- fix deprecated mediaquerylist\n
+
+Labels:
+
+
+Comments:
+- vercel: @acald-creator is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22c254d0bc95d2e020481a05e3769ebe478ca061e1%22%7D%2C%22id%22%3A%22QmebNsrhh1o5uo1vv2zqUBszxMUzF7qzsfNZMrmvrs8Z6Q%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1070%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #0fjadMQMQFOozlb0DSTOb/VDWvEv9fiJ2e/gn9PSy9o=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLWFjYWxkLWNyZWF0b3ItZml4LTEtMGY2MTJiLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rL0FxTWdRalVvQU41Q1AzTUJ4eTdiblRKQkpBZkciLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay1naXQtZm9yay1hY2FsZC1jcmVhdG9yLWZpeC0xLTBmNjEyYi1uZXh0dWktb3JnLnZlcmNlbC5hcHAifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/AqMgQjUoAN5CP3MBxy7bnTJBJAfG)) | [Visit Preview](https://nextui-storybook-git-fork-acald-creator-fix-1-0f612b-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-acald-creator-fix-1-0f612b-nextui-org.vercel.app) | Mar 13, 2023 at 5:25PM (UTC) |
+
+\n- Yuri-Lima: Any news about this push?\n
+
+Files Changed:
+- apps/docs/content/components/grid/hideElement.ts (modified, 4 changes)\n  Patch: @@ -12,14 +12,14 @@ export const useMediaQuery = (width)=> {
+   }, []);
+   React.useEffect(() => {
+     const media = window.matchMedia(\`(max-width: \${width}px)\`);
+-    media.addListener(updateTarget);
++    media.addEventListener('change', updateTarget);
+ 
+     // Check on mount (callback is not called until a change occurs)
+     if (media.matches) {
+       setTargetReached(true);
+     }
+ 
+-    return () => media.removeListener(updateTarget);
++    return () => media.removeEventListener('change', updateTarget);
+   }, []);
+ 
+   return targetReached;\n- apps/docs/content/components/grid/responsive.ts (modified, 4 changes)\n  Patch: @@ -12,14 +12,14 @@ export const useMediaQuery = (width)=> {
+   }, []);
+   React.useEffect(() => {
+     const media = window.matchMedia(\`(max-width: \${width}px)\`);
+-    media.addListener(updateTarget);
++    addEventListener('change', updateTarget);
+ 
+     // Check on mount (callback is not called until a change occurs)
+     if (media.matches) {
+       setTargetReached(true);
+     }
+ 
+-    return () => media.removeListener(updateTarget);
++    return () => media.removeEventListener('change', updateTarget);
+   }, []);
+ 
+   return targetReached;\n- apps/docs/src/hooks/use-media-query.ts (modified, 4 changes)\n  Patch: @@ -14,14 +14,14 @@ export const useMediaQuery = (width: number): boolean => {
+   useEffect(() => {
+     const media = window.matchMedia(`(max-width: ${width}px)`);
+ 
+-    media.addListener(updateTarget);
++    media.addEventListener("change", updateTarget);
+ 
+     // Check on mount (callback is not called until a change occurs)
+     if (media.matches) {
+       setTargetReached(true);
+     }
+ 
+-    return () => media.removeListener(updateTarget);
++    return () => media.removeEventListener("change", updateTarget);
+   }, []);
+ 
+   return targetReached;\n- apps/docs/src/hooks/use-prefers-reduced-motion.ts (modified, 4 changes)\n  Patch: @@ -23,14 +23,14 @@ function usePrefersReducedMotion() {
+     if (mediaQueryList.addEventListener) {
+       mediaQueryList.addEventListener("change", listener);
+     } else {
+-      mediaQueryList.addListener(listener);
++      mediaQueryList.addEventListener("change", listener);
+     }
+ 
+     return () => {
+       if (mediaQueryList.removeEventListener) {
+         mediaQueryList.removeEventListener("change", listener);
+       } else {
+-        mediaQueryList.removeListener(listener);
++        mediaQueryList.removeEventListener("change", listener);
+       }
+     };
+   }, []);\n

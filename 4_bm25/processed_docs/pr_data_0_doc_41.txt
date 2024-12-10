@@ -1,0 +1,547 @@
+Pull Request Number: 4215
+Title: fix(theme): support description with a single space using zero-width …
+Base Branch: canary
+Head Branch: zero-width-space
+Author: iqingting
+URL: https://github.com/nextui-org/nextui/pull/4215
+State: OPEN
+Created At: 2024-12-03T09:25:01Z
+Merged At: None
+Participants: iqingting, Peterl561
+
+Description:
+📝 Description
+Support description=" " to maintain a consistent layout when some form controls have descriptions and others do not.
+⛳️ Current behavior (updates)
+
+🚀 New behavior
+
+
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Summary by CodeRabbit
+Release Notes
+
+
+New Features
+
+Introduced new story templates for components like Input, Textarea, and DatePicker, enhancing their presentation with descriptions.
+Added type safety for the InputOtp component, improving prop validation.
+
+
+
+Improvements
+
+Streamlined the rendering of descriptions in various components to handle empty or whitespace-only cases more gracefully.
+Enhanced layout and styling for WithDescription exports across multiple components for better visual representation.
+
+
+
+Bug Fixes
+
+Adjusted validation handling in the RadioGroup component to remove unnecessary properties.
+
+Commits:
+- fix(theme): support description with a single space using zero-width space\n- fix: revert code\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: ecfd47196b95230755dfcdeca84aa4ca96197f82
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/iqingting/nextui/new/zero-width-space?filename=.changeset/many-snails-train.md&value=---%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A%22%40nextui-org%2Fcheckbox%22%3A%20patch%0A%22%40nextui-org%2Fdate-input%22%3A%20patch%0A%22%40nextui-org%2Fdate-picker%22%3A%20patch%0A%22%40nextui-org%2Finput-otp%22%3A%20patch%0A%22%40nextui-org%2Finput%22%3A%20patch%0A%22%40nextui-org%2Fradio%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A---%0A%0Afix(theme)%3A%20support%20description%20with%20a%20single%20space%20using%20zero-width%20%E2%80%A6%0A)
+
+\n- vercel: @iqingting is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22917fbb1698f3cbd7318c0f3d50a29bcd4c11f2af%22%7D%2C%22id%22%3A%22QmWgFNKwxede2bKqZ356jC6KCgsFJxP8HH4nqK7zTsFkRM%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A4215%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: rate limited by coderabbit.ai -->
+
+> [!WARNING]
+> ## Rate limit exceeded
+> 
+> @iqingting has exceeded the limit for the number of commits or files that can be reviewed per hour. Please wait **22 minutes and 25 seconds** before requesting another review.
+> 
+> <details>
+> <summary>⌛ How to resolve this issue?</summary>
+> 
+> After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR.
+> 
+> We recommend that you space out your commits to avoid hitting the rate limit.
+> 
+> </details>
+> 
+> 
+> <details>
+> <summary>🚦 How do rate limits work?</summary>
+> 
+> CodeRabbit enforces hourly rate limits for each developer per organization.
+> 
+> Our paid plans have higher rate limits than the trial, open-source and free plans. In all cases, we re-allow further reviews after a brief timeout.
+> 
+> Please see our [FAQ](https://docs.coderabbit.ai/faq) for further information.
+> 
+> </details>
+> 
+> <details>
+> <summary>📥 Commits</summary>
+> 
+> Reviewing files that changed from the base of the PR and between 704ba5254980a7c095328f8bc1348a126cbd8eb3 and ecfd47196b95230755dfcdeca84aa4ca96197f82.
+> 
+> </details>
+
+<!-- end of auto-generated comment: rate limited by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This pull request introduces modifications across various story files for components like Autocomplete, Checkbox, Date Input, and others. The primary focus is on the `WithDescription` export, where the rendering logic has been updated to remove the `description` prop from `args` and instead manage it directly within the render function. Additionally, several components have seen changes to how descriptions are displayed, particularly handling cases where the description is a single space character. Overall, the changes streamline the presentation of the stories while maintaining existing functionality.
+
+## Changes
+
+| File Path                                                                 | Change Summary                                                                                                           |
+|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| `packages/components/autocomplete/stories/autocomplete.stories.tsx`      | Removed `MirrorTemplate`, replaced with an inline function for `WithDescription`, removed `description` from `args`.  |
+| `packages/components/checkbox/stories/checkbox-group.stories.tsx`       | Updated `WithDescription` to wrap two `Template` components in a `div`, removed `description` from `args`.            |
+| `packages/components/date-input/src/date-input-group.tsx`               | Modified rendering of `description` to display a non-breaking space for single spaces.                                 |
+| `packages/components/date-input/stories/date-input.stories.tsx`         | Updated `WithDescription` to center `DateInput` components, removed `description` from `args`.                        |
+| `packages/components/date-input/stories/time-input.stories.tsx`         | Updated `WithDescription` to display two `TimeInput` components, removed `description` from `args`.                   |
+| `packages/components/date-picker/stories/date-picker.stories.tsx`       | Updated `WithDescription` to wrap `Template` in a styled `div`, removed `description` from `args`.                    |
+| `packages/components/date-picker/stories/date-range-picker.stories.tsx` | Updated `WithDescription` to include a wrapper `div`, removed `description` from `args`.                               |
+| `packages/components/input-otp/stories/input-otp.stories.tsx`           | Introduced `InputOtpProps`, updated `WithDescription` to conditionally include `description`.                          |
+| `packages/components/input/src/input.tsx`                               | Modified rendering logic for `description` to handle single space characters.                                          |
+| `packages/components/input/stories/input.stories.tsx`                   | Added `WithDescriptionTemplate`, replacing `MirrorTemplate` in `WithDescription`.                                      |
+| `packages/components/input/stories/textarea.stories.tsx`                | Introduced new `WithDescription` story for `Textarea` component.                                                      |
+| `packages/components/radio/stories/radio.stories.tsx`                   | Updated `WithDescription` to render two `Template` components, removed `isInvalid` from `ServerValidationTemplate`.    |
+| `packages/components/select/src/select.tsx`                             | Modified rendering logic for `description` to display non-breaking space for single spaces.                             |
+| `packages/components/select/stories/select.stories.tsx`                 | Updated `WithDescription` to render multiple `Template` instances with varying props, removed `description` from `args`.|
+
+## Possibly related PRs
+- **#2987**: Modifications to the `WithDescription` export in the `autocomplete.stories.tsx` file.
+- **#2990**: Changes to the `WithDescription` export in the `checkbox-group.stories.tsx` file.
+- **#3281**: Updates to the `WithDescription` export in the `date-picker.stories.tsx` file.
+- **#3302**: Changes to the `WithDescription` export in the `date-range-picker.stories.tsx` file.
+- **#3552**: Modifications to the `WithDescription` export in the `radio.stories.tsx` file.
+- **#3658**: Changes to the `WithDescription` export in the `select.stories.tsx` file.
+- **#4203**: Introduction of virtualization support for the `Select` component.
+- **#4206**: Introduction of virtualization support for the `Listbox` component.
+
+## Suggested labels
+`👀 Status: In Review`
+
+## Suggested reviewers
+- jrgarciadev
+- wingkwong
+
+<!-- walkthrough_end -->
+
+<!-- internal state start -->
+
+
+<!-- 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= -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- iqingting: > Aligning inputs is a styling problem that can be fixed through CSS (e.g. `align-items: flex-start;` or `items-start` class in tailwind). No need to make this change to input description's behavior.
+
+It's not just a style issue; the problem is that when no description is provided, the error messages disrupt the layout. For example, if the form is in a modal, the current behavior causes the modal's height to change as the form's validation status updates.
+
+And what I do is set the description to an empty value to reserve space so that the error messages no longer disrupt the layout.
+
+https://stackblitz.com/edit/vitejs-vite-mj4jjg?file=src%2FApp.tsx
+
+
+https://github.com/user-attachments/assets/4ea978b6-926a-40b2-82e8-cb520b73bf7b
+\n- Peterl561: > It's not just a style issue; the problem is that when no description is provided, the error messages disrupt the layout. For example, if the form is in a modal, the current behavior causes the modal's height to change as the form's validation status updates.
+
+That is definitely not great UI-wise, but I think solving it with some CSS is preferable to the implementation proposed in this PR, for the reasons I mentioned in my previous comments.\n- iqingting: > > It's not just a style issue; the problem is that when no description is provided, the error messages disrupt the layout. For example, if the form is in a modal, the current behavior causes the modal's height to change as the form's validation status updates.
+> 
+> 
+> 
+> That is definitely not great UI-wise, but I think solving it with some CSS is preferable to the implementation proposed in this PR, for the reasons I mentioned in my previous comments.
+
+I agree it’s not the best solution, but
+
+1. Why do you think don't disrupt the form layout when validate status change is not great UI-wise.
+2. `flex-start` doesn't work unless you set a static height for every form control, if you agree that preventing the form layout is a reasonable requirement.\n- Peterl561: > 1. Why do you think don't disrupt the form layout when validate status change is not great UI-wise.
+> 2. `flex-start` doesn't work unless you set a static height for every form control, if you agree that preventing the form layout is a reasonable requirement.
+
+Sorry for the confusion. I meant that the form height changing is not great. I do think it would be nice if we could come up with a generalized fix, but I don't have any decent ideas.
+
+The actual CSS implementation will of course depend on your requirements. If you are interested in discussing a specific CSS solution for your situation, you could try asking in Discord.\n
+
+Files Changed:
+- packages/components/autocomplete/stories/autocomplete.stories.tsx (modified, 34 changes)\n  Patch: @@ -285,30 +285,6 @@ const FullyControlledTemplate = () => {
+   );
+ };
+ 
+-const MirrorTemplate = ({color, variant, ...args}: AutocompleteProps) => (
+-  <div className="w-full max-w-xl flex flex-row gap-4">
+-    <Autocomplete
+-      className="max-w-xs"
+-      color={color}
+-      label="Select an animal"
+-      variant={variant}
+-      {...args}
+-    >
+-      {items}
+-    </Autocomplete>
+-    <Autocomplete
+-      className="max-w-xs"
+-      color={color}
+-      label="Favorite Animal"
+-      placeholder="Select an animal"
+-      variant={variant}
+-      {...args}
+-    >
+-      {items}
+-    </Autocomplete>
+-  </div>
+-);
+-
+ const LabelPlacementTemplate = ({color, variant, ...args}: AutocompleteProps) => (
+   <div className="w-full flex flex-col items-center gap-12">
+     <div className="w-full max-w-2xl flex flex-col gap-3">
+@@ -983,11 +959,17 @@ export const IsInvalid = {
+ };
+ 
+ export const WithDescription = {
+-  render: MirrorTemplate,
++  render: (props: AutocompleteProps) => {
++    return (
++      <div className="w-full max-w-3xl flex justify-center gap-4">
++        <Template {...props} description="Select your favorite animal" />
++        <Template {...props} description=" " />
++      </div>
++    );
++  },
+ 
+   args: {
+     ...defaultProps,
+-    description: "Select your favorite animal",
+   },
+ };
+ \n- packages/components/checkbox/stories/checkbox-group.stories.tsx (modified, 10 changes)\n  Patch: @@ -232,11 +232,17 @@ export const LineThrough = {
+ };
+ 
+ export const WithDescription = {
+-  render: Template,
++  render: (args: CheckboxGroupProps) => {
++    return (
++      <div className="w-full max-w-3xl flex justify-center gap-4">
++        <Template {...args} description="Select the cities you want to visit" />
++        <Template {...args} description=" " />
++      </div>
++    );
++  },
+ 
+   args: {
+     ...defaultProps,
+-    description: "Select the cities you want to visit",
+   },
+ };
+ \n- packages/components/date-input/src/date-input-group.tsx (modified, 4 changes)\n  Patch: @@ -64,7 +64,9 @@ export const DateInputGroup = forwardRef<"div", DateInputGroupProps>((props, ref
+         {isInvalid && errorMessage ? (
+           <div {...errorMessageProps}>{errorMessage}</div>
+         ) : description ? (
+-          <div {...descriptionProps}>{description}</div>
++          <div {...descriptionProps}>
++            {description === " " ? <span>&#8203;</span> : description}
++          </div>
+         ) : null}
+       </div>
+     );\n- packages/components/date-input/stories/date-input.stories.tsx (modified, 10 changes)\n  Patch: @@ -210,11 +210,17 @@ export const WithoutLabel = {
+ };
+ 
+ export const WithDescription = {
+-  render: Template,
++  render: (props: DateInputProps) => {
++    return (
++      <div className="w-full max-w-3xl flex justify-center gap-4">
++        <Template {...props} description="Please enter your birth date" />
++        <Template {...props} description=" " />
++      </div>
++    );
++  },
+ 
+   args: {
+     ...defaultProps,
+-    description: "Please enter your birth date",
+   },
+ };
+ \n- packages/components/date-input/stories/time-input.stories.tsx (modified, 10 changes)\n  Patch: @@ -185,11 +185,17 @@ export const WithoutLabel = {
+ };
+ 
+ export const WithDescription = {
+-  render: Template,
++  render: (args: TimeInputProps) => {
++    return (
++      <div className="w-full max-w-3xl flex justify-center gap-4">
++        <Template {...args} description="Please enter your meeting time" />
++        <Template {...args} description=" " />
++      </div>
++    );
++  },
+ 
+   args: {
+     ...defaultProps,
+-    description: "Please enter your meeting time",
+   },
+ };
+ \n- packages/components/date-picker/stories/date-picker.stories.tsx (modified, 10 changes)\n  Patch: @@ -489,11 +489,17 @@ export const WithoutLabel = {
+ };
+ 
+ export const WithDescription = {
+-  render: Template,
++  render: (args: DatePickerProps) => {
++    return (
++      <div className="w-full max-w-3xl flex justify-center gap-4">
++        <Template {...args} description="Please enter your birth date" />
++        <Template {...args} description=" " />
++      </div>
++    );
++  },
+ 
+   args: {
+     ...defaultProps,
+-    description: "Please enter your birth date",
+   },
+ };
+ \n- packages/components/date-picker/stories/date-range-picker.stories.tsx (modified, 10 changes)\n  Patch: @@ -570,11 +570,17 @@ export const WithoutLabel = {
+ };
+ 
+ export const WithDescription = {
+-  render: Template,
++  render: (args: DateRangePickerProps) => {
++    return (
++      <div className="w-full max-w-3xl flex justify-center gap-4">
++        <Template {...args} description="Please enter your stay duration" />
++        <Template {...args} description=" " />
++      </div>
++    );
++  },
+ 
+   args: {
+     ...defaultProps,
+-    description: "Please enter your stay duration",
+   },
+ };
+ \n- packages/components/input-otp/stories/input-otp.stories.tsx (modified, 12 changes)\n  Patch: @@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
+ import {ValidationResult} from "@react-types/shared";
+ import {Button} from "@nextui-org/button";
+ 
+-import {InputOtp} from "../src";
++import {InputOtp, InputOtpProps} from "../src";
+ 
+ export default {
+   title: "Components/InputOtp",
+@@ -213,11 +213,17 @@ export const ReadOnly = {
+ };
+ 
+ export const WithDescription = {
+-  render: Template,
++  render: (args: InputOtpProps) => {
++    return (
++      <div className="w-full max-w-3xl flex justify-center gap-4">
++        <Template {...args} description="Enter the 4 digit code sent to your email" />
++        <Template {...args} description=" " />
++      </div>
++    );
++  },
+   args: {
+     ...defaultProps,
+     length: 4,
+-    description: "Enter the 4 digit code sent to your email",
+   },
+ };
+ \n- packages/components/input/src/input.tsx (modified, 4 changes)\n  Patch: @@ -53,7 +53,9 @@ const Input = forwardRef<"input", InputProps>((props, ref) => {
+         {shouldShowError ? (
+           <div {...getErrorMessageProps()}>{errorMessage}</div>
+         ) : (
+-          <div {...getDescriptionProps()}>{description}</div>
++          <div {...getDescriptionProps()}>
++            {description === " " ? <span>&#8203;</span> : description}
++          </div>
+         )}
+       </div>
+     );\n- packages/components/input/stories/input.stories.tsx (modified, 10 changes)\n  Patch: @@ -91,6 +91,14 @@ const MirrorTemplate = (args) => (
+   </div>
+ );
+ 
++const WithDescriptionTemplate = (args) => (
++  <div className="w-full max-w-4xl flex flex-row items-end gap-4">
++    <Input {...args} />
++    <Input {...args} placeholder="Enter your email" />
++    <Input {...args} description=" " placeholder="Enter your email" />
++  </div>
++);
++
+ const FormTemplate = (args) => (
+   <form
+     className="w-full max-w-xl flex flex-row items-end gap-4"
+@@ -590,7 +598,7 @@ export const WithoutLabel = {
+ };
+ 
+ export const WithDescription = {
+-  render: MirrorTemplate,
++  render: WithDescriptionTemplate,
+ 
+   args: {
+     ...defaultProps,\n- packages/components/input/stories/textarea.stories.tsx (modified, 15 changes)\n  Patch: @@ -214,6 +214,21 @@ export const WithEndContent = {
+   },
+ };
+ 
++export const WithDescription = {
++  render: (args: TextAreaProps) => {
++    return (
++      <div className="w-full max-w-3xl flex justify-center gap-4">
++        <Template {...args} description="Please enter your description" />
++        <Template {...args} description=" " />
++      </div>
++    );
++  },
++
++  args: {
++    ...defaultProps,
++  },
++};
++
+ const ServerValidationTemplate = (args: TextAreaProps) => {
+   const [serverErrors, setServerErrors] = React.useState({});
+   const onSubmit = (e) => {\n- packages/components/radio/stories/radio.stories.tsx (modified, 9 changes)\n  Patch: @@ -271,7 +271,14 @@ export const IsRequired = {
+ };
+ 
+ export const WithDescription = {
+-  render: Template,
++  render: (args: RadioGroupProps) => {
++    return (
++      <div className="w-full max-w-3xl flex justify-center gap-4">
++        <Template {...args} description="Please select an option" />
++        <Template {...args} description=" " />
++      </div>
++    );
++  },
+ 
+   args: {
+     ...defaultProps,\n- packages/components/select/src/select.tsx (modified, 4 changes)\n  Patch: @@ -71,7 +71,9 @@ const Select = forwardRef(function Select<T extends object>(
+         {shouldShowError ? (
+           <div {...getErrorMessageProps()}>{errorMessage}</div>
+         ) : (
+-          <div {...getDescriptionProps()}>{description}</div>
++          <div {...getDescriptionProps()}>
++            {description === " " ? <span>&#8203;</span> : description}
++          </div>
+         )}
+       </div>
+     );\n- packages/components/select/stories/select.stories.tsx (modified, 25 changes)\n  Patch: @@ -865,11 +865,32 @@ export const StartContent = {
+ };
+ 
+ export const WithDescription = {
+-  render: MirrorTemplate,
++  render: (args: SelectProps) => {
++    return (
++      <div className="w-full max-w-3xl flex justify-center gap-4">
++        <Template
++          {...args}
++          description="Select your favorite animal"
++          placeholder="Select an animal"
++        />
++        <Template
++          {...args}
++          description="Select your favorite animal"
++          label="Favorite Animal"
++          placeholder="Select an animal"
++        />
++        <Template
++          {...args}
++          description=" "
++          label="Favorite Animal"
++          placeholder="Select an animal"
++        />
++      </div>
++    );
++  },
+ 
+   args: {
+     ...defaultProps,
+-    description: "Select your favorite animal",
+   },
+ };
+ \n

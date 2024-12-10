@@ -1,0 +1,284 @@
+Pull Request Number: 2709
+Title: fix(modal): input carry over with IMEs in modal forms
+Base Branch: main
+Head Branch: fix/modal-input-ime
+Author: ryo-manba
+URL: https://github.com/nextui-org/nextui/pull/2709
+State: MERGED
+Created At: 2024-04-14T10:34:53Z
+Merged At: 2024-04-14T12:51:43Z
+Participants: ryo-manba, jrgarciadev
+
+Description:
+Closes #2445
+📝 Description
+Fixed an issue where typing with an IME (like Korean or Japanese) and pressing tab would carry the input to the next field. This was resolved using the isComposing property.
+
+  
+    
+    
+
+    modal-form-input-with-korean-language.mov
+    
+  
+
+  
+
+  
+
+
+⛳️ Current behavior (updates)
+When entering text in a modal form using Korean, pressing the tab key causes the last character to be entered into the next input field.
+🚀 New behavior
+Pressing the tab key after entering text in Korean no longer transfers the last character to the next input field.
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+This bug does not occur in Storybook, so the behavior was verified using the docs.
+This was tested using both Japanese and 2-set Korean IMEs on browsers including Chrome, Safari, and Firefox.
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Implemented a fix in modal components to prevent carryover of IME (Input Method Editor) input when switching fields using the Tab key.
+Enhanced accessibility by handling Tab key press event in the ModalContent component.
+
+Commits:
+- fix(modal): prevent IME input carryover in form fields when tabbing\n- chore: add changeset\n- chore: chain default onKeyDown\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: fd30f0b846b58829910f102a5b41868048bf320a
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/modal | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/ryo-manba/nextui/new/fix/modal-input-ime?filename=.changeset/mighty-readers-allow.md&value=---%0A%22%40nextui-org%2Fmodal%22%3A%20patch%0A---%0A%0Afix(modal)%3A%20input%20carry%20over%20with%20IMEs%20in%20modal%20forms%0A)
+
+\n- vercel: [vc]: #ktvsahnlMuOY+UMG7BJTzW8n5SVsk7tqitxyjYSwp88=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvOEg5R0dObXRpNE1MUzZZaXpwU2dvbnY1QTVpaSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXJ5by1tYW5iYS1maXgtbW8tZDgyYTJlLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXJ5by1tYW5iYS1maXgtbW8tZDgyYTJlLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/8H9GGNmti4MLS6YizpSgonv5A5ii)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-ryo-manba-fix-mo-d82a2e-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-ryo-manba-fix-mo-d82a2e-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 14, 2024 11:02am |
+
+\n- vercel: @ryo-manba is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22334c0449afb315dbb2c9a79d61dcb30be9ad855a%22%7D%2C%22id%22%3A%22QmPtdfuuQffdoNa1DFYT8YiwTNo9hTYPzJmWEC2oQ2xxWw%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2709%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The update introduces a patch for the `@nextui-org/modal` package to handle the Tab key press event in the `ModalContent` component. This prevents the carryover of IME input in form fields and addresses issues related to tab navigation within modals.
+
+## Changes
+
+| File Path                                | Change Summary                                                                                     |
+|------------------------------------------|----------------------------------------------------------------------------------------------------|
+| `.changeset/old-cameras-sip.md`          | Introduced a patch to handle IME input carryover using Tab in `@nextui-org/modal`.                 |
+| `packages/components/modal/src/modal-content.tsx`     | Added `KeyboardEvent` import and `onKeyDown` callback to manage Tab key events and prevent defaults. |
+
+## Assessment against linked issues
+
+| Objective                                 | Addressed | Explanation                                                                                     |
+|-------------------------------------------|-----------|--------------------------------------------------------------------------------------------------|
+| Bug when using Korean language in modal form (#2445) | ✅        | The changes address the issue by preventing IME input carryover when tabbing through form fields. |
+| Bug Description: Tabbing through form fields in a Modal triggers data loss upon reaching the Close button (#2558) | ✅        | The new `onKeyDown` callback ensures that tabbing to the Close button does not result in data loss. |
+
+## Possibly related issues
+- **None**
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/old-cameras-sip.md: The new file introduces a patch for "@nextui-org/modal" to prevent IME input carryover in form fields when tabbing.
+
+---
+
+packages/components/modal/src/modal-content.tsx: ## Short summary
+
+Added the import of `KeyboardEvent` from "react" and implemented a new `onKeyDown` callback in the `ModalContent` component to handle the Tab key press event and prevent default behavior.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+This pull request, numbered 2709 and titled "Fix(modal): input carry over with IMEs in modal forms," addresses an issue in the NextUI library where typing with an IME, such as Korean or Japanese, and pressing the tab key would carry the input to the next field in modal forms. The problem, documented in issue #2445, led to the last character being unintentionally transferred to the subsequent input field, impacting user interaction negatively.
+
+The resolution involves utilizing the `isComposing` property from the `KeyboardEvent` API to distinguish input events during composition sessions, like those with IMEs. By leveraging this property, the code now correctly handles tab key presses, preventing the default behavior that caused character carryover.
+
+The changes are isolated to the `ModalContent` component within the NextUI library. A new `onKeyDown` callback has been incorporated to manage keyboard events and address the tab key behavior during text input with IMEs. This enhancement ensures that pressing the tab key post-IME input no longer results in transferring the last character to the subsequent input field.
+
+Additionally, a changeset file has been included to outline the fix for preventing IME input carryover in modal form fields during tab navigation. Extensive testing across Chrome, Safari, and Firefox, with Japanese and Korean IMEs, confirms consistent behavior across browsers and input methods.
+
+### AI-Generated Summary of Changes
+
+The PR introduces a patch in the NextUI library's `ModalContent` component to handle keyboard events more effectively when using IMEs, specifically addressing the issue of character carryover when tabbing in modal input fields. By adding an `onKeyDown` callback, the default tab behavior causing character transfer has been mitigated, ensuring a seamless user experience for non-Latin script users navigating form fields with the tab key.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai -->
+
+---
+
+<details>
+
+<summary>Recent Review Details</summary>
+
+**Configuration used: .coderabbit.yaml**
+
+<details>
+<summary>Commits</summary>
+Files that changed from the base of the PR and between 334c0449afb315dbb2c9a79d61dcb30be9ad855a and fd30f0b846b58829910f102a5b41868048bf320a.
+</details>
+
+
+<details>
+<summary>Files selected for processing (2)</summary>
+
+* .changeset/old-cameras-sip.md (1 hunks)
+* packages/components/modal/src/modal-content.tsx (2 hunks)
+
+</details>
+
+
+
+
+
+<details>
+<summary>Files skipped from review as they are similar to previous changes (2)</summary>
+
+* .changeset/old-cameras-sip.md
+* packages/components/modal/src/modal-content.tsx
+
+</details>
+
+
+
+
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- 334c0449afb315dbb2c9a79d61dcb30be9ad855a -->
+<!-- fd30f0b846b58829910f102a5b41868048bf320a -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/old-cameras-sip.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/modal": patch
++---
++
++Prevent IME input carryover in form fields when tabbing\n- packages/components/modal/src/modal-content.tsx (modified, 14 changes)\n  Patch: @@ -9,8 +9,9 @@ import {CloseIcon} from "@nextui-org/shared-icons";
+ import {RemoveScroll} from "react-remove-scroll";
+ import {domAnimation, LazyMotion, m} from "framer-motion";
+ import {useDialog} from "@react-aria/dialog";
+-import {mergeProps} from "@react-aria/utils";
++import {chain, mergeProps} from "@react-aria/utils";
+ import {HTMLNextUIProps} from "@nextui-org/system";
++import {KeyboardEvent} from "react";
+ 
+ import {useModalContext} from "./modal-context";
+ import {scaleInOut} from "./modal-transition";
+@@ -59,8 +60,17 @@ const ModalContent = forwardRef<"div", ModalContentProps, KeysToOmit>((props, _)
+     </button>
+   );
+ 
++  // Handle Tab key during IME composition to prevent input carryover
++  const onKeyDown = useCallback((e: KeyboardEvent) => {
++    if (e.key === "Tab" && e.nativeEvent.isComposing) {
++      e.stopPropagation();
++      e.preventDefault();
++    }
++  }, []);
++
++  const contentProps = getDialogProps(mergeProps(dialogProps, otherProps));
+   const content = (
+-    <Component {...getDialogProps(mergeProps(dialogProps, otherProps))}>
++    <Component {...contentProps} onKeyDown={chain(contentProps.onKeyDown, onKeyDown)}>
+       <DismissButton onDismiss={onClose} />
+       {!hideCloseButton && closeButtonContent}
+       {typeof children === "function" ? children(onClose) : children}\n

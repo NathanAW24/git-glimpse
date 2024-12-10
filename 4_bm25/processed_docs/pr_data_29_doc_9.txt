@@ -1,0 +1,99 @@
+Pull Request Number: 383
+Title: Fix/no margin pagination
+Base Branch: next
+Head Branch: fix/no-margin-pagination
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/383
+State: MERGED
+Created At: 2022-04-01T01:04:51Z
+Merged At: 2022-04-01T13:07:43Z
+Participants: jrgarciadev
+
+Description:
+[react]/[pagination]
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Avoid pagination styles collision on rounded and noMargin variations
+
+
+
+Screenshots - Animations
+
+Commits:
+- refactor(docs): theme switch performance improved\n- Merge branch 'next' of github.com:nextui-org/nextui into next\n- fix(react-pagination): noMargin and !rounded compoundVariant added\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/src/components/hero/components.tsx (modified, 6 changes)\n  Patch: @@ -58,10 +58,14 @@ const HeroComponents = () => {
+       />
+       <ThemeSwitch
+         css={{
++          color: '$black',
+           position: 'absolute',
+           top: '-170%',
+           right: '-120%',
+-          animation: `${levitating} 13s ease infinite 1s reverse`
++          animation: `${levitating} 13s ease infinite 1s reverse`,
++          '.nextui-switch-circle': {
++            bg: '$white'
++          }
+         }}
+       />
+       <UserTwitterCard\n- apps/docs/src/components/theme-switch/index.tsx (modified, 13 changes)\n  Patch: @@ -1,22 +1,25 @@
+ import React from 'react';
+-import { Moon, Sun } from '../icons';
++import { Moon } from '../icons';
+ import { Switch, SwitchProps, useTheme } from '@nextui-org/react';
+ import { useTheme as useNextTheme } from 'next-themes';
+ 
+ export const ThemeToggle: React.FC<Partial<SwitchProps>> = ({ ...props }) => {
++  const [isSelfDark, setIsSelfDark] = React.useState(false);
++
+   const { setTheme } = useNextTheme();
+   const { isDark } = useTheme();
+ 
+   const handleToggleTheme = () => {
+-    setTheme(isDark ? 'light' : 'dark');
++    const nextTheme = isDark ? 'light' : 'dark';
++    setIsSelfDark(nextTheme === 'dark');
++    setTheme(nextTheme);
+   };
+ 
+   return (
+     <Switch
+       size="xl"
+-      checked={isDark}
+-      iconOn={<Moon filled />}
+-      iconOff={<Sun filled />}
++      checked={isSelfDark || isDark}
++      icon={<Moon filled />}
+       onChange={handleToggleTheme}
+       {...props}
+     />\n- packages/react/src/pagination/pagination.styles.ts (modified, 8 changes)\n  Patch: @@ -368,6 +368,14 @@ export const StyledPagination = styled('nav', {
+       css: {
+         $$paginationItemRadius: '0px'
+       }
++    },
++    {
++      // !rounded && noMargin
++      rounded: false,
++      noMargin: true,
++      css: {
++        $$paginationItemRadius: '0px'
++      }
+     }
+   ],
+   defaultVariants: {\n

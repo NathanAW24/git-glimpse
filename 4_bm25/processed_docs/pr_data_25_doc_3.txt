@@ -1,0 +1,76 @@
+Pull Request Number: 1002
+Title: fix: fix isSeleted prop warning #916
+Base Branch: main
+Head Branch: fix/isSelected-prop-warning
+Author: Yukiniro
+URL: https://github.com/nextui-org/nextui/pull/1002
+State: CLOSED
+Created At: 2023-01-12T05:43:01Z
+Merged At: None
+Participants: Yukiniro, jrgarciadev
+
+Description:
+Closes #916
+📝 Description
+
+Delete isSeleted which passed to the dom
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix: fix isSeleted prop warning #916\n
+
+Labels:
+
+
+Comments:
+- vercel: @Yukiniro is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%224b10d41f6eea87446bf4cf4c90b13c220f49f190%22%7D%2C%22id%22%3A%22QmWHuvLXmNkNZTqnb2yZB7tnpD6zrffpFZuK9Q1zjdrQvD%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1002%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #1XfxZd7E+Sk6XsyenbQkusfXGUDH3p9kQXkx/Vx+yhU=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLXl1a2luaXJvLWZpeC1pc3NlbGUtMjY5YWUyLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rL0d1ZGV3ekNaR1BMZEFOS2N4WVQxRXZ5MVpDTksiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay1naXQtZm9yay15dWtpbmlyby1maXgtaXNzZWxlLTI2OWFlMi1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/GudewzCZGPLdANKcxYT1Evy1ZCNK)) | [Visit Preview](https://nextui-storybook-git-fork-yukiniro-fix-issele-269ae2-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-yukiniro-fix-issele-269ae2-nextui-org.vercel.app) | Jan 12, 2023 at 5:44AM (UTC) |
+
+\n- jrgarciadev: Hey @Yukiniro I appreciate you sent this PR, however as the `filterDOMProps` function from `react-aria` fits better I used it instead https://github.com/nextui-org/nextui/commit/35dfc6a1bebf9dc3ebb0148ff6a930952fcf9fd1
+
+Thank you anyways 🙏🏻 \n- Yukiniro: > Hey @Yukiniro I appreciate you sent this PR, however as the `filterDOMProps` function from `react-aria` fits better I used it instead [35dfc6a](https://github.com/nextui-org/nextui/commit/35dfc6a1bebf9dc3ebb0148ff6a930952fcf9fd1)
+> 
+> Thank you anyways 🙏🏻
+
+OK\n
+
+Files Changed:
+- packages/react/src/checkbox/checkbox.tsx (modified, 10 changes)\n  Patch: @@ -89,10 +89,18 @@ const Checkbox = React.forwardRef<HTMLLabelElement, CheckboxProps>(
+         : "uncheked";
+     }, [isHovered, isIndeterminate, inputProps.checked]);
+ 
++    const labelProps = useMemo(() => {
++      const mergedProps = {...mergeProps(hoverProps, pressProps, otherProps)};
++
++      delete mergedProps.isSelected;
++
++      return mergedProps;
++    }, [hoverProps, pressProps, otherProps]);
++
+     return (
+       <StyledCheckboxLabel
+         ref={domRef}
+-        {...mergeProps(hoverProps, pressProps, otherProps)}
++        {...labelProps}
+         as={as}
+         className={clsx("nextui-checkbox-label", `nextui-checkbox--${checkboxState}`, className)}
+         css={css}\n

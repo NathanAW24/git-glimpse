@@ -1,0 +1,297 @@
+Pull Request Number: 3593
+Title: fix: remove disableAnimation prop from span element instead of img el…
+Base Branch: canary
+Head Branch: react-doesnt-recognize-disableanimation-eng-1225
+Author: kuri-sun
+URL: https://github.com/nextui-org/nextui/pull/3593
+State: CLOSED
+Created At: 2024-08-02T14:48:50Z
+Merged At: None
+Participants: kuri-sun, wingkwong
+
+Description:
+Closes #
+Im working on this linear issue: https://linear.app/nextui-inc/issue/ENG-1225/react-doesnt-recognize-disableanimation
+📝 Description
+[Cause of the error]
+The error says we need to remove disableAnimation prop from <span> element.
+
+Currently we are trying to remove this prop from <img> element instead of <span>. So, I removed those lines of codes.
+The cause of this error is we did not extract disabledAnimation prop in useAvatar function's argument object de-structuring so that we accidentally passed disableAnimation to <span> element with otherProps.
+[Solution]
+So, to avoid passing this prop to <span> element(which means we shall avoid including disableAnimation in otherProps), we added the object de-structuring as a solution for this.
+⛳️ Current behavior (updates)
+the error message in console
+🚀 New behavior
+
+Working as fine.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Improvements
+
+Enhanced the handling of animation properties for better clarity and performance.
+Simplified the logic for managing the animation control within the avatar component, leading to improved maintainability.
+Filtered DOM properties to exclude unnecessary complexity, potentially improving overall performance.
+
+Commits:
+- fix: remove disableAnimation prop from span element instead of img element\n
+
+Labels:
+📦 Scope : Components
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-1225/react-doesnt-recognize-disableanimation">ENG-1225 React doesn't recognize "disableAnimation"</a></p>\n- vercel: [vc]: #XhECHjeGsj6n5uylgiXlQi6pKphcFXy5o5+er2Cy/qY=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LXJlYWN0LWRvZXNudC1yZWNvZ25pemUtZGlzLWE3MTU0ZC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifSwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLWRvY3MtdjIvQUhoZHM5ZkdjV3NOVnBNTFZlQzdyUXhyWUJFcSIsInByZXZpZXdVcmwiOiJuZXh0dWktZG9jcy12Mi1naXQtcmVhY3QtZG9lc250LXJlY29nbml6ZS1kaXMtYTcxNTRkLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCJ9LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LXJlYWN0LWRvZXNudC1yZWNvZ25pei0yODM4NWQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn0sImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNW5HYVhTSmlWQmNRazhGOU43a3NXMXlvNUZVNiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1yZWFjdC1kb2VzbnQtcmVjb2duaXotMjgzODVkLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCJ9XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/AHhds9fGcWsNVpMLVeC7rQxrYBEq)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-react-doesnt-recognize-dis-a7154d-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-react-doesnt-recognize-dis-a7154d-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 2, 2024 2:48pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/5nGaXSJiVBcQk8F9N7ksW1yo5FU6)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-react-doesnt-recogniz-28385d-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-react-doesnt-recogniz-28385d-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 2, 2024 2:48pm |
+
+
+\n- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: ea89296cbfcf129a2ca63e497dde998ed5366d7d
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/react-doesnt-recognize-disableanimation-eng-1225?filename=.changeset/wise-badgers-push.md&value=---%0A%22%40nextui-org%2Favatar%22%3A%20patch%0A---%0A%0Afix%3A%20remove%20disableAnimation%20prop%20from%20span%20element%20instead%20of%20img%20el%E2%80%A6%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: skip review by coderabbit.ai -->
+
+> [!IMPORTANT]
+> ## Review skipped
+> 
+> Auto reviews are limited to specific labels.
+> 
+> 
+> 
+> Please check the settings in the CodeRabbit UI or the `.coderabbit.yaml` file in this repository. To trigger a single review, invoke the `@coderabbitai review` command.
+> 
+> You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file.
+
+<!-- end of auto-generated comment: skip review by coderabbit.ai --><!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent changes to the `use-avatar.ts` file enhance the handling of the `disableAnimation` property by renaming it to `isDisableAnimation` for clarity and initializing it directly from the input props. This streamlining improves readability and reduces complexity in prop filtering by excluding `disableAnimation` from the DOM properties. Overall, these modifications aim to improve code maintainability and understanding of component behavior without altering the function's signature.
+
+## Changes
+
+| File                                         | Change Summary                                                                                           |
+|----------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| `packages/components/avatar/src/use-avatar.ts` | Simplified handling of `disableAnimation`, renamed to `isDisableAnimation`, and excluded from DOM props. |
+
+## Sequence Diagram(s)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant AvatarComponent
+    participant useAvatar
+
+    User->>AvatarComponent: Render Avatar
+    AvatarComponent->>useAvatar: Call useAvatar(originalProps)
+    useAvatar->>useAvatar: Initialize isDisableAnimation
+    useAvatar->>AvatarComponent: Return props
+    AvatarComponent->>DOM: Render with filtered props
+```
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+packages/components/avatar/src/use-avatar.ts: ## AI-generated summary of changes
+
+The changes in the `use-avatar.ts` file primarily involve the handling of the `disableAnimation` property within the `useAvatar` function. The property is now initialized directly from the `originalProps` parameter, with a default value of `false`, and is renamed to `isDisableAnimation` for clarity in subsequent usage. This change enhances the readability and understanding of the variable's purpose. The previous method of determining the `disableAnimation` value has been streamlined by removing redundant declarations and simplifying the logic. 
+
+Additionally, the filtering of DOM properties has been altered; the `filterDOMProps` function call now excludes the `disableAnimation` property, which could potentially reduce unnecessary complexity in the props being passed to the DOM elements. This adjustment may improve performance and maintainability. The overall structure of the function remains intact, but these modifications refine the control flow and enhance the clarity of the code.
+
+Overall, the changes focus on improving variable naming and simplifying logic related to animation control, which could lead to better maintainability and understanding of the component's behavior.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useAvatar(originalProps: UseAvatarProps = {})` in `packages/components/avatar/src/use-avatar.ts` → `export function useAvatar(originalProps: UseAvatarProps = {})` in `packages/components/avatar/src/use-avatar.ts` (no signature change, but internal logic modified)
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix: remove disableAnimation prop from span element instead of img el…" addresses an issue related to the incorrect handling of the `disableAnimation` prop in a React component. The problem originated from the fact that the `disableAnimation` prop was being passed to a `<span>` element instead of the intended `<img>` element. This was due to the prop not being properly extracted in the `useAvatar` function's argument object destructuring, leading to it being included in `otherProps` and subsequently passed to the `<span>`.
+
+To resolve this issue, the author has removed the lines of code that incorrectly handled the `disableAnimation` prop for the `<img>` element and added the necessary destructuring to ensure that `disableAnimation` is excluded from `otherProps`. As a result, the prop will no longer be passed to the `<span>`, thus eliminating the associated error message in the console.
+
+The changes made in this pull request do not introduce any breaking changes to the existing functionality. The author has confirmed that the updated implementation works correctly without the error, as evidenced by the provided screenshots demonstrating the resolution of the issue.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- ea89296cbfcf129a2ca63e497dde998ed5366d7d -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- wingkwong: handled in #3946\n
+
+Files Changed:
+- packages/components/avatar/src/use-avatar.ts (modified, 25 changes)\n  Patch: @@ -1,10 +1,10 @@
+ import type {AvatarSlots, AvatarVariantProps, SlotsToClasses} from "@nextui-org/theme";
+-import type {DOMElement, DOMAttributes, HTMLNextUIProps, PropGetter} from "@nextui-org/system";
++import type {HTMLNextUIProps, PropGetter} from "@nextui-org/system";
+ 
+ import {avatar} from "@nextui-org/theme";
+ import {useProviderContext} from "@nextui-org/system";
+ import {mergeProps} from "@react-aria/utils";
+-import {ReactRef, useDOMRef, filterDOMProps} from "@nextui-org/react-utils";
++import {ReactRef, useDOMRef} from "@nextui-org/react-utils";
+ import {clsx, safeText, dataAttr} from "@nextui-org/shared-utils";
+ import {useFocusRing} from "@react-aria/focus";
+ import {useMemo, useCallback} from "react";
+@@ -117,6 +117,7 @@ export function useAvatar(originalProps: UseAvatarProps = {}) {
+     isBordered = groupContext?.isBordered ?? false,
+     isDisabled = groupContext?.isDisabled ?? false,
+     isFocusable = false,
++    disableAnimation = false,
+     getInitials = safeText,
+     ignoreFallback = false,
+     showFallback: showFallbackProp = false,
+@@ -134,15 +135,13 @@ export function useAvatar(originalProps: UseAvatarProps = {}) {
+ 
+   const {isFocusVisible, isFocused, focusProps} = useFocusRing();
+   const {isHovered, hoverProps} = useHover({isDisabled});
+-  const disableAnimation =
+-    originalProps.disableAnimation ?? globalContext?.disableAnimation ?? false;
++
++  let isDisableAnimation = disableAnimation ?? globalContext?.disableAnimation ?? false;
+ 
+   const imageStatus = useImage({src, onError, ignoreFallback});
+ 
+   const isImgLoaded = imageStatus === "loaded";
+ 
+-  const shouldFilterDOMProps = typeof ImgComponent === "string";
+-
+   /**
+    * Fallback avatar applies under 2 conditions:
+    * - If `src` was passed and the image has not loaded or failed to load
+@@ -161,7 +160,7 @@ export function useAvatar(originalProps: UseAvatarProps = {}) {
+         isBordered,
+         isDisabled,
+         isInGroup,
+-        disableAnimation,
++        disableAnimation: isDisableAnimation,
+         isInGridGroup: groupContext?.isGrid ?? false,
+       }),
+     [
+@@ -170,7 +169,7 @@ export function useAvatar(originalProps: UseAvatarProps = {}) {
+       size,
+       isBordered,
+       isDisabled,
+-      disableAnimation,
++      isDisableAnimation,
+       isInGroup,
+       groupContext?.isGrid,
+     ],
+@@ -203,15 +202,9 @@ export function useAvatar(originalProps: UseAvatarProps = {}) {
+       src: src,
+       "data-loaded": dataAttr(isImgLoaded),
+       className: slots.img({class: classNames?.img}),
+-      ...mergeProps(
+-        imgProps,
+-        props,
+-        filterDOMProps({disableAnimation} as DOMAttributes<DOMElement>, {
+-          enabled: shouldFilterDOMProps,
+-        }),
+-      ),
++      ...mergeProps(imgProps, props),
+     }),
+-    [slots, isImgLoaded, imgProps, disableAnimation, src, imgRef, shouldFilterDOMProps],
++    [slots, isImgLoaded, imgProps, src, imgRef],
+   );
+ 
+   return {\n

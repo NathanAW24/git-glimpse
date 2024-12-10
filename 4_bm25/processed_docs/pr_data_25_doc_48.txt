@@ -1,0 +1,466 @@
+Pull Request Number: 839
+Title: Fix: Update TableContext when items change (fix #798)
+Base Branch: next
+Head Branch: fix/context-update
+Author: Knorrke
+URL: https://github.com/nextui-org/nextui/pull/839
+State: MERGED
+Created At: 2022-10-23T18:59:09Z
+Merged At: 2022-12-11T20:30:22Z
+Participants: Knorrke, jrgarciadev, tianenpang
+
+Description:
+Closes #798
+📝 Description
+Update collection in TableContext when items change to update dependent components like Table.Pagination.
+⛳️ Current behavior (updates)
+Currently the collection are only initialized once, so even if you add items the Pagination won't get additional pages. Only Table.Body uses the collections from props.
+🚀 New behavior
+When items prop of Table.Body changes, TableContext is updated and Pagination will update the number of pages accordingly.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Commits:
+- fix(table): update table context when items change\n- add test for context update and update snapshots\n
+
+Labels:
+
+
+Comments:
+- vercel: @Knorrke is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%221de4e5294bfc1eaeed35bead0091b19e223442b9%22%7D%2C%22id%22%3A%22QmYhTr2nUf1XgepyrdDSML1kKHcrfj8YPUjUW3wxFuR55d%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A839%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/iwqT5a4oRUjCu3TAJNU1PrbM7ahP)) | [Visit Preview](https://nextui-storybook-git-fork-knorrke-fix-context-update-nextui-org.vercel.app) | Oct 23, 2022 at 6:59PM (UTC) |
+
+\n- jrgarciadev: Hey @tianenpang could you please help me check this? 🙏🏻\n- Knorrke: If there's anything I can help with, please let me know.\n
+
+Files Changed:
+- packages/react/src/collapse/__tests__/__snapshots__/group.test.tsx.snap (modified, 32 changes)\n  Patch: @@ -15,12 +15,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria2612136440-10"
++        aria-controls="react-aria5082782828-10"
+         aria-disabled="false"
+         aria-expanded="false"
+         class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria2612136440-9"
++        id="react-aria5082782828-9"
+         role="button"
+         tabindex="0"
+       >
+@@ -66,9 +66,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria2612136440-9"
++            aria-labelledby="react-aria5082782828-9"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria2612136440-10"
++            id="react-aria5082782828-10"
+             role="region"
+             tabindex="-1"
+           >
+@@ -83,12 +83,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria2612136440-12"
++        aria-controls="react-aria5082782828-12"
+         aria-disabled="false"
+         aria-expanded="false"
+         class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria2612136440-11"
++        id="react-aria5082782828-11"
+         role="button"
+         tabindex="0"
+       >
+@@ -134,9 +134,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria2612136440-11"
++            aria-labelledby="react-aria5082782828-11"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria2612136440-12"
++            id="react-aria5082782828-12"
+             role="region"
+             tabindex="-1"
+           >
+@@ -188,12 +188,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria2612136440-6"
++        aria-controls="react-aria5082782828-6"
+         aria-disabled="false"
+         aria-expanded="false"
+         class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria2612136440-5"
++        id="react-aria5082782828-5"
+         role="button"
+         tabindex="0"
+       >
+@@ -239,9 +239,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria2612136440-5"
++            aria-labelledby="react-aria5082782828-5"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria2612136440-6"
++            id="react-aria5082782828-6"
+             role="region"
+             tabindex="-1"
+           >
+@@ -256,12 +256,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria2612136440-8"
++        aria-controls="react-aria5082782828-8"
+         aria-disabled="false"
+         aria-expanded="false"
+         class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria2612136440-7"
++        id="react-aria5082782828-7"
+         role="button"
+         tabindex="0"
+       >
+@@ -307,9 +307,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria2612136440-7"
++            aria-labelledby="react-aria5082782828-7"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria2612136440-8"
++            id="react-aria5082782828-8"
+             role="region"
+             tabindex="-1"
+           >\n- packages/react/src/collapse/__tests__/__snapshots__/index.test.tsx.snap (modified, 40 changes)\n  Patch: @@ -15,12 +15,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria11709204-10"
++        aria-controls="react-aria9582091932-10"
+         aria-disabled="false"
+         aria-expanded="false"
+         class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria11709204-9"
++        id="react-aria9582091932-9"
+         role="button"
+         tabindex="0"
+       >
+@@ -71,9 +71,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria11709204-9"
++            aria-labelledby="react-aria9582091932-9"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria11709204-10"
++            id="react-aria9582091932-10"
+             role="region"
+             tabindex="-1"
+           >
+@@ -88,12 +88,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria11709204-12"
++        aria-controls="react-aria9582091932-12"
+         aria-disabled="false"
+         aria-expanded="false"
+         class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria11709204-11"
++        id="react-aria9582091932-11"
+         role="button"
+         tabindex="0"
+       >
+@@ -146,9 +146,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria11709204-11"
++            aria-labelledby="react-aria9582091932-11"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria11709204-12"
++            id="react-aria9582091932-12"
+             role="region"
+             tabindex="-1"
+           >
+@@ -198,12 +198,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria11709204-4"
++        aria-controls="react-aria9582091932-4"
+         aria-disabled="false"
+         aria-expanded="false"
+         class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria11709204-3"
++        id="react-aria9582091932-3"
+         role="button"
+         tabindex="0"
+       >
+@@ -254,9 +254,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria11709204-3"
++            aria-labelledby="react-aria9582091932-3"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria11709204-4"
++            id="react-aria9582091932-4"
+             role="region"
+             tabindex="-1"
+           >
+@@ -271,12 +271,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria11709204-6"
++        aria-controls="react-aria9582091932-6"
+         aria-disabled="false"
+         aria-expanded="false"
+         class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria11709204-5"
++        id="react-aria9582091932-5"
+         role="button"
+         tabindex="0"
+       >
+@@ -325,9 +325,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria11709204-5"
++            aria-labelledby="react-aria9582091932-5"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria11709204-6"
++            id="react-aria9582091932-6"
+             role="region"
+             tabindex="-1"
+           >
+@@ -4344,12 +4344,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria11709204-8"
++        aria-controls="react-aria9582091932-8"
+         aria-disabled="false"
+         aria-expanded="false"
+         class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria11709204-7"
++        id="react-aria9582091932-7"
+         role="button"
+         tabindex="0"
+       >
+@@ -4395,9 +4395,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria11709204-7"
++            aria-labelledby="react-aria9582091932-7"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria11709204-8"
++            id="react-aria9582091932-8"
+             role="region"
+             tabindex="-1"
+           >\n- packages/react/src/input/__tests__/__snapshots__/index.test.tsx.snap (modified, 8 changes)\n  Patch: @@ -1,9 +1,9 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`Input should be work with content 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-input-content nextui-input-content--left\\"><span>test-icon</span></span><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVyrVm-hasLeftContent-true nextui-input nextui-input-left-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-25\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVsTEo-hasRightContent-true nextui-input nextui-input-nextui-input-right-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-27\\" value=\\"\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-input-content nextui-input-content--right\\"><span>test-icon</span></span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Input should be work with content 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-input-content nextui-input-content--left\\"><span>test-icon</span></span><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVyrVm-hasLeftContent-true nextui-input nextui-input-left-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-25\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVsTEo-hasRightContent-true nextui-input nextui-input-nextui-input-right-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-27\\" value=\\"\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-input-content nextui-input-content--right\\"><span>test-icon</span></span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
+ 
+-exports[`Input should be work with label 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><label class=\\"nextui-c-hzQjrs nextui-input-block-label\\" for=\\"react-aria5747947790-19\\" id=\\"react-aria5747947790-20\\">label</label><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><div class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-19\\" aria-labelledby=\\"react-aria5747947790-20\\" value=\\"\\"></div></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-21\\" value=\\"\\"><span class=\\"nextui-c-gieWTI nextui-c-gieWTI-bPbUHf-isRight-true nextui-c-gieWTI-bzgJTZ-cv nextui-input-label--right\\">label</span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-gieWTI nextui-c-gieWTI-ceZkzL-isRight-false nextui-c-gieWTI-bzgJTZ-cv nextui-input-label--left\\">label</span><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-23\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Input should be work with label 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><label class=\\"nextui-c-hzQjrs nextui-input-block-label\\" for=\\"react-aria862868262-19\\" id=\\"react-aria862868262-20\\">label</label><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><div class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-19\\" aria-labelledby=\\"react-aria862868262-20\\" value=\\"\\"></div></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-21\\" value=\\"\\"><span class=\\"nextui-c-gieWTI nextui-c-gieWTI-bPbUHf-isRight-true nextui-c-gieWTI-bzgJTZ-cv nextui-input-label--right\\">label</span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-gieWTI nextui-c-gieWTI-ceZkzL-isRight-false nextui-c-gieWTI-bzgJTZ-cv nextui-input-label--left\\">label</span><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-23\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
+ 
+-exports[`Input should work with different sizes 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-jwvDph-size-xs nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-3\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-iUdBCG-size-sm nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-5\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-bkiCag-size-lg nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-7\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gNajeV-size-xl nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-9\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-imosJd-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-11\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Input should work with different sizes 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-jwvDph-size-xs nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-3\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-iUdBCG-size-sm nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-5\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-bkiCag-size-lg nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-7\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gNajeV-size-xl nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-9\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-imosJd-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-11\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
+ 
+-exports[`Input should work with different status 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-kWLfoB-color-secondary nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-13\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-gzViYB-color-success nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-15\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jzFoKt-color-warning nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5747947790-17\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Input should work with different status 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-kWLfoB-color-secondary nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-13\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-gzViYB-color-success nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-15\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jzFoKt-color-warning nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria862868262-17\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;\n- packages/react/src/input/__tests__/__snapshots__/password.test.tsx.snap (modified, 2 changes)\n  Patch: @@ -1,3 +1,3 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`InputPassword should render correctly 1`] = `"<div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input nextui-input-password\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVsTEo-hasRightContent-true nextui-input nextui-input-nextui-input-right-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"password\\" id=\\"react-aria5907530703-1\\" value=\\"\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-c-PJLV-hUwVy-clickable-true nextui-input-content nextui-input-content--right\\"><svg class=\\"nextui-input-password-icon\\" fill=\\"none\\" height=\\"16\\" shape-rendering=\\"geometricPrecision\\" stroke=\\"currentColor\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" stroke-width=\\"1.5\\" style=\\"color: currentColor;\\" viewBox=\\"0 0 24 24\\" width=\\"16\\"><path d=\\"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\\"></path><circle cx=\\"12\\" cy=\\"12\\" r=\\"3\\"></circle></svg></span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div>"`;
++exports[`InputPassword should render correctly 1`] = `"<div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input nextui-input-password\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVsTEo-hasRightContent-true nextui-input nextui-input-nextui-input-right-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"password\\" id=\\"react-aria3963845131-1\\" value=\\"\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-c-PJLV-hUwVy-clickable-true nextui-input-content nextui-input-content--right\\"><svg class=\\"nextui-input-password-icon\\" fill=\\"none\\" height=\\"16\\" shape-rendering=\\"geometricPrecision\\" stroke=\\"currentColor\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" stroke-width=\\"1.5\\" style=\\"color: currentColor;\\" viewBox=\\"0 0 24 24\\" width=\\"16\\"><path d=\\"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\\"></path><circle cx=\\"12\\" cy=\\"12\\" r=\\"3\\"></circle></svg></span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div>"`;\n- packages/react/src/link/__tests__/__snapshots__/index.test.tsx.snap (removed, 3 changes)\n  Patch: @@ -1,3 +0,0 @@
+-// Jest Snapshot v1, https://goo.gl/fbAQLP
+-
+-exports[`Link should render correctly 1`] = `"<div><a class=\\"nextui-c-dIWzTP nextui-c-PJLV nextui-c-dIWzTP-hfnKRU-color-default nextui-c-dIWzTP-isWIbj-animated-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-dIWzTP-icTVmtU-css nextui-link\\" href=\\"https://nextui.org\\">link</a><a class=\\"nextui-c-dIWzTP nextui-c-PJLV nextui-c-dIWzTP-iVlgeG-color-secondary nextui-c-dIWzTP-isWIbj-animated-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-dIWzTP-iclraoi-css nextui-link\\" href=\\"https://nextui.org\\">link</a><a class=\\"nextui-c-dIWzTP nextui-c-PJLV nextui-c-dIWzTP-geYkrv-color-success nextui-c-dIWzTP-isWIbj-animated-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-dIWzTP-iighAhn-css nextui-link\\" href=\\"https://nextui.org\\">link<svg class=\\"nextui-c-cBXzrI nextui-link-icon\\" fill=\\"none\\" height=\\"1em\\" shape-rendering=\\"geometricPrecision\\" stroke=\\"currentColor\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" stroke-width=\\"1.5\\" viewBox=\\"0 0 24 24\\" width=\\"1em\\"><path d=\\"M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6\\"></path><path d=\\"M15 3h6v6\\"></path><path d=\\"M10 14L21 3\\"></path></svg></a><a class=\\"nextui-c-dIWzTP nextui-c-PJLV nextui-c-dIWzTP-hfnKRU-color-default nextui-c-dIWzTP-cSuHME-underline-true nextui-c-dIWzTP-isWIbj-animated-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-dIWzTP-icTVmtU-css nextui-link\\" href=\\"https://nextui.org\\">link</a><a class=\\"nextui-c-dIWzTP nextui-c-PJLV nextui-c-dIWzTP-hfnKRU-color-default nextui-c-dIWzTP-fZgbCn-block-true nextui-c-dIWzTP-isWIbj-animated-true nextui-c-dIWzTP-jSBLRj-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-dIWzTP-icTVmtU-css nextui-link\\" href=\\"https://nextui.org\\">link</a></div>"`;\n- packages/react/src/table/__tests__/__snapshots__/index.test.tsx.snap (modified, 4 changes)\n  Patch: @@ -1,5 +1,5 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`Table should render a static table correctly with sorting 1`] = `"<div class=\\"nextui-c-hWZRae nextui-c-hWZRae-gikTHb-shadow-true nextui-c-hWZRae-bzEnZV-borderWeight-normal nextui-c-hWZRae-iPJLV-css nextui-table-container\\"><table class=\\"nextui-c-fcXuxO nextui-c-fcXuxO-fyxmJu-color-primary nextui-c-fcXuxO-fPgLZC-lineWeight-light nextui-table\\" aria-label=\\"Test sorting table\\" id=\\"react-aria9575136216-15\\" role=\\"grid\\" tabindex=\\"0\\" aria-describedby=\\"\\"><thead class=\\"nextui-c-PJLV nextui-table-row-group\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-fRbcxI nextui-table-header-row\\" role=\\"row\\"><th class=\\"nextui-c-jhJWUH nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.0\\" role=\\"columnheader\\" id=\\"react-aria9575136216-15-.0.0\\">NAME</th><th class=\\"nextui-c-jhJWUH nextui-c-PJLV nextui-c-jhJWUH-hHqiAG-allowsSorting-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.1\\" role=\\"columnheader\\" id=\\"react-aria9575136216-15-.0.1\\" aria-sort=\\"none\\" aria-describedby=\\"react-aria-description-0\\">TYPE<svg aria-hidden=\\"true\\" class=\\"nextui-c-cqpNQI nextui-c-cqpNQI-ihOkgrg-css nextui-table-sort-icon\\" fill=\\"none\\" focusable=\\"false\\" height=\\"22\\" role=\\"presentation\\" viewBox=\\"0 0 24 24\\" width=\\"22\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path d=\\"M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.06 11.27L12.53 14.8C12.38 14.95 12.19 15.02 12 15.02C11.81 15.02 11.62 14.95 11.47 14.8L7.94 11.27C7.65 10.98 7.65 10.5 7.94 10.21C8.23 9.92 8.71 9.92 9 10.21L12 13.21L15 10.21C15.29 9.92 15.77 9.92 16.06 10.21C16.35 10.5 16.35 10.97 16.06 11.27Z\\"></path></svg></th><th class=\\"nextui-c-jhJWUH nextui-c-PJLV nextui-c-jhJWUH-hHqiAG-allowsSorting-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.2\\" role=\\"columnheader\\" id=\\"react-aria9575136216-15-.0.2\\" aria-sort=\\"none\\" aria-describedby=\\"react-aria-description-0\\">DATE MODIFIED<svg aria-hidden=\\"true\\" class=\\"nextui-c-cqpNQI nextui-c-cqpNQI-ihOkgrg-css nextui-table-sort-icon\\" fill=\\"none\\" focusable=\\"false\\" height=\\"22\\" role=\\"presentation\\" viewBox=\\"0 0 24 24\\" width=\\"22\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path d=\\"M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.06 11.27L12.53 14.8C12.38 14.95 12.19 15.02 12 15.02C11.81 15.02 11.62 14.95 11.47 14.8L7.94 11.27C7.65 10.98 7.65 10.5 7.94 10.21C8.23 9.92 8.71 9.92 9 10.21L12 13.21L15 10.21C15.29 9.92 15.77 9.92 16.06 10.21C16.35 10.5 16.35 10.97 16.06 11.27Z\\"></path></svg></th></tr><tr aria-hidden=\\"true\\" class=\\"nextui-c-gNVTSf nextui-c-gNVTSf-hakyQ-inline-false nextui-c-gNVTSf-icCJVMZ-css nextui-table-hidden-row\\"></tr></thead><tbody class=\\"nextui-c-PJLV nextui-c-PJLV-iccTTUn-css nextui-table-body\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-bUbfzy nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-row\\" role=\\"row\\" tabindex=\\"-1\\" data-key=\\"1\\" aria-labelledby=\\"react-aria9575136216-15-1-.0.0\\" aria-hidden=\\"false\\"><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.0\\" role=\\"rowheader\\" id=\\"react-aria9575136216-15-1-.0.0\\">Games</td><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.1\\" role=\\"gridcell\\">File folder</td><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.2\\" role=\\"gridcell\\">6/7/2020</td></tr></tbody></table></div>"`;
++exports[`Table should render a static table correctly with sorting 1`] = `"<div class=\\"nextui-c-hWZRae nextui-c-hWZRae-gikTHb-shadow-true nextui-c-hWZRae-bzEnZV-borderWeight-normal nextui-c-hWZRae-iPJLV-css nextui-table-container\\"><table class=\\"nextui-c-fcXuxO nextui-c-fcXuxO-fyxmJu-color-primary nextui-c-fcXuxO-fPgLZC-lineWeight-light nextui-table\\" aria-label=\\"Test sorting table\\" id=\\"react-aria6029138373-15\\" role=\\"grid\\" tabindex=\\"0\\" aria-describedby=\\"\\"><thead class=\\"nextui-c-PJLV nextui-table-row-group\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-fRbcxI nextui-table-header-row\\" role=\\"row\\"><th class=\\"nextui-c-kNgzEX nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.0\\" role=\\"columnheader\\" id=\\"react-aria6029138373-15-.0.0\\">NAME</th><th class=\\"nextui-c-kNgzEX nextui-c-PJLV nextui-c-kNgzEX-hHqiAG-allowsSorting-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.1\\" role=\\"columnheader\\" id=\\"react-aria6029138373-15-.0.1\\" aria-sort=\\"none\\" aria-describedby=\\"react-aria-description-0\\">TYPE<svg aria-hidden=\\"true\\" class=\\"nextui-c-cqpNQI nextui-c-cqpNQI-ihOkgrg-css nextui-table-sort-icon\\" fill=\\"none\\" focusable=\\"false\\" height=\\"22\\" role=\\"presentation\\" viewBox=\\"0 0 24 24\\" width=\\"22\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path d=\\"M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.06 11.27L12.53 14.8C12.38 14.95 12.19 15.02 12 15.02C11.81 15.02 11.62 14.95 11.47 14.8L7.94 11.27C7.65 10.98 7.65 10.5 7.94 10.21C8.23 9.92 8.71 9.92 9 10.21L12 13.21L15 10.21C15.29 9.92 15.77 9.92 16.06 10.21C16.35 10.5 16.35 10.97 16.06 11.27Z\\"></path></svg></th><th class=\\"nextui-c-kNgzEX nextui-c-PJLV nextui-c-kNgzEX-hHqiAG-allowsSorting-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.2\\" role=\\"columnheader\\" id=\\"react-aria6029138373-15-.0.2\\" aria-sort=\\"none\\" aria-describedby=\\"react-aria-description-0\\">DATE MODIFIED<svg aria-hidden=\\"true\\" class=\\"nextui-c-cqpNQI nextui-c-cqpNQI-ihOkgrg-css nextui-table-sort-icon\\" fill=\\"none\\" focusable=\\"false\\" height=\\"22\\" role=\\"presentation\\" viewBox=\\"0 0 24 24\\" width=\\"22\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path d=\\"M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.06 11.27L12.53 14.8C12.38 14.95 12.19 15.02 12 15.02C11.81 15.02 11.62 14.95 11.47 14.8L7.94 11.27C7.65 10.98 7.65 10.5 7.94 10.21C8.23 9.92 8.71 9.92 9 10.21L12 13.21L15 10.21C15.29 9.92 15.77 9.92 16.06 10.21C16.35 10.5 16.35 10.97 16.06 11.27Z\\"></path></svg></th></tr><tr aria-hidden=\\"true\\" class=\\"nextui-c-gNVTSf nextui-c-gNVTSf-hakyQ-inline-false nextui-c-gNVTSf-icCJVMZ-css nextui-table-hidden-row\\"></tr></thead><tbody class=\\"nextui-c-PJLV nextui-c-PJLV-iccTTUn-css nextui-table-body\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-bUbfzy nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-row\\" role=\\"row\\" tabindex=\\"-1\\" data-key=\\"1\\" aria-labelledby=\\"react-aria6029138373-15-1-.0.0\\" aria-hidden=\\"false\\"><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.0\\" role=\\"rowheader\\" id=\\"react-aria6029138373-15-1-.0.0\\">Games</td><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.1\\" role=\\"gridcell\\">File folder</td><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.2\\" role=\\"gridcell\\">6/7/2020</td></tr></tbody></table></div>"`;
+ 
+-exports[`Table should render correctly 1`] = `"<div class=\\"nextui-c-hWZRae nextui-c-hWZRae-gikTHb-shadow-true nextui-c-hWZRae-bzEnZV-borderWeight-normal nextui-c-hWZRae-iPJLV-css nextui-table-container\\"><table class=\\"nextui-c-fcXuxO nextui-c-fcXuxO-fyxmJu-color-primary nextui-c-fcXuxO-fPgLZC-lineWeight-light nextui-table\\" aria-label=\\"Test example table\\" id=\\"react-aria9575136216-2\\" role=\\"grid\\" tabindex=\\"0\\" aria-describedby=\\"\\"><thead class=\\"nextui-c-PJLV nextui-table-row-group\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-fRbcxI nextui-table-header-row\\" role=\\"row\\"><th class=\\"nextui-c-jhJWUH nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.0\\" role=\\"columnheader\\" id=\\"react-aria9575136216-2-.0.0\\">NAME</th><th class=\\"nextui-c-jhJWUH nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.1\\" role=\\"columnheader\\" id=\\"react-aria9575136216-2-.0.1\\">TYPE</th><th class=\\"nextui-c-jhJWUH nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.2\\" role=\\"columnheader\\" id=\\"react-aria9575136216-2-.0.2\\">DATE MODIFIED</th></tr><tr aria-hidden=\\"true\\" class=\\"nextui-c-gNVTSf nextui-c-gNVTSf-hakyQ-inline-false nextui-c-gNVTSf-icCJVMZ-css nextui-table-hidden-row\\"></tr></thead><tbody class=\\"nextui-c-PJLV nextui-c-PJLV-iccTTUn-css nextui-table-body\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-bUbfzy nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-row\\" role=\\"row\\" tabindex=\\"-1\\" data-key=\\"1\\" aria-labelledby=\\"react-aria9575136216-2-1-.0.0\\" aria-hidden=\\"false\\"><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.0\\" role=\\"rowheader\\" id=\\"react-aria9575136216-2-1-.0.0\\">Games</td><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.1\\" role=\\"gridcell\\">File folder</td><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.2\\" role=\\"gridcell\\">6/7/2020</td></tr></tbody></table></div>"`;
++exports[`Table should render correctly 1`] = `"<div class=\\"nextui-c-hWZRae nextui-c-hWZRae-gikTHb-shadow-true nextui-c-hWZRae-bzEnZV-borderWeight-normal nextui-c-hWZRae-iPJLV-css nextui-table-container\\"><table class=\\"nextui-c-fcXuxO nextui-c-fcXuxO-fyxmJu-color-primary nextui-c-fcXuxO-fPgLZC-lineWeight-light nextui-table\\" aria-label=\\"Test example table\\" id=\\"react-aria6029138373-2\\" role=\\"grid\\" tabindex=\\"0\\" aria-describedby=\\"\\"><thead class=\\"nextui-c-PJLV nextui-table-row-group\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-fRbcxI nextui-table-header-row\\" role=\\"row\\"><th class=\\"nextui-c-kNgzEX nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.0\\" role=\\"columnheader\\" id=\\"react-aria6029138373-2-.0.0\\">NAME</th><th class=\\"nextui-c-kNgzEX nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.1\\" role=\\"columnheader\\" id=\\"react-aria6029138373-2-.0.1\\">TYPE</th><th class=\\"nextui-c-kNgzEX nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.2\\" role=\\"columnheader\\" id=\\"react-aria6029138373-2-.0.2\\">DATE MODIFIED</th></tr><tr aria-hidden=\\"true\\" class=\\"nextui-c-gNVTSf nextui-c-gNVTSf-hakyQ-inline-false nextui-c-gNVTSf-icCJVMZ-css nextui-table-hidden-row\\"></tr></thead><tbody class=\\"nextui-c-PJLV nextui-c-PJLV-iccTTUn-css nextui-table-body\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-bUbfzy nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-row\\" role=\\"row\\" tabindex=\\"-1\\" data-key=\\"1\\" aria-labelledby=\\"react-aria6029138373-2-1-.0.0\\" aria-hidden=\\"false\\"><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.0\\" role=\\"rowheader\\" id=\\"react-aria6029138373-2-1-.0.0\\">Games</td><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.1\\" role=\\"gridcell\\">File folder</td><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.2\\" role=\\"gridcell\\">6/7/2020</td></tr></tbody></table></div>"`;\n- packages/react/src/table/__tests__/index.test.tsx (modified, 53 changes)\n  Patch: @@ -379,4 +379,57 @@ describe("Table", () => {
+     expect(thirdColumnHeader.text()).toBe("DATE MODIFIED");
+     expect(thirdColumnHeader.props()["aria-sort"]).toBe("none");
+   });
++
++  it('should update the pagination when items change', async () => {
++    const TableWithPagination = ()  => {
++      const [rows, setRows] = React.useState(items)
++      
++      return (
++        <div>
++          <Table aria-label="Test pagination update">
++            <Table.Header columns={columns}>
++              {(column) => <Table.Column>{column.name}</Table.Column>}
++            </Table.Header>
++            <Table.Body items={rows}>
++              {(item: any) => (
++                <Table.Row key={item.test}>
++                  <Table.Cell>{item.test}</Table.Cell>
++                  <Table.Cell>{item.foo}</Table.Cell>
++                  <Table.Cell>{item.bar}</Table.Cell>
++                </Table.Row>
++              )}
++            </Table.Body>
++            <Table.Pagination rowsPerPage={2} />
++          </Table>
++          <button id='add-item' onClick={() => setRows([...rows, {
++            test: `Test ${items.length+1}`,
++            foo: `Foo ${items.length+1}`,
++            bar: `Bar ${items.length+1}`,
++            yay: `Yay ${items.length+1}`,
++            baz: `Baz ${items.length+1}`
++          }])}>
++            Add item
++          </button>
++        </div>
++      )
++    }
++    const wrapper = mount(<TableWithPagination />)
++
++    const table = wrapper.find('[role="grid"]').at(0);
++    expect(table.props()["aria-label"]).toBe("Test pagination update");
++
++    const pagination = table.find('.nextui-table-pagination');
++
++    //pagination should contain left and right navigation button and one page
++    expect(pagination.find('button').length).toBe(3)
++
++    const button = wrapper.find('#add-item')
++    button.simulate('click')
++    // three rows on two pages
++    expect(wrapper.find('[role="grid"] .nextui-table-pagination button').length).toBe(4)
++
++    button.simulate('click')
++    // four rows still on two pages
++    expect(wrapper.find('[role="grid"] .nextui-table-pagination button').length).toBe(4)
++  })
+ });\n- packages/react/src/table/table-body.tsx (modified, 8 changes)\n  Patch: @@ -42,10 +42,16 @@ const TableBody: React.FC<React.PropsWithChildren<TableBodyProps>> = ({
+   hideLoading,
+   ...props
+ }) => {
+-  const {currentPage, rowsPerPage} = useTableContext();
++  const {currentPage, rowsPerPage, collection: collectionContext, setCollection} = useTableContext();
+ 
+   const infinityScroll = useMemo(() => isInfinityScroll(collection), [collection.body.props]);
+ 
++  React.useEffect(() => {
++    if (collection !== collectionContext) {
++      setCollection?.(collection);
++    }
++  }, [collection, collectionContext]);
++
+   const isLoading =
+     collection.body?.props?.loadingState === "loading" ||
+     collection.body?.props?.loadingState === "loadingMore";\n- packages/react/src/table/table.stories.tsx (modified, 67 changes)\n  Patch: @@ -366,6 +366,73 @@ export const Pagination = () => {
+   );
+ };
+ 
++
++export const AsyncPagination = () => {
++  let scopedColumns = [
++    {name: "Name", uid: "name"},
++    {name: "Height", uid: "height"},
++    {name: "Mass", uid: "mass"},
++    {name: "Birth Year", uid: "birth_year"},
++  ];
++
++  let list = useAsyncList({
++    async load({signal, cursor}) {
++      if (cursor) {
++        // write this /^http:\/\//i using RegExp
++        const regex = "/^http:///i";
++
++        cursor = cursor.replace(regex, "https://");
++      }
++
++      let res = await fetch(cursor || "https://swapi.py4e.com/api/people/?search=", {signal});
++      let json = await res.json();
++
++      return {
++        items: json.results,
++        cursor: json.next,
++      };
++    },
++  });
++
++  const rowsPerPage = 3
++
++  return (
++    <Table
++      aria-label="Example table with asyncronosly loading dynamic content"
++      color="secondary"
++      css={{
++        minWidth: "620px",
++        height: "auto",
++        "@xsMax": {
++          minWidth: "100%",
++        },
++      }}
++      selectionMode="multiple"
++      shadow={false}
++    >
++      <Table.Header columns={scopedColumns}>
++        {(column) => <Table.Column key={column.uid}>{column.name}</Table.Column>}
++      </Table.Header>
++      <Table.Body items={list.items}>
++        {(item: any) => (
++          <Table.Row key={item.name}>{(key) => <Table.Cell>{item[key]}</Table.Cell>}</Table.Row>
++        )}
++      </Table.Body>
++      <Table.Pagination
++        noMargin
++        shadow
++        align="center"
++        rowsPerPage={rowsPerPage}
++        onPageChange={(page) => {
++          if (page >= list.items.length / rowsPerPage) {
++            list.loadMore();
++          }
++        }}
++      />
++    </Table>
++  );
++};
++
+ export const InfinityPagination = () => {
+   let scopedColumns = [
+     {name: "Name", uid: "name"},\n- packages/react/src/textarea/__tests__/__snapshots__/index.test.tsx.snap (modified, 4 changes)\n  Patch: @@ -1,5 +1,5 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`Textarea should render correctly 1`] = `"<div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-PJLV nextui-c-iFHsrU nextui-input-placeholder\\">placeholder</span><textarea aria-multiline=\\"true\\" aria-placeholder=\\"placeholder\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"placeholder\\" type=\\"text\\" id=\\"react-aria4137920911-1\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div>"`;
++exports[`Textarea should render correctly 1`] = `"<div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-PJLV nextui-c-iFHsrU nextui-input-placeholder\\">placeholder</span><textarea aria-multiline=\\"true\\" aria-placeholder=\\"placeholder\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"placeholder\\" type=\\"text\\" id=\\"react-aria636911619-1\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div>"`;
+ 
+-exports[`Textarea should work with different styles 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-kWLfoB-color-secondary nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><textarea aria-multiline=\\"true\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4137920911-3\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-ikPZLca-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><textarea aria-multiline=\\"true\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4137920911-5\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Textarea should work with different styles 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-kWLfoB-color-secondary nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><textarea aria-multiline=\\"true\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria636911619-3\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-ikPZLca-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><textarea aria-multiline=\\"true\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria636911619-5\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;\n

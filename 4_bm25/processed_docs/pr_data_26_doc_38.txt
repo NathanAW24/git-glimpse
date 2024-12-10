@@ -1,0 +1,101 @@
+Pull Request Number: 684
+Title: fix(table): Table.Header column border radius size #677
+Base Branch: next
+Head Branch: fix/table
+Author: wangly19
+URL: https://github.com/nextui-org/nextui/pull/684
+State: MERGED
+Created At: 2022-08-22T17:49:39Z
+Merged At: 2022-08-23T18:03:43Z
+Participants: wangly19, jrgarciadev
+
+Description:
+Closes #677
+📝 Description
+Fix Table.Header border display abnormally under a single Column.
+Mainly solve the problem raised by #677
+⛳️ Current behavior (updates)
+
+incorrect style:
+
+
+
+Exception code:
+
+
+🚀 New behavior
+
+Normal display:
+
+
+💣 Is this a breaking change (Yes/No):
+
+No
+📝 Additional Information
+In a single-column representation, first-child and last-child setting border-radius at the same time will be overridden according to priority.
+
+Commits:
+- fix(table): Table.Header column border size\n- Merge branch 'next' into fix/table\n
+
+Labels:
+
+
+Comments:
+- vercel: @wangly19 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22d2ac54440fe959549cb805bb215ba9f1d0ef6801%22%7D%2C%22id%22%3A%22QmYZ4xVTafFv2mgHNQoYeNSiqzgb1BpagP8Lrn9fUhuVYb%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A684%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/DyGK49hTWeHciPLECx3XXYGJCckt)) | [Visit Preview](https://nextui-storybook-git-fork-wangly19-fix-table-nextui-org.vercel.app) | Aug 23, 2022 at 3:34PM (UTC) |
+
+\n- jrgarciadev: Thanks! @wangly19, could you please fix the conflicts?  \n- wangly19: > 
+
+@jrgarciadev   Yes, I've solved it.\n
+
+Files Changed:
+- packages/react/src/table/table.styles.ts (modified, 36 changes)\n  Patch: @@ -8,23 +8,25 @@ export const StyledTableHeaderRow = styled("tr", {
+ export const StyledTableColumnHeader = styled(
+   "th",
+   {
+-    height: "$14",
+-    cursor: "default",
+-    bg: "$accents0",
+-    color: "$accents7",
+-    fontSize: "$xs",
+-    textAlign: "left",
+-    position: "relative",
+-    "@motion": {
+-      transition: "none",
+-    },
+-    "&:first-child": {
+-      pl: "$8",
+-      br: "$md 0 0 $md",
+-    },
+-    "&:last-child": {
+-      pr: "$8",
+-      br: "0 $md $md 0",
++    height: '$14',
++    cursor: 'default',
++    bg: '$accents0',
++    color: '$accents7',
++    fontSize: '$xs',
++    textAlign: 'left',
++    position: 'relative',
++    '@motion': {
++      transition: 'none'
++    },
++    '&:first-child': {
++      pl: '$8',
++      btlr: '$md',
++      bblr: '$md',
++    },
++    '&:last-child': {
++      pr: '$8',
++      btrr: '$md',
++      bbrr: '$md'
+     },
+     variants: {
+       align: {\n

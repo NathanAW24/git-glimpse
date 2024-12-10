@@ -1,0 +1,687 @@
+Pull Request Number: 868
+Title: chore(repo): define children's type as react-node
+Base Branch: next
+Head Branch: chore/children-type
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/868
+State: MERGED
+Created At: 2022-11-09T18:03:19Z
+Merged At: 2022-11-10T00:46:00Z
+Participants: tianenpang, jrgarciadev
+
+Description:
+📝 Description
+Manually define the children's type as ReactNode according to Dan's suggestion.
+
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- chore(react): define children's type as react-node\n- chore(docs): define children's type as react-node\n
+
+Labels:
+
+
+Comments:
+- vercel: @tianenpang is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22d9b7a39d8ade47c0d4e855c5f07ef31ce5588a4c%22%7D%2C%22id%22%3A%22QmX7sKU2Dx7FwGrXmUf8TAYcUNwoAQQ2ffgMD1FUVduorM%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A868%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/4ECYvqQo8tzBhid6xzSBWYAVHaxx)) | [Visit Preview](https://nextui-storybook-git-fork-tianenpang-chore-ch-e7963e-nextui-org.vercel.app) | Nov 9, 2022 at 6:03PM (UTC) |
+
+\n
+
+Files Changed:
+- apps/docs/src/components/anchor/index.tsx (modified, 3 changes)\n  Patch: @@ -5,6 +5,7 @@ import {Anchor} from "../icons";
+ 
+ export interface Props {
+   pure?: boolean;
++  children?: React.ReactNode;
+ }
+ 
+ export const virtualAnchorEncode = (text?: string) => {
+@@ -13,7 +14,7 @@ export const virtualAnchorEncode = (text?: string) => {
+   return text.toLowerCase().replace(/ /g, "-");
+ };
+ 
+-const VirtualAnchor: React.FC<React.PropsWithChildren<Props>> = ({children, pure}) => {
++const VirtualAnchor: React.FC<Props> = ({children, pure}) => {
+   const {theme} = useTheme();
+   const ref = useRef<HTMLAnchorElement>(null);
+   const [id, setId] = useState<string | undefined>();\n- apps/docs/src/components/badge/index.tsx (modified, 3 changes)\n  Patch: @@ -5,13 +5,14 @@ import {StyledBadge, BadgeVariantsProps} from "./badge.styles";
+ 
+ interface Props {
+   className?: string;
++  children?: React.ReactNode;
+ }
+ 
+ type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
+ 
+ type BadgeProps = Props & NativeAttrs & BadgeVariantsProps & {css?: CSS};
+ 
+-const Badge: React.FC<React.PropsWithChildren<BadgeProps>> = ({children, ...props}) => {
++const Badge: React.FC<BadgeProps> = ({children, ...props}) => {
+   return <StyledBadge {...props}>{children}</StyledBadge>;
+ };
+ \n- apps/docs/src/components/codeblock/index.tsx (modified, 2 changes)\n  Patch: @@ -10,7 +10,7 @@ const globalStyles = globalCss({
+   },
+ });
+ 
+-const Codeblock: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
++const Codeblock: React.FC<{children?: React.ReactNode}> = ({children}) => {
+   const codeTheme = makeCodeTheme();
+   const stringColor = codeTheme.styles.find((style) => style.types.includes("string"));
+   const punctuationColor = codeTheme.styles.find((style) => style.types.includes("punctuation"));\n- apps/docs/src/components/css-transition/index.tsx (modified, 3 changes)\n  Patch: @@ -8,6 +8,7 @@ interface Props {
+   clearTime?: number;
+   className?: string;
+   name?: string;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -21,7 +22,7 @@ const defaultProps = {
+ 
+ export type CSSTransitionProps = Props & typeof defaultProps;
+ 
+-const CSSTransition: React.FC<React.PropsWithChildren<CSSTransitionProps>> = ({
++const CSSTransition: React.FC<CSSTransitionProps> = ({
+   children,
+   className,
+   visible,\n- apps/docs/src/components/dots-container/index.tsx (modified, 2 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import * as React from "react";
+ import {useTheme} from "@nextui-org/react";
+ 
+-const DotsContainer: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
++const DotsContainer: React.FC<{children?: React.ReactNode}> = ({children}) => {
+   const {theme} = useTheme();
+ 
+   return (\n- apps/docs/src/components/fixed/index.tsx (modified, 9 changes)\n  Patch: @@ -8,6 +8,7 @@ export interface FixedProps {
+   shadow?: boolean;
+   className?: string;
+   css?: CSS;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -29,13 +30,7 @@ const StyledFixed = styled("div", {
+   },
+ });
+ 
+-const Fixed: React.FC<React.PropsWithChildren<FixedProps>> = ({
+-  offset,
+-  children,
+-  shadow,
+-  className,
+-  css,
+-}) => {
++const Fixed: React.FC<FixedProps> = ({offset, children, shadow, className, css}) => {
+   return (
+     <StyledFixed
+       className={cn(className, {shadow})}\n- apps/docs/src/components/heading/index.tsx (modified, 3 changes)\n  Patch: @@ -3,6 +3,7 @@ import withDefaults from "@utils/with-defaults";
+ 
+ export interface Props {
+   title: string;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -13,7 +14,7 @@ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+ 
+ export type HeadingProps = Props & typeof defaultProps & NativeAttrs;
+ 
+-const Heading: React.FC<React.PropsWithChildren<HeadingProps>> = ({title, children}) => {
++const Heading: React.FC<HeadingProps> = ({title, children}) => {
+   return (
+     <div className="heading">
+       <h4>{title}</h4>\n- apps/docs/src/components/keyboard/index.tsx (modified, 3 changes)\n  Patch: @@ -11,6 +11,7 @@ interface Props {
+   small?: boolean;
+   onClick?: () => void;
+   className?: string;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -46,7 +47,7 @@ const getLayout = (small: boolean, theme?: NextUITheme): CustomLayout => {
+   };
+ };
+ 
+-const Keyboard: React.FC<React.PropsWithChildren<KeyboardProps>> = ({
++const Keyboard: React.FC<KeyboardProps> = ({
+   command,
+   shift,
+   option,\n- apps/docs/src/components/mdx/index.tsx (modified, 11 changes)\n  Patch: @@ -10,7 +10,7 @@ import CarbonAd from "../carbon-ad";
+ import * as Icons from "../icons";
+ import Block from "../templates/example-block";
+ 
+-const Table: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
++const Table: React.FC<{children?: React.ReactNode}> = ({children}) => {
+   return (
+     <div className="docs-table-container">
+       <table className="docs-table">{children}</table>
+@@ -28,7 +28,7 @@ const Table: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
+     </div>
+   );
+ };
+-const Thead: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
++const Thead: React.FC<{children?: React.ReactNode}> = ({children}) => {
+   const {theme} = useTheme();
+ 
+   return (
+@@ -57,10 +57,10 @@ const Thead: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
+     </thead>
+   );
+ };
+-const Trow: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
++const Trow: React.FC<{children?: React.ReactNode}> = ({children}) => {
+   return <tr className="docs-tr">{children}</tr>;
+ };
+-const Tcol: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
++const Tcol: React.FC<{children?: React.ReactNode}> = ({children}) => {
+   const {theme} = useTheme();
+ 
+   return (
+@@ -82,6 +82,7 @@ const Tcol: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
+ export interface LinkedHeadingProps {
+   as: keyof JSX.IntrinsicElements;
+   linked?: boolean;
++  children?: React.ReactNode;
+ }
+ 
+ const LinkedHeading: React.FC<LinkedHeadingProps> = ({as, linked = true, ...props}) => {
+@@ -94,7 +95,7 @@ const LinkedHeading: React.FC<LinkedHeadingProps> = ({as, linked = true, ...prop
+   );
+ };
+ 
+-const List: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
++const List: React.FC<{children?: React.ReactNode}> = ({children}) => {
+   const {theme} = useTheme();
+ 
+   return (\n- apps/docs/src/components/sandpack/sandpack.tsx (modified, 3 changes)\n  Patch: @@ -31,6 +31,7 @@ interface Props {
+   removeEntryContainer?: boolean;
+   template?: SandpackPredefinedTemplate;
+   highlightedLines?: HighlightedLines;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -46,7 +47,7 @@ const defaultProps = {
+ 
+ export type SandpackProps = Props & typeof defaultProps;
+ 
+-const Sandpack: React.FC<React.PropsWithChildren<SandpackProps>> = ({
++const Sandpack: React.FC<SandpackProps> = ({
+   files,
+   children,
+   highlightedLines,\n- apps/docs/src/components/sidebar/category.tsx (modified, 3 changes)\n  Patch: @@ -15,6 +15,7 @@ export interface Props {
+   selected: boolean;
+   opened: boolean;
+   updated?: boolean;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -28,7 +29,7 @@ type NativeAttrs = Omit<React.HTMLAttributes<HTMLDivElement>, keyof Props>;
+ 
+ export type CategoryProps = Props & typeof defaultProps & NativeAttrs;
+ 
+-const Category: React.FC<React.PropsWithChildren<CategoryProps>> = ({
++const Category: React.FC<CategoryProps> = ({
+   isMobile,
+   level = 1,
+   title,\n- apps/docs/src/components/sidebar/post.tsx (modified, 8 changes)\n  Patch: @@ -11,6 +11,7 @@ export interface Props {
+   route: NavLinkProps;
+   isMobile: boolean;
+   onClick?: () => void;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -22,12 +23,7 @@ type NativeAttrs = Omit<React.HTMLAttributes<HTMLDivElement>, keyof Props>;
+ 
+ export type PostProps = Props & typeof defaultProps & NativeAttrs;
+ 
+-const Post: React.FC<React.PropsWithChildren<PostProps>> = ({
+-  isMobile,
+-  route,
+-  level = 1,
+-  onClick,
+-}) => {
++const Post: React.FC<PostProps> = ({isMobile, route, level = 1, onClick}) => {
+   const selectedRef = useRef<HTMLDivElement>(null);
+   const ref = route.selected ? selectedRef : null;
+   const {theme, isDark} = useTheme();\n- apps/docs/src/components/templates/example-block/index.tsx (modified, 3 changes)\n  Patch: @@ -7,6 +7,7 @@ interface Props {
+   width?: number;
+   height?: number;
+   radius?: number | string;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -31,7 +32,7 @@ const getBackground = (plain: number | boolean, theme?: NextUITheme) => {
+   return colors[plain - 1] || theme?.colors?.primary?.value;
+ };
+ 
+-const ExampleBlock: React.FC<React.PropsWithChildren<ExampleBlockProps>> = ({
++const ExampleBlock: React.FC<ExampleBlockProps> = ({
+   children,
+   plain,
+   width,\n- apps/docs/src/layouts/default.tsx (modified, 3 changes)\n  Patch: @@ -11,9 +11,10 @@ export interface Props {
+   currentRoute?: Route;
+   tag?: string;
+   slug?: string;
++  children?: React.ReactNode;
+ }
+ 
+-const DefaultLayout: React.FC<React.PropsWithChildren<Props>> = ({children, routes}) => {
++const DefaultLayout: React.FC<Props> = ({children, routes}) => {
+   return (
+     <div id="app-container">
+       <Header />\n- apps/docs/src/layouts/docs.tsx (modified, 3 changes)\n  Patch: @@ -24,9 +24,10 @@ export interface Props {
+   meta?: MetaProps;
+   tag?: string;
+   slug?: string;
++  children?: React.ReactNode;
+ }
+ 
+-const DocsLayout: React.FC<React.PropsWithChildren<Props>> = ({
++const DocsLayout: React.FC<Props> = ({
+   children,
+   routes,
+   prevRoute,\n- packages/react/src/backdrop/backdrop.tsx (modified, 3 changes)\n  Patch: @@ -28,6 +28,7 @@ interface Props {
+   css?: CSS;
+   className?: string;
+   as?: keyof JSX.IntrinsicElements;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -46,7 +47,7 @@ export type BackdropProps = Props & typeof defaultProps & NativeAttrs & Backdrop
+ 
+ const preClass = "nextui-backdrop";
+ 
+-const Backdrop: React.FC<React.PropsWithChildren<BackdropProps>> = React.memo(
++const Backdrop: React.FC<BackdropProps> = React.memo(
+   ({
+     children,
+     onClick,\n- packages/react/src/button/button-group.tsx (modified, 3 changes)\n  Patch: @@ -21,6 +21,7 @@ interface Props {
+   borderWeight?: NormalWeights;
+   size?: NormalSizes;
+   color?: NormalColors;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -36,7 +37,7 @@ export type ButtonGroupProps = Props &
+   NativeAttrs &
+   typeof defaultProps & {css?: CSS};
+ 
+-const ButtonGroup: React.FC<React.PropsWithChildren<ButtonGroupProps>> = (groupProps) => {
++const ButtonGroup: React.FC<ButtonGroupProps> = (groupProps) => {
+   const {
+     disabled,
+     size,\n- packages/react/src/button/button-icon.tsx (modified, 8 changes)\n  Patch: @@ -10,6 +10,7 @@ interface Props {
+   isRight?: boolean;
+   isSingle?: boolean;
+   className?: string;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -113,12 +114,7 @@ export type ButtonIconProps = Props &
+     css?: CSS;
+   };
+ 
+-const ButtonIcon: React.FC<React.PropsWithChildren<ButtonIconProps>> = ({
+-  children,
+-  className,
+-  css,
+-  ...props
+-}) => {
++const ButtonIcon: React.FC<ButtonIconProps> = ({children, className, css, ...props}) => {
+   return (
+     <StyledButtonIcon
+       className={clsx(\n- packages/react/src/button/utils.tsx (modified, 6 changes)\n  Patch: @@ -1,12 +1,10 @@
+ import type {CSS} from "../theme/stitches.config";
+ 
+-import React from "react";
+-
+ import {ButtonProps} from "./button";
+ import {ButtonGroupConfig} from "./button-group-context";
+ 
+ export const filterPropsWithGroup = (
+-  props: React.PropsWithChildren<ButtonProps>,
++  props: ButtonProps,
+   config: ButtonGroupConfig,
+ ): ButtonProps => {
+   if (!config.isButtonGroup) return props;
+@@ -29,7 +27,7 @@ export const filterPropsWithGroup = (
+   };
+ };
+ 
+-export const getCssColors = (props: React.PropsWithChildren<ButtonProps>): CSS | undefined => {
++export const getCssColors = (props: ButtonProps): CSS | undefined => {
+   if (!props.disabled) {
+     if (props.auto && props.color === "gradient" && (props.bordered || props.ghost)) {
+       return {\n- packages/react/src/code/code.tsx (modified, 3 changes)\n  Patch: @@ -8,6 +8,7 @@ import {StyledCode, StyledPre, CodeVariantsProps} from "./code.styles";
+ interface Props {
+   block?: boolean;
+   as?: keyof JSX.IntrinsicElements;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -17,7 +18,7 @@ const defaultProps = {
+ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+ export type CodeProps = Props & NativeAttrs & CodeVariantsProps & {css?: CSS};
+ 
+-const Code: React.FC<React.PropsWithChildren<CodeProps>> = ({block, children, ...props}) => {
++const Code: React.FC<CodeProps> = ({block, children, ...props}) => {
+   if (!block) return <StyledCode {...props}>{children}</StyledCode>;
+ 
+   return (\n- packages/react/src/col/col.tsx (modified, 9 changes)\n  Patch: @@ -11,6 +11,7 @@ interface Props {
+   offset?: number;
+   css?: CSS;
+   as?: keyof JSX.IntrinsicElements;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -22,13 +23,7 @@ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+ 
+ export type ColProps = Props & typeof defaultProps & ColVariantsProps & NativeAttrs;
+ 
+-const Col: React.FC<React.PropsWithChildren<ColProps>> = ({
+-  children,
+-  span,
+-  offset,
+-  css,
+-  ...props
+-}) => {
++const Col: React.FC<ColProps> = ({children, span, offset, css, ...props}) => {
+   return (
+     <StyledCol
+       css={{\n- packages/react/src/collapse/collapse-group.tsx (modified, 3 changes)\n  Patch: @@ -15,6 +15,7 @@ interface Props {
+   divider?: boolean;
+   onChange?: (index?: number | undefined, value?: boolean) => void;
+   as?: keyof JSX.IntrinsicElements;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -25,7 +26,7 @@ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+ 
+ export type CollapseGroupProps = Props & NativeAttrs & CollapseGroupVariantsProps & {css?: CSS};
+ 
+-const CollapseGroup: React.FC<React.PropsWithChildren<CollapseGroupProps>> = ({
++const CollapseGroup: React.FC<CollapseGroupProps> = ({
+   children,
+   accordion,
+   animated,\n- packages/react/src/collapse/collapse.tsx (modified, 3 changes)\n  Patch: @@ -40,6 +40,7 @@ interface Props {
+     value?: boolean,
+   ) => void;
+   as?: keyof JSX.IntrinsicElements;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -62,7 +63,7 @@ export type CollapseProps = Props &
+ 
+ const preClass = "nextui-collapse";
+ 
+-const Collapse: React.FC<React.PropsWithChildren<CollapseProps>> = ({
++const Collapse: React.FC<CollapseProps> = ({
+   children,
+   title,
+   subtitle,\n- packages/react/src/container/container.tsx (modified, 125 changes)\n  Patch: @@ -24,6 +24,7 @@ interface Props {
+   alignContent?: AlignContent;
+   as?: keyof JSX.IntrinsicElements;
+   css?: CSS;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -44,69 +45,67 @@ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+ 
+ export type ContainerProps = Props & typeof defaultProps & NativeAttrs;
+ 
+-const Container = React.forwardRef<HTMLElement, React.PropsWithChildren<ContainerProps>>(
+-  (containerProps, ref) => {
+-    const {
+-      xs,
+-      sm,
+-      md,
+-      lg,
+-      xl,
+-      wrap,
+-      gap,
+-      as,
+-      display,
+-      justify,
+-      direction,
+-      alignItems,
+-      alignContent,
+-      children,
+-      responsive,
+-      fluid,
+-      css,
+-      ...otherProps
+-    } = containerProps;
+-
+-    const domRef = useDOMRef(ref);
+-
+-    const gapUnit = useMemo(() => {
+-      return `calc(${gap} * $space$sm)`;
+-    }, [gap]);
+-
+-    const getMaxWidth = () => {
+-      if (xs) return "$breakpoints$xs";
+-      if (sm) return "$breakpoints$sm";
+-      if (md) return "$breakpoints$md";
+-      if (lg) return "$breakpoints$lg";
+-      if (xl) return "$breakpoints$xl";
+-
+-      return "";
+-    };
+-
+-    return (
+-      <StyledContainer
+-        ref={domRef}
+-        as={as}
+-        css={{
+-          px: gapUnit,
+-          maxWidth: getMaxWidth(),
+-          alignItems,
+-          alignContent,
+-          flexWrap: wrap,
+-          display: display,
+-          justifyContent: justify,
+-          flexDirection: direction,
+-          ...css,
+-        }}
+-        fluid={fluid}
+-        responsive={responsive}
+-        {...otherProps}
+-      >
+-        {children}
+-      </StyledContainer>
+-    );
+-  },
+-);
++const Container = React.forwardRef<HTMLElement, ContainerProps>((containerProps, ref) => {
++  const {
++    xs,
++    sm,
++    md,
++    lg,
++    xl,
++    wrap,
++    gap,
++    as,
++    display,
++    justify,
++    direction,
++    alignItems,
++    alignContent,
++    children,
++    responsive,
++    fluid,
++    css,
++    ...otherProps
++  } = containerProps;
++
++  const domRef = useDOMRef(ref);
++
++  const gapUnit = useMemo(() => {
++    return `calc(${gap} * $space$sm)`;
++  }, [gap]);
++
++  const getMaxWidth = () => {
++    if (xs) return "$breakpoints$xs";
++    if (sm) return "$breakpoints$sm";
++    if (md) return "$breakpoints$md";
++    if (lg) return "$breakpoints$lg";
++    if (xl) return "$breakpoints$xl";
++
++    return "";
++  };
++
++  return (
++    <StyledContainer
++      ref={domRef}
++      as={as}
++      css={{
++        px: gapUnit,
++        maxWidth: getMaxWidth(),
++        alignItems,
++        alignContent,
++        flexWrap: wrap,
++        display: display,
++        justifyContent: justify,
++        flexDirection: direction,
++        ...css,
++      }}
++      fluid={fluid}
++      responsive={responsive}
++      {...otherProps}
++    >
++      {children}
++    </StyledContainer>
++  );
++});
+ 
+ Container.displayName = "NextUI.Container";
+ \n- packages/react/src/css-baseline/css-baseline.tsx (modified, 8 changes)\n  Patch: @@ -240,7 +240,7 @@ const globalStyles = globalCss({
+ 
+ const flushCSS = () => <style dangerouslySetInnerHTML={{__html: getCssText()}} id="stitches" />;
+ 
+-const CssBaseline: React.FC<React.PropsWithChildren<{}>> = ({children}) => {
++const CssBaseline: React.FC<{children?: React.ReactNode}> = ({children}) => {
+   globalStyles();
+ 
+   return <React.Fragment>{children}</React.Fragment>;
+@@ -250,9 +250,9 @@ type MemoCssBaselineComponent<P = {}> = React.NamedExoticComponent<P> & {
+   flush: typeof flushCSS;
+ };
+ 
+-const MemoCssBaseline = React.memo(CssBaseline) as MemoCssBaselineComponent<
+-  React.PropsWithChildren<{}>
+->;
++const MemoCssBaseline = React.memo(CssBaseline) as MemoCssBaselineComponent<{
++  children?: React.ReactNode;
++}>;
+ 
+ MemoCssBaseline.flush = flushCSS;
+ \n- packages/react/src/divider/divider.tsx (modified, 3 changes)\n  Patch: @@ -16,6 +16,7 @@ interface Props {
+   align?: DividerAlign;
+   css?: CSS;
+   as?: keyof JSX.IntrinsicElements;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -28,7 +29,7 @@ const defaultProps = {
+ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+ export type DividerProps = Props & DividerVariantsProps & NativeAttrs;
+ 
+-const Divider: React.FC<React.PropsWithChildren<DividerProps>> = ({
++const Divider: React.FC<DividerProps> = ({
+   height,
+   x,
+   y,\n- packages/react/src/grid/grid-container.tsx (modified, 3 changes)\n  Patch: @@ -13,6 +13,7 @@ interface Props {
+   wrap?: Wrap;
+   className?: string;
+   css?: CSS;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -23,7 +24,7 @@ const defaultProps = {
+ 
+ export type GridContainerProps = Props & Partial<typeof defaultProps> & GridItemProps;
+ 
+-const GridContainer = React.forwardRef<HTMLDivElement, React.PropsWithChildren<GridContainerProps>>(
++const GridContainer = React.forwardRef<HTMLDivElement, GridContainerProps>(
+   ({gap, wrap, css, children, className, ...props}, ref) => {
+     const gapUnit = useMemo(() => {
+       return `calc(${gap} * $space$3)`;\n- packages/react/src/grid/grid-item.tsx (modified, 3 changes)\n  Patch: @@ -21,6 +21,7 @@ interface Props {
+   css?: CSS;
+   as?: keyof JSX.IntrinsicElements;
+   className?: string;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -62,7 +63,7 @@ const getItemLayout = (val?: BreakpointsValue): React.CSSProperties => {
+   };
+ };
+ 
+-const GridItem = React.forwardRef<HTMLDivElement, React.PropsWithChildren<GridItemProps>>(
++const GridItem = React.forwardRef<HTMLDivElement, GridItemProps>(
+   (
+     {
+       xs,\n- packages/react/src/grid/grid.tsx (modified, 16 changes)\n  Patch: @@ -5,15 +5,13 @@ import GridBasicItem, {GridItemProps} from "./grid-item";
+ 
+ export type GridProps = GridItemProps;
+ 
+-const Grid = React.forwardRef<HTMLDivElement, React.PropsWithChildren<GridProps>>(
+-  ({children, css, ...props}, ref) => {
+-    return (
+-      <GridBasicItem ref={ref} css={css} {...props}>
+-        {children}
+-      </GridBasicItem>
+-    );
+-  },
+-);
++const Grid = React.forwardRef<HTMLDivElement, GridProps>(({children, css, ...props}, ref) => {
++  return (
++    <GridBasicItem ref={ref} css={css} {...props}>
++      {children}
++    </GridBasicItem>
++  );
++});
+ 
+ Grid.displayName = "NextUI.Grid";
+ Grid.toString = () => ".nextui-grid";\n- packages/react/src/input/input-password.tsx (modified, 6 changes)\n  Patch: @@ -13,6 +13,7 @@ interface PasswordProps extends Props {
+   hideToggle?: boolean;
+   visibleIcon?: React.ReactNode;
+   hiddenIcon?: React.ReactNode;
++  children?: React.ReactNode;
+ }
+ 
+ const passwordDefaultProps = {
+@@ -27,10 +28,7 @@ export type InputPasswordProps = PasswordProps &
+   typeof passwordDefaultProps &
+   NativeAttrs & {css?: CSS};
+ 
+-const InputPassword = React.forwardRef<
+-  HTMLInputElement,
+-  React.PropsWithChildren<InputPasswordProps>
+->(
++const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordProps>(
+   (
+     {hideToggle, visibleIcon, hiddenIcon, children, ...props},
+     ref: React.Ref<HTMLInputElement | null>,\n

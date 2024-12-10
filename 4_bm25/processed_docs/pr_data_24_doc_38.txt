@@ -1,0 +1,98 @@
+Pull Request Number: 1073
+Title: fix(react-link): update example by handle next 13
+Base Branch: v1
+Head Branch: main
+Author: hyesungoh
+URL: https://github.com/nextui-org/nextui/pull/1073
+State: CLOSED
+Created At: 2023-03-16T07:25:33Z
+Merged At: None
+Participants: hyesungoh, jrgarciadev
+
+Description:
+📝 Description
+
+
+Using linkContent at link - Next.js Link
+
+there are already exist file, but not using it
+
+
+
+next.js 13 handling example
+
+current example cause hydration error
+there are two way to handle it, what I found
+
+using legacyBehavior prop
+using Link tags 'as' prop with NextLink
+
+
+
+
+
+I found this PR, so I handle with this as prop #446
+⛳️ Current behavior (updates)
+
+🚀 New behavior
+
+💣 Is this a breaking change (Yes/No):
+No. just changin docs
+📝 Additional Information
+does not work example Go to Button, I do not know why 😢
+
+I guess... are there not allowed importing 'next/link' where linkContent mdx files?
+
+Commits:
+- fix(react-link): handle next 13\n
+
+Labels:
+
+
+Comments:
+- vercel: @hyesungoh is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228ae089346a4bc490c17d56448f693995f4e4542e%22%7D%2C%22id%22%3A%22QmVkRsfK76UyNPaKVK4s2CBcbMVXWutycNTKz3dKJQTYFZ%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1073%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #V9ky5+vos9PmbQQMxrej6J4qYPWGucTDRu7lHu8SVGM=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2svR3pZRlVCdFlxTVpZYVh5UmU4SFFhMzR1VjliUSIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLWh5ZXN1bmdvaC1tYWluLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay1naXQtZm9yay1oeWVzdW5nb2gtbWFpbi1uZXh0dWktb3JnLnZlcmNlbC5hcHAifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/GzYFUBtYqMZYaXyRe8HQa34uV9bQ)) | [Visit Preview](https://nextui-storybook-git-fork-hyesungoh-main-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-hyesungoh-main-nextui-org.vercel.app) | Mar 16, 2023 at 7:28AM (UTC) |
+
+\n- jrgarciadev: Closing this due to v1 will not receive more updates.\n
+
+Files Changed:
+- apps/docs/content/components/link/nextLink.ts (modified, 9 changes)\n  Patch: @@ -1,12 +1,11 @@
+ const App = `import { Link } from "@nextui-org/react";
++import NextLink from "next/link";
+ 
+ export default function App() {
+   return (
+-    <NextLink href="/docs/components/button">
+-      <Link block color="secondary">
+-        Go to Button
+-      </Link>
+-    </NextLink>
++    <Link href="/" as={NextLink} block color="secondary">
++      Go to Button
++    </Link>
+   );
+ }`;
+ \n- apps/docs/content/docs/components/link.mdx (modified, 9 changes)\n  Patch: @@ -48,13 +48,8 @@ import { Link } from "@nextui-org/react";
+ 
+ <Playground
+   title="Next.js Link"
+-  desc="If you are using [Next.js](https://nextjs.org) you can use `next/link` as a parent."
+-  code={`<NextLink href="/docs/components/button">
+-  <Link block color="secondary">
+-    Go to Button
+-  </Link>
+-</NextLink>
+-`}
++  desc="If you are using [Next.js](https://nextjs.org) you can use `next/link` as an `as` prop."
++  files={linkContent.nextLink}
+ />
+ 
+ <Spacer y={3} />\n

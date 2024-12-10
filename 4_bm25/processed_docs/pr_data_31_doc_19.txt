@@ -1,0 +1,94 @@
+Pull Request Number: 130
+Title: Feat/turborepo
+Base Branch: main
+Head Branch: feat/turborepo
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/130
+State: MERGED
+Created At: 2022-01-02T02:03:03Z
+Merged At: 2022-01-02T02:38:19Z
+Participants: jrgarciadev
+
+Description:
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Turborepo was added to the project in order to have faster builds and a better DX, storybook main project was separated into a package
+
+
+
+Screenshots - Animations
+
+Commits:
+- fea(root): turbo repo initialized\n- feat(root): storybook added as a package\n- chore(sb): nextui removed as a dependency\n- chore(sb): nextui added as a dependency again\n- chore: build working\n- chore: storybook removed from the build pipeline\n- fix: git ignore\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- .github/workflows/main.yaml (modified, 8 changes)\n  Patch: @@ -46,6 +46,14 @@ jobs:
+           node-version: '12'
+       - name: Install dependencies
+         run: yarn install --frozen-lockfile
++      - uses: actions/cache@v2
++        with:
++          path: ${{ github.workspace }}/.next/cache
++          # Generate a new cache whenever packages or source files change.
++          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
++          # If source files changed but packages didn't, rebuild from a prior cache.
++          restore-keys: |
++            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+       - name: Build
+         run: yarn build
+ \n- .gitignore (modified, 9 changes)\n  Patch: @@ -2,19 +2,23 @@
+ # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+ 
+ # dependencies
+-/node_modules
++node_modules
+ /.pnp
+ .pnp.js
+ 
+ # testing
+ /coverage
++coverage
++types
+ 
+ # next.js
+ /.next/
++.next/
+ /out/
+ 
+ # production
+ /build
++dist/
+ 
+ # misc
+ .DS_Store
+@@ -41,3 +45,6 @@ examples/**/.next
+ 
+ # ignore sitemap
+ packages/**/sitemap.xml
++
++# turbo
++.turbo\n- .vscode/settings.json (modified, 2 changes)\n  Patch: @@ -1,5 +1,5 @@
+ {
+-  "eslint.workingDirectories": ["./packages/docs","./packages/nextui"],
++  "eslint.workingDirectories": ["./apps/docs", "./packages/react", "./packages/storybook"],
+   "editor.tabSize": 2,
+   "editor.insertSpaces": true
+ }\n- README.md (modified, 2 changes)\n  Patch: @@ -1 +1 @@
+-packages/nextui/README.md
+\ No newline at end of file
++packages/react/README.md
+\ No newline at end of file\n- apps/docs/.babelrc (renamed)\n  Previous Filename: packages/docs/.babelrc\n- apps/docs/.env.example (renamed)\n  Previous Filename: packages/docs/.env.example\n- apps/docs/.eslintrc.json (renamed)\n  Previous Filename: packages/docs/.eslintrc.json\n- apps/docs/LICENSE (renamed)\n  Previous Filename: packages/docs/LICENSE\n- apps/docs/content/docs/components/avatar.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/avatar.mdx\n- apps/docs/content/docs/components/button-group.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/button-group.mdx\n- apps/docs/content/docs/components/button.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/button.mdx\n- apps/docs/content/docs/components/card.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/card.mdx\n- apps/docs/content/docs/components/checkbox.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/checkbox.mdx\n- apps/docs/content/docs/components/collapse.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/collapse.mdx\n- apps/docs/content/docs/components/input.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/input.mdx\n- apps/docs/content/docs/components/link.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/link.mdx\n- apps/docs/content/docs/components/loading.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/loading.mdx\n- apps/docs/content/docs/components/modal.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/modal.mdx\n- apps/docs/content/docs/components/pagination.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/pagination.mdx\n- apps/docs/content/docs/components/progress.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/progress.mdx\n- apps/docs/content/docs/components/radio.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/radio.mdx\n- apps/docs/content/docs/components/switch.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/switch.mdx\n- apps/docs/content/docs/components/text.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/text.mdx\n- apps/docs/content/docs/components/textarea.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/textarea.mdx\n- apps/docs/content/docs/components/tooltip.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/components/tooltip.mdx\n- apps/docs/content/docs/guide/getting-started.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/guide/getting-started.mdx\n- apps/docs/content/docs/guide/nextui-plus-nextjs.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/guide/nextui-plus-nextjs.mdx\n- apps/docs/content/docs/layout/container.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/layout/container.mdx\n- apps/docs/content/docs/layout/grid.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/layout/grid.mdx\n- apps/docs/content/docs/layout/spacer.mdx (renamed)\n  Previous Filename: packages/docs/content/docs/layout/spacer.mdx\n

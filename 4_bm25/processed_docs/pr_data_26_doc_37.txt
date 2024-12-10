@@ -1,0 +1,2506 @@
+Pull Request Number: 686
+Title: Feat/navbar component
+Base Branch: next
+Head Branch: feat/navbar
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/686
+State: MERGED
+Created At: 2022-08-24T01:03:28Z
+Merged At: 2022-08-26T00:55:40Z
+Participants: jrgarciadev
+
+Description:
+Closes #433 #642 #668 #482
+📝 Description
+The navbar component has been created 🎉
+
+  
+    
+    
+
+    NextUI_-Navbar-component.1.mp4
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No): Yes
+Link APIs breaking changes
+
+
+
+OLD APIs
+NEW APIs
+
+
+
+
+icon
+isExternal
+
+Commits:
+- feat(react-navbar): first structure\n- feat(react-navbar): navbar in progress\n- feat(react-link): link has been migrated to @react-aria/link\n- feat(react-navbar): navbar link added\n- feat(react-navbar): better flex implementation\n- feat(navbar): better background blur implementation\n- fix(root): readme\n- Merge branch 'next' of github.com:nextui-org/nextui into feat/navbar\n- feat(react-navbar): navbar items variants created\n- feat(react-navbar): hihglight cursor added\n- feat(react-navbar): cusro highlight and items width improve\n- feat(react-navbar): hide on scroll implemented\n- feat(react-navbar): navbar collapse in progress\n- feat(react-navbar): animations applied to navbar-list\n- Merge branch 'next' of github.com:nextui-org/nextui into feat/navbar\n- feat(react-navbar): collapse styles improved, animations applied\n- feat(react-navbar): collapse items transition improved\n- feat(react-navbar): collapse & collapse item separated, transition delay managed internally\n- Merge branch 'next' of github.com:nextui-org/nextui into feat/navbar\n- fix(react-navbar): collapse height is auto adjusted according to the parent height\n- feat(react-navbar): dropdown included and refactored to work well with navbar\n- Merge branch 'next' of github.com:nextui-org/nextui into feat/navbar\n- feat(react-navbar): dropdown included and refactored to work well with navbar\n- refactor(react-dropdown-trigger): scale animation applied to the children directly, css fixes\n- feat(react-navbar): dropdown improved\n- fix(react-button): #482  Button uses deprecated onClick instead of onPress\n- feat(docs): window actions added to the playground\n- feat(docs): playground with iframe and resizer implemented\n- feat(docs-navbar): documentation in progress...\n- feat(docs-navbar): new notify banner, badge styled adjusted, navbar documentation improved\n- feat(docs-notify): sparkles component added\n- refactor(react-link): icon prop renamed to isExternal\n- feat(react-navbar): transitions & collaspe item styles improved, nav docs improved\n- feat(docs-navbar): navbar anatomy and examples improved\n- feat(navbar):  docs improved, collapse transitions improved\n- feat(react-common): breakpointMin added as a media breakpoints too\n- feat(navbar): docs improved, navbar with search input example added\n- feat(navbar): dynamic live draggable with inital width improved, navbar APIs improved\n- feat(docs-navbar): docs improved\n- feat(docs-navbar): documentation done!\n- Merge branch 'next' of github.com:nextui-org/nextui into feat/navbar\n- fix(react-navbar): transition time\n- refactor(react-navbar): collapse matrix animation improved\n- chore(docs): merged with the next branch\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/2HRCwykisKsNodb9CE5etNFy66dq)) | [Visit Preview](https://nextui-docs-git-feat-navbar-nextui-org.vercel.app) | Aug 25, 2022 at 1:25PM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/D6QqDnn27uKV5do77UwNMKTvvPBu)) | [Visit Preview](https://nextui-storybook-git-feat-navbar-nextui-org.vercel.app) | Aug 25, 2022 at 1:25PM (UTC) |
+
+
+\n
+
+Files Changed:
+- apps/docs/content/components/index.ts (modified, 2 changes)\n  Patch: @@ -25,6 +25,7 @@ import spacerContent from "./spacer";
+ import popoverContent from "./popover";
+ import dropdownContent from "./dropdown";
+ import badgeContent from "./badge";
++import navbarContent from "./navbar";
+ 
+ export default {
+   tableContent,
+@@ -54,4 +55,5 @@ export default {
+   popoverContent,
+   dropdownContent,
+   badgeContent,
++  navbarContent,
+ };\n- apps/docs/content/components/navbar/active-item-variants.ts (added, 103 changes)\n  Patch: @@ -0,0 +1,103 @@
++import {Layout, Box, AcmeLogo, Content, VariantsSelectorWrapper} from "./common";
++
++const App = `import React from "react";
++import { Navbar, Button, Link, Text, Card, Spacer, Radio, useTheme } from "@nextui-org/react";
++import { Layout } from "./Layout.js";
++import { AcmeLogo } from "./AcmeLogo.js";
++import { VariantsSelectorWrapper } from "./VariantsSelectorWrapper.js";
++
++export default function App() {
++  const [variant, setVariant] = React.useState("default");
++  const [activeColor, setActiveColor] = React.useState("primary");
++
++  const {isDark} = useTheme();
++
++  const variants = [
++    "default",
++    "highlight",
++    "highlight-solid",
++    "underline",
++    "highlight-rounded",
++    "highlight-solid-rounded",
++    "underline-rounded",
++  ];
++
++  const colors = ["primary", "secondary", "success", "warning", "error"];
++  
++  return (
++    <Layout>
++      <Navbar isBordered={isDark} variant="sticky">
++        <Navbar.Brand>
++          <AcmeLogo />
++          <Text b color="inherit" hideIn="xs">
++            ACME
++          </Text>
++        </Navbar.Brand>
++        <Navbar.Content activeColor={activeColor} hideIn="xs" variant={variant}>
++          <Navbar.Link href="#">Features</Navbar.Link>
++          <Navbar.Link isActive href="#">Customers</Navbar.Link>
++          <Navbar.Link href="#">Pricing</Navbar.Link>
++          <Navbar.Link href="#">Company</Navbar.Link>
++        </Navbar.Content>
++        <Navbar.Content>
++          <Navbar.Link color="inherit" href="#">
++            Login
++          </Navbar.Link>
++          <Navbar.Item>
++            <Button auto flat as={Link} color={activeColor} href="#">
++              Sign Up
++            </Button>
++          </Navbar.Item>
++        </Navbar.Content>
++      </Navbar>
++      <VariantsSelectorWrapper>
++        <Card css={{px: "$6", maxW: "90%"}}>
++          <Card.Body>
++            <Radio.Group
++              defaultValue="default"
++              label="Select active variant"
++              orientation="horizontal"
++              size="sm"
++              value={variant}
++              onChange={setVariant}
++            >
++              {variants.map((variant) => (
++                <Radio key={variant} color={activeColor} value={variant}>
++                  {variant}
++                </Radio>
++              ))}
++            </Radio.Group>
++            <Spacer y={0.5} />
++            <Radio.Group
++              defaultValue="default"
++              label="Select active color"
++              orientation="horizontal"
++              size="sm"
++              value={activeColor}
++              onChange={setActiveColor}
++            >
++              {colors.map((color) => (
++                <Radio key={color} color={activeColor} value={color}>
++                  {color === "primary" ? "primary (default)" : color}
++                </Radio>
++              ))}
++            </Radio.Group>
++          </Card.Body>
++        </Card>
++      </VariantsSelectorWrapper>      
++    </Layout>
++  )
++}`;
++
++const react = {
++  "/Content.js": Content,
++  "/Layout.js": Layout,
++  "/AcmeLogo.js": AcmeLogo,
++  "/Box.js": Box,
++  "/VariantsSelectorWrapper.js": VariantsSelectorWrapper,
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/navbar/bordered.ts (added, 48 changes)\n  Patch: @@ -0,0 +1,48 @@
++import {Layout, Box, AcmeLogo, Content} from "./common";
++
++const App = `import { Navbar, Button, Link, Text } from "@nextui-org/react";
++import { Layout } from "./Layout.js";
++import { AcmeLogo } from "./AcmeLogo.js";
++
++export default function App() {
++  return (
++    <Layout>
++      <Navbar isBordered variant="floating">
++        <Navbar.Brand>
++          <AcmeLogo />
++          <Text b color="inherit" hideIn="xs">
++            ACME
++          </Text>
++        </Navbar.Brand>
++        <Navbar.Content hideIn="xs" variant="highlight-rounded">
++          <Navbar.Link href="#">Features</Navbar.Link>
++          <Navbar.Link isActive href="#">Customers</Navbar.Link>
++          <Navbar.Link href="#">Pricing</Navbar.Link>
++          <Navbar.Link href="#">Company</Navbar.Link>
++        </Navbar.Content>
++        <Navbar.Content>
++          <Navbar.Link color="inherit" href="#">
++            Login
++          </Navbar.Link>
++          <Navbar.Item>
++            <Button auto flat as={Link} href="#">
++              Sign Up
++            </Button>
++          </Navbar.Item>
++        </Navbar.Content>
++      </Navbar>
++    </Layout>
++  )
++}`;
++
++const react = {
++  "/Content.js": Content,
++  "/Layout.js": Layout,
++  "/AcmeLogo.js": AcmeLogo,
++  "/Box.js": Box,
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/navbar/common.ts (added, 135 changes)\n  Patch: @@ -0,0 +1,135 @@
++export const AcmeLogo = `export const AcmeLogo = () => (
++  <svg
++    className=""
++    fill="none"
++    height="36"
++    viewBox="0 0 32 32"
++    width="36"
++    xmlns="http://www.w3.org/2000/svg"
++  >
++    <rect fill="var(--secondary)" height="100%" rx="16" width="100%" />
++    <path
++      clipRule="evenodd"
++      d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
++      fill="currentColor"
++      fillRule="evenodd"
++    />
++  </svg>
++);`;
++
++export const Box = `import { styled } from "@nextui-org/react"
++
++export const Box = styled("div", {
++  boxSizing: "border-box",
++});
++`;
++
++export const Content = `import { Text, Spacer } from "@nextui-org/react"
++import { Box } from "./Box.js"
++
++const Content = () => (
++  <Box css={{px: "$12", mt: "$8", "@xsMax": {px: "$10"}}}>
++    <Text h2>Lorem ipsum dolor sit amet</Text>
++    <Text size="$lg">
++      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
++      labore et dolore magna aliqua. Purus gravida quis blandit turpis. Augue neque gravida in
++      fermentum et sollicitudin ac orci. Et sollicitudin ac orci phasellus egestas. Elementum tempus
++      egestas sed sed risus pretium quam vulputate. Interdum velit euismod in pellentesque massa
++      placerat duis ultricies.
++    </Text>
++    <Spacer y={1} />
++    <Text size="$lg">
++      Rhoncus mattis rhoncus urna neque viverra justo nec ultrices dui. Praesent semper feugiat nibh
++      sed pulvinar. Ultrices gravida dictum fusce ut placerat orci nulla pellentesque. Malesuada
++      proin libero nunc consequat interdum varius sit amet. Lectus quam id leo in vitae. Sed viverra
++      tellus in hac habitasse platea dictumst. Vivamus at augue eget arcu. Augue mauris augue neque
++      gravida in.
++    </Text>
++    <Spacer y={1} />
++    <Text size="$lg">
++      Tincidunt vitae semper quis lectus nulla at volutpat diam. Gravida dictum fusce ut placerat.
++      Erat velit scelerisque in dictum non. Tempus quam pellentesque nec nam aliquam sem et tortor
++      consequat. Eu nisl nunc mi ipsum faucibus. Cras fermentum odio eu feugiat pretium nibh. Vel
++      pharetra vel turpis nunc eget lorem dolor sed viverra. Sollicitudin tempor id eu nisl nunc mi
++      ipsum faucibus. Sed id semper risus in hendrerit gravida rutrum. Eget nulla facilisi etiam
++      dignissim. Erat imperdiet sed euismod nisi. Risus in hendrerit gravida rutrum quisque non
++      tellus orci ac.
++    </Text>
++    <Spacer y={1} />
++    <Text size="$lg">
++      Tempor orci dapibus ultrices in iaculis nunc sed augue lacus. In pellentesque massa placerat
++      duis ultricies. Sit amet massa vitae tortor condimentum. Morbi tincidunt augue interdum velit
++      euismod. Aliquet enim tortor at auctor urna nunc id. A scelerisque purus semper eget. Vitae
++      justo eget magna fermentum iaculis. Arcu non odio euismod lacinia at quis. Et leo duis ut diam
++      quam nulla porttitor massa. Eget nunc scelerisque viverra mauris. Suscipit tellus mauris a
++      diam maecenas sed enim. Cras sed felis eget velit aliquet. Est placerat in egestas erat
++      imperdiet sed euismod nisi porta. In ante metus dictum at tempor commodo. In cursus turpis
++      massa tincidunt dui ut ornare lectus. Tempus iaculis urna id volutpat. Iaculis eu non diam
++      phasellus vestibulum lorem sed risus.
++    </Text>
++    <Spacer y={1} />
++    <Text size="$lg">
++      Ridiculus mus mauris vitae ultricies leo integer malesuada nunc vel. Imperdiet massa tincidunt
++      nunc pulvinar sapien et ligula ullamcorper malesuada. Faucibus pulvinar elementum integer enim
++      neque volutpat. Gravida arcu ac tortor dignissim convallis aenean. Lectus quam id leo in
++      vitae. Ultricies tristique nulla aliquet enim tortor. Nec tincidunt praesent semper feugiat
++      nibh sed. Imperdiet proin fermentum leo vel orci porta non pulvinar neque. Praesent semper
++      feugiat nibh sed pulvinar proin gravida. Dis parturient montes nascetur ridiculus mus mauris.
++      Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Ut lectus arcu bibendum at.
++      Integer enim neque volutpat ac. Diam sit amet nisl suscipit. Eros donec ac odio tempor orci
++      dapibus ultrices in iaculis. Ullamcorper a lacus vestibulum sed arcu non odio euismod. Quis
++      lectus nulla at volutpat diam ut. Turpis egestas integer eget aliquet. Adipiscing tristique
++      risus nec feugiat in fermentum posuere. Morbi tempus iaculis urna id. Amet commodo nulla
++      facilisi nullam vehicula ipsum a arcu.
++    </Text>
++    <Text size="$lg">
++      Rhoncus mattis rhoncus urna neque viverra justo nec ultrices dui. Praesent semper feugiat nibh
++      sed pulvinar. Ultrices gravida dictum fusce ut placerat orci nulla pellentesque. Malesuada
++      proin libero nunc consequat interdum varius sit amet. Lectus quam id leo in vitae. Sed viverra
++      tellus in hac habitasse platea dictumst. Vivamus at augue eget arcu. Augue mauris augue neque
++      gravida in.
++    </Text>
++    <Spacer y={1} />
++    <Text size="$lg">
++      Tincidunt vitae semper quis lectus nulla at volutpat diam. Gravida dictum fusce ut placerat.
++      Erat velit scelerisque in dictum non. Tempus quam pellentesque nec nam aliquam sem et tortor
++      consequat. Eu nisl nunc mi ipsum faucibus. Cras fermentum odio eu feugiat pretium nibh. Vel
++      pharetra vel turpis nunc eget lorem dolor sed viverra. Sollicitudin tempor id eu nisl nunc mi
++      ipsum faucibus. Sed id semper risus in hendrerit gravida rutrum. Eget nulla facilisi etiam
++      dignissim. Erat imperdiet sed euismod nisi. Risus in hendrerit gravida rutrum quisque non
++      tellus orci ac.
++    </Text>
++    <Spacer y={1} />
++  </Box>
++);`;
++
++export const Layout = `import { Content } from "./Content.js"
++
++export const Layout = ({ children }) => (
++  <Box
++    css={{
++      maxW: "100%",
++      maxHeight: "600px",
++      position: "relative",
++      overflow: "visible scroll",
++    }}
++  >
++    {children}
++    <Content />
++  </Box>
++);`;
++
++export const VariantsSelectorWrapper = `// used as a wrapper for the navbar variants radio buttons
++export const VariantsSelectorWrapper = styled("div", {
++  dflex: "center",
++  position: "fixed",
++  width: "100%",
++  bottom: "10px",
++  "& .nextui-radio-group-items": {
++    display: "grid",
++    gridTemplateColumns: "repeat(3, 1fr)",
++    gridTemplateRows: "1fr",
++    gridColumnGap: "$8",
++    gridRowGap: "$2",
++  },
++});`;\n- apps/docs/content/components/navbar/compact.ts (added, 48 changes)\n  Patch: @@ -0,0 +1,48 @@
++import {Layout, Box, AcmeLogo, Content} from "./common";
++
++const App = `import { Navbar, Button, Link, Text } from "@nextui-org/react";
++import { Layout } from "./Layout.js";
++import { AcmeLogo } from "./AcmeLogo.js";
++
++export default function App() {
++  return (
++    <Layout>
++      <Navbar isCompact isBordered variant="sticky">
++        <Navbar.Brand>
++          <AcmeLogo />
++          <Text b color="inherit" hideIn="xs">
++            ACME
++          </Text>
++        </Navbar.Brand>
++        <Navbar.Content hideIn="xs" variant="underline">
++          <Navbar.Link href="#">Features</Navbar.Link>
++          <Navbar.Link isActive href="#">Customers</Navbar.Link>
++          <Navbar.Link href="#">Pricing</Navbar.Link>
++          <Navbar.Link href="#">Company</Navbar.Link>
++        </Navbar.Content>
++        <Navbar.Content>
++          <Navbar.Link color="inherit" href="#">
++            Login
++          </Navbar.Link>
++          <Navbar.Item>
++            <Button auto flat as={Link} href="#">
++              Sign Up
++            </Button>
++          </Navbar.Item>
++        </Navbar.Content>
++      </Navbar>
++    </Layout>
++  )
++}`;
++
++const react = {
++  "/Content.js": Content,
++  "/Layout.js": Layout,
++  "/AcmeLogo.js": AcmeLogo,
++  "/Box.js": Box,
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/navbar/cursor-highlight.ts (added, 52 changes)\n  Patch: @@ -0,0 +1,52 @@
++import {Layout, Box, AcmeLogo, Content} from "./common";
++
++const App = `import { Navbar, Button, Link, Text, useTheme } from "@nextui-org/react";
++import { Layout } from "./Layout.js";
++import { AcmeLogo } from "./AcmeLogo.js";
++
++export default function App() {
++  const { isDark } = useTheme();
++
++  return (
++    <Layout>
++      <Navbar isBordered={isDark} variant="sticky">
++        <Navbar.Brand>
++          <AcmeLogo />
++          <Text b color="inherit" hideIn="xs">
++            ACME
++          </Text>
++        </Navbar.Brand>
++        <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
++          <Navbar.Link href="#">Features</Navbar.Link>
++          <Navbar.Link isActive href="#">
++            Customers
++          </Navbar.Link>
++          <Navbar.Link href="#">Pricing</Navbar.Link>
++          <Navbar.Link href="#">Company</Navbar.Link>
++        </Navbar.Content>
++        <Navbar.Content>
++          <Navbar.Link color="inherit" href="#">
++            Login
++          </Navbar.Link>
++          <Navbar.Item>
++            <Button auto flat as={Link} href="#">
++              Sign Up
++            </Button>
++          </Navbar.Item>
++        </Navbar.Content>
++      </Navbar>
++    </Layout>
++  )
++}`;
++
++const react = {
++  "/Content.js": Content,
++  "/Layout.js": Layout,
++  "/AcmeLogo.js": AcmeLogo,
++  "/Box.js": Box,
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/navbar/disable-collapse-animation.ts (added, 138 changes)\n  Patch: @@ -0,0 +1,138 @@
++import {Layout, Box, AcmeLogo, Content} from "./common";
++
++const App = `import { Navbar, Link, Text, Avatar, Dropdown } from "@nextui-org/react";
++import { Layout } from "./Layout.js";
++import { AcmeLogo } from "./AcmeLogo.js";
++
++export default function App() {
++  const collapseItems = [
++    "Profile",
++    "Dashboard",
++    "Activity",
++    "Analytics",
++    "System",
++    "Deployments",
++    "My Settings",
++    "Team Settings",
++    "Help & Feedback",
++    "Log Out",
++  ];
++
++  return (
++    <Layout>
++      <Navbar isBordered variant="sticky">
++        <Navbar.Toggle showIn="xs" />
++        <Navbar.Brand
++          css={{
++            "@xs": {
++              w: "12%",
++            },
++          }}
++        >
++          <AcmeLogo />
++          <Text b color="inherit" hideIn="xs">
++            ACME
++          </Text>
++        </Navbar.Brand>
++        <Navbar.Content
++          enableCursorHighlight
++          activeColor="warning"
++          hideIn="xs"
++          variant="highlight"
++        >
++          <Navbar.Link href="#">Features</Navbar.Link>
++          <Navbar.Link isActive href="#">
++            Customers
++          </Navbar.Link>
++          <Navbar.Link href="#">Pricing</Navbar.Link>
++          <Navbar.Link href="#">Company</Navbar.Link>
++        </Navbar.Content>
++        <Navbar.Content
++          css={{
++            "@xs": {
++              w: "12%",
++              jc: "flex-end",
++            },
++          }}
++        >
++          <Dropdown placement="bottom-right">
++            <Navbar.Item>
++              <Dropdown.Trigger>
++                <Avatar
++                  bordered
++                  as="button"
++                  color="warning"
++                  size="md"
++                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
++                />
++              </Dropdown.Trigger>
++            </Navbar.Item>
++            <Dropdown.Menu
++              aria-label="User menu actions"
++              color="warning"
++              onAction={(actionKey) => console.log({ actionKey })}
++            >
++              <Dropdown.Item key="profile" css={{ height: "$18" }}>
++                <Text b color="inherit" css={{ d: "flex" }}>
++                  Signed in as
++                </Text>
++                <Text b color="inherit" css={{ d: "flex" }}>
++                  zoey@example.com
++                </Text>
++              </Dropdown.Item>
++              <Dropdown.Item key="settings" withDivider>
++                My Settings
++              </Dropdown.Item>
++              <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
++              <Dropdown.Item key="analytics" withDivider>
++                Analytics
++              </Dropdown.Item>
++              <Dropdown.Item key="system">System</Dropdown.Item>
++              <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
++              <Dropdown.Item key="help_and_feedback" withDivider>
++                Help & Feedback
++              </Dropdown.Item>
++              <Dropdown.Item key="logout" withDivider color="error">
++                Log Out
++              </Dropdown.Item>
++            </Dropdown.Menu>
++          </Dropdown>
++        </Navbar.Content>
++        <Navbar.Collapse disableAnimation>
++          {collapseItems.map((item, index) => (
++            <Navbar.CollapseItem
++              key={item}
++              activeColor="warning"
++              css={{
++                color: index === collapseItems.length - 1 ? "$error" : "",
++              }}
++              isActive={index === 2}
++            >
++              <Link
++                color="inherit"
++                css={{
++                  minWidth: "100%",
++                }}
++                href="#"
++              >
++                {item}
++              </Link>
++            </Navbar.CollapseItem>
++          ))}
++        </Navbar.Collapse>
++      </Navbar>
++    </Layout>
++  );
++}`;
++
++const react = {
++  "/Content.js": Content,
++  "/Layout.js": Layout,
++  "/AcmeLogo.js": AcmeLogo,
++  "/Box.js": Box,
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/navbar/hide-on-scroll.ts (added, 50 changes)\n  Patch: @@ -0,0 +1,50 @@
++import {Layout, Box, AcmeLogo, Content} from "./common";
++
++const App = `import { Navbar, Button, Link, Text, useTheme } from "@nextui-org/react";
++import { Layout } from "./Layout.js";
++import { AcmeLogo } from "./AcmeLogo.js";
++
++export default function App() {
++  const { isDark } = useTheme();
++
++  return (
++    <Layout>
++      <Navbar shouldHideOnScroll isBordered={isDark} variant="sticky">
++        <Navbar.Brand>
++          <AcmeLogo />
++          <Text b color="inherit" hideIn="xs">
++            ACME
++          </Text>
++        </Navbar.Brand>
++        <Navbar.Content hideIn="xs" variant="underline">
++          <Navbar.Link href="#">Features</Navbar.Link>
++          <Navbar.Link isActive href="#">Customers</Navbar.Link>
++          <Navbar.Link href="#">Pricing</Navbar.Link>
++          <Navbar.Link href="#">Company</Navbar.Link>
++        </Navbar.Content>
++        <Navbar.Content>
++          <Navbar.Link color="inherit" href="#">
++            Login
++          </Navbar.Link>
++          <Navbar.Item>
++            <Button auto flat as={Link} href="#">
++              Sign Up
++            </Button>
++          </Navbar.Item>
++        </Navbar.Content>
++      </Navbar>
++    </Layout>
++  )
++}`;
++
++const react = {
++  "/Content.js": Content,
++  "/Layout.js": Layout,
++  "/AcmeLogo.js": AcmeLogo,
++  "/Box.js": Box,
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/navbar/index.ts (added, 25 changes)\n  Patch: @@ -0,0 +1,25 @@
++import variants from "./variants";
++import activeItemVariants from "./active-item-variants";
++import bordered from "./bordered";
++import compact from "./compact";
++import hideOnScroll from "./hide-on-scroll";
++import cursorHighlight from "./cursor-highlight";
++import withToggleButton from "./with-toggle-button";
++import withDropdownMenu from "./with-dropdown-menu";
++import withAvatarUser from "./with-avatar-user";
++import withSearchInput from "./with-search-input";
++import disableCollapseAnimation from "./disable-collapse-animation";
++
++export default {
++  variants,
++  activeItemVariants,
++  bordered,
++  compact,
++  hideOnScroll,
++  cursorHighlight,
++  withToggleButton,
++  withDropdownMenu,
++  withAvatarUser,
++  withSearchInput,
++  disableCollapseAnimation,
++};\n- apps/docs/content/components/navbar/variants.ts (added, 77 changes)\n  Patch: @@ -0,0 +1,77 @@
++import {Layout, Box, AcmeLogo, Content, VariantsSelectorWrapper} from "./common";
++
++const App = `import React from "react";
++import { Navbar, Button, Link, Text, Card, Radio, useTheme } from "@nextui-org/react";
++import { Layout } from "./Layout.js";
++import { AcmeLogo } from "./AcmeLogo.js";
++import { VariantsSelectorWrapper } from "./VariantsSelectorWrapper.js";
++
++export default function App() {
++  const [variant, setVariant] = React.useState("static");
++
++  const { isDark } = useTheme();
++
++  const variants = ["static", "floating", "sticky"];
++  
++  return (
++    <Layout>
++      <Navbar isBordered={isDark} variant={variant}>
++        <Navbar.Brand>
++          <AcmeLogo />
++          <Text b color="inherit" hideIn="xs">
++            ACME
++          </Text>
++        </Navbar.Brand>
++        <Navbar.Content hideIn="xs">
++          <Navbar.Link href="#">Features</Navbar.Link>
++          <Navbar.Link isActive href="#">Customers</Navbar.Link>
++          <Navbar.Link href="#">Pricing</Navbar.Link>
++          <Navbar.Link href="#">Company</Navbar.Link>
++        </Navbar.Content>
++        <Navbar.Content>
++          <Navbar.Link color="inherit" href="#">
++            Login
++          </Navbar.Link>
++          <Navbar.Item>
++            <Button auto flat as={Link} href="#">
++              Sign Up
++            </Button>
++          </Navbar.Item>
++        </Navbar.Content>
++      </Navbar>
++      <VariantsSelectorWrapper>
++        <Card css={{maxW: "50%"}}>
++          <Card.Body css={{pt: "$8", px: "$8"}}>
++            <Radio.Group
++              defaultValue="default"
++              label="Select variant"
++              orientation="horizontal"
++              size="sm"
++              value={variant}
++              onChange={setVariant}
++            >
++              {variants.map((variant) => (
++                <Radio key={variant} value={variant}>
++                  {variant}
++                </Radio>
++              ))}
++            </Radio.Group>
++          </Card.Body>
++        </Card>
++      </VariantsSelectorWrapper>      
++    </Layout>
++  )
++}`;
++
++const react = {
++  "/Content.js": Content,
++  "/Layout.js": Layout,
++  "/AcmeLogo.js": AcmeLogo,
++  "/Box.js": Box,
++  "/VariantsSelectorWrapper.js": VariantsSelectorWrapper,
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/navbar/with-avatar-user.ts (added, 138 changes)\n  Patch: @@ -0,0 +1,138 @@
++import {Layout, Box, AcmeLogo, Content} from "./common";
++
++const App = `import { Navbar, Link, Text, Avatar, Dropdown } from "@nextui-org/react";
++import { Layout } from "./Layout.js";
++import { AcmeLogo } from "./AcmeLogo.js";
++
++export default function App() {
++  const collapseItems = [
++    "Profile",
++    "Dashboard",
++    "Activity",
++    "Analytics",
++    "System",
++    "Deployments",
++    "My Settings",
++    "Team Settings",
++    "Help & Feedback",
++    "Log Out",
++  ];
++
++  return (
++    <Layout>
++      <Navbar isBordered variant="sticky">
++        <Navbar.Toggle showIn="xs" />
++        <Navbar.Brand
++          css={{
++            "@xs": {
++              w: "12%",
++            },
++          }}
++        >
++          <AcmeLogo />
++          <Text b color="inherit" hideIn="xs">
++            ACME
++          </Text>
++        </Navbar.Brand>
++        <Navbar.Content
++          enableCursorHighlight
++          activeColor="secondary"
++          hideIn="xs"
++          variant="highlight-rounded"
++        >
++          <Navbar.Link href="#">Features</Navbar.Link>
++          <Navbar.Link isActive href="#">
++            Customers
++          </Navbar.Link>
++          <Navbar.Link href="#">Pricing</Navbar.Link>
++          <Navbar.Link href="#">Company</Navbar.Link>
++        </Navbar.Content>
++        <Navbar.Content
++          css={{
++            "@xs": {
++              w: "12%",
++              jc: "flex-end",
++            },
++          }}
++        >
++          <Dropdown placement="bottom-right">
++            <Navbar.Item>
++              <Dropdown.Trigger>
++                <Avatar
++                  bordered
++                  as="button"
++                  color="secondary"
++                  size="md"
++                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
++                />
++              </Dropdown.Trigger>
++            </Navbar.Item>
++            <Dropdown.Menu
++              aria-label="User menu actions"
++              color="secondary"
++              onAction={(actionKey) => console.log({ actionKey })}
++            >
++              <Dropdown.Item key="profile" css={{ height: "$18" }}>
++                <Text b color="inherit" css={{ d: "flex" }}>
++                  Signed in as
++                </Text>
++                <Text b color="inherit" css={{ d: "flex" }}>
++                  zoey@example.com
++                </Text>
++              </Dropdown.Item>
++              <Dropdown.Item key="settings" withDivider>
++                My Settings
++              </Dropdown.Item>
++              <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
++              <Dropdown.Item key="analytics" withDivider>
++                Analytics
++              </Dropdown.Item>
++              <Dropdown.Item key="system">System</Dropdown.Item>
++              <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
++              <Dropdown.Item key="help_and_feedback" withDivider>
++                Help & Feedback
++              </Dropdown.Item>
++              <Dropdown.Item key="logout" withDivider color="error">
++                Log Out
++              </Dropdown.Item>
++            </Dropdown.Menu>
++          </Dropdown>
++        </Navbar.Content>
++        <Navbar.Collapse>
++          {collapseItems.map((item, index) => (
++            <Navbar.CollapseItem
++              key={item}
++              activeColor="secondary"
++              css={{
++                color: index === collapseItems.length - 1 ? "$error" : "",
++              }}
++              isActive={index === 2}
++            >
++              <Link
++                color="inherit"
++                css={{
++                  minWidth: "100%",
++                }}
++                href="#"
++              >
++                {item}
++              </Link>
++            </Navbar.CollapseItem>
++          ))}
++        </Navbar.Collapse>
++      </Navbar>
++    </Layout>
++  );
++}`;
++
++const react = {
++  "/Content.js": Content,
++  "/Layout.js": Layout,
++  "/AcmeLogo.js": AcmeLogo,
++  "/Box.js": Box,
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/navbar/with-dropdown-menu.ts (added, 305 changes)\n  Patch: @@ -0,0 +1,305 @@
++import {Layout, Box, AcmeLogo, Content} from "./common";
++
++const Icons = `import React from "react";
++
++const ChevronDownIcon = ({fill, size, width = 24, height = 24, ...props}) => {
++  return (
++    <svg
++      fill="none"
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      width={size || width || 24}
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="m19.92 8.95-6.52 6.52c-.77.77-2.03.77-2.8 0L4.08 8.95"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeMiterlimit={10}
++        strokeWidth={1.5}
++      />
++    </svg>
++  );
++};
++
++const TagUserIcon = ({fill, size, width = 24, height = 24, ...props}) => {
++  return (
++    <svg
++      fill="none"
++      height={size || height}
++      viewBox="0 0 24 24"
++      width={size || width}
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M18 18.86h-.76c-.8 0-1.56.31-2.12.87l-1.71 1.69c-.78.77-2.05.77-2.83 0l-1.71-1.69c-.56-.56-1.33-.87-2.12-.87H6c-1.66 0-3-1.33-3-2.97V4.98c0-1.64 1.34-2.97 3-2.97h12c1.66 0 3 1.33 3 2.97v10.91c0 1.63-1.34 2.97-3 2.97Z"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeMiterlimit={10}
++        strokeWidth={1.5}
++      />
++      <path
++        d="M12 10a2.33 2.33 0 1 0 0-4.66A2.33 2.33 0 0 0 12 10ZM16 15.66c0-1.8-1.79-3.26-4-3.26s-4 1.46-4 3.26"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={1.5}
++      />
++    </svg>
++  );
++};
++
++const ServerIcon = ({fill, size, width = 24, height = 24, ...props}) => {
++  return (
++    <svg
++      fill="none"
++      height={size || height}
++      viewBox="0 0 24 24"
++      width={size || width}
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M19.32 10H4.69c-1.48 0-2.68-1.21-2.68-2.68V4.69c0-1.48 1.21-2.68 2.68-2.68h14.63C20.8 2.01 22 3.22 22 4.69v2.63C22 8.79 20.79 10 19.32 10ZM19.32 22H4.69c-1.48 0-2.68-1.21-2.68-2.68v-2.63c0-1.48 1.21-2.68 2.68-2.68h14.63c1.48 0 2.68 1.21 2.68 2.68v2.63c0 1.47-1.21 2.68-2.68 2.68ZM6 5v2M10 5v2M6 17v2M10 17v2M14 6h4M14 18h4"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={1.5}
++      />
++    </svg>
++  );
++};
++
++const FlashIcon = ({fill, size, width = 24, height = 24, ...props}) => {
++  return (
++    <svg
++      fill="none"
++      height={size || height}
++      viewBox="0 0 24 24"
++      width={size || width}
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M6.09 13.28h3.09v7.2c0 1.68.91 2.02 2.02.76l7.57-8.6c.93-1.05.54-1.92-.87-1.92h-3.09v-7.2c0-1.68-.91-2.02-2.02-.76l-7.57 8.6c-.92 1.06-.53 1.92.87 1.92Z"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeMiterlimit={10}
++        strokeWidth={1.5}
++      />
++    </svg>
++  );
++};
++
++const ActivityIcon = ({fill, size, width = 24, height = 24, ...props}) => {
++  return (
++    <svg
++      data-name="Iconly/Curved/Activity"
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      width={size || width || 24}
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <g
++        fill="none"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeMiterlimit={10}
++        strokeWidth={1.5}
++      >
++        <path d="M6.918 14.854l2.993-3.889 3.414 2.68 2.929-3.78" />
++        <path d="M19.668 2.35a1.922 1.922 0 11-1.922 1.922 1.921 1.921 0 011.922-1.922z" />
++        <path d="M20.756 9.269a20.809 20.809 0 01.194 3.034c0 6.938-2.312 9.25-9.25 9.25s-9.25-2.312-9.25-9.25 2.313-9.25 9.25-9.25a20.931 20.931 0 012.983.187" />
++      </g>
++    </svg>
++  );
++};
++
++const ScaleIcon = ({fill, size, width = 24, height = 24, ...props}) => {
++  return (
++    <svg
++      fill="none"
++      height={size || height}
++      viewBox="0 0 24 24"
++      width={size || width}
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7ZM18 6 6 18"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={1.5}
++      />
++      <path
++        d="M18 10V6h-4M6 14v4h4"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={1.5}
++      />
++    </svg>
++  );
++}
++
++export const icons = {
++  chevron: <ChevronDownIcon fill="currentColor" size={16} />,
++  scale: <ScaleIcon fill="var(--nextui-colors-warning)" size={30} />,
++  activity: <ActivityIcon fill="var(--nextui-colors-secondary)" size={30} />,
++  flash: <FlashIcon fill="var(--nextui-colors-primary)" size={30} />,
++  server: <ServerIcon fill="var(--nextui-colors-success)" size={30} />,
++  user: <TagUserIcon fill="var(--nextui-colors-error)" size={30} />,
++};`;
++
++const App = `import { Navbar, Button, Link, Text } from "@nextui-org/react";
++import { Layout } from "./Layout.js";
++import { AcmeLogo } from "./AcmeLogo.js";
++import { icons } from "./Icons.js";
++
++export default function App() {
++  const collapseItems = [
++    "Features",
++    "Customers",
++    "Pricing",
++    "Company",
++    "Legal",
++    "Team",
++    "Help & Feedback",
++    "Login",
++    "Sign Up",
++  ];
++
++  return (
++    <Layout>
++      <Navbar isBordered variant="sticky">
++        <Navbar.Brand>
++          <AcmeLogo />
++          <Text b color="inherit" hideIn="xs">
++            ACME
++          </Text>
++        </Navbar.Brand>
++        <Navbar.Content
++          enableCursorHighlight
++          activeColor="secondary"
++          hideIn="xs"
++          variant="underline"
++        >
++          <Dropdown isBordered>
++            <Navbar.Item>
++              <Dropdown.Button
++                auto
++                light
++                css={{
++                  px: 0,
++                  dflex: "center",
++                  svg: { pe: "none" },
++                }}
++                iconRight={icons.chevron}
++                ripple={false}
++              >
++                Features
++              </Dropdown.Button>
++            </Navbar.Item>
++            <Dropdown.Menu
++              aria-label="ACME features"
++              css={{
++                $$dropdownMenuWidth: "340px",
++                $$dropdownItemHeight: "70px",
++                "& .nextui-dropdown-item": {
++                  py: "$4",
++                  // dropdown item left icon
++                  svg: {
++                    color: "$secondary",
++                    mr: "$4",
++                  },
++                  // dropdown item title
++                  "& .nextui-dropdown-item-content": {
++                    w: "100%",
++                    fontWeight: "$semibold",
++                  },
++                },
++              }}
++            >
++              <Dropdown.Item
++                key="autoscaling"
++                showFullDescription
++                description="ACME scales apps to meet user demand, automagically, based on load."
++                icon={icons.scale}
++              >
++                Autoscaling
++              </Dropdown.Item>
++              <Dropdown.Item
++                key="usage_metrics"
++                showFullDescription
++                description="Real-time metrics to debug issues. Slow query added? We’ll show you exactly where."
++                icon={icons.activity}
++              >
++                Usage Metrics
++              </Dropdown.Item>
++              <Dropdown.Item
++                key="production_ready"
++                showFullDescription
++                description="ACME runs on ACME, join us and others serving requests at web scale."
++                icon={icons.flash}
++              >
++                Production Ready
++              </Dropdown.Item>
++              <Dropdown.Item
++                key="99_uptime"
++                showFullDescription
++                description="Applications stay on the grid with high availability and high uptime guarantees."
++                icon={icons.server}
++              >
++                +99% Uptime
++              </Dropdown.Item>
++              <Dropdown.Item
++                key="supreme_support"
++                showFullDescription
++                description="Overcome any challenge with a supporting team ready to respond."
++                icon={icons.user}
++              >
++                +Supreme Support
++              </Dropdown.Item>
++            </Dropdown.Menu>
++          </Dropdown>
++          <Navbar.Link isActive href="#">
++            Customers
++          </Navbar.Link>
++          <Navbar.Link href="#">Pricing</Navbar.Link>
++          <Navbar.Link href="#">Company</Navbar.Link>
++        </Navbar.Content>
++        <Navbar.Content>
++          <Navbar.Link color="inherit" href="#">
++            Login
++          </Navbar.Link>
++          <Navbar.Item>
++            <Button auto flat as={Link} href="#">
++              Sign Up
++            </Button>
++          </Navbar.Item>
++        </Navbar.Content>
++      </Navbar>
++    </Layout>
++  );
++}`;
++
++const react = {
++  "/Content.js": Content,
++  "/Layout.js": Layout,
++  "/AcmeLogo.js": AcmeLogo,
++  "/Icons.js": Icons,
++  "/Box.js": Box,
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/navbar/with-search-input.ts (added, 148 changes)\n  Patch: @@ -0,0 +1,148 @@
++import {Layout, Box, AcmeLogo, Content} from "./common";
++
++const SearchIcon = `export const SearchIcon = ({size, fill, width = 24, height = 24, ...props}) => {
++  return (
++    <svg fill="none" height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
++      <path
++        d="M11.5 21a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19ZM22 22l-2-2"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={2}
++      />
++    </svg>
++  );
++};`;
++
++const App = `import { Navbar, Text, Avatar, Dropdown, Input } from "@nextui-org/react";
++import { Layout } from "./Layout.js";
++import { AcmeLogo } from "./AcmeLogo.js";
++import { SearchIcon } from "./SearchIcon.js";
++
++export default function App() {
++  const collapseItems = [
++    "Profile",
++    "Dashboard",
++    "Activity",
++    "Analytics",
++    "System",
++    "Deployments",
++    "My Settings",
++    "Team Settings",
++    "Help & Feedback",
++    "Log Out",
++  ];
++
++  return (
++    <Layout>
++      <Navbar isBordered variant="sticky">
++        <Navbar.Brand css={{ mr: "$4" }}>
++          <AcmeLogo />
++          <Text b color="inherit" css={{ mr: "$11" }} hideIn="xs">
++            ACME
++          </Text>
++          <Navbar.Content hideIn="xs" variant="highlight">
++            <Navbar.Link isActive href="#">
++              Dashboard
++            </Navbar.Link>
++            <Navbar.Link href="#">Team</Navbar.Link>
++            <Navbar.Link href="#">Activity</Navbar.Link>
++            <Navbar.Link href="#">Settings</Navbar.Link>
++          </Navbar.Content>
++        </Navbar.Brand>
++        <Navbar.Content
++          css={{
++            "@xsMax": {
++              w: "100%",
++              jc: "space-between",
++            },
++          }}
++        >
++          <Navbar.Item
++            css={{
++              "@xsMax": {
++                w: "100%",
++                jc: "center",
++              },
++            }}
++          >
++            <Input
++              clearable
++              contentLeft={
++                <SearchIcon fill="var(--nextui-colors-accents6)" size={16} />
++              }
++              contentLeftStyling={false}
++              css={{
++                w: "100%",
++                "@xsMax": {
++                  mw: "300px",
++                },
++                "& .nextui-input-content--left": {
++                  h: "100%",
++                  ml: "$4",
++                  dflex: "center",
++                },
++              }}
++              placeholder="Search..."
++            />
++          </Navbar.Item>
++          <Dropdown placement="bottom-right">
++            <Navbar.Item>
++              <Dropdown.Trigger>
++                <Avatar
++                  bordered
++                  as="button"
++                  color="primary"
++                  size="md"
++                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
++                />
++              </Dropdown.Trigger>
++            </Navbar.Item>
++            <Dropdown.Menu
++              aria-label="User menu actions"
++              color="secondary"
++              onAction={(actionKey) => console.log({ actionKey })}
++            >
++              <Dropdown.Item key="profile" css={{ height: "$18" }}>
++                <Text b color="inherit" css={{ d: "flex" }}>
++                  Signed in as
++                </Text>
++                <Text b color="inherit" css={{ d: "flex" }}>
++                  zoey@example.com
++                </Text>
++              </Dropdown.Item>
++              <Dropdown.Item key="settings" withDivider>
++                My Settings
++              </Dropdown.Item>
++              <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
++              <Dropdown.Item key="analytics" withDivider>
++                Analytics
++              </Dropdown.Item>
++              <Dropdown.Item key="system">System</Dropdown.Item>
++              <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
++              <Dropdown.Item key="help_and_feedback" withDivider>
++                Help & Feedback
++              </Dropdown.Item>
++              <Dropdown.Item key="logout" withDivider color="error">
++                Log Out
++              </Dropdown.Item>
++            </Dropdown.Menu>
++          </Dropdown>
++        </Navbar.Content>
++      </Navbar>
++    </Layout>
++  );
++}`;
++
++const react = {
++  "/Content.js": Content,
++  "/Layout.js": Layout,
++  "/AcmeLogo.js": AcmeLogo,
++  "/SearchIcon.js": SearchIcon,
++  "/Box.js": Box,
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/navbar/with-toggle-button.ts (added, 78 changes)\n  Patch: @@ -0,0 +1,78 @@
++import {Layout, Box, AcmeLogo, Content} from "./common";
++
++const App = `import { Navbar, Button, Link, Text } from "@nextui-org/react";
++import { Layout } from "./Layout.js";
++import { AcmeLogo } from "./AcmeLogo.js";
++
++export default function App() {
++  const collapseItems = [
++    "Features",
++    "Customers",
++    "Pricing",
++    "Company",
++    "Legal",
++    "Team",
++    "Help & Feedback",
++    "Login",
++    "Sign Up",
++  ];
++
++  return (
++    <Layout>
++      <Navbar isBordered variant="sticky">
++        <Navbar.Brand>
++          <Navbar.Toggle aria-label="toggle navigation" />
++          <AcmeLogo />
++          <Text b color="inherit" hideIn="xs">
++            ACME
++          </Text>
++        </Navbar.Brand>
++        <Navbar.Content enableCursorHighlight hideIn="xs" variant="underline">
++          <Navbar.Link href="#">Features</Navbar.Link>
++          <Navbar.Link isActive href="#">
++            Customers
++          </Navbar.Link>
++          <Navbar.Link href="#">Pricing</Navbar.Link>
++          <Navbar.Link href="#">Company</Navbar.Link>
++        </Navbar.Content>
++        <Navbar.Content>
++          <Navbar.Link color="inherit" href="#">
++            Login
++          </Navbar.Link>
++          <Navbar.Item>
++            <Button auto flat as={Link} href="#">
++              Sign Up
++            </Button>
++          </Navbar.Item>
++        </Navbar.Content>
++        <Navbar.Collapse>
++        {collapseItems.map((item, index) => (
++          <Navbar.CollapseItem key={item}>
++            <Link
++              color="inherit"
++              css={{
++                minWidth: "100%",
++              }}
++              href="#"
++            >
++              {item}
++            </Link>
++          </Navbar.CollapseItem>
++        ))}
++      </Navbar.Collapse>
++      </Navbar>
++    </Layout>
++  )
++}`;
++
++const react = {
++  "/Content.js": Content,
++  "/Layout.js": Layout,
++  "/AcmeLogo.js": AcmeLogo,
++  "/Box.js": Box,
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/docs/components/dropdown.mdx (modified, 44 changes)\n  Patch: @@ -140,14 +140,15 @@ import { Dropdown } from "@nextui-org/react";
+ 
+ #### Dropdown Props
+ 
+-| Attribute         | Type                                                   | Description                                                                                              | Default |
+-| ----------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ------- |
+-| **children\***    | `ReactNode[]`                                          | The content of the dropdown. It's usually the `Dropdown.Trigger`, `Dropdown.Button` and `Dropdown.Menu`. | -       |
+-| **type**          | [TriggerType](#trigger-type)                           | The type of dropdown menu that the dropdown trigger opens.                                               | `menu`  |
+-| **trigger**       | [MenuTriggerType](#menu-trigger-type)                  | How the dropdown menu is triggered.                                                                      | `press` |
+-| **closeOnSelect** | `boolean`                                              | Whether the dropdown menu closes when a selection is made.                                               | `true`  |
+-| **isDisabled**    | `boolean`                                              | Whether dropdown trigger is disabled.                                                                    | `false` |
+-| **PopoverProps**  | [PopoverProps](/docs/components/popover#popover-props) | Since dropdown is based on the `Popover` you can use any of the `Popover` props.                         | -       |
++| Attribute                                | Type                                                   | Description                                                                                              | Default |
++| ---------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ------- |
++| **children\***                           | `ReactNode[]`                                          | The content of the dropdown. It's usually the `Dropdown.Trigger`, `Dropdown.Button` and `Dropdown.Menu`. | -       |
++| **type**                                 | [TriggerType](#trigger-type)                           | The type of dropdown menu that the dropdown trigger opens.                                               | `menu`  |
++| **trigger**                              | [MenuTriggerType](#menu-trigger-type)                  | How the dropdown menu is triggered.                                                                      | `press` |
++| **closeOnSelect**                        | `boolean`                                              | Whether the dropdown menu closes when a selection is made.                                               | `true`  |
++| **isDisabled**                           | `boolean`                                              | Whether dropdown trigger is disabled.                                                                    | `false` |
++| **disableTriggerPressedAnimation** `new` | `boolean`                                              | Whether the trigger should show a pressed animation when the menu is open.                               | `false` |
++| **PopoverProps**                         | [PopoverProps](/docs/components/popover#popover-props) | Since dropdown is based on the `Popover` you can use any of the `Popover` props.                         | -       |
+ 
+ <Spacer y={1} />
+ 
+@@ -237,19 +238,20 @@ import { Dropdown } from "@nextui-org/react";
+ 
+ #### Dropdown.Item Props
+ 
+-| Attribute         | Type                                                | Description                                                      | Default   |
+-| ----------------- | --------------------------------------------------- | ---------------------------------------------------------------- | --------- |
+-| **key**           | [Key](https://reactjs.org/docs/lists-and-keys.html) | The unique key for the menu item.                                | `false`   |
+-| **description**   | `string`                                            | Description text element inside the dropdown menu item.          | -         |
+-| **command**       | `string`                                            | Right-aligned label text content, useful for displaying hotkeys. | -         |
+-| **icon**          | `ReactNode`                                         | The icon to render before the dropdown menu item's label.        | -         |
+-| **dividerWeight** | [NormalWeights](#normal-weights)                    | The dropdown item divider height                                 | `light`   |
+-| **color**         | [SimpleColors](#simple-colors)                      | The dropdown item color                                          | `default` |
+-| **textColor**     | [SimpleColors](#simple-colors)                      | The dropdown item text color                                     | `default` |
+-| **variant**       | [DropdownVariant](#dropdown-variants)               | The dropdown item variation                                      | `flat`    |
+-| **withDivider**   | `boolean`                                           | Whether the dropdown item should have a border on top            | `false`   |
+-| **css**           | `Stitches.CSS`                                      | Override Default CSS style.                                      | -         |
+-| **as**            | `keyof JSX.IntrinsicElements`                       | Changes which tag component outputs.                             | `li`      |
++| Attribute                     | Type                                                | Description                                                      | Default   |
++| ----------------------------- | --------------------------------------------------- | ---------------------------------------------------------------- | --------- |
++| **key**                       | [Key](https://reactjs.org/docs/lists-and-keys.html) | The unique key for the menu item.                                | `false`   |
++| **description**               | `string`                                            | Description text element inside the dropdown menu item.          | -         |
++| **command**                   | `string`                                            | Right-aligned label text content, useful for displaying hotkeys. | -         |
++| **icon**                      | `ReactNode`                                         | The icon to render before the dropdown menu item's label.        | -         |
++| **dividerWeight**             | [NormalWeights](#normal-weights)                    | The dropdown item divider height                                 | `light`   |
++| **color**                     | [SimpleColors](#simple-colors)                      | The dropdown item color                                          | `default` |
++| **textColor**                 | [SimpleColors](#simple-colors)                      | The dropdown item text color                                     | `default` |
++| **variant**                   | [DropdownVariant](#dropdown-variants)               | The dropdown item variation                                      | `flat`    |
++| **withDivider**               | `boolean`                                           | Whether the dropdown item should have a border on top            | `false`   |
++| **showFullDescription** `new` | `boolean`                                           | Whether the item description should be truncated or not.         | `false`   |
++| **css**                       | `Stitches.CSS`                                      | Override Default CSS style.                                      | -         |
++| **as**                        | `keyof JSX.IntrinsicElements`                       | Changes which tag component outputs.                             | `li`      |
+ 
+ <Spacer y={1} />
+ \n- apps/docs/content/docs/components/link.mdx (modified, 46 changes)\n  Patch: @@ -1,6 +1,6 @@
+ ---
+-title: 'Link'
+-description: 'Links allow users to click their way from page to page. This component is styled to resemble a hyperlink and semantically renders an <a>'
++title: "Link"
++description: "Links allow users to click their way from page to page. This component is styled to resemble a hyperlink and semantically renders an <a>"
+ url: https://nextui.org/docs/components/link
+ ---
+ 
+@@ -9,7 +9,7 @@ url: https://nextui.org/docs/components/link
+ Links allow users to click their way from page to page. This component is styled to resemble a hyperlink and semantically renders an `<a>`
+ 
+ ```jsx
+-import { Link } from '@nextui-org/react';
++import { Link } from "@nextui-org/react";
+ ```
+ 
+ <CarbonAd />
+@@ -41,8 +41,8 @@ import { Link } from '@nextui-org/react';
+ />
+ 
+ <Playground
+-  title="Icon"
+-  desc="Show an icon in the `Link` with the `icon` prop."
++  title="External Link"
++  desc="Show an icon in the `Link` with the `isExternal` prop."
+   files={linkContent.icon}
+ />
+ 
+@@ -65,17 +65,17 @@ import { Link } from '@nextui-org/react';
+ 
+ #### Link Props
+ 
+-| Attribute     | Type                                            | Accepted values            | Description                             | Default |
+-| ------------- | ----------------------------------------------- | -------------------------- | --------------------------------------- | ------- |
+-| **color**     | `LinkColors` `boolean` `string`                 | [LinkColors](#link-colors) | Change link color                       | `false` |
+-| **href**      | `string`                                        | -                          | Link url                                | -       |
+-| **icon**      | `boolean`                                       | `true/false`               | Show link icon                          | `false` |
+-| **underline** | `boolean`                                       | `true/false`               | Display underline                       | `false` |
+-| **block**     | `boolean`                                       | `true/false`               | Display as a separate block             | `false` |
+-| **ref**       | <Code>Ref<HTMLAnchorElement &#124; null></Code> | -                          | forwardRef                              | -       |
+-| **css**       | `Stitches.CSS`                                  | -                          | Override Default CSS style              | -       |
+-| **as**        | `keyof JSX.IntrinsicElements`                   | -                          | Changes which tag component outputs     | `a`     |
+-| ...           | `AnchorHTMLAttributes`                          | `'rel', 'target', ...`     | Native props                            | -       |
++| Attribute                | Type                                            | Accepted values            | Description                         | Default |
++| ------------------------ | ----------------------------------------------- | -------------------------- | ----------------------------------- | ------- |
++| **color**                | `LinkColors` `boolean` `string`                 | [LinkColors](#link-colors) | Change link color                   | `false` |
++| **href**                 | `string`                                        | -                          | Link url                            | -       |
++| **isExternal** `updated` | `boolean`                                       | `true/false`               | Show link icon                      | `false` |
++| **underline**            | `boolean`                                       | `true/false`               | Display underline                   | `false` |
++| **block**                | `boolean`                                       | `true/false`               | Display as a separate block         | `false` |
++| **ref**                  | <Code>Ref<HTMLAnchorElement &#124; null></Code> | -                          | forwardRef                          | -       |
++| **css**                  | `Stitches.CSS`                                  | -                          | Override Default CSS style          | -       |
++| **as**                   | `keyof JSX.IntrinsicElements`                   | -                          | Changes which tag component outputs | `a`     |
++| ...                      | `AnchorHTMLAttributes`                          | `'rel', 'target', ...`     | Native props                        | -       |
+ 
+ <Spacer y={2} />
+ 
+@@ -87,11 +87,11 @@ import { Link } from '@nextui-org/react';
+ 
+ ```ts
+ type LinkColors =
+-  | 'text'
+-  | 'default'
+-  | 'primary'
+-  | 'secondary'
+-  | 'success'
+-  | 'warning'
+-  | 'error';
++  | "text"
++  | "default"
++  | "primary"
++  | "secondary"
++  | "success"
++  | "warning"
++  | "error";
+ ```\n- apps/docs/content/docs/components/navbar.mdx (added, 410 changes)\n  Patch: @@ -0,0 +1,410 @@
++---
++title: "Navbar"
++description: "A responsive navigation header positioned on top side of your page that includes support for branding, links, navigation, collapse and more."
++url: https://nextui.org/docs/components/navbar
++---
++
++# Navbar
++
++A responsive navigation header positioned on top side of your page that includes support for branding, links, navigation, collapse and more.
++
++```jsx
++import { Navbar } from "@nextui-org/react";
++```
++
++<CarbonAd />
++
++<Spacer y={2} />
++
++#### Anatomy
++
++- **Navbar**: The wrapper that provides state and general context management.
++- **Navbar.Brand**: A simple and flexible wrapper for branding content.
++- **Navbar.Content**: The wrapper that provides the state and variants for the navbar content items.
++- **Navbar.Item**: The individual items. Must be a direct child of `Navbar.Content`.
++- **Navbar.Link**: A link item. Must be a direct child of `Navbar.Content`.
++- **Navbar.Toggle**: The toggle button that toggles the navbar. Must be a direct child of `Navbar`.
++- **Navbar.Collapse**: The collapse wrapper that provides the state and menu for the navbar collapse items.
++- **Navbar.CollapseItem**: The individual items. Must be a direct child of `Navbar.Collapse`.
++
++<Spacer y={2} />
++
++<Playground
++  asIframe
++  title="Variants"
++  desc="Navbar can be styled with different variants. The default variant is `static`, but you can also use `floating` and `sticky`."
++  iframeSrc="/examples/navbar/variants"
++  highlightedLines="16"
++  files={navbarContent.variants}
++/>
++
++<Playground
++  asIframe
++  title="Active Item Variants"
++  previewHeight="600px"
++  iframeSrc="/examples/navbar/active-item-variants"
++  desc="The navbar content active items can be styled with different variants. You can apply the `variant` and `activeColor` either to the `Navbar.Content` or `Navbar.Item`."
++  highlightedLines="34"
++  files={navbarContent.activeItemVariants}
++/>
++
++<Playground
++  asIframe
++  title="Bordered"
++  iframeSrc="/examples/navbar/bordered"
++  desc="You can add a border to the navbar with the `isBordered` prop."
++  highlightedLines="8"
++  files={navbarContent.bordered}
++/>
++
++<Playground
++  asIframe
++  title="Compact"
++  iframeSrc="/examples/navbar/compact"
++  desc="You can reduce the height and amount of padding that navbar contains by using the `isCompact` property."
++  highlightedLines="8"
++  files={navbarContent.compact}
++/>
++
++<Playground
++  asIframe
++  title="Hide on scroll"
++  iframeSrc="/examples/navbar/hide-on-scroll"
++  desc="By using the `shouldHideOnScroll` the navbar hides on scroll down to leave more space for content."
++  highlightedLines="10"
++  files={navbarContent.hideOnScroll}
++/>
++
++<Playground
++  asIframe
++  title="Cursor Highlight"
++  iframeSrc="/examples/navbar/cursor-highlight"
++  desc="You can highlight the navbar content items when the cursor is over them with the `enableCursorHighlight` prop."
++  highlightedLines="17"
++  files={navbarContent.cursorHighlight}
++/>
++
++<Playground
++  asIframe
++  title="With Toggle Button"
++  previewHeight="600px"
++  iframeInitialWidth={420}
++  iframeSrc="/examples/navbar/with-toggle-button"
++  desc="You can show a collapse menu by adding the `Navbar.Toggle` and `Navbar.Collapse` components to the navbar."
++  highlightedLines="22"
++  files={navbarContent.withToggleButton}
++/>
++
++<Playground
++  asIframe
++  title="With Dropdown Menu"
++  previewHeight="600px"
++  iframeSrc="/examples/navbar/with-dropdown-menu"
++  desc="You can use the `Dropdown` component as navbar item to show a dropdown menu."
++  highlightedLines="34"
++  files={navbarContent.withDropdownMenu}
++/>
++
++<Playground
++  asIframe
++  title="With Avatar User"
++  previewHeight="600px"
++  iframeSrc="/examples/navbar/with-avatar-user"
++  desc="A common use case is to display the user's avatar in the navbar. To achieve this, you can use the `Avatar` component as navbar item or combine it with the `Dropdown` to show a dropdown menu."
++  highlightedLines="59"
++  files={navbarContent.withAvatarUser}
++/>
++
++<Playground
++  asIframe
++  title="With Search Input"
++  previewHeight="600px"
++  iframeSrc="/examples/navbar/with-search-input"
++  desc="Another common use case is to display a search input in the navbar. You can do this by using the `Input` component as navbar item."
++  highlightedLines="53"
++  files={navbarContent.withSearchInput}
++/>
++
++<Playground
++  asIframe
++  title="Disable collapse animation"
++  previewHeight="600px"
++  iframeInitialWidth={420}
++  iframeSrc="/examples/navbar/disable-collapse-animation"
++  desc="By adding the `disableAnimation` prop to the `Navbar.Collapse` you can disable the animation of the collapse menu and its items when it is opened or closed."
++  highlightedLines="99"
++  files={navbarContent.disableCollapseAnimation}
++/>
++
++<Spacer y={3} />
++
++### APIs
++
++<Spacer y={2} />
++
++#### Navbar Props
++
++| Attribute                | Type                                | Description                                                                                                                                         | Default  |
++| ------------------------ | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
++| **children\***           | `ReactNode` `ReactNode[]`           | The content of the navbar. It's usually the brand, content, toggle and collapse.                                                                    | -        |
++| **parentRef**            | `RefObject<HTMLElement>`            | The parent element where the navbar is placed within. This is used to determine the scroll position and whether the navbar should be hidden or not. | `window` |
++| **variant**              | [NavbarVariants](#navbar-variants)  | The navbar positions variantions.                                                                                                                   | `static` |
++| **height**               | `number` `string`                   | The height of the navbar. When the navbar is compacted (isCompact=`true`) the height is reduced to `54px`.                                          | `76px`   |
++| **maxWidth**             | [NavbarMaxWidth](#navbar-max-width) | The navbar maximum width.                                                                                                                           | `lg`     |
++| **isBordered**           | `boolean`                           | Whether the navbar should be bordered.                                                                                                              | `false`  |
++| **isCompact**            | `boolean`                           | Whether the navbar should be compact. It reduces the height to `54px`.                                                                              | `false`  |
++| **borderWeight**         | [NormalWeights](#normal-weights)    | The border weight of the bordered navbar.                                                                                                           | `light`  |
++| **shouldHideOnScroll**   | `boolean`                           | Whether the navbar should hide on scroll or not.                                                                                                    | `false`  |
++| **disableShadow**        | `boolean`                           | Whether the navbar should have a shadow or not.                                                                                                     | `false`  |
++| **disableBlur**          | `boolean`                           | Whether the navbar should be blurred or not. (only supported by this browser [list](https://caniuse.com/?search=backdrop-filter%3A%20blur)          | `false`  |
++| **disableScrollHandler** | `boolean`                           | Whether the navbar parent scroll event should be listened to or not.                                                                                | `false`  |
++| **containerCss**         | `Stitches.CSS`                      | The css object of the navbar container.                                                                                                             | -        |
++| **css**                  | `Stitches.CSS`                      | Override Default CSS style.                                                                                                                         | -        |
++| **as**                   | `keyof JSX.IntrinsicElements`       | Changes which tag component outputs.                                                                                                                | `nav`    |
++
++<Spacer y={1} />
++
++#### Navbar Events
++
++| Attribute                  | Type                               | Description                                                                                                                                                                                              | Default |
++| -------------------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
++| **onScrollPositionChange** | `(scrollPosition: number) => void` | The scroll event handler for the navbar. The event fires when the navbar parent element is scrolled. it only works if `disableScrollHandler` is set to `false` or `shouldHideOnScroll` is set to `true`. | -       |
++
++<Spacer y={2} />
++
++---
++
++<Spacer y={2} />
++
++#### Navbar.Brand Props
++
++| Attribute    | Type                             | Description                                                                   | Default |
++| ------------ | -------------------------------- | ----------------------------------------------------------------------------- | ------- |
++| **children** | `ReactNode` `ReactNode[]`        | The content of the navbar brand. It's usually the logo and name of the brand. | -       |
++| **hideIn**   | [HideShowIn](#hide-in-&-show-in) | Sets the breakpoint from where the component should start hiding.             | -       |
++| **showIn**   | [HideShowIn](#hide-in-&-show-in) | Sets the breakpoint from where the component should start displaying.         | -       |
++| **css**      | `Stitches.CSS`                   | Override Default CSS style.                                                   | -       |
++| **as**       | `keyof JSX.IntrinsicElements`    | Changes which tag component outputs.                                          | `span`  |
++
++<Spacer y={2} />
++
++---
++
++<Spacer y={2} />
++
++#### Navbar.Content Props
++
++| Attribute                    | Type                                                              | Description                                                                      | Default          |
++| ---------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------- | ---------------- |
++| **children**                 | `ReactNode` `ReactNode[]`                                         | The content of the navbar content. It's usually the navbar item and navbar link. | -                |
++| **variant**                  | [NavbarContentVariants](#navbar-content-variants)                 | The variant of the navbar content items.                                         | `default`        |
++| **gap**                      | `number` `string` [CSSGapUnit](/docs/theme/default-theme#spacing) | The gap between each content item. It's `0px` for highlight variants.            | `$10`            |
++| **activeColor**              | [SimpleColors](#simple-colors)                                    | The active color of the navbar content items.                                    | `default (link)` |
++| **underlineHeight**          | [NormalWeights](#normal-weights)                                  | The height of the navbar content items's underline.                              | `normal`         |
++| **enableCursorHighlight**    | [NormalWeights](#normal-weights)                                  | Whether the navbar content highlighted cursor should be visible.                 | `false`          |
++| **isCursorHighlightRounded** | [NormalWeights](#normal-weights)                                  | Whether the navbar content highlighted cursor should be rounded.                 | `false`          |
++| **hideIn**                   | [HideShowIn](#hide-in-&-show-in)                                  | Sets the breakpoint from where the component should start hiding.                | -                |
++| **showIn**                   | [HideShowIn](#hide-in-&-show-in)                                  | Sets the breakpoint from where the component should start displaying.            | -                |
++| **css**                      | `Stitches.CSS`                                                    | Override Default CSS style.                                                      | -                |
++| **as**                       | `keyof JSX.IntrinsicElements`                                     | Changes which tag component outputs.                                             | `ul`             |
++
++<Spacer y={2} />
++
++---
++
++<Spacer y={2} />
++
++#### Navbar.Item Props
++
++| Attribute           | Type                                              | Description                                                           | Default          |
++| ------------------- | ------------------------------------------------- | --------------------------------------------------------------------- | ---------------- |
++| **children\***      | `ReactNode`                                       | The contents of the navbar item.                                      | -                |
++| **variant**         | [NavbarContentVariants](#navbar-content-variants) | The variant of the navbar item.                                       | `default`        |
++| **activeColor**     | [SimpleColors](#simple-colors)                    | The active color of the navbar item.                                  | `default (link)` |
++| **underlineHeight** | [NormalWeights](#normal-weights)                  | The height of the navbar item underline.                              | `normal`         |
++| **isActive**        | `boolean`                                         | Whether navbar item is active.                                        | `false`          |
++| **isDisabled**      | `boolean`                                         | Whether navbar item is disabled.                                      | `false`          |
++| **hideIn**          | [HideShowIn](#hide-in-&-show-in)                  | Sets the breakpoint from where the component should start hiding.     | -                |
++| **showIn**          | [HideShowIn](#hide-in-&-show-in)                  | Sets the breakpoint from where the component should start displaying. | -                |
++| **css**             | `Stitches.CSS`                                    | Override Default CSS style.                                           | -                |
++| **as**              | `keyof JSX.IntrinsicElements`                     | Changes which tag component outputs.                                  | `li`             |
++
++<Spacer y={2} />
++
++---
++
++<Spacer y={2} />
++
++#### Navbar.Link Props
++
++| Attribute         | Type                                          | Description                                                                                                    | Default |
++| ----------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------- |
++| **ItemProps**     | [NavbarItemProps](#navbaritem-props)          | Since dropdown navbar link is based on the `Navbar.Item` component you can use any of the `Navbar.Item` props. | -       |
++| **LinkProps**     | [LinkProps](/docs/components/link#link-props) | Since dropdown navbar link uses the `Link` component as a base, you can use any of the `Link` props.           | -       |
++| **itemCss**       | `Stitches.CSS`                                | Override the navbar item CSS style.                                                                            | -       |
++| **itemClassName** | `string`                                      | Add a class name to the navbar item.                                                                           | -       |
++| **css**           | `Stitches.CSS`                                | Override Default CSS style.                                                                                    | -       |
++| **as**            | `keyof JSX.IntrinsicElements`                 | Changes which tag component outputs.                                                                           | `a`     |
++
++<Spacer y={2} />
++
++---
++
++<Spacer y={2} />
++
++#### Navbar.Toggle Props
++
++| Attribute           | Type                             | Description                                                                | Default  |
++| ------------------- | -------------------------------- | -------------------------------------------------------------------------- | -------- |
++| **children**        | `ReactNode`                      | The contents of the navbar toggle. It's usually an hamburguer icon button. | -        |
++| **isSelected**      | [HideShowIn](#hide-in-&-show-in) | Whether the element should be selected (controlled).                       | `false`  |
++| **defaultSelected** | [HideShowIn](#hide-in-&-show-in) | Whether the element should be selected (uncontrolled).                     | -        |
++| **autoFocus**       | [HideShowIn](#hide-in-&-show-in) | Whether the element should receive focus on render.                        | `false`  |
++| **hideIn**          | [HideShowIn](#hide-in-&-show-in) | Sets the breakpoint from where the component should start hiding.          | -        |
++| **showIn**          | [HideShowIn](#hide-in-&-show-in) | Sets the breakpoint from where the component should start displaying.      | -        |
++| **css**             | `Stitches.CSS`                   | Override Default CSS style.                                                | -        |
++| **as**              | `keyof JSX.IntrinsicElements`    | Changes which tag component outputs.                                       | `button` |
++
++<Spacer y={1} />
++
++#### Navbar.Toggle Events
++
++| Attribute    | Type                            | Description                                                        | Default |
++| ------------ | ------------------------------- | ------------------------------------------------------------------ | ------- |
++| **onChange** | `(isSelected: boolean) => void` | Handler that is called when the element's selection state changes. | -       |
++
++<Spacer y={1} />
++
++#### Navbar.Toggle Accessibility Props
++
++| Attribute      | Type     | Description                                                                                                        | Default |
++| -------------- | -------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
++| **id**         | `string` | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) | -       |
++| **aria-label** | `string` | Defines a string value that labels the current element                                                             | -       |
++
++<Spacer y={2} />
++
++---
++
++<Spacer y={2} />
++
++#### Navbar.Collapse Props
++
++| Attribute            | Type                                                    | Description                                                                | Default                                                                 |
++| -------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
++| **children**         | `ReactNode` `ReactNode[]`                               | The contents of the navbar toggle. It's usually an hamburguer icon button. | -                                                                       |
++| **transitionDelay**  | `number`                                                | The delay of all collapse items transition. (milliseconds)                 | `0`                                                                     |
++| **transitionTime**   | `number`                                                | The delay of all collapse items transition. (milliseconds)                 | `450`                                                                   |
++| **transitionMatrix** | [CollapseTransitionMatrix](#collapse-transition-matrix) | The matrix of all collapse items transition.                               | `{in: "matrix(1, 0, 0, 1, 0, 0)", out: "matrix(0.97, 0, 0, 1, 0, 20)"}` |
++| **disableAnimation** | `boolean`                                               | Whether the all navbar collapse items are animated.                        | `false`                                                                 |
++| **hideIn**           | [HideShowIn](#hide-in-&-show-in)                        | Sets the breakpoint from where the component should start hiding.          | -                                                                       |
++| **showIn**           | [HideShowIn](#hide-in-&-show-in)                        | Sets the breakpoint from where the component should start displaying.      | -                                                                       |
++| **css**              | `Stitches.CSS`                                          | Override Default CSS style.                                                | -                                                                       |
++| **as**               | `keyof JSX.IntrinsicElements`                           | Changes which tag component outputs.                                       | `ul`                                                                    |
++
++<Spacer y={1} />
++
++#### Navbar.Collapse Accessibility Props
++
++| Attribute            | Type     | Description                                                                                                        | Default |
++| -------------------- | -------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
++| **id**               | `string` | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) | -       |
++| **aria-labelledby**  | `string` | Identifies the element (or elements) that labels the current element                                               | -       |
++| **aria-describedby** | `string` | Identifies the element (or elements) that describes the object.                                                    | -       |
++
++<Spacer y={2} />
++
++---
++
++<Spacer y={2} />
++
++#### Navbar.CollapseItem
++
++| Attribute            | Type                                                    | Description                                                                | Default                                                                 |
++| -------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
++| **children**         | `ReactNode` `ReactNode[]`                               | The contents of the navbar toggle. It's usually an hamburguer icon button. | -                                                                       |
++| **transitionDelay**  | `number`                                                | The delay of all collapse items transition. (milliseconds)                 | `0`                                                                     |
++| **transitionTime**   | `number`                                                | The delay of all collapse items transition. (milliseconds)                 | `450`                                                                   |
++| **transitionMatrix** | [CollapseTransitionMatrix](#collapse-transition-matrix) | The matrix of all collapse items transition.                               | `{in: "matrix(1, 0, 0, 1, 0, 0)", out: "matrix(0.97, 0, 0, 1, 0, 20)"}` |
++| **disableAnimation** | `boolean`                                               | Whether the navbar collapse item is animated.                              | `false`                                                                 |
++| **hideIn**           | [HideShowIn](#hide-in-&-show-in)                        | Sets the breakpoint from where the component should start hiding.          | -                                                                       |
++| **showIn**           | [HideShowIn](#hide-in-&-show-in)                        | Sets the breakpoint from where the component should start displaying.      | -                                                                       |
++| **css**              | `Stitches.CSS`                                          | Override Default CSS style.                                                | -                                                                       |
++| **as**               | `keyof JSX.IntrinsicElements`                           | Changes which tag component outputs.                                       | `li`                                                                    |
++
++<Spacer y={2} />
++
++---
++
++<Spacer y={2} />
++
++### Navbar types
++
++<Spacer y={1} />
++
++#### Navbar Variants
++
++```ts
++type NavbarVariants = "static" | "sticky" | "floating";
++```
++
++#### Navbar Max Width
++
++```ts
++type NavbarMaxWidth = "xs" | "sm" | "md" | "lg" | "xl" | "fluid";
++```
++
++> **Note**: `fluid` means the navbar will fill the entire width of the screen. You can see the complete breakpoint list [here](https://nextui.org/docs/theme/default-theme#breakpoints).
++
++#### Hide In & Show In
++
++```ts
++type HideIn = "xsMax" | "smMax" | "mdMax" | "lgMax" | "xlMax";
++type ShowIn = "xsMin" | "smMin" | "mdMin" | "lgMin" | "xlMin";
++```
++
++> **Note**: You can see the complete media breakpoint list [here](/docs/theme/media#media-queries).
++
++#### Navbar Content Variants
++
++```ts
++type NavbarVariants =
++  | "default"
++  | "underline"
++  | "underline-rounded"
++  | "highlight"
++  | "highlight-solid"
++  | "highlight-rounded"
++  | "highlight-solid-rounded";
++```
++
++> **Note**: You can try the complete list of item variants [here](#active-item-variants).
++
++#### Collapse Transition Matrix
++
++```ts
++type CollapseTransitionMatrix = {
++  in?: string;
++  out?: string;
++};
++```
++
++> **Note**: For more information about the transition matrix, check the [transition matrix documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix).
++
++#### Simple Colors
++
++```ts
++type SimpleColors =
++  | "default"
++  | "primary"
++  | "secondary"
++  | "success"
++  | "warning"
++  | "error";
++```
++
++#### Normal Weights
++
++```ts
++type NormalWeights = "light" | "normal" | "bold" | "extrabold" | "black";
++```\n- apps/docs/content/docs/components/text.mdx (modified, 34 changes)\n  Patch: @@ -69,22 +69,24 @@ import { Text } from "@nextui-org/react";
+ 
+ #### Text Props
+ 
+-| Attribute      | Type                                                                  | Description                         | Default   |
+-| -------------- | --------------------------------------------------------------------- | ----------------------------------- | --------- |
+-| **h1 - h6**    | `boolean`                                                             | Component name                      | `false`   |
+-| **small**      | `boolean`                                                             | Component name                      | `false`   |
+-| **span**       | `boolean`                                                             | Component name                      | `false`   |
+-| **del**        | `boolean`                                                             | Component name                      | `false`   |
+-| **i**          | `boolean`                                                             | Component name                      | `false`   |
+-| **em**         | `boolean`                                                             | Component name                      | `false`   |
+-| **b**          | `boolean`                                                             | Component name                      | `false`   |
+-| **blockquote** | `boolean`                                                             | Component name                      | `false`   |
+-| **transform**  | [TextTransforms](#text-transforms)                                    | text-transform prop                 | `none`    |
+-| **size**       | `string` `number` [FontSize](/docs/theme/default-theme#2-font-sizes) | Text size                           | `inherit` |
+-| **color**      | [SimpleColors](#simple-colors) `string`                               | Text color                          | `default` |
+-| **weight**     | [TextWeights](#text-weights)                                          | Text weight                         | `noset`   |
+-| **css**        | `Stitches.CSS`                                                        | Override Default CSS style          | -         |
+-| **as**         | `keyof JSX.IntrinsicElements`                                         | Changes which tag component outputs | `p`       |
++| Attribute        | Type                                                                 | Description                                                       | Default   |
++| ---------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------- | --------- |
++| **h1 - h6**      | `boolean`                                                            | Component name                                                    | `false`   |
++| **small**        | `boolean`                                                            | Component name                                                    | `false`   |
++| **span**         | `boolean`                                                            | Component name                                                    | `false`   |
++| **del**          | `boolean`                                                            | Component name                                                    | `false`   |
++| **i**            | `boolean`                                                            | Component name                                                    | `false`   |
++| **em**           | `boolean`                                                            | Component name                                                    | `false`   |
++| **b**            | `boolean`                                                            | Component name                                                    | `false`   |
++| **blockquote**   | `boolean`                                                            | Component name                                                    | `false`   |
++| **transform**    | [TextTransforms](#text-transforms)                                   | text-transform prop                                               | `none`    |
++| **size**         | `string` `number` [FontSize](/docs/theme/default-theme#2-font-sizes) | Text size                                                         | `inherit` |
++| **color**        | [SimpleColors](#simple-colors) `string`                              | Text color                                                        | `default` |
++| **weight**       | [TextWeights](#text-weights)                                         | Text weight                                                       | `noset`   |
++| **hideIn** `new` | `xs` `sm` `md` `lg` `xl`                                             | Whether the Text should be hidden from selected breakpoint.       | -         |
++| **showIn** `new` | `xs` `sm` `md` `lg` `xl`                                             | Whether the Text should be visible only from selected breakpoint. | -         |
++| **css**          | `Stitches.CSS`                                                       | Override Default CSS style                                        | -         |
++| **as**           | `keyof JSX.IntrinsicElements`                                        | Changes which tag component outputs                               | `p`       |
+ 
+ <Spacer y={2} />
+ \n- apps/docs/content/docs/guide/nextui-plus-nextjs.mdx (modified, 52 changes)\n  Patch: @@ -6,9 +6,9 @@ url: https://nextui.org/docs/nextui-plus-nextjs
+ 
+ # NextUI + Next.js
+ 
+-NextUI is totally compatible with <Link target="_blank" color rel="nofollow" href="https://nextjs.org">Next.js</Link> you just need to customize the <Link target="_blank" color rel="nofollow" href="https://nextjs.org/docs/advanced-features/custom-app">\_app.jsx</Link> entry file to load the provider.
++NextUI is totally compatible with <a target="_blank" rel="nofollow" href="https://nextjs.org">Next.js</a> you just need to customize the <a target="_blank" rel="nofollow" href="https://nextjs.org/docs/advanced-features/custom-app">\_app.jsx</a> entry file to load the provider.
+ 
+-Start your Next.js project with <Link target="\_blank" color rel="nofollow" href="https://github.com/nextui-org/nextui/tree/main/examples/create-next-app"> this example</Link>.
++Start your Next.js project with <a target="_blank" rel="nofollow" href="https://github.com/nextui-org/nextui/tree/main/examples/create-next-app"> this example</a>.
+ 
+ <CarbonAd />
+ 
+@@ -20,46 +20,36 @@ All Components of `@nextui-org/react` are compatible with **Server Render**. In
+ 
+ Server-side rendering (SSR) is the process of rendering web pages on a server and passing them to the browser (client-side),
+ instead of rendering them in the browser. SSR sends a fully rendered page to the client; the client's JavaScript
+-bundle takes over and enables the SPA framework to operate, the best option to use server side render in React.js is using <Link target="_blank" color rel="nofollow" href="https://nextjs.org">Next.js</Link>.
++bundle takes over and enables the SPA framework to operate, the best option to use server side render in React.js is using <a target="_blank" color rel="nofollow" href="https://nextjs.org">Next.js</a>.
+ 
+ If you are worried about losing the advantages of a Single Page Application by implementing server-side rendering, you can use the `hybrid render` application.
+-Please read <Link color href="https://nextjs.org/blog/next-9-3#next-gen-static-site-generation-ssg-support" rel="nofollow">
+-the post from the Next.js team</Link> to learn more.
+-
+-<Text>
+-  In addition, for <Text b>server-side render</Text> and web applications, we
+-  strongly recommend that you read this famous post&nbsp;
+-  <Link
+-    color
+-    href="https://rauchg.com/2014/7-principles-of-rich-web-applications"
+-    rel="nofollow"
+-    target="_blank"
+-  >
+-    7-principles-of-rich-web-applications
+-  </Link> from <Text em>Guillermo Rauch</Text>.
+-</Text>
++Please read <a target="_blank" rel="nofollow" href="https://nextjs.org/blog/next-9-3#next-gen-static-site-generation-ssg-support">
++the post from the Next.js team</a> to learn more.
++
++In addition, for **server-side render** and web applications, we
++strongly recommend that you read this famous post&nbsp;<a href="https://rauchg.com/2014/7-principles-of-rich-web-applications" rel="nofollow" target="_blank">7-principles-of-rich-web-applications</a> from _Guillermo Rauch_.
+ 
+ <Spacer y={1} />
+ 
+ ### Next.js
+ 
+-In <Link target="_blank" color rel="nofollow" href="https://nextjs.org">Next.js</Link> framework, you need customization file `_document.js`,
+-please refer to <Link target="_blank" href="https://nextjs.org/docs/advanced-features/custom-document" rel="nofollow">Next.js document here</Link>
++In <a target="_blank" rel="nofollow" href="https://nextjs.org">Next.js</a> framework, you need customization file `_document.js`,
++please refer to <a target="_blank" href="https://nextjs.org/docs/advanced-features/custom-document" rel="nofollow">Next.js document here</a>
+ to create file `_document.js`.
+ 
+ Then we add the following code to the file:
+ 
+ ```jsx
+-import React from 'react';
+-import Document, { Html, Head, Main, NextScript } from 'next/document';
+-import { CssBaseline } from '@nextui-org/react';
++import React from "react";
++import Document, { Html, Head, Main, NextScript } from "next/document";
++import { CssBaseline } from "@nextui-org/react";
+ 
+ class MyDocument extends Document {
+   static async getInitialProps(ctx) {
+     const initialProps = await Document.getInitialProps(ctx);
+     return {
+       ...initialProps,
+-      styles: React.Children.toArray([initialProps.styles])
++      styles: React.Children.toArray([initialProps.styles]),
+     };
+   }
+ 
+@@ -79,17 +69,19 @@ class MyDocument extends Document {
+ export default MyDocument;
+ ```
+ 
+-Here's an example of what your `_document.js` file should look like: <Link target="_blank" href="https://github.com/nextui-org/nextui/blob/main/examples/create-next-app/pages/_document.js" rel="nofollow" color>\_document.jsx</Link>.
++Here's an example of what your `_document.js` file should look like: <a target="_blank" href="https://github.com/nextui-org/nextui/blob/main/examples/create-next-app/pages/_document.js" rel="nofollow" color>\_document.jsx</a>.
++
++<Spacer y={1}/>
+ 
+ ### Custom Server
+ 
+ In the custom server, also get the style set from function `CssBaseline.flush` as shown below.
+ 
+ ```jsx
+-import React from 'react';
+-import ReactDOM from 'react-dom/server';
+-import { CssBaseline } from '@nextui-org/react';
+-import App from './app';
++import React from "react";
++import ReactDOM from "react-dom/server";
++import { CssBaseline } from "@nextui-org/react";
++import App from "./app";
+ 
+ export default (req, res) => {
+   const app = ReactDOM.renderToString(<App />);
+@@ -102,6 +94,6 @@ export default (req, res) => {
+       </body>
+     </html>
+   );
+-  res.end('<!doctype html>' + html);
++  res.end("<!doctype html>" + html);
+ };
+ ```\n- apps/docs/content/docs/manifest.json (modified, 28 changes)\n  Patch: @@ -126,6 +126,18 @@
+               "keywords": "collapse, accordion, expand, reveal",
+               "path": "/docs/components/collapse.mdx"
+             },
++            {
++              "title": "Navbar",
++              "keywords": "navbar, nav, navbar, navigation, menu, header",
++              "path": "/docs/components/navbar.mdx",
++              "newPost": true
++            },
++            {
++              "title": "Badge",
++              "keywords": "badge, status, display, count, highlight",
++              "path": "/docs/components/badge.mdx",
++              "newPost": true
++            },
+             {
+               "title": "Input",
+               "keywords": "text input, input, textarea",
+@@ -168,19 +180,14 @@
+             {
+               "title": "Dropdown",
+               "keywords": "dropdown, select, selectable, menu",
+-              "path": "/docs/components/dropdown.mdx"
++              "path": "/docs/components/dropdown.mdx",
++              "updated": true
+             },
+             {
+               "title": "Progress",
+               "keywords": "progress, bar, task, display, activity",
+               "path": "/docs/components/progress.mdx"
+             },
+-            {
+-              "title": "Badge",
+-              "keywords": "badge, status, display, count, highlight",
+-              "path": "/docs/components/badge.mdx",
+-              "newPost": true
+-            },
+             {
+               "title": "Select",
+               "comingSoon": true
+@@ -195,10 +202,6 @@
+               "keywords": "loading, spinner, loadable, progress",
+               "path": "/docs/components/loading.mdx"
+             },
+-            {
+-              "title": "Navbar",
+-              "comingSoon": true
+-            },
+             {
+               "title": "Switch",
+               "keywords": "toggle, switch",
+@@ -207,7 +210,8 @@
+             {
+               "title": "Text",
+               "keywords": "text, txt, paragraph",
+-              "path": "/docs/components/text.mdx"
++              "path": "/docs/components/text.mdx",
++              "updated": true
+             },
+             {
+               "title": "Link",\n- apps/docs/content/docs/theme/default-theme.mdx (modified, 9 changes)\n  Patch: @@ -58,6 +58,14 @@ export default {
+     // generic colors
+     white: '#ffffff',
+     black: '#000000',
++
++    // background colors (light)
++    background: "$white",
++    backgroundAlpha: "rgba(255, 255, 255, 0.8)", // used for semi-transparent backgrounds like the navbar
++    foreground: "$black",
++    backgroundContrast: "$white",
++
++
+     //semantic colors (light)
+     blue50: '#EDF5FF',
+     // ...
+@@ -255,6 +263,7 @@ This table is a simple overview of the most common use case for each step. Howev
+   code={`
+     <Palette colors={[
+         "background", 
++        "backgroundAlpha",
+         "backgroundContrast",
+         "foreground",
+         "text",\n- apps/docs/content/docs/theme/media.mdx (modified, 5 changes)\n  Patch: @@ -23,6 +23,11 @@ export const media = {
+   md: `(min-width: ${defaultTokens.breakpoints.md})`,
+   lg: `(min-width: ${defaultTokens.breakpoints.lg})`,
+   xl: `(min-width: ${defaultTokens.breakpoints.xl})`,
++  xsMin: `(min-width: ${defaultTokens.breakpoints.xs})`,
++  smMin: `(min-width: ${defaultTokens.breakpoints.sm})`,
++  mdMin: `(min-width: ${defaultTokens.breakpoints.md})`,
++  lgMin: `(min-width: ${defaultTokens.breakpoints.lg})`,
++  xlMin: `(min-width: ${defaultTokens.breakpoints.xl})`,
+   xsMax: `(max-width: ${defaultTokens.breakpoints.xs})`,
+   smMax: `(max-width: ${defaultTokens.breakpoints.sm})`,
+   mdMax: `(max-width: ${defaultTokens.breakpoints.md})`,\n- apps/docs/src/components/code-demo/code-block.tsx (modified, 43 changes)\n  Patch: @@ -10,9 +10,7 @@ import hastToHtml from "hast-util-to-html";
+ import rangeParser from "parse-numeric-range";
+ import highlightLine from "@lib/rehype-highlight-line";
+ import highlightWord from "@lib/rehype-highlight-word";
+-import {styled} from "@nextui-org/react";
+-
+-import {Box} from "../primitives";
++import {WindowActions} from "@components";
+ 
+ import {Pre} from "./pre";
+ 
+@@ -24,25 +22,6 @@ refractor.register(diff);
+ 
+ type PreProps = Omit<React.ComponentProps<typeof Pre>, "css">;
+ 
+-const WindowIcon = styled(Box, {
+-  size: "$6",
+-  br: "$pill",
+-  mr: "$4",
+-  variants: {
+-    color: {
+-      red: {
+-        bg: "$red600",
+-      },
+-      green: {
+-        bg: "$green600",
+-      },
+-      yellow: {
+-        bg: "$yellow600",
+-      },
+-    },
+-  },
+-});
+-
+ type CodeBlockProps = PreProps & {
+   language: "js" | "jsx" | "bash" | "css" | "diff";
+   value?: string;
+@@ -173,25 +152,7 @@ const CodeBlock = React.forwardRef<HTMLPreElement, CodeBlockProps>((_props, forw
+       data-line-numbers={showLineNumbers}
+       {...props}
+     >
+-      {showWindowIcons && (
+-        <Box
+-          css={{
+-            dflex: "flex-start",
+-            alignItems: "center",
+-            px: "$2",
+-            pt: "$5",
+-            pb: "$4",
+-            zIndex: "$2",
+-            position: "sticky",
+-            background: "$codeBackground",
+-            top: 0,
+-          }}
+-        >
+-          <WindowIcon color="red" />
+-          <WindowIcon color="yellow" />
+-          <WindowIcon color="green" />
+-        </Box>
+-      )}
++      {showWindowIcons && <WindowActions />}
+       <code className={classes} dangerouslySetInnerHTML={{__html: result}} />
+     </Pre>
+   );\n- apps/docs/src/components/examples/index.ts (added, 1 changes)\n  Patch: @@ -0,0 +1 @@
++export * from "./navbar/common";\n- apps/docs/src/components/examples/navbar/common.tsx (added, 112 changes)\n  Patch: @@ -0,0 +1,112 @@
++import {Text, Spacer, styled} from "@nextui-org/react";
++
++export const Box = styled("div", {
++  boxSizing: "border-box",
++});
++
++export const AcmeLogo = () => (
++  <svg
++    className=""
++    fill="none"
++    height="36"
++    viewBox="0 0 32 32"
++    width="36"
++    xmlns="http://www.w3.org/2000/svg"
++  >
++    <rect fill="var(--secondary)" height="100%" rx="16" width="100%" />
++    <path
++      clipRule="evenodd"
++      d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
++      fill="currentColor"
++      fillRule="evenodd"
++    />
++  </svg>
++);
++
++export const NavbarContent = () => (
++  <Box css={{px: "$12", mt: "$8", "@xsMax": {px: "$10"}}}>
++    <Text h2>Lorem ipsum dolor sit amet</Text>
++    <Text size="$lg">
++      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
++      labore et dolore magna aliqua. Purus gravida quis blandit turpis. Augue neque gravida in
++      fermentum et sollicitudin ac orci. Et sollicitudin ac orci phasellus egestas. Elementum tempus
++      egestas sed sed risus pretium quam vulputate. Interdum velit euismod in pellentesque massa
++      placerat duis ultricies.
++    </Text>
++    <Spacer y={1} />
++    <Text size="$lg">
++      Rhoncus mattis rhoncus urna neque viverra justo nec ultrices dui. Praesent semper feugiat nibh
++      sed pulvinar. Ultrices gravida dictum fusce ut placerat orci nulla pellentesque. Malesuada
++      proin libero nunc consequat interdum varius sit amet. Lectus quam id leo in vitae. Sed viverra
++      tellus in hac habitasse platea dictumst. Vivamus at augue eget arcu. Augue mauris augue neque
++      gravida in.
++    </Text>
++    <Spacer y={1} />
++    <Text size="$lg">
++      Tincidunt vitae semper quis lectus nulla at volutpat diam. Gravida dictum fusce ut placerat.
++      Erat velit scelerisque in dictum non. Tempus quam pellentesque nec nam aliquam sem et tortor
++      consequat. Eu nisl nunc mi ipsum faucibus. Cras fermentum odio eu feugiat pretium nibh. Vel
++      pharetra vel turpis nunc eget lorem dolor sed viverra. Sollicitudin tempor id eu nisl nunc mi
++      ipsum faucibus. Sed id semper risus in hendrerit gravida rutrum. Eget nulla facilisi etiam
++      dignissim. Erat imperdiet sed euismod nisi. Risus in hendrerit gravida rutrum quisque non
++      tellus orci ac.
++    </Text>
++    <Spacer y={1} />
++    <Text size="$lg">
++      Tempor orci dapibus ultrices in iaculis nunc sed augue lacus. In pellentesque massa placerat
++      duis ultricies. Sit amet massa vitae tortor condimentum. Morbi tincidunt augue interdum velit
++      euismod. Aliquet enim tortor at auctor urna nunc id. A scelerisque purus semper eget. Vitae
++      justo eget magna fermentum iaculis. Arcu non odio euismod lacinia at quis. Et leo duis ut diam
++      quam nulla porttitor massa. Eget nunc scelerisque viverra mauris. Suscipit tellus mauris a
++      diam maecenas sed enim. Cras sed felis eget velit aliquet. Est placerat in egestas erat
++      imperdiet sed euismod nisi porta. In ante metus dictum at tempor commodo. In cursus turpis
++      massa tincidunt dui ut ornare lectus. Tempus iaculis urna id volutpat. Iaculis eu non diam
++      phasellus vestibulum lorem sed risus.
++    </Text>
++    <Spacer y={1} />
++    <Text size="$lg">
++      Ridiculus mus mauris vitae ultricies leo integer malesuada nunc vel. Imperdiet massa tincidunt
++      nunc pulvinar sapien et ligula ullamcorper malesuada. Faucibus pulvinar elementum integer enim
++      neque volutpat. Gravida arcu ac tortor dignissim convallis aenean. Lectus quam id leo in
++      vitae. Ultricies tristique nulla aliquet enim tortor. Nec tincidunt praesent semper feugiat
++      nibh sed. Imperdiet proin fermentum leo vel orci porta non pulvinar neque. Praesent semper
++      feugiat nibh sed pulvinar proin gravida. Dis parturient montes nascetur ridiculus mus mauris.
++      Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Ut lectus arcu bibendum at.
++      Integer enim neque volutpat ac. Diam sit amet nisl suscipit. Eros donec ac odio tempor orci
++      dapibus ultrices in iaculis. Ullamcorper a lacus vestibulum sed arcu non odio euismod. Quis
++      lectus nulla at volutpat diam ut. Turpis egestas integer eget aliquet. Adipiscing tristique
++      risus nec feugiat in fermentum posuere. Morbi tempus iaculis urna id. Amet commodo nulla
++      facilisi nullam vehicula ipsum a arcu.
++    </Text>
++    <Text size="$lg">
++      Rhoncus mattis rhoncus urna neque viverra justo nec ultrices dui. Praesent semper feugiat nibh
++      sed pulvinar. Ultrices gravida dictum fusce ut placerat orci nulla pellentesque. Malesuada
++      proin libero nunc consequat interdum varius sit amet. Lectus quam id leo in vitae. Sed viverra
++      tellus in hac habitasse platea dictumst. Vivamus at augue eget arcu. Augue mauris augue neque
++      gravida in.
++    </Text>
++    <Spacer y={1} />
++    <Text size="$lg">
++      Tincidunt vitae semper quis lectus nulla at volutpat diam. Gravida dictum fusce ut placerat.
++      Erat velit scelerisque in dictum non. Tempus quam pellentesque nec nam aliquam sem et tortor
++      consequat. Eu nisl nunc mi ipsum faucibus. Cras fermentum odio eu feugiat pretium nibh. Vel
++      pharetra vel turpis nunc eget lorem dolor sed viverra. Sollicitudin tempor id eu nisl nunc mi
++      ipsum faucibus. Sed id semper risus in hendrerit gravida rutrum. Eget nulla facilisi etiam
++      dignissim. Erat imperdiet sed euismod nisi. Risus in hendrerit gravida rutrum quisque non
++      tellus orci ac.
++    </Text>
++    <Spacer y={1} />
++  </Box>
++);
++
++export const NavbarLayout = ({children}: {children: React.ReactNode}) => (
++  <Box
++    css={{
++      maxW: "100%",
++      maxHeight: "100%",
++    }}
++  >
++    {children}
++    <NavbarContent />
++  </Box>
++);\n- apps/docs/src/components/icons/chevron-down.tsx (added, 32 changes)\n  Patch: @@ -0,0 +1,32 @@
++import * as React from "react";
++
++export interface Props {
++  fill?: string;
++  width?: number;
++  height?: number;
++  size?: number;
++}
++
++const ChevronDown: React.FC<Props> = ({fill, size, width = 24, height = 24, ...props}) => {
++  return (
++    <svg
++      fill="none"
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      width={size || width || 24}
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="m19.92 8.95-6.52 6.52c-.77.77-2.03.77-2.8 0L4.08 8.95"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeMiterlimit={10}
++        strokeWidth={1.5}
++      />
++    </svg>
++  );
++};
++
++export default ChevronDown;\n- apps/docs/src/components/icons/chevron-right.tsx (modified, 12 changes)\n  Patch: @@ -5,10 +5,18 @@ export interface Props {
+   width?: number;
+   height?: number;
+   size?: number;
++  strokeWidth?: number;
+   className?: string;
+ }
+ 
+-const ChevronRight: React.FC<Props> = ({fill, size, width = 24, height = 24, ...props}) => {
++const ChevronRight: React.FC<Props> = ({
++  fill,
++  size,
++  width = 24,
++  height = 24,
++  strokeWidth = 1.5,
++  ...props
++}) => {
+   return (
+     <svg
+       height={size || height}
+@@ -22,7 +30,7 @@ const ChevronRight: React.FC<Props> = ({fill, size, width = 24, height = 24, ...
+         stroke={fill}
+         strokeLinecap="round"
+         strokeLinejoin="round"
+-        strokeWidth={1.5}
++        strokeWidth={strokeWidth}
+         {...props}
+       >
+         <path d="M14.43 5.93L20.5 12l-6.07 6.07" />\n- apps/docs/src/components/icons/index.ts (modified, 3 changes)\n  Patch: @@ -20,6 +20,7 @@ export {default as Activity} from "./activity";
+ export {default as Camera} from "./camera";
+ export {default as ChevronLeft} from "./chevron-left";
+ export {default as ChevronRight} from "./chevron-right";
++export {default as ChevronDown} from "./chevron-down";
+ export {default as ArrowLeft} from "./arrow-left";
+ export {default as ArrowRight} from "./arrow-right";
+ export {default as Copy} from "./copy";
+@@ -70,3 +71,5 @@ export {default as NextJsLogo} from "./nextjs-logo";
+ export {default as VercelLogo} from "./vercel";
+ export {default as TypescriptLogo} from "./typescript";
+ export {default as JavascriptLogo} from "./javascript";
++export {default as Scale} from "./scale";
++export {default as Sparkle} from "./sparkle";\n- apps/docs/src/components/icons/scale.tsx (added, 38 changes)\n  Patch: @@ -0,0 +1,38 @@
++import * as React from "react";
++
++export interface Props {
++  fill?: string;
++  width?: number;
++  height?: number;
++  size?: number;
++}
++
++const Scale: React.FC<Props> = ({fill, size, width = 24, height = 24, ...props}) => {
++  return (
++    <svg
++      fill="none"
++      height={size || height}
++      viewBox="0 0 24 24"
++      width={size || width}
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7ZM18 6 6 18"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={1.5}
++      />
++      <path
++        d="M18 10V6h-4M6 14v4h4"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={1.5}
++      />
++    </svg>
++  );
++};
++
++export default Scale;\n- apps/docs/src/components/icons/search.tsx (modified, 13 changes)\n  Patch: @@ -16,11 +16,14 @@ const defaultProps = {
+ 
+ const Search: React.FC<Props> = ({size, fill, width, height, ...props}) => {
+   return (
+-    <svg height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
+-      <g fill={fill}>
+-        <path d="M21 11.5A9.5 9.5 0 1111.5 2a9.5 9.5 0 019.5 9.5z" />
+-        <path d="M21.299 21.999a.7.7 0 01-.49-.2l-1.862-1.86a.706.706 0 010-.992.706.706 0 01.99 0l1.86 1.86a.706.706 0 010 .99.738.738 0 01-.498.202z" />
+-      </g>
++    <svg fill="none" height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
++      <path
++        d="M11.5 21a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19ZM22 22l-2-2"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={2}
++      />
+     </svg>
+   );
+ };\n

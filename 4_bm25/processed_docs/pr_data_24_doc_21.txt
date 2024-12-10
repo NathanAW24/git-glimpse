@@ -1,0 +1,1006 @@
+Pull Request Number: 1127
+Title: fix: JavaScript default parameters instead ".defaultProps"
+Base Branch: main
+Head Branch: fix/default-props-react-18
+Author: maxxborer
+URL: https://github.com/nextui-org/nextui/pull/1127
+State: CLOSED
+Created At: 2023-05-12T16:09:11Z
+Merged At: None
+Participants: maxxborer, auser
+
+Description:
+Closes 1025
+📝 Description
+
+Fixed Warning: {COMPONENT}: Support for defaultProps will be removed from memo components in a future major release. Use JavaScript default parameters instead.
+
+⛳️ Current behavior (updates)
+
+When using this package, many errors occur for each component used. An error like "Warning: {COMPONENT}: Support for defaultProps will be removed from memo components in a future major release. Use JavaScript default parameters instead." appears every time the application is launched, which can cause inconvenience and lead to potential problems in future releases.
+
+
+Brief description of the changes:
+
+Replaced the use of defaultProps in components using memo with JavaScript default parameters.
+Relevant components have been updated to avoid potential issues in future releases.
+
+
+🚀 New behavior
+
+After the changes made, the error no longer occurs when using components from this package. The updates avoid these bugs and provide a smoother application experience with no warnings about the deprecated use of defaultProps.
+
+💣 Is this a breaking change (Yes/No): No
+📝 Additional Information
+Screenshot of the error for an example:
+
+Why we should use the built-in defaults:
+
+https://notes.webutvikling.org/stop-using-defaultprops/
+https://medium.com/@matanbobi/react-defaultprops-is-dying-whos-the-contender-443c19d9e7f1
+
+Commits:
+- fix: stories lint and correct props
+
+1. lint errors/warnings
+2. add "currectColor" for Switch story
+3. change incorrect prop "underlined" for the "NoAnimated" story\n- fix: JavaScript default parameters instead ".defaultProps"
+
+Warnings "Warning: {component X} : Support for defaultProps will be removed" in NextJS on >18 node.js\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #4d2nMI1pw4nB1RqZ0VleWOFdYTZFWZLBljVLxx8soeY=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLW1heHhib3Jlci1maXgtZGVmYXUtNWQyOGI4LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rL0F1YWlFWk1IN2hzMUFreXAzdW5tNDdubWt2SlMiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay1naXQtZm9yay1tYXh4Ym9yZXItZml4LWRlZmF1LTVkMjhiOC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/AuaiEZMH7hs1Akyp3unm47nmkvJS)) | [Visit Preview](https://nextui-storybook-git-fork-maxxborer-fix-defau-5d28b8-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-maxxborer-fix-defau-5d28b8-nextui-org.vercel.app) | May 12, 2023 4:21pm |
+
+\n- vercel: @maxxborer is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f7baacd2f7ff9f6967c1beb09a9016f5df2c0221%22%7D%2C%22id%22%3A%22QmVi24TEMcyHdZUUEWqLht3F18ArZ6gqjqnAfsVs8n93qe%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1127%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- maxxborer: >however the v1 will be deprecated soon, that’s why we haven’t merged any new PRs, for new contributions please use feat/v2 branch\n- auser: Is this getting launched yet?\n
+
+Files Changed:
+- apps/docs/src/components/blockholder/index.tsx (modified, 19 changes)\n  Patch: @@ -1,22 +1,19 @@
+ import React from "react";
+ 
+-import withDefaults from "../../utils/with-defaults";
+-
+ export interface Props {
+   className?: string;
+   width?: string;
+   height?: string;
+   alt?: string;
+ }
+ 
+-const defaultProps = {
+-  className: "",
+-  width: "100%",
+-  height: "100%",
+-  alt: "block placeholder",
+-};
+-
+-const PlaceholderBlock: React.FC<Props> = ({className, width, height, alt, ...props}) => {
++const PlaceholderBlock: React.FC<Props> = ({
++  className = "",
++  width = "100%",
++  height = "100%",
++  alt = "block placeholder",
++  ...props
++}) => {
+   return (
+     <div className={className} style={{width, height}} {...props}>
+       <img
+@@ -44,4 +41,4 @@ const PlaceholderBlock: React.FC<Props> = ({className, width, height, alt, ...pr
+   );
+ };
+ 
+-export default withDefaults(PlaceholderBlock, defaultProps);
++export default PlaceholderBlock;\n- apps/docs/src/components/community/community.tsx (modified, 15 changes)\n  Patch: @@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
+ import {Grid, Text, Row, Spacer} from "@nextui-org/react";
+ import {Twitter, Discord, Github} from "@components";
+ import {Title, Subtitle} from "@primitives";
+-import withDefaults from "@utils/with-defaults";
+ 
+ import {StyledCommunityCard} from "./styles";
+ 
+@@ -13,17 +12,15 @@ export interface CommunityProps {
+   discord?: string;
+ }
+ 
+-const defaultProps = {
+-  twitter: "https://twitter.com/getnextui",
+-  github: "https://github.com/nextui-org/nextui",
+-  discord: "https://discord.gg/9b6yyZKmH4",
+-};
+-
+ const DynamicLopperBG = dynamic(() => import("../looper-bg"), {
+   ssr: false,
+ });
+ 
+-const Community: React.FC<CommunityProps> = ({twitter, github, discord}) => {
++const Community: React.FC<CommunityProps> = ({
++  twitter = "https://twitter.com/getnextui",
++  github = "https://github.com/nextui-org/nextui",
++  discord = "https://discord.gg/9b6yyZKmH4",
++}) => {
+   return (
+     <Grid.Container css={{position: "relative"}} gap={2} justify="center">
+       <Grid css={{mb: "$10"}} direction="column" xs={12}>
+@@ -90,4 +87,4 @@ const Community: React.FC<CommunityProps> = ({twitter, github, discord}) => {
+   );
+ };
+ 
+-export default withDefaults(Community, defaultProps);
++export default Community;\n- apps/docs/src/components/css-transition/index.tsx (modified, 30 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import React, {useEffect, useState} from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ interface Props {
+   visible?: boolean;
+@@ -11,25 +10,14 @@ interface Props {
+   children?: React.ReactNode;
+ }
+ 
+-const defaultProps = {
+-  visible: false,
+-  enterTime: 60,
+-  leaveTime: 60,
+-  clearTime: 60,
+-  className: "",
+-  name: "transition",
+-};
+-
+-export type CSSTransitionProps = Props & typeof defaultProps;
+-
+-const CSSTransition: React.FC<CSSTransitionProps> = ({
+-  children,
+-  className,
+-  visible,
+-  enterTime,
+-  leaveTime,
+-  clearTime,
+-  name,
++const CSSTransition: React.FC<Props> = ({
++  visible = false,
++  enterTime = 60,
++  leaveTime = 60,
++  clearTime = 60,
++  className = "",
++  name = "transition",
++  children = null,
+   ...props
+ }) => {
+   const [classes, setClasses] = useState<string>("");
+@@ -73,4 +61,4 @@ const CSSTransition: React.FC<CSSTransitionProps> = ({
+   });
+ };
+ 
+-export default withDefaults(CSSTransition, defaultProps);
++export default CSSTransition;\n- apps/docs/src/components/features-grid/features-grid.tsx (modified, 15 changes)\n  Patch: @@ -1,6 +1,5 @@
+ import React from "react";
+ import {Grid, GridProps, Text, Row, CSS} from "@nextui-org/react";
+-import withDefaults from "@utils/with-defaults";
+ import {useRouter} from "next/router";
+ import {LinkIcon} from "@components";
+ 
+@@ -25,17 +24,11 @@ interface Props {
+ 
+ export type FeaturesGridProps = Props & GridProps;
+ 
+-const defaultProps = {
+-  xs: 12,
+-  sm: 4,
+-  lg: 3,
+-};
+-
+ const FeaturesGrid: React.FC<FeaturesGridProps> = ({
+   features,
+-  xs,
+-  sm,
+-  lg,
++  xs = 12,
++  sm = 4,
++  lg = 3,
+   css,
+ 
+   itemCss,
+@@ -95,4 +88,4 @@ const FeaturesGrid: React.FC<FeaturesGridProps> = ({
+   );
+ };
+ 
+-export default withDefaults(FeaturesGrid, defaultProps);
++export default FeaturesGrid;\n- apps/docs/src/components/fixed/index.tsx (modified, 17 changes)\n  Patch: @@ -1,6 +1,5 @@
+ import * as React from "react";
+ import cn from "classnames";
+-import withDefaults from "@utils/with-defaults";
+ import {styled, CSS} from "@nextui-org/react";
+ 
+ export interface FixedProps {
+@@ -11,12 +10,6 @@ export interface FixedProps {
+   children?: React.ReactNode;
+ }
+ 
+-const defaultProps = {
+-  offset: 0,
+-  shadow: false,
+-  className: "",
+-};
+-
+ const StyledFixed = styled("div", {
+   background: "transparent",
+   position: "fixed",
+@@ -30,7 +23,13 @@ const StyledFixed = styled("div", {
+   },
+ });
+ 
+-const Fixed: React.FC<FixedProps> = ({offset, children, shadow, className, css}) => {
++const Fixed: React.FC<FixedProps> = ({
++  offset = 0,
++  children,
++  shadow = false,
++  className = "",
++  css,
++}) => {
+   return (
+     <StyledFixed
+       className={cn(className, {shadow})}
+@@ -44,4 +43,4 @@ const Fixed: React.FC<FixedProps> = ({offset, children, shadow, className, css})
+ 
+ const MemoFixed = React.memo(Fixed);
+ 
+-export default withDefaults(MemoFixed, defaultProps);
++export default MemoFixed;\n- apps/docs/src/components/heading/index.tsx (modified, 11 changes)\n  Patch: @@ -1,20 +1,15 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ export interface Props {
+   title: string;
+   children?: React.ReactNode;
+ }
+ 
+-const defaultProps = {
+-  title: "Heading",
+-};
+-
+ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+ 
+-export type HeadingProps = Props & typeof defaultProps & NativeAttrs;
++export type HeadingProps = Props & NativeAttrs;
+ 
+-const Heading: React.FC<HeadingProps> = ({title, children}) => {
++const Heading: React.FC<HeadingProps> = ({title = "Heading", children}) => {
+   return (
+     <div className="heading">
+       <h4>{title}</h4>
+@@ -31,4 +26,4 @@ const Heading: React.FC<HeadingProps> = ({title, children}) => {
+ 
+ const MemoHeading = React.memo(Heading);
+ 
+-export default withDefaults(MemoHeading, defaultProps);
++export default MemoHeading;\n- apps/docs/src/components/icons/bug.tsx (modified, 10 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ interface Props {
+   width?: number;
+@@ -8,12 +7,7 @@ interface Props {
+   fill?: string;
+ }
+ 
+-const defaultProps = {
+-  width: 24,
+-  height: 24,
+-};
+-
+-const Bug: React.FC<Props> = ({size, fill, width, height, ...props}) => {
++const Bug: React.FC<Props> = ({size, fill, width = 24, height = 24, ...props}) => {
+   return (
+     <svg
+       height={size || height}
+@@ -32,4 +26,4 @@ const Bug: React.FC<Props> = ({size, fill, width, height, ...props}) => {
+ 
+ const MemoBug = React.memo(Bug);
+ 
+-export default withDefaults(MemoBug, defaultProps);
++export default MemoBug;\n- apps/docs/src/components/icons/close.tsx (modified, 10 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ interface Props {
+   width?: number;
+@@ -8,12 +7,7 @@ interface Props {
+   fill?: string;
+ }
+ 
+-const defaultProps = {
+-  width: 24,
+-  height: 24,
+-};
+-
+-const Close: React.FC<Props> = ({size, fill, width, height, ...props}) => {
++const Close: React.FC<Props> = ({size, fill, width = 24, height = 24, ...props}) => {
+   return (
+     <svg height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
+       <path
+@@ -26,4 +20,4 @@ const Close: React.FC<Props> = ({size, fill, width, height, ...props}) => {
+ 
+ const MemoClose = React.memo(Close);
+ 
+-export default withDefaults(MemoClose, defaultProps);
++export default MemoClose;\n- apps/docs/src/components/icons/code-document.tsx (modified, 18 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ interface Props {
+   width?: number;
+@@ -9,13 +8,14 @@ interface Props {
+   filled?: boolean;
+ }
+ 
+-const defaultProps = {
+-  width: 24,
+-  height: 24,
+-  filled: true,
+-};
+-
+-const CodeDocument: React.FC<Props> = ({size, fill, width, height, filled, ...props}) => {
++const CodeDocument: React.FC<Props> = ({
++  size,
++  fill,
++  width = 24,
++  height = 24,
++  filled = true,
++  ...props
++}) => {
+   if (filled) {
+     return (
+       <svg height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
+@@ -58,4 +58,4 @@ const CodeDocument: React.FC<Props> = ({size, fill, width, height, filled, ...pr
+ 
+ const MemoCodeDocument = React.memo(CodeDocument);
+ 
+-export default withDefaults(MemoCodeDocument, defaultProps);
++export default MemoCodeDocument;\n- apps/docs/src/components/icons/copy.tsx (modified, 10 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ interface Props {
+   width?: number;
+@@ -8,12 +7,7 @@ interface Props {
+   fill?: string;
+ }
+ 
+-const defaultProps = {
+-  width: 24,
+-  height: 24,
+-};
+-
+-const Copy: React.FC<Props> = ({size, fill, width, height, ...props}) => {
++const Copy: React.FC<Props> = ({size, fill, width = 24, height = 24, ...props}) => {
+   return (
+     <svg
+       height={size || height}
+@@ -32,4 +26,4 @@ const Copy: React.FC<Props> = ({size, fill, width, height, ...props}) => {
+ 
+ const MemoCopy = React.memo(Copy);
+ 
+-export default withDefaults(MemoCopy, defaultProps);
++export default MemoCopy;\n- apps/docs/src/components/icons/discord.tsx (modified, 10 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ interface Props {
+   width?: number;
+@@ -8,12 +7,7 @@ interface Props {
+   fill?: string;
+ }
+ 
+-const defaultProps = {
+-  width: 24,
+-  height: 24,
+-};
+-
+-const Discord: React.FC<Props> = ({size, fill, width, height, ...props}) => {
++const Discord: React.FC<Props> = ({size, fill, width = 24, height = 24, ...props}) => {
+   return (
+     <svg height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
+       <path
+@@ -26,4 +20,4 @@ const Discord: React.FC<Props> = ({size, fill, width, height, ...props}) => {
+ 
+ const MemoDiscord = React.memo(Discord);
+ 
+-export default withDefaults(MemoDiscord, defaultProps);
++export default MemoDiscord;\n- apps/docs/src/components/icons/forward5s.tsx (modified, 9 changes)\n  Patch: @@ -1,13 +1,8 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ import {IconProps, Icon} from "./index";
+ 
+-const defualtProps = {
+-  fill: "currentColor",
+-};
+-
+-const Rewind5s: React.FC<IconProps> = ({fill, size, height, width, ...props}) => {
++const Rewind5s: React.FC<IconProps> = ({fill = "currentColor", size, height, width, ...props}) => {
+   return (
+     <Icon
+       fill="none"
+@@ -29,4 +24,4 @@ const Rewind5s: React.FC<IconProps> = ({fill, size, height, width, ...props}) =>
+   );
+ };
+ 
+-export default withDefaults(Rewind5s, defualtProps);
++export default Rewind5s;\n- apps/docs/src/components/icons/github.tsx (modified, 18 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ interface Props {
+   width?: number;
+@@ -9,13 +8,14 @@ interface Props {
+   className?: string;
+ }
+ 
+-const defaultProps = {
+-  width: 24,
+-  height: 24,
+-  className: "",
+-};
+-
+-const Github: React.FC<Props> = ({size, fill, width, height, className, ...props}) => {
++const Github: React.FC<Props> = ({
++  size,
++  fill,
++  width = 24,
++  height = 24,
++  className = "",
++  ...props
++}) => {
+   return (
+     <svg
+       className={className}
+@@ -36,4 +36,4 @@ const Github: React.FC<Props> = ({size, fill, width, height, className, ...props
+ 
+ const MemoGithub = React.memo(Github);
+ 
+-export default withDefaults(MemoGithub, defaultProps);
++export default MemoGithub;\n- apps/docs/src/components/icons/hash.tsx (modified, 10 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ interface Props {
+   width?: number;
+@@ -8,12 +7,7 @@ interface Props {
+   fill?: string;
+ }
+ 
+-const defaultProps = {
+-  width: 24,
+-  height: 24,
+-};
+-
+-const Hash: React.FC<Props> = ({size, fill, width, height, ...props}) => {
++const Hash: React.FC<Props> = ({size, fill, width = 24, height = 24, ...props}) => {
+   return (
+     <svg height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
+       <g transform="translate(-684 -252)">
+@@ -63,4 +57,4 @@ const Hash: React.FC<Props> = ({size, fill, width, height, ...props}) => {
+ 
+ const MemoHash = React.memo(Hash);
+ 
+-export default withDefaults(MemoHash, defaultProps);
++export default MemoHash;\n- apps/docs/src/components/icons/next-track.tsx (modified, 9 changes)\n  Patch: @@ -1,13 +1,8 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ import {IconProps, Icon} from "./index";
+ 
+-const defaultProps = {
+-  fill: "currentColor",
+-};
+-
+-const NextTrack: React.FC<IconProps> = ({fill, size, height, width, ...props}) => {
++const NextTrack: React.FC<IconProps> = ({fill = "currentColor", size, height, width, ...props}) => {
+   return (
+     <Icon
+       fill="none"
+@@ -25,4 +20,4 @@ const NextTrack: React.FC<IconProps> = ({fill, size, height, width, ...props}) =
+   );
+ };
+ 
+-export default withDefaults(NextTrack, defaultProps);
++export default NextTrack;\n- apps/docs/src/components/icons/play.tsx (modified, 9 changes)\n  Patch: @@ -1,13 +1,8 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ import {IconProps, Icon} from "./index";
+ 
+-const defaultProps = {
+-  fill: "#ffffff",
+-};
+-
+-const Play: React.FC<IconProps> = ({fill, filled, size, height, width, ...props}) => {
++const Play: React.FC<IconProps> = ({fill = "#ffffff", filled, size, height, width, ...props}) => {
+   return (
+     <Icon
+       fill={filled ? fill : "none"}
+@@ -25,4 +20,4 @@ const Play: React.FC<IconProps> = ({fill, filled, size, height, width, ...props}
+   );
+ };
+ 
+-export default withDefaults(Play, defaultProps);
++export default Play;\n- apps/docs/src/components/icons/previous-track.tsx (modified, 15 changes)\n  Patch: @@ -1,13 +1,14 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ import {IconProps, Icon} from "./index";
+ 
+-const defaultProps = {
+-  fill: "currentColor",
+-};
+-
+-const PreviousTrack: React.FC<IconProps> = ({fill, size, height, width, ...props}) => {
++const PreviousTrack: React.FC<IconProps> = ({
++  fill = "currentColor",
++  size,
++  height,
++  width,
++  ...props
++}) => {
+   return (
+     <Icon
+       fill="none"
+@@ -25,4 +26,4 @@ const PreviousTrack: React.FC<IconProps> = ({fill, size, height, width, ...props
+   );
+ };
+ 
+-export default withDefaults(PreviousTrack, defaultProps);
++export default PreviousTrack;\n- apps/docs/src/components/icons/rewind5s.tsx (modified, 9 changes)\n  Patch: @@ -1,13 +1,8 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ import {IconProps, Icon} from "./index";
+ 
+-const defualtProps = {
+-  fill: "currentColor",
+-};
+-
+-const Rewind5s: React.FC<IconProps> = ({fill, size, height, width, ...props}) => {
++const Rewind5s: React.FC<IconProps> = ({fill = "currentColor", size, height, width, ...props}) => {
+   return (
+     <Icon
+       fill="none"
+@@ -29,4 +24,4 @@ const Rewind5s: React.FC<IconProps> = ({fill, size, height, width, ...props}) =>
+   );
+ };
+ 
+-export default withDefaults(Rewind5s, defualtProps);
++export default Rewind5s;\n- apps/docs/src/components/icons/search-by-algolia.tsx (modified, 10 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ import {useTheme} from "@nextui-org/react";
+ 
+ interface Props {
+@@ -8,12 +7,7 @@ interface Props {
+   fill?: string;
+ }
+ 
+-const defaultProps = {
+-  width: 84.14,
+-  height: 11.404,
+-};
+-
+-const SearchByAlgolia: React.FC<Props> = ({fill, width, height, ...props}) => {
++const SearchByAlgolia: React.FC<Props> = ({fill, width = 84.14, height = 11.404, ...props}) => {
+   const {theme} = useTheme();
+ 
+   return (
+@@ -39,4 +33,4 @@ const SearchByAlgolia: React.FC<Props> = ({fill, width, height, ...props}) => {
+ 
+ const MemoSearchByAlgolia = React.memo(SearchByAlgolia);
+ 
+-export default withDefaults(MemoSearchByAlgolia, defaultProps);
++export default MemoSearchByAlgolia;\n- apps/docs/src/components/icons/search.tsx (modified, 10 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ interface Props {
+   width?: number;
+@@ -9,12 +8,7 @@ interface Props {
+   className?: string;
+ }
+ 
+-const defaultProps = {
+-  width: 24,
+-  height: 24,
+-};
+-
+-const Search: React.FC<Props> = ({size, fill, width, height, ...props}) => {
++const Search: React.FC<Props> = ({size, fill, width = 24, height = 24, ...props}) => {
+   return (
+     <svg fill="none" height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
+       <path
+@@ -30,4 +24,4 @@ const Search: React.FC<Props> = ({size, fill, width, height, ...props}) => {
+ 
+ const MemoSearch = React.memo(Search);
+ 
+-export default withDefaults(MemoSearch, defaultProps);
++export default MemoSearch;\n- apps/docs/src/components/icons/twitter.tsx (modified, 10 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ interface Props {
+   width?: number;
+@@ -8,12 +7,7 @@ interface Props {
+   fill?: string;
+ }
+ 
+-const defaultProps = {
+-  width: 24,
+-  height: 24,
+-};
+-
+-const Twitter: React.FC<Props> = ({size, fill, width, height, ...props}) => {
++const Twitter: React.FC<Props> = ({size, fill, width = 24, height = 24, ...props}) => {
+   return (
+     <svg height={size || height} viewBox="0 0 24 24" width={size || width} {...props}>
+       <path
+@@ -26,4 +20,4 @@ const Twitter: React.FC<Props> = ({size, fill, width, height, ...props}) => {
+ 
+ const MemoTwitter = React.memo(Twitter);
+ 
+-export default withDefaults(MemoTwitter, defaultProps);
++export default MemoTwitter;\n- apps/docs/src/components/icons/vercel.tsx (modified, 17 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ import {Icon} from "./index";
+ 
+@@ -10,13 +9,13 @@ interface Props {
+   className?: string;
+ }
+ 
+-const defaultProps = {
+-  height: 44,
+-  fill: "currentColor",
+-  className: "",
+-};
+-
+-const Vercel: React.FC<Props> = ({fill, width, height, className, ...props}) => {
++const Vercel: React.FC<Props> = ({
++  fill = "currentColor",
++  width,
++  height = 44,
++  className = "",
++  ...props
++}) => {
+   return (
+     <Icon
+       className={className}
+@@ -35,4 +34,4 @@ const Vercel: React.FC<Props> = ({fill, width, height, className, ...props}) =>
+   );
+ };
+ 
+-export default withDefaults(Vercel, defaultProps);
++export default Vercel;\n- apps/docs/src/components/image-browser/index.tsx (modified, 13 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ import {useTheme} from "@nextui-org/react";
+ import useIsMounted from "@hooks/use-is-mounted";
+ 
+@@ -11,17 +10,11 @@ interface Props {
+   className?: string;
+ }
+ 
+-const defaultProps = {
+-  width: 721,
+-  height: 424,
+-  className: "",
+-};
+-
+ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+ 
+-export type ImageBrowserProps = Props & typeof defaultProps & NativeAttrs;
++export type ImageBrowserProps = Props & NativeAttrs;
+ 
+-const ImageBrowser: React.FC<Props> = ({width, height, className, ...props}) => {
++const ImageBrowser: React.FC<Props> = ({width = 721, height = 424, className = "", ...props}) => {
+   const isMounted = useIsMounted();
+   const {isDark} = useTheme();
+   const {firstWindow, secondWindow} = React.useMemo(() => {
+@@ -710,4 +703,4 @@ const ImageBrowser: React.FC<Props> = ({width, height, className, ...props}) =>
+   );
+ };
+ 
+-export default withDefaults(ImageBrowser, defaultProps);
++export default ImageBrowser;\n- apps/docs/src/components/keyboard/index.tsx (modified, 26 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import React, {useMemo} from "react";
+-import withDefaults from "@utils/with-defaults";
+ import {NextUITheme, useTheme} from "@nextui-org/react";
+ import {addColorAlpha} from "@utils/index";
+ 
+@@ -14,17 +13,8 @@ interface Props {
+   children?: React.ReactNode;
+ }
+ 
+-const defaultProps = {
+-  command: false,
+-  shift: false,
+-  option: false,
+-  ctrl: false,
+-  small: false,
+-  className: "",
+-};
+-
+ type NativeAttrs = Omit<React.KeygenHTMLAttributes<unknown>, keyof Props>;
+-export type KeyboardProps = Props & typeof defaultProps & NativeAttrs;
++export type KeyboardProps = Props & NativeAttrs;
+ 
+ type CustomLayout = {
+   padding: number | string;
+@@ -48,13 +38,13 @@ const getLayout = (small: boolean, theme?: NextUITheme): CustomLayout => {
+ };
+ 
+ const Keyboard: React.FC<KeyboardProps> = ({
+-  command,
+-  shift,
+-  option,
+-  ctrl,
+-  small,
++  command = false,
++  shift = false,
++  option = false,
++  ctrl = false,
++  small = false,
+   children,
+-  className,
++  className = "",
+   onClick,
+   ...props
+ }) => {
+@@ -109,4 +99,4 @@ const Keyboard: React.FC<KeyboardProps> = ({
+ 
+ const MemoKeyboard = React.memo(Keyboard);
+ 
+-export default withDefaults(MemoKeyboard, defaultProps);
++export default MemoKeyboard;\n- apps/docs/src/components/looper-bg/index.tsx (modified, 10 changes)\n  Patch: @@ -1,6 +1,5 @@
+ import React from "react";
+ import {styled, CSS} from "@nextui-org/react";
+-import withDefaults from "@utils/with-defaults";
+ 
+ export interface Props {
+   width?: number;
+@@ -9,14 +8,9 @@ export interface Props {
+   css?: CSS;
+ }
+ 
+-const defaultProps = {
+-  width: 1371,
+-  height: 1352,
+-};
+-
+ const StyledSvg = styled("svg", {});
+ 
+-const LooperBG: React.FC<Props> = ({width, height, ...props}) => {
++const LooperBG: React.FC<Props> = ({width = 1371, height = 1352, ...props}) => {
+   return (
+     <StyledSvg
+       fill="none"
+@@ -1273,4 +1267,4 @@ const LooperBG: React.FC<Props> = ({width, height, ...props}) => {
+   );
+ };
+ 
+-export default withDefaults(LooperBG, defaultProps);
++export default LooperBG;\n- apps/docs/src/components/mobile-navigation/index.tsx (modified, 16 changes)\n  Patch: @@ -1,7 +1,6 @@
+ import React from "react";
+ import {usePortal, useTheme} from "@nextui-org/react";
+ import cn from "classnames";
+-import withDefaults from "@utils/with-defaults";
+ import {Route} from "@lib/docs/page";
+ import {createPortal} from "react-dom";
+ import {Sidebar} from "@components";
+@@ -14,12 +13,13 @@ interface Props {
+   onClose?: () => void;
+ }
+ 
+-const defaultProps = {
+-  opened: false,
+-  detached: false,
+-};
+-
+-const MobileNavigation: React.FC<Props> = ({opened, detached, hasNotify, routes, onClose}) => {
++const MobileNavigation: React.FC<Props> = ({
++  opened = false,
++  detached = false,
++  hasNotify,
++  routes,
++  onClose,
++}) => {
+   const portal = usePortal("mobile-navigation");
+ 
+   const {isDark} = useTheme();
+@@ -115,4 +115,4 @@ const MobileNavigation: React.FC<Props> = ({opened, detached, hasNotify, routes,
+ 
+ const MemoMobileNavigation = React.memo(MobileNavigation);
+ 
+-export default withDefaults(MemoMobileNavigation, defaultProps);
++export default MemoMobileNavigation;\n- apps/docs/src/components/nav-link/index.tsx (modified, 17 changes)\n  Patch: @@ -14,16 +14,9 @@ export interface Props {
+   color?: string;
+ }
+ 
+-const defaultProps = {
+-  href: "",
+-  pathname: "",
+-  title: "",
+-  selected: false,
+-};
+-
+ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+ 
+-export type NavLinkProps = Props & typeof defaultProps & NativeAttrs;
++export type NavLinkProps = Props & NativeAttrs;
+ 
+ const BaseLink = styled(Link, {
+   d: "flex",
+@@ -59,11 +52,11 @@ const BaseLink = styled(Link, {
+ });
+ 
+ const NavLink: React.FC<NavLinkProps> = ({
+-  href,
+-  pathname,
+-  title,
++  href = "",
++  pathname = "",
++  title = "",
+   color,
+-  selected,
++  selected = false,
+   comingSoon,
+   onClick,
+ }) => {\n- apps/docs/src/components/page-nav/index.tsx (modified, 5 changes)\n  Patch: @@ -1,5 +1,4 @@
+ import * as React from "react";
+-import withDefaults from "@utils/with-defaults";
+ import {Route, addTagToSlug} from "@lib/docs/page";
+ import NextLink from "next/link";
+ import {useTheme, styled, Container, Link} from "@nextui-org/react";
+@@ -13,8 +12,6 @@ export interface PageNavProps {
+   nextRoute?: Route;
+ }
+ 
+-const defaultProps = {};
+-
+ const StyledLink = styled(Link, {
+   "&.page-nav__link": {
+     d: "flex",
+@@ -59,4 +56,4 @@ const PageNav: React.FC<PageNavProps> = ({tag, prevRoute, nextRoute}) => {
+   );
+ };
+ 
+-export default withDefaults(PageNav, defaultProps);
++export default PageNav;\n- apps/docs/src/components/playground/dynamic-live.tsx (modified, 18 changes)\n  Patch: @@ -3,7 +3,6 @@ import {LivePreview, LiveProvider, LiveError} from "react-live";
+ import NextLink from "next/link";
+ import {useMediaQuery} from "@hooks/use-media-query";
+ import {validateEmail, isProd} from "@utils/index";
+-import withDefaults from "@utils/with-defaults";
+ import {motion, useTransform, useMotionValue} from "framer-motion";
+ import {InView} from "react-intersection-observer";
+ import {Box} from "@primitives";
+@@ -31,13 +30,6 @@ export interface Props {
+   overflow?: "auto" | "visible" | "hidden";
+ }
+ 
+-const defaultProps = {
+-  showEditor: true,
+-  enableResize: false,
+-  showWindowActions: false,
+-  height: "auto",
+-};
+-
+ const WindowIframe = Components.styled("iframe", {
+   // reset styles
+   width: "100%",
+@@ -208,16 +200,16 @@ const MIN_WIDTH = 400;
+ 
+ const DynamicLive: React.FC<Props & {css?: Components.CSS}> = ({
+   code,
+-  showEditor,
++  showEditor = true,
+   initialEditorOpen,
+   iframeInitialWidth,
+   noInline,
+   overflow,
+-  showWindowActions,
+-  enableResize,
++  showWindowActions = false,
++  enableResize = false,
+   iframeSrc,
+   iframeTitle,
+-  height,
++  height = "auto",
+   css,
+ }) => {
+   const [isVisible, setIsVisible] = useState(false);
+@@ -332,4 +324,4 @@ const DynamicLive: React.FC<Props & {css?: Components.CSS}> = ({
+   );
+ };
+ 
+-export default withDefaults(DynamicLive, defaultProps);
++export default DynamicLive;\n- apps/docs/src/components/playground/playground.tsx (modified, 49 changes)\n  Patch: @@ -1,7 +1,6 @@
+ import React from "react";
+ import dynamic from "next/dynamic";
+ import {Loading} from "@nextui-org/react";
+-import withDefaults from "@utils/with-defaults";
+ import {SandpackFiles, SandpackPredefinedTemplate, SandpackHighlightedLines} from "@components";
+ import {Box} from "@primitives";
+ import {isEmpty} from "lodash";
+@@ -49,44 +48,28 @@ interface Props {
+   template?: SandpackPredefinedTemplate;
+   highlightedLines?: SandpackHighlightedLines;
+   code?: string;
++  readonly bindings?: Record<string, any>;
+ }
+ 
+-const defaultProps = {
+-  desc: "",
+-  title: "",
+-  code: "",
+-  files: {},
+-  showEditor: true,
+-  asIframe: false,
+-  showSandpackPreview: false,
+-  initialEditorOpen: false,
+-  showWindowActions: false,
+-  removeEntryContainer: false,
+-  enableResize: false,
+-  previewHeight: "auto",
+-  overflow: "visible",
+-  bindings: {},
+-};
+-
+-export type PlaygroundProps = Props & typeof defaultProps;
++export type PlaygroundProps = Props;
+ 
+ const Playground: React.FC<PlaygroundProps> = ({
+-  title: inputTitle,
+-  code: inputCode,
+-  initialEditorOpen,
+-  showEditor,
++  title: inputTitle = "",
++  code: inputCode = "",
++  initialEditorOpen = false,
++  showEditor = true,
+   highlightedLines,
+-  showSandpackPreview,
+-  showWindowActions,
++  showSandpackPreview = false,
++  showWindowActions = false,
+   iframeInitialWidth,
+-  removeEntryContainer,
+-  enableResize,
+-  files,
++  removeEntryContainer = false,
++  enableResize = false,
++  files = {},
+   iframeSrc,
+-  asIframe,
+-  overflow,
+-  previewHeight,
+-  desc,
++  asIframe = false,
++  overflow = "visible",
++  previewHeight = "auto",
++  desc = "",
+ }) => {
+   const isSanpackEditor = !isEmpty(files);
+ 
+@@ -198,4 +181,4 @@ const Playground: React.FC<PlaygroundProps> = ({
+ 
+ const MemoPlayground = React.memo(Playground);
+ 
+-export default withDefaults(MemoPlayground, defaultProps);
++export default MemoPlayground;\n

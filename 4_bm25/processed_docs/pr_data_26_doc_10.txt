@@ -1,0 +1,67 @@
+Pull Request Number: 788
+Title: fix(react-radio) inaccessible prop types and duplicate class name
+Base Branch: next
+Head Branch: fix/759-radio-props-type
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/788
+State: MERGED
+Created At: 2022-09-26T09:37:09Z
+Merged At: 2022-11-06T18:56:37Z
+Participants: tianenpang, jrgarciadev
+
+Description:
+Closes #759
+📝 Description
+
+Export radio and radio-group prop types
+Fix duplicate class names
+
+
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- fix(react-radio) inaccessible prop types and duplicate class name\n
+
+Labels:
+
+
+Comments:
+- vercel: @tianenpang is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2297c062b34081b8d07c3aed570ab5e724b087ed55%22%7D%2C%22id%22%3A%22QmPJi7RPBQpP2UbLiDhGAJaAU2agrQrkRYbReNhZh1b7qC%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A788%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/9MAXNxireShWjmyuD1ARo3yKfTr5)) | [Visit Preview](https://nextui-storybook-git-fork-tianenpang-fix-759-a7e552-nextui-org.vercel.app) | Sep 26, 2022 at 9:37AM (UTC) |
+
+\n
+
+Files Changed:
+- packages/react/src/radio/index.ts (modified, 5 changes)\n  Patch: @@ -12,6 +12,7 @@ export {
+   StyledRadioGroup,
+   StyledRadioGroupContainer,
+ } from "./radio.styles";
++
+ export type {
+   RadioLabelVariantsProps,
+   RadioTexVariantsProps,
+@@ -22,4 +23,8 @@ export type {
+   RadioGroupContainerVariantsProps,
+ } from "./radio.styles";
+ 
++export type {RadioProps} from "./radio";
++
++export type {RadioGroupProps} from "./radio-group";
++
+ export default Radio;\n- packages/react/src/radio/radio.tsx (modified, 2 changes)\n  Patch: @@ -102,7 +102,7 @@ export const Radio = React.forwardRef((props: RadioProps, ref: ReactRef<HTMLInpu
+           </VisuallyHidden>
+         </StyledRadioPoint>
+         <StyledRadioText
+-          className="nextui-radio-label"
++          className="nextui-radio-text"
+           color={labelColor}
+           isDisabled={isDisabled}
+           isInvalid={isInvalid}\n

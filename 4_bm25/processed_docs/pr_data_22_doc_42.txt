@@ -1,0 +1,171 @@
+Pull Request Number: 1323
+Title: fix(input): duplicate triggering of input events
+Base Branch: main
+Head Branch: fix/input-dom-props
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/1323
+State: MERGED
+Created At: 2023-08-08T15:02:43Z
+Merged At: 2023-08-08T15:19:08Z
+Participants: tianenpang, jrgarciadev
+
+Description:
+Closes #1308
+📝 Description
+This PR fixes the issue where native DOM events for the input were being triggered twice. This issue was caused by the duplication of inputProps and otherProps in the mergeProps.
+Firstly, inputProps is derived from originalProps after being processed by useTextField, which already includes the native DOM events. Secondly, otherProps also contain a similar set of props.
+In this scenario, there could be two identical DOM event functions present in mergeProps. However, within mergeProps, the identical functions are executed in a chain (source), leading to the execution of the functions twice.
+⛳️ Current behavior (updates)
+Filter out duplicate event functions in filterDOMProps.
+🚀 New behavior
+The filterDOMProps utility method now supports the omitEventNames option to prevent redundant event functions. (Skips only functions with names starting with on[A-Z]).
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+Test cases have been added and passed successfully.
+
+Commits:
+- feat(utils): support for omit-names\n- fix(input): exclude duplicate event props\n- fix(input): exclude duplicate event fn only\n- test(input): event fn call count\n- chore(changeset): changeset added\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 5c227d11d21c4889a58004b6a8fa1ac0fa434510
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 34 packages</summary>
+
+  | Name                        | Type  |
+| --------------------------- | ----- |
+| @nextui-org/react-rsc-utils | Patch |
+| @nextui-org/input           | Patch |
+| @nextui-org/divider         | Patch |
+| @nextui-org/react-utils     | Patch |
+| @nextui-org/modal           | Patch |
+| @nextui-org/navbar          | Patch |
+| @nextui-org/popover         | Patch |
+| @nextui-org/tabs            | Patch |
+| @nextui-org/react           | Patch |
+| @nextui-org/accordion       | Patch |
+| @nextui-org/dropdown        | Patch |
+| @nextui-org/avatar          | Patch |
+| @nextui-org/badge           | Patch |
+| @nextui-org/button          | Patch |
+| @nextui-org/card            | Patch |
+| @nextui-org/checkbox        | Patch |
+| @nextui-org/chip            | Patch |
+| @nextui-org/code            | Patch |
+| @nextui-org/image           | Patch |
+| @nextui-org/kbd             | Patch |
+| @nextui-org/link            | Patch |
+| @nextui-org/pagination      | Patch |
+| @nextui-org/progress        | Patch |
+| @nextui-org/radio           | Patch |
+| @nextui-org/ripple          | Patch |
+| @nextui-org/skeleton        | Patch |
+| @nextui-org/snippet         | Patch |
+| @nextui-org/spacer          | Patch |
+| @nextui-org/spinner         | Patch |
+| @nextui-org/switch          | Patch |
+| @nextui-org/table           | Patch |
+| @nextui-org/tooltip         | Patch |
+| @nextui-org/user            | Patch |
+| @nextui-org/use-real-shape  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/tianenpang/nextui/new/fix/input-dom-props?filename=.changeset/seven-shrimps-hang.md&value=---%0A%22%40nextui-org%2Finput%22%3A%20patch%0A%22%40nextui-org%2Freact-rsc-utils%22%3A%20patch%0A---%0A%0Afix(input)%3A%20duplicate%20triggering%20of%20input%20events%0A)
+
+\n- vercel: [vc]: #izAoZtC2Ag6R44NVEQE+4/NA+Ay4Z1V5olyyUbqIYUo=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvOThaSzZBSG0za0toRzIxZndOYWtRVTdDYTJObSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXRpYW5lbnBhbmctZml4LWktZWViZjRmLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXRpYW5lbnBhbmctZml4LWktZWViZjRmLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/98ZK6AHm3kKhG21fwNakQU7Ca2Nm)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-tianenpang-fix-i-eebf4f-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-tianenpang-fix-i-eebf4f-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 8, 2023 3:04pm |
+
+\n- vercel: @tianenpang is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%225c227d11d21c4889a58004b6a8fa1ac0fa434510%22%7D%2C%22id%22%3A%22QmXY1XjeQJpmusm2HHKZC7X9YY6kGZdMxoT4iP9tggA1nh%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1323%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Huge thanks! @tianenpang \n- tianenpang: Hi @jrgarciadev, this PR only updates the `filterDOMProps` for the input, perhaps there are other components that we should also address to prevent similar issues 👀\n- jrgarciadev: Yes @tianenpang  I'd be nice to apply the same change to other components\n
+
+Files Changed:
+- .changeset/mean-parrots-whisper.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/react-rsc-utils": patch
++---
++
++Support for omit-event-names option.\n- .changeset/new-zoos-hug.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/input": patch
++---
++
++Fixed event functions call twice.\n- packages/components/input/__tests__/input.test.tsx (modified, 11 changes)\n  Patch: @@ -88,4 +88,15 @@ describe("Input", () => {
+ 
+     expect(container6.querySelector("input")).toHaveAttribute("type", "text");
+   });
++
++  it("should call dom event handlers only once", () => {
++    const onFocus = jest.fn();
++
++    const {container} = render(<Input label="test input" onFocus={onFocus} />);
++
++    container.querySelector("input")?.focus();
++    container.querySelector("input")?.blur();
++
++    expect(onFocus).toHaveBeenCalledTimes(1);
++  });
+ });\n- packages/components/input/src/use-input.ts (modified, 11 changes)\n  Patch: @@ -234,7 +234,16 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+       return {
+         ref: domRef,
+         className: slots.input({class: clsx(classNames?.input, !!inputValue ? "is-filled" : "")}),
+-        ...mergeProps(focusProps, inputProps, filterDOMProps(otherProps), props),
++        ...mergeProps(
++          focusProps,
++          inputProps,
++          filterDOMProps(otherProps, {
++            enabled: true,
++            labelable: true,
++            omitEventNames: new Set(Object.keys(inputProps)),
++          }),
++          props,
++        ),
+         required: originalProps.isRequired,
+         "aria-readonly": dataAttr(originalProps.isReadOnly),
+         "aria-required": dataAttr(originalProps.isRequired),\n- packages/utilities/react-rsc-utils/src/filter-dom-props.ts (modified, 11 changes)\n  Patch: @@ -26,6 +26,10 @@ interface Options {
+    * A Set of other property names that should be included in the filter.
+    */
+   propNames?: Set<string>;
++  /**
++   * A Set of event names that should be excluded from the filter.
++   */
++  omitEventNames?: Set<string>;
+ }
+ 
+ const propRe = /^(data-.*)$/;
+@@ -44,14 +48,17 @@ export function filterDOMProps(
+     enabled: true,
+   },
+ ): DOMProps & AriaLabelingProps {
+-  let {labelable, propNames} = opts;
++  let {labelable, propNames, omitEventNames} = opts;
+   let filteredProps = {};
+ 
+   if (!opts.enabled) {
+     return props;
+   }
+-
+   for (const prop in props) {
++    if (omitEventNames?.has(prop) && funcRe.test(prop)) {
++      continue;
++    }
++
+     if (
+       (Object.prototype.hasOwnProperty.call(props, prop) &&
+         (DOMPropNames.has(prop) ||\n

@@ -1,0 +1,440 @@
+Pull Request Number: 3332
+Title: fix(table): resolve double fetch issue in useInfiniteScroll hook
+Base Branch: canary
+Head Branch: fix/table-infinite-scroll
+Author: abhisektomar1
+URL: https://github.com/nextui-org/nextui/pull/3332
+State: MERGED
+Created At: 2024-06-26T10:00:17Z
+Merged At: 2024-07-12T18:35:37Z
+Participants: abhisektomar1, jrgarciadev, wingkwong
+
+Description:
+Summary
+Resolved the issue where the useInfiniteScroll hook was fetching data twice on initial render. This fix ensures that data is fetched only once during initial render and additional data is fetched upon scrolling.
+Issue
+
+Closes #3251.
+
+Changes
+
+Updated useInfiniteScroll hook to prevent double fetching.
+Verified the fix by testing the component and ensuring only one initial fetch.
+
+
+Closes # 
+📝 Description
+I use isLoadingRef to prevent concurrent load calls, implements a debounced loadMore function with useCallback, and simplifies the IntersectionObserver logic.
+The hook now handles both loader-based and scroll-based detection more efficiently, using debounce for scroll events. I also improved cleanup for the IntersectionObserver and better TypeScript typing. These changes collectively make the hook more robust, reducing issues like multiple simultaneous loads and excessive re-renders, while providing a smoother infinite scrolling experience
+⛳️ Current behavior (updates)
+Table useInfiniteScroll hook fetches twice
+🚀 New behavior
+
+Updated useInfiniteScroll hook to prevent double fetching.
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+New Features
+
+Enhanced infinite scroll functionality with a new loadMore callback for improved data loading.
+Introduced a debounce mechanism to prevent multiple load calls in a short timeframe.
+Added an IntersectionObserver to optimize content loading when scrolling near the bottom.
+
+Commits:
+- fix(table): resolve double fetch issue in useInfiniteScroll hook (fix #3251)\n- fix(table): remove unnecessary else clause\n- fix(table): add a changeset file for use-infinite-scroll\n- fix(hooks): add clearTimeout function\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 35f54edcba6c248ffbf8d05d495146c05c125776
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 1 package</summary>
+
+  | Name                            | Type  |
+| ------------------------------- | ----- |
+| @nextui-org/use-infinite-scroll | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/abhisektomar1/nextui/new/fix/table-infinite-scroll?filename=.changeset/tiny-trains-fold.md&value=---%0A%22%40nextui-org%2Fuse-infinite-scroll%22%3A%20patch%0A---%0A%0Afix(table)%3A%20resolve%20double%20fetch%20issue%20in%20useInfiniteScroll%20hook%0A)
+
+\n- vercel: [vc]: #KLa1uQcC4p8DdiFTN0fOplZ1mYa4sACBfkQOE53lYPw=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRExYdWY0d3dZWHJMY2FUUEdyakhHc2RDVlFGQyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFiaGlzZWt0b21hcjEtZmktZGQzMmU1LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFiaGlzZWt0b21hcjEtZmktZGQzMmU1LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/DLXuf4wwYXrLcaTPGrjHGsdCVQFC)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-abhisektomar1-fi-dd32e5-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-abhisektomar1-fi-dd32e5-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jul 6, 2024 2:20pm |
+
+\n- vercel: @abhisektomar1 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%220a6cdb8dabba88d7cd92a1e1a69e5ca8fe3c11a7%22%7D%2C%22id%22%3A%22QmRNy39L2gKu215ivEkXsEa265sPzruZqj5mfzdjSaYeSJ%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3332%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The `useInfiniteScroll` hook in `packages/hooks/use-infinite-scroll/src/index.ts` was updated to enhance performance and fix the issue of multiple fetches. The function now includes a `loadMore` callback using `useCallback` to handle data loading under specific conditions and introduces a debounce mechanism with `useRef` to avoid redundant calls. Additionally, an `IntersectionObserver` was integrated to trigger data loading when scrolling near the bottom of the content.
+
+## Changes
+| File                                                                | Change Summary                                                                                                                           |
+|---------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `packages/hooks/use-infinite-scroll/src/index.ts`                   | Updated to include `loadMore` callback and debounce mechanism, introduced `IntersectionObserver` for triggering data loads, improved performance to prevent redundant fetches. |
+
+## Sequence Diagram(s)
+```mermaid
+sequenceDiagram
+    participant User
+    participant Hook
+    participant Observer
+    participant API
+
+    User ->> Hook: Initialize useInfiniteScroll
+    Hook ->> Observer: Create IntersectionObserver
+    Observer ->> Hook: Observe scroll position
+    Hook ->> Hook: Check condition and debounce
+    Hook ->> API: Fetch data
+    API -->> Hook: Return data
+    Hook -->> User: Update data state
+```
+
+## Assessment against linked issues
+| Objective (Issue #3251)                                             | Addressed | Explanation                                             |
+|---------------------------------------------------------------------|-----------|---------------------------------------------------------|
+| Prevent multiple fetches on initial load                            | ✅        |                                                         |
+| Implement a debounce mechanism to avoid redundant calls             | ✅        |                                                         |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```
+packages/hooks/use-infinite-scroll/src/index.ts: ### Summary
+The `useInfiniteScroll` function in `packages/hooks/use-infinite-scroll/src/index.ts` has been updated to include a `loadMore` callback using `useCallback` that handles loading more data when certain conditions are met. The logic for triggering `onLoadMore` has been refactored to use this callback, and a debounce mechanism has been added to prevent multiple calls within a short time frame. The function now includes new functionality related to loading more content when scrolling near the bottom, utilizing an `IntersectionObserver` to trigger loading. Performance improvements have been made to prevent multiple calls and enhance overall performance.
+
+### Alterations to the declarations of exported or public entities:
+- `import {useLayoutEffect, useRef, useCallback}` in `packages/hooks/use-infinite-scroll/src/index.ts` 
+- Updated implementation with changes to the function body as described in the summary
+- Added `observerRef` of type `useRef<IntersectionObserver | null>`
+- Added `isLoadingRef` of type `useRef<boolean>`
+- Added `loadMore` function with `hasMore` and `onLoadMore` dependencies
+- Modified the logic for loading more content based on scroll position and intersection with the loader element
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR summary
+
+**Title:** fix(table): resolve double fetch issue in useInfiniteScroll hook  
+**User:** abhisektomar1  
+**Number:** 3332  
+**URL:** [https://github.com/nextui-org/nextui/pull/3332](https://github.com/nextui-org/nextui/pull/3332)
+
+### Description:
+The pull request addresses an issue where the `useInfiniteScroll` hook was fetching data twice during the initial render. The fix ensures that data is fetched only once during the initial render, with additional data fetched upon scrolling. Key changes include:
+
+- Preventing double fetching by updating the `useInfiniteScroll` hook.
+- Using `isLoadingRef` to prevent concurrent load calls.
+- Implementing a debounced `loadMore` function with `useCallback`.
+- Simplifying the `IntersectionObserver` logic.
+- Improving cleanup for the `IntersectionObserver` and enhancing TypeScript typing.
+
+The changes aim to make the hook more robust, reduce issues like multiple simultaneous loads and excessive re-renders, and provide a smoother infinite scrolling experience.
+
+### Issue:
+- Closes #3251.
+
+### Changes:
+- Updated `useInfiniteScroll` hook to prevent double fetching.
+- Verified the fix by testing the component to ensure only one initial fetch.
+
+### Current behavior:
+The `useInfiniteScroll` hook fetches data twice during the initial render.
+
+### New behavior:
+The `useInfiniteScroll` hook fetches data only once during the initial render.
+
+### Breaking change:
+No
+
+### Additional Information:
+There was a test failure related to the `NextUI.Input` component inside an `Autocomplete` component, which was unrelated to the changes made in this PR.
+
+## Objectives from linked issues
+
+### Issue #3251: [BUG] - Table useInfiniteScroll hook fetches twice
+
+**NextUI Version:** 2.4.1
+
+**Bug Description:**
+Following the example code for Infinite pagination in [NextUI Table Infinite Scroll](https://nextui.org/docs/components/table#infinite-pagination), the expected behavior is that when the page initially loads, data is fetched once to load the initial page. However, the `loadMore` function from the `useAsyncList` hook is called immediately after the initial load, causing the app to load two pages instead of one. This behavior causes concurrency issues and incorrect data loading in customized software when `list.reload` is called.
+
+**Steps to Reproduce:**
+1. Go to the provided sandbox or NextUI Table Infinite Scroll example.
+2. Run the dev server and inspect the console logs.
+3. Notice that two consecutive pages are fetched without scrolling to the bottom.
+
+**Expected behavior:**
+Initial load should call `load` once.
+
+**Observed behavior:**
+Initial load triggers `load` once and then triggers `loadMore` without scrolling to the bottom.
+
+## Comments summary
+
+### Comment by abhisektomar1:
+The user noted a test failure related to the `NextUI.Input` component inside an `Autocomplete` component. The changes made in this PR were only to the `useInfiniteScroll` hook and did not affect these components. The user requested advice from the maintenance team on how to proceed with this pre-existing issue.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+## Summary of Generated Summaries
+
+The `useInfiniteScroll` function in `packages/hooks/use-infinite-scroll/src/index.ts` has been enhanced to improve data loading when scrolling. Key updates include the addition of a `loadMore` callback using `useCallback` to handle data loading under specific conditions, and the introduction of a debounce mechanism to avoid multiple rapid calls. The function now employs an `IntersectionObserver` to detect when the user is near the bottom of the scrollable area and trigger loading of more content. Performance improvements have been implemented to ensure efficient handling of multiple calls. New state management elements such as `observerRef` and `isLoadingRef`, both using `useRef`, have been added to support these functionalities.
+
+## Alterations to the Declarations of Exported or Public Entities
+
+- **Imports:**
+  - Before: 
+    ```typescript
+    import { useLayoutEffect, useRef } from 'react';
+    ```
+  - After:
+    ```typescript
+    import { useLayoutEffect, useRef, useCallback } from 'react';
+    ```
+
+- **New Additions:**
+  - `observerRef` of type `useRef<IntersectionObserver | null>`
+  - `isLoadingRef` of type `useRef<boolean>`
+
+- **Updated Functionality:**
+  - Added `loadMore` function with `hasMore` and `onLoadMore` dependencies.
+  - Refactored logic to utilize `loadMore` callback for triggering `onLoadMore`.
+  - Incorporated `IntersectionObserver` for detecting scroll position and loading content accordingly.
+  - Implemented debounce mechanism to prevent multiple calls in a short time frame.
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 0a6cdb8dabba88d7cd92a1e1a69e5ca8fe3c11a7 -->
+<!-- 044b3f9b84ac53558bc90c77e1015ed367b32094 -->
+<!-- 35f54edcba6c248ffbf8d05d495146c05c125776 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- abhisektomar1: I noticed that there's a test failure related to the NextUI.Input component inside an Autocomplete component. However, my changes were only to the useInfiniteScroll hook and didn't touch these components. This seems to be a pre-existing issue in the test suite. Could someone from the maintenance team please advise on how to proceed?\n
+
+Files Changed:
+- .changeset/fix-infinite-scroll.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/use-infinite-scroll": patch
++---
++
++fix(table): resolve double fetch issue in useInfiniteScroll hook (#3251)
+\ No newline at end of file\n- packages/hooks/use-infinite-scroll/src/index.ts (modified, 87 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import debounce from "lodash.debounce";
+-import {useLayoutEffect, useRef} from "react";
++import {useLayoutEffect, useRef, useCallback} from "react";
+ 
+ export interface UseInfiniteScrollProps {
+   /**
+@@ -27,13 +27,32 @@ export interface UseInfiniteScrollProps {
+ }
+ 
+ export function useInfiniteScroll(props: UseInfiniteScrollProps = {}) {
+-  const {hasMore, distance = 250, isEnabled = true, shouldUseLoader = true, onLoadMore} = props;
++  const {
++    hasMore = true,
++    distance = 250,
++    isEnabled = true,
++    shouldUseLoader = true,
++    onLoadMore,
++  } = props;
+ 
+   const scrollContainerRef = useRef<HTMLElement>(null);
+   const loaderRef = useRef<HTMLElement>(null);
++  const observerRef = useRef<IntersectionObserver | null>(null);
++  const isLoadingRef = useRef(false);
++
++  const loadMore = useCallback(() => {
++    let timer: ReturnType<typeof setTimeout>;
++
++    if (!isLoadingRef.current && hasMore && onLoadMore) {
++      isLoadingRef.current = true;
++      onLoadMore();
++      timer = setTimeout(() => {
++        isLoadingRef.current = false;
++      }, 100); // Debounce time to prevent multiple calls
++    }
+ 
+-  const previousY = useRef<number>();
+-  const previousRatio = useRef<number>(0);
++    return () => clearTimeout(timer);
++  }, [hasMore, onLoadMore]);
+ 
+   useLayoutEffect(() => {
+     const scrollContainerNode = scrollContainerRef.current;
+@@ -48,50 +67,44 @@ export function useInfiniteScroll(props: UseInfiniteScrollProps = {}) {
+       const options = {
+         root: scrollContainerNode,
+         rootMargin: `0px 0px ${distance}px 0px`,
++        threshold: 0.1,
+       };
+ 
+-      const listener = (entries: IntersectionObserverEntry[]) => {
+-        entries.forEach(({isIntersecting, intersectionRatio, boundingClientRect = {}}) => {
+-          const y = boundingClientRect.y || 0;
+-
+-          if (
+-            isIntersecting &&
+-            intersectionRatio >= previousRatio.current &&
+-            (!previousY.current || y < previousY.current)
+-          ) {
+-            onLoadMore?.();
+-          }
+-          previousY.current = y;
+-          previousRatio.current = intersectionRatio;
+-        });
+-      };
++      const observer = new IntersectionObserver((entries) => {
++        const [entry] = entries;
+ 
+-      const observer = new IntersectionObserver(listener, options);
++        if (entry.isIntersecting) {
++          loadMore();
++        }
++      }, options);
+ 
+       observer.observe(loaderNode);
++      observerRef.current = observer;
+ 
+-      return () => observer.disconnect();
+-    } else {
+-      const debouncedOnLoadMore = onLoadMore ? debounce(onLoadMore, 200) : undefined;
+-
+-      const checkIfNearBottom = () => {
+-        if (
+-          scrollContainerNode.scrollHeight - scrollContainerNode.scrollTop <=
+-          scrollContainerNode.clientHeight + distance
+-        ) {
+-          debouncedOnLoadMore?.();
++      return () => {
++        if (observerRef.current) {
++          observerRef.current.disconnect();
+         }
+       };
++    }
+ 
+-      scrollContainerNode.addEventListener("scroll", checkIfNearBottom);
++    const debouncedCheckIfNearBottom = debounce(() => {
++      if (
++        scrollContainerNode.scrollHeight - scrollContainerNode.scrollTop <=
++        scrollContainerNode.clientHeight + distance
++      ) {
++        loadMore();
++      }
++    }, 100);
+ 
+-      return () => {
+-        scrollContainerNode.removeEventListener("scroll", checkIfNearBottom);
+-      };
+-    }
+-  }, [hasMore, distance, isEnabled, onLoadMore, shouldUseLoader]);
++    scrollContainerNode.addEventListener("scroll", debouncedCheckIfNearBottom);
++
++    return () => {
++      scrollContainerNode.removeEventListener("scroll", debouncedCheckIfNearBottom);
++    };
++  }, [hasMore, distance, isEnabled, shouldUseLoader, loadMore]);
+ 
+-  return [loaderRef, scrollContainerRef];
++  return [loaderRef, scrollContainerRef] as const;
+ }
+ 
+ export type UseInfiniteScrollReturn = ReturnType<typeof useInfiniteScroll>;\n

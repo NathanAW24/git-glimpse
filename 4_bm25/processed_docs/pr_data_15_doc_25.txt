@@ -1,0 +1,85 @@
+Pull Request Number: 2450
+Title: fix(dropdown): getMenuTriggerProps mergeProps
+Base Branch: main
+Head Branch: fix/eng-455
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2450
+State: MERGED
+Created At: 2024-03-05T10:59:34Z
+Merged At: 2024-03-05T11:58:01Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes #2448
+📝 Description
+
+revised getMenuTriggerProps mergeProps logic
+
+⛳️ Current behavior (updates)
+
+originalProps will not be spread.
+if isDisabled is not set, the value will be undefined
+
+🚀 New behavior
+
+originalProps will be spread.
+if isDisabled is not set, the value will be false
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Commits:
+- fix(dropdown): getMenuTriggerProps mergeProps\n- feat(changeset): fixed getMenuTriggerProps mergeProps\n- refactor(dropdown): use isDisabled directly\n- chore(changeset): correct issue number\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: bb8a863dec47ff3464c9a482d1a251421deb107f
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                 | Type  |
+| -------------------- | ----- |
+| @nextui-org/dropdown | Patch |
+| @nextui-org/react    | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/wingkwong/nextui/new/fix/eng-455?filename=.changeset/dirty-adults-develop.md&value=---%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A---%0A%0Afix(dropdown)%3A%20getMenuTriggerProps%20mergeProps%0A)
+
+\n- vercel: [vc]: #35bblU9UxjqlrshSC1Dhpal80ppwUrrFVX8KAnVt9Vg=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvN3o2bWtGN3dSbmlTb3NtY3BEY3hLMm1DN1dqQyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtZW5nLTQ1NS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay13aW5na3dvbmctZml4LWVuZy00NTUtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/7z6mkF7wRniSosmcpDcxK2mC7WjC)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-455-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-455-nextui-org.vercel.app?via=pr-comment-feedback-link) | Mar 5, 2024 11:09am |
+
+\n- vercel: @wingkwong is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%223540d24eddd04f461a720a5dbe0cb144f87106a7%22%7D%2C%22id%22%3A%22QmPXvq3cqUGN7UTVWc6RhXmoKvHyhS4RozgMaLTW58HTCX%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2450%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/silly-seas-tie.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/dropdown": patch
++---
++
++fixed getMenuTriggerProps mergeProps (#2448)\n- packages/components/dropdown/src/use-dropdown.ts (modified, 2 changes)\n  Patch: @@ -127,7 +127,7 @@ export function useDropdown(props: UseDropdownProps) {
+     const {onKeyDown, onPress, onPressStart, ...otherMenuTriggerProps} = menuTriggerProps;
+ 
+     return {
+-      ...mergeProps(otherMenuTriggerProps, {isDisabled: props.isDisabled, originalProps}),
++      ...mergeProps(otherMenuTriggerProps, {isDisabled}, originalProps),
+       ref: mergeRefs(_ref, triggerRef),
+     };
+   };\n

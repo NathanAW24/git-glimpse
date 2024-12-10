@@ -1,0 +1,169 @@
+Pull Request Number: 131
+Title: fix: docs path
+Base Branch: main
+Head Branch: feat/turborepo
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/131
+State: MERGED
+Created At: 2022-01-02T02:45:21Z
+Merged At: 2022-01-02T02:45:29Z
+Participants: jrgarciadev
+
+Description:
+[LEVEL]/[COMPONENT]
+TASK: 
+Types of changes
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Docs path fixed
+Screenshots - Animations
+
+Commits:
+- fix: docs path\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- .github/workflows/main.yaml (modified, 8 changes)\n  Patch: @@ -74,7 +74,7 @@ jobs:
+         run: yarn coverage:update
+       - uses: codecov/codecov-action@v2
+         with:
+-          directory: './packages/nextui'
++          directory: './packages/react'
+         
+   publish:
+     needs: [build, tests]
+@@ -93,7 +93,7 @@ jobs:
+       - uses: JS-DevTools/npm-publish@v1
+         with:
+           token: ${{ secrets.NPM_TOKEN }}
+-          package: './packages/nextui/lib/package.json'
++          package: './packages/react/lib/package.json'
+       - name: Show published version
+         if: steps.publish.outputs.type != 'none'
+         run: |
+@@ -104,7 +104,7 @@ jobs:
+         with:
+           GITHUB_TOKEN: ${{ github.token }}
+           tag_prefix: "v"
+-          package_root: "./packages/nextui"
++          package_root: "./packages/react"
+ 
+   deploy:
+     needs: [publish]
+@@ -123,7 +123,7 @@ jobs:
+           vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
+           vercel-project-name: ${{ secrets.VERCEL_PROJECT_NAME}}
+           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} 
+-          working-directory: './packages/docs'
++          working-directory: './apps/docs'
+ 
+   update_algolia_index:
+     needs: [publish]\n- .gitignore (modified, 2 changes)\n  Patch: @@ -44,7 +44,7 @@ examples/**/.next
+ .vercel
+ 
+ # ignore sitemap
+-packages/**/sitemap.xml
++apps/**/sitemap.xml
+ 
+ # turbo
+ .turbo\n- CONTRIBUTING.MD (modified, 2 changes)\n  Patch: @@ -99,7 +99,7 @@ Until NextUI has a stable release new components will be created only for the co
+ 
+ Please update the docs with any API changes, the code and docs should always be in sync.
+ 
+-The main documentation lives in the `packages/docs/content` folder, the project uses MDX and all `NextUI` are already imported.
++The main documentation lives in the `apps/docs/content` folder, the project uses MDX and all `NextUI` are already imported.
+ 
+ ## Breaking changes
+ \n- apps/docs/.eslintrc.json (modified, 2 changes)\n  Patch: @@ -5,7 +5,7 @@
+       {
+         "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+         "parserOptions": {
+-            "project": ["packages/docs/tsconfig(.*)?.json"],
++            "project": ["apps/docs/tsconfig(.*)?.json"],
+             "ecmaFeatures": {
+               "jsx": true
+             }\n- apps/docs/src/lib/docs/config.ts (modified, 4 changes)\n  Patch: @@ -1,9 +1,9 @@
+ // Tag to use if FORCE_TAG is enabled (only for production build)
+ export const TAG = 'main'; // Github branch
+ 
+-export const CONTENT_PATH = '/packages/docs/content';
++export const CONTENT_PATH = '/apps/docs/content';
+ 
+-export const ASSETS_PATH = '/packages/docs/public';
++export const ASSETS_PATH = '/apps/docs/public';
+ 
+ // If a version different from the latest release is required, update TAG with the wanted
+ // version and set this to `true`\n- packages/react/README.md (modified, 11 changes)\n  Patch: @@ -1,6 +1,6 @@
+ <p align="center">
+   <a href="https://nextui.org">
+-      <img width="20%" src="https://raw.githubusercontent.com/jrgarciadev/nextui/main/packages/docs/public/isotipo.png" alt="nextui" />
++      <img width="20%" src="https://raw.githubusercontent.com/jrgarciadev/nextui/main/apps/docs/public/isotipo.png" alt="nextui" />
+       <h1 align="center">NextUI</h1>
+   </a>
+ </p>
+@@ -71,6 +71,15 @@ import Button from '@nextui-org/react/button';
+ const Component = () => <Button>Click me</Button>;
+ ```
+ 
++### Communnity
++
++We're excited to see the community adopt NextUI, raise issues, and provide feedback.
++Whether it's a feature request, bug report, or a project to showcase, please get involved!
++
++- [Discord](https://discord.gg/9b6yyZKmH4)
++- [Twitter](https://twitter.com/getnextui)
++- [GitHub Discussions](https://github.com/nextui-org/nextui/discussions)
++
+ ## Contributing
+ 
+ Contributions are always welcome!\n- scripts/update-index-docs.ts (modified, 12 changes)\n  Patch: @@ -26,7 +26,7 @@ interface TOCResultItem {
+   seen: number;
+ }
+ 
+-const docsRootFolder = 'packages/docs';
++const docsRootFolder = 'apps/docs';
+ 
+ async function getMDXMeta(file: string) {
+   const { content, frontMatter } = await parseMarkdownFile(file);
+@@ -47,8 +47,8 @@ async function getMDXMeta(file: string) {
+     type: 'lvl1',
+     url: removePrefix(slug, '/'),
+     hierarchy: {
+-      lvl1: title,
+-    },
++      lvl1: title
++    }
+   });
+ 
+   json.forEach((item, index) => {
+@@ -60,8 +60,8 @@ async function getMDXMeta(file: string) {
+       hierarchy: {
+         lvl1: title,
+         lvl2: item.lvl === 2 ? item.content : json[index - 1]?.content ?? null,
+-        lvl3: item.lvl === 3 ? item.content : null,
+-      },
++        lvl3: item.lvl === 3 ? item.content : null
++      }
+     });
+   });
+ 
+@@ -114,7 +114,7 @@ async function getSearchMeta() {
+ 
+     await mainIndex.replaceAllObjects(json, {
+       autoGenerateObjectIDIfNotExist: true,
+-      safe: true,
++      safe: true
+     });
+ 
+     console.log('[NextUI] Search meta is ready ✅');\n

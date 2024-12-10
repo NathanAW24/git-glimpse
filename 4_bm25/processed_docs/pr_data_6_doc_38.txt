@@ -1,0 +1,366 @@
+Pull Request Number: 3568
+Title: fix(select): prevent select from closing instantly when clicking on label of select
+Base Branch: canary
+Head Branch: fix/select-label-close
+Author: sohan01fw
+URL: https://github.com/nextui-org/nextui/pull/3568
+State: MERGED
+Created At: 2024-07-28T12:25:47Z
+Merged At: 2024-09-05T09:22:05Z
+Participants: sohan01fw, awesome-pro, wingkwong, jrgarciadev
+
+Description:
+Closes #3558
+Closes #3683
+📝 Description
+Fixed select component unexpectedly close while click on label of select component
+⛳️ Current behavior (updates)
+Below recording shows the current behavior of component.
+
+  
+    
+    
+
+    select.mp4
+    
+  
+
+  
+
+  
+
+
+🚀 New behavior
+Below recording shows the fix behavior of component
+
+  
+    
+    
+
+    fix.select.mp4
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No):No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Improved user interaction by preventing default actions on label clicks within the select component.
+Simplified interaction model for the select component by adjusting class assignments based on its filled state.
+
+
+
+Bug Fixes
+
+Resolved a toggle issue in the select component that caused unexpected behavior when clicking on the label, enhancing the user experience.
+
+Commits:
+- fix(select): prevent select from closing instantly when clicking on label\n- fix(select): flickering on label click\n- fix(select): flickering while click on label\n- fix(select): add changeset on fixing the flickering model issue\n- chore(changeset): revise changeset message and add issue number\n
+
+Labels:
+
+
+Comments:
+- vercel: @sohan01fw is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2277eaaa49ccd5fbe2b62912cc17d142fa4f6ae301%22%7D%2C%22id%22%3A%22QmaqUz2vGeQEynHGNCg1GL65KhMvZ5qXjQYq25VtGZXjra%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3568%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 66f7d8621e1ecfa70e61d71c30ded7a42eba8141
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name               | Type  |
+| ------------------ | ----- |
+| @nextui-org/select | Patch |
+| @nextui-org/react  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/sohan01fw/nextui-project/new/fix/select-label-close?filename=.changeset/stale-bugs-cheer.md&value=---%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(select)%3A%20prevent%20select%20from%20closing%20instantly%20when%20clicking%20on%20l%E2%80%A6%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: rate limited by coderabbit.ai -->
+
+> [!WARNING]
+> ## Rate limit exceeded
+> 
+> @wingkwong has exceeded the limit for the number of commits or files that can be reviewed per hour. Please wait **17 minutes and 44 seconds** before requesting another review.
+> 
+> <details>
+> <summary>How to resolve this issue?</summary>
+> 
+> After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR.
+> 
+> We recommend that you space out your commits to avoid hitting the rate limit.
+> 
+> </details>
+> 
+> 
+> <details>
+> <summary>How do rate limits work?</summary>
+> 
+> CodeRabbit enforces hourly rate limits for each developer per organization.
+> 
+> Our paid plans have higher rate limits than the trial, open-source and free plans. In all cases, we re-allow further reviews after a brief timeout.
+> 
+> Please see our [FAQ](https://coderabbit.ai/docs/faq) for further information.
+> 
+> </details>
+> 
+> <details>
+> <summary>Commits</summary>
+> 
+> Files that changed from the base of the PR and between e92ee47ff88f46c04165b2023eddeaf0a6aaf53c and 66f7d8621e1ecfa70e61d71c30ded7a42eba8141.
+> 
+> </details>
+
+<!-- end of auto-generated comment: rate limited by coderabbit.ai --><!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent updates to the `useSelect` function and the select component improve user interaction by adding an `onClick` event handler that prevents default behavior when clicking on the label. This effectively resolves the issue of the select component opening and immediately closing, enhancing overall usability.
+
+## Changes
+
+| File                                         | Change Summary                                                                 |
+|----------------------------------------------|--------------------------------------------------------------------------------|
+| `packages/components/select/src/use-select.ts` | Introduced `onClick` event handler to prevent default behavior on label clicks. |
+| `packages/core/theme/src/components/select.ts` | Removed conditional class assignment based on `filled` property, simplifying interaction model. |
+
+## Assessment against linked issues
+
+| Objective                                             | Addressed | Explanation                               |
+|------------------------------------------------------|-----------|-------------------------------------------|
+| Select opens and closes instantly when clicking on the label (#3558) | ✅         |                                           |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+# Existing changesets
+
+# Existing changesets
+
+packages/components/select/src/use-select.ts: ## AI-generated summary of changes
+
+The diff introduces a new `onClick` event handler within the `useSelect` function, which is designed to prevent the default action of a mouse click event on a label element. This change enhances the control flow by ensuring that clicking on the label does not trigger any default behavior, which may be necessary for maintaining the integrity of the select component's functionality. The addition of this handler suggests a focus on improving user interaction by managing event propagation more effectively, thereby potentially preventing unwanted side effects when the label is clicked.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useSelect<T extends object>(originalProps: UseSelectProps<T>)` in `packages/components/select/src/use-select.ts` → No changes to the function signature.
+
+
+# New changesets
+
+packages/core/theme/src/components/select.ts: ## AI-generated summary of changes
+
+The diff modifies the behavior of a component's class assignment within a TypeScript file. Specifically, it alters the condition under which the `label` class is applied in the `select` component. The original code assigned the class when the `filled` property was `true`, indicating that certain pointer events were enabled for the label. The change now assigns the class when the `filled` property is `false`, suggesting that pointer events are enabled only when the component is not filled. This adjustment likely impacts the user interaction model, affecting how the component responds to user input based on its filled state.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- No changes to the declarations of exported or public entities were made in `packages/core/theme/src/components/select.ts`.
+
+
+# New changesets
+
+packages/core/theme/src/components/select.ts: ## AI-generated summary of changes
+
+The diff modifies the behavior of a component's class assignment within a TypeScript file. Specifically, it removes the conditional assignment of the `label` class based on the `filled` property, which previously allowed pointer events when the property was `true`. The updated code now only specifies the `labelPlacement` as "outside" and does not include any conditions related to the `filled` state. This change simplifies the interaction model for the `select` component, potentially affecting how user interactions are handled, as the previous logic for pointer events tied to the `filled` state has been eliminated.
+
+## Alterations to the declarations of exported or public entities
+
+- No changes to the declarations of exported or public entities were made in `packages/core/theme/src/components/select.ts`.
+
+
+# New changesets
+
+.changeset/clean-dryers-notice.md: ## AI-generated summary of changes
+
+This update introduces a patch for the `@nextui-org/select` component, addressing a toggle issue that occurs when users click on the label. The previous implementation allowed the model to open and close unexpectedly, leading to a poor user experience. The fix involves removing a specific code block related to `group-data-[filled=true]:pointer-events-auto`, which was responsible for enabling unintended interactions. By eliminating this block, the patch effectively resolves the flickering issue and ensures that the toggle behavior is more predictable and user-friendly.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- No changes to the declarations of exported or public entities were made.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(select): prevent select from closing instantly when clicking on label of select component" addresses a bug in the Select component of the NextUI library. This issue, documented in issue #3558, caused the Select component to close immediately after being opened when the user clicked on its label. The PR includes a description of the current behavior, illustrated with a video recording, and contrasts it with the new behavior following the fix, also shown in a video. The solution ensures that clicking on the label keeps the Select component open, allowing users to make selections without interruption. The author confirmed that this change does not introduce any breaking changes.
+
+## Objectives from Linked Issues
+
+The linked issue #3558 outlines a bug affecting the Select component in NextUI version 2.4.6. Users reported that after upgrading to this version, clicking on the label of a Select would cause it to open and then immediately close, disrupting the expected functionality. This behavior was reproducible on the NextUI documentation website, where users could observe the issue by clicking on the Select labels. The expected behavior is that clicking on the label should keep the Select open, allowing users to select an option without the component closing unexpectedly. The issue emphasizes the need for a solution to restore the intended functionality of the Select component, ensuring a smoother user experience.
+
+## Comments Summary
+
+The comments on the pull request reflect a collaborative effort to address the issue with the Select component. The author, sohan01fw, initially expressed surprise that a simple solution could resolve the problem and indicated they would explore other solutions as suggested by reviewers. Another contributor, awesome-pro, noted that changing the DOM reference from `domRef` to `triggerRef` introduced a new problem where the Select would not close upon a second click. This highlighted the complexity of the issue, as the button was being passed as an element that triggered both opening and closing actions.
+
+Sohan01fw mentioned encountering build errors locally and raised the PR to address both the fix and the build issue. They noted that the Select component worked fine during testing, despite the errors. Wingkwong, another contributor, recalled the issue and pointed out that the proposed solution might disrupt the expected behavior of the Select component. They urged caution, emphasizing the need for a solution that accommodates both the opening and closing actions of the Select.
+
+Throughout the discussion, there were exchanges about the appropriateness of modifying test cases to accommodate the changes. Sohan01fw expressed frustration in finding a suitable solution, while Wingkwong insisted on adhering to best practices rather than adjusting tests to fit the implementation. Eventually, sohan01fw proposed a change to the label's pointer events, which seemed to resolve the issue. Wingkwong requested that the code be pushed for testing and asked for clarification on why the change worked.
+
+Sohan01fw explained that changing the data-filled attribute from true to false stops the flickering because it disables the CSS styles associated with the `group-data-[filled=true]:pointer-events-auto` class. When the data-filled attribute is set to true, the class enables pointer events, allowing the label to respond to user interactions. Conversely, setting it to false removes the class, preventing the label from responding to clicks.
+
+Wingkwong suggested removing the entire block of code related to pointer events, indicating that it might be unnecessary. Sohan01fw agreed, stating that it was acceptable since the label was not a link. They then prepared to push the code for further testing.
+
+Overall, the comments reflect a constructive dialogue focused on finding a robust solution to the Select component's behavior while maintaining the integrity of the component's functionality.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 77eaaa49ccd5fbe2b62912cc17d142fa4f6ae301 -->
+<!-- 3f418f2d48aa103e69c4ebe4debc4f8dd816eda2 -->
+<!-- 2c2653486716f7da595e0d36162326b7462a0187 -->
+<!-- e92ee47ff88f46c04165b2023eddeaf0a6aaf53c -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- sohan01fw: lol, ya i thought that this simple couldn't be the solution. Ok, i will go with other solution as u mention\n- awesome-pro: @wingkwong  I have tried changing the domRef to `triggerRef`, but it leads to another problem that on clicking the select the popover opens but it doesn't closes on clicking again, which should happen
+
+The the button is itself being passed on as an element and trigger both on clicking the label, that is why  the state is getting closed.
+
+@sohan01fw  I believe you MUST mind your language and take these things professionally.  Perhaps it's not the place to do things randomly 
+\n- sohan01fw: @abhinandan-verma bro it worked with that simple code so i think let's raise pr and iam also getting error during build time in my local so to fix and check both i did raise pr. Now it makes clear tho to solve it by figuring out the further things in deep.\n- sohan01fw: @wingkwong i tried to solve it but it throws test error in select component but when i click and see the select component work fine.
+
+![Screenshot (49)](https://github.com/user-attachments/assets/82d59666-27b8-4219-9f6a-102e65325591)
+\n- wingkwong: I remember this issue. After opening and clicking selector button, the select is not closed. \n- sohan01fw:  should i push this changes or?\n- wingkwong: this would break the selector button closing behavior. need a solution to cover both case.\n- sohan01fw: @wingkwong when i make changes in test code it work perfectly but is it a right approach ? I add the delay promises to match the test equal to real enviroment
+![Screenshot (50)](https://github.com/user-attachments/assets/7575c469-f3bd-440f-88ee-70defd90305e)
+\n- wingkwong: Nope. It shouldn't be like that. What's the new solution btw?\n- sohan01fw: nah same solution i just try to make changes in test cases to fix out the error\n- sohan01fw: @wingkwong I think this is the only way . I tried everything from my side nothing works.
+![Screenshot (51)](https://github.com/user-attachments/assets/d66fbf5f-e8e8-48a5-8865-153c17d42225)
+\n- wingkwong: I don't know why you keep making changes on the test while the solution is not expected\n- sohan01fw: no not this one i reset the above test changes  on this . You can see file changes. And i didn't able to figure out other solution rather then this .  what u say?\n- wingkwong: I mean adding onClick is not the correct solution, even though all tests are passed and it looks working fine.\n- sohan01fw: @wingkwong what u say on this ? i did change the  `label: ["group-data-[filled=true]:pointer-events-auto"]`  to  `label: ["group-data-[filled=false]:pointer-events-auto"]` and it work
+![Screenshot (52)](https://github.com/user-attachments/assets/bb3a8c33-bbee-4a36-a6ae-374057dd5334)
+\n- wingkwong: 1. push the code so that i could test on the build. 
+2. explain why changing that works\n- sohan01fw: Changing the data-filled attribute from true to false stops the flickering because it disables the CSS styles associated with the `group-data-[filled=true]:pointer-events-auto class`.
+
+When the data-filled attribute is set to true, the `group-data-[filled=true]:pointer-events-auto` class is applied to the label element, which enables pointer events and allows the label to respond to user interactions.
+
+However, when the data-filled attribute is set to false, the `group-data-[filled=true]:pointer-events-auto` class is removed from the label element, which disables pointer events and prevents the label from responding to user interactions.
+\n- vercel: [vc]: #UtYSLrxvIohm755bejJbBwQwwYDZ/ZwqqWqlVZIqYd8=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvaW9odGd4RlBLRzVwMm80QWtQa1BNZVVGSkZreSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXNvaGFuMDFmdy1maXgtc2UtYjE3YTJiLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXNvaGFuMDFmdy1maXgtc2UtYjE3YTJiLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9ISHpEeGIxUlU4MmJkQVJZeWpkR1JtZktocUVMIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLXNvaGFuMDFmdy1maXgtc2VsZWN0LTZhMGNjNi1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZvcmstc29oYW4wMWZ3LWZpeC1zZWxlY3QtNmEwY2M2LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/HHzDxb1RU82bdARYyjdGRmfKhqEL)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-sohan01fw-fix-select-6a0cc6-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-sohan01fw-fix-select-6a0cc6-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 25, 2024 1:26am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/iohtgxFPKG5p2o4AkPkPMeUFJFky)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-sohan01fw-fix-se-b17a2b-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-sohan01fw-fix-se-b17a2b-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 25, 2024 1:26am |
+
+
+\n- wingkwong: what about just removing the whole block (L538 - L544)?\n- sohan01fw: yeah i think it's ok to do that cause it's not a link tho\n- sohan01fw: wait i will push code
+\n- sohan01fw: ok
+\n
+
+Files Changed:
+- .changeset/clean-dryers-notice.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/select": patch
++---
++
++Fixed toggle issue while clicking on label of select component unexpectedly open and close the model instantly. The removal of code block containing `group-data-[filled=true]:pointer-events-auto` prevent from any unwanted user interactions and resolve the flickering issue (#3558)\n- packages/core/theme/src/components/select.ts (modified, 7 changes)\n  Patch: @@ -535,13 +535,6 @@ const select = tv({
+         trigger: "h-16 min-h-16 py-2.5 gap-0",
+       },
+     },
+-    //  labelPlacement=[inside, outside]
+-    {
+-      labelPlacement: ["inside", "outside"],
+-      class: {
+-        label: ["group-data-[filled=true]:pointer-events-auto"],
+-      },
+-    },
+     {
+       labelPlacement: "outside",
+       isMultiline: false,\n

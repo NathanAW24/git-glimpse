@@ -1,0 +1,82 @@
+Pull Request Number: 49
+Title: fix(tooltip): a11y
+Base Branch: main
+Head Branch: dacuna/fix-a11y-tooltip
+Author: DaniAcu
+URL: https://github.com/nextui-org/nextui/pull/49
+State: MERGED
+Created At: 2021-10-01T16:44:19Z
+Merged At: 2021-10-01T17:11:37Z
+Participants: DaniAcu, jrgarciadev
+
+Description:
+Tooltip
+#32
+Types of changes
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+I don't add ARIA tags but improve the accessibility of the tooltip for persons that don't have a mouse or need that the tooltip be treat as that by screenreaders
+Screenshots - Animations
+
+Commits:
+- fix(tooltip): a11y\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/nextui/src/tooltip/__test__/index.test.tsx (modified, 16 changes)\n  Patch: @@ -7,6 +7,7 @@ import { act } from 'react-dom/test-utils';
+ 
+ const expectTooltipIsShow = (wrapper: ReactWrapper) => {
+   expect(wrapper.find('.inner').length).not.toBe(0);
++  expect(wrapper.find('.inner').prop("role")).toEqual("tooltip");
+ };
+ 
+ const expectTooltipIsHidden = (wrapper: ReactWrapper) => {
+@@ -49,6 +50,21 @@ describe('Tooltip', () => {
+     expectTooltipIsHidden(wrapper);
+   });
+ 
++  it('should render text when focus it', async () => {
++    const wrapper = mount(
++      <div>
++        <Tooltip text="some text">some tips</Tooltip>
++      </div>
++    );
++    wrapper.find('.tooltip').simulate('focus', nativeEvent);
++    await updateWrapper(wrapper, 150);
++    expectTooltipIsShow(wrapper);
++
++    wrapper.find('.tooltip').simulate('blur', nativeEvent);
++    await updateWrapper(wrapper, 150);
++    expectTooltipIsHidden(wrapper);
++  });
++
+   it('should render react-node when click it', async () => {
+     const wrapper = mount(
+       <Tooltip text={<p id="test">custom-content</p>} trigger="click">\n- packages/nextui/src/tooltip/tooltip-content.tsx (modified, 2 changes)\n  Patch: @@ -131,7 +131,7 @@ const TooltipContent: React.FC<React.PropsWithChildren<Props>> = ({
+         onClick={preventHandler}
+         {...props}
+       >
+-        <div className={`inner ${!hideArrow ? 'arrow' : ''}`}>{children}</div>
++        <div role="tooltip" className={`inner ${!hideArrow ? 'arrow' : ''}`}>{children}</div>
+         <style jsx>{`
+           .tooltip-content {
+             position: absolute;\n- packages/nextui/src/tooltip/tooltip.tsx (modified, 2 changes)\n  Patch: @@ -123,6 +123,8 @@ const Tooltip: React.FC<React.PropsWithChildren<TooltipProps>> = ({
+       onClick={clickEventHandler}
+       onMouseEnter={() => mouseEventHandler(true)}
+       onMouseLeave={() => mouseEventHandler(false)}
++      onFocus={() => mouseEventHandler(true)}
++      onBlur={() => mouseEventHandler(false)}
+       {...props}
+     >
+       {children}\n

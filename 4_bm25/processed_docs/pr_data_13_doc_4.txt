@@ -1,0 +1,284 @@
+Pull Request Number: 2721
+Title: fix(cmdk): modal - searching with one char shows no results & cmdk esc does not work without recent search results
+Base Branch: main
+Head Branch: first-search-attempt-failure
+Author: kuri-sun
+URL: https://github.com/nextui-org/nextui/pull/2721
+State: MERGED
+Created At: 2024-04-15T13:34:09Z
+Merged At: 2024-04-22T05:12:38Z
+Participants: kuri-sun, wingkwong
+
+Description:
+Closes #2643
+📝 Description
+*make sure that you remove the recent search results.
+
+When users search from the search-modal with one single char like the pic, it will fail with no result.
+Cmdk ESC does not work when there is no recent search results cache.
+
+⛳️ Current behavior (updates)
+one char searching will show no result in the search modal.
+🚀 New behavior
+
+  
+    
+    
+
+    Screen.Recording.2024-04-05.at.1.25.44.AM.mov
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Improved the display logic for the "No results" message in the command palette to ensure it shows correctly based on the query length.
+
+Commits:
+- fix: modal - searching with one char shows no results\n- Merge branch 'main' into first-search-attempt-failure\n- fix: removed the unnecesary dependencies\n
+
+Labels:
+🐛 Type: Bug
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: db4e56ba381cb1b15b715552811b30544c1cec85
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/first-search-attempt-failure?filename=.changeset/wicked-cycles-cheat.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Afix(cmdk)%3A%20modal%20-%20searching%20with%20one%20char%20shows%20no%20results%20%26%20cmdk%20esc%20does%20not%20work%20without%20recent%20search%20results%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The recent update to the `Cmdk` component improves the user experience by adjusting the conditional rendering logic for the "No results" message. This ensures that the message displays correctly when a user searches with minimal characters, addressing issues with user feedback during short or empty search queries.
+
+## Changes
+
+| File Path                  | Change Summary |
+|----------------------------|----------------|
+| `apps/docs/components/cmdk.tsx` | Adjusted conditional rendering for "No results" message based on query length. |
+
+## Assessment against linked issues
+
+| Objective                                                                 | Addressed | Explanation |
+|----------------------------------------------------------------------------|-----------|-------------|
+| Ensure "No results" message displays correctly for one-character searches (#2643) | ✅         |             |
+| Fix issue where Cmdk ESC does not work without recent search results cache (#2643) | ❌         | The provided changes do not address the ESC key functionality. |
+
+The adjustments made in the `Cmdk` component focus solely on improving the display of the "No results" message, successfully addressing the issue related to displaying appropriate feedback for short search queries. However, the issue concerning the ESC key functionality when there is no cache of recent search results remains unaddressed in this update.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+apps/docs/components/cmdk.tsx: ## Short Summary
+
+In the `Cmdk` component, the conditional rendering logic for displaying "No results" message has been adjusted to wrap the condition around the `<Command.Empty>` component, ensuring proper display based on the query length.
+
+
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives (User Provided Facts)
+
+This pull request (PR #2721) addresses a bug in the NextUI library, specifically within the command modal (cmdk) component. The issue, documented in #2643, describes two main problems:
+
+1. **Single Character Search Issue**: When a user inputs a single character in the search modal, it fails to return any results. The expected behavior, as suggested, should be to inform the user that no results were found and to try adding more characters to the search term.
+
+2. **Escape Key Functionality**: The escape (ESC) key does not function in the cmdk modal when there are no recent search results cached. This functionality is crucial for enhancing user experience by allowing users to exit the search modal smoothly regardless of the search history state.
+
+The PR aims to fix these issues by modifying the conditional rendering logic in the `Cmdk` component. The changes ensure that a message is displayed when no results are found, particularly when searching with a single character. Additionally, it addresses the escape key functionality to work independently of the search results cache.
+
+The PR is categorized under bug fixes and does not introduce any breaking changes or new external dependencies. It includes a link to a visual representation of the new behavior but does not detail the technical specifics of the implementation in the description.
+
+### AI-Generated Summary of Generated Summaries
+
+The pull request makes adjustments to the `Cmdk` component in the NextUI library. Specifically, it modifies the conditional rendering logic associated with displaying the "No results" message. This change ensures that the message is appropriately shown when searches yield no results, particularly for single-character queries. This update addresses user experience issues by providing clearer feedback during search operations and ensuring functional consistency with the escape key in the search modal.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai -->
+
+---
+
+<details>
+
+<summary>Recent Review Details</summary>
+
+**Configuration used: .coderabbit.yaml**
+
+<details>
+<summary>Commits</summary>
+Files that changed from the base of the PR and between 158c2aa004f0080449321f84b0efd37762e8adc0 and db4e56ba381cb1b15b715552811b30544c1cec85.
+</details>
+
+
+<details>
+<summary>Files selected for processing (1)</summary>
+
+* apps/docs/components/cmdk.tsx (2 hunks)
+
+</details>
+
+
+
+
+
+
+
+<details><summary>Additional comments not posted (3)</summary><blockquote>
+<details><summary>apps/docs/components/cmdk.tsx (3)</summary><blockquote>
+
+`410-417`: > :memo: **NOTE**
+> This review was outside the diff hunks and was mapped to the diff hunk with the greatest overlap. Original lines [413-428]
+
+Ensure consistent handling of "No results" message for single-character searches.
+
+The conditional logic for displaying the "No results" message has been adjusted to handle single-character searches specifically. This change aligns with the PR's objective to improve user feedback when the search results are empty. However, ensure that this logic is robust against edge cases, such as rapid changes in the query state.
+
+---
+
+`410-417`: > :memo: **NOTE**
+> This review was outside the diff hunks and was mapped to the diff hunk with the greatest overlap. Original lines [1-428]
+
+Verify the implementation of the escape key functionality.
+
+The escape key functionality, crucial for user experience, should allow closing the modal regardless of the search history state. This functionality isn't directly visible in the provided code snippet. Please ensure that the `onClose` method is correctly triggered by the escape key under all conditions, including when there are no recent search results.
+
+---
+
+`410-417`: > :memo: **NOTE**
+> This review was outside the diff hunks and was mapped to the diff hunk with the greatest overlap. Original lines [1-428]
+
+Confirm the necessity of `router` and `query` for navigation and search functionality.
+
+The `router` is used to handle navigation when a search result is selected, and the `query` state is essential for managing the search input and results. Both are appropriately used in the component's logic and are necessary for its functionality.
+
+</blockquote></details></blockquote></details>
+
+
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- db4e56ba381cb1b15b715552811b30544c1cec85 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #FMsEzJzRgefWFUDlSt9XtoQPDWZbuRBnL7JRi0U99rE=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi84TTZTQjdkNXNiREY1YlFKTUUyY1NBaDFEWER2IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXJzdC1zZWFyY2gtYXR0ZW1wdC1mYWlsdXJlLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktZG9jcy12Mi1naXQtZmlyc3Qtc2VhcmNoLWF0dGVtcHQtZmFpbHVyZS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX0seyJuYW1lIjoibmV4dHVpLXN0b3J5Ym9vay12MiIsInJvb3REaXJlY3RvcnkiOiJwYWNrYWdlcy9zdG9yeWJvb2siLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLXYyLzh6OXdSaG5CTnhoSnRKd2laVTdCU0hjcXlERVgiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZmlyc3Qtc2VhcmNoLWF0dGVtcHQtZmFpbHVyZS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZmlyc3Qtc2VhcmNoLWF0dGVtcHQtZmFpbHVyZS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/8M6SB7d5sbDF5bQJME2cSAh1DXDv)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-first-search-attempt-failure-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-first-search-attempt-failure-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 21, 2024 2:15pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/8z9wRhnBNxhJtJwiZU7BSHcqyDEX)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-first-search-attempt-failure-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-first-search-attempt-failure-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 21, 2024 2:15pm |
+
+
+\n
+
+Files Changed:
+- apps/docs/components/cmdk.tsx (modified, 8 changes)\n  Patch: @@ -410,8 +410,8 @@ export const Cmdk: FC<{}> = () => {
+             </Kbd>
+           </div>
+           <Command.List ref={listRef} className={slots.list()} role="listbox">
+-            {query.length > 0 && (
+-              <Command.Empty>
++            <Command.Empty>
++              {query.length > 0 && (
+                 <div className={slots.emptyWrapper()}>
+                   <div>
+                     <p>No results for &quot;{query}&quot;</p>
+@@ -424,8 +424,8 @@ export const Cmdk: FC<{}> = () => {
+                     )}
+                   </div>
+                 </div>
+-              </Command.Empty>
+-            )}
++              )}
++            </Command.Empty>
+ 
+             {isEmpty(query) &&
+               (isEmpty(recentSearches) ? (\n

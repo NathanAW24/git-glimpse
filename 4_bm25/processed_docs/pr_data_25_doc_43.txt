@@ -1,0 +1,53 @@
+Pull Request Number: 864
+Title: fix(react-navbar): collapse wrapper background on safari
+Base Branch: next
+Head Branch: fix/navbar-collapse-blur-background-safari
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/864
+State: MERGED
+Created At: 2022-11-07T00:08:04Z
+Merged At: 2022-11-07T00:08:57Z
+Participants: jrgarciadev
+
+Description:
+Closes: #850
+📝 Description
+The collapse wrapper doesn't have a blurred background on safari
+⛳️ Current behavior (updates)
+The collapse wrapper doesn't have a blurred background on safari
+
+🚀 New behavior
+Safari specific styles added
+
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(react-navbar): collapse wrapper background on safari\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-docs/5wPXgGZn4jNMfV6Qrnb36WKJDGmm)) |  | Nov 7, 2022 at 0:08AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/ymcKxqpCY9GpbhCv7CcENgYsJd9N)) | [Visit Preview](https://nextui-storybook-git-fix-navbar-collapse-blur-af68b6-nextui-org.vercel.app) | Nov 7, 2022 at 0:08AM (UTC) |
+
+
+\n
+
+Files Changed:
+- packages/react/src/navbar/navbar.styles.ts (modified, 3 changes)\n  Patch: @@ -133,7 +133,8 @@ export const StyledNavbarCollapse = styled(
+           "@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none))": {
+             bg: "$$navbarListBlurBackgroundColor",
+             backdropFilter: "saturate(180%) blur($$navbarListBlur)",
+-            "@safari": {
++            // safari
++            "@media screen and (-webkit-min-device-pixel-ratio:0)": {
+               [`& ${StyledNavbarCollapseWrapper}`]: {
+                 bg: "$$navbarListBlurBackgroundColor",
+                 backdropFilter: "saturate(180%) blur($$navbarListBlur)",\n
