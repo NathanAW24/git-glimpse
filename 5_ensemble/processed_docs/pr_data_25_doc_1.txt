@@ -1,0 +1,602 @@
+Pull Request Number: 1010
+Title: fix: fix lag issues for card on chrome
+Base Branch: main
+Head Branch: fix/card-lag
+Author: zoclhas
+URL: https://github.com/nextui-org/nextui/pull/1010
+State: CLOSED
+Created At: 2023-01-14T15:11:00Z
+Merged At: None
+Participants: zoclhas, jrgarciadev
+
+Description:
+Closes  #957
+📝 Description
+Fixing the cause for lag on chrome browsers whilst hardware acceleration is disabled.
+⛳️ Current behavior (updates)
+Chrome browsers use the filter: drop-shadow() property instead of box-shadow:  property for displaying the shadows in the Card component.
+🚀 New behavior
+Modified card.styles.ts to remove the default dropShadow for chrome, and made everything use boxShadow
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+  
+    
+    
+
+    Card._.NextUI.-.Beautiful.fast.and.modern.React.UI.Library.-.Google.Chrome.2023-01-14.19-07-28.mp4
+
+Commits:
+- Fixed lag issues for card on chrome\n
+
+Labels:
+
+
+Comments:
+- vercel: @zoclhas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%225ff61e5727581408bf848090820be0e4f2109b6d%22%7D%2C%22id%22%3A%22QmWnxJk2i4Hz1YCYD7NB6fwqBgLQxxhyza9nKVaJx7DniR%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1010%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #ZijpmwzIy65nGQASthBgQdyZkh1mrOw6Bt2ra47BJaA=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLXpvY2xoYXMtZml4LWNhcmQtbGFnLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLzZLaWV4cFV6aE1UOW5CUnl4NjU2aFlCSnp4QzkiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay1naXQtZm9yay16b2NsaGFzLWZpeC1jYXJkLWxhZy1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/6KiexpUzhMT9nBRyx656hYBJzxC9)) | [Visit Preview](https://nextui-storybook-git-fork-zoclhas-fix-card-lag-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-zoclhas-fix-card-lag-nextui-org.vercel.app) | Jan 14, 2023 at 3:13PM (UTC) |
+
+\n
+
+Files Changed:
+- packages/react/src/avatar/__tests__/__snapshots__/group.test.tsx.snap (modified, 32 changes)\n  Patch: @@ -6,10 +6,10 @@ Object {
+   "baseElement": <body>
+     <div>
+       <div
+-        class="nextui-c-cpgyzW"
++        class="nextui-c-ducuHz"
+       >
+         <span
+-          class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++          class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+           data-state="ready"
+         >
+           <span
+@@ -22,7 +22,7 @@ Object {
+           </span>
+         </span>
+         <span
+-          class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++          class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+           data-state="ready"
+         >
+           <span
+@@ -35,7 +35,7 @@ Object {
+           </span>
+         </span>
+         <span
+-          class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++          class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+           data-state="ready"
+         >
+           <span
+@@ -48,7 +48,7 @@ Object {
+           </span>
+         </span>
+         <span
+-          class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++          class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+           data-state="ready"
+         >
+           <span
+@@ -65,10 +65,10 @@ Object {
+   </body>,
+   "container": <div>
+     <div
+-      class="nextui-c-cpgyzW"
++      class="nextui-c-ducuHz"
+     >
+       <span
+-        class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++        class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+         data-state="ready"
+       >
+         <span
+@@ -81,7 +81,7 @@ Object {
+         </span>
+       </span>
+       <span
+-        class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++        class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+         data-state="ready"
+       >
+         <span
+@@ -94,7 +94,7 @@ Object {
+         </span>
+       </span>
+       <span
+-        class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++        class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+         data-state="ready"
+       >
+         <span
+@@ -107,7 +107,7 @@ Object {
+         </span>
+       </span>
+       <span
+-        class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++        class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-dbZNQr-bordered-true nextui-c-gEEnVX-gBVgtO-stacked-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-MtAEf-cv nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+         data-state="ready"
+       >
+         <span
+@@ -181,10 +181,10 @@ Object {
+   "baseElement": <body>
+     <div>
+       <div
+-        class="nextui-c-cpgyzW nextui-c-cpgyzW-jErlEr-animated-true"
++        class="nextui-c-ducuHz nextui-c-ducuHz-jSvqnm-animated-true"
+       >
+         <span
+-          class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++          class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+           data-state="ready"
+         >
+           <span
+@@ -197,7 +197,7 @@ Object {
+           </span>
+         </span>
+         <span
+-          class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++          class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+           data-state="ready"
+         >
+           <span
+@@ -214,10 +214,10 @@ Object {
+   </body>,
+   "container": <div>
+     <div
+-      class="nextui-c-cpgyzW nextui-c-cpgyzW-jErlEr-animated-true"
++      class="nextui-c-ducuHz nextui-c-ducuHz-jSvqnm-animated-true"
+     >
+       <span
+-        class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++        class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+         data-state="ready"
+       >
+         <span
+@@ -230,7 +230,7 @@ Object {
+         </span>
+       </span>
+       <span
+-        class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++        class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+         data-state="ready"
+       >
+         <span\n- packages/react/src/avatar/__tests__/__snapshots__/index.test.tsx.snap (modified, 18 changes)\n  Patch: @@ -3,7 +3,7 @@
+ exports[`Avatar should render component of a specified size 1`] = `
+ LoadedCheerio {
+   "0": <span
+-    class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-ihFPSGE-css only-text-avatar"
++    class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-ihFPSGE-css only-text-avatar"
+     data-state="ready"
+   >
+     <span
+@@ -41,12 +41,12 @@ LoadedCheerio {
+ }
+ `;
+ 
+-exports[`Avatar should render correctly with an icon 1`] = `"<span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span><span class=\\"nextui-avatar-icon\\"><svg class=\\"\\"></svg></span></span>"`;
++exports[`Avatar should render correctly with an icon 1`] = `"<span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span><span class=\\"nextui-avatar-icon\\"><svg class=\\"\\"></svg></span></span>"`;
+ 
+ exports[`Avatar should render text element 1`] = `
+ LoadedCheerio {
+   "0": <span
+-    class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++    class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+     data-state="ready"
+   >
+     <span
+@@ -87,7 +87,7 @@ LoadedCheerio {
+ exports[`Avatar should render text element 2`] = `
+ LoadedCheerio {
+   "0": <span
+-    class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar"
++    class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar"
+     data-state="ready"
+   >
+     <span
+@@ -130,12 +130,12 @@ LoadedCheerio {
+ }
+ `;
+ 
+-exports[`Avatar should work correctly with different sizes 1`] = `"<div><span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-jROyhw-size-xs nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-bHlgBq-size-sm nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-lmZTtQ-size-lg nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-ehDSPw-size-xl nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span></div>"`;
++exports[`Avatar should work correctly with different sizes 1`] = `"<div><span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-jROyhw-size-xs nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-bHlgBq-size-sm nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-lmZTtQ-size-lg nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-ehDSPw-size-xl nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span></div>"`;
+ 
+-exports[`Avatar should work with a gradient color 1`] = `"<span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-lcNuyd-color-gradient nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span>"`;
++exports[`Avatar should work with a gradient color 1`] = `"<span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-lcNuyd-color-gradient nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span>"`;
+ 
+-exports[`Avatar should work with different colors 1`] = `"<div><span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-eeabkr-color-primary nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-jzyGMN-color-secondary nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-fJMMFA-color-success nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-eCIbjl-color-warning nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-gYTGZH-color-error nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span></div>"`;
++exports[`Avatar should work with different colors 1`] = `"<div><span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-eeabkr-color-primary nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-jzyGMN-color-secondary nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-fJMMFA-color-success nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-eCIbjl-color-warning nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span><span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-gYTGZH-color-error nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span></div>"`;
+ 
+-exports[`Avatar should work with pointer 1`] = `"<span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-hpLzEY-pointer-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span>"`;
++exports[`Avatar should work with pointer 1`] = `"<span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-hpLzEY-pointer-true nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span>"`;
+ 
+-exports[`Avatar should work with zoomed 1`] = `"<span class=\\"nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-OUZAS-zoomed-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span>"`;
++exports[`Avatar should work with zoomed 1`] = `"<span class=\\"nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-OUZAS-zoomed-true nextui-c-gEEnVX-iPJLV-css only-text-avatar\\" data-state=\\"ready\\"><span class=\\"nextui-avatar-bg\\"></span></span>"`;\n- packages/react/src/button/__tests__/__snapshots__/group.test.tsx.snap (modified, 8 changes)\n  Patch: @@ -1,12 +1,12 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`ButtonGroup buttons should be displayed vertically 1`] = `"<div class=\\"nextui-c-kGDNMl nextui-c-kGDNMl-hFdVks-vertical-true nextui-c-kGDNMl-gimGqK-size-md\\"><button class=\\"nextui-c-iWjDFM nextui-c-PJLV nextui-c-iWjDFM-hkKLfu-color-default nextui-c-iWjDFM-gkIlwi-size-md nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-exaRme-auto-true nextui-c-iWjDFM-gglxka-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-button-text\\">action1</span></button><button class=\\"nextui-c-iWjDFM nextui-c-PJLV nextui-c-iWjDFM-hkKLfu-color-default nextui-c-iWjDFM-gkIlwi-size-md nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-exaRme-auto-true nextui-c-iWjDFM-gglxka-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-button-text\\">action2</span></button></div>"`;
++exports[`ButtonGroup buttons should be displayed vertically 1`] = `"<div class=\\"nextui-c-iufrEs nextui-c-iufrEs-jVVxkR-vertical-true nextui-c-iufrEs-gimGqK-size-md\\"><button class=\\"nextui-c-iWjDFM nextui-c-gulvcB nextui-c-iWjDFM-hkKLfu-color-default nextui-c-iWjDFM-gkIlwi-size-md nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-exaRme-auto-true nextui-c-iWjDFM-gglxka-cv nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-button-text\\">action1</span></button><button class=\\"nextui-c-iWjDFM nextui-c-gulvcB nextui-c-iWjDFM-hkKLfu-color-default nextui-c-iWjDFM-gkIlwi-size-md nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-exaRme-auto-true nextui-c-iWjDFM-gglxka-cv nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-button-text\\">action2</span></button></div>"`;
+ 
+-exports[`ButtonGroup props should be passed to each button 1`] = `"<div class=\\"nextui-c-kGDNMl nextui-c-kGDNMl-juzAIU-vertical-false nextui-c-kGDNMl-iAoIqM-size-xs\\"><button class=\\"nextui-c-iWjDFM nextui-c-PJLV nextui-c-iWjDFM-hfnhFm-color-success nextui-c-iWjDFM-imrJwH-size-xs nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-exaRme-auto-true nextui-c-iWjDFM-gNZcsS-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-button-text\\">action</span></button></div>"`;
++exports[`ButtonGroup props should be passed to each button 1`] = `"<div class=\\"nextui-c-iufrEs nextui-c-iufrEs-iGVTkN-vertical-false nextui-c-iufrEs-iAoIqM-size-xs\\"><button class=\\"nextui-c-iWjDFM nextui-c-gulvcB nextui-c-iWjDFM-hfnhFm-color-success nextui-c-iWjDFM-imrJwH-size-xs nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-exaRme-auto-true nextui-c-iWjDFM-gNZcsS-cv nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-button-text\\">action</span></button></div>"`;
+ 
+-exports[`ButtonGroup props should be passed to each button 2`] = `"<div class=\\"nextui-c-kGDNMl nextui-c-kGDNMl-juzAIU-vertical-false nextui-c-kGDNMl-iAoIqM-size-xs\\"><button class=\\"nextui-c-iWjDFM nextui-c-PJLV nextui-c-iWjDFM-hfnhFm-color-success nextui-c-iWjDFM-imrJwH-size-xs nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-cyFBRX-flat-true nextui-c-iWjDFM-exaRme-auto-true nextui-c-iWjDFM-gNZcsS-cv nextui-c-iWjDFM-gmvfdi-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-button-text\\">action</span></button></div>"`;
++exports[`ButtonGroup props should be passed to each button 2`] = `"<div class=\\"nextui-c-iufrEs nextui-c-iufrEs-iGVTkN-vertical-false nextui-c-iufrEs-iAoIqM-size-xs\\"><button class=\\"nextui-c-iWjDFM nextui-c-gulvcB nextui-c-iWjDFM-hfnhFm-color-success nextui-c-iWjDFM-imrJwH-size-xs nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-cyFBRX-flat-true nextui-c-iWjDFM-exaRme-auto-true nextui-c-iWjDFM-gNZcsS-cv nextui-c-iWjDFM-gmvfdi-cv nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-button-text\\">action</span></button></div>"`;
+ 
+-exports[`ButtonGroup should render correctly 1`] = `"<div class=\\"nextui-c-kGDNMl nextui-c-kGDNMl-juzAIU-vertical-false nextui-c-kGDNMl-gimGqK-size-md\\"><button class=\\"nextui-c-iWjDFM nextui-c-PJLV nextui-c-iWjDFM-hkKLfu-color-default nextui-c-iWjDFM-gkIlwi-size-md nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-exaRme-auto-true nextui-c-iWjDFM-gglxka-cv nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-button-text\\">action</span></button></div>"`;
++exports[`ButtonGroup should render correctly 1`] = `"<div class=\\"nextui-c-iufrEs nextui-c-iufrEs-iGVTkN-vertical-false nextui-c-iufrEs-gimGqK-size-md\\"><button class=\\"nextui-c-iWjDFM nextui-c-gulvcB nextui-c-iWjDFM-hkKLfu-color-default nextui-c-iWjDFM-gkIlwi-size-md nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-exaRme-auto-true nextui-c-iWjDFM-gglxka-cv nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-button-text\\">action</span></button></div>"`;
+ 
+ exports[`ButtonGroup should render different variants 1`] = `ReactWrapper {}`;
+ \n- packages/react/src/button/__tests__/__snapshots__/icon.test.tsx.snap (modified, 6 changes)\n  Patch: @@ -1,7 +1,7 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`ButtonIcon should render correctly 1`] = `"<button class=\\"nextui-c-iWjDFM nextui-c-PJLV nextui-c-iWjDFM-hkKLfu-color-default nextui-c-iWjDFM-gkIlwi-size-md nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-c-bDGMeb nextui-button-icon\\"><svg></svg></span><div class=\\"nextui-button-text nextui-button-text-left\\">action</div></button>"`;
++exports[`ButtonIcon should render correctly 1`] = `"<button class=\\"nextui-c-iWjDFM nextui-c-gulvcB nextui-c-iWjDFM-hkKLfu-color-default nextui-c-iWjDFM-gkIlwi-size-md nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-c-bDGMeb nextui-button-icon\\"><svg></svg></span><div class=\\"nextui-button-text nextui-button-text-left\\">action</div></button>"`;
+ 
+-exports[`ButtonIcon should work with right 1`] = `"<button class=\\"nextui-c-iWjDFM nextui-c-PJLV nextui-c-iWjDFM-hkKLfu-color-default nextui-c-iWjDFM-gkIlwi-size-md nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-c-bDGMeb nextui-c-bDGMeb-jeNDWm-isRight-true nextui-button-icon nextui-button-icon-right\\"><svg></svg></span><div class=\\"nextui-button-text nextui-button-text-right\\">action</div></button>"`;
++exports[`ButtonIcon should work with right 1`] = `"<button class=\\"nextui-c-iWjDFM nextui-c-gulvcB nextui-c-iWjDFM-hkKLfu-color-default nextui-c-iWjDFM-gkIlwi-size-md nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-c-bDGMeb nextui-c-bDGMeb-jeNDWm-isRight-true nextui-button-icon nextui-button-icon-right\\"><svg></svg></span><div class=\\"nextui-button-text nextui-button-text-right\\">action</div></button>"`;
+ 
+-exports[`ButtonIcon should work without text 1`] = `"<button class=\\"nextui-c-iWjDFM nextui-c-PJLV nextui-c-iWjDFM-hkKLfu-color-default nextui-c-iWjDFM-gkIlwi-size-md nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-bQrkqa-isChildLess-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-c-bDGMeb nextui-c-bDGMeb-jeNDWm-isRight-true nextui-c-bDGMeb-iyYGWO-isSingle-true nextui-c-bDGMeb-bVsTEo-cv nextui-button-icon nextui-button-icon-right nextui-button-icon-single\\"><svg></svg></span></button>"`;
++exports[`ButtonIcon should work without text 1`] = `"<button class=\\"nextui-c-iWjDFM nextui-c-gulvcB nextui-c-iWjDFM-hkKLfu-color-default nextui-c-iWjDFM-gkIlwi-size-md nextui-c-iWjDFM-cwXrJp-borderWeight-normal nextui-c-iWjDFM-bQrkqa-isChildLess-true nextui-c-iWjDFM-iPJLV-css nextui-button nextui-button--ready\\" data-state=\\"ready\\" type=\\"button\\"><span class=\\"nextui-c-bDGMeb nextui-c-bDGMeb-jeNDWm-isRight-true nextui-c-bDGMeb-iyYGWO-isSingle-true nextui-c-bDGMeb-bVsTEo-cv nextui-button-icon nextui-button-icon-right nextui-button-icon-single\\"><svg></svg></span></button>"`;\n- packages/react/src/card/card.styles.ts (modified, 33 changes)\n  Patch: @@ -54,16 +54,7 @@ export const StyledCard = styled(
+           bg: "$accents0",
+         },
+         shadow: {
+-          dropShadow: "$lg",
+-          "@safari": {
+-            boxShadow: "$lg",
+-            dropShadow: "none",
+-          },
+-          // firefox
+-          "@-moz-document url-prefix()": {
+-            boxShadow: "$lg",
+-            dropShadow: "none",
+-          },
++          boxShadow: "$lg",
+         },
+         bordered: {
+           borderStyle: "solid",
+@@ -107,16 +98,7 @@ export const StyledCard = styled(
+       },
+       isHovered: {
+         true: {
+-          dropShadow: "$lg",
+-          "@safari": {
+-            boxShadow: "$lg",
+-            dropShadow: "none",
+-          },
+-          // firefox
+-          "@-moz-document url-prefix()": {
+-            boxShadow: "$lg",
+-            dropShadow: "none",
+-          },
++          boxShadow: "$lg",
+         },
+       },
+     },
+@@ -142,16 +124,7 @@ export const StyledCard = styled(
+         isHovered: true,
+         variant: "shadow",
+         css: {
+-          dropShadow: "$xl",
+-          "@safari": {
+-            boxShadow: "$xl",
+-            dropShadow: "none",
+-          },
+-          // firefox
+-          "@-moz-document url-prefix()": {
+-            boxShadow: "$xl",
+-            dropShadow: "none",
+-          },
++          boxShadow: "$xl",
+         },
+       },
+     ],\n- packages/react/src/collapse/__tests__/__snapshots__/group.test.tsx.snap (modified, 40 changes)\n  Patch: @@ -15,12 +15,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria9260875313-10"
++        aria-controls="react-aria6558548957-10"
+         aria-disabled="false"
+         aria-expanded="false"
+-        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        class="nextui-c-lfcDHB nextui-c-gulvcB nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria9260875313-9"
++        id="react-aria6558548957-9"
+         role="button"
+         tabindex="0"
+       >
+@@ -66,9 +66,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria9260875313-9"
++            aria-labelledby="react-aria6558548957-9"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria9260875313-10"
++            id="react-aria6558548957-10"
+             role="region"
+             tabindex="-1"
+           >
+@@ -83,12 +83,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria9260875313-12"
++        aria-controls="react-aria6558548957-12"
+         aria-disabled="false"
+         aria-expanded="false"
+-        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        class="nextui-c-lfcDHB nextui-c-gulvcB nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria9260875313-11"
++        id="react-aria6558548957-11"
+         role="button"
+         tabindex="0"
+       >
+@@ -134,9 +134,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria9260875313-11"
++            aria-labelledby="react-aria6558548957-11"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria9260875313-12"
++            id="react-aria6558548957-12"
+             role="region"
+             tabindex="-1"
+           >
+@@ -188,12 +188,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria9260875313-6"
++        aria-controls="react-aria6558548957-6"
+         aria-disabled="false"
+         aria-expanded="false"
+-        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        class="nextui-c-lfcDHB nextui-c-gulvcB nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria9260875313-5"
++        id="react-aria6558548957-5"
+         role="button"
+         tabindex="0"
+       >
+@@ -239,9 +239,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria9260875313-5"
++            aria-labelledby="react-aria6558548957-5"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria9260875313-6"
++            id="react-aria6558548957-6"
+             role="region"
+             tabindex="-1"
+           >
+@@ -256,12 +256,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria9260875313-8"
++        aria-controls="react-aria6558548957-8"
+         aria-disabled="false"
+         aria-expanded="false"
+-        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        class="nextui-c-lfcDHB nextui-c-gulvcB nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria9260875313-7"
++        id="react-aria6558548957-7"
+         role="button"
+         tabindex="0"
+       >
+@@ -307,9 +307,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria9260875313-7"
++            aria-labelledby="react-aria6558548957-7"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria9260875313-8"
++            id="react-aria6558548957-8"
+             role="region"
+             tabindex="-1"
+           >\n- packages/react/src/collapse/__tests__/__snapshots__/index.test.tsx.snap (modified, 50 changes)\n  Patch: @@ -15,12 +15,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria8996229668-10"
++        aria-controls="react-aria7974862725-10"
+         aria-disabled="false"
+         aria-expanded="false"
+-        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        class="nextui-c-lfcDHB nextui-c-gulvcB nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria8996229668-9"
++        id="react-aria7974862725-9"
+         role="button"
+         tabindex="0"
+       >
+@@ -71,9 +71,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria8996229668-9"
++            aria-labelledby="react-aria7974862725-9"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria8996229668-10"
++            id="react-aria7974862725-10"
+             role="region"
+             tabindex="-1"
+           >
+@@ -88,12 +88,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria8996229668-12"
++        aria-controls="react-aria7974862725-12"
+         aria-disabled="false"
+         aria-expanded="false"
+-        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        class="nextui-c-lfcDHB nextui-c-gulvcB nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria8996229668-11"
++        id="react-aria7974862725-11"
+         role="button"
+         tabindex="0"
+       >
+@@ -146,9 +146,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria8996229668-11"
++            aria-labelledby="react-aria7974862725-11"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria8996229668-12"
++            id="react-aria7974862725-12"
+             role="region"
+             tabindex="-1"
+           >
+@@ -198,12 +198,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria8996229668-4"
++        aria-controls="react-aria7974862725-4"
+         aria-disabled="false"
+         aria-expanded="false"
+-        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        class="nextui-c-lfcDHB nextui-c-gulvcB nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria8996229668-3"
++        id="react-aria7974862725-3"
+         role="button"
+         tabindex="0"
+       >
+@@ -254,9 +254,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria8996229668-3"
++            aria-labelledby="react-aria7974862725-3"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria8996229668-4"
++            id="react-aria7974862725-4"
+             role="region"
+             tabindex="-1"
+           >
+@@ -271,12 +271,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria8996229668-6"
++        aria-controls="react-aria7974862725-6"
+         aria-disabled="false"
+         aria-expanded="false"
+-        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        class="nextui-c-lfcDHB nextui-c-gulvcB nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria8996229668-5"
++        id="react-aria7974862725-5"
+         role="button"
+         tabindex="0"
+       >
+@@ -325,9 +325,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria8996229668-5"
++            aria-labelledby="react-aria7974862725-5"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria8996229668-6"
++            id="react-aria7974862725-6"
+             role="region"
+             tabindex="-1"
+           >
+@@ -4344,12 +4344,12 @@ LoadedCheerio {
+       tabindex="-1"
+     >
+       <div
+-        aria-controls="react-aria8996229668-8"
++        aria-controls="react-aria7974862725-8"
+         aria-disabled="false"
+         aria-expanded="false"
+-        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        class="nextui-c-lfcDHB nextui-c-gulvcB nextui-collapse-view"
+         data-state="closed"
+-        id="react-aria8996229668-7"
++        id="react-aria7974862725-7"
+         role="button"
+         tabindex="0"
+       >
+@@ -4395,9 +4395,9 @@ LoadedCheerio {
+           class="nextui-expand-content"
+         >
+           <div
+-            aria-labelledby="react-aria8996229668-7"
++            aria-labelledby="react-aria7974862725-7"
+             class="nextui-c-fMAxGR nextui-collapse-content"
+-            id="react-aria8996229668-8"
++            id="react-aria7974862725-8"
+             role="region"
+             tabindex="-1"
+           >\n- packages/react/src/input/__tests__/__snapshots__/index.test.tsx.snap (modified, 8 changes)\n  Patch: @@ -1,9 +1,9 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`Input should be work with content 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-input-content nextui-input-content--left\\"><span>test-icon</span></span><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVyrVm-hasLeftContent-true nextui-input nextui-input-left-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-25\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVsTEo-hasRightContent-true nextui-input nextui-input-nextui-input-right-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-27\\" value=\\"\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-input-content nextui-input-content--right\\"><span>test-icon</span></span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Input should be work with content 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-input-content nextui-input-content--left\\"><span>test-icon</span></span><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVyrVm-hasLeftContent-true nextui-input nextui-input-left-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-25\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVsTEo-hasRightContent-true nextui-input nextui-input-nextui-input-right-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-27\\" value=\\"\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-input-content nextui-input-content--right\\"><span>test-icon</span></span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
+ 
+-exports[`Input should be work with label 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><label class=\\"nextui-c-hzQjrs nextui-input-block-label\\" for=\\"react-aria5953064628-19\\" id=\\"react-aria5953064628-20\\">label</label><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><div class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-19\\" aria-labelledby=\\"react-aria5953064628-20\\" value=\\"\\"></div></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-21\\" value=\\"\\"><span class=\\"nextui-c-gieWTI nextui-c-gieWTI-bPbUHf-isRight-true nextui-c-gieWTI-bzgJTZ-cv nextui-input-label--right\\">label</span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-gieWTI nextui-c-gieWTI-ceZkzL-isRight-false nextui-c-gieWTI-bzgJTZ-cv nextui-input-label--left\\">label</span><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-23\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Input should be work with label 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><label class=\\"nextui-c-hzQjrs nextui-input-block-label\\" for=\\"react-aria1189229579-19\\" id=\\"react-aria1189229579-20\\">label</label><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><div class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-19\\" aria-labelledby=\\"react-aria1189229579-20\\" value=\\"\\"></div></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-21\\" value=\\"\\"><span class=\\"nextui-c-gieWTI nextui-c-gieWTI-bPbUHf-isRight-true nextui-c-gieWTI-bzgJTZ-cv nextui-input-label--right\\">label</span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-gieWTI nextui-c-gieWTI-ceZkzL-isRight-false nextui-c-gieWTI-bzgJTZ-cv nextui-input-label--left\\">label</span><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-23\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
+ 
+-exports[`Input should work with different sizes 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-jwvDph-size-xs nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-3\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-iUdBCG-size-sm nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-5\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-bkiCag-size-lg nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-7\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gNajeV-size-xl nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-9\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-imosJd-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-11\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Input should work with different sizes 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-jwvDph-size-xs nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-3\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-iUdBCG-size-sm nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-5\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-bkiCag-size-lg nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-7\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gNajeV-size-xl nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-9\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-imosJd-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-11\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
+ 
+-exports[`Input should work with different status 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-kWLfoB-color-secondary nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-13\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-gzViYB-color-success nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-15\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jzFoKt-color-warning nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-17\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Input should work with different status 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-kWLfoB-color-secondary nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-13\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-gzViYB-color-success nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-15\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jzFoKt-color-warning nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1189229579-17\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;\n- packages/react/src/input/__tests__/__snapshots__/password.test.tsx.snap (modified, 2 changes)\n  Patch: @@ -1,3 +1,3 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`InputPassword should render correctly 1`] = `"<div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input nextui-input-password\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVsTEo-hasRightContent-true nextui-input nextui-input-nextui-input-right-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"password\\" id=\\"react-aria4819393953-1\\" value=\\"\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-c-PJLV-hUwVy-clickable-true nextui-input-content nextui-input-content--right\\"><svg class=\\"nextui-input-password-icon\\" fill=\\"none\\" height=\\"16\\" shape-rendering=\\"geometricPrecision\\" stroke=\\"currentColor\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" stroke-width=\\"1.5\\" style=\\"color: currentColor;\\" viewBox=\\"0 0 24 24\\" width=\\"16\\"><path d=\\"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\\"></path><circle cx=\\"12\\" cy=\\"12\\" r=\\"3\\"></circle></svg></span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div>"`;
++exports[`InputPassword should render correctly 1`] = `"<div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input nextui-input-password\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVsTEo-hasRightContent-true nextui-input nextui-input-nextui-input-right-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"password\\" id=\\"react-aria1364010802-1\\" value=\\"\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-c-PJLV-hUwVy-clickable-true nextui-input-content nextui-input-content--right\\"><svg class=\\"nextui-input-password-icon\\" fill=\\"none\\" height=\\"16\\" shape-rendering=\\"geometricPrecision\\" stroke=\\"currentColor\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" stroke-width=\\"1.5\\" style=\\"color: currentColor;\\" viewBox=\\"0 0 24 24\\" width=\\"16\\"><path d=\\"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\\"></path><circle cx=\\"12\\" cy=\\"12\\" r=\\"3\\"></circle></svg></span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div>"`;\n- packages/react/src/textarea/__tests__/__snapshots__/index.test.tsx.snap (modified, 4 changes)\n  Patch: @@ -1,5 +1,5 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`Textarea should render correctly 1`] = `"<div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-PJLV nextui-c-iFHsrU nextui-input-placeholder\\">placeholder</span><textarea aria-multiline=\\"true\\" aria-placeholder=\\"placeholder\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"placeholder\\" type=\\"text\\" id=\\"react-aria1995823903-1\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div>"`;
++exports[`Textarea should render correctly 1`] = `"<div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-PJLV nextui-c-iFHsrU nextui-input-placeholder\\">placeholder</span><textarea aria-multiline=\\"true\\" aria-placeholder=\\"placeholder\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"placeholder\\" type=\\"text\\" id=\\"react-aria3541073565-1\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div>"`;
+ 
+-exports[`Textarea should work with different styles 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-kWLfoB-color-secondary nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><textarea aria-multiline=\\"true\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1995823903-3\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-ikPZLca-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><textarea aria-multiline=\\"true\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1995823903-5\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Textarea should work with different styles 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-kWLfoB-color-secondary nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><textarea aria-multiline=\\"true\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria3541073565-3\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-ikPZLca-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><textarea aria-multiline=\\"true\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria3541073565-5\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;\n- packages/react/src/user/__tests__/__snapshots__/index.test.tsx.snap (modified, 8 changes)\n  Patch: @@ -4,10 +4,10 @@ exports[` User should support image and text 1`] = `
+ LoadedCheerio {
+   "0": <div>
+     <div
+-      class="nextui-c-ijHtNE nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-ijHtNE-iPJLV-css"
++      class="nextui-c-ijHtNE nextui-c-gulvcB nextui-c-ijHtNE-iPJLV-css"
+     >
+       <span
+-        class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css only-text-avatar nextui-user-avatar"
++        class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css only-text-avatar nextui-user-avatar"
+         data-state="ready"
+       >
+         <span
+@@ -33,10 +33,10 @@ LoadedCheerio {
+       </div>
+     </div>
+     <div
+-      class="nextui-c-ijHtNE nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-ijHtNE-iPJLV-css"
++      class="nextui-c-ijHtNE nextui-c-gulvcB nextui-c-ijHtNE-iPJLV-css"
+     >
+       <span
+-        class="nextui-c-gEEnVX nextui-c-PJLV nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-c-gEEnVX-iPJLV-css nextui-user-avatar"
++        class="nextui-c-gEEnVX nextui-c-gulvcB nextui-c-gEEnVX-qXFXw-color-default nextui-c-gEEnVX-duCSmO-textColor-default nextui-c-gEEnVX-iHugVF-size-md nextui-c-gEEnVX-krOtXB-borderWeight-normal nextui-c-gEEnVX-bAEoQm-rounded-true nextui-c-gEEnVX-iPJLV-css nextui-user-avatar"
+         data-state="loading"
+       >
+         <span\n

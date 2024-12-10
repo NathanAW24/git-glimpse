@@ -1,0 +1,71 @@
+Pull Request Number: 723
+Title: fix: remove color-scheme suffix (fix #692)
+Base Branch: next
+Head Branch: fix/removeColorSchemeSuffix
+Author: sun0day
+URL: https://github.com/nextui-org/nextui/pull/723
+State: MERGED
+Created At: 2022-08-31T12:42:00Z
+Merged At: 2022-11-05T19:58:03Z
+Participants: sun0day, jrgarciadev
+
+Description:
+Closes #692
+📝 Description
+
+Add a brief description
+
+color-scheme's value should not contain -theme suffix.
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+ThemeProvider now will set html tag's style attr to be "color-scheme: light-theme"
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+ThemeProvider now will set html tag's style attr to be "color-scheme: light"
+💣 Is this a breaking change (Yes/No):
+
+No
+📝 Additional Information
+
+Commits:
+- fix: remove color-scheme suffix (fix #692)\n- Merge branch main of https://github.com/nextui-org/nextui into fix/removeColorSchemeSuffix\n
+
+Labels:
+
+
+Comments:
+- vercel: @sun0day is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22479f17ddbdc7b5f7e16e6405611a71dc1be1456d%22%7D%2C%22id%22%3A%22Qma4A6CUrt3mn9dziUXf1nzRdzvURJSknzZrhgFhRWCQHV%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A723%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/AzfJGko3G6DhxpLzeSWJZWkCgQne)) | [Visit Preview](https://nextui-storybook-git-fork-sun0day-fix-removec-32cfef-nextui-org.vercel.app) | Sep 1, 2022 at 3:32AM (UTC) |
+
+\n
+
+Files Changed:
+- packages/react/src/theme/utils.ts (modified, 6 changes)\n  Patch: @@ -122,6 +122,8 @@ export const changeTheme = (theme: ThemeType | string) => {
+       .filter((stl) => !stl.includes("color-scheme") && stl.length)
+       .map((el) => `${el};`) || [];
+ 
+-  el?.setAttribute("class", clsx(prevClasses, `${getThemeName(theme)}-theme`));
+-  el?.setAttribute("style", clsx(prevStyles, `color-scheme: ${theme};`));
++  const themeName = getThemeName(theme)
++
++  el?.setAttribute("class", clsx(prevClasses, `${themeName}-theme`));
++  el?.setAttribute("style", clsx(prevStyles, `color-scheme: ${themeName};`));
+ };\n- packages/storybook/storybook-static/iframe.html (modified, 2 changes)\n  Patch: @@ -361,4 +361,4 @@
+           
+       
+           
+-            window['STORIES'] = [{"titlePrefix":"","directory":"../react/src","files":"**/*.stories.mdx","importPathMatcher":"^(?:\\.\\.\\/react\\/src(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.mdx)$"},{"titlePrefix":"","directory":"../react/src","files":"**/*.stories.@(js|jsx|ts|tsx)","importPathMatcher":"^(?:\\.\\.\\/react\\/src(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.(js|jsx|ts|tsx))$"}];</script><script src="runtime~main.e6244631.iframe.bundle.js"></script><script src="107.02592e15.iframe.bundle.js"></script><script src="main.0039f79a.iframe.bundle.js"></script></body></html>
+\ No newline at end of file
++            window['STORIES'] = [{"titlePrefix":"","directory":"../react/src","files":"**/*.stories.mdx","importPathMatcher":"^(?:\\.\\.\\/react\\/src(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.mdx)$"},{"titlePrefix":"","directory":"../react/src","files":"**/*.stories.@(js|jsx|ts|tsx)","importPathMatcher":"^(?:\\.\\.\\/react\\/src(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.(js|jsx|ts|tsx))$"}];</script><script src="runtime~main.e6244631.iframe.bundle.js"></script><script src="107.02592e15.iframe.bundle.js"></script><script src="main.0039f79a.iframe.bundle.js"></script></body></html>\n- packages/storybook/storybook-static/main.e3e09920.iframe.bundle.js (added, 2 changes)\n  Patch: No patch available\n- packages/storybook/storybook-static/main.e3e09920.iframe.bundle.js.LICENSE.txt (added, 1 changes)\n  Patch: @@ -0,0 +1 @@
++/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */\n

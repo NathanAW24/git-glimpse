@@ -1,0 +1,66 @@
+Pull Request Number: 370
+Title: fix[react](theme): ConfigType.Theme interface fixed
+Base Branch: next
+Head Branch: fix/add-classname-theme-object
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/370
+State: MERGED
+Created At: 2022-03-26T20:32:50Z
+Merged At: 2022-03-26T20:32:56Z
+Participants: jrgarciadev
+
+Description:
+[react]/[theme]
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Missing keys were added to the ConfigType.Theme interface
+
+
+
+Screenshots - Animations
+
+Commits:
+- fix[react](theme): ConfigType.Theme interface fixed\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/react/src/theme/types.ts (modified, 13 changes)\n  Patch: @@ -5,20 +5,19 @@ import commonTheme from './common';
+ declare namespace ConfigType {
+   /** Theme interface. */
+   export type Theme<T = {}> = {
+-    borderStyles?: { [token in number | string]: boolean | number | string };
+-    borderWidths?: { [token in number | string]: boolean | number | string };
+-    colors?: { [token in number | string]: boolean | number | string };
+     fonts?: { [token in number | string]: boolean | number | string };
+     fontSizes?: { [token in number | string]: boolean | number | string };
+     fontWeights?: { [token in number | string]: boolean | number | string };
+-    letterSpacings?: { [token in number | string]: boolean | number | string };
+     lineHeights?: { [token in number | string]: boolean | number | string };
++    letterSpacings?: { [token in number | string]: boolean | number | string };
++    space?: { [token in number | string]: boolean | number | string };
+     radii?: { [token in number | string]: boolean | number | string };
++    zIndices?: { [token in number | string]: boolean | number | string };
++    borderWeights?: { [token in number | string]: boolean | number | string };
++    colors?: { [token in number | string]: boolean | number | string };
+     shadows?: { [token in number | string]: boolean | number | string };
+-    sizes?: { [token in number | string]: boolean | number | string };
+-    space?: { [token in number | string]: boolean | number | string };
+     transitions?: { [token in number | string]: boolean | number | string };
+-    zIndices?: { [token in number | string]: boolean | number | string };
++    breakpoints?: { [token in number | string]: boolean | number | string };
+   } & {
+     [Scale in keyof T]: {
+       [Token in keyof T[Scale]]: T[Scale][Token] extends\n

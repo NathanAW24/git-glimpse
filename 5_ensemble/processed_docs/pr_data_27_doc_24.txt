@@ -1,0 +1,487 @@
+Pull Request Number: 564
+Title: fix(react-table): react-stately props
+Base Branch: next
+Head Branch: fix/table
+Author: danielsimao
+URL: https://github.com/nextui-org/nextui/pull/564
+State: MERGED
+Created At: 2022-06-22T14:36:49Z
+Merged At: 2022-07-03T12:51:20Z
+Participants: danielsimao, jrgarciadev
+
+Description:
+Closes #557  
+📝 Description
+It's not possible to replicate the same issue locally in storybook, but I noticed that some props from @react-stately/table hook useTableState were being wrongly spread into StyledTable. That's why the dom was complaining regarding the onSelectionChange, because that event does not exist natively.
+⛳️ Current behavior (updates)
+I'm not changing any behaviour, just strictly passing the correct props.
+🚀 New behavior
+No new behaviour.
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+Would be nice to understand why the storybook instance is suppressing this error.
+@jrgarciadev, let me know if you agree with my commit text.
+
+Commits:
+- fix(react-table): react-stately props\n- fix(react-table): code review\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Hey @danielsimao , I was checking this out, and I think we could remove the `{...props}` from the `StyledTable` due to the `gridProps` already has the `html` props the user could pass, however there's some changes you have to do, here's the detail:
+
+1. Delete this `tuple` from `packages>react>src>utils>props-types.ts`
+
+```diff
+- export const excludedTableProps = tuple(
+-  "items",
+-  "disabledKeys",
+-  "allowDuplicateSelectionEvents",
+-  "disallowEmptySelection",
+-  "defaultSelectedKeys",
+-  "sortDescriptor",
+-  "onSortChange",
+- );
+```
+
+2. Delete the `excludedTableProps` import from the `table.tsx:9` component
+
+```diff
+- import {excludedTableProps} from "../utils/prop-types";
+```
+
+3. Adjust the table desctructured props in `table.tsx:60`
+
+```diff
+    const {
++    css,  
+      selectionMode,
+      selectionBehavior,
+      hideLoading,
+      children,
+      shadow,
+      color,
+      animated,
+      borderWeight,
+      bordered,
++    hoverable,
++    sticked,
+      containerCss,
+      className,
+-      ...props
+    } = tableProps;
+```
+
+4. Delete the clean keys process `table.tsx:89`
+
+```diff 
+-    // clean table props
+-    Object.keys(props).forEach((propNameKey: any) => {
+-      if (excludedTableProps.indexOf(propNameKey) > -1) {
+-        // @ts-ignored
+-        delete props[propNameKey];
+-      }
+-    });
+```
+
+5. Adjust the `StyledTable` component
+
+`table.tsx:126`
+```diff
+    <StyledTable
+        ref={tableRef}
++      css={css}
+        animated={animated}
+-      className={clsx("nextui-table", props.className)}        
++      className={clsx("nextui-table", className)}
+        color={color}
+        hasPagination={hasPagination}
+-      hoverable={selectionMode !== "none" || props.hoverable}
++      hoverable={selectionMode !== "none" || hoverable}
+        isMultiple={selectionMode === "multiple"}
+        shadow={shadow}
+        {...gridProps}
+-        {...props}
+      >
+```
+
+`table.tsx:161`
+```diff
+- {!props.sticked && <Spacer as="tr" className="nextui-table-hidden-row" y={0.4} />}
++ {!sticked && <Spacer as="tr" className="nextui-table-hidden-row" y={0.4} />}
+```
+
+
+Please let me know if something doesn't work as expected 🙌🏻 \n- danielsimao: @jrgarciadev thank you so much for taking the time to explain me the needed changes. I have pushed them.
+
+Please let me know if it looks alright.
+
+Also, do you have any idea why storybook is suppressing this warnings messages? Could be the package version? I started having a lot of these warning on my latest storybook upgrade. \n- jrgarciadev: hey @danielsimao could you please fix the conflicts? 🙏🏻\n- danielsimao: @jrgarciadev `next` branch does not have `prettier` file. \n- jrgarciadev: Hey @danielsimao , no It doesn't have a `prettier` file because `prettier` config was moved to the `eslint` file\n
+
+Files Changed:
+- packages/react/src/table/table.tsx (modified, 90 changes)\n  Patch: @@ -1,12 +1,20 @@
+-import React, {useImperativeHandle, useRef, RefAttributes, PropsWithoutRef} from "react";
+-import {useTable} from "@react-aria/table";
+-import {useTableState, TableStateProps} from "@react-stately/table";
+-import {SelectionMode, SelectionBehavior, CollectionChildren} from "@react-types/shared";
+-
+-import {Spacer} from "../index";
+-import {CSS} from "../theme/stitches.config";
+-import {pickSingleChild} from "../utils/collections";
+-import {excludedTableProps} from "../utils/prop-types";
++import React, {
++  useImperativeHandle,
++  useRef,
++  RefAttributes,
++  PropsWithoutRef,
++} from "react";
++import { useTable } from "@react-aria/table";
++import { useTableState, TableStateProps } from "@react-stately/table";
++import {
++  SelectionMode,
++  SelectionBehavior,
++  CollectionChildren,
++} from "@react-types/shared";
++
++import { Spacer } from "../index";
++import { CSS } from "../theme/stitches.config";
++import { pickSingleChild } from "../utils/collections";
+ import withDefaults from "../utils/with-defaults";
+ import clsx from "../utils/clsx";
+ 
+@@ -30,8 +38,8 @@ import {
+   TableVariantsProps,
+   TableContainerVariantsProps,
+ } from "./table.styles";
+-import TableContext, {TableConfig} from "./table-context";
+-import {isInfinityScroll, hasPaginationChild} from "./utils";
++import TableContext, { TableConfig } from "./table-context";
++import { isInfinityScroll, hasPaginationChild } from "./utils";
+ 
+ interface Props<T> extends TableStateProps<T> {
+   selectionMode?: SelectionMode;
+@@ -41,12 +49,15 @@ interface Props<T> extends TableStateProps<T> {
+   as?: keyof JSX.IntrinsicElements;
+ }
+ 
+-type NativeAttrs = Omit<React.TableHTMLAttributes<unknown>, keyof Props<object>>;
++type NativeAttrs = Omit<
++  React.TableHTMLAttributes<unknown>,
++  keyof Props<object>
++>;
+ 
+ export type TableProps<T = object> = Props<T> &
+   NativeAttrs &
+   Omit<TableVariantsProps, "isMultiple" | "shadow" | "hasPagination"> &
+-  TableContainerVariantsProps & {css?: CSS; containerCss?: CSS};
++  TableContainerVariantsProps & { css?: CSS; containerCss?: CSS };
+ 
+ const defaultProps = {
+   animated: true,
+@@ -58,6 +69,7 @@ const defaultProps = {
+ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+   (tableProps, ref: React.Ref<HTMLTableElement | null>) => {
+     const {
++      css,
+       selectionMode,
+       selectionBehavior,
+       hideLoading,
+@@ -67,15 +79,20 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+       animated,
+       borderWeight,
+       bordered,
++      hoverable,
++      sticked,
+       containerCss,
+-      ...props
++      className,
+     } = tableProps;
+ 
+     const [withoutPaginationChildren, paginationChildren] = pickSingleChild<
+       CollectionChildren<any>
+     >(children, TablePagination);
+ 
+-    const {hasPagination, rowsPerPage} = hasPaginationChild(children, TablePagination);
++    const { hasPagination, rowsPerPage } = hasPaginationChild(
++      children,
++      TablePagination
++    );
+ 
+     const state = useTableState({
+       ...tableProps,
+@@ -86,19 +103,11 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+           : selectionMode === "multiple" && selectionBehavior !== "replace",
+     });
+ 
+-    // clean table props
+-    Object.keys(props).forEach((propNameKey: any) => {
+-      if (excludedTableProps.indexOf(propNameKey) > -1) {
+-        // @ts-ignored
+-        delete props[propNameKey];
+-      }
+-    });
+-
+     const tableRef = useRef<HTMLTableElement | null>(null);
+ 
+     useImperativeHandle(ref, () => tableRef?.current);
+ 
+-    const {collection} = state;
++    const { collection } = state;
+     const {
+       gridProps,
+     }: {
+@@ -120,24 +129,28 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+           borderWeight={borderWeight}
+           bordered={bordered}
+           className="nextui-table-container"
+-          css={{...(containerCss as any)}}
++          css={{ ...(containerCss as any) }}
+           shadow={shadow}
+         >
+           <StyledTable
+             ref={tableRef}
+             animated={animated}
+-            className={clsx("nextui-table", props.className)}
++            className={clsx("nextui-table", className)}
+             color={color}
++            css={css}
+             hasPagination={hasPagination}
+-            hoverable={selectionMode !== "none" || props.hoverable}
++            hoverable={selectionMode !== "none" || hoverable}
+             isMultiple={selectionMode === "multiple"}
+             shadow={shadow}
+             {...gridProps}
+-            {...props}
+           >
+             <TableRowGroup as="thead" isFixed={isInfinityScroll(collection)}>
+               {collection.headerRows.map((headerRow) => (
+-                <TableHeaderRow key={headerRow?.key} item={headerRow} state={state}>
++                <TableHeaderRow
++                  key={headerRow?.key}
++                  item={headerRow}
++                  state={state}
++                >
+                   {[...headerRow.childNodes].map((column) =>
+                     column?.props?.isSelectionCell ? (
+                       <TableSelectAllCheckbox
+@@ -154,11 +167,13 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+                         column={column}
+                         state={state}
+                       />
+-                    ),
++                    )
+                   )}
+                 </TableHeaderRow>
+               ))}
+-              {!props.sticked && <Spacer as="tr" className="nextui-table-hidden-row" y={0.4} />}
++              {!sticked && (
++                <Spacer as="tr" className="nextui-table-hidden-row" y={0.4} />
++              )}
+             </TableRowGroup>
+             <TableBody
+               animated={animated}
+@@ -173,7 +188,11 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+               <TableFooter>
+                 <Spacer as="tr" className="nextui-table-hidden-row" y={0.6} />
+                 <tr role="row">
+-                  <th colSpan={collection.columnCount} role="columnheader" tabIndex={-1}>
++                  <th
++                    colSpan={collection.columnCount}
++                    role="columnheader"
++                    tabIndex={-1}
++                  >
+                     {paginationChildren}
+                   </th>
+                 </tr>
+@@ -183,7 +202,7 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+         </StyledTableContainer>
+       </TableContext.Provider>
+     );
+-  },
++  }
+ );
+ 
+ type TableComponent<T, P = {}> = React.ForwardRefExoticComponent<
+@@ -200,4 +219,7 @@ type TableComponent<T, P = {}> = React.ForwardRefExoticComponent<
+ Table.displayName = "NextUI.Table";
+ Table.toString = () => ".nextui-table";
+ 
+-export default withDefaults(Table, defaultProps) as TableComponent<HTMLTableElement, TableProps>;
++export default withDefaults(Table, defaultProps) as TableComponent<
++  HTMLTableElement,
++  TableProps
++>;\n- packages/react/src/utils/prop-types.ts (modified, 71 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import {ElementType} from "react";
++import { ElementType } from "react";
+ 
+ export const tuple = <T extends string[]>(...args: T) => args;
+ 
+@@ -11,10 +11,17 @@ export const normalColors = tuple(
+   "success",
+   "warning",
+   "error",
+-  "gradient",
++  "gradient"
+ );
+ 
+-export const simpleColors = tuple("default", "primary", "secondary", "success", "warning", "error");
++export const simpleColors = tuple(
++  "default",
++  "primary",
++  "secondary",
++  "success",
++  "warning",
++  "error"
++);
+ 
+ export const extendedColors = tuple(
+   "default",
+@@ -24,7 +31,7 @@ export const extendedColors = tuple(
+   "warning",
+   "error",
+   "invert",
+-  "gradient",
++  "gradient"
+ );
+ 
+ export const extendedColorsNoGradient = tuple(
+@@ -34,7 +41,7 @@ export const extendedColorsNoGradient = tuple(
+   "success",
+   "warning",
+   "error",
+-  "invert",
++  "invert"
+ );
+ 
+ export const extraColors = tuple(
+@@ -50,12 +57,24 @@ export const extraColors = tuple(
+   "purple",
+   "violet",
+   "gradient",
+-  "cyan",
++  "cyan"
+ );
+ 
+-export const normalLoaders = tuple("default", "points", "points-opacity", "gradient", "spinner");
++export const normalLoaders = tuple(
++  "default",
++  "points",
++  "points-opacity",
++  "gradient",
++  "spinner"
++);
+ 
+-export const normalWeights = tuple("light", "normal", "bold", "extrabold", "black");
++export const normalWeights = tuple(
++  "light",
++  "normal",
++  "bold",
++  "extrabold",
++  "black"
++);
+ 
+ export const textWeights = tuple(
+   /* Keyword values */
+@@ -68,7 +87,7 @@ export const textWeights = tuple(
+   "inherit",
+   "initial",
+   "revert",
+-  "unset",
++  "unset"
+ );
+ 
+ export const textTransforms = tuple(
+@@ -83,7 +102,7 @@ export const textTransforms = tuple(
+   "inherit",
+   "initial",
+   "revert",
+-  "unset",
++  "unset"
+ );
+ 
+ const copyTypes = tuple("default", "slient", "prevent");
+@@ -102,7 +121,7 @@ const placement = tuple(
+   "bottomEnd",
+   "right",
+   "rightStart",
+-  "rightEnd",
++  "rightEnd"
+ );
+ 
+ const position = tuple(
+@@ -115,7 +134,7 @@ const position = tuple(
+   "inherit",
+   "initial",
+   "revert",
+-  "unset",
++  "unset"
+ );
+ 
+ const objectFit = tuple(
+@@ -128,7 +147,7 @@ const objectFit = tuple(
+   "inherit",
+   "initial",
+   "revert",
+-  "unset",
++  "unset"
+ );
+ 
+ const dividerAlign = tuple("start", "center", "end", "left", "right");
+@@ -139,18 +158,24 @@ const justify = tuple(
+   "flex-end",
+   "space-between",
+   "space-around",
+-  "space-evenly",
++  "space-evenly"
+ );
+ 
+-const alignItems = tuple("flex-start", "flex-end", "center", "stretch", "baseline");
++const alignItems = tuple(
++  "flex-start",
++  "flex-end",
++  "center",
++  "stretch",
++  "baseline"
++);
+ 
+ const alignContent = tuple(
+   "stretch",
+   "center",
+   "flex-start",
+   "flex-end",
+   "space-between",
+-  "space-around",
++  "space-around"
+ );
+ 
+ const direction = tuple("row", "row-reverse", "column", "column-reverse");
+@@ -164,7 +189,7 @@ const display = tuple(
+   "inline",
+   "inline-block",
+   "inline-flex",
+-  "inline-grid",
++  "inline-grid"
+ );
+ 
+ const contentPosition = tuple("left", "right");
+@@ -184,17 +209,7 @@ export const excludedInputPropsForTextarea = tuple(
+   "contentRightStyling",
+   "onContentClick",
+   "onClearClick",
+-  "css",
+-);
+-
+-export const excludedTableProps = tuple(
+-  "items",
+-  "disabledKeys",
+-  "allowDuplicateSelectionEvents",
+-  "disallowEmptySelection",
+-  "defaultSelectedKeys",
+-  "sortDescriptor",
+-  "onSortChange",
++  "css"
+ );
+ 
+ const selectionBehavior = tuple("toggle", "replace");\n

@@ -1,0 +1,1863 @@
+Pull Request Number: 89
+Title: Feat/kbar
+Base Branch: main
+Head Branch: feat/kbar
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/89
+State: MERGED
+Created At: 2021-10-17T02:30:52Z
+Merged At: 2021-10-17T02:44:53Z
+Participants: jrgarciadev, codecov-commenter
+
+Description:
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+CMDK tool modal implemented
+Modal animation changed
+
+Screenshots - Animations
+
+Commits:
+- chore: kbar library added\n- chore(netxui): needed components exported\n- refactor(nextui): modal background changed to a less dark color in dark mode\n- feat: Own cmdk implemented base on kbar library\n- chore: neccesary kbar dependency installed\n- chore(docs): new icons added and generic component for using icons\n- feat(docs): kbar improved and implemented with sections\n- refactor(modal): animation improved\n- fix(docs): linter\n- fix(docs): lint key missing\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/89?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#89](https://codecov.io/gh/nextui-org/nextui/pull/89?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (d972c63) into [main](https://codecov.io/gh/nextui-org/nextui/commit/9f0b99fb26451ae15046f9517ff8c233568af404?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (9f0b99f) will **decrease** coverage by `0.05%`.
+> The diff coverage is `75.00%`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/89/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/89?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@            Coverage Diff             @@
+##             main      #89      +/-   ##
+==========================================
+- Coverage   85.59%   85.53%   -0.06%     
+==========================================
+  Files         106      106              
+  Lines        1853     1860       +7     
+  Branches      630      633       +3     
+==========================================
++ Hits         1586     1591       +5     
+- Misses        261      262       +1     
+- Partials        6        7       +1     
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/89?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/nextui/src/modal/modal-wrapper.tsx](https://codecov.io/gh/nextui-org/nextui/pull/89/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvbmV4dHVpL3NyYy9tb2RhbC9tb2RhbC13cmFwcGVyLnRzeA==) | `91.17% <71.42%> (-5.12%)` | :arrow_down: |
+| [packages/nextui/src/backdrop/index.tsx](https://codecov.io/gh/nextui-org/nextui/pull/89/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvbmV4dHVpL3NyYy9iYWNrZHJvcC9pbmRleC50c3g=) | `63.63% <100.00%> (ø)` | |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/89?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/89?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [9f0b99f...d972c63](https://codecov.io/gh/nextui-org/nextui/pull/89?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- packages/docs/content/docs/manifest.json (modified, 26 changes)\n  Patch: @@ -2,25 +2,33 @@
+     "routes": [
+         {
+             "title": "Documentation",
++            "keywords": "docs, doc, documentation, getting started, nextui",
++            "subtitle": "For an advanced search please use the search input",
++            "icon": "note",
++            "section": "Scope",
+             "heading": true,
+             "routes": [
+                 {
+                     "title": "Guide",
+                     "open": true,
++                    "keywords": "guide, getting started, start, nextui",
+                     "icon": "/paper.svg",
+                     "routes": [
+                         {
+                             "title": "Getting Started",
++                            "keywords": "getting started, start, nextui",
+                             "path": "/docs/guide/getting-started.mdx"
+                         },
+                         {
+                             "title": "NextUI + Next.js",
++                            "keywords": "next, nextjs, nextui",
+                             "path": "/docs/guide/nextui-plus-nextjs.mdx"
+                         }
+                     ]
+                 },
+                 {
+                     "title": "Theme",
++                    "keywords": "themeable, theme, customize, palette",
+                     "icon": "/category.svg",
+                     "open": true,
+                     "routes": [
+@@ -33,78 +41,96 @@
+                 {
+                     "title": "Layout",
+                     "icon": "/layout.svg",
++                    "keywords": "layout, container, grid, spacer, flex",
+                     "open": true,
+                     "routes": [
+                         {
+                             "title": "Container",
++                            "keywords": "cont, container, flex, media query",
+                             "path": "/docs/layout/container.mdx"
+                         },
+                         {
+                             "title": "Grid",
++                            "keywords": "grid, container, media query",
+                             "path": "/docs/layout/grid.mdx"
+                         },
+                         {
+                             "title": "Spacer",
++                            "keywords": "space, spacer, gap",
+                             "path": "/docs/layout/spacer.mdx"
+                         }
+                     ]
+                 },
+                 {
+                     "title": "Components",
++                    "keywords": "components, btn, button, input, modal",
+                     "icon": "/components.svg",
+                     "open": true,
+                     "routes": [
+                         {
+                             "title": "Text",
++                            "keywords": "text, txt, paragraph",
+                             "path": "/docs/components/text.mdx"
+                         },
+                         {
+                             "title": "Button",
++                            "keywords": "button, btn, buttons, action",
+                             "path": "/docs/components/button.mdx"
+                         },
+                         {
+                             "title": "Button Group",
++                            "keywords": "btn, button, btn group, button group, group",
+                             "path": "/docs/components/button-group.mdx"
+                         },
+                         {
+                             "title": "Input",
++                            "keywords": "text input, input, textarea",
+                             "path": "/docs/components/input.mdx"
+                         },
+                         {
+                             "title": "Textarea",
++                            "keywords": "textarea, input, text input, large text input",
+                             "path": "/docs/components/textarea.mdx"
+                         },
+                         {
+                             "title": "Checkbox",
++                            "keywords": "check, radio, selectable, checkbox, box",
+                             "path": "/docs/components/checkbox.mdx"
+                         },
+                         {
+                             "title": "Radio",
++                            "keywords": "check, radio, select",
+                             "path": "/docs/components/radio.mdx"
+                         },
+                         {
+                             "title": "Tooltip",
++                            "keywords": "tool, popover, tooltip, hoverable",
+                             "path": "/docs/components/tooltip.mdx"
+                         },
+                         {
+                             "title": "Modal",
++                            "keywords": "modal, dialog, backdrop",
+                             "path": "/docs/components/modal.mdx",
+                             "newPost": true
+                         },
+                         {
+                             "title": "Loading",
++                            "keywords": "loading, spinner, loadable, progress",
+                             "path": "/docs/components/loading.mdx"
+                         },
+                         {
+                             "title": "Switch",
++                            "keywords": "toggle, switch",
+                             "path": "/docs/components/switch.mdx"
+                         },
+                         {
+                             "title": "Link",
++                            "keywords": "link, href, next link",
+                             "path": "/docs/components/link.mdx"
+                         },
+                         {
+                             "title": "Avatar",
++                            "keywords": "avatar, avatar group, group",
+                             "path": "/docs/components/avatar.mdx"
+                         }
+                     ]\n- packages/docs/package.json (modified, 4 changes)\n  Patch: @@ -19,6 +19,7 @@
+     "algoliasearch": "^4.10.3",
+     "classnames": "^2.3.1",
+     "gray-matter": "^4.0.3",
++    "kbar": "^0.1.0-beta.6",
+     "lodash": "^4.17.21",
+     "next": "^11.0.0",
+     "next-mdx-remote": "^3.0.2",
+@@ -37,7 +38,8 @@
+     "shelljs": "^0.8.4",
+     "styled-jsx": "^4.0.1",
+     "use-dark-mode": "^2.3.1",
+-    "util.promisify": "^1.1.1"
++    "util.promisify": "^1.1.1",
++    "match-sorter": "^6.3.0"
+   },
+   "devDependencies": {
+     "@types/react": "^17.0.11",\n- packages/docs/src/components/icons/chevron-left.tsx (added, 39 changes)\n  Patch: @@ -0,0 +1,39 @@
++import * as React from 'react';
++
++export interface Props {
++  fill?: string;
++  width?: number;
++  height?: number;
++  size?: number;
++}
++
++const ChevronLeft: React.FC<Props> = ({
++  fill,
++  size,
++  width = 24,
++  height = 24,
++  ...props
++}) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width}
++      height={size || height}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <g
++        fill="none"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={1.5}
++      >
++        <path d="M9.57 5.93L3.5 12l6.07 6.07" />
++        <path d="M20.5 12H3.67" />
++      </g>
++    </svg>
++  );
++};
++
++export default ChevronLeft;\n- packages/docs/src/components/icons/chevron-right.tsx (added, 40 changes)\n  Patch: @@ -0,0 +1,40 @@
++import * as React from 'react';
++
++export interface Props {
++  fill?: string;
++  width?: number;
++  height?: number;
++  size?: number;
++}
++
++const ChevronRight: React.FC<Props> = ({
++  fill,
++  size,
++  width = 24,
++  height = 24,
++  ...props
++}) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width}
++      height={size || height}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <g
++        fill="none"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={1.5}
++        {...props}
++      >
++        <path d="M14.43 5.93L20.5 12l-6.07 6.07" />
++        <path d="M3.5 12h16.83" />
++      </g>
++    </svg>
++  );
++};
++
++export default ChevronRight;\n- packages/docs/src/components/icons/home.tsx (added, 39 changes)\n  Patch: @@ -0,0 +1,39 @@
++import * as React from 'react';
++
++export interface Props {
++  fill?: string;
++  width?: number;
++  height?: number;
++  size?: number;
++}
++
++const Home: React.FC<Props> = ({
++  fill,
++  size,
++  width = 24,
++  height = 24,
++  ...props
++}) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width}
++      height={size || height}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <g
++        fill="none"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={1.5}
++      >
++        <path d="M9.02 2.84l-5.39 4.2A4.759 4.759 0 002 10.36v7.41a4.225 4.225 0 004.21 4.22h11.58A4.223 4.223 0 0022 17.78V10.5a4.723 4.723 0 00-1.8-3.45l-6.18-4.333a4.487 4.487 0 00-5 .123z" />
++        <path data-name="Vector" d="M12 17.99v-3" />
++      </g>
++    </svg>
++  );
++};
++
++export default Home;\n- packages/docs/src/components/icons/index.ts (modified, 5 changes)\n  Patch: @@ -8,9 +8,12 @@ export interface IconProps {
+   className?: string;
+ }
+ 
++export { default as Home } from './home';
+ export { default as Anchor } from './anchor';
+ export { default as Activity } from './activity';
+ export { default as Camera } from './camera';
++export { default as ChevronLeft } from './chevron-left';
++export { default as ChevronRight } from './chevron-right';
+ export { default as ArrowLeft } from './arrow-left';
+ export { default as ArrowRight } from './arrow-right';
+ export { default as Copy } from './copy';
+@@ -38,3 +41,5 @@ export { default as Github } from './github';
+ export { default as Send } from './send';
+ export { default as Mail } from './mail';
+ export { default as Password } from './password';
++export { default as Palette } from './palette';
++export { default as Note } from './note';\n- packages/docs/src/components/icons/map-icons.tsx (added, 31 changes)\n  Patch: @@ -0,0 +1,31 @@
++import React from 'react';
++import * as IconPack from './index';
++
++export interface GenericIconProps extends IconPack.IconProps {
++  name: string;
++}
++
++const icons: { [key: string]: any } = {
++  home: IconPack.Home,
++  note: IconPack.Note,
++  twitter: IconPack.Twitter,
++  discord: IconPack.Discord,
++  github: IconPack.Github,
++  palette: IconPack.Palette,
++  moon: IconPack.Moon,
++  sun: IconPack.Sun,
++  'arrow-left': IconPack.ArrowLeft,
++  'arrow-right': IconPack.ArrowRight,
++  'chevron-left': IconPack.ChevronLeft,
++  'chevron-right': IconPack.ChevronRight
++};
++
++const Iconly: React.FC<GenericIconProps> = ({ name, ...props }) => {
++  const Icon = icons[name];
++  if (!Icon) {
++    throw new Error(`Icon '${name}' doesn't exists in the icons folder`);
++  }
++  return <Icon {...props} />;
++};
++
++export default Iconly;\n- packages/docs/src/components/icons/moon.tsx (modified, 8 changes)\n  Patch: @@ -15,8 +15,8 @@ const Moon: React.FC<IconProps> = ({
+   if (filled) {
+     return (
+       <svg
+-        width={size || width}
+-        height={size || height}
++        width={size || width || 24}
++        height={size || height || 24}
+         viewBox="0 0 24 24"
+         {...props}
+       >
+@@ -31,8 +31,8 @@ const Moon: React.FC<IconProps> = ({
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+-      width={size || width}
+-      height={size || height}
++      width={size || width || 24}
++      height={size || height || 24}
+       viewBox="0 0 24 24"
+       {...props}
+     >\n- packages/docs/src/components/icons/note.tsx (added, 39 changes)\n  Patch: @@ -0,0 +1,39 @@
++import * as React from 'react';
++
++export interface Props {
++  fill?: string;
++  width?: number;
++  height?: number;
++  size?: number;
++}
++
++const Note: React.FC<Props> = ({
++  fill,
++  size,
++  width = 24,
++  height = 24,
++  ...props
++}) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width}
++      height={size || height}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <g
++        fill="none"
++        stroke={fill}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={1.5}
++      >
++        <path d="M8 2v3" />
++        <path d="M16 2v3M7 13h8M7 17h5M16 3.5c3.33.18 5 1.45 5 6.15v6.18c0 4.12-1 6.18-6 6.18H9c-5 0-6-2.06-6-6.18V9.65c0-4.7 1.67-5.96 5-6.15z" />
++      </g>
++    </svg>
++  );
++};
++
++export default Note;\n- packages/docs/src/components/icons/palette.tsx (added, 37 changes)\n  Patch: @@ -0,0 +1,37 @@
++import * as React from 'react';
++import { IconProps } from './index';
++import { NextUIThemes, useTheme } from '@nextui-org/react';
++
++const Palette: React.FC<IconProps> = ({
++  fill,
++  size,
++  height,
++  width,
++  label,
++  ...props
++}) => {
++  const theme = useTheme() as NextUIThemes;
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <g
++        fill="none"
++        stroke={fill || theme.palette.text}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++        strokeWidth={1.5}
++      >
++        <path d="M10 4.5V18a4.007 4.007 0 01-1.14 2.79l-.04.04a3.149 3.149 0 01-.28.25 3.5 3.5 0 01-.99.6c-.11.05-.22.09-.33.13A3.888 3.888 0 016 22a4.255 4.255 0 01-.8-.08c-.13-.03-.26-.06-.39-.1a3.611 3.611 0 01-.46-.17c0-.01 0-.01-.01 0a5.042 5.042 0 01-.8-.49l-.01-.01a2.744 2.744 0 01-.36-.32c-.11-.12-.22-.24-.33-.37a5.042 5.042 0 01-.49-.8c.01-.01.01-.01 0-.01a.031.031 0 00-.01-.02c-.06-.14-.11-.29-.16-.44-.04-.13-.07-.26-.1-.39A4.255 4.255 0 012 18V4.5A2.362 2.362 0 014.5 2h3A2.362 2.362 0 0110 4.5z" />
++        <path d="M22 16.5v3a2.362 2.362 0 01-2.5 2.5H6a3.888 3.888 0 001.22-.19c.11-.04.22-.08.33-.13a3.5 3.5 0 00.99-.6 3.149 3.149 0 00.28-.25l.04-.04 6.8-6.79h3.84a2.362 2.362 0 012.5 2.5zM4.81 21.82a3.835 3.835 0 01-1.64-.99 3.835 3.835 0 01-.99-1.64 4.02 4.02 0 002.63 2.63z" />
++        <path d="M18.37 11.29L15.66 14l-6.8 6.79A4.007 4.007 0 0010 18V8.335l2.71-2.705a2.368 2.368 0 013.54 0l2.12 2.12a2.368 2.368 0 010 3.54zM7 18a1 1 0 11-1-1 1 1 0 011 1z" />
++      </g>
++    </svg>
++  );
++};
++
++export default Palette;\n- packages/docs/src/components/icons/sun.tsx (modified, 8 changes)\n  Patch: @@ -15,8 +15,8 @@ const Sun: React.FC<IconProps> = ({
+   if (filled) {
+     return (
+       <svg
+-        width={size || width}
+-        height={size || height}
++        width={size || width || 24}
++        height={size || height || 24}
+         viewBox="0 0 24 24"
+         {...props}
+       >
+@@ -30,8 +30,8 @@ const Sun: React.FC<IconProps> = ({
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+-      width={size || width}
+-      height={size || height}
++      width={size || width || 24}
++      height={size || height || 24}
+       viewBox="0 0 24 24"
+       {...props}
+     >\n- packages/docs/src/components/image-browser/index.tsx (modified, 21 changes)\n  Patch: @@ -11,7 +11,7 @@ interface Props {
+ const defaultProps = {
+   width: 721,
+   height: 424,
+-  className: '',
++  className: ''
+ };
+ 
+ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+@@ -36,7 +36,7 @@ const ImageBrowser: React.FC<Props> = ({
+           bar: '#111',
+           miniBar: '#444',
+           elements: '#444',
+-          elements2: '#333',
++          elements2: '#333'
+         },
+         secondWindow: {
+           logo: '#000',
+@@ -45,8 +45,8 @@ const ImageBrowser: React.FC<Props> = ({
+           bar: '#d2d2d2',
+           miniBar: '#c1c1c1',
+           elements: '#c1c1c1',
+-          elements2: '#999',
+-        },
++          elements2: '#999'
++        }
+       };
+     }
+     return {
+@@ -57,7 +57,7 @@ const ImageBrowser: React.FC<Props> = ({
+         bar: '#d2d2d2',
+         miniBar: '#c1c1c1',
+         elements: '#c1c1c1',
+-        elements2: '#999',
++        elements2: '#999'
+       },
+       secondWindow: {
+         logo: '#fff',
+@@ -66,8 +66,8 @@ const ImageBrowser: React.FC<Props> = ({
+         bar: '#111',
+         miniBar: '#444',
+         elements: '#444',
+-        elements2: '#333',
+-      },
++        elements2: '#333'
++      }
+     };
+   }, [isDark]);
+   return (
+@@ -87,9 +87,6 @@ const ImageBrowser: React.FC<Props> = ({
+           .prefix__cls-20,.prefix__cls-21,
+           .prefix__cls-23,.prefix__cls-73,
+           .prefix__cls-53,.prefix__cls-33,
+-          .prefix__cls-15 {
+-            transition: fill 200ms ease;
+-          }
+           .prefix__cls-1{fill:${firstWindow.bg}}
+           .prefix__cls-2{fill:${secondWindow.bg}}
+           .prefix__cls-3{fill:#f21361}
+@@ -729,7 +726,9 @@ const ImageBrowser: React.FC<Props> = ({
+       <style jsx>
+         {`
+           .image-browser-svg {
+-            filter: drop-shadow(10px 0px 60px rgb(0 0 0 / 20%));
++            filter: drop-shadow(
++              10px 0px 60px rgb(${isDark ? '121 40 202' : '0 0 0'} / 20%)
++            );
+           }
+         `}
+       </style>\n- packages/docs/src/components/index.ts (modified, 2 changes)\n  Patch: @@ -16,8 +16,10 @@ export { default as MenuToggle } from './menu-toggle';
+ export { default as MobileNavigation } from './mobile-navigation';
+ export { default as Badge } from './badge';
+ export { default as Heading } from './heading';
++export { default as Keyboard } from './keyboard';
+ export { default as ExampleBlock } from './templates/example-block';
+ export { default as ThemeToggle } from './theme-toggle';
++export { default as KBar } from './kbar';
+ export * from './search';
+ export * from './icons';
+ export * from './templates';\n- packages/docs/src/components/kbar/index.tsx (added, 53 changes)\n  Patch: @@ -0,0 +1,53 @@
++import React from 'react';
++import { useTheme, Backdrop } from '@nextui-org/react';
++import {
++  KBarPortal,
++  KBarPositioner,
++  KBarAnimator,
++  VisualState,
++  useKBar
++} from 'kbar';
++import KBarOption from './option';
++import KBarSearch from './search';
++import KBarResults from './results';
++import generateStyles from './styles';
++
++const KBar: React.FC<unknown> = () => {
++  const theme = useTheme();
++  const styles = generateStyles(theme);
++  const { visible } = useKBar((state) => ({
++    visible: state.visualState !== VisualState.hidden
++  }));
++
++  return (
++    <KBarPortal>
++      <Backdrop
++        blur
++        className="backdrop"
++        visible={visible}
++        width={styles.container.maxWidth}
++      >
++        <KBarPositioner>
++          <KBarAnimator style={styles.container}>
++            <KBarSearch placeholder="What do you need?" />
++            <KBarResults
++              style={styles.result}
++              onRender={(action, handlers, state) => (
++                <KBarOption action={action} handlers={handlers} state={state} />
++              )}
++            />
++          </KBarAnimator>
++        </KBarPositioner>
++      </Backdrop>
++      <style jsx>
++        {`
++          :global(.backdrop .content) {
++            height: 100%;
++          }
++        `}
++      </style>
++    </KBarPortal>
++  );
++};
++
++export default KBar;\n- packages/docs/src/components/kbar/option.tsx (added, 169 changes)\n  Patch: @@ -0,0 +1,169 @@
++import React, { useCallback } from 'react';
++import cn from 'classnames';
++import Image from 'next/image';
++import { Action, ResultHandlers, ResultState } from 'kbar';
++import { useTheme } from '@nextui-org/react';
++import { addColorAlpha } from '@utils/index';
++import Keyboard from '../keyboard';
++import useDarkMode from 'use-dark-mode';
++import Icon from '../icons/map-icons';
++import { isEmpty } from 'lodash';
++
++interface Props {
++  action: Action;
++  handlers: ResultHandlers;
++  state: ResultState;
++}
++
++const KBarOption: React.FC<Props> = ({ action, handlers, state }) => {
++  const ownRef = React.useRef<HTMLLIElement>(null);
++  const active = state.index === state.activeIndex;
++  const isDark = useDarkMode().value;
++  const theme = useTheme();
++
++  React.useEffect(() => {
++    if (active) {
++      // wait for the KBarAnimator to resize, _then_ scrollIntoView.
++      // https://medium.com/@owencm/one-weird-trick-to-performant-touch-response-animations-with-react-9fe4a0838116
++      window.requestAnimationFrame(() =>
++        window.requestAnimationFrame(() => {
++          const element = ownRef.current;
++          if (!element) {
++            return;
++          }
++          // @ts-ignore
++          element.scrollIntoView({
++            block: 'nearest',
++            behavior: 'smooth',
++            inline: 'start'
++          });
++        })
++      );
++    }
++  }, [active]);
++
++  const renderIcon = useCallback(() => {
++    if (isEmpty(action.icon)) {
++      return (
++        <div className="option-icon">
++          <Icon
++            fill={active ? theme.palette.accents_5 : theme.palette.accents_3}
++            name="arrow-right"
++          />
++        </div>
++      );
++    }
++    if (
++      action.icon &&
++      typeof action.icon === 'string' &&
++      action.icon.includes('.svg')
++    ) {
++      return (
++        <div className="option-icon">
++          <Image
++            width={24}
++            height={24}
++            src={action.icon?.replace(
++              '.svg',
++              isDark ? '-dark.svg' : '-light.svg'
++            )}
++            alt={`${action.name} icon`}
++          />
++        </div>
++      );
++    } else if (action.icon && typeof action.icon === 'string') {
++      return (
++        <div className="option-icon">
++          <Icon
++            fill={active ? theme.palette.accents_5 : theme.palette.accents_3}
++            name={action.icon}
++          />
++        </div>
++      );
++    }
++    return <div className="option-icon">{action.icon}</div>;
++  }, [active, isDark]);
++
++  return (
++    <li ref={ownRef} className="kbar-option" {...handlers}>
++      <div className={cn('option-container', { active })}>
++        <div className="option-left-container">
++          {renderIcon()}
++          <div className="option-text-container">
++            <span className="option-text-title">{action.name}</span>
++            {action.subtitle && (
++              <span className="option-text-subtitle">{action.subtitle}</span>
++            )}
++          </div>
++        </div>
++        <div className="option-right-container">
++          {action.shortcut?.length ? (
++            <div className="kbd-container">
++              {action.shortcut.map((sc, index) => (
++                <Keyboard key={`${sc}_${index}`}>{sc}</Keyboard>
++              ))}
++            </div>
++          ) : null}
++        </div>
++      </div>
++
++      <style jsx>
++        {`
++          .kbar-option {
++            width: 100%;
++            min-height: 54px;
++          }
++          .option-container {
++            display: flex;
++            height: 54px;
++            padding: 0 10px;
++            margin: 4px 12px;
++            align-items: center;
++            cursor: pointer;
++            justify-content: space-between;
++            border-radius: 4px;
++            transition: all 0.2s ease;
++          }
++          .active {
++            background: ${addColorAlpha(theme.palette.text, 0.1)};
++          }
++          .option-left-container {
++            display: flex;
++            align-items: center;
++          }
++          :global(.option-icon) {
++            display: flex;
++            align-items: center;
++            padding-right: 12px;
++          }
++          .option-text-container {
++            display: flex;
++            flex-direction: column;
++            align-items: flex-start;
++          }
++          .option-right-container {
++            display: flex;
++            flex-direction: row;
++            align-items: center;
++          }
++          .option-text-title {
++            color: ${theme.palette.text};
++          }
++          .option-text-subtitle {
++            font-size: 12px;
++            color: ${theme.palette.accents_4};
++          }
++          .kbd-container {
++            display: grid;
++            grid-auto-flow: column;
++            gap: 4px;
++          }
++        `}
++      </style>
++    </li>
++  );
++};
++
++const MemoKBarOption = React.memo(KBarOption);
++
++export default MemoKBarOption;\n- packages/docs/src/components/kbar/results.tsx (added, 239 changes)\n  Patch: @@ -0,0 +1,239 @@
++import * as React from 'react';
++import cn from 'classnames';
++import { matchSorter } from 'match-sorter';
++import type {
++  Action,
++  KBarResultsProps,
++  ResultHandlers,
++  ResultState
++} from 'kbar';
++import { VisualState, useKBar } from 'kbar';
++import { groupBy, isEmpty } from 'lodash';
++import { useTheme } from '@nextui-org/react';
++
++function useMatches(term: string, actions: Action[]) {
++  // TODO: we can throttle this if needed
++  return React.useMemo(
++    () =>
++      term.trim() === ''
++        ? actions
++        : matchSorter(actions, term, { keys: ['keywords', 'name'] }),
++    [term, actions]
++  );
++}
++
++export default function KBarResults(props: KBarResultsProps) {
++  const { search, actions, currentRootActionId, query } = useKBar((state) => ({
++    search: state.searchQuery,
++    currentRootActionId: state.currentRootActionId,
++    actions: state.actions
++  }));
++
++  const theme = useTheme();
++
++  // Store reference to a list of all actions
++  const actionsList = React.useMemo(
++    () =>
++      Object.keys(actions).map((key) => {
++        return actions[key];
++      }),
++    [actions]
++  );
++
++  const currActions = React.useMemo(() => {
++    if (!currentRootActionId) {
++      return actionsList.reduce((acc: any, curr) => {
++        if (!curr.parent) {
++          acc[curr.id] = curr;
++        }
++        return acc;
++      }, {});
++    }
++
++    const root = actions[currentRootActionId];
++    const children = root.children;
++
++    if (!children) {
++      return {
++        [root.id]: root
++      };
++    }
++
++    return {
++      ...children.reduce((acc: any, actionId) => {
++        acc[actionId] = actions[actionId];
++        return acc;
++      }, {})
++    };
++  }, [actions, actionsList, currentRootActionId]);
++
++  const filteredList = React.useMemo(
++    () =>
++      Object.keys(currActions).map((key) => {
++        const action = currActions[key];
++        return action;
++      }) as Action[],
++    [currActions]
++  );
++
++  const matches = useMatches(search, filteredList);
++
++  const [activeIndex, setActiveIndex] = React.useState(0);
++
++  // Reset active index on root action change
++  React.useEffect(() => {
++    setActiveIndex(0);
++  }, [currentRootActionId]);
++
++  const select = React.useCallback(() => {
++    const action = matches[activeIndex];
++
++    if (!action) return;
++
++    if (action.perform) {
++      action.perform();
++      query.setVisualState(() => VisualState.animatingOut);
++    } else {
++      query.setCurrentRootAction(action.id);
++    }
++  }, [matches, activeIndex, query]);
++
++  React.useEffect(() => {
++    function handleKeyDown(event: KeyboardEvent) {
++      event.stopPropagation();
++      if (event.key === 'ArrowDown' || (event.ctrlKey && event.key === 'j')) {
++        event.preventDefault();
++        setActiveIndex((index) => {
++          if (index >= matches.length - 1) {
++            return 0;
++          } else {
++            return index + 1;
++          }
++        });
++      }
++
++      if (event.key === 'ArrowUp' || (event.ctrlKey && event.key === 'k')) {
++        event.preventDefault();
++        setActiveIndex((index) => {
++          if (index === 0) {
++            return matches.length - 1;
++          } else {
++            return index - 1;
++          }
++        });
++      }
++      if (event.key === 'Enter') {
++        event.preventDefault();
++        select();
++      }
++    }
++    window.addEventListener('keydown', handleKeyDown);
++    return () => window.removeEventListener('keydown', handleKeyDown);
++  }, [matches, select, activeIndex]);
++
++  // Reset focused index when searching & updated results.
++  React.useEffect(() => {
++    setActiveIndex(0);
++  }, [filteredList.length, search]);
++
++  const groupedMatches = groupBy(matches, 'section');
++
++  const renderAction = (action: any, index: number) => {
++    const handlers: ResultHandlers = {
++      onClick: select,
++      onPointerDown: () => setActiveIndex(index),
++      onMouseEnter: () => setActiveIndex(index)
++    };
++    const state: ResultState = {
++      activeIndex,
++      index
++    };
++    if (props.onRender) {
++      // Implicitly add a `key` so the user won't have to.
++      return React.cloneElement(props.onRender(action, handlers, state), {
++        key: action.id
++      });
++    }
++    return (
++      <DefaultResultWrapper
++        key={action.id}
++        isActive={activeIndex === index}
++        {...handlers}
++      >
++        {action.name}
++      </DefaultResultWrapper>
++    );
++  };
++  let idx = -1;
++  return (
++    <div className={cn('kbar-section', props.className)} style={props.style}>
++      {!isEmpty(groupedMatches)
++        ? Object.keys(groupedMatches).map((section, sectionIndex) => {
++            return (
++              <ul
++                key={`${section}_${sectionIndex}`}
++                className="kbar-section-list"
++              >
++                {section ? (
++                  <b className="kbar-section-list__title">{section}</b>
++                ) : null}
++                {groupedMatches[section].map((action) => {
++                  idx = idx + 1;
++                  return renderAction(action, idx);
++                })}
++              </ul>
++            );
++          })
++        : null}
++      <style jsx>
++        {`
++          .kbar-section-list {
++            display: flex;
++            width: 100%;
++            margin: 0;
++            flex-direction: column;
++            align-items: flex-start;
++          }
++          .kbar-section-list__title {
++            padding: 4px 16px;
++            color: ${theme.palette.accents_7};
++            opacity: 0.4;
++            font-size: 12px;
++            font-weight: 500;
++          }
++        `}
++      </style>
++    </div>
++  );
++}
++
++// Separate component to ensure we can scrollTo active elements properly.
++const DefaultResultWrapper: React.FC<{ isActive: boolean }> = ({
++  isActive,
++  children,
++  ...rest
++}) => {
++  const ownRef = React.useRef<HTMLUListElement>(null);
++
++  React.useEffect(() => {
++    if (isActive) {
++      // wait for the KBarAnimator to resize, _then_ scrollIntoView.
++      // https://medium.com/@owencm/one-weird-trick-to-performant-touch-response-animations-with-react-9fe4a0838116
++      window.requestAnimationFrame(() =>
++        window.requestAnimationFrame(() => {
++          const element = ownRef.current;
++          if (!element) {
++            return;
++          }
++          element.scrollIntoView({ block: 'nearest' });
++        })
++      );
++    }
++  }, [isActive]);
++
++  return (
++    <ul ref={ownRef} className="kbar-result-list" {...rest}>
++      {children}
++    </ul>
++  );
++};\n- packages/docs/src/components/kbar/search.tsx (added, 64 changes)\n  Patch: @@ -0,0 +1,64 @@
++import * as React from 'react';
++import { useKBar } from 'kbar';
++import { useTheme } from '@nextui-org/react';
++
++export default function KBarSearch(
++  props: React.InputHTMLAttributes<HTMLInputElement>
++) {
++  const { query, search, actions, currentRootActionId } = useKBar((state) => ({
++    search: state.searchQuery,
++    currentRootActionId: state.currentRootActionId,
++    actions: state.actions
++  }));
++
++  const theme = useTheme();
++  const ownRef = React.useRef<HTMLInputElement>(null);
++
++  React.useEffect(() => {
++    query.setSearch('');
++    ownRef.current?.focus();
++  }, [currentRootActionId, query]);
++
++  return (
++    <>
++      <input
++        ref={ownRef}
++        {...props}
++        value={search}
++        onChange={(event) => {
++          props.onChange?.(event);
++          query.setSearch(event.target.value);
++        }}
++        onKeyDown={(event) => {
++          if (currentRootActionId && !search && event.key === 'Backspace') {
++            const parent = actions[currentRootActionId].parent;
++            query.setCurrentRootAction(parent);
++          }
++        }}
++      />
++      <style jsx>{`
++        input {
++          padding: 14px 24px;
++          fontsize: 16px;
++          width: 100%;
++          box-sizing: border-box;
++          outline: none;
++          border: none;
++          background: transparent;
++          color: ${theme.palette.foreground};
++        }
++        input:focus::placeholder {
++          opacity: 1;
++          transition: opacity 0.25s ease 0s;
++        }
++        input::placeholder {
++          color: ${theme.palette.accents_4};
++          transition: opacity 0.25s ease 0s;
++          -moz-transition: opacity 0.25s ease 0s;
++          -ms-transition: opacity 0.25s ease 0s;
++          -webkit-transition: opacity 0.25s ease 0s;
++        }
++      `}</style>
++    </>
++  );
++}\n- packages/docs/src/components/kbar/styles.ts (added, 20 changes)\n  Patch: @@ -0,0 +1,20 @@
++import { NextUIThemes } from '@nextui-org/react';
++
++export default function generateStyles(theme: NextUIThemes) {
++  return {
++    container: {
++      maxWidth: '500px',
++      width: '100%',
++      background: theme.palette.accents_1,
++      color: theme.palette.text,
++      borderRadius: '8px',
++      overflow: 'hidden',
++      boxShadow: theme.expressiveness.shadowMedium
++    },
++    result: {
++      maxHeight: 400,
++      paddingBottom: '8px',
++      overflow: 'auto'
++    }
++  };
++}\n- packages/docs/src/components/keyboard/index.tsx (added, 111 changes)\n  Patch: @@ -0,0 +1,111 @@
++import React, { useMemo } from 'react';
++import withDefaults from '@utils/with-defaults';
++import { useTheme, NextUIThemes } from '@nextui-org/react';
++import { addColorAlpha } from '@utils/index';
++import useDarkMode from 'use-dark-mode';
++
++interface Props {
++  command?: boolean;
++  shift?: boolean;
++  option?: boolean;
++  ctrl?: boolean;
++  small?: boolean;
++  onClick?: () => void;
++  className?: string;
++}
++
++const defaultProps = {
++  command: false,
++  shift: false,
++  option: false,
++  ctrl: false,
++  small: false,
++  className: ''
++};
++
++type NativeAttrs = Omit<React.KeygenHTMLAttributes<unknown>, keyof Props>;
++export type KeyboardProps = Props & typeof defaultProps & NativeAttrs;
++
++type CustomLayout = {
++  padding: number | string;
++  fontSize: string;
++  minWidth: string;
++};
++
++const getLayout = (small: boolean, theme: NextUIThemes): CustomLayout => {
++  if (small)
++    return {
++      padding: 0,
++      fontSize: '.75rem',
++      minWidth: theme.layout.gap
++    };
++  return {
++    padding: theme.layout.gapQuarter,
++    fontSize: '0.875rem',
++    minWidth: `calc(1.5 * ${theme.layout.gap})`
++  };
++};
++
++const Keyboard: React.FC<React.PropsWithChildren<KeyboardProps>> = ({
++  command,
++  shift,
++  option,
++  ctrl,
++  small,
++  children,
++  className,
++  onClick,
++  ...props
++}) => {
++  const theme = useTheme();
++  const isDark = useDarkMode().value;
++  const { padding, fontSize, minWidth } = useMemo<CustomLayout>(
++    () => getLayout(small, theme),
++    [small, theme]
++  );
++
++  return (
++    <kbd className={className} onClick={onClick} {...props}>
++      {command && <span>⌘</span>}
++      {shift && <span>⇧</span>}
++      {option && <span>⌥</span>}
++      {ctrl && <span>⌃</span>}
++      {children && <span>{children}</span>}
++      <style jsx>{`
++        kbd {
++          width: fit-content;
++          line-height: 2em;
++          text-align: center;
++          display: inline-block;
++          cursor: ${onClick ? 'pointer' : 'default'};
++          color: ${addColorAlpha(theme.palette.text, 0.6)};
++          background-color: ${addColorAlpha(theme.palette.background, 0.8)};
++          border: ${isDark
++            ? `1px solid ${addColorAlpha(theme.palette.foreground, 0.2)}`
++            : 'none'};
++          box-shadow: ${isDark ? 'none' : '0 0 2px 0 rgb(0 0 0 / 14%)'};
++          font-family: ${theme.font.sans};
++          border-radius: 6px;
++          padding: 0 ${padding};
++          min-width: ${minWidth};
++          font-size: ${fontSize};
++        }
++        kbd + kbd {
++          margin-left: ${theme.layout.gapQuarter};
++        }
++        span {
++          line-height: 2em;
++          font-size: 0.875rem;
++          text-align: center;
++        }
++        span + span {
++          margin-left: ${theme.layout.gapQuarter};
++        }
++      `}</style>
++    </kbd>
++  );
++};
++
++const MemoKeyboard = React.memo(Keyboard);
++
++export default withDefaults(MemoKeyboard, defaultProps);\n- packages/docs/src/components/nav-link/index.tsx (modified, 4 changes)\n  Patch: @@ -17,7 +17,7 @@ const defaultProps = {
+   href: '',
+   pathname: '',
+   title: '',
+-  selected: false,
++  selected: false
+ };
+ 
+ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+@@ -30,7 +30,7 @@ const NavLink: React.FC<NavLinkProps> = ({
+   title,
+   color,
+   selected,
+-  onClick,
++  onClick
+ }) => {
+   const router = useRouter();
+   const onlyHashChange = pathname === router.pathname;\n- packages/docs/src/components/search/autocomplete.tsx (modified, 84 changes)\n  Patch: @@ -1,7 +1,8 @@
+ import * as React from 'react';
+ import { createPortal } from 'react-dom';
+ import cn from 'classnames';
+-import { browserName } from 'react-device-detect';
++import useDarkMode from 'use-dark-mode';
++import { isMacOs } from 'react-device-detect';
+ import { useRouter } from 'next/router';
+ import {
+   NextUIThemes,
+@@ -17,20 +18,20 @@ import AutoSuggest, {
+   RenderInputComponentProps
+ } from 'react-autosuggest';
+ import { useMediaQuery } from '@hooks/use-media-query';
+-import { SearchByAlgolia, Search, Close } from '../icons';
++import { SearchByAlgolia, Close } from '../icons';
+ import { addColorAlpha } from '@utils/index';
+ import {
+   connectAutoComplete,
+   connectStateResults
+ } from 'react-instantsearch-dom';
+-import { isEmpty, includes } from 'lodash';
++import { isEmpty } from 'lodash';
+ import { AutocompleteProvided } from 'react-instantsearch-core';
++import Keyboard from '../keyboard';
+ import Suggestion from './suggestion';
++import { VisualState, useKBar } from 'kbar';
+ 
+ interface Props extends AutocompleteProvided {}
+ 
+-const isSafari = includes(browserName, 'Safari');
+-
+ const Autocomplete: React.FC<Props> = ({ hits, refine }) => {
+   const [value, setValue] = React.useState('');
+   const [isFocused, setIsFocused] = React.useState(false);
+@@ -43,6 +44,10 @@ const Autocomplete: React.FC<Props> = ({ hits, refine }) => {
+     Number(theme.breakpoints.sm.max.replace('px', ''))
+   );
+ 
++  const { query } = useKBar();
++
++  const isDark = useDarkMode().value;
++
+   let inputRef = React.useRef<HTMLInputElement>(null);
+ 
+   useClickAway(inputRef, () => {
+@@ -104,19 +109,29 @@ const Autocomplete: React.FC<Props> = ({ hits, refine }) => {
+     inputRef && inputRef?.current?.blur();
+   };
+ 
++  const handleKeyboardClick = () => {
++    query.setVisualState((vs) =>
++      [VisualState.animatingOut, VisualState.hidden].includes(vs)
++        ? VisualState.animatingIn
++        : VisualState.animatingOut
++    );
++  };
++
+   const renderInput = React.useCallback(
+     (inputProps: RenderInputComponentProps) => {
+       return (
+         <label className="search__input-container">
+-          <input {...inputProps} />
++          <input {...inputProps} placeholder="Search..." />
+           {!value ? (
+             <span className="search__placeholder-container">
+-              <Search
+-                size={16}
+-                fill={theme.palette.accents_8}
+-                className="search__placeholder-icon"
+-              />
+-              <p className="search__placeholder-text">Search...</p>
++              <Keyboard
++                className="search__placeholder-kbd"
++                command={isMacOs}
++                ctrl={!isMacOs}
++                onClick={handleKeyboardClick}
++              >
++                K
++              </Keyboard>
+             </span>
+           ) : (
+             <span className="search__reset-container" onClick={onClear}>
+@@ -233,50 +248,38 @@ const Autocomplete: React.FC<Props> = ({ hits, refine }) => {
+             width: 100%;
+             height: 100%;
+           }
++          .search__placeholder-kbd {
++            position: absolute;
++            right: 4px;
++          }
+           :global(.search__reset-container:hover path) {
+             fill: ${addColorAlpha(theme.palette.accents_6, 0.8)};
+           }
+-          .search__placeholder-text {
+-            position: absolute;
+-            margin: 0;
+-            padding: 0;
+-            left: 40%;
+-            font-size: 1rem;
+-            justify-content: center;
+-            align-items: center;
+-            line-height: 1px;
+-            pointer-events: none;
+-            color: ${theme.palette.accents_5};
+-            transition: all 0.25s ease;
+-          }
+           .search__placeholder-icon {
+             position: absolute;
+             left: 30%;
+             z-index: -1;
+             transition: all 0.25s ease;
+           }
+-          .search__container.focused .search__placeholder-text {
+-            left: ${isSafari ? '25px' : '16px'};
+-          }
+           .search__container.focused .search__placeholder-icon {
+             left: 0;
+             opacity: 0;
+           }
+-          .search__container:hover .search__placeholder-text {
+-            color: ${theme.palette.accents_6};
+-          }
+           .react-autosuggest__container {
+             position: relative;
+             z-index: 4;
+           }
+           .search__input-container {
+             position: relative;
+             display: flex;
++            height: 38px;
+             justify-content: center;
+             align-items: center;
+             z-index: 9999;
+             background: ${addColorAlpha(theme.palette.background, 0.7)};
+-            box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.1);
++            box-shadow: ${isDark
++              ? '0px 5px 20px -5px rgba(0, 0, 0, 0.1)'
++              : 'none'};
+             border-radius: 8px;
+           }
+           .react-autosuggest__input {
+@@ -389,7 +392,21 @@ const Autocomplete: React.FC<Props> = ({ hits, refine }) => {
+           ::-webkit-search-cancel-button {
+             display: none;
+           }
++          input:focus::placeholder {
++            opacity: 0;
++            transition: opacity 0.25s ease 0s;
++          }
++          input::placeholder {
++            color: ${theme.palette.accents_4};
++            transition: opacity 0.25s ease 0s;
++            -moz-transition: opacity 0.25s ease 0s;
++            -ms-transition: opacity 0.25s ease 0s;
++            -webkit-transition: opacity 0.25s ease 0s;
++          }
+           @media only screen and (max-width: ${theme.breakpoints.xs.max}) {
++            input::placeholder {
++              text-align: center;
++            }
+             .react-autosuggest__suggestions-container,
+             .no-results {
+               z-index: 1004;
+@@ -402,6 +419,9 @@ const Autocomplete: React.FC<Props> = ({ hits, refine }) => {
+               left: 0;
+               right: 0;
+             }
++            .search__placeholder-kbd {
++              display: none !important;
++            }
+             .react-autosuggest__suggestions-container {
+               padding: 64px 0;
+             }\n- packages/docs/src/components/search/suggestion.tsx (modified, 3 changes)\n  Patch: @@ -42,11 +42,10 @@ const Suggestion: React.FC<Props> = ({ hit, highlighted }) => {
+         <style jsx>
+           {`
+             .suggestion__container {
+-              padding: 16px 8px;
+               display: flex;
+               align-items: center;
+               cursor: pointer;
+-              padding: 0 12px;
++              padding: 16px 8px;
+               justify-content: space-between;
+               border-bottom: 1px solid
+                 ${addColorAlpha(theme.palette.border, 0.6)};\n- packages/docs/src/components/sidebar/index.tsx (modified, 6 changes)\n  Patch: @@ -20,7 +20,7 @@ export interface Props {
+ const defaultProps = {
+   level: 1,
+   tag: '',
+-  slug: '',
++  slug: ''
+ };
+ 
+ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+@@ -37,7 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({
+   level,
+   tag,
+   slug,
+-  onPostClick,
++  onPostClick
+ }) => {
+   const theme = useTheme() as NextUIThemes;
+   const isMobile = useMediaQuery(
+@@ -97,7 +97,7 @@ const Sidebar: React.FC<SidebarProps> = ({
+           title,
+           pathname,
+           selected,
+-          newPost,
++          newPost
+         } as NavLinkProps;
+ 
+         return (\n- packages/docs/src/hooks/use-docs-route.ts (modified, 2 changes)\n  Patch: @@ -30,7 +30,7 @@ const getRouteContext = (
+         title:
+           parent && !parent.heading
+             ? `${parent.title}: ${currentRoute?.title}` || ''
+-            : currentRoute?.title || '',
++            : currentRoute?.title || ''
+       };
+       // Continue the loop until we know the next route
+       continue;\n- packages/docs/src/lib/docs/page.ts (modified, 3 changes)\n  Patch: @@ -5,7 +5,10 @@ import { removeFromLast } from '@utils/index';
+ 
+ export interface Route {
+   title: string;
++  subtitle?: string;
++  section?: string;
+   heading?: boolean;
++  keywords?: string;
+   icon?: string;
+   open?: boolean;
+   path?: string;\n- packages/docs/src/lib/kbar-actions.ts (added, 128 changes)\n  Patch: @@ -0,0 +1,128 @@
++import { Action } from 'kbar';
++import { NextRouter } from 'next/router';
++import { DarkMode } from 'use-dark-mode';
++import { Route } from '@lib/docs/page';
++import { getId } from '../utils/collections';
++import { removeFromLast } from '@utils/index';
++// data imported from manifest
++import docsManifest from '../../content/docs/manifest.json';
++
++const docsActions: Action[] = [];
++
++const buildDocsActions = (
++  router: NextRouter,
++  routes: Route[],
++  parent?: string
++) => {
++  routes.forEach((route: Route) => {
++    const routeId = getId();
++    const routePath: any = route.path ? removeFromLast(route.path, '.') : null;
++    const action: Action = {
++      id: routeId,
++      name: route.title,
++      section: route.section || '',
++      parent: parent,
++      shortcut: [],
++      children: [],
++      keywords: route.keywords || '',
++      subtitle: route.subtitle || ''
++    };
++    if (routePath) {
++      action.perform = () => {
++        router.push(routePath);
++      };
++    }
++    if (route.icon) {
++      action.icon = route.icon;
++    }
++    if (parent) {
++      docsActions
++        .filter((act) => act.id === parent)
++        .map((act) => {
++          return act.children?.push(routeId);
++        });
++    }
++    docsActions.push(action);
++    if (route.routes) {
++      buildDocsActions(router, route.routes, routeId);
++    }
++  });
++};
++
++const handleExternalLink = (href: string) => {
++  Object.assign(document.createElement('a'), {
++    target: '_blank',
++    rel: 'noopener noreferrer',
++    href
++  }).click();
++};
++
++const getActions = (router: NextRouter, darkMode: DarkMode): Action[] => {
++  const routes = docsManifest.routes;
++  buildDocsActions(router, routes);
++
++  const staticActions: Action[] = [
++    {
++      id: 'twitter',
++      name: 'Twitter',
++      subtitle: '@getnextui',
++      section: 'Social',
++      shortcut: [],
++      keywords: 'dm, twitter, contact',
++      icon: 'twitter',
++      perform: () => handleExternalLink('https://twitter.com/getnextui')
++    },
++    {
++      id: 'discord',
++      name: 'Discord',
++      subtitle: 'Join us!',
++      section: 'Social',
++      shortcut: [],
++      keywords: 'chat, community, join',
++      icon: 'discord',
++      perform: () => handleExternalLink('https://discord.gg/9b6yyZKmH4')
++    },
++    {
++      id: 'github',
++      name: 'Github',
++      subtitle: 'nextui-org',
++      section: 'Social',
++      shortcut: [],
++      keywords: 'github, source code, open, code',
++      icon: 'github',
++      perform: () => handleExternalLink('https://github.com/nextui-org/nextui')
++    },
++    {
++      id: 'changeTheme',
++      name: 'Change Theme',
++      section: 'General',
++      shortcut: [],
++      keywords:
++        'background, change color, color, change theme, theme, dark, light',
++      icon: 'palette',
++      children: ['darkTheme', 'lightTheme']
++    },
++    {
++      id: 'darkTheme',
++      name: 'Dark',
++      parent: 'changeTheme',
++      keywords: 'dark',
++      icon: 'moon',
++      shortcut: [],
++      perform: () => darkMode.enable()
++    },
++    {
++      id: 'lightTheme',
++      name: 'Light',
++      parent: 'changeTheme',
++      keywords: 'light',
++      shortcut: [],
++      icon: 'sun',
++      perform: () => darkMode.disable()
++    }
++  ];
++
++  return [...docsActions, ...staticActions];
++};
++
++export default getActions;\n- packages/docs/src/pages/_app.tsx (modified, 43 changes)\n  Patch: @@ -1,12 +1,15 @@
+ import React, { useState, useEffect } from 'react';
+ import { NextPage } from 'next';
+-import { NextRouter, Router } from 'next/router';
++import dynamic from 'next/dynamic';
++import { NextRouter, Router, useRouter } from 'next/router';
+ import { CssBaseline, NextUIThemes, ThemeProvider } from '@nextui-org/react';
+ import useDarkMode from 'use-dark-mode';
+ import { AppInitialProps } from 'next/app';
+ import { DeepPartial } from '@utils/types';
+ import { NextComponent } from '@lib/types';
++import generateKbarActions from '@lib/kbar-actions';
+ import sharedTheme from '@theme/shared';
++import { KBarProvider } from 'kbar';
+ 
+ type AppPropsType<
+   R extends NextRouter = NextRouter,
+@@ -20,52 +23,66 @@ type AppPropsType<
+ 
+ type AppProps<P = {}> = AppPropsType<Router, P>;
+ 
++const KbarComponent = dynamic(() => import('../components/kbar'), {
++  ssr: false
++});
++
+ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
+   const [mounted, setMounted] = useState(false);
+   const [customTheme, setCustomTheme] = useState<DeepPartial<NextUIThemes>>({
+-    ...sharedTheme,
++    ...sharedTheme
+   });
+ 
++  const router = useRouter();
++
+   const themeChangeHandle = (isDark: boolean) => {
+     if (customTheme.type === 'dark' && !isDark) {
+       setCustomTheme({
+         ...customTheme,
+-        type: 'light',
++        type: 'light'
+       });
+     } else if (customTheme.type === 'light' && isDark) {
+       setCustomTheme({
+         ...customTheme,
+-        type: 'dark',
++        type: 'dark'
+       });
+     }
+   };
+ 
+-  useDarkMode(true, {
+-    onChange: themeChangeHandle,
++  const darkMode = useDarkMode(true, {
++    onChange: themeChangeHandle
+   });
+ 
++  const kbarActions = generateKbarActions(router, darkMode);
++
+   useEffect(() => {
+     const savedTheme = window.localStorage.getItem('darkMode')
+       ? 'dark'
+       : 'light';
+     setCustomTheme((prevTheme) => ({
+       ...prevTheme,
+-      type: savedTheme || 'dark',
++      type: savedTheme || 'dark'
+     }));
+     setMounted(true);
+   }, []);
+ 
+   return (
+     <>
+       <ThemeProvider theme={customTheme}>
+-        <>
+-          <CssBaseline />
++        <CssBaseline />
++        <KBarProvider
++          actions={kbarActions}
++          options={{
++            animations: {
++              enterMs: 250,
++              exitMs: 100
++            }
++          }}
++        >
++          <KbarComponent />
+           {mounted && <Component {...pageProps} />}
+-        </>
++        </KBarProvider>
+         <style global jsx>{`
+-          html {
+-            scroll-behavior: smooth;
+-          }
+           .noselect {
+             -webkit-touch-callout: none; /* iOS Safari */
+             -webkit-user-select: none; /* Safari */\n- packages/docs/src/pages/docs/[[...slug]].tsx (modified, 39 changes)\n  Patch: @@ -1,6 +1,6 @@
+ /* eslint-disable react/display-name */
+ import * as React from 'react';
+-import { useRouter } from 'next/router';
++import router, { useRouter } from 'next/router';
+ import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+ import DocsLayout from '@layouts/docs';
+ import * as Components from '@nextui-org/react';
+@@ -11,6 +11,7 @@ import { MDXComponents } from '@components';
+ import matter from 'gray-matter';
+ import { serialize } from 'next-mdx-remote/serialize';
+ import { getSlug } from '@lib/docs/utils';
++import { Action, useRegisterActions } from 'kbar';
+ import fs from 'fs';
+ import path from 'path';
+ import {
+@@ -20,13 +21,14 @@ import {
+   fetchRawDoc,
+   findRouteByPath,
+   getRawAsset,
+-  getPaths,
++  getPaths
+ } from '@lib/docs/page';
+ import { isProd } from '@utils/index';
++import { getId } from '@utils/collections';
+ 
+ const components = {
+   ...Components,
+-  ...MDXComponents,
++  ...MDXComponents
+ };
+ 
+ interface Props {
+@@ -40,6 +42,23 @@ const DocsPage: React.FC<Props> = ({ routes, currentRoute, source, meta }) => {
+   const { route, prevRoute, nextRoute } = useDocsRoute(routes, currentRoute);
+   const { query } = useRouter();
+   const { tag, slug } = getSlug(query);
++
++  // kbar home action
++  const homeAction: Action = React.useMemo(() => {
++    return {
++      id: getId(),
++      name: 'Go Home',
++      section: 'Scope',
++      icon: 'home',
++      shortcut: [],
++      keywords: 'home, return, back, landing, page, init, initial',
++      children: [],
++      perform: () => router.push('/')
++    };
++  }, [routes]);
++
++  useRegisterActions([homeAction].filter(Boolean));
++
+   return (
+     <DocsLayout
+       routes={routes}
+@@ -75,7 +94,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
+ 
+   if (!route) {
+     return {
+-      props: {},
++      props: {}
+     };
+   }
+ 
+@@ -99,17 +118,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
+     mdxOptions: {
+       remarkPlugins: [
+         require('remark-autolink-headings'),
+-        require('remark-slug'),
++        require('remark-slug')
+       ],
+-      rehypePlugins: [require('@mapbox/rehype-prism')],
+-    },
++      rehypePlugins: [require('@mapbox/rehype-prism')]
++    }
+   });
+ 
+   const routes = manifest.routes.map((route: any) => {
+     if (route.icon) {
+       return {
+         ...route,
+-        icon: getRawAsset(route.icon, currentTag),
++        icon: getRawAsset(route.icon, currentTag)
+       };
+     }
+     return route;
+@@ -120,8 +139,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
+       routes,
+       meta,
+       source: mdxSource,
+-      currentRoute: route,
+-    },
++      currentRoute: route
++    }
+   };
+ };
+ \n- packages/docs/src/pages/index.tsx (modified, 23 changes)\n  Patch: @@ -1,10 +1,12 @@
+ import React from 'react';
+ import { GetStaticProps } from 'next';
+-import { useRouter } from 'next/router';
++import router, { useRouter } from 'next/router';
+ import { Hero } from '@components';
+ import DefaultLayout from '@layouts/default';
+ import { getSlug } from '@lib/docs/utils';
+ import { Route, getCurrentTag, fetchDocsManifest } from '@lib/docs/page';
++import { Action, useRegisterActions } from 'kbar';
++import { getId } from '@utils/collections';
+ 
+ interface Props {
+   routes: Route[];
+@@ -14,6 +16,21 @@ interface Props {
+ const IndexPage: React.FC<Props> = ({ routes, currentRoute }) => {
+   const { query } = useRouter();
+   const { tag, slug } = getSlug(query);
++
++  // kbar home action
++  const homeAction: Action = React.useMemo(() => {
++    return {
++      id: getId(),
++      name: 'Getting started',
++      section: 'Scope',
++      shortcut: [],
++      keywords: 'help, docs, go, started, getting started, nextui',
++      perform: () => router.push('/docs/guide/getting-started')
++    };
++  }, [routes]);
++
++  useRegisterActions([homeAction]);
++
+   return (
+     <DefaultLayout
+       routes={routes}
+@@ -31,8 +48,8 @@ export const getStaticProps: GetStaticProps = async () => {
+   const manifest = await fetchDocsManifest(tag);
+   return {
+     props: {
+-      routes: manifest.routes,
+-    },
++      routes: manifest.routes
++    }
+   };
+ };
+ \n- packages/nextui/src/backdrop/index.tsx (modified, 5 changes)\n  Patch: @@ -35,9 +35,8 @@ const Backdrop: React.FC<React.PropsWithChildren<BackdropProps>> = React.memo(
+     ...props
+   }) => {
+     const theme = useTheme();
+-    const [, setIsContentMouseDown, IsContentMouseDownRef] = useCurrentState(
+-      false
+-    );
++    const [, setIsContentMouseDown, IsContentMouseDownRef] =
++      useCurrentState(false);
+     const clickHandler = (event: MouseEvent<HTMLElement>) => {
+       if (IsContentMouseDownRef.current) return;
+       onClick && onClick(event);\n

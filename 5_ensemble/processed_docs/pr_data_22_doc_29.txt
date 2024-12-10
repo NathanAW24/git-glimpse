@@ -1,0 +1,100 @@
+Pull Request Number: 1357
+Title: fix: storybook image stories ReferenceError: require is not defined
+Base Branch: main
+Head Branch: fix/storybook-image
+Author: Jlassiezzeddine
+URL: https://github.com/nextui-org/nextui/pull/1357
+State: CLOSED
+Created At: 2023-08-11T01:41:40Z
+Merged At: None
+Participants: Jlassiezzeddine, jrgarciadev
+
+Description:
+📝 Description
+Issue : #1356
+When we run storybook in dev static files are not loaded correctly using require("path/to/file")
+I think the possible solution that I applied in this PR is to add the assets folder to .storybook/main.js :
+module.exports = { ..., staticDirs: ["../public", "../../components/image/stories/assets"],  ... }
+⛳️ Current behavior (updates)
+[ReferenceError: require is not defined]
+
+🚀 New behavior
+Images now load correctly
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+I'm not sure this is the right solution to include every static folder from each component that need images to the staticDirs array
+
+Commits:
+- fix: storybook image stories ReferenceError: require is not defined\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 1acfb4b7bf55f172391258a42f11bdd98bcd8284
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/Jlassiezzeddine/nextui/new/fix/storybook-image?filename=.changeset/dry-otters-collect.md&value=---%0A%22%40nextui-org%2Fimage%22%3A%20patch%0A%22%40nextui-org%2Fstorybook%22%3A%20patch%0A---%0A%0Afix%3A%20storybook%20image%20stories%20ReferenceError%3A%20require%20is%20not%20defined%0A)
+
+\n- vercel: [vc]: #cC4QkxCuPD8rgkPwYUnOVXyeKeiN0VbZyZCtsdgZMfU=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvM25DZzJjcjRrVWtSc1dGanI1SFhoVGsxNVEzOCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWpsYXNzaWV6emVkZGluZS1lMjg2ZTktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstamxhc3NpZXp6ZWRkaW5lLWUyODZlOS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/3nCg2cr4kUkRsWFjr5HXhTk15Q38)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jlassiezzeddine-e286e9-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jlassiezzeddine-e286e9-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 11, 2023 1:43am |
+
+\n- vercel: @Jlassiezzeddine is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%221acfb4b7bf55f172391258a42f11bdd98bcd8284%22%7D%2C%22id%22%3A%22QmPVcka51ks779yDKtCiUg9aZWMXkwYSdjWsfbzEGNvzCb%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1357%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Hey @Jlassiezzeddine sorry I didn't see you sent this PR, I already fixed here https://github.com/nextui-org/nextui/pull/1359\n
+
+Files Changed:
+- packages/components/image/stories/image.stories.tsx (modified, 6 changes)\n  Patch: @@ -47,7 +47,7 @@ export default {
+ 
+ const defaultProps = {
+   ...image.defaultVariants,
+-  src: require("./assets/local-image-1.jpeg"),
++  src: "local-image-1.jpeg",
+   alt: "NextUI hero image",
+   disableSkeleton: true,
+ };
+@@ -82,7 +82,7 @@ export const Blurred = {
+     ...defaultProps,
+     width: 300,
+     isBlurred: true,
+-    src: require("./assets/local-image-small.jpg"),
++    src: "/local-image-small.jpg",
+     // src:
+     //   "https://images.unsplash.com/photo-1519638831568-d9897f54ed69?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+   },
+@@ -105,7 +105,7 @@ export const Shadow = {
+     isZoomed: true,
+     radius: "lg",
+     shadow: "md",
+-    src: require("./assets/local-image-small.jpg"),
++    src: "/local-image-small.jpg",
+   },
+ };
+ \n- packages/storybook/.storybook/main.js (modified, 2 changes)\n  Patch: @@ -4,7 +4,7 @@ module.exports = {
+     "../../components/**/stories/**/*.stories.@(js|jsx|ts|tsx)",
+     "../../core/theme/stories/*.stories.@(js|jsx|ts|tsx)",
+   ],
+-  staticDirs: ["../public"],
++  staticDirs: ["../public", "../../components/image/stories/assets"],
+   addons: [
+     "@storybook/addon-a11y",
+     "@storybook/addon-essentials",\n

@@ -1,0 +1,149 @@
+Pull Request Number: 440
+Title: fix: #439 server side rendering of table with pagination
+Base Branch: next
+Head Branch: fix/pagination-table-ssr
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/440
+State: MERGED
+Created At: 2022-04-28T23:17:12Z
+Merged At: 2022-05-01T19:34:09Z
+Participants: tianenpang, codecov-commenter, jrgarciadev
+
+Description:
+Closes #439
+📝 Description
+Fix the issue that row data is not rendered on the server side.
+⛳️ Current behavior (updates)
+Add rowsPerPage to the initialValues of TableContext so that TableBody can calculate rows correctly.
+🚀 New behavior
+Added hasPaginationChild method to check if there is a pagination and to get rowsPerPage by default 0.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+Screenshot of table with pagination ssr
+
+Commits:
+- fix: add rowsPerPage to initialValues\n
+
+Labels:
+👀 Status: In Review
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/440?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#440](https://codecov.io/gh/nextui-org/nextui/pull/440?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (7b3e8a0) into [main](https://codecov.io/gh/nextui-org/nextui/commit/15c006102566f25638a1a17ba9569002ea2d2401?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (15c0061) will **decrease** coverage by `0.04%`.
+> The diff coverage is `66.66%`.
+
+```diff
+@@            Coverage Diff             @@
+##             main     #440      +/-   ##
+==========================================
+- Coverage   74.77%   74.73%   -0.05%     
+==========================================
+  Files         174      174              
+  Lines        2791     2802      +11     
+  Branches      822      828       +6     
+==========================================
++ Hits         2087     2094       +7     
+- Misses        694      697       +3     
+- Partials       10       11       +1     
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/440?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/react/src/table/table-context.tsx](https://codecov.io/gh/nextui-org/nextui/pull/440/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3RhYmxlL3RhYmxlLWNvbnRleHQudHN4) | `81.81% <33.33%> (-7.66%)` | :arrow_down: |
+| [packages/react/src/table/utils.ts](https://codecov.io/gh/nextui-org/nextui/pull/440/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3RhYmxlL3V0aWxzLnRz) | `81.25% <75.00%> (-6.25%)` | :arrow_down: |
+| [packages/react/src/table/table.tsx](https://codecov.io/gh/nextui-org/nextui/pull/440/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3RhYmxlL3RhYmxlLnRzeA==) | `90.32% <100.00%> (ø)` | |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/440?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/440?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [15c0061...7b3e8a0](https://codecov.io/gh/nextui-org/nextui/pull/440?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n- jrgarciadev: Huge thanks @tianenpang 🙏🏻 \n
+
+Files Changed:
+- packages/react/src/table/__tests__/__snapshots__/index.test.tsx.snap (modified, 4 changes)\n  Patch: @@ -1,5 +1,5 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`Table should render a static table correctly with sorting 1`] = `"<div class=\\"nextui-c-hSfoSF nextui-c-hSfoSF-gikTHb-shadow-true nextui-c-hSfoSF-bzEnZV-borderWeight-normal nextui-c-hSfoSF-iPJLV-css nextui-table-container\\"><table class=\\"nextui-c-hLONex nextui-c-hLONex-dicOIe-color-primary nextui-c-hLONex-fPgLZC-lineWeight-light nextui-table\\" aria-label=\\"Test sorting table\\" id=\\"react-aria1907238169-15\\" role=\\"grid\\" tabindex=\\"0\\" aria-describedby=\\"\\"><thead class=\\"nextui-c-PJLV nextui-table-row-group\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-fRbcxI nextui-table-header-row\\" role=\\"row\\"><th class=\\"nextui-c-gkciFS nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.0\\" role=\\"columnheader\\" id=\\"react-aria1907238169-15-.0.0\\">NAME</th><th class=\\"nextui-c-gkciFS nextui-c-PJLV nextui-c-gkciFS-hjbeJO-allowsSorting-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.1\\" role=\\"columnheader\\" id=\\"react-aria1907238169-15-.0.1\\" aria-sort=\\"none\\" aria-describedby=\\"react-aria-description-0\\">TYPE<svg role=\\"presentation\\" aria-hidden=\\"true\\" focusable=\\"false\\" class=\\"nextui-c-cqpNQI nextui-c-cqpNQI-ihOkgrg-css nextui-table-sort-icon\\" width=\\"22\\" height=\\"22\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path d=\\"M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.06 11.27L12.53 14.8C12.38 14.95 12.19 15.02 12 15.02C11.81 15.02 11.62 14.95 11.47 14.8L7.94 11.27C7.65 10.98 7.65 10.5 7.94 10.21C8.23 9.92 8.71 9.92 9 10.21L12 13.21L15 10.21C15.29 9.92 15.77 9.92 16.06 10.21C16.35 10.5 16.35 10.97 16.06 11.27Z\\"></path></svg></th><th class=\\"nextui-c-gkciFS nextui-c-PJLV nextui-c-gkciFS-hjbeJO-allowsSorting-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.2\\" role=\\"columnheader\\" id=\\"react-aria1907238169-15-.0.2\\" aria-sort=\\"none\\" aria-describedby=\\"react-aria-description-0\\">DATE MODIFIED<svg role=\\"presentation\\" aria-hidden=\\"true\\" focusable=\\"false\\" class=\\"nextui-c-cqpNQI nextui-c-cqpNQI-ihOkgrg-css nextui-table-sort-icon\\" width=\\"22\\" height=\\"22\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path d=\\"M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.06 11.27L12.53 14.8C12.38 14.95 12.19 15.02 12 15.02C11.81 15.02 11.62 14.95 11.47 14.8L7.94 11.27C7.65 10.98 7.65 10.5 7.94 10.21C8.23 9.92 8.71 9.92 9 10.21L12 13.21L15 10.21C15.29 9.92 15.77 9.92 16.06 10.21C16.35 10.5 16.35 10.97 16.06 11.27Z\\"></path></svg></th></tr><tr aria-hidden=\\"true\\" class=\\"nextui-c-gNVTSf nextui-c-gNVTSf-hakyQ-inline-false nextui-c-gNVTSf-icCJVMZ-css nextui-table-hidden-row\\"></tr></thead><tbody class=\\"nextui-c-PJLV nextui-c-PJLV-iccTTUn-css nextui-table-body\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-bUbfzy nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-row\\" role=\\"row\\" tabindex=\\"-1\\" data-key=\\"1\\" aria-labelledby=\\"react-aria1907238169-15-1-.0.0\\" aria-hidden=\\"false\\"><td class=\\"nextui-c-PJLV nextui-c-eXPDRa nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.0\\" role=\\"rowheader\\" id=\\"react-aria1907238169-15-1-.0.0\\">Games</td><td class=\\"nextui-c-PJLV nextui-c-eXPDRa nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.1\\" role=\\"gridcell\\">File folder</td><td class=\\"nextui-c-PJLV nextui-c-eXPDRa nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.2\\" role=\\"gridcell\\">6/7/2020</td></tr></tbody></table></div>"`;
++exports[`Table should render a static table correctly with sorting 1`] = `"<div class=\\"nextui-c-hWZRae nextui-c-hWZRae-gikTHb-shadow-true nextui-c-hWZRae-bzEnZV-borderWeight-normal nextui-c-hWZRae-iPJLV-css nextui-table-container\\"><table class=\\"nextui-c-cuoPNV nextui-c-cuoPNV-dicOIe-color-primary nextui-c-cuoPNV-fPgLZC-lineWeight-light nextui-table\\" aria-label=\\"Test sorting table\\" id=\\"react-aria9051012084-15\\" role=\\"grid\\" tabindex=\\"0\\" aria-describedby=\\"\\"><thead class=\\"nextui-c-PJLV nextui-table-row-group\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-fRbcxI nextui-table-header-row\\" role=\\"row\\"><th class=\\"nextui-c-gkciFS nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.0\\" role=\\"columnheader\\" id=\\"react-aria9051012084-15-.0.0\\">NAME</th><th class=\\"nextui-c-gkciFS nextui-c-PJLV nextui-c-gkciFS-hjbeJO-allowsSorting-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.1\\" role=\\"columnheader\\" id=\\"react-aria9051012084-15-.0.1\\" aria-sort=\\"none\\" aria-describedby=\\"react-aria-description-0\\">TYPE<svg role=\\"presentation\\" aria-hidden=\\"true\\" focusable=\\"false\\" class=\\"nextui-c-cqpNQI nextui-c-cqpNQI-ihOkgrg-css nextui-table-sort-icon\\" width=\\"22\\" height=\\"22\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path d=\\"M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.06 11.27L12.53 14.8C12.38 14.95 12.19 15.02 12 15.02C11.81 15.02 11.62 14.95 11.47 14.8L7.94 11.27C7.65 10.98 7.65 10.5 7.94 10.21C8.23 9.92 8.71 9.92 9 10.21L12 13.21L15 10.21C15.29 9.92 15.77 9.92 16.06 10.21C16.35 10.5 16.35 10.97 16.06 11.27Z\\"></path></svg></th><th class=\\"nextui-c-gkciFS nextui-c-PJLV nextui-c-gkciFS-hjbeJO-allowsSorting-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.2\\" role=\\"columnheader\\" id=\\"react-aria9051012084-15-.0.2\\" aria-sort=\\"none\\" aria-describedby=\\"react-aria-description-0\\">DATE MODIFIED<svg role=\\"presentation\\" aria-hidden=\\"true\\" focusable=\\"false\\" class=\\"nextui-c-cqpNQI nextui-c-cqpNQI-ihOkgrg-css nextui-table-sort-icon\\" width=\\"22\\" height=\\"22\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path d=\\"M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.06 11.27L12.53 14.8C12.38 14.95 12.19 15.02 12 15.02C11.81 15.02 11.62 14.95 11.47 14.8L7.94 11.27C7.65 10.98 7.65 10.5 7.94 10.21C8.23 9.92 8.71 9.92 9 10.21L12 13.21L15 10.21C15.29 9.92 15.77 9.92 16.06 10.21C16.35 10.5 16.35 10.97 16.06 11.27Z\\"></path></svg></th></tr><tr aria-hidden=\\"true\\" class=\\"nextui-c-gNVTSf nextui-c-gNVTSf-hakyQ-inline-false nextui-c-gNVTSf-icCJVMZ-css nextui-table-hidden-row\\"></tr></thead><tbody class=\\"nextui-c-PJLV nextui-c-PJLV-iccTTUn-css nextui-table-body\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-bUbfzy nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-row\\" role=\\"row\\" tabindex=\\"-1\\" data-key=\\"1\\" aria-labelledby=\\"react-aria9051012084-15-1-.0.0\\" aria-hidden=\\"false\\"><td class=\\"nextui-c-PJLV nextui-c-coKxkr nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.0\\" role=\\"rowheader\\" id=\\"react-aria9051012084-15-1-.0.0\\">Games</td><td class=\\"nextui-c-PJLV nextui-c-coKxkr nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.1\\" role=\\"gridcell\\">File folder</td><td class=\\"nextui-c-PJLV nextui-c-coKxkr nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.2\\" role=\\"gridcell\\">6/7/2020</td></tr></tbody></table></div>"`;
+ 
+-exports[`Table should render correctly 1`] = `"<div class=\\"nextui-c-hSfoSF nextui-c-hSfoSF-gikTHb-shadow-true nextui-c-hSfoSF-bzEnZV-borderWeight-normal nextui-c-hSfoSF-iPJLV-css nextui-table-container\\"><table class=\\"nextui-c-hLONex nextui-c-hLONex-dicOIe-color-primary nextui-c-hLONex-fPgLZC-lineWeight-light nextui-table\\" aria-label=\\"Test example table\\" id=\\"react-aria1907238169-2\\" role=\\"grid\\" tabindex=\\"0\\" aria-describedby=\\"\\"><thead class=\\"nextui-c-PJLV nextui-table-row-group\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-fRbcxI nextui-table-header-row\\" role=\\"row\\"><th class=\\"nextui-c-gkciFS nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.0\\" role=\\"columnheader\\" id=\\"react-aria1907238169-2-.0.0\\">NAME</th><th class=\\"nextui-c-gkciFS nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.1\\" role=\\"columnheader\\" id=\\"react-aria1907238169-2-.0.1\\">TYPE</th><th class=\\"nextui-c-gkciFS nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.2\\" role=\\"columnheader\\" id=\\"react-aria1907238169-2-.0.2\\">DATE MODIFIED</th></tr><tr aria-hidden=\\"true\\" class=\\"nextui-c-gNVTSf nextui-c-gNVTSf-hakyQ-inline-false nextui-c-gNVTSf-icCJVMZ-css nextui-table-hidden-row\\"></tr></thead><tbody class=\\"nextui-c-PJLV nextui-c-PJLV-iccTTUn-css nextui-table-body\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-bUbfzy nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-row\\" role=\\"row\\" tabindex=\\"-1\\" data-key=\\"1\\" aria-labelledby=\\"react-aria1907238169-2-1-.0.0\\" aria-hidden=\\"false\\"><td class=\\"nextui-c-PJLV nextui-c-eXPDRa nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.0\\" role=\\"rowheader\\" id=\\"react-aria1907238169-2-1-.0.0\\">Games</td><td class=\\"nextui-c-PJLV nextui-c-eXPDRa nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.1\\" role=\\"gridcell\\">File folder</td><td class=\\"nextui-c-PJLV nextui-c-eXPDRa nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.2\\" role=\\"gridcell\\">6/7/2020</td></tr></tbody></table></div>"`;
++exports[`Table should render correctly 1`] = `"<div class=\\"nextui-c-hWZRae nextui-c-hWZRae-gikTHb-shadow-true nextui-c-hWZRae-bzEnZV-borderWeight-normal nextui-c-hWZRae-iPJLV-css nextui-table-container\\"><table class=\\"nextui-c-cuoPNV nextui-c-cuoPNV-dicOIe-color-primary nextui-c-cuoPNV-fPgLZC-lineWeight-light nextui-table\\" aria-label=\\"Test example table\\" id=\\"react-aria9051012084-2\\" role=\\"grid\\" tabindex=\\"0\\" aria-describedby=\\"\\"><thead class=\\"nextui-c-PJLV nextui-table-row-group\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-fRbcxI nextui-table-header-row\\" role=\\"row\\"><th class=\\"nextui-c-gkciFS nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.0\\" role=\\"columnheader\\" id=\\"react-aria9051012084-2-.0.0\\">NAME</th><th class=\\"nextui-c-gkciFS nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.1\\" role=\\"columnheader\\" id=\\"react-aria9051012084-2-.0.1\\">TYPE</th><th class=\\"nextui-c-gkciFS nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.2\\" role=\\"columnheader\\" id=\\"react-aria9051012084-2-.0.2\\">DATE MODIFIED</th></tr><tr aria-hidden=\\"true\\" class=\\"nextui-c-gNVTSf nextui-c-gNVTSf-hakyQ-inline-false nextui-c-gNVTSf-icCJVMZ-css nextui-table-hidden-row\\"></tr></thead><tbody class=\\"nextui-c-PJLV nextui-c-PJLV-iccTTUn-css nextui-table-body\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-bUbfzy nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-row\\" role=\\"row\\" tabindex=\\"-1\\" data-key=\\"1\\" aria-labelledby=\\"react-aria9051012084-2-1-.0.0\\" aria-hidden=\\"false\\"><td class=\\"nextui-c-PJLV nextui-c-coKxkr nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.0\\" role=\\"rowheader\\" id=\\"react-aria9051012084-2-1-.0.0\\">Games</td><td class=\\"nextui-c-PJLV nextui-c-coKxkr nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.1\\" role=\\"gridcell\\">File folder</td><td class=\\"nextui-c-PJLV nextui-c-coKxkr nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.2\\" role=\\"gridcell\\">6/7/2020</td></tr></tbody></table></div>"`;\n- packages/react/src/table/table-context.tsx (modified, 4 changes)\n  Patch: @@ -49,7 +49,9 @@ const Provider: React.FC<React.PropsWithChildren<ProviderProps>> = ({
+   );
+   const [collection, setCollection] = React.useState(defaultValues?.collection);
+   const [rowsPerPage, setRowsPerPage] = React.useState(
+-    defaultContext.rowsPerPage
++    defaultValues?.rowsPerPage === undefined
++      ? defaultContext.rowsPerPage
++      : defaultValues?.rowsPerPage
+   );
+   const [currentPage, setCurrentPage] = React.useState(
+     defaultContext.currentPage\n- packages/react/src/table/table.tsx (modified, 14 changes)\n  Patch: @@ -31,7 +31,7 @@ import {
+ import TablePagination from './table-pagination';
+ import TableFooter from './table-footer';
+ import TableBody from './table-body';
+-import { hasChild, pickSingleChild } from '../utils/collections';
++import { pickSingleChild } from '../utils/collections';
+ import {
+   StyledTable,
+   StyledTableContainer,
+@@ -40,7 +40,7 @@ import {
+ } from './table.styles';
+ import TableContext, { TableConfig } from './table-context';
+ import { excludedTableProps } from '../utils/prop-types';
+-import { isInfinityScroll } from './utils';
++import { isInfinityScroll, hasPaginationChild } from './utils';
+ import withDefaults from '../utils/with-defaults';
+ import clsx from '../utils/clsx';
+ 
+@@ -89,7 +89,10 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+       CollectionChildren<any>
+     >(children, TablePagination);
+ 
+-    const hasPagination = hasChild(children, TablePagination);
++    const { hasPagination, rowsPerPage } = hasPaginationChild(
++      children,
++      TablePagination
++    );
+ 
+     const state = useTableState({
+       ...tableProps,
+@@ -123,9 +126,10 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+       return {
+         collection,
+         color,
+-        animated
++        animated,
++        rowsPerPage
+       };
+-    }, [collection, animated, color]);
++    }, [collection, animated, color, rowsPerPage]);
+ 
+     return (
+       <TableContext.Provider defaultValues={initialValues}>\n- packages/react/src/table/utils.ts (modified, 17 changes)\n  Patch: @@ -1,6 +1,23 @@
++import React, { ReactNode } from 'react';
+ import { AriaCheckboxProps } from '@react-types/checkbox';
+ import { TableCollection } from '@react-types/table';
+ 
++export const hasPaginationChild = (
++  children: ReactNode | undefined,
++  child: React.ElementType
++): { hasPagination: boolean; rowsPerPage: number } => {
++  const pagination = React.Children.toArray(children).find(
++    (item) => React.isValidElement(item) && item.type === child
++  );
++  if (React.isValidElement(pagination)) {
++    return {
++      hasPagination: true,
++      rowsPerPage: pagination?.props?.rowsPerPage || 0
++    };
++  }
++  return { hasPagination: false, rowsPerPage: 0 };
++};
++
+ export const isInfinityScroll = (collection: TableCollection<unknown>) => {
+   const bodyProps = collection.body?.props;
+   return (\n

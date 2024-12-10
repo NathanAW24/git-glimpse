@@ -1,0 +1,72 @@
+Pull Request Number: 810
+Title: fix(react-navbar): box-sizing causing navbar issues on firefox
+Base Branch: next
+Head Branch: fix/navbar-broken-on-firefox
+Author: Nadhum
+URL: https://github.com/nextui-org/nextui/pull/810
+State: MERGED
+Created At: 2022-10-09T19:13:21Z
+Merged At: 2022-11-06T19:29:45Z
+Participants: Nadhum, jrgarciadev
+
+Description:
+Closes #713
+📝 Description
+BoxSizing "border-box" is causing issues on firefox and width are not being calculated properly. Probably because of using it in combination with flex components.
+This PR changes box-sizing of Links and Buttons inside the NavBar to be "content-box" instead "bordex-box" which fixes the issues currently seen on Firefox
+⛳️ Current behavior (updates)
+
+
+
+
+
+🚀 New behavior
+
+
+
+
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+Only tested on Firefox and Chrome.
+Need help with Safari testing.
+
+Commits:
+- fix(react-navbar): box-sizing causing navbar issues on firefox\n
+
+Labels:
+
+
+Comments:
+- vercel: @Nadhum is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2284782453b2017595e9e90fc73ab2d958eb358581%22%7D%2C%22id%22%3A%22QmYq6jRxGAYWsFWwoXh4WiXQVo2SpBuUq3n1aNVJNdoqq6%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A810%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/AyqgkkzZ2d6b2jHbDPo1bXps8M2n)) | [Visit Preview](https://nextui-storybook-git-fork-nadhum-fix-navbar-b-476a8d-nextui-org.vercel.app) | Oct 9, 2022 at 7:13PM (UTC) |
+
+\n
+
+Files Changed:
+- packages/react/src/navbar/navbar.styles.ts (modified, 5 changes)\n  Patch: @@ -1,5 +1,7 @@
+ import {styled, VariantProps} from "../theme/stitches.config";
+ import {cssFocusVisible, cssHideShowIn} from "../theme/shared-css";
++import {StyledButton} from "../button/";
++import {StyledLink} from "../link";
+ 
+ const itemColors = {
+   default: {
+@@ -254,6 +256,9 @@ export const StyledNavbarItem = styled(
+       bottom: 0,
+       borderRadius: "$sm",
+     },
++    [`& ${StyledButton}, & ${StyledLink}`]: {
++      boxSizing: "content-box",
++    },
+     "&:after": {
+       opacity: 0,
+       zIndex: "$1",\n

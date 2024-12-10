@@ -1,0 +1,104 @@
+Pull Request Number: 652
+Title: chore(repo): build and deploy with vercel
+Base Branch: main
+Head Branch: chore/build-in-vercel
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/652
+State: MERGED
+Created At: 2022-08-03T01:48:54Z
+Merged At: 2022-08-03T01:58:02Z
+Participants: tianenpang, codecov-commenter, jrgarciadev
+
+Description:
+📝 Description
+
+Remove deploy workflow
+Update vercel.json config
+
+
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- chore(docs): remove deploy workflow and update vercel config\n
+
+Labels:
+
+
+Comments:
+- vercel: @tianenpang is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22893dc53e30c4dc2c395b96c1ecadfd09ba1b466e%22%7D%2C%22id%22%3A%22QmdsChdyCYjDBCC1GE46mxUAuH2QYJ1c6aTXGy3TYuqz3e%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A652%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/9pwLhfJkMUtBTVo94ZHzfx6cuzGL)) | [Visit Preview](https://nextui-storybook-git-fork-tianenpang-chore-bu-45be29-nextui-org.vercel.app) | Sep 3, 2022 at 1:50AM (UTC) |
+
+\n- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/652?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#652](https://codecov.io/gh/nextui-org/nextui/pull/652?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (893dc53) into [main](https://codecov.io/gh/nextui-org/nextui/commit/37fb3d69897aa34cff8e232cb443e13668855cb8?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (37fb3d6) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+```diff
+@@           Coverage Diff           @@
+##             main     #652   +/-   ##
+=======================================
+  Coverage   74.82%   74.82%           
+=======================================
+  Files         200      200           
+  Lines        3098     3098           
+  Branches      956      956           
+=======================================
+  Hits         2318     2318           
+  Misses        765      765           
+  Partials       15       15           
+```
+
+
+
+Help us with your feedback. Take ten seconds to tell us [how you rate us](https://about.codecov.io/nps?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Have a feature suggestion? [Share it here.](https://app.codecov.io/gh/feedback/?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+\n
+
+Files Changed:
+- .github/workflows/main.yaml (modified, 21 changes)\n  Patch: @@ -106,27 +106,6 @@ jobs:
+           tag_prefix: "v"
+           package_root: "./packages/react"
+ 
+-  deploy:
+-    needs: [publish]
+-    runs-on: ubuntu-20.04
+-    if: ${{ github.event_name == 'push' }}
+-    steps:
+-      - uses: actions/checkout@v3
+-        with:
+-          fetch-depth: 0
+-      - name: Deploy to Vercel
+-        uses: amondnet/vercel-action@v20
+-        with:
+-          vercel-token: ${{ secrets.VERCEL_TOKEN }} 
+-          github-comment: true
+-          github-token: ${{ github.token }}
+-          # Skip the build cache and production deploy
+-          vercel-args: '--force --prod'
+-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
+-          vercel-project-name: ${{ secrets.VERCEL_PROJECT_NAME}}
+-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} 
+-          working-directory: './apps/docs'
+-
+   update_algolia_index:
+     needs: [publish]
+     runs-on: ubuntu-20.04\n- vercel.json (modified, 10 changes)\n  Patch: @@ -1,6 +1,6 @@
+ {
+-    "version": 2,
+-    "github": {
+-      "enabled": false
+-    }
+-  }
+\ No newline at end of file
++  "github": {
++    "silent": false,
++    "autoJobCancelation": true
++  }
++}
+\ No newline at end of file\n

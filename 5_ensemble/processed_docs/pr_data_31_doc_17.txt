@@ -1,0 +1,53 @@
+Pull Request Number: 132
+Title: Update dark-mode.mdx | Fixed wrong function argument :v:
+Base Branch: main
+Head Branch: patch-1
+Author: milksense
+URL: https://github.com/nextui-org/nextui/pull/132
+State: MERGED
+Created At: 2022-01-04T02:45:49Z
+Merged At: 2022-01-04T02:48:40Z
+Participants: milksense, jrgarciadev
+
+Description:
+Minor fix which fixes an issue
+[docs]/[theme/dark-mode]
+Types of changes
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Solved syntax error when can't get SwitchEvent in this file.
+export interface SwitchEvent {
+    target: SwitchEventTarget;
+    stopPropagation: () => void;
+    preventDefault: () => void;
+    nativeEvent: React.ChangeEvent;
+}
+Screenshots - Animations
+
+Commits:
+- Update dark-mode.mdx
+
+Fixed wrong function argument :v:\n
+
+Labels:
+🧱 Type: Refactoring
+
+Comments:
+- jrgarciadev: Hey @milksense thanks! 🙌🏻 \n
+
+Files Changed:
+- apps/docs/content/docs/theme/dark-mode.mdx (modified, 2 changes)\n  Patch: @@ -77,7 +77,7 @@ const App = () => {
+       The current theme is: {type}
+       <Switch
+         initialChecked={isDark}
+-        onChange={(e) => setTheme(target.target ? 'dark' : 'light')}
++        onChange={(e) => setTheme(e.target ? 'dark' : 'light')}
+       />
+     </div>
+   )\n

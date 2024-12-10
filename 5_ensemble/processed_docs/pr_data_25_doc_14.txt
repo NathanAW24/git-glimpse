@@ -1,0 +1,61 @@
+Pull Request Number: 961
+Title: fix: process overflow visible #958
+Base Branch: next
+Head Branch: fix/progress_958
+Author: wangly19
+URL: https://github.com/nextui-org/nextui/pull/961
+State: MERGED
+Created At: 2022-12-21T13:55:10Z
+Merged At: 2023-01-04T01:09:05Z
+Participants: wangly19, jrgarciadev, tianenpang
+
+Description:
+📝 Description
+The progress bar shows an exception.
+exception:
+
+Correct
+
+⛳️ Current behavior (updates)
+Setting small values makes the problem worse, as colored areas start to "highlight" circular progress bars visibly.
+🚀 New behavior
+Display normal
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+For small values, the colored portion of the progress bar component clips out of the circular shape，
+Is the design correct?
+
+Commits:
+- fix: process overflow visible.\n- chore: updated process overflow hidden\n
+
+Labels:
+
+
+Comments:
+- vercel: @wangly19 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2265ac862b3bbef562efca454d5468116141ae3507%22%7D%2C%22id%22%3A%22QmQoLg4PsuG3W12wPNFi9nmYKBAFLPnseK9KurTzRNadsA%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A961%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/ACFFHs725PqY3ajj4MnebShdcLaV)) | [Visit Preview](https://nextui-docs-git-fork-wangly19-fix-progress958-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-docs-git-fork-wangly19-fix-progress958-nextui-org.vercel.app) | Jan 3, 2023 at 10:33AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/DmiXXVu64PDUCg3BrSfrkr6f7Qb3)) | [Visit Preview](https://nextui-storybook-git-fork-wangly19-fix-progress958-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-wangly19-fix-progress958-nextui-org.vercel.app) | Jan 3, 2023 at 10:33AM (UTC) |
+
+
+\n- jrgarciadev: @tianenpang could you please help me test this?\n- tianenpang: Hi @jrgarciadev LGTM, ready to merge 🚀 thanks @wangly19.
+
+Closes https://github.com/nextui-org/nextui/issues/958\n
+
+Files Changed:
+- packages/react/src/progress/progress.styles.ts (modified, 2 changes)\n  Patch: @@ -14,7 +14,7 @@ export const StyledProgress = styled("div", {
+   padding: 0,
+   width: "100%",
+   position: "relative",
+-  overflow: "visible",
++  overflow: "hidden",
+   variants: {
+     color: {
+       default: {\n

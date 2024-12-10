@@ -1,0 +1,291 @@
+Pull Request Number: 3689
+Title: fix(select): nullify quick clicks on select
+Base Branch: canary
+Head Branch: macci001/add-delay-in-multi-clicks
+Author: macci001
+URL: https://github.com/nextui-org/nextui/pull/3689
+State: CLOSED
+Created At: 2024-08-28T11:55:58Z
+Merged At: None
+Participants: macci001, wingkwong, chirokas
+
+Description:
+Closes #3619
+📝 Description
+
+Multiple quick clicks on select trigger was not waiting for animation to complete and starts to process the actions by subsequent clicks to open/close the popover.
+The PR makes the fix which blocks the actions triggered by the click until a specific threshold time.
+
+⛳️ Current behavior (updates)
+
+As shown in the video below, on multiple quick click, the subsequent clicks action is triggered which closes/opens the pop-over without waiting for the animation to get completed.
+
+
+  
+    
+    
+
+    Screen.Recording.2024-08-28.at.5.07.09.PM.mov
+    
+  
+
+  
+
+  
+
+
+🚀 New behavior
+
+PR adds an a delay of threshold only after which the click will trigger action.
+
+
+  
+    
+    
+
+    Screen.Recording.2024-08-28.at.5.05.35.PM.mov
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No): No
+📝 Questions to the reviewers:
+
+The threshold selected is based on trial and error as I was unable to get the information about timing in which the framer motion animation will get over. Current threshold works good but is there an better way in thresholding here?
+The code makes changes in use-multiselect, by modifying the triggerProps returned. Alternative of this could be making the change in use-select by modifying onPressStart there. But the current way is implemented in order to support re-usability.
+
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Resolved an issue with the multi-select component that caused unintended actions during rapid clicks, enhancing user experience.
+
+
+
+New Features
+
+Introduced a functionality to manage press event timing, preventing rapid consecutive triggers for improved interaction with the multi-select component.
+
+Commits:
+- fix(select): nullify the clicks on quick presses\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 4bf8eabcba84c5a5f74f6de689e7bdde4d2bad78
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                             | Type  |
+| -------------------------------- | ----- |
+| @nextui-org/use-aria-multiselect | Patch |
+| @nextui-org/select               | Patch |
+| @nextui-org/react                | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/macci001/nextui/new/macci001/add-delay-in-multi-clicks?filename=.changeset/popular-gifts-hammer.md&value=---%0A%22%40nextui-org%2Fuse-aria-multiselect%22%3A%20patch%0A---%0A%0Afix(select)%3A%20nullify%20quick%20clicks%20on%20select%0A)
+
+\n- vercel: @macci001 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22a414baff0d6d4f6e8d9420233c353c323ed20aaa%22%7D%2C%22id%22%3A%22QmNjqFAbNRAURRXxSMCiFqrSMTMqMXq8wTvXAkFnGMXoek%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3689%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update implements a fix for the multi-select component in the `@nextui-org/use-aria-multiselect` package. It addresses an issue where rapid clicks could trigger actions before the animation for opening or closing the popover completed. A new function, `useAvoidQuickPress`, is introduced to manage press event timing, preventing unintended interactions during animations.
+
+## Changes
+
+| Files                                           | Change Summary                                                   |
+|-------------------------------------------------|------------------------------------------------------------------|
+| `src/use-multiselect.ts`                        | Added `useAvoidQuickPress` function; modified `useMultiSelect` to integrate it. |
+
+## Assessment against linked issues
+
+| Objective                                                  | Addressed | Explanation                       |
+|-----------------------------------------------------------|-----------|-----------------------------------|
+| Ensure actions wait for ongoing animations to complete (3619) | ✅         |                                   |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+.changeset/chilled-jeans-laugh.md: ## AI-generated summary of changes
+
+This update introduces a fix to the behavior of the multi-select component from the `@nextui-org/use-aria-multiselect` package. The issue addressed was that multiple rapid clicks on the select trigger would initiate actions before the animation for opening or closing the popover had completed. The new logic implements a blocking mechanism that prevents any actions triggered by subsequent clicks until a defined threshold time of 500ms has elapsed. This ensures that the component behaves more predictably and enhances the user experience by preventing unintended interactions during the animation phase. Additionally, a new function, `useAvoidQuickPress`, has been introduced to manage the timing of press events, preventing rapid consecutive triggers. This function utilizes a state variable, `isPressAllowed`, to control whether a press event handler can execute. The `useMultiSelect` function has been modified to incorporate this new functionality, enhancing user interaction with the multi-select component.
+
+## Alterations to the declarations of exported or public entities
+
+- `function useAvoidQuickPress(fn: ((e: PressEvent) => void) | undefined)` in `src/use-multiselect.ts` (new function added)
+- `export function useMultiSelect<T>(props: MultiSelectProps<T>, state: MultiSelectState<T>)` in `src/use-multiselect.ts` (modified to use `useAvoidQuickPress`)
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(select): nullify quick clicks on select" addresses an issue where multiple rapid clicks on a select component caused actions to trigger without waiting for animations to complete. This behavior led to a disjointed user experience, as subsequent clicks would open or close the popover prematurely. The PR introduces a solution by implementing a delay, referred to as a "threshold," which prevents any click actions from being processed until this specified time has passed. The changes are made within the `use-multiselect` hook by modifying the `triggerProps` returned. The author determined the threshold through trial and error, as they were unable to find specific timing information for the framer motion animations. Importantly, this PR does not introduce any breaking changes.
+
+## Objectives from Linked Issues
+
+The linked issue, titled "[BUG] - Unexpected Behavior of Select's Animation," outlines a bug in the NextUI library where rapid clicking on the select component results in inconsistent behavior compared to the expected functionality shown on the homepage. Users reported that clicking quickly three times caused actions to execute without waiting for ongoing animations to finish, which contrasted with the smoother interactions observed in the Storybook examples. The issue highlights the necessity for events triggered by rapid clicks—such as opening or closing a modal or menu—to wait for any current animations to complete, ensuring a visually consistent and smooth user experience. The report includes information about the NextUI version in use and underscores the discrepancies between the interactions in Storybook and the homepage, indicating a need for resolution to align functionality across these platforms.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- a414baff0d6d4f6e8d9420233c353c323ed20aaa -->
+<!-- 4bf8eabcba84c5a5f74f6de689e7bdde4d2bad78 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- macci001: I tried to figure out the discrepant behaviour but was unable to find out what exact issue is behind this.
+One thing I noted was that on docs is: While closing the select popover, the `onPressStart` and `onPress` events are not triggered (the respective events do get triggered on opening the select)
+But on the story book page the `onPressStart` and `onPress` events are triggered both on opening and closing the select popover.
+Edit: I have checked that the issue of quick clicks occurs in story-book, sandbox provided on docs, individual project as well, just not sure why does this not happen on the preview in docs. 
+@wingkwong maybe you can help in a bit here?\n- wingkwong: Previously I also had a quick check but got no clue. Better identify the discrepancy to see if the fix is correct or not.\n- chirokas: @wingkwong The issue may be caused by [domRef](https://github.com/nextui-org/nextui/blob/canary/packages/components/select/src/use-select.ts#L535C77-L535C83), which does not occur in PR#3467. Additionally, the NextUI doc is outdated (When Select A is open, clicking Select B does not open Select B).
+\n- wingkwong: @chirokas can you sync your PR with latest canary once? I think I'll move your PR to v2.4.7.\n- wingkwong: Closing this one - will be handled in chirokas' PR.\n
+
+Files Changed:
+- .changeset/chilled-jeans-laugh.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/use-aria-multiselect": patch
++---
++
++Multiple quick clicks on select trigger was not waiting for animation to complete and starts to process the actions by subsequent clicks to open/close the popover. The PR makes the fix which blocks the actions triggered by the click until a threshold time of 500ms.\n- packages/hooks/use-aria-multiselect/src/use-multiselect.ts (modified, 36 changes)\n  Patch: @@ -11,8 +11,8 @@ import {AriaListBoxOptions} from "@react-aria/listbox";
+ import {useMenuTrigger} from "@react-aria/menu";
+ import {ListKeyboardDelegate, useTypeSelect} from "@react-aria/selection";
+ import {chain, filterDOMProps, mergeProps, useId} from "@react-aria/utils";
+-import {FocusEvent, HTMLAttributes, RefObject, useMemo} from "react";
+-import {ValidationResult} from "@react-types/shared";
++import {FocusEvent, HTMLAttributes, RefObject, useMemo, useState} from "react";
++import {PressEvent, ValidationResult} from "@react-types/shared";
+ 
+ export type MultiSelectProps<T> = MultiSelectStateProps<T>;
+ 
+@@ -31,6 +31,36 @@ export interface MultiSelectAria<T> extends ValidationResult {
+   errorMessageProps: HTMLAttributes<HTMLElement>;
+ }
+ 
++/**
++ * Debounces press events to prevent rapid successive triggers.
++ * @param {function} fn - The original event handler function.
++ * @returns {function} - A wrapped event handler with debounce functionality.
++ */
++function useAvoidQuickPress(fn: ((e: PressEvent) => void) | undefined) {
++  const [isPressAllowed, setIsPressAllowed] = useState(true);
++
++  if (!fn) {
++    return fn;
++  }
++  const nullifiedQuickPress = (e: PressEvent) => {
++    if (!isPressAllowed) {
++      return;
++    }
++
++    setIsPressAllowed(false);
++    fn(e);
++    const timeout = setTimeout(() => {
++      setIsPressAllowed(true);
++    }, 500);
++
++    return () => {
++      clearTimeout(timeout);
++    };
++  };
++
++  return nullifiedQuickPress;
++}
++
+ export function useMultiSelect<T>(
+   props: MultiSelectProps<T>,
+   state: MultiSelectState<T>,
+@@ -53,6 +83,8 @@ export function useMultiSelect<T>(
+     ref,
+   );
+ 
++  menuTriggerProps.onPressStart = useAvoidQuickPress(menuTriggerProps.onPressStart);
++
+   const triggerOnKeyDown = (e: KeyboardEvent) => {
+     // Select items when trigger has focus - imitating default `<select>` behavior.
+     // In multi selection mode it does not make sense.\n

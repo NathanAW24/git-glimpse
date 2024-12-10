@@ -1,0 +1,98 @@
+Pull Request Number: 1760
+Title: fix(input): migrate inline styles in inputWrapperProps to tailwind
+Base Branch: main
+Head Branch: fix/input
+Author: Enalmada
+URL: https://github.com/nextui-org/nextui/pull/1760
+State: CLOSED
+Created At: 2023-10-11T16:26:24Z
+Merged At: None
+Participants: Enalmada, jrgarciadev, wingkwong
+
+Description:
+📝 Description
+Content Security Policy (CSP) is important to guard your Next.js application against various security threats such as cross-site scripting (XSS), clickjacking, and other code injection attacks.  Next.js 13.5 has put in some work into making it practical to achieve a strict CSP through improved documentation, updated example, and recent bug fixes/code changes.
+Unfortunately Nextui uses some inline styles which force use of style-src: unsafe-inline in production and prevents users from configuring next.js with a strict CSP.   Although unsafe styles isn't as critical as script, nextui shouldn't be a blocker for security best practices if achievable with reasonable effort.
+This PR fixes the first case I noticed.  I am hoping it can be a good before/after example to reference. and also start a conversation.
+What would take to get alignment that inline styles stop being added to new code and monitored during dev and code reviews?
+Could a nextui expert scan the remaining usages of style: for any that are not migratable with reasonable effort?  It would be interesting to know if there are any obvious hard stops to this initiative before digging in further.
+Eventually
+
+nextui can brag on homepage about how it is compatible with security best practices because it uses tailwind.
+
+⛳️ Current behavior (updates)
+
+inputWrapperProps adds a style attribute cursor: text
+
+🚀 New behavior
+
+inputWrapperProps adds a tailwind equivalent class cursor-text
+
+💣 Is this a breaking change (Yes/No):  No
+📝 Additional Information
+I believe things like style: mergeProps(positionProps.style, otherProps.style, props.style) are fine because it just passes through user attributes.
+
+Commits:
+- fix(input): migrate inline styles to tailwind\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 8c94d411d026ccd4b203be4c32e3e7dce459193b
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/input | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/Enalmada/nextui/new/fix/input?filename=.changeset/pretty-crews-explain.md&value=---%0A%22%40nextui-org%2Finput%22%3A%20patch%0A---%0A%0Afix(input)%3A%20migrate%20inline%20styles%20in%20inputWrapperProps%20to%20tailwind%0A)
+
+\n- vercel: [vc]: #mHA0YcbaHh0e0e8Y49KivDO3nXBZz9pkXHEteB13YdA=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvQTY4ZkZicnRlbloxeGJtNTRwd1dmN2lTc0N4ciIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWVuYWxtYWRhLWZpeC1pbnB1dC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay1lbmFsbWFkYS1maXgtaW5wdXQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/A68fFbrtenZ1xbm54pwWf7iSsCxr)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-enalmada-fix-input-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-enalmada-fix-input-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 11, 2023 4:28pm |
+
+\n- vercel: @Enalmada is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228c94d411d026ccd4b203be4c32e3e7dce459193b%22%7D%2C%22id%22%3A%22QmTiv3cAhKsUKAz9GaYYtRmSsZLhJGLZsh7EtMdgC6CVma%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1760%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Hey @Enalmada thanks for sending this PR, however, we cannot use TailwindCSS classes in the components source code, we can only use TailwindCSS in the `theme` packages because it is the one we read the styles
+
+https://nextui.org/docs/customization/theme\n
+
+Files Changed:
+- .changeset/brown-lions-love.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/input": patch
++---
++
++migrated input cursor text from inline style to tailwind\n- packages/components/input/src/use-input.ts (modified, 3 changes)\n  Patch: @@ -296,7 +296,7 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+         "data-focus-visible": dataAttr(isFocusVisible),
+         "data-focus": dataAttr(isFocused),
+         className: slots.inputWrapper({
+-          class: clsx(classNames?.inputWrapper, !!inputValue ? "is-filled" : ""),
++          class: clsx(classNames?.inputWrapper, !!inputValue ? "is-filled" : "", "cursor-text"),
+         }),
+         onClick: (e: React.MouseEvent) => {
+           if (e.target === e.currentTarget) {
+@@ -305,7 +305,6 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+         },
+         ...mergeProps(props, hoverProps),
+         style: {
+-          cursor: "text",
+           ...props.style,
+         },
+       };\n

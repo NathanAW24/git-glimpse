@@ -1,0 +1,37 @@
+Pull Request Number: 463
+Title: Updated _document.tsx code to remove errors
+Base Branch: main
+Head Branch: patch-1
+Author: NayamAmarshe
+URL: https://github.com/nextui-org/nextui/pull/463
+State: CLOSED
+Created At: 2022-05-09T18:11:53Z
+Merged At: None
+Participants: NayamAmarshe, jrgarciadev
+
+Description:
+Original Discussion: #441
+and my original code: #441 (comment)
+I posted the correct code but I suppose the PR by anoushk1234 forgot to include ctx: any at line 82.
+Without ctx: any, the editor would throw an error because ctx requires a type.
+Explained here: https://stackoverflow.com/a/50414836/18995569
+
+Commits:
+- Updated _document.tsx code to remove warnings\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Hey @NayamAmarshe, the current NextUI + Next.js example targets`Javascript` code, if you want to have the `_document` typescript implementation you can use the `Next.js` example https://nextjs.org/docs/advanced-features/custom-document#typescript, I hope to add the `Typescript` example soon as well  \n
+
+Files Changed:
+- apps/docs/content/docs/guide/getting-started.mdx (modified, 2 changes)\n  Patch: @@ -79,7 +79,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
+ import { CssBaseline } from '@nextui-org/react';
+ 
+ class MyDocument extends Document {
+-  static async getInitialProps(ctx) {
++  static async getInitialProps(ctx: any) {
+     const initialProps = await Document.getInitialProps(ctx);
+     return {
+       ...initialProps,\n

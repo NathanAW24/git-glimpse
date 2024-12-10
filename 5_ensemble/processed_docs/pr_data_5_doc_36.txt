@@ -1,0 +1,782 @@
+Pull Request Number: 3732
+Title: chore: upgrade react-aria / React 19 & Next.js 15 support
+Base Branch: canary
+Head Branch: update-react-aria-202407
+Author: ryo-manba
+URL: https://github.com/nextui-org/nextui/pull/3732
+State: MERGED
+Created At: 2024-09-09T13:53:36Z
+Merged At: 2024-11-04T14:53:47Z
+Participants: ryo-manba, Scholar01, jrgarciadev
+
+Description:
+📝 Description
+Updated the version of react-aria.
+The details of the changes are documented in the inline comments.
+
+closes: #3784
+closes: #3786
+closes: #3449
+
+⛳️ Current behavior (updates)
+🚀 New behavior
+React 19 Support, Next.js 15 Support
+💣 Is this a breaking change (Yes/No):
+Yes.
+As mentioned in the comment below, layoutNode can’t be passed anymore. We could pass it separately, but since it's deprecated, I think it's okay to remove it.
+https://github.com/nextui-org/nextui/pull/3732/files#r1750342546
+📝 Additional Information
+July 22, 2024 Release – React Spectrum Releases
+
+Summary by CodeRabbit
+Summary by CodeRabbit
+
+
+New Features
+
+Minor version updates to various @nextui-org packages, enhancing functionality and stability.
+Updates to @react-aria and @react-types packages for improved accessibility features and performance optimizations.
+
+
+
+Bug Fixes
+
+Various components received patch updates, addressing bugs and improving reliability.
+
+
+
+Documentation
+
+Updated dependency versions in documentation for better clarity on changes.
+
+
+
+Chores
+
+General maintenance updates to ensure compatibility with the latest libraries and frameworks.
+
+Commits:
+- chore: upgrade react-aria\n- chore: add changeset\n- Merge branch 'canary' into update-react-aria-202407\n- chore: fix type error\n- fix: conflicts\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 81999445cceac7b5e2e8e1bcb27160c09c554f50
+
+**The changes in this PR will be included in the next version bump.**
+
+
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/update-react-aria-202407?filename=.changeset/old-vans-relax.md&value=---%0A%22%40fake-scope%2Ffake-pkg%22%3A%20patch%0A---%0A%0Achore%3A%20upgrade%20react-aria%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This pull request introduces updates across various components of the NextUI library, primarily focusing on dependency version increments for packages related to React Aria and React Stately. It includes minor version updates for several packages, such as `@nextui-org/calendar`, `@nextui-org/autocomplete`, and others. Additionally, there are enhancements to the control flow in specific components, improving their functionality and stability.
+
+## Changes
+
+| File(s)                                       | Change Summary                                                                                                     |
+|-----------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| .changeset/few-jars-flow.md                  | Updates to various NextUI components, minor version upgrades for several packages, and patch updates for others.   |
+| apps/docs/package.json                        | Updated versions for `@internationalized/date` and `@react-types/shared`.                                       |
+| package.json                                  | Updated version for `@react-types/shared`.                                                                        |
+| packages/components/*/package.json            | Incremented versions for multiple dependencies across components such as `accordion`, `autocomplete`, `avatar`, etc. |
+| packages/components/input/src/use-input.ts    | Modified `useInput` hook to enhance input handling and state synchronization.                                      |
+| packages/components/calendar/src/calendar-cell.tsx | Improved logic for selection range in `CalendarCell`.                                                             |
+| packages/components/calendar/src/utils.ts     | Modified parameter types in `getYearRange` function to allow `null` values.                                      |
+| packages/components/table/src/use-table.ts    | Changed handling of `layout` property in `useTable` function.                                                    |
+
+## Sequence Diagram(s)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Component
+    participant Library
+
+    User->>Component: Interact with UI
+    Component->>Library: Call updated methods
+    Library-->>Component: Return results
+    Component-->>User: Update UI based on results
+```
+
+## Assessment against linked issues
+
+| Objective                                                                                  | Addressed | Explanation                                |
+|--------------------------------------------------------------------------------------------|-----------|--------------------------------------------|
+| Ensure ListboxItem links use client-side navigation (Bug #3784)                          | ❓         | Changes related to ListboxItem not verified. |
+| Prevent full page reload when using Tabs as Link (Bug #3786)                             | ❓         | Changes related to Tabs not verified.        |
+| Fix unexpected behavior on AutocompleteItem select (Bug #3449)                           | ❓         | Changes related to AutocompleteItem not verified. |
+
+## Possibly related PRs
+
+- **#3240**: This PR updates the React Aria dependencies, which includes the `@react-types/shared` package that was also updated in the main PR.
+- **#3533**: This PR introduces an override for the `@react-aria/utils` package, which is relevant as the main PR also updates the `@react-types/shared` package.
+- **#3726**: This PR addresses keyboard navigation in the `AutocompleteSection`, which is related to the changes in the main PR that involve updates to dependencies affecting autocomplete functionality.
+
+## Suggested reviewers
+
+- wingkwong
+
+<!-- walkthrough_end -->
+
+
+
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #RKo+ICDqUOhgMGFSp8qn30qv1LT5qAMRTbH0DiiNngk=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNTJlMVVGNXV1eFRXWnM0Znl5WENZbkxNQnpGeSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC11cGRhdGUtcmVhY3QtYXJpYS0yMDI0MDctbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LXVwZGF0ZS1yZWFjdC1hcmlhLTIwMjQwNy1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX0seyJuYW1lIjoibmV4dHVpLWRvY3MtdjIiLCJyb290RGlyZWN0b3J5IjoiYXBwcy9kb2NzIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLWRvY3MtdjIvNHFEaWh6ajNEZ0FRZVNEd3o1UDhWc3lmbXhDZiIsInByZXZpZXdVcmwiOiJuZXh0dWktZG9jcy12Mi1naXQtdXBkYXRlLXJlYWN0LWFyaWEtMjAyNDA3LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktZG9jcy12Mi1naXQtdXBkYXRlLXJlYWN0LWFyaWEtMjAyNDA3LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/4qDihzj3DgAQeSDwz5P8VsyfmxCf)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-update-react-aria-202407-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-update-react-aria-202407-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 4, 2024 2:52pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/52e1UF5uuxTWZs4fyyXCYnLMBzFy)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-update-react-aria-202407-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-update-react-aria-202407-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 4, 2024 2:52pm |
+
+
+\n- Scholar01: Any progress?\n- ryo-manba: Hi @Scholar01, this will be resolved together in the following PR. Please wait a little longer🙇
+- https://github.com/nextui-org/nextui/pull/3036
+
+\n
+
+Files Changed:
+- .changeset/few-jars-flow.md (added, 53 changes)\n  Patch: @@ -0,0 +1,53 @@
++---
++"@nextui-org/table": minor
++"@nextui-org/accordion": patch
++"@nextui-org/autocomplete": patch
++"@nextui-org/avatar": patch
++"@nextui-org/breadcrumbs": patch
++"@nextui-org/button": patch
++"@nextui-org/calendar": patch
++"@nextui-org/card": patch
++"@nextui-org/checkbox": patch
++"@nextui-org/chip": patch
++"@nextui-org/date-input": patch
++"@nextui-org/date-picker": patch
++"@nextui-org/divider": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/input": patch
++"@nextui-org/kbd": patch
++"@nextui-org/link": patch
++"@nextui-org/listbox": patch
++"@nextui-org/menu": patch
++"@nextui-org/modal": patch
++"@nextui-org/navbar": patch
++"@nextui-org/pagination": patch
++"@nextui-org/popover": patch
++"@nextui-org/progress": patch
++"@nextui-org/radio": patch
++"@nextui-org/select": patch
++"@nextui-org/slider": patch
++"@nextui-org/snippet": patch
++"@nextui-org/switch": patch
++"@nextui-org/tabs": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/user": patch
++"@nextui-org/react": patch
++"@nextui-org/system": patch
++"@nextui-org/system-rsc": patch
++"@nextui-org/use-aria-accordion": patch
++"@nextui-org/use-aria-accordion-item": patch
++"@nextui-org/use-aria-button": patch
++"@nextui-org/use-aria-link": patch
++"@nextui-org/use-aria-menu": patch
++"@nextui-org/use-aria-modal-overlay": patch
++"@nextui-org/use-aria-multiselect": patch
++"@nextui-org/use-aria-overlay": patch
++"@nextui-org/use-aria-toggle-button": patch
++"@nextui-org/use-disclosure": patch
++"@nextui-org/use-intersection-observer": patch
++"@nextui-org/use-is-mobile": patch
++"@nextui-org/use-pagination": patch
++"@nextui-org/aria-utils": patch
++---
++
++update react-aria version\n- apps/docs/package.json (modified, 4 changes)\n  Patch: @@ -18,7 +18,7 @@
+     "@codesandbox/sandpack-react": "^2.6.4",
+     "@iconify/icons-solar": "^1.2.3",
+     "@iconify/react": "^4.1.1",
+-    "@internationalized/date": "^3.5.4",
++    "@internationalized/date": "3.5.5",
+     "@mapbox/rehype-prism": "^0.6.0",
+     "@nextui-org/aria-utils": "workspace:*",
+     "@nextui-org/badge": "workspace:*",
+@@ -99,7 +99,7 @@
+     "@docusaurus/utils": "2.0.0-beta.3",
+     "@next/bundle-analyzer": "^13.4.6",
+     "@next/env": "^13.4.12",
+-    "@react-types/shared": "3.23.1",
++    "@react-types/shared": "3.24.1",
+     "@tailwindcss/typography": "^0.5.9",
+     "@types/canvas-confetti": "^1.4.2",
+     "@types/lodash": "^4.14.194",\n- package.json (modified, 2 changes)\n  Patch: @@ -68,7 +68,7 @@
+     "@commitlint/config-conventional": "^17.2.0",
+     "@react-bootstrap/babel-preset": "^2.1.0",
+     "@react-types/link": "^3.4.4",
+-    "@react-types/shared": "3.23.1",
++    "@react-types/shared": "3.24.1",
+     "@storybook/react": "^7.4.6",
+     "@swc/core": "^1.3.35",
+     "@swc/jest": "^0.2.24",\n- packages/components/accordion/package.json (modified, 14 changes)\n  Patch: @@ -54,13 +54,13 @@
+     "@nextui-org/framer-utils": "workspace:*",
+     "@nextui-org/divider": "workspace:*",
+     "@nextui-org/use-aria-accordion": "workspace:*",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-stately/tree": "3.8.1",
+-    "@react-aria/button": "3.9.5",
+-    "@react-types/accordion": "3.0.0-alpha.21",
+-    "@react-types/shared": "3.23.1"
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/utils": "3.25.2",
++    "@react-stately/tree": "3.8.4",
++    "@react-aria/button": "3.9.8",
++    "@react-types/accordion": "3.0.0-alpha.23",
++    "@react-types/shared": "3.24.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/autocomplete/package.json (modified, 20 changes)\n  Patch: @@ -53,15 +53,15 @@
+     "@nextui-org/spinner": "workspace:*",
+     "@nextui-org/use-aria-button": "workspace:*",
+     "@nextui-org/use-safe-layout-effect": "workspace:*",
+-    "@react-aria/combobox": "3.9.1",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/i18n": "3.11.1",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-aria/visually-hidden": "3.8.12",
+-    "@react-stately/combobox": "3.8.4",
+-    "@react-types/combobox": "3.11.1",
+-    "@react-types/shared": "3.23.1"
++    "@react-aria/combobox": "3.10.3",
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/i18n": "3.12.2",
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/utils": "3.25.2",
++    "@react-aria/visually-hidden": "3.8.15",
++    "@react-stately/combobox": "3.9.2",
++    "@react-types/combobox": "3.12.1",
++    "@react-types/shared": "3.24.1"
+   },
+   "devDependencies": {
+     "@nextui-org/avatar": "workspace:*",
+@@ -70,7 +70,7 @@
+     "@nextui-org/system": "workspace:*",
+     "@nextui-org/theme": "workspace:*",
+     "@nextui-org/use-infinite-scroll": "workspace:*",
+-    "@react-stately/data": "3.11.4",
++    "@react-stately/data": "3.11.6",
+     "clean-package": "2.2.0",
+     "framer-motion": "^11.0.28",
+     "react": "^18.0.0",\n- packages/components/avatar/package.json (modified, 6 changes)\n  Patch: @@ -43,9 +43,9 @@
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/use-image": "workspace:*",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/utils": "3.24.1"
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/utils": "3.25.2"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/breadcrumbs/package.json (modified, 10 changes)\n  Patch: @@ -43,11 +43,11 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/breadcrumbs": "3.5.13",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-types/breadcrumbs": "3.7.5",
+-    "@react-types/shared": "3.23.1"
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/breadcrumbs": "3.5.16",
++    "@react-aria/utils": "3.25.2",
++    "@react-types/breadcrumbs": "3.7.7",
++    "@react-types/shared": "3.24.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/button/package.json (modified, 12 changes)\n  Patch: @@ -46,12 +46,12 @@
+     "@nextui-org/use-aria-button": "workspace:*",
+     "@nextui-org/ripple": "workspace:*",
+     "@nextui-org/spinner": "workspace:*",
+-    "@react-aria/button": "3.9.5",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-types/shared": "3.23.1",
+-    "@react-types/button": "3.9.4"
++    "@react-aria/button": "3.9.8",
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/utils": "3.25.2",
++    "@react-aria/focus": "3.18.2",
++    "@react-types/shared": "3.24.1",
++    "@react-types/button": "3.9.6"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/calendar/package.json (modified, 24 changes)\n  Patch: @@ -47,18 +47,18 @@
+     "@nextui-org/use-aria-button": "workspace:*",
+     "@nextui-org/button": "workspace:*",
+     "lodash.debounce": "^4.0.8",
+-    "@internationalized/date": "^3.5.4",
+-    "@react-aria/calendar": "3.5.8",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/i18n": "3.11.1",
+-    "@react-stately/calendar": "3.5.1",
+-    "@react-types/button": "3.9.4",
+-    "@react-aria/visually-hidden": "3.8.12",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-stately/utils": "3.10.1",
+-    "@react-types/calendar": "3.4.6",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-types/shared": "3.23.1",
++    "@internationalized/date": "3.5.5",
++    "@react-aria/calendar": "3.5.11",
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/i18n": "3.12.2",
++    "@react-stately/calendar": "3.5.4",
++    "@react-types/button": "3.9.6",
++    "@react-aria/visually-hidden": "3.8.15",
++    "@react-aria/utils": "3.25.2",
++    "@react-stately/utils": "3.10.3",
++    "@react-types/calendar": "3.4.9",
++    "@react-aria/interactions": "3.22.2",
++    "@react-types/shared": "3.24.1",
+     "scroll-into-view-if-needed": "3.0.10",
+     "@types/lodash.debounce": "^4.0.7"
+   },\n- packages/components/calendar/src/calendar-cell.tsx (modified, 4 changes)\n  Patch: @@ -49,9 +49,9 @@ export function CalendarCell(originalProps: CalendarCellProps) {
+     !isDisabled && !isInvalid && state.isCellUnavailable(props.date.subtract({days: 1}));
+   const highlightedRange = "highlightedRange" in state && state.highlightedRange;
+   const isSelectionStart =
+-    isSelected && highlightedRange && isSameDay(props.date, highlightedRange.start);
++    isSelected && highlightedRange ? isSameDay(props.date, highlightedRange.start) : false;
+   const isSelectionEnd =
+-    isSelected && highlightedRange && isSameDay(props.date, highlightedRange.end);
++    isSelected && highlightedRange ? isSameDay(props.date, highlightedRange.end) : false;
+   const {locale} = useLocale();
+   const dayOfWeek = getDayOfWeek(props.date, locale);
+   const isRangeStart =\n- packages/components/calendar/src/utils.ts (modified, 2 changes)\n  Patch: @@ -1,6 +1,6 @@
+ import {DateValue, startOfYear} from "@internationalized/date";
+ 
+-export function getYearRange(start?: DateValue, end?: DateValue): DateValue[] {
++export function getYearRange(start?: DateValue | null, end?: DateValue | null): DateValue[] {
+   const years: DateValue[] = [];
+ 
+   if (!start || !end) {\n- packages/components/card/package.json (modified, 10 changes)\n  Patch: @@ -45,11 +45,11 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/use-aria-button": "workspace:*",
+     "@nextui-org/ripple": "workspace:*",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/button": "3.9.5",
+-    "@react-types/shared": "3.23.1"
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/utils": "3.25.2",
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/button": "3.9.8",
++    "@react-types/shared": "3.24.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/checkbox/package.json (modified, 18 changes)\n  Patch: @@ -44,15 +44,15 @@
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/use-callback-ref": "workspace:*",
+     "@nextui-org/use-safe-layout-effect": "workspace:*",
+-    "@react-aria/checkbox": "3.14.3",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-aria/visually-hidden": "3.8.12",
+-    "@react-stately/checkbox": "3.6.5",
+-    "@react-stately/toggle": "3.7.4",
+-    "@react-types/checkbox": "3.8.1",
+-    "@react-types/shared": "3.23.1"
++    "@react-aria/checkbox": "3.14.6",
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/utils": "3.25.2",
++    "@react-aria/visually-hidden": "3.8.15",
++    "@react-stately/checkbox": "3.6.8",
++    "@react-stately/toggle": "3.7.7",
++    "@react-types/checkbox": "3.8.3",
++    "@react-types/shared": "3.24.1"
+   },
+   "devDependencies": {
+     "@nextui-org/chip": "workspace:*",\n- packages/components/chip/package.json (modified, 8 changes)\n  Patch: @@ -43,10 +43,10 @@
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-types/checkbox": "3.8.1"
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/utils": "3.25.2",
++    "@react-types/checkbox": "3.8.3"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/date-input/package.json (modified, 14 changes)\n  Patch: @@ -42,13 +42,13 @@
+   "dependencies": {
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+-    "@internationalized/date": "^3.5.4",
+-    "@react-aria/datepicker": "3.10.1",
+-    "@react-aria/i18n": "3.11.1",
+-    "@react-stately/datepicker": "3.9.4",
+-    "@react-types/datepicker": "3.7.4",
+-    "@react-types/shared": "3.23.1",
+-    "@react-aria/utils": "3.24.1"
++    "@internationalized/date": "3.5.5",
++    "@react-aria/datepicker": "3.11.2",
++    "@react-aria/i18n": "3.12.2",
++    "@react-stately/datepicker": "3.10.2",
++    "@react-types/datepicker": "3.8.2",
++    "@react-types/shared": "3.24.1",
++    "@react-aria/utils": "3.25.2"
+   },
+   "devDependencies": {
+     "@nextui-org/system": "workspace:*",\n- packages/components/date-input/src/date-input-segment.tsx (modified, 6 changes)\n  Patch: @@ -22,14 +22,8 @@ export const DateInputSegment: React.FC<DateInputSegmentProps> = ({
+   ...otherProps
+ }) => {
+   const ref = useRef(null);
+-
+   let {segmentProps} = useDateSegment(segment, state, ref);
+ 
+-  // @ts-expect-error autoCapitalize is not a valid prop
+-  // Removing autoCapitalize as it causes bugs in Firefox.
+-  // See: https://github.com/adobe/react-spectrum/issues/5599
+-  delete segmentProps.autoCapitalize;
+-
+   return (
+     <div
+       {...mergeProps(segmentProps, otherProps)}\n- packages/components/date-input/src/use-date-input.ts (modified, 3 changes)\n  Patch: @@ -1,7 +1,8 @@
+ import type {DateInputVariantProps, DateInputSlots, SlotsToClasses} from "@nextui-org/theme";
+ import type {AriaDateFieldProps} from "@react-types/datepicker";
+ import type {SupportedCalendars} from "@nextui-org/system";
+-import type {DateValue, Calendar} from "@internationalized/date";
++import type {DateValue} from "@react-types/datepicker";
++import type {Calendar} from "@internationalized/date";
+ import type {ReactRef} from "@nextui-org/react-utils";
+ import type {DOMAttributes, GroupDOMAttributes} from "@react-types/shared";
+ import type {DateInputGroupProps} from "./date-input-group";\n- packages/components/date-picker/package.json (modified, 20 changes)\n  Patch: @@ -40,7 +40,7 @@
+     "react-dom": ">=18"
+   },
+   "dependencies": {
+-    "@internationalized/date": "^3.5.4",
++    "@internationalized/date": "3.5.5",
+     "@nextui-org/aria-utils": "workspace:*",
+     "@nextui-org/button": "workspace:*",
+     "@nextui-org/calendar": "workspace:*",
+@@ -49,14 +49,14 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+-    "@react-aria/datepicker": "3.10.1",
+-    "@react-aria/i18n": "3.11.1",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-stately/datepicker": "3.9.4",
+-    "@react-stately/overlays": "3.6.7",
+-    "@react-stately/utils": "3.10.1",
+-    "@react-types/datepicker": "3.7.4",
+-    "@react-types/shared": "3.23.1"
++    "@react-aria/datepicker": "3.11.2",
++    "@react-aria/i18n": "3.12.2",
++    "@react-aria/utils": "3.25.2",
++    "@react-stately/datepicker": "3.10.2",
++    "@react-stately/overlays": "3.6.10",
++    "@react-stately/utils": "3.10.3",
++    "@react-types/datepicker": "3.8.2",
++    "@react-types/shared": "3.24.1"
+   },
+   "devDependencies": {
+     "@nextui-org/radio": "workspace:*",
+@@ -68,4 +68,4 @@
+     "react-dom": "^18.0.0"
+   },
+   "clean-package": "../../../clean-package.config.json"
+-}
+\ No newline at end of file
++}\n- packages/components/divider/package.json (modified, 2 changes)\n  Patch: @@ -42,7 +42,7 @@
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-rsc-utils": "workspace:*",
+     "@nextui-org/system-rsc": "workspace:*",
+-    "@react-types/shared": "3.23.1"
++    "@react-types/shared": "3.24.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/dropdown/package.json (modified, 10 changes)\n  Patch: @@ -46,11 +46,11 @@
+     "@nextui-org/popover": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/menu": "3.14.1",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-stately/menu": "3.7.1",
+-    "@react-types/menu": "3.9.9"
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/menu": "3.15.3",
++    "@react-aria/utils": "3.25.2",
++    "@react-stately/menu": "3.8.2",
++    "@react-types/menu": "3.9.11"
+   },
+   "devDependencies": {
+     "@nextui-org/avatar": "workspace:*",\n- packages/components/input/package.json (modified, 14 changes)\n  Patch: @@ -44,13 +44,13 @@
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/use-safe-layout-effect": "workspace:*",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/textfield": "3.14.5",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-stately/utils": "3.10.1",
+-    "@react-types/shared": "3.23.1",
+-    "@react-types/textfield": "3.9.3",
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/textfield": "3.14.8",
++    "@react-aria/utils": "3.25.2",
++    "@react-stately/utils": "3.10.3",
++    "@react-types/shared": "3.24.1",
++    "@react-types/textfield": "3.9.6",
+     "react-textarea-autosize": "^8.5.3"
+   },
+   "devDependencies": {\n- packages/components/input/src/use-input.ts (modified, 2 changes)\n  Patch: @@ -363,7 +363,6 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+   const getInputProps: PropGetter = useCallback(
+     (props = {}) => {
+       return {
+-        ref: domRef,
+         "data-slot": "input",
+         "data-filled": dataAttr(isFilled),
+         "data-filled-within": dataAttr(isFilledWithin),
+@@ -384,6 +383,7 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+         ),
+         "aria-readonly": dataAttr(originalProps.isReadOnly),
+         onChange: chain(inputProps.onChange, onChange),
++        ref: domRef,
+       };
+     },
+     [\n- packages/components/kbd/package.json (modified, 2 changes)\n  Patch: @@ -42,7 +42,7 @@
+     "@nextui-org/system-rsc": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+-    "@react-aria/utils": "3.24.1"
++    "@react-aria/utils": "3.25.2"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/link/package.json (modified, 8 changes)\n  Patch: @@ -44,10 +44,10 @@
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/use-aria-link": "workspace:*",
+-    "@react-aria/link": "3.7.1",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-types/link": "3.5.5"
++    "@react-aria/link": "3.7.4",
++    "@react-aria/utils": "3.25.2",
++    "@react-aria/focus": "3.18.2",
++    "@react-types/link": "3.5.7"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/listbox/package.json (modified, 14 changes)\n  Patch: @@ -45,13 +45,13 @@
+     "@nextui-org/divider": "workspace:*",
+     "@nextui-org/aria-utils": "workspace:*",
+     "@nextui-org/use-is-mobile": "workspace:*",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-aria/listbox": "3.12.1",
+-    "@react-stately/list": "3.10.5",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-types/menu": "3.9.9",
+-    "@react-types/shared": "3.23.1"
++    "@react-aria/utils": "3.25.2",
++    "@react-aria/listbox": "3.13.3",
++    "@react-stately/list": "3.10.8",
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/interactions": "3.22.2",
++    "@react-types/menu": "3.9.11",
++    "@react-types/shared": "3.24.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/menu/package.json (modified, 16 changes)\n  Patch: @@ -46,14 +46,14 @@
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/use-aria-menu": "workspace:*",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/menu": "3.14.1",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-stately/menu": "3.7.1",
+-    "@react-stately/tree": "3.8.1",
+-    "@react-types/menu": "3.9.9",
+-    "@react-types/shared": "3.23.1"
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/menu": "3.15.3",
++    "@react-aria/utils": "3.25.2",
++    "@react-stately/menu": "3.8.2",
++    "@react-stately/tree": "3.8.4",
++    "@react-types/menu": "3.9.11",
++    "@react-types/shared": "3.24.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/modal/package.json (modified, 14 changes)\n  Patch: @@ -49,13 +49,13 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/use-aria-modal-overlay": "workspace:*",
+-    "@react-aria/dialog": "3.5.14",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/overlays": "3.22.1",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-stately/overlays": "3.6.7",
+-    "@react-types/overlays": "3.8.7"
++    "@react-aria/dialog": "3.5.17",
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/overlays": "3.23.2",
++    "@react-aria/utils": "3.25.2",
++    "@react-stately/overlays": "3.6.10",
++    "@react-types/overlays": "3.8.9"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/navbar/package.json (modified, 12 changes)\n  Patch: @@ -46,12 +46,12 @@
+     "@nextui-org/framer-utils": "workspace:*",
+     "@nextui-org/use-aria-toggle-button": "workspace:*",
+     "@nextui-org/use-scroll-position": "workspace:*",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/overlays": "3.22.1",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-stately/toggle": "3.7.4",
+-    "@react-stately/utils": "3.10.1",
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/overlays": "3.23.2",
++    "@react-aria/utils": "3.25.2",
++    "@react-stately/toggle": "3.7.7",
++    "@react-stately/utils": "3.10.3",
+     "react-remove-scroll": "^2.5.6"
+   },
+   "devDependencies": {\n- packages/components/pagination/package.json (modified, 8 changes)\n  Patch: @@ -44,10 +44,10 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/use-pagination": "workspace:*",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/i18n": "3.11.1",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/utils": "3.24.1",
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/i18n": "3.12.2",
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/utils": "3.25.2",
+     "scroll-into-view-if-needed": "3.0.10"
+   },
+   "devDependencies": {\n- packages/components/popover/package.json (modified, 18 changes)\n  Patch: @@ -48,14 +48,14 @@
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/use-aria-button": "workspace:*",
+     "@nextui-org/use-safe-layout-effect": "workspace:*",
+-    "@react-aria/dialog": "3.5.14",
+-    "@react-aria/focus": "3.17.1",
+-    "@react-aria/interactions": "3.21.3",
+-    "@react-aria/overlays": "3.22.1",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-stately/overlays": "3.6.7",
+-    "@react-types/button": "3.9.4",
+-    "@react-types/overlays": "3.8.7",
++    "@react-aria/dialog": "3.5.17",
++    "@react-aria/focus": "3.18.2",
++    "@react-aria/interactions": "3.22.2",
++    "@react-aria/overlays": "3.23.2",
++    "@react-aria/utils": "3.25.2",
++    "@react-stately/overlays": "3.6.10",
++    "@react-types/button": "3.9.6",
++    "@react-types/overlays": "3.8.9",
+     "react-remove-scroll": "^2.5.6"
+   },
+   "devDependencies": {
+@@ -69,4 +69,4 @@
+     "react-dom": "^18.0.0"
+   },
+   "clean-package": "../../../clean-package.config.json"
+-}
+\ No newline at end of file
++}\n

@@ -1,0 +1,361 @@
+Pull Request Number: 3665
+Title: fix(#3640) : `errorFallbackSrc` and `loadingFallbackSrc` props  to image component
+Base Branch: canary
+Head Branch: issue-3640
+Author: abhinav700
+URL: https://github.com/nextui-org/nextui/pull/3665
+State: CLOSED
+Created At: 2024-08-19T05:24:53Z
+Merged At: None
+Participants: abhinav700, wingkwong
+
+Description:
+Closes #3640 
+📝 Description
+⛳️ Current behavior (updates)
+Fallback displays same fallback image for error and loading state
+🚀 New behavior
+errorFallbackSrc and loadingFallbackSrc props are added to display different fallbacks for both states.
+💣 Is this a breaking change (Yes/No):
+I don't know
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced errorFallbackSrc and loadingFallbackSrc properties for improved image handling during loading and error states.
+Enhanced user experience by displaying relevant placeholder images instead of broken icons during loading errors.
+
+
+
+Documentation
+
+Updated documentation to reflect the new properties and provide clearer usage instructions for the Image component.
+
+Commits:
+- fix(#3640): added  and  props to display different fallbacks for loding and error states\n- fix(#3640): removing react import that was added automatically\n- fix(#3640): updated changeset\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 105107bdf02a2c36cfbe84d51a8f51060bf7fb11
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/image | Minor |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/abhinav700/nextui/new/issue-3640?filename=.changeset/tender-chairs-nail.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fimage%22%3A%20patch%0A---%0A%0Afix(%233640)%20%3A%20%60errorFallbackSrc%60%20and%20%60loadingFallbackSrc%60%20props%20%20to%20image%20component%0A)
+
+\n- vercel: @abhinav700 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22105107bdf02a2c36cfbe84d51a8f51060bf7fb11%22%7D%2C%22id%22%3A%22QmUc3YRgpTCxskVPtZWbhdH3uN1dpnUZNyzjZjXVP6J6dA%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3665%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This change enhances the `@nextui-org/image` component by introducing two new properties, `errorFallbackSrc` and `loadingFallbackSrc`, for improved image loading management. This allows developers to define distinct fallback images for loading and error states, enhancing user experience by preventing broken image icons and providing relevant visual feedback during image transitions.
+
+## Changes
+
+| File                                      | Change Summary                                                                                   |
+|-------------------------------------------|-------------------------------------------------------------------------------------------------|
+| .changeset/small-gifts-learn.md          | Added `errorFallbackSrc` and `loadingFallbackSrc` properties for image loading states.         |
+| apps/docs/content/components/image/fallback.ts | Updated `App` component to include `errorFallbackSrc` and `loadingFallbackSrc`.                |
+| apps/docs/content/docs/components/image.mdx | Refined `Image` component logic to utilize separate properties for loading and error states.    |
+| packages/components/image/src/use-image.ts | Enhanced `useImage` hook to handle new fallback images based on loading and error conditions.  |
+| packages/components/image/stories/image.stories.tsx | Updated stories to demonstrate the new fallback properties for loading and error states.   |
+
+## Assessment against linked issues
+
+| Objective                                                                | Addressed | Explanation                                            |
+|--------------------------------------------------------------------------|-----------|-------------------------------------------------------|
+| Make a distinction between loading and error states in the Image component (#[3640]) | ✅        |                                                       |
+| Allow separate images for loading and error states                        | ✅        |                                                       |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```
+.changeset/small-gifts-learn.md: ## AI-generated summary of changes
+
+This change introduces two new properties, `errorFallbackSrc` and `loadingFallbackSrc`, to the configuration of the `@nextui-org/image` component. These properties allow developers to specify different fallback images for scenarios where the primary image fails to load or is still in the loading state. The addition enhances the user experience by providing visual feedback during image loading and error situations, ensuring that users see a relevant placeholder instead of a broken image icon. The control flow is improved by allowing conditional rendering based on the image load state, which can help in maintaining a clean and professional appearance in user interfaces.
+
+## Alterations to the declarations of exported or public entities
+
+- `errorFallbackSrc` in `@nextui-org/image` → New property added
+- `loadingFallbackSrc` in `@nextui-org/image` → New property added
+
+---
+
+apps/docs/content/components/image/fallback.ts: ## AI-generated summary of changes
+
+The diff introduces two new properties, `errorFallbackSrc` and `loadingFallbackSrc`, to the `App` component's image element. These properties provide additional fallback sources for the image under specific conditions: when an error occurs while loading the image and during the loading phase, respectively. This enhancement improves the user experience by ensuring that appropriate placeholder images are displayed in various scenarios, thereby increasing the robustness of the image handling functionality. The overall structure of the component remains unchanged, but the addition of these properties alters the control flow related to image rendering, allowing for better handling of loading states and error scenarios.
+
+## Alterations to the declarations of exported or public entities
+
+- `export default function App()` in `apps/docs/content/components/image/fallback.ts` → `export default function App(errorFallbackSrc: string, loadingFallbackSrc: string)` in `apps/docs/content/components/image/fallback.ts`
+
+---
+
+apps/docs/content/docs/components/image.mdx: ## AI-generated summary of changes
+
+The diff introduces significant modifications to the functionality of the `Image` component, specifically regarding the handling of fallback images during loading and error states. The previous implementation allowed for a single `fallbackSrc` prop to manage fallback images under various conditions. The updated logic refines this by introducing two new props: `errorFallbackSrc` and `loadingFallbackSrc`, which provide more granular control over fallback images based on specific states of the image loading process. The changes clarify the conditions under which each fallback image is used. The `fallbackSrc` will now only be utilized during error scenarios if the `errorFallbackSrc` is not provided. Similarly, the `loadingFallbackSrc` will be employed exclusively when the image is still loading, enhancing the user experience by allowing different images to be displayed based on the loading status and error conditions. Additionally, the documentation has been updated to reflect these changes, providing clearer instructions on how to use the new props. This restructuring improves the component's flexibility and usability, allowing developers to specify distinct images for loading and error states, thus enhancing the overall robustness of the image handling logic.
+
+## Alterations to the declarations of exported or public entities
+
+- `fallbackSrc` prop type: `string` → `string` (remains the same, but its usage context has changed)
+- `errorFallbackSrc` prop type: `string` added
+- `loadingFallbackSrc` prop type: `string` added
+
+---
+
+packages/components/image/src/use-image.ts: ## AI-generated summary of changes
+
+The changes introduced in the `use-image.ts` file enhance the functionality of the `useImage` hook by adding new properties and modifying the logic for handling image loading and error states. Two new optional properties, `errorFallbackSrc` and `loadingFallbackSrc`, have been added to the `Props` interface, allowing developers to specify fallback images for error and loading states, respectively. The logic within the `useImage` function has been updated to incorporate these new properties. The `showLoadingFallback` and `showErrorFallback` variables have been introduced to determine when to display the respective fallback images based on the image loading status and the presence of the new props. The existing `showSkeleton` logic has been adjusted to ensure that the loading skeleton is only shown when neither of the new fallback images is displayed. Additionally, the `getWrapperProps` function now constructs the `fallbackStyle` based on the results of the new conditions, allowing for a more dynamic fallback behavior. This change consolidates the fallback logic into a single variable, `fallbackUrl`, which selects the appropriate fallback image based on the loading and error states. Overall, these modifications significantly enhance the flexibility and robustness of the image handling logic within the component, allowing for a more nuanced response to different loading conditions.
+
+## Alterations to the declarations of exported or public entities
+
+- `errorFallbackSrc?: React.ReactNode` in interface `Props` in `packages/components/image/src/use-image.ts` → `errorFallbackSrc?: React.ReactNode` in interface `Props` in `packages/components/image/src/use-image.ts`
+- `loadingFallbackSrc?: React.ReactNode` in interface `Props` in `packages/components/image/src/use-image.ts` → `loadingFallbackSrc?: React.ReactNode` in interface `Props` in `packages/components/image/src/use-image.ts`
+
+---
+
+packages/components/image/stories/image.stories.tsx: ## AI-generated summary of changes
+
+The diff introduces two new properties to the `Fallback` export in the `image.stories.tsx` file. Specifically, it adds `errorFallbackSrc` and `loadingFallbackSrc`, which provide alternative image sources for error and loading states, respectively. This enhancement improves the component's robustness by allowing it to handle scenarios where the primary image fails to load or is in a loading state, thereby ensuring a better user experience. The addition of these properties indicates an expansion of the component's functionality to accommodate more dynamic image handling.
+
+## Alterations to the declarations of exported or public entities
+
+- `Fallback` in `packages/components/image/stories/image.stories.tsx` now includes:
+  - `errorFallbackSrc: "/images/placeholder_450x500.png"`
+  - `loadingFallbackSrc: "/images/placeholder_500x550.png"`
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(#3640): `errorFallbackSrc` and `loadingFallbackSrc` props to image component" addresses issue #3640 by introducing two new properties to the Image component: `errorFallbackSrc` and `loadingFallbackSrc`. Previously, the Image component utilized a single property, `fallbackSrc`, which displayed the same fallback image for both loading and error states. This change allows developers to specify different images for each state, enhancing the user experience by providing clearer visual feedback depending on the situation. The author, abhinav700, is uncertain whether this change constitutes a breaking change. 
+
+The PR aims to improve the functionality of the Image component by allowing for more granular control over fallback images, thus addressing a specific need expressed in the linked issue.
+
+## Objectives from Linked Issues
+
+The linked issue, titled "Feature Request: Make a Distinction Between Loading and Error States in Image Component," outlines a need for differentiation between loading and error states when using the Image component. The current implementation only supports a single fallback image through the `fallbackSrc` property, which does not allow developers to visually distinguish between the two states. 
+
+The issue describes the problem of wanting separate images for loading and error scenarios, suggesting that the solution should involve adding a new property to handle error states distinctly. An alternative approach considered was to wrap the existing Image component and manage the fallback image dynamically using state, but this was seen as a less ideal solution compared to a built-in property. The objective is to enhance the Image component's functionality by enabling different fallback images for loading and error states, thereby improving usability and clarity for developers and users alike.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 105107bdf02a2c36cfbe84d51a8f51060bf7fb11 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- wingkwong: will be handled in #3664 \n
+
+Files Changed:
+- .changeset/small-gifts-learn.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/image": minor
++---
++
++Added `errorFallbackSrc` and `loadingFallbackSrc` to display different fallbacks for loading and error states.\n- apps/docs/content/components/image/fallback.ts (modified, 2 changes)\n  Patch: @@ -7,6 +7,8 @@ export default function App() {
+       height={200}
+       src="https://app.requestly.io/delay/1000/https://nextui-docs-v2.vercel.app/images/fruit-4.jpeg"
+       fallbackSrc="https://via.placeholder.com/300x200"
++      errorFallbackSrc="https://via.placeholder.com/250x300"
++      loadingFallbackSrc="https://via.placeholder.com/300x300"
+       alt="NextUI Image with fallback"
+     />
+   );\n- apps/docs/content/docs/components/image.mdx (modified, 16 changes)\n  Patch: @@ -68,10 +68,18 @@ Image component has a built-in `skeleton` animation to indicate the image is loa
+ You can use the `fallbackSrc` prop to display a fallback image when:
+ 
+ - The `fallbackSrc` prop is provided.
+-- The image provided in `src` is still loading.
+-- The image provided in `src` fails to load.
+-- The image provided in `src` is not found.
++  - The image provided in `src` is still loading and `loadingFallbackSrc` is not provided.
++  - The image provided in `src` fails to load.
++  - The image provided in `src` is not found.
+ 
++ Image provided in `fallbackSrc` is used as fallback during second and third case only 
++ if `errorFallbackSrc` is not provided
++
++- `errorFallbackSrc` prop is used to display a fallback image when:
++  - The image provided in `src` fails to load or there is some error or `src` is not found
++
++- `loadingFallbackSrc` prop is used to display a fallback image when:
++  - The image provided in `src` is still loading
+ <CodeDemo displayMode="visible" title="Image with fallback" files={imageContent.fallback} />
+ 
+ ### With Next.js Image
+@@ -107,6 +115,8 @@ you can use it with NextUI `Image` component as well.
+ | shadow          | `none` \| `sm` \| `md` \| `lg`                                       | The image shadow.                                                                                                                                                                                           | `none`  |
+ | loading         | `eager` \| `lazy`                                                    | A loading strategy to use for the image.                                                                                                                                                                    | -       |
+ | fallbackSrc     | `string`                                                             | The fallback image source.                                                                                                                                                                                  | -       |
++| errorFallbackSrc| `string`                                                             | Fallback to display when image fails to load due to some error                                                                                                                                              | -
++| loadingFallbackSrc | `string`                                                          | Fallback to display when image is still loading                                                                                                                                                             | -
+ | isBlurred       | `boolean`                                                            | Whether the image should have a duplicated blurred image at the background.                                                                                                                                 | `false` |
+ | isZoomed        | `boolean`                                                            | Whether the image should be zoomed when hovered.                                                                                                                                                            | `false` |
+ | removeWrapper   | `boolean`                                                            | Whether to remove the wrapper element. This will cause the image to be rendered as a direct child of the parent element. If you set this prop as `true` neither the skeleton nor the zoom effect will work. | `false` |\n- packages/components/image/src/use-image.ts (modified, 30 changes)\n  Patch: @@ -29,6 +29,9 @@ interface Props extends HTMLNextUIProps<"img"> {
+    * A fallback image.
+    */
+   fallbackSrc?: React.ReactNode;
++
++  errorFallbackSrc?: React.ReactNode; // fallback to display during error state
++  loadingFallbackSrc?: React.ReactNode; // fallback to display during loading state
+   /**
+    * Whether to disable the loading skeleton.
+    * @default false
+@@ -88,6 +91,8 @@ export function useImage(originalProps: UseImageProps) {
+     loading,
+     isBlurred,
+     fallbackSrc,
++    errorFallbackSrc,
++    loadingFallbackSrc,
+     isLoading: isLoadingProp,
+     disableSkeleton = !!fallbackSrc,
+     removeWrapper = false,
+@@ -115,6 +120,7 @@ export function useImage(originalProps: UseImageProps) {
+ 
+   const isImgLoaded = imageStatus === "loaded" && !isLoadingProp;
+   const isLoading = imageStatus === "loading" || isLoadingProp;
++  const isThereError: boolean = imageStatus === "failed";
+   const isZoomed = originalProps.isZoomed;
+ 
+   const Component = as || "img";
+@@ -137,7 +143,13 @@ export function useImage(originalProps: UseImageProps) {
+   }, [props?.width, props?.height]);
+ 
+   const showFallback = (!src || !isImgLoaded) && !!fallbackSrc;
+-  const showSkeleton = isLoading && !disableSkeleton;
++  // true only if image is not loaded and loadingFalllbackSrc is provided
++  const showLoadingFallback = src && !isImgLoaded && !!loadingFallbackSrc;
++  /*
++    show skeleton only when image is loading and we are not showing loading fallbak
++  */
++  const showErrorFallback = (!src || isThereError) && !!errorFallbackSrc;
++  const showSkeleton = isLoading && !disableSkeleton && !showLoadingFallback;
+ 
+   const slots = useMemo(
+     () =>
+@@ -175,11 +187,17 @@ export function useImage(originalProps: UseImageProps) {
+   };
+ 
+   const getWrapperProps = useCallback<PropGetter>(() => {
+-    const fallbackStyle = showFallback
+-      ? {
+-          backgroundImage: `url(${fallbackSrc})`,
+-        }
+-      : {};
++    const fallbackUrl = showErrorFallback
++      ? errorFallbackSrc
++      : showLoadingFallback
++      ? loadingFallbackSrc
++      : fallbackSrc;
++    const fallbackStyle =
++      showFallback || showErrorFallback || showLoadingFallback
++        ? {
++            backgroundImage: `url(${fallbackUrl})`,
++          }
++        : {};
+ 
+     return {
+       className: slots.wrapper({class: classNames?.wrapper}),\n- packages/components/image/stories/image.stories.tsx (modified, 2 changes)\n  Patch: @@ -132,6 +132,8 @@ export const Fallback = {
+     radius: "lg",
+     src: "https://app.requestly.io/delay/3000/https://images.unsplash.com/photo-1539571696357-5a69c17a67c6",
+     fallbackSrc: "/images/placeholder_300x450.png",
++    errorFallbackSrc: "/images/placeholder_450x500.png",
++    loadingFallbackSrc: "/images/placeholder_500x550.png",
+   },
+ };
+ \n

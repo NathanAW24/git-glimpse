@@ -1,0 +1,238 @@
+Pull Request Number: 275
+Title: feat(button): add isLoading prop
+Base Branch: main
+Head Branch: feat/button-add-loading-prop
+Author: DaniAcu
+URL: https://github.com/nextui-org/nextui/pull/275
+State: CLOSED
+Created At: 2022-02-12T02:53:11Z
+Merged At: None
+Participants: DaniAcu, codecov-commenter, jrgarciadev, renatorib
+
+Description:
+✨Button - add isLoading prop
+TASK:  #192
+Types of changes
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Add a isLoading prop in Button component
+Screenshots - Animations
+
+Commits:
+- feat(button): add isLoading prop\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/275?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#275](https://codecov.io/gh/nextui-org/nextui/pull/275?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (6354ad0) into [main](https://codecov.io/gh/nextui-org/nextui/commit/06b6f7c37a971c547ab75b1c5e5ae25fb83c1abc?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (06b6f7c) will **increase** coverage by `0.00%`.
+> The diff coverage is `90.90%`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/275/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/275?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main     #275   +/-   ##
+=======================================
+  Coverage   75.66%   75.67%           
+=======================================
+  Files         140      140           
+  Lines        2268     2273    +5     
+  Branches      676      675    -1     
+=======================================
++ Hits         1716     1720    +4     
+- Misses        548      549    +1     
+  Partials        4        4           
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/275?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/react/src/button/button.tsx](https://codecov.io/gh/nextui-org/nextui/pull/275/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2J1dHRvbi9idXR0b24udHN4) | `94.44% <90.90%> (-2.33%)` | :arrow_down: |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/275?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/275?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [06b6f7c...6354ad0](https://codecov.io/gh/nextui-org/nextui/pull/275?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n- jrgarciadev: Hey @DaniAcu any update on this? 🙌🏻 \n- renatorib: Why not just `loading`? I think it's more consistent with other props. It's not `isDisabled`, `isClickable`, etc. \n
+
+Files Changed:
+- packages/react/src/button/__tests__/__snapshots__/index.test.tsx.snap (modified, 16 changes)\n  Patch: @@ -11,6 +11,7 @@ exports[`Button should render different variants 2`] = `
+   clickable={true}
+   disabled={false}
+   ghost={false}
++  isLoading={false}
+   ripple={true}
+ >
+   button
+@@ -26,6 +27,21 @@ exports[`Button should render empty button correctly 1`] = `
+   clickable={true}
+   disabled={false}
+   ghost={false}
++  isLoading={false}
++  ripple={true}
++/>
++`;
++
++exports[`Button should render loading button correctly 1`] = `
++<NextUI - Button
++  animated={true}
++  auto={false}
++  bordered={false}
++  className=""
++  clickable={true}
++  disabled={false}
++  ghost={false}
++  isLoading={true}
+   ripple={true}
+ />
+ `;\n- packages/react/src/button/__tests__/index.test.tsx (modified, 4 changes)\n  Patch: @@ -45,6 +45,10 @@ describe('Button', () => {
+     expect(wrapper.text()).toContain('Hello');
+   });
+ 
++  it('should render loading button correctly', () => {
++    expect(<Button isLoading={true}/>).toMatchSnapshot();
++  });
++
+   it('should render empty button correctly', () => {
+     expect(<Button />).toMatchSnapshot();
+   });\n- packages/react/src/button/button.stories.tsx (modified, 5 changes)\n  Patch: @@ -47,6 +47,11 @@ export const Sizes = () => (
+ 
+ export const Loadings = () => (
+   <Grid.Container gap={2}>
++    <Grid>
++      <Button auto clickable={false} color="primary" css={{ px: '$13' }} isLoading>
++        Content
++      </Button>
++    </Grid>
+     <Grid>
+       <Button auto clickable={false} color="primary" css={{ px: '$13' }}>
+         <Loading color="white" size="sm" />\n- packages/react/src/button/button.tsx (modified, 69 changes)\n  Patch: @@ -20,6 +20,7 @@ import useDrip from '../use-drip';
+ import StyledButton, { ButtonVariantsProps } from './button.styles';
+ import withDefaults from '../utils/with-defaults';
+ import { __DEV__ } from '../utils/assertion';
++import Loading from '../loading';
+ 
+ export interface Props {
+   light?: boolean;
+@@ -37,6 +38,7 @@ export interface Props {
+   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+   as?: keyof JSX.IntrinsicElements;
+   className?: string;
++  isLoading?: boolean;
+ }
+ 
+ const defaultProps = {
+@@ -47,7 +49,8 @@ const defaultProps = {
+   animated: true,
+   disabled: false,
+   auto: false,
+-  className: ''
++  className: '',
++  isLoading: false
+ };
+ 
+ type NativeAttrs = Omit<React.ButtonHTMLAttributes<unknown>, keyof Props>;
+@@ -81,6 +84,7 @@ const Button = React.forwardRef<
+     ghost,
+     clickable,
+     className,
++    isLoading,
+     ...props
+   } = filteredProps;
+   /* eslint-enable @typescript-eslint/no-unused-vars */
+@@ -117,9 +121,46 @@ const Button = React.forwardRef<
+   };
+ 
+   const getState = useMemo(() => {
+-    return disabled ? 'disabled' : 'ready';
++    return disabled || isLoading ? 'disabled' : 'ready';
+   }, [disabled]);
+ 
++  const content = useMemo(() => {
++    const hasChildren = React.Children.count(children) !== 0;
++
++    
++    if(isLoading) {
++      return <Loading size="sm" color="white" className="nextui-button-text"/>
++    }
++
++    if(!hasChildren) {
++      return (
++        <ButtonIcon isAuto={auto} isRight={isRight} isSingle>
++          {hasIcon}
++        </ButtonIcon>
++      );
++    }
++
++    if(hasIcon) {
++      return (
++        <>
++          <ButtonIcon isAuto={auto} isRight={isRight}>
++            {hasIcon}
++          </ButtonIcon>
++          <div
++            className={clsx('nextui-button-text', {
++              'nextui-button-text-right': isRight,
++              'nextui-button-text-left': !isRight
++            })}
++          >
++            {children}
++          </div>
++        </>
++      )
++    }
++
++    return <span className="nextui-button-text">{children}</span>
++  }, [isLoading, children, hasIcon]);
++
+   return (
+     <StyledButton
+       ref={buttonRef}
+@@ -131,35 +172,15 @@ const Button = React.forwardRef<
+       bordered={bordered || ghost}
+       clickable={clickable}
+       data-state={getState}
+-      disabled={disabled}
++      disabled={disabled || isLoading}
+       animated={animated}
+       onClick={clickHandler}
+       isFocusVisible={isFocusVisible}
+       className={clsx('nextui-button', `nextui-button--${getState}`, className)}
+       {...focusProps}
+       {...props}
+     >
+-      {React.Children.count(children) === 0 ? (
+-        <ButtonIcon isAuto={auto} isRight={isRight} isSingle>
+-          {hasIcon}
+-        </ButtonIcon>
+-      ) : hasIcon ? (
+-        <>
+-          <ButtonIcon isAuto={auto} isRight={isRight}>
+-            {hasIcon}
+-          </ButtonIcon>
+-          <div
+-            className={clsx('nextui-button-text', {
+-              'nextui-button-text-right': isRight,
+-              'nextui-button-text-left': !isRight
+-            })}
+-          >
+-            {children}
+-          </div>
+-        </>
+-      ) : (
+-        <span className="nextui-button-text">{children}</span>
+-      )}
++      {content}
+       <ButtonDrip color="white" {...dripBindings} />
+     </StyledButton>
+   );\n

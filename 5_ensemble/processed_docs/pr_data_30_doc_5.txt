@@ -1,0 +1,87 @@
+Pull Request Number: 280
+Title: Add keycodes prop to Collapse component
+Base Branch: main
+Head Branch: main
+Author: gillescoolen
+URL: https://github.com/nextui-org/nextui/pull/280
+State: CLOSED
+Created At: 2022-02-14T11:48:13Z
+Merged At: None
+Participants: gillescoolen, jrgarciadev, erenkulaksiz
+
+Description:
+[Collapse]
+TASK: Disable keyboard shortcuts for Collapse component
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+
+
+See issue.
+Screenshots - Animations
+
+Commits:
+- feat(collapse) add keyCodes prop\n- fix(collapse) fix rename typo\n- chore(collapse) change keyCodes to eventKeyCodes\n
+
+Labels:
+
+
+Comments:
+- gillescoolen: Okay, I'll change it to `eventKeyCodes` then.\n- jrgarciadev: Hey @gillescoolen I appreciate your effort in sending this PR, however, as we are currently integrating `@react-aria` to NextUI components this won't be necessary, would you like to integrate [@react-aria/accordion](https://github.com/adobe/react-spectrum/blob/main/packages/%40react-aria/accordion/src/useAccordion.ts) ? \n- jrgarciadev: Hey @gillescoolen thanks for your contribution, however, I'll close this PR due to we already implemented a solution https://github.com/nextui-org/nextui/pull/350/files, we have another branch for migrating the `Collapse` component to `@react-aria/accordion` https://github.com/nextui-org/nextui/tree/refactor/collapse-react-aria, let me know if you want yo continue that work 🙌🏻 
+
+\n
+
+Files Changed:
+- packages/react/src/collapse/collapse.tsx (modified, 9 changes)\n  Patch: @@ -11,9 +11,9 @@ import { CSS } from '../theme/stitches.config';
+ import useKeyboard, { KeyCode } from '../use-keyboard';
+ import {
+   StyledCollapse,
++  StyledCollapseContent,
+   StyledCollapseView,
+-  CollapseVariantsProps,
+-  StyledCollapseContent
++  CollapseVariantsProps
+ } from './collapse.styles';
+ import clsx from '../utils/clsx';
+ import withDefaults from '../utils/with-defaults';
+@@ -32,6 +32,7 @@ interface Props {
+   index?: number;
+   disabled?: boolean;
+   preventDefault?: boolean;
++  eventKeyCodes?: KeyCode[]
+   onChange?: (
+     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+     index?: number | undefined,
+@@ -48,6 +49,7 @@ const defaultProps = {
+   animated: true,
+   disabled: false,
+   preventDefault: true,
++  eventKeyCodes: [KeyCode.Enter, KeyCode.Space],
+   expanded: false
+ };
+ 
+@@ -75,6 +77,7 @@ const Collapse: React.FC<React.PropsWithChildren<CollapseProps>> = ({
+   bordered,
+   contentLeft,
+   preventDefault,
++  eventKeyCodes,
+   animated: animatedProp,
+   borderWeight,
+   index,
+@@ -135,7 +138,7 @@ const Collapse: React.FC<React.PropsWithChildren<CollapseProps>> = ({
+     (event: any) => {
+       handleChange(event);
+     },
+-    [KeyCode.Enter, KeyCode.Space],
++    eventKeyCodes,
+     {
+       disableGlobalEvent: true,
+       preventDefault\n

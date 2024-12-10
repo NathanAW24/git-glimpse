@@ -1,0 +1,248 @@
+Pull Request Number: 2597
+Title: fix(radio): isRequired & missing warning message in Form
+Base Branch: v.2.3.0
+Head Branch: fix/eng-560
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2597
+State: MERGED
+Created At: 2024-03-27T08:58:38Z
+Merged At: 2024-03-31T18:26:10Z
+Participants: wingkwong, jrgarciadev, ryo-manba
+
+Description:
+Closes #2585
+📝 Description
+
+avoid overriding required prop
+merge with domRef to keep validationMessage
+
+⛳️ Current behavior (updates)
+
+  
+    
+    
+
+    pr2597-issue-demo.webm
+    
+  
+
+  
+
+  
+
+
+🚀 New behavior
+
+  
+    
+    
+
+    pr2597-demo.webm
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Patched the radio component to ensure all required properties are present and validation messages are correctly displayed.
+Improved the radio component's handling of input properties for better performance and reliability.
+
+Commits:
+- fix(radio): avoid overriding required props\n- fix(radio): merge with domRef\n- feat(changeset): fixed missing required props and validationMessage\n- fix(radio): unnecessary mergeRefs\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: eb0ebbf822f8faa6aa7fdca8c969597bf0340ed0
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/radio | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/wingkwong/nextui/new/fix/eng-560?filename=.changeset/selfish-islands-itch.md&value=---%0A%22%40nextui-org%2Fradio%22%3A%20patch%0A---%0A%0Afix(radio)%3A%20isRequired%20%26%20missing%20warning%20message%20in%20Form%0A)
+
+\n- vercel: [vc]: #bODekhF++0d9ii02mKZxpzorS7xR5PvFltRyC6fDAQI=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRGJGVlhFdzlVTDU0VTlOdno3WUZ1UEZHZzFjVyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtZW5nLTU2MC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay13aW5na3dvbmctZml4LWVuZy01NjAtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/DbFVXEw9UL54U9Nvz7YFuPFGg1cW)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-560-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-560-nextui-org.vercel.app?via=pr-comment-feedback-link) | Mar 31, 2024 4:08am |
+
+\n- vercel: @wingkwong is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%229254774309b14b323ce4382dd5a4a8e1cb14a49c%22%7D%2C%22id%22%3A%22QmNpi21Y9ET34YiVv4ezFVpeUAgH3N9PmW6GAKMKQRxBvx%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2597%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update introduces enhancements and fixes to the `@nextui-org/radio` package, specifically addressing a bug related to form submission with the `RadioGroup` component. The changes include improvements in prop handling and ref merging within the `useRadio` function, aiming to ensure that the `isRequired` attribute on `RadioGroup` functions as expected, preventing form submission when no option is selected.
+
+## Changes
+
+| File Path                                      | Change Summary                                                             |
+|------------------------------------------------|-----------------------------------------------------------------------------|
+| `.changeset/thirty-islands-trade.md`           | Added patch for missing props and `validationMessage` in `@nextui-org/radio` |
+| `packages/components/radio/src/use-radio.ts`   | Enhanced prop handling and ref merging using `mergeRefs` and `mergeProps`  |
+
+## Assessment against linked issues
+
+| Objective                                                                 | Addressed | Explanation |
+|----------------------------------------------------------------------------|-----------|-------------|
+| Prevent form submission without selection in RadioGroup [#2585]            | ✅         |             |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/thirty-islands-trade.md: The new file introduces a patch for "@nextui-org/radio" to fix missing required props and validationMessage.
+
+---
+
+packages/components/radio/src/use-radio.ts: In `use-radio.ts`, the `useRadio` function now utilizes `mergeRefs` from `@nextui-org/react-utils` to merge refs, and `mergeProps` is used to combine props more efficiently, affecting the control flow and logic of handling input properties.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+This pull request, numbered 2597, aims to fix a bug in the NextUI library related to the `RadioGroup` component. The bug, documented in issue #2585, involves the incorrect behavior of the `isRequired` attribute within the `RadioGroup`. Despite setting `isRequired={true}`, the form submission proceeds even when no option is selected, contrary to the expected behavior of requiring at least one option to be chosen before submission.
+
+The PR intends to resolve this issue by ensuring that the `isRequired` property functions correctly, preventing form submission when no option is selected and `isRequired` is true. Additionally, it merges the `validationMessage` with `domRef` to maintain the component's ability to display validation messages effectively.
+
+Demonstrations of the bug and the proposed fix are provided through video links, showing the current behavior where form submission is not blocked without a selection and the expected behavior post-fix where submission is prevented until an option is chosen.
+
+The PR confirms that this fix does not introduce any breaking changes, preserving backward compatibility and ensuring that existing implementations of the `RadioGroup` component remain unaffected beyond the addressed bug.
+
+### AI-generated Summary of Generated Summaries
+
+This PR targets the `@nextui-org/radio` package, specifically focusing on `use-radio.ts`. The key changes involve enhancing the handling of the `isRequired` attribute and `validationMessage` for the `RadioGroup` component. By utilizing `mergeRefs` from `@nextui-org/react-utils` to merge references efficiently and employing `mergeProps` to combine properties effectively, the fix ensures that the `isRequired` property enforces the selection requirement within the `RadioGroup` for form submission. The adjustments maintain the component's validation message display functionality while addressing the bug without causing any breaking changes. This approach enhances the library's functionality while upholding compatibility with existing implementations.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 4ee99597d5c5f790446712edeb942d2ec46fa3c7 -->
+<!-- eb0ebbf822f8faa6aa7fdca8c969597bf0340ed0 -->
+
+<!-- commit_ids_reviewed_end --><!-- tweet_start -->
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<!-- tweet_end --><!-- tips_start -->
+
+---
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with CodeRabbit:
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- The JSON schema for the configuration file is available [here](https://coderabbit.ai/integrations/coderabbit-overrides.v2.json).
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/coderabbit-overrides.v2.json`
+
+### CodeRabbit Discord Community
+
+Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+
+</details>
+
+<!-- tips_end -->\n- jrgarciadev: @ryo-manba will this issue be fixed by these changes https://github.com/nextui-org/nextui/pull/2561 ?\n- ryo-manba: @jrgarciadev 
+yes, it will be fixed. You can check the current behavior of the PR via this link.
+https://nextui-storybook-v2-kbm4zu6yz-nextui-org.vercel.app/?path=/story/components-radiogroup--is-required&args=validationBehavior:native
+
+
+
+
+
+\n- wingkwong: @ryo-manba the behaviour seems different. Lemme DM you to discuss.
+
+<img width="863" alt="image" src="https://github.com/nextui-org/nextui/assets/35857179/578692e5-cea5-42ba-a713-8691adb83219">
+\n- ryo-manba: @wingkwong 
+That might happen when `validationBehavior` is set to `aria`.
+Let's continue this discussion in DMs. 
+\n
+
+Files Changed:
+- .changeset/thirty-islands-trade.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/radio": patch
++---
++
++Fixed missing required props and validationMessage\n- packages/components/radio/src/use-radio.ts (modified, 4 changes)\n  Patch: @@ -218,10 +218,8 @@ export function useRadio(props: UseRadioProps) {
+   const getInputProps: PropGetter = useCallback(
+     (props = {}) => {
+       return {
+-        ...props,
+         ref: inputRef,
+-        required: isRequired,
+-        ...mergeProps(inputProps, focusProps),
++        ...mergeProps(props, inputProps, focusProps, {required: isRequired}),
+         onChange: chain(inputProps.onChange, onChange),
+       };
+     },\n

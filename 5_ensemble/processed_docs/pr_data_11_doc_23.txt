@@ -1,0 +1,620 @@
+Pull Request Number: 2915
+Title: Cn utility refactor
+Base Branch: canary
+Head Branch: chore/cn-utility
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/2915
+State: MERGED
+Created At: 2024-04-29T20:06:55Z
+Merged At: 2024-04-29T20:34:01Z
+Participants: jrgarciadev
+
+Description:
+📝 Description
+Export improved cn utility from the @nextui-org/theme package.
+⛳️ Current behavior (updates)
+The cn utility is just a wrapper of the clsx library.
+🚀 New behavior
+The new cn utility exported from the @nextui-org/theme package includes tailwind-merge to avoid conflicts between tailwindcss classes overrides and includes the config for NextUI custom classes.
+💣 Is this a breaking change (Yes/No): Yes
+If you are using the cn utility from the @nextui-org/system or @nextui-org/system-rsc package, you need to update the import as follows:
+- import {cn} from "@nextui-org/system" // or "system-rsc"
++ import {cn} from "@nextui-org/theme"
+If you are using it from @nextui-org/react, no changes are required.
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced class composition utility (cn) that integrates NextUI custom classes with Tailwind CSS for improved styling flexibility.
+
+
+
+Refactor
+
+Transitioned the cn utility from @nextui-org/system to @nextui-org/theme to centralize styling functionalities.
+Updated various components (Calendar, Date Picker, Pagination, Slider) to use the new cn function source.
+
+
+
+Dependencies
+
+Added new dependencies (clsx and tailwind-merge) to improve class name manipulation and merged configurations.
+
+
+
+Documentation
+
+Updated import statements in story files reflecting the shift in utility function sources.
+
+Commits:
+- refactor(core): cn utility adjusted and moved to the theme package\n- chore(root): changeset\n- fix(storybook): stories that used cn\n
+
+Labels:
+🧱 Type: Refactoring, 💥 Type: Breaking Change, 🟡 Priority: Medium
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 81bfc0514bb9bd685ca91a8590daa1802a6ca63c
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 30 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/system       | Patch |
+| @nextui-org/system-rsc   | Patch |
+| @nextui-org/theme        | Patch |
+| @nextui-org/accordion    | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/button       | Patch |
+| @nextui-org/calendar     | Patch |
+| @nextui-org/date-picker  | Patch |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/listbox      | Patch |
+| @nextui-org/menu         | Patch |
+| @nextui-org/modal        | Patch |
+| @nextui-org/navbar       | Patch |
+| @nextui-org/popover      | Patch |
+| @nextui-org/select       | Patch |
+| @nextui-org/slider       | Patch |
+| @nextui-org/snippet      | Patch |
+| @nextui-org/table        | Patch |
+| @nextui-org/tabs         | Patch |
+| @nextui-org/tooltip      | Patch |
+| @nextui-org/react        | Patch |
+| @nextui-org/aria-utils   | Patch |
+| @nextui-org/framer-utils | Patch |
+| @nextui-org/badge        | Patch |
+| @nextui-org/code         | Patch |
+| @nextui-org/divider      | Patch |
+| @nextui-org/kbd          | Patch |
+| @nextui-org/skeleton     | Patch |
+| @nextui-org/spacer       | Patch |
+| @nextui-org/spinner      | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/chore/cn-utility?filename=.changeset/giant-meals-repair.md&value=---%0A%22%40nextui-org%2Fcalendar%22%3A%20patch%0A%22%40nextui-org%2Fdate-picker%22%3A%20patch%0A%22%40nextui-org%2Fpagination%22%3A%20patch%0A%22%40nextui-org%2Fslider%22%3A%20patch%0A%22%40nextui-org%2Fsystem-rsc%22%3A%20patch%0A%22%40nextui-org%2Fsystem%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0ACn%20utility%20refactor%0A)
+
+\n- vercel: [vc]: #H3EaZjG2lsh82JzP15QBt5ldhQEUzWtEhLdAISE/wO0=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi80bzZ6TVlEc2haVkF3anpZNXNiZkd1aVJWYldxIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1jaG9yZS1jbi11dGlsaXR5LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktZG9jcy12Mi1naXQtY2hvcmUtY24tdXRpbGl0eS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX0seyJuYW1lIjoibmV4dHVpLXN0b3J5Ym9vay12MiIsInJvb3REaXJlY3RvcnkiOiJwYWNrYWdlcy9zdG9yeWJvb2siLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLXYyLzRwQTE2NEFRalRITmFCeTNYdHpYWFZjVG96SHUiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtY2hvcmUtY24tdXRpbGl0eS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtY2hvcmUtY24tdXRpbGl0eS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/4o6zMYDshZVAwjzY5sbfGuiRVbWq)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-chore-cn-utility-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-chore-cn-utility-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 29, 2024 8:27pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/4pA164AQjTHNaBy3XtzXXVcTozHu)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-chore-cn-utility-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-chore-cn-utility-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 29, 2024 8:27pm |
+
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent updates streamline NextUI packages by enhancing utilities and dependencies. The focus is on migrating the `cn` utility to the `theme` package, improving class manipulation with `clsx` and `tailwind-merge`, and optimizing Tailwind CSS integration with NextUI's features.
+
+## Changes
+
+| File Path | Change Summary |
+|-----------|----------------|
+| `.changeset/few-oranges-jam.md` | Introduced updates to NextUI packages, moving `cn` utility to `theme` package with enhanced support for custom classes. |
+| `packages/core/system-rsc/package.json`<br>`packages/core/theme/package.json` | Updated dependencies: removed "tailwind-variants", added "clsx" and "tailwind-merge". |
+| `packages/core/system-rsc/src/extend-variants.js`<br>`packages/core/system-rsc/test-utils/slots-component.tsx` | Replaced `cn` with `clsx`, impacting class name logic and styling in components. |
+| `packages/core/system-rsc/src/index.ts` | Removed export of `cn`. |
+| `packages/core/system-rsc/src/utils.ts` | Replaced `clsx` with custom `cn` utility function. |
+| `packages/core/theme/src/utils/cn.ts` | Introduced `cn` utility integrating Tailwind CSS and NextUI's classes. |
+| `packages/core/theme/src/utils/index.ts` | Restructured exports for clarity and control. |
+| `packages/core/theme/src/utils/tv.ts`<br>`packages/core/theme/src/utils/tw-merge-config.ts` | Updated `tv` function, introduced `twMergeConfig` for Tailwind CSS configuration merging. |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/few-oranges-jam.md: The new file introduces updates to the NextUI packages `@nextui-org/system`, `@nextui-org/system-rsc`, and `@nextui-org/theme`. The `cn` utility was moved to the `theme` package and enhanced to support NextUI custom classes.
+
+---
+
+packages/core/system-rsc/package.json: The change in functionality involves removing the dependency on "tailwind-variants" from the peer dependencies in the `package.json` file, while adding the package `"clsx": "^1.2.1"` and `"tailwind-merge": "^1.14.0"`.
+
+---
+
+packages/core/system-rsc/src/extend-variants.js: Replaced the `cn` function with `clsx` for handling class names, impacting the logic related to class name generation and manipulation within the code.
+
+---
+
+packages/core/system-rsc/src/index.ts: Removed the export of `cn` from the file, affecting the list of exported entities.
+
+---
+
+packages/core/system-rsc/src/utils.ts: Removed the `clsx` import and usage in the `utils.ts` file, replacing it with a custom `cn` utility function for classnames.
+
+---
+
+packages/core/system-rsc/test-utils/slots-component.tsx: Replaced the `cn` function with `clsx` from the `utils` module, affecting the styling logic within the `Card` component.
+
+---
+
+packages/core/theme/package.json: Added the package `"clsx": "^1.2.1"` and `"tailwind-merge": "^1.14.0"` while keeping `"tailwind-variants": "^0.1.20"` in the dependencies section of the `package.json` file.
+
+---
+
+packages/core/theme/src/utils/cn.ts: Introduces a utility function `cn` that combines CSS class names using Tailwind CSS and NextUI's custom classes. It extends the functionality of `tailwind-merge` to include NextUI's classes for easier class composition.
+
+---
+
+packages/core/theme/src/utils/index.ts: Restructured the exports to explicitly export specific entities from different modules instead of using wildcard exports. This change enhances clarity and control over the exported items.
+
+---
+
+packages/core/theme/src/utils/tv.ts: Updated to import `twMergeConfig` and use it to merge configurations for `opacity`, `spacing`, `borderWidth`, `borderRadius`, `shadow`, `font-size`, and `bg-image` properties within the `tv` function.
+
+---
+
+packages/core/theme/src/utils/tw-merge-config.ts: Introduces a partial configuration for merging Tailwind CSS theme configurations. It defines common units for various properties like spacing, border width, border radius, shadows, font sizes, background images, and more.
+
+---
+
+packages/components/calendar/stories/calendar.stories.tsx: ## Short summary
+
+The change in functionality involves updating the import statement for the `cn` function from `@nextui-org/system` to `@nextui-org/theme`.
+
+---
+
+packages/components/calendar/stories/range-calendar.stories.tsx: ## Short summary
+
+The change in functionality involves updating the import statement for the `cn` function from `@nextui-org/system` to `@nextui-org/theme`.
+
+---
+
+packages/components/date-picker/stories/date-picker.stories.tsx: ## Short summary
+
+The change in functionality involves updating the import statement for `cn` from `"@nextui-org/system"` to `"@nextui-org/theme"` in the `date-picker.stories.tsx` file.
+
+---
+
+packages/components/date-picker/stories/date-range-picker.stories.tsx: ## Short summary
+
+The change in functionality involves updating an import statement from using `@nextui-org/system` to `@nextui-org/theme` for the `cn` function, likely indicating a shift in the source of styling or theming within the component.
+
+---
+
+packages/components/pagination/stories/pagination.stories.tsx: ## Short summary
+
+In the `pagination.stories.tsx` file, the import statement for the `cn` function has been updated to import it from `@nextui-org/theme` instead of `@nextui-org/system`.
+
+---
+
+packages/components/slider/stories/slider.stories.tsx: ## Short summary
+
+The change in functionality involves updating the import statement for the `cn` function from the `@nextui-org/system` package to the `@nextui-org/theme` package in the `slider.stories.tsx` file.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+The pull request titled "Cn utility refactor" (PR #2915) aims to enhance the `cn` utility in the `@nextui-org/theme` package. The update involves incorporating `tailwind-merge` to prevent conflicts with Tailwind CSS classes and integrating NextUI custom classes. This change is a breaking one, requiring users of `@nextui-org/system` or `@nextui-org/system-rsc` to update their imports to `@nextui-org/theme`. The PR focuses on improving CSS class handling and configuration merging within NextUI packages.
+
+### AI-Generated Summary of Generated Summaries
+
+The PR introduces significant changes to CSS class utilities in NextUI packages. The `cn` utility is moved from `system-rsc` to `theme`, now supporting NextUI custom classes and utilizing `tailwind-merge`. In `system-rsc`, dependencies are updated, `cn` is replaced with `clsx`, and exports are adjusted. The `theme` package adds dependencies and introduces a new `cn` utility with enhanced `tailwind-merge` support. Additionally, a `tw-merge-config.ts` file defines common units for CSS properties, utilized in the `tv` function. These changes streamline CSS class handling, enhancing Tailwind CSS integration in NextUI components.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai -->
+
+---
+
+<details>
+
+<summary>Recent Review Details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>Commits</summary>
+Files that changed from the base of the PR and between fbb45f6b24a0958fb8778c95c409a4e8fa5513f2 and 81bfc0514bb9bd685ca91a8590daa1802a6ca63c.
+</details>
+
+
+<details>
+<summary>Files selected for processing (6)</summary>
+
+* packages/components/calendar/stories/calendar.stories.tsx (1 hunks)
+* packages/components/calendar/stories/range-calendar.stories.tsx (1 hunks)
+* packages/components/date-picker/stories/date-picker.stories.tsx (1 hunks)
+* packages/components/date-picker/stories/date-range-picker.stories.tsx (1 hunks)
+* packages/components/pagination/stories/pagination.stories.tsx (1 hunks)
+* packages/components/slider/stories/slider.stories.tsx (1 hunks)
+
+</details>
+
+
+
+
+
+
+
+<details><summary>Additional comments not posted (6)</summary><blockquote>
+<details><summary>packages/components/pagination/stories/pagination.stories.tsx (1)</summary><blockquote>
+
+`4-4`: Change in import path for `cn` function is correct and aligns with the PR objectives.
+
+</blockquote></details>
+<details><summary>packages/components/calendar/stories/calendar.stories.tsx (1)</summary><blockquote>
+
+`15-15`: Change in import path for `cn` function is correct and aligns with the PR objectives.
+
+</blockquote></details>
+<details><summary>packages/components/calendar/stories/range-calendar.stories.tsx (1)</summary><blockquote>
+
+`19-19`: Change in import path for `cn` function is correct and aligns with the PR objectives.
+
+</blockquote></details>
+<details><summary>packages/components/date-picker/stories/date-picker.stories.tsx (1)</summary><blockquote>
+
+`19-19`: Change in import path for `cn` function is correct and aligns with the PR objectives.
+
+</blockquote></details>
+<details><summary>packages/components/slider/stories/slider.stories.tsx (1)</summary><blockquote>
+
+`7-7`: Change in import path for `cn` function is correct and aligns with the PR objectives.
+
+</blockquote></details>
+<details><summary>packages/components/date-picker/stories/date-range-picker.stories.tsx (1)</summary><blockquote>
+
+`21-21`: Updated import path for `cn` function to `@nextui-org/theme` aligns with the PR's objectives.
+
+</blockquote></details></blockquote></details>
+
+
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- fbb45f6b24a0958fb8778c95c409a4e8fa5513f2 -->
+<!-- 81bfc0514bb9bd685ca91a8590daa1802a6ca63c -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/few-oranges-jam.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/system": patch
++"@nextui-org/system-rsc": patch
++"@nextui-org/theme": patch
++---
++
++The `cn` utility was moved the `theme` package and updated to support NextUI custom classes.\n- packages/components/calendar/stories/calendar.stories.tsx (modified, 2 changes)\n  Patch: @@ -12,7 +12,7 @@ import {
+ import {I18nProvider, useLocale} from "@react-aria/i18n";
+ import {Button, ButtonGroup} from "@nextui-org/button";
+ import {Radio, RadioGroup} from "@nextui-org/radio";
+-import {cn} from "@nextui-org/system";
++import {cn} from "@nextui-org/theme";
+ 
+ import {Calendar, CalendarProps, DateValue} from "../src";
+ \n- packages/components/calendar/stories/range-calendar.stories.tsx (modified, 2 changes)\n  Patch: @@ -16,7 +16,7 @@ import {
+ import {I18nProvider, useLocale} from "@react-aria/i18n";
+ import {Button, ButtonGroup} from "@nextui-org/button";
+ import {Radio, RadioGroup} from "@nextui-org/radio";
+-import {cn} from "@nextui-org/system";
++import {cn} from "@nextui-org/theme";
+ 
+ import {RangeCalendar, RangeCalendarProps} from "../src";
+ \n- packages/components/date-picker/stories/date-picker.stories.tsx (modified, 2 changes)\n  Patch: @@ -16,7 +16,7 @@ import {
+ import {I18nProvider, useDateFormatter, useLocale} from "@react-aria/i18n";
+ import {Button, ButtonGroup} from "@nextui-org/button";
+ import {Radio, RadioGroup} from "@nextui-org/radio";
+-import {cn} from "@nextui-org/system";
++import {cn} from "@nextui-org/theme";
+ 
+ import {DatePicker, DatePickerProps} from "../src";
+ \n- packages/components/date-picker/stories/date-range-picker.stories.tsx (modified, 2 changes)\n  Patch: @@ -18,7 +18,7 @@ import {DateValue} from "@react-types/datepicker";
+ import {I18nProvider, useDateFormatter, useLocale} from "@react-aria/i18n";
+ import {Button, ButtonGroup} from "@nextui-org/button";
+ import {Radio, RadioGroup} from "@nextui-org/radio";
+-import {cn} from "@nextui-org/system";
++import {cn} from "@nextui-org/theme";
+ 
+ import {DateRangePicker, DateRangePickerProps} from "../src";
+ \n- packages/components/pagination/stories/pagination.stories.tsx (modified, 2 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import React from "react";
+ import {Meta} from "@storybook/react";
+ import {button, pagination} from "@nextui-org/theme";
+-import {cn} from "@nextui-org/system";
++import {cn} from "@nextui-org/theme";
+ import {ChevronIcon} from "@nextui-org/shared-icons";
+ 
+ import {Pagination, PaginationItemRenderProps, PaginationItemType, usePagination} from "../src";\n- packages/components/slider/stories/slider.stories.tsx (modified, 2 changes)\n  Patch: @@ -4,7 +4,7 @@ import {Meta} from "@storybook/react";
+ import {slider} from "@nextui-org/theme";
+ import {InfoIcon, VolumeHighBoldIcon, VolumeLowBoldIcon} from "@nextui-org/shared-icons";
+ import {Tooltip} from "@nextui-org/tooltip";
+-import {cn} from "@nextui-org/system";
++import {cn} from "@nextui-org/theme";
+ 
+ import {Slider, SliderProps, SliderValue} from "../src";
+ \n- packages/core/system-rsc/package.json (modified, 3 changes)\n  Patch: @@ -35,8 +35,7 @@
+   },
+   "peerDependencies": {
+     "react": ">=18",
+-    "@nextui-org/theme": ">=2.1.0",
+-    "tailwind-variants": ">=0.1.13"
++    "@nextui-org/theme": ">=2.1.0"
+   },
+   "devDependencies": {
+     "react": "^18.0.0",\n- packages/core/system-rsc/src/extend-variants.js (modified, 7 changes)\n  Patch: @@ -1,7 +1,8 @@
+ import * as React from "react";
+ import {tv} from "@nextui-org/theme";
++import clsx from "clsx";
+ 
+-import {cn, mapPropsVariants} from "./utils";
++import {mapPropsVariants} from "./utils";
+ 
+ function getSlots(variants) {
+   return variants
+@@ -65,7 +66,7 @@ function getClassNamesWithProps({
+ 
+   // if no slots, the result is a string
+   if (!hasSlots) {
+-    newProps.className = cn(result, props.className);
++    newProps.className = clsx(result, props.className);
+   }
+   // if has slots, the result is an object with keys as slots functions
+   else {
+@@ -78,7 +79,7 @@ function getClassNamesWithProps({
+     });
+ 
+     Object.entries(props.classNames ?? {}).forEach(([key, value]) => {
+-      classNames[key] = cn(classNames[key], value);
++      classNames[key] = clsx(classNames[key], value);
+     });
+   }
+ \n- packages/core/system-rsc/src/index.ts (modified, 1 changes)\n  Patch: @@ -15,7 +15,6 @@ export type {
+ } from "./types";
+ 
+ export {
+-  cn,
+   forwardRef,
+   toIterator,
+   mapPropsVariants,\n- packages/core/system-rsc/src/utils.ts (modified, 6 changes)\n  Patch: @@ -1,7 +1,6 @@
+ import type {As, RightJoinProps, PropsOf, InternalForwardRefRenderFunction} from "./types";
+ 
+ import * as React from "react";
+-import clsx from "clsx";
+ import {forwardRef as baseForwardRef} from "react";
+ 
+ export function forwardRef<
+@@ -96,11 +95,6 @@ export const mapPropsVariantsWithCommon = <
+   return [props, variants] as const;
+ };
+ 
+-/**
+- * Classnames utility
+- */
+-export const cn = clsx;
+-
+ /**
+  * Checks if a component is a NextUI component.
+  * @param component - The component to check.\n- packages/core/system-rsc/test-utils/slots-component.tsx (modified, 5 changes)\n  Patch: @@ -4,8 +4,9 @@ import React, {useMemo} from "react";
+ import {SlotsToClasses, tv, type VariantProps} from "@nextui-org/theme";
+ import {filterDOMProps, ReactRef, useDOMRef} from "@nextui-org/react-utils";
+ import {objectToDeps} from "@nextui-org/shared-utils";
++import clsx from "clsx";
+ 
+-import {cn, forwardRef, mapPropsVariants} from "../src/utils";
++import {forwardRef, mapPropsVariants} from "../src/utils";
+ 
+ const card = tv({
+   slots: {
+@@ -171,7 +172,7 @@ export const Card = forwardRef<"div", CardProps>((originalProps, ref) => {
+ 
+   const styles = useMemo(() => card({...variantProps}), [objectToDeps(variantProps)]);
+ 
+-  const baseStyles = cn(classNames?.base, className);
++  const baseStyles = clsx(classNames?.base, className);
+ 
+   const domRef = useDOMRef(ref);
+ \n- packages/core/system/src/index.ts (modified, 1 changes)\n  Patch: @@ -18,7 +18,6 @@ export type {
+ } from "@nextui-org/system-rsc";
+ 
+ export {
+-  cn,
+   forwardRef,
+   toIterator,
+   mapPropsVariants,\n- packages/core/theme/package.json (modified, 4 changes)\n  Patch: @@ -55,7 +55,9 @@
+     "lodash.kebabcase": "^4.1.1",
+     "lodash.mapkeys": "^4.6.0",
+     "lodash.omit": "^4.5.0",
+-    "tailwind-variants": "^0.1.20"
++    "clsx": "^1.2.1",
++    "tailwind-variants": "^0.1.20",
++    "tailwind-merge": "^1.14.0"
+   },
+   "peerDependencies": {
+     "tailwindcss": ">=3.4.0"\n- packages/core/theme/src/utils/cn.ts (added, 17 changes)\n  Patch: @@ -0,0 +1,17 @@
++import type {ClassValue} from "clsx";
++
++import clsx from "clsx";
++import {extendTailwindMerge} from "tailwind-merge";
++
++import {twMergeConfig} from "./tw-merge-config";
++
++/**
++ * We need to extend the tailwind merge to include NextUI's custom classes.
++ *
++ * So we can use classes like `text-small` or `text-default-500` and override them.
++ */
++const twMerge = extendTailwindMerge(twMergeConfig);
++
++export function cn(...inputs: ClassValue[]) {
++  return twMerge(clsx(inputs));
++}\n- packages/core/theme/src/utils/index.ts (modified, 17 changes)\n  Patch: @@ -1,3 +1,14 @@
+-export * from "./classes";
+-export * from "./types";
+-export * from "./variants";
++export {
++  baseStyles,
++  ringClasses,
++  focusVisibleClasses,
++  dataFocusVisibleClasses,
++  groupDataFocusVisibleClasses,
++  translateCenterClasses,
++  absoluteFullClasses,
++  collapseAdjacentVariantBorders,
++} from "./classes";
++export type {SlotsToClasses} from "./types";
++export {colorVariants} from "./variants";
++export {COMMON_UNITS, twMergeConfig} from "./tw-merge-config";
++export {cn} from "./cn";\n- packages/core/theme/src/utils/tv.ts (modified, 11 changes)\n  Patch: @@ -1,6 +1,6 @@
+ import {tv as tvBase, TV} from "tailwind-variants";
+ 
+-const COMMON_UNITS = ["small", "medium", "large"];
++import {twMergeConfig} from "./tw-merge-config";
+ 
+ export const tv: TV = (options, config) =>
+   tvBase(options, {
+@@ -10,16 +10,11 @@ export const tv: TV = (options, config) =>
+       ...config?.twMergeConfig,
+       theme: {
+         ...config?.twMergeConfig?.theme,
+-        opacity: ["disabled"],
+-        spacing: ["divider"],
+-        borderWidth: COMMON_UNITS,
+-        borderRadius: COMMON_UNITS,
++        ...twMergeConfig.theme,
+       },
+       classGroups: {
+         ...config?.twMergeConfig?.classGroups,
+-        shadow: [{shadow: COMMON_UNITS}],
+-        "font-size": [{text: ["tiny", ...COMMON_UNITS]}],
+-        "bg-image": ["bg-stripe-gradient"],
++        ...twMergeConfig.classGroups,
+       },
+     },
+   });\n- packages/core/theme/src/utils/tw-merge-config.ts (added, 16 changes)\n  Patch: @@ -0,0 +1,16 @@
++import type {Config} from "tailwind-merge";
++export const COMMON_UNITS = ["small", "medium", "large"];
++
++export const twMergeConfig: Partial<Config> = {
++  theme: {
++    opacity: ["disabled"],
++    spacing: ["divider"],
++    borderWidth: COMMON_UNITS,
++    borderRadius: COMMON_UNITS,
++  },
++  classGroups: {
++    shadow: [{shadow: COMMON_UNITS}],
++    "font-size": [{text: ["tiny", ...COMMON_UNITS]}],
++    "bg-image": ["bg-stripe-gradient"],
++  },
++};\n- pnpm-lock.yaml (modified, 6 changes)\n  Patch: @@ -3020,6 +3020,9 @@ importers:
+ 
+   packages/core/theme:
+     dependencies:
++      clsx:
++        specifier: ^1.2.1
++        version: 1.2.1
+       color:
+         specifier: ^4.2.3
+         version: 4.2.3
+@@ -3047,6 +3050,9 @@ importers:
+       lodash.omit:
+         specifier: ^4.5.0
+         version: 4.5.0
++      tailwind-merge:
++        specifier: ^1.14.0
++        version: 1.14.0
+       tailwind-variants:
+         specifier: ^0.1.20
+         version: 0.1.20(tailwindcss@3.4.3)\n

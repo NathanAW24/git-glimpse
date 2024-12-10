@@ -1,0 +1,70 @@
+Pull Request Number: 1476
+Title: Fix/1469
+Base Branch: main
+Head Branch: fix/1469
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/1476
+State: MERGED
+Created At: 2023-08-23T03:10:35Z
+Merged At: 2023-08-23T03:10:41Z
+Participants: jrgarciadev
+
+Description:
+Closes #1469
+📝 Description
+Sandpack files filter fixed
+⛳️ Current behavior (updates)
+The sandpack code editor is ignoring .js files when typescriptStrict is true
+🚀 New behavior
+Filter .js files only when the ts language is selected
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- feat(blog): rss auto-discovery added\n- fix(blog): feed.xml author name\n- Merge branch 'main' of github.com:nextui-org/nextui\n- Merge branch 'main' of github.com:nextui-org/nextui\n- fix(docs): sandpack files filter\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 83973a171097c4a2ebac66e0cefc07d5bc32d974
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/fix/1469?filename=.changeset/moody-adults-sleep.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0AFix%2F1469%0A)
+
+\n- vercel: [vc]: #MT/yKm37Pke+TYM6fMoBWpdnA6fktSFqDN8f4oMFCY8=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9KMWVzN1VkUkVVM0E4UzgxS1BEbWEzNTc0QWdYIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtMTQ2OS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiUEVORElORyJ9LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi9rZVY1UVM0ajdFODFiOEVaUzVBNDVwQ1pXWWJSIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC0xNDY5LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJQRU5ESU5HIn1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated (UTC) |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/J1es7UdREU3A8S81KPDma3574AgX)) | [Visit Preview](https://nextui-docs-v2-git-fix-1469-nextui-org.vercel.app) | Aug 23, 2023 3:10am |
+| **nextui-storybook-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/keV5QS4j7E81b8EZS5A45pCZWYbR)) | [Visit Preview](https://nextui-storybook-v2-git-fix-1469-nextui-org.vercel.app) | Aug 23, 2023 3:10am |
+
+
+\n
+
+Files Changed:
+- apps/docs/components/sandpack/use-sandpack.ts (modified, 5 changes)\n  Patch: @@ -59,7 +59,10 @@ export const useSandpack = ({
+     if (key.includes("App") && !key.includes(mimeType)) {
+       return acc;
+     }
+-    if (typescriptStrict && key.includes("js")) {
++    if (typescriptStrict && currentTemplate === "vite-react-ts" && key.includes("js")) {
++      return acc;
++    }
++    if (currentTemplate === "vite-react" && key.includes("ts")) {
+       return acc;
+     }
+     // @ts-ignore\n

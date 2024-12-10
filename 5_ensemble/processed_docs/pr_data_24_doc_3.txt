@@ -1,0 +1,110 @@
+Pull Request Number: 1167
+Title: test: added contrast test for semantic colors
+Base Branch: feat/v2
+Head Branch: test/added-contrast-test-for-semantic-colors
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1167
+State: MERGED
+Created At: 2023-06-19T18:52:44Z
+Merged At: 2023-06-19T19:17:18Z
+Participants: jguddas, jrgarciadev
+
+Description:
+FAIL  packages/core/theme/src/colors/__tests__/semantic.test.ts
+  semanticColors
+    light
+      ✓ light.divider.DEFAULT has enough contrast with light.background.DEFAULT to be decorative (3 ms)
+      ✓ light.foreground.DEFAULT has enough contrast with light.background.DEFAULT to be aa (1 ms)
+      ✓ light.foreground.DEFAULT has enough contrast with light.default.DEFAULT to be aa (1 ms)
+      ✓ light.default.foreground has enough contrast with light.default.DEFAULT to be aa (1 ms)
+      ✓ light.foreground.DEFAULT has enough contrast with light.content1.DEFAULT to be aa
+      ✓ light.content1.foreground has enough contrast with light.content1.DEFAULT to be aa
+      ✓ light.foreground.DEFAULT has enough contrast with light.content2.DEFAULT to be aa (1 ms)
+      ✓ light.content2.foreground has enough contrast with light.content2.DEFAULT to be aa
+      ✓ light.foreground.DEFAULT has enough contrast with light.content3.DEFAULT to be aa (1 ms)
+      ✓ light.content3.foreground has enough contrast with light.content3.DEFAULT to be aa
+      ✓ light.foreground.DEFAULT has enough contrast with light.content4.DEFAULT to be aa
+      ✓ light.content4.foreground has enough contrast with light.content4.DEFAULT to be aa (1 ms)
+      ✕ light.primary.DEFAULT has enough contrast with light.background.DEFAULT to be aa (2 ms)
+      ✕ light.primary.foreground has enough contrast with light.primary.DEFAULT to be aa (1 ms)
+      ✓ light.secondary.DEFAULT has enough contrast with light.background.DEFAULT to be aa (1 ms)
+      ✓ light.secondary.foreground has enough contrast with light.secondary.DEFAULT to be aa (1 ms)
+      ✕ light.success.DEFAULT has enough contrast with light.background.DEFAULT to be aa (1 ms)
+      ✕ light.success.foreground has enough contrast with light.success.DEFAULT to be aa
+      ✕ light.warning.DEFAULT has enough contrast with light.background.DEFAULT to be aa (2 ms)
+      ✕ light.warning.foreground has enough contrast with light.warning.DEFAULT to be aa (1 ms)
+      ✕ light.danger.DEFAULT has enough contrast with light.background.DEFAULT to be aa (1 ms)
+      ✕ light.danger.foreground has enough contrast with light.danger.DEFAULT to be aa (1 ms)
+    dark
+      ✓ dark.divider.DEFAULT has enough contrast with dark.background.DEFAULT to be decorative (1 ms)
+      ✓ dark.foreground.DEFAULT has enough contrast with dark.background.DEFAULT to be aa (1 ms)
+      ✓ dark.foreground.DEFAULT has enough contrast with dark.default.DEFAULT to be aa
+      ✓ dark.default.foreground has enough contrast with dark.default.DEFAULT to be aa (1 ms)
+      ✓ dark.foreground.DEFAULT has enough contrast with dark.content1.DEFAULT to be aa
+      ✓ dark.content1.foreground has enough contrast with dark.content1.DEFAULT to be aa
+      ✓ dark.foreground.DEFAULT has enough contrast with dark.content2.DEFAULT to be aa (1 ms)
+      ✓ dark.content2.foreground has enough contrast with dark.content2.DEFAULT to be aa
+      ✓ dark.foreground.DEFAULT has enough contrast with dark.content3.DEFAULT to be aa
+      ✓ dark.content3.foreground has enough contrast with dark.content3.DEFAULT to be aa
+      ✓ dark.foreground.DEFAULT has enough contrast with dark.content4.DEFAULT to be aa (1 ms)
+      ✓ dark.content4.foreground has enough contrast with dark.content4.DEFAULT to be aa
+      ✓ dark.primary.DEFAULT has enough contrast with dark.background.DEFAULT to be aa
+      ✕ dark.primary.foreground has enough contrast with dark.primary.DEFAULT to be aa (1 ms)
+      ✕ dark.secondary.DEFAULT has enough contrast with dark.background.DEFAULT to be aa (1 ms)
+      ✓ dark.secondary.foreground has enough contrast with dark.secondary.DEFAULT to be aa (1 ms)
+      ✓ dark.success.DEFAULT has enough contrast with dark.background.DEFAULT to be aa
+      ✓ dark.success.foreground has enough contrast with dark.success.DEFAULT to be aa (1 ms)
+      ✓ dark.warning.DEFAULT has enough contrast with dark.background.DEFAULT to be aa
+      ✓ dark.warning.foreground has enough contrast with dark.warning.DEFAULT to be aa
+      ✓ dark.danger.DEFAULT has enough contrast with dark.background.DEFAULT to be aa
+      ✕ dark.danger.foreground has enough contrast with dark.danger.DEFAULT to be aa
+
+Tests:       11 failed, 33 passed, 44 total
+
+Commits:
+- test: added contrast test for semantic colors\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Hey @jguddas thanks!, I'll work on better color contrast\n
+
+Files Changed:
+- packages/core/theme/src/colors/__tests__/semantic.test.ts (added, 36 changes)\n  Patch: @@ -0,0 +1,36 @@
++import {getContrast} from "color2k";
++import get from "lodash.get";
++
++import {semanticColors} from "../semantic";
++
++const guidelines = {decorative: 1.5, readable: 3, aa: 4.5, aaa: 7};
++const targetGuideline: keyof typeof guidelines = "aa";
++
++const testGoodContrast = (
++  colorPath: string,
++  backgroundPath: string,
++  standard: keyof typeof guidelines,
++) => {
++  it(`${colorPath} has enough contrast with ${backgroundPath} to be ${standard}`, () => {
++    expect(
++      getContrast(get(semanticColors, colorPath), get(semanticColors, backgroundPath)),
++    ).toBeGreaterThanOrEqual(guidelines[standard]);
++  });
++};
++
++describe("semanticColors", () => {
++  ["light", "dark"].forEach((mode) => {
++    describe(mode, () => {
++      testGoodContrast(`${mode}.divider.DEFAULT`, `${mode}.background.DEFAULT`, "decorative");
++      testGoodContrast(`${mode}.foreground.DEFAULT`, `${mode}.background.DEFAULT`, targetGuideline);
++      ["default", "content1", "content2", "content3", "content4"].forEach((name) => {
++        testGoodContrast(`${mode}.foreground.DEFAULT`, `${mode}.${name}.DEFAULT`, targetGuideline);
++        testGoodContrast(`${mode}.${name}.foreground`, `${mode}.${name}.DEFAULT`, targetGuideline);
++      });
++      ["primary", "secondary", "success", "warning", "danger"].forEach((name) => {
++        testGoodContrast(`${mode}.${name}.DEFAULT`, `${mode}.background.DEFAULT`, targetGuideline);
++        testGoodContrast(`${mode}.${name}.foreground`, `${mode}.${name}.DEFAULT`, targetGuideline);
++      });
++    });
++  });
++});\n

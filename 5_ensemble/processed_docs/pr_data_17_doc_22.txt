@@ -1,0 +1,113 @@
+Pull Request Number: 2094
+Title: fix(listbox): pass `shouldHighlightOnFocus` to `ListboxSection` and its children items
+Base Branch: main
+Head Branch: fix/lisbox-section-items-highlight
+Author: black197
+URL: https://github.com/nextui-org/nextui/pull/2094
+State: CLOSED
+Created At: 2023-12-05T08:47:34Z
+Merged At: None
+Participants: black197, wingkwong
+
+Description:
+Closes #1908 
+📝 Description
+Inside Listbox, pass prop shouldHighlightOnFocus to ListboxSection and its children items to enable highlighting.
+⛳️ Current behavior (updates)
+When navigating with keys on Autocomplete with sections, it does not highlight the currently selected item.
+🚀 New behavior
+The focused item will be highlighted.
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(listbox): pass `shouldHighlightOnFocus` to `ListboxSection` and its children items (#1908)\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 05ef895bcfb4020422d939de89db787a70799fbc
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 4 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/listbox      | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/select       | Patch |
+| @nextui-org/react        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/black197/nextui/new/fix/lisbox-section-items-highlight?filename=.changeset/fresh-dancers-lay.md&value=---%0A%22%40nextui-org%2Flistbox%22%3A%20patch%0A---%0A%0Afix(listbox)%3A%20pass%20%60shouldHighlightOnFocus%60%20to%20%60ListboxSection%60%20and%20its%20children%20items%0A)
+
+\n- vercel: @black197 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2205ef895bcfb4020422d939de89db787a70799fbc%22%7D%2C%22id%22%3A%22QmaDJx7qTNgSY6s8NcocJ9bA5VyTTwmPEAExmTenELzkvM%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2094%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #F2SNX0p/YT86ZPnOHdiMn0+DASbxFURqoYBxlQU0GlI=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNTZXM0hESkExWGZMYjh4Nnh4ZWpITXdWN3ViNyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWJsYWNrMTk3LWZpeC1saXMtNDViZWVkLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWJsYWNrMTk3LWZpeC1saXMtNDViZWVkLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/56W3HDJA1XfLb8x6xxejHMwV7ub7)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-black197-fix-lis-45beed-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-black197-fix-lis-45beed-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 5, 2023 8:49am |
+
+\n- wingkwong: Closing - the reported issue is no longer reproducible (tested in 2.3.5).\n
+
+Files Changed:
+- .changeset/fuzzy-cats-crash.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/listbox": patch
++---
++
++Fix #1908 pass `shouldHighlightOnFocus` to `ListboxSection` and its children items\n- packages/components/listbox/src/listbox-section.tsx (modified, 7 changes)\n  Patch: @@ -27,6 +27,11 @@ export interface ListboxSectionProps<T extends object = object> extends ListboxS
+    * @default false
+    */
+   disableAnimation?: boolean;
++  /**
++   * Whether the listbox items should be highlighted on focus.
++   * @default false
++   */
++  shouldHighlightOnFocus?: ListboxItemProps["shouldHighlightOnFocus"];
+ }
+ 
+ /**
+@@ -51,6 +56,7 @@ const ListboxSection = forwardRef<"li", ListboxSectionProps>(
+       // the title props is already inside the rendered prop
+       // eslint-disable-next-line @typescript-eslint/no-unused-vars
+       title,
++      shouldHighlightOnFocus,
+       ...otherProps
+     },
+     _,
+@@ -100,6 +106,7 @@ const ListboxSection = forwardRef<"li", ListboxSectionProps>(
+                 disableAnimation={disableAnimation}
+                 hideSelectedIcon={hideSelectedIcon}
+                 item={node}
++                shouldHighlightOnFocus={shouldHighlightOnFocus}
+                 state={state}
+                 variant={variant}
+                 {...nodeProps}\n- packages/components/listbox/src/listbox.tsx (modified, 9 changes)\n  Patch: @@ -45,7 +45,14 @@ function Listbox<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLUListE
+         };
+ 
+         if (item.type === "section") {
+-          return <ListboxSection key={item.key} {...itemProps} itemClasses={itemClasses} />;
++          return (
++            <ListboxSection
++              key={item.key}
++              {...itemProps}
++              itemClasses={itemClasses}
++              shouldHighlightOnFocus={shouldHighlightOnFocus}
++            />
++          );
+         }
+         let listboxItem = (
+           <ListboxItem\n

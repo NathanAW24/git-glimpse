@@ -1,0 +1,88 @@
+Pull Request Number: 1431
+Title: fix: added value to aria label of select
+Base Branch: feat/select-component
+Head Branch: fix/select-aria-label-2
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1431
+State: MERGED
+Created At: 2023-08-18T19:02:01Z
+Merged At: 2023-08-18T19:25:50Z
+Participants: jguddas, jrgarciadev
+
+Description:
+Before it just read out the label i.e. Favorite Animal, now it reads out Dog, Favorite Animal.
+I added a visually hidden comma so most screen readers put a liddle pause between the value and label.
+
+Commits:
+- fix: added value to aria label of select\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: c0bd5be8f3c29699f545d51e6e25d7701ed726ed
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/jguddas/nextui/new/fix/select-aria-label-2?filename=.changeset/perfect-tigers-rule.md&value=---%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Fuse-aria-multiselect%22%3A%20patch%0A---%0A%0Afix%3A%20added%20value%20to%20aria%20label%20of%20select%0A)
+
+\n- vercel: [vc]: #XOmz1uHYHEFZSPoiqaPesLLwmAG57vPv7bjCgGLbzlI=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvOHRVZXU1WDRMc0VpVThVZVJVbnJZaGZ5WlhBdyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWpndWRkYXMtZml4LXNlbGUtNjUyYTU3LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWpndWRkYXMtZml4LXNlbGUtNjUyYTU3LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/8tUeu5X4LsEiU8UeRUnrYhfyZXAw)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jguddas-fix-sele-652a57-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jguddas-fix-sele-652a57-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 18, 2023 7:03pm |
+
+\n- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22c0bd5be8f3c29699f545d51e6e25d7701ed726ed%22%7D%2C%22id%22%3A%22QmdRRTPjGdjPjcpNYGsT7JxqWQxtwJxkYqBzKvQ9HQvXGs%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1431%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/select/src/select.tsx (modified, 6 changes)\n  Patch: @@ -4,6 +4,7 @@ import {ScrollShadow} from "@nextui-org/scroll-shadow";
+ import {ChevronDownIcon} from "@nextui-org/shared-icons";
+ import {forwardRef} from "@nextui-org/system";
+ import {FocusScope} from "@react-aria/focus";
++import {VisuallyHidden} from "@react-aria/visually-hidden";
+ import {cloneElement, ForwardedRef, ReactElement, Ref, useMemo} from "react";
+ 
+ import {HiddenSelect} from "./hidden-select";
+@@ -95,7 +96,10 @@ function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectE
+             {!shouldLabelBeOutside ? labelContent : null}
+             <div {...getInnerWrapperProps()}>
+               {startContent}
+-              <span {...getValueProps()}>{renderSelectedItem}</span>
++              <span {...getValueProps()}>
++                {renderSelectedItem}
++                <VisuallyHidden>,</VisuallyHidden>
++              </span>
+               {endContent}
+             </div>
+             {clonedIcon}\n- packages/hooks/use-aria-multiselect/src/use-multiselect.ts (modified, 8 changes)\n  Patch: @@ -129,10 +129,14 @@ export function useMultiSelect<T>(
+       ...triggerProps,
+       onKeyDown: chain(triggerProps.onKeyDown, triggerOnKeyDown, props.onKeyDown),
+       onKeyUp: props.onKeyUp,
+-      "aria-labelledby":
++      "aria-labelledby": [
++        valueId,
+         domProps["aria-label"] !== undefined
+-          ? domProps["aria-labelledby"]
++          ? domProps["aria-labelledby"] !== undefined
++            ? domProps["aria-labelledby"]
++            : triggerProps.id
+           : triggerProps["aria-labelledby"],
++      ].join(" "),
+       onFocus(e: FocusEvent) {
+         if (state.isFocused) {
+           return;\n
