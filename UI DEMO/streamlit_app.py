@@ -103,32 +103,29 @@ if run_button:
     retrieved_docs = retriever.get_documents(refined_query)
     st.write("**Retrieved Documents:**", list(retrieved_docs.keys()))
 
-    # Step 3: Summarize Each Document
-    st.markdown("**Step 3: Summarize Documents**")
+    # Step 3: Summarize Each Document and Extract PR Info
+    st.markdown("**Step 3: Summarize Documents and Extract PR Info**")
     summaries = []
     for fname, content in retrieved_docs.items():
         summary = summarize_document(content)
         summaries.append(summary)
-        with st.expander(f"Document: {fname}"):
-            st.write("**Original Content:**", content)
-            st.write("**Summary:**", summary)
+        st.markdown(f"**Document: {fname}**")
+        st.write("**Summary:**", summary)
+
+        # Extract PR info
+        prs = extract_pr_info(content)
+        if prs:
+            st.markdown("**Relevant PRs:**")
+            for pr_num, pr_url in prs:
+                st.markdown(f"- PR #{pr_num}: [View on GitHub]({pr_url})")
+        else:
+            st.write("No PRs found in this document.")
+
+        # Collapsible full content
+        with st.expander("View Full Content"):
+            st.write(content)
 
     # Step 4: Generate Final Answer
     st.markdown("**Step 4: Generate Final Answer**")
     final_answer = generate_final_answer(user_query, summaries)
     st.write("**Final Answer:**", final_answer)
-
-    # Step 5: Extract PR Info from retrieved content
-    st.markdown("**Relevant PRs**")
-    pr_links = []
-    for fname, content in retrieved_docs.items():
-        prs = extract_pr_info(content)
-        for pr_num, pr_url in prs:
-            pr_links.append((pr_num, pr_url))
-
-    if pr_links:
-        st.write("Found PRs:")
-        for pr_num, pr_url in pr_links:
-            st.markdown(f"- PR #{pr_num}: [View on GitHub]({pr_url})")
-    else:
-        st.write("No PR links found.")
