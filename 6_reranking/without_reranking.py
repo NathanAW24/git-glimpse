@@ -104,7 +104,7 @@ questions = [[
 ]]
 
 # Reranking parameters
-top_n_initial = 10  # Get initial top 10 or 15, configurable
+top_n_initial = 5  # Get initial top 10 or 15, configurable
 top_n_final = 5     # After reranking, choose top 5
 
 
@@ -242,23 +242,23 @@ for [file_name_query, question] in questions:
 
     # Rerank using Cross-Encoder
     # Prepare pairs: (query, doc)
-    doc_items = list(combined_docs.items())  # [(fname, content), ...]
-    pairs = [(question, content) for fname, content in doc_items]
+    # doc_items = list(combined_docs.items())  # [(fname, content), ...]
+    # pairs = [(question, content) for fname, content in doc_items]
 
-    # Get scores from CrossEncoder
-    rerank_scores = cross_encoder_model.predict(pairs)
+    # # Get scores from CrossEncoder
+    # rerank_scores = cross_encoder_model.predict(pairs)
 
-    # Attach scores and sort
-    scored_docs = list(zip(doc_items, rerank_scores))
-    # Higher is more relevant
-    scored_docs.sort(key=lambda x: x[1], reverse=True)
+    # # Attach scores and sort
+    # scored_docs = list(zip(doc_items, rerank_scores))
+    # # Higher is more relevant
+    # scored_docs.sort(key=lambda x: x[1], reverse=True)
 
-    # Now take only the top_n_final after reranking
-    final_docs = scored_docs[:top_n_final]
+    # # Now take only the top_n_final after reranking
+    # final_docs = scored_docs[:top_n_final]
 
     # Evaluate with LLM scoring (no changes to LLM call)
     doc_scores = []
-    for ((fname, content), _) in final_docs:
+    for fname, content in combined_docs.items():
         if fname == file_name_query:
             score = 10  # Known relevant doc
         else:
@@ -315,7 +315,7 @@ results["overall_averages"] = {
     metric: np.mean(values) for metric, values in overall_metrics.items()
 }
 
-with open("evaluation_results_ensemble.json", "w") as json_file:
+with open("evaluation_results_ensemble_no_reranking.json", "w") as json_file:
     json.dump(results, json_file, indent=4)
 
 print("Results have been saved to evaluation_results_ensemble.json.")
