@@ -1,0 +1,143 @@
+Pull Request Number: 567
+Title: feat(react-container): add forwardRef
+Base Branch: next
+Head Branch: feat/container
+Author: danielsimao
+URL: https://github.com/nextui-org/nextui/pull/567
+State: MERGED
+Created At: 2022-06-24T09:34:27Z
+Merged At: 2022-07-03T12:41:11Z
+Participants: danielsimao, jrgarciadev
+
+Description:
+Closes #566 
+📝 Description
+Allow passing ref to Container
+⛳️ Current behavior (updates)
+Doesn't allow to pass ref.
+🚀 New behavior
+Allows passing ref.
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- feat(react-container): add forwardRef\n- fix(react-container): code review\n
+
+Labels:
+
+
+Comments:
+- danielsimao: > here please pass a ref from the function `useDomRef`, something like this
+> 
+> ```
+>    import {useDOMRef} from "../utils/dom";
+>    //....
+>    const domRef = useDOMRef(ref);
+>  // .....
+>  return (
+>       <StyledContainer
+>         ref={domRef}
+> //......
+> ```
+
+I made the change. Out of curiosity, could you please explain why you prefer this way, even tho you do not give any use to the ref created inside the component?\n- jrgarciadev: Could you please fix the conflicts? @danielsimao 🙏🏻\n- danielsimao: @jrgarciadev done\n- jrgarciadev: Thanks a lot! @danielsimao 🚀\n- jrgarciadev: Thanks a lot! @danielsimao 🚀\n
+
+Files Changed:
+- packages/react/src/container/container.tsx (modified, 68 changes)\n  Patch: @@ -1,7 +1,15 @@
+-import React, {useMemo} from "react";
++import React, { useMemo } from "react";
+ 
+-import {CSS} from "../theme/stitches.config";
+-import {Wrap, Display, Justify, Direction, AlignItems, AlignContent} from "../utils/prop-types";
++import { CSS } from "../theme/stitches.config";
++import { useDOMRef } from "../utils/dom";
++import {
++  Wrap,
++  Display,
++  Justify,
++  Direction,
++  AlignItems,
++  AlignContent,
++} from "../utils/prop-types";
+ 
+ import StyledContainer from "./container.styles";
+ 
+@@ -42,26 +50,33 @@ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+ 
+ export type ContainerProps = Props & typeof defaultProps & NativeAttrs;
+ 
+-const Container: React.FC<React.PropsWithChildren<ContainerProps>> = ({
+-  xs,
+-  sm,
+-  md,
+-  lg,
+-  xl,
+-  wrap,
+-  gap,
+-  as,
+-  display,
+-  justify,
+-  direction,
+-  alignItems,
+-  alignContent,
+-  children,
+-  responsive,
+-  fluid,
+-  css,
+-  ...props
+-}) => {
++const Container = React.forwardRef<
++  HTMLElement,
++  React.PropsWithChildren<ContainerProps>
++>((containerProps, ref) => {
++  const {
++    xs,
++    sm,
++    md,
++    lg,
++    xl,
++    wrap,
++    gap,
++    as,
++    display,
++    justify,
++    direction,
++    alignItems,
++    alignContent,
++    children,
++    responsive,
++    fluid,
++    css,
++    ...otherProps
++  } = containerProps;
++
++  const domRef = useDOMRef(ref);
++
+   const gapUnit = useMemo(() => {
+     return `calc(${gap} * $space$sm)`;
+   }, [gap]);
+@@ -78,6 +93,7 @@ const Container: React.FC<React.PropsWithChildren<ContainerProps>> = ({
+ 
+   return (
+     <StyledContainer
++      ref={domRef}
+       as={as}
+       css={{
+         px: gapUnit,
+@@ -92,12 +108,14 @@ const Container: React.FC<React.PropsWithChildren<ContainerProps>> = ({
+       }}
+       fluid={fluid}
+       responsive={responsive}
+-      {...props}
++      {...otherProps}
+     >
+       {children}
+     </StyledContainer>
+   );
+-};
++});
++
++Container.displayName = "NextUI.Container";
+ 
+ Container.toString = () => ".nextui-container";
+ \n

@@ -1,0 +1,548 @@
+Pull Request Number: 2622
+Title: fix: lazyMotion forwardRef issue
+Base Branch: main
+Head Branch: fix/lazymotion-forwardRef-issue
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2622
+State: MERGED
+Created At: 2024-04-01T05:57:59Z
+Merged At: 2024-04-02T14:01:17Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+
+fixed lazy motion issue in ripple
+include tests (accordion, modal, navbar, tab, tooltip)
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Tests
+
+Improved testing in components (Accordion, Dropdown, Modal, Navbar, Popover, Tabs) to enhance stability and prevent errors during user interactions.
+
+
+Bug Fixes
+
+Addressed issues in various components to ensure error-free behavior.
+
+
+Documentation
+
+Documented improvements for a specific component related to forwardRef handling.
+
+Commits:
+- fix(ripple): lazyMotion forwardRef issue in Ripple\n- feat(dropdown): add test case for LazyMotion React.forwardRef issue\n- refactor(dropdown): revise the test title\n- feat(modal): include console error check in modal test\n- feat(popover): add "should not throw error when clicking trigger button" test\n- feat(accordion): add test for lazy motion issue\n- feat(navbar): add test for lazy motion issue\n- feat(tabs): add test for lazy motion issue\n- feat(tooltip): add test for lazy motion issue\n- refactor(dropdown): remove unnecessary async\n- refactor(test): move spy outside and trigger clearAllMocks after each test\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 3830c6e4b3f54da1a069b4a60063cdf58cdc80bc
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 9 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/ripple       | Patch |
+| @nextui-org/button       | Patch |
+| @nextui-org/card         | Patch |
+| @nextui-org/react        | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/popover      | Patch |
+| @nextui-org/select       | Patch |
+| @nextui-org/snippet      | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/wingkwong/nextui/new/fix/lazymotion-forwardRef-issue?filename=.changeset/breezy-ties-happen.md&value=---%0A%22%40nextui-org%2Faccordion%22%3A%20patch%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A%22%40nextui-org%2Fmodal%22%3A%20patch%0A%22%40nextui-org%2Fnavbar%22%3A%20patch%0A%22%40nextui-org%2Fpopover%22%3A%20patch%0A%22%40nextui-org%2Fripple%22%3A%20patch%0A%22%40nextui-org%2Ftabs%22%3A%20patch%0A%22%40nextui-org%2Ftooltip%22%3A%20patch%0A---%0A%0Afix%3A%20lazyMotion%20forwardRef%20issue%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent updates focus on enhancing component testing across various UI elements like Accordions, Dropdowns, Modals, Navbars, Popovers, and Tabs. These improvements include adding spies to monitor console errors, particularly regarding refs in function components, and introducing test cases to ensure error-free interactions. Additionally, a minor functionality change in the Ripple component involves a structural adjustment. A patch is also introduced to address a specific issue related to forwardRef in the LazyMotion component.
+
+## Changes
+
+| File Path                                | Change Summary                                                                                                                                                      |
+|------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `.../__tests__/accordion.test.tsx`       | Added a spy to check for console errors related to refs when unmounting.                                                                                            |
+| `.../__tests__/dropdown.test.tsx`        | Added a test case to verify no errors occur when clicking a button within the dropdown.                                                                            |
+| `.../__tests__/modal.test.tsx`           | Implemented a spy on `console.error` for warnings about function components not being given refs, and added an assertion on the spy call count.                     |
+| `.../__tests__/navbar.test.tsx`          | Added a mock for `window.scrollTo` and a test case to ensure no errors after a toggle click.                                                                        |
+| `.../__tests__/popover.test.tsx`         | Added a test case to ensure no errors when clicking the trigger button.                                                                                             |
+| `.../__tests__/tabs.test.tsx`            | Introduced a spy on `console.error` to ensure a specific error message is not logged.                                                                               |
+| `.../src/ripple.tsx`                     | Wrapped the `<m.span>` element inside an additional empty fragment in the Ripple component.                                                                         |
+| `.changeset/chilled-horses-type.md`      | Introduced a patch for "@nextui-org/ripple" to fix the LazyMotion forwardRef issue.                                                                                 |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.packages/components/accordion/__tests__/accordion.test.tsx: In the `Accordion` component test file, a spy is added to check for console errors related to refs in function components, ensuring the correct behavior of the component when unmounting. The `afterEach` hook is used to clear all mocks after each test.
+
+---
+
+.packages/components/dropdown/__tests__/dropdown.test.tsx: In the `Dropdown` component test suite, a new test case was added to ensure that no error is thrown when clicking a button within the dropdown. The test simulates a button click event and verifies that no console errors occur during the process.
+
+---
+
+.packages/components/modal/__tests__/modal.test.tsx: In the `modal.test.tsx` file, the changes introduce a spy on `console.error` to handle warnings related to function components not being given refs. The spy is implemented to prevent errors related to accessing refs and is restored after the test. Additionally, an assertion is added to check the number of times the spy is called.
+
+---
+
+.packages/components/navbar/__tests__/navbar.test.tsx: In the `navbar.test.tsx` file, a mock function `window.scrollTo` is added, and a test case is included to ensure that no error is thrown after a toggle click within the Navbar component.
+
+---
+
+.packages/components/popover/__tests__/popover.test.tsx: In the `Popover` component test suite, a new test case was added to ensure that clicking the trigger button does not throw an error related to function components and refs. The test simulates clicking the trigger button within the popover component and verifies that no errors are thrown during this interaction.
+
+---
+
+.packages/components/tabs/__tests__/tabs.test.tsx: In the `tabs.test.tsx` file, the change introduces a spy on `console.error` to mock its implementation for testing purposes. This spy is used to ensure that a specific error message is not logged during the test execution.
+
+---
+
+.packages/components/tooltip/__tests__/tooltip.test.tsx: In the `Tooltip` component test file, a new test case has been added to ensure that a specific console error related to function components not accepting refs is not triggered during rendering. The test spies on `console.error` to check for this condition and verifies that the error is not called during the test execution.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+The pull request titled "fix: lazyMotion forwardRef issue" with the number 2622 aims to address a specific problem related to the `lazyMotion` feature within a library, presumably a UI or animation library. The main objective of this PR is to fix an issue where function components might not be properly forwarding refs, which can lead to errors or warnings in React applications, particularly those that rely on motion or animation features.
+
+The description of the PR outlines several key points:
+- The issue is fixed specifically in the context of a "ripple" effect, which suggests that the problem was manifesting in components that utilize this visual feedback effect.
+- The PR includes tests for various components such as accordion, modal, navbar, tab, and tooltip. This indicates a thorough approach to ensure that the fix does not introduce regressions in other parts of the library and that these components behave correctly with the fix applied.
+- The description mentions the current behavior being modified but does not detail what this behavior is, implying that the PR's focus is on fixing the issue rather than altering functionality.
+- The new behavior section is also left vague, suggesting that the primary outcome of the PR is the resolution of the error without significant changes to the components' functionality.
+- The question of whether this is a breaking change is left unanswered in the provided description, which might indicate that the impact of the change is expected to be minimal or that it has been assessed to not require migration steps for users of the library.
+
+### AI-generated Summary of Generated Summaries
+
+This pull request introduces a series of tests and fixes across multiple components (accordion, dropdown, modal, navbar, popover, tabs) within a library to address an issue related to the improper forwarding of refs in function components, particularly highlighted by the `lazyMotion` feature's use in the ripple effect. The core of the fix involves an adjustment in the `Ripple` component, where an `<m.span>` element is now wrapped inside an additional empty fragment to ensure proper ref forwarding. This adjustment is critical for preventing console errors related to refs when components mount or unmount.
+
+To validate the fix and ensure no regressions, the PR includes new test cases across several components. These tests primarily focus on spying on `console.error` to catch and assert against specific ref-related errors during component interactions, such as clicking within a dropdown, toggling a navbar, or triggering a popover. Additionally, a mock function for `window.scrollTo` is introduced in the navbar tests to further ensure interaction robustness without errors.
+
+Moreover, the tests for the accordion and tabs components introduce a spy on `console.error` to monitor and assert that no unwanted error messages are logged, indicating a comprehensive approach to quality assurance and error handling in the library's components.
+
+The changeset file mentioned indicates that this patch is specifically for the "@nextui-org/ripple" package, suggesting that the primary focus of these adjustments is on enhancing the ripple effect's compatibility and functionality within the library, particularly in relation to the lazyMotion feature and forwardRef issue.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- ec881537f36be4abe0c2105dd79030de49f3bfcf -->
+<!-- 3830c6e4b3f54da1a069b4a60063cdf58cdc80bc -->
+
+<!-- commit_ids_reviewed_end --><!-- tweet_start -->
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<!-- tweet_end --><!-- tips_start -->
+
+---
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/coderabbit-overrides.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #vryBDNHz5+HLf5cJwJZsNB/uwvdLCLWAl+RQidPIxjU=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvR053cERpUDNLQ0RMUmVXQllDY2Z4VWc5V0E4MyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtbGEtZmI5NjZhLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtbGEtZmI5NjZhLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/GNwpDiP3KCDLReWBYCcfxUg9WA83)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-la-fb966a-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-la-fb966a-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 2, 2024 9:37am |
+
+\n- vercel: @wingkwong is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22d2ddca93f14c6f93f5d1b4b44939e3a7f8c1011b%22%7D%2C%22id%22%3A%22QmTQ4duYYKLjnS8FUZ57r2g28FkNgS5JUkhw7mRtfWrhGV%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2622%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/chilled-horses-type.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/ripple": patch
++---
++
++Fixed LazyMotion forwardRef issue\n- packages/components/accordion/__tests__/accordion.test.tsx (modified, 10 changes)\n  Patch: @@ -5,7 +5,15 @@ import userEvent from "@testing-library/user-event";
+ 
+ import {Accordion, AccordionItem} from "../src";
+ 
++// e.g. console.error Warning: Function components cannot be given refs.
++// Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
++const spy = jest.spyOn(console, "error").mockImplementation(() => {});
++
+ describe("Accordion", () => {
++  afterEach(() => {
++    jest.clearAllMocks();
++  });
++
+   it("should render correctly", () => {
+     const wrapper = render(
+       <Accordion>
+@@ -14,6 +22,8 @@ describe("Accordion", () => {
+     );
+ 
+     expect(() => wrapper.unmount()).not.toThrow();
++
++    expect(spy).toBeCalledTimes(0);
+   });
+ 
+   it("ref should be forwarded", () => {\n- packages/components/dropdown/__tests__/dropdown.test.tsx (modified, 36 changes)\n  Patch: @@ -5,7 +5,15 @@ import userEvent from "@testing-library/user-event";
+ 
+ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, DropdownSection} from "../src";
+ 
++// e.g. console.error Warning: Function components cannot be given refs.
++// Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
++const spy = jest.spyOn(console, "error").mockImplementation(() => {});
++
+ describe("Dropdown", () => {
++  afterEach(() => {
++    jest.clearAllMocks();
++  });
++
+   it("should render correctly (static)", () => {
+     const wrapper = render(
+       <Dropdown>
+@@ -110,6 +118,34 @@ describe("Dropdown", () => {
+     expect(() => wrapper.unmount()).not.toThrow();
+   });
+ 
++  it("should not throw any error when clicking button", async () => {
++    const wrapper = render(
++      <Dropdown>
++        <DropdownTrigger>
++          <Button data-testid="trigger-test">Trigger</Button>
++        </DropdownTrigger>
++        <DropdownMenu aria-label="Actions" onAction={alert}>
++          <DropdownItem key="new">New file</DropdownItem>
++          <DropdownItem key="copy">Copy link</DropdownItem>
++          <DropdownItem key="edit">Edit file</DropdownItem>
++          <DropdownItem key="delete" color="danger">
++            Delete file
++          </DropdownItem>
++        </DropdownMenu>
++      </Dropdown>,
++    );
++
++    let triggerButton = wrapper.getByTestId("trigger-test");
++
++    expect(triggerButton).toBeTruthy();
++
++    await act(async () => {
++      await userEvent.click(triggerButton);
++    });
++
++    expect(spy).toBeCalledTimes(0);
++  });
++
+   it("should work with single selection (controlled)", async () => {
+     let onOpenChange = jest.fn();
+     let onSelectionChange = jest.fn();\n- packages/components/modal/__tests__/modal.test.tsx (modified, 10 changes)\n  Patch: @@ -3,7 +3,15 @@ import {act, render, fireEvent} from "@testing-library/react";
+ 
+ import {Modal, ModalContent, ModalBody, ModalHeader, ModalFooter} from "../src";
+ 
++// e.g. console.error Warning: Function components cannot be given refs.
++// Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
++const spy = jest.spyOn(console, "error").mockImplementation(() => {});
++
+ describe("Modal", () => {
++  afterEach(() => {
++    jest.clearAllMocks();
++  });
++
+   it("should render correctly", () => {
+     const wrapper = render(
+       <Modal isOpen>
+@@ -16,6 +24,8 @@ describe("Modal", () => {
+     );
+ 
+     expect(() => wrapper.unmount()).not.toThrow();
++
++    expect(spy).toBeCalledTimes(0);
+   });
+ 
+   it("ref should be forwarded", () => {\n- packages/components/navbar/__tests__/navbar.test.tsx (modified, 39 changes)\n  Patch: @@ -11,7 +11,16 @@ import {
+   NavbarMenuItem,
+ } from "../src";
+ 
++window.scrollTo = jest.fn();
++
++// e.g. console.error Warning: Function components cannot be given refs.
++// Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
++const spy = jest.spyOn(console, "error").mockImplementation(() => {});
++
+ describe("Navbar", () => {
++  afterEach(() => {
++    jest.clearAllMocks();
++  });
+   it("should render correctly", () => {
+     const wrapper = render(<Navbar />);
+ 
+@@ -53,6 +62,36 @@ describe("Navbar", () => {
+     expect(navbarContent.children.length).toBe(5);
+   });
+ 
++  it("should not throw error after toggle click", () => {
++    const items = ["item1", "item2", "item3", "item4", "item5"];
++
++    const wrapper = render(
++      <Navbar data-testid="navbar-test">
++        <NavbarMenuToggle data-testid="navbar-toggle-test" />
++        <NavbarContent data-testid="navbar-content-test">
++          <NavbarItem>Dashboard</NavbarItem>
++          <NavbarItem>Team</NavbarItem>
++          <NavbarItem>Deployments</NavbarItem>
++          <NavbarItem>Activity</NavbarItem>
++          <NavbarItem>Settings</NavbarItem>
++        </NavbarContent>
++        <NavbarMenu data-testid="navbar-menu-test">
++          {items.map((item, index) => (
++            <NavbarMenuItem key={`${item}-${index}`}>{item}</NavbarMenuItem>
++          ))}
++        </NavbarMenu>
++      </Navbar>,
++    );
++
++    const toggle = wrapper.getByTestId("navbar-toggle-test");
++
++    act(() => {
++      toggle.click();
++    });
++
++    expect(spy).toBeCalledTimes(0);
++  });
++
+   it("should render correctly with menu", () => {
+     const items = ["item1", "item2", "item3", "item4", "item5"];
+ \n- packages/components/popover/__tests__/popover.test.tsx (modified, 29 changes)\n  Patch: @@ -4,7 +4,15 @@ import {Button} from "@nextui-org/button";
+ 
+ import {Popover, PopoverContent, PopoverTrigger} from "../src";
+ 
++// e.g. console.error Warning: Function components cannot be given refs.
++// Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
++const spy = jest.spyOn(console, "error").mockImplementation(() => {});
++
+ describe("Popover", () => {
++  afterEach(() => {
++    jest.clearAllMocks();
++  });
++
+   it("should render correctly", () => {
+     const wrapper = render(
+       <Popover>
+@@ -20,6 +28,27 @@ describe("Popover", () => {
+     expect(() => wrapper.unmount()).not.toThrow();
+   });
+ 
++  it("should not throw error when clicking trigger button", () => {
++    const wrapper = render(
++      <Popover>
++        <PopoverTrigger>
++          <button data-testid="trigger-test">Open popover</button>
++        </PopoverTrigger>
++        <PopoverContent>
++          <p>This is the content of the popover.</p>
++        </PopoverContent>
++      </Popover>,
++    );
++    const trigger = wrapper.getByTestId("trigger-test");
++
++    // open popover
++    act(() => {
++      trigger.click();
++    });
++
++    expect(spy).toBeCalledTimes(0);
++  });
++
+   it("ref should be forwarded", () => {
+     const ref = React.createRef<HTMLDivElement>();
+ \n- packages/components/ripple/src/ripple.tsx (modified, 54 changes)\n  Patch: @@ -26,32 +26,34 @@ const Ripple: FC<RippleProps> = (props) => {
+ 
+         return (
+           <AnimatePresence key={ripple.key} mode="popLayout">
+-            <LazyMotion features={domAnimation}>
+-              <m.span
+-                animate={{transform: "scale(2)", opacity: 0}}
+-                className="nextui-ripple"
+-                exit={{opacity: 0}}
+-                initial={{transform: "scale(0)", opacity: 0.35}}
+-                style={{
+-                  position: "absolute",
+-                  backgroundColor: color,
+-                  borderRadius: "100%",
+-                  transformOrigin: "center",
+-                  pointerEvents: "none",
+-                  zIndex: 10,
+-                  top: ripple.y,
+-                  left: ripple.x,
+-                  width: `${ripple.size}px`,
+-                  height: `${ripple.size}px`,
+-                  ...style,
+-                }}
+-                transition={{duration}}
+-                onAnimationComplete={() => {
+-                  onClear(ripple.key);
+-                }}
+-                {...motionProps}
+-              />
+-            </LazyMotion>
++            <>
++              <LazyMotion features={domAnimation}>
++                <m.span
++                  animate={{transform: "scale(2)", opacity: 0}}
++                  className="nextui-ripple"
++                  exit={{opacity: 0}}
++                  initial={{transform: "scale(0)", opacity: 0.35}}
++                  style={{
++                    position: "absolute",
++                    backgroundColor: color,
++                    borderRadius: "100%",
++                    transformOrigin: "center",
++                    pointerEvents: "none",
++                    zIndex: 10,
++                    top: ripple.y,
++                    left: ripple.x,
++                    width: `${ripple.size}px`,
++                    height: `${ripple.size}px`,
++                    ...style,
++                  }}
++                  transition={{duration}}
++                  onAnimationComplete={() => {
++                    onClear(ripple.key);
++                  }}
++                  {...motionProps}
++                />
++              </LazyMotion>
++            </>
+           </AnimatePresence>
+         );
+       })}\n- packages/components/tabs/__tests__/tabs.test.tsx (modified, 10 changes)\n  Patch: @@ -29,7 +29,15 @@ let tabs: Item[] = [
+   },
+ ];
+ 
++// e.g. console.error Warning: Function components cannot be given refs.
++// Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
++const spy = jest.spyOn(console, "error").mockImplementation(() => {});
++
+ describe("Tabs", () => {
++  afterEach(() => {
++    jest.clearAllMocks();
++  });
++
+   it("should render correctly (static)", () => {
+     const wrapper = render(
+       <Tabs aria-label="Tabs static test">
+@@ -46,6 +54,8 @@ describe("Tabs", () => {
+     );
+ 
+     expect(() => wrapper.unmount()).not.toThrow();
++
++    expect(spy).toBeCalledTimes(0);
+   });
+ 
+   it("should render correctly (dynamic)", () => {\n- packages/components/tooltip/__tests__/tooltip.test.tsx (modified, 10 changes)\n  Patch: @@ -4,7 +4,15 @@ import {Button} from "@nextui-org/button";
+ 
+ import {Tooltip} from "../src";
+ 
++// e.g. console.error Warning: Function components cannot be given refs.
++// Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
++const spy = jest.spyOn(console, "error").mockImplementation(() => {});
++
+ describe("Tooltip", () => {
++  afterEach(() => {
++    jest.clearAllMocks();
++  });
++
+   it("should throw error if no children is passed", () => {
+     const spy = jest.spyOn(console, "warn").mockImplementation(() => {});
+ 
+@@ -21,6 +29,8 @@ describe("Tooltip", () => {
+     );
+ 
+     expect(() => wrapper.unmount()).not.toThrow();
++
++    expect(spy).toBeCalledTimes(0);
+   });
+ 
+   it("ref should be forwarded", () => {\n

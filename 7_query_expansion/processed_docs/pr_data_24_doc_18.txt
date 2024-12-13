@@ -1,0 +1,91 @@
+Pull Request Number: 1135
+Title: fix(Link): fix unknown event warning when passing onPress prop
+Base Branch: feat/v2
+Head Branch: patch-4
+Author: camcam2605
+URL: https://github.com/nextui-org/nextui/pull/1135
+State: MERGED
+Created At: 2023-05-27T22:52:34Z
+Merged At: 2023-05-28T01:23:23Z
+Participants: camcam2605, jrgarciadev
+
+Description:
+Closes # 
+📝 Description:
+Fix this warning:
+
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- fix(Link): fix warning unknown event when passing onPress prop\n- add useCallback\n
+
+Labels:
+
+
+Comments:
+- vercel: @camcam2605 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22adebe8c0960174a9510ec45c060bc25a1f60fa16%22%7D%2C%22id%22%3A%22QmaxRG3WUALQh2sPerRm2x6MYF7YPqy69UXbEFfKjVAKRJ%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1135%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/link/src/use-link.ts (modified, 12 changes)\n  Patch: @@ -7,7 +7,7 @@ import {HTMLNextUIProps, mapPropsVariants, PropGetter} from "@nextui-org/system"
+ import {useDOMRef} from "@nextui-org/dom-utils";
+ import {useFocusRing} from "@react-aria/focus";
+ import {dataAttr, ReactRef} from "@nextui-org/shared-utils";
+-import {useMemo} from "react";
++import {useMemo, useCallback} from "react";
+ import {mergeProps} from "@react-aria/utils";
+ 
+ interface Props extends HTMLNextUIProps<"a">, LinkVariantProps {
+@@ -46,14 +46,16 @@ export function useLink(originalProps: UseLinkProps) {
+     showAnchorIcon = false,
+     autoFocus = false,
+     className,
++    onPress,    
++    onClick,
+     ...otherProps
+   } = props;
+ 
+   const Component = as || "a";
+ 
+   const domRef = useDOMRef(ref);
+ 
+-  const {linkProps} = useAriaLink({...otherProps, elementType: `${as}`}, domRef);
++  const {linkProps} = useAriaLink({...otherProps, onPress, onClick, elementType: `${as}`}, domRef);
+ 
+   const {isFocused, isFocusVisible, focusProps} = useFocusRing({
+     autoFocus,
+@@ -73,15 +75,15 @@ export function useLink(originalProps: UseLinkProps) {
+     [...Object.values(variantProps), className],
+   );
+ 
+-  const getLinkProps: PropGetter = (props = {}) => {
++  const getLinkProps: PropGetter = useCallback(() => {
+     return {
+       ref: domRef,
+       className: classNames,
+       "data-focused": dataAttr(isFocused),
+       "data-focus-visible": dataAttr(isFocusVisible),
+-      ...mergeProps(focusProps, linkProps, otherProps, props),
++      ...mergeProps(focusProps, linkProps, otherProps),
+     };
+-  };
++  }, [classNames, isFocused, isFocusVisible, focusProps, linkProps, otherProps]);
+ 
+   return {Component, children, anchorIcon, showAnchorIcon, getLinkProps};
+ }\n

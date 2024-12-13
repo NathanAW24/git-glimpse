@@ -1,0 +1,227 @@
+Pull Request Number: 182
+Title: fix(docs-dark-mode): workaround applied to reduce the switching themes delay
+Base Branch: main
+Head Branch: fix_177/slow-dark-mode-switch
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/182
+State: MERGED
+Created At: 2022-01-29T03:50:26Z
+Merged At: 2022-01-29T04:03:39Z
+Participants: jrgarciadev, codecov-commenter
+
+Description:
+[docs]/[dark-mode-player-component]
+TASK:  #177
+Closes #177
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+The scope of `Dark mode is effortless Switch was reduced in order to get a faster switching themes
+
+
+
+Screenshots - Animations
+
+  
+    
+    
+
+    Screen.Recording.2022-01-29.at.00.49.47.mov
+
+Commits:
+- fix(docs-dark-mode-section): workaround applied to reduce the switching themes delay\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/182?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#182](https://codecov.io/gh/nextui-org/nextui/pull/182?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (6575f43) into [main](https://codecov.io/gh/nextui-org/nextui/commit/7c9982cf498f796096f5b5a1308b767a0548413c?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (7c9982c) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/182/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/182?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main     #182   +/-   ##
+=======================================
+  Coverage   76.13%   76.13%           
+=======================================
+  Files         140      140           
+  Lines        2275     2275           
+  Branches      681      681           
+=======================================
+  Hits         1732     1732           
+  Misses        538      538           
+  Partials        5        5           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/182?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/182?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [7c9982c...6575f43](https://codecov.io/gh/nextui-org/nextui/pull/182?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- apps/docs/src/components/hero/index.tsx (modified, 4 changes)\n  Patch: @@ -13,11 +13,11 @@ import {
+ import { StyledTitle, StyledGradientTitle, StyledSubtitle } from './styles';
+ 
+ const DynamicLopperBG = dynamic(() => import('../looper-bg'), {
+-  ssr: false
++  ssr: true
+ });
+ 
+ const DynamicHeroComponents = dynamic(() => import('./components'), {
+-  ssr: false
++  ssr: true
+ });
+ 
+ const Hero: React.FC = () => {\n- apps/docs/src/components/home/custom-themes.tsx (modified, 4 changes)\n  Patch: @@ -24,11 +24,11 @@ const darkCodeHighlights = {
+ };
+ 
+ const DynamicShopCard = dynamic(() => import('../templates/shop-card'), {
+-  ssr: false
++  ssr: true
+ });
+ 
+ const DynamicCodeDemo = dynamic(() => import('../code-demo/code-demo'), {
+-  ssr: false
++  ssr: true
+ });
+ 
+ const CustomThemesSection = () => {\n- apps/docs/src/components/home/dark-mode.tsx (modified, 55 changes)\n  Patch: @@ -1,12 +1,29 @@
+-import React from 'react';
++import React, { useState } from 'react';
++import cn from 'classnames';
+ import NextLink from 'next/link';
+ import { Box, Section, Title, Subtitle, BlockLink } from '@primitives';
+-import { Grid, Row, Col, Spacer } from '@nextui-org/react';
++import { Switch, Grid, Row, Col, Spacer, createTheme } from '@nextui-org/react';
+ import landingContent from '@content/landing';
+-import { darkTheme } from '@theme/shared';
+-import { CodeDemoBlock, ThemeSwitch, Player } from '@components';
++import { darkTheme, lightTheme } from '@theme/shared';
++import { CodeDemoBlock, Player } from '@components';
++import { Moon, Sun } from '../icons';
++
++const playerDarkTheme = createTheme({
++  type: 'dark',
++  className: 'player-dark-theme'
++});
++const playerLightTheme = createTheme({
++  type: 'light',
++  className: 'player-light-theme'
++});
+ 
+ const DarkModeSection = () => {
++  const [activeTheme, setActiveTheme] = useState('dark');
++
++  const handleToggleTheme = () => {
++    setActiveTheme(activeTheme === 'dark' ? 'light' : 'dark');
++  };
++
+   return (
+     <Section css={{ position: 'relative', zIndex: '$10' }}>
+       <Box
+@@ -56,7 +73,12 @@ const DarkModeSection = () => {
+         >
+           <Col css={{ d: 'flex', fd: 'column', ai: 'flex-start', pt: '$4' }}>
+             <Spacer y={0.2} />
+-            <ThemeSwitch
++            <Switch
++              size="xl"
++              checked={activeTheme === 'dark'}
++              iconOn={<Moon filled />}
++              iconOff={<Sun filled />}
++              onChange={handleToggleTheme}
+               css={{
+                 $$switchColorHover:
+                   'linear-gradient(180deg, #FF1CF7 25%, #b249f8 100%)',
+@@ -69,8 +91,29 @@ const DarkModeSection = () => {
+                 }
+               }}
+             />
++
+             <Spacer y={1} />
+-            <Player />
++            <Player
++              className={cn(
++                activeTheme === 'dark' ? playerDarkTheme : playerLightTheme,
++                {
++                  'is-dark': activeTheme === 'dark',
++                  'is-light': activeTheme === 'light'
++                }
++              )}
++              css={{
++                [`.${darkTheme} &`]: {
++                  '&.is-light': {
++                    $$cardColor: '$colors$white'
++                  }
++                },
++                [`.${lightTheme} &`]: {
++                  '&.is-dark': {
++                    $$cardColor: '$colors$gray900'
++                  }
++                }
++              }}
++            />
+             <NextLink href="/docs/theme/dark-mode">
+               <BlockLink>Learn more</BlockLink>
+             </NextLink>\n- apps/docs/src/components/templates/player/player.tsx (modified, 12 changes)\n  Patch: @@ -6,7 +6,8 @@ import {
+   Text,
+   Row,
+   Progress,
+-  StyledProgressBar
++  StyledProgressBar,
++  CSS
+ } from '@nextui-org/react';
+ import {
+   Box,
+@@ -18,11 +19,16 @@ import {
+   PreviousTrack
+ } from '@components';
+ 
+-const Player: React.FC<unknown> = () => {
++export interface Props {
++  className?: string;
++  css?: CSS;
++}
++
++const Player: React.FC<Props> = ({ css, ...props }) => {
+   const [liked, setLiked] = React.useState(false);
+ 
+   return (
+-    <Card css={{ p: '$6', mt: '$8', boxShadow: '$lg' }}>
++    <Card css={{ p: '$6', mt: '$8', boxShadow: '$lg', ...css }} {...props}>
+       <Card.Header css={{ d: 'flex', ai: 'center', py: '$8' }}>
+         <Grid.Container>
+           <Grid css={{ mr: '$8' }}>\n- apps/docs/src/components/templates/player/styles.ts (removed, 3 changes)\n  Patch: @@ -1,3 +0,0 @@
+-import { styled } from '@nextui-org/react';
+-
+-export const Title = styled('h1', {});\n- apps/docs/src/pages/index.tsx (modified, 2 changes)\n  Patch: @@ -31,6 +31,8 @@ const IndexPage: React.FC<Props> = ({ routes, currentRoute }) => {
+   const { query } = useRouter();
+   const { tag, slug } = getSlug(query);
+ 
++  console.log('render');
++
+   // kbar home action
+   const homeAction: Action = React.useMemo(() => {
+     return {\n- packages/react/src/switch/index.ts (modified, 2 changes)\n  Patch: @@ -1,6 +1,6 @@
+ import Switch from './switch';
+ 
+-export type { SwitchProps } from './switch';
++export type { SwitchProps, SwitchEvent } from './switch';
+ export {
+   StyledSwitchContainer,
+   StyledSwitchInput,\n

@@ -1,0 +1,282 @@
+Pull Request Number: 1326
+Title: docs(table): use case example
+Base Branch: main
+Head Branch: docs/table-use-case
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/1326
+State: MERGED
+Created At: 2023-08-08T16:51:09Z
+Merged At: 2023-08-08T17:43:40Z
+Participants: tianenpang, jguddas, jrgarciadev
+
+Description:
+Closes #1325
+📝 Description
+
+Display available data count.
+Remove pagination disabled state.
+Update pagination button disabled state.
+Return to the first page when clearing the search-box.
+
+
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+
+  
+    
+    
+
+    table-use-case.webm
+
+Commits:
+- docs(table): use case example\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 9046c2924de852fcdbaff0da53f1f35680fcf21b
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/tianenpang/nextui/new/docs/table-use-case?filename=.changeset/great-kids-eat.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Adocs(table)%3A%20use%20case%20example%0A)
+
+\n- vercel: @tianenpang is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%229046c2924de852fcdbaff0da53f1f35680fcf21b%22%7D%2C%22id%22%3A%22QmcCfnqDk8zqyrLLxT7FUTyYjtcKJd6u6aBXcSX2UozxX6%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1326%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #O/B4uMeRP7X7Z5VXaa6B9tyWizx3kJlhGi1ovSFvfeE=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXRpYW5lbnBhbmctZG9jcy03ZTVlMDMtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn0sImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRVRHblpMS0NjakY5UDJ3dXJBdnFrTkRjUDRHOCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXRpYW5lbnBhbmctZG9jcy03ZTVlMDMtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIn1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/ETGnZLKCcjF9P2wurAvqkNDcP4G8)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-tianenpang-docs-7e5e03-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-tianenpang-docs-7e5e03-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 8, 2023 4:53pm |
+
+\n
+
+Files Changed:
+- apps/docs/app/examples/table/use-case/page.tsx (modified, 18 changes)\n  Patch: @@ -271,8 +271,6 @@ export default function Page() {
+ 
+   const [page, setPage] = useState(1);
+ 
+-  const pages = Math.ceil(users.length / rowsPerPage);
+-
+   const hasSearchFilter = Boolean(filterValue);
+ 
+   const headerColumns = useMemo(() => {
+@@ -298,6 +296,8 @@ export default function Page() {
+     return filteredUsers;
+   }, [users, filterValue, statusFilter]);
+ 
++  const pages = Math.ceil(filteredItems.length / rowsPerPage);
++
+   const items = useMemo(() => {
+     const start = (page - 1) * rowsPerPage;
+     const end = start + rowsPerPage;
+@@ -390,6 +390,11 @@ export default function Page() {
+     }
+   }, []);
+ 
++  const onClear = useCallback(() => {
++    setFilterValue("");
++    setPage(1);
++  }, []);
++
+   const topContent = useMemo(() => {
+     return (
+       <div className="flex flex-col gap-4">
+@@ -400,7 +405,7 @@ export default function Page() {
+             placeholder="Search by name..."
+             startContent={<SearchIcon />}
+             value={filterValue}
+-            onClear={() => setFilterValue("")}
++            onClear={() => onClear()}
+             onValueChange={onSearchChange}
+           />
+           <div className="flex gap-3">
+@@ -483,23 +488,22 @@ export default function Page() {
+         <span className="w-[30%] text-small text-default-400">
+           {selectedKeys === "all"
+             ? "All items selected"
+-            : `${selectedKeys.size} of ${items.length} selected`}
++            : `${selectedKeys.size} of ${filteredItems.length} selected`}
+         </span>
+         <Pagination
+           isCompact
+           showControls
+           showShadow
+           color="primary"
+-          isDisabled={hasSearchFilter}
+           page={page}
+           total={pages}
+           onChange={setPage}
+         />
+         <div className="hidden sm:flex w-[30%] justify-end gap-2">
+-          <Button isDisabled={hasSearchFilter} size="sm" variant="flat" onPress={onPreviousPage}>
++          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
+             Previous
+           </Button>
+-          <Button isDisabled={hasSearchFilter} size="sm" variant="flat" onPress={onNextPage}>
++          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
+             Next
+           </Button>
+         </div>\n- apps/docs/content/components/table/use-case.ts (modified, 39 changes)\n  Patch: @@ -360,8 +360,6 @@ export default function App() {
+   });
+   const [page, setPage] = React.useState(1);
+ 
+-  const pages = Math.ceil(users.length / rowsPerPage);
+-
+   const hasSearchFilter = Boolean(filterValue);
+ 
+   const headerColumns = React.useMemo(() => {
+@@ -387,6 +385,8 @@ export default function App() {
+     return filteredUsers;
+   }, [users, filterValue, statusFilter]);
+ 
++  const pages = Math.ceil(filteredItems.length / rowsPerPage);
++
+   const items = React.useMemo(() => {
+     const start = (page - 1) * rowsPerPage;
+     const end = start + rowsPerPage;
+@@ -452,7 +452,7 @@ export default function App() {
+         return cellValue;
+     }
+   }, []);
+-  
++
+   const onNextPage = React.useCallback(() => {
+     if (page < pages) {
+       setPage(page + 1);
+@@ -479,6 +479,11 @@ export default function App() {
+     }
+   }, []);
+ 
++  const onClear = useCallback(()=>{
++    setFilterValue("")
++    setPage(1)
++  },[])
++
+   const topContent = React.useMemo(() => {
+     return (
+       <div className="flex flex-col gap-4">
+@@ -489,7 +494,7 @@ export default function App() {
+             placeholder="Search by name..."
+             startContent={<SearchIcon />}
+             value={filterValue}
+-            onClear={() => setFilterValue("")}
++            onClear={() => onClear()}
+             onValueChange={onSearchChange}
+           />
+           <div className="flex gap-3">
+@@ -572,23 +577,22 @@ export default function App() {
+         <span className="w-[30%] text-small text-default-400">
+           {selectedKeys === "all"
+             ? "All items selected"
+-            : \`\${selectedKeys.size} of \${items.length} selected\`}
++            : \`\${selectedKeys.size} of \${filteredItems.length} selected\`}
+         </span>
+         <Pagination
+           isCompact
+           showControls
+           showShadow
+           color="primary"
+-          isDisabled={hasSearchFilter}
+           page={page}
+           total={pages}
+           onChange={setPage}
+         />
+         <div className="hidden sm:flex w-[30%] justify-end gap-2">
+-          <Button isDisabled={hasSearchFilter} size="sm" variant="flat" onPress={onPreviousPage}>
++          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
+             Previous
+           </Button>
+-          <Button isDisabled={hasSearchFilter} size="sm" variant="flat" onPress={onNextPage}>
++          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
+             Next
+           </Button>
+         </div>
+@@ -684,7 +688,6 @@ export default function App() {
+   });
+ 
+   const [page, setPage] = useState(1);
+-  const pages = Math.ceil(users.length / rowsPerPage);
+ 
+   const hasSearchFilter = Boolean(filterValue);
+ 
+@@ -711,6 +714,8 @@ export default function App() {
+     return filteredUsers;
+   }, [users, filterValue, statusFilter]);
+ 
++  const pages = Math.ceil(filteredItems.length / rowsPerPage);
++
+   const items = React.useMemo(() => {
+     const start = (page - 1) * rowsPerPage;
+     const end = start + rowsPerPage;
+@@ -776,7 +781,7 @@ export default function App() {
+         return cellValue;
+     }
+   }, []);
+-  
++
+   const onNextPage = React.useCallback(() => {
+     if (page < pages) {
+       setPage(page + 1);
+@@ -803,6 +808,11 @@ export default function App() {
+     }
+   }, []);
+ 
++  const onClear = useCallback(()=>{
++    setFilterValue("")
++    setPage(1)
++  },[])
++
+   const topContent = React.useMemo(() => {
+     return (
+       <div className="flex flex-col gap-4">
+@@ -813,7 +823,7 @@ export default function App() {
+             placeholder="Search by name..."
+             startContent={<SearchIcon />}
+             value={filterValue}
+-            onClear={() => setFilterValue("")}
++            onClear={() => onClear()}
+             onValueChange={onSearchChange}
+           />
+           <div className="flex gap-3">
+@@ -896,23 +906,22 @@ export default function App() {
+         <span className="w-[30%] text-small text-default-400">
+           {selectedKeys === "all"
+             ? "All items selected"
+-            : \`\${selectedKeys.size} of \${items.length} selected\`}
++            : \`\${selectedKeys.size} of \${filteredItems.length} selected\`}
+         </span>
+         <Pagination
+           isCompact
+           showControls
+           showShadow
+           color="primary"
+-          isDisabled={hasSearchFilter}
+           page={page}
+           total={pages}
+           onChange={setPage}
+         />
+         <div className="hidden sm:flex w-[30%] justify-end gap-2">
+-          <Button isDisabled={hasSearchFilter} size="sm" variant="flat" onPress={onPreviousPage}>
++          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
+             Previous
+           </Button>
+-          <Button isDisabled={hasSearchFilter} size="sm" variant="flat" onPress={onNextPage}>
++          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
+             Next
+           </Button>
+         </div>\n

@@ -1,0 +1,74 @@
+Pull Request Number: 74
+Title: refactor: dynamic search and menutoggle import
+Base Branch: main
+Head Branch: refactor/mobile-optimizations
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/74
+State: MERGED
+Created At: 2021-10-09T13:50:45Z
+Merged At: 2021-10-09T13:50:55Z
+Participants: jrgarciadev
+
+Description:
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Documentation start page mobile performance increased as a result of importing dynamically the SearchInput and MobileNavigation
+
+Commits:
+- refactor: dynamic search and menutoggle import\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/docs/src/layouts/navbar.tsx (modified, 26 changes)\n  Patch: @@ -1,16 +1,8 @@
+ import React, { useState, useEffect } from 'react';
+-import {
+-  Logo,
+-  SearchInput,
+-  MenuToggle,
+-  MobileNavigation,
+-  Badge,
+-  Twitter,
+-  Discord,
+-  Github,
+-} from '@components';
++import { Logo, MenuToggle, Badge, Twitter, Discord, Github } from '@components';
+ import cn from 'classnames';
+ import NextLink from 'next/link';
++import dynamic from 'next/dynamic';
+ import {
+   Row,
+   Col,
+@@ -32,6 +24,20 @@ export interface Props {
+   routes?: Route[];
+ }
+ 
++const MobileNavigation = dynamic(
++  () => import('../components/mobile-navigation'),
++  {
++    ssr: false,
++  }
++);
++
++const SearchInput = dynamic(
++  () => import('../components/search/instant-search'),
++  {
++    ssr: true,
++  }
++);
++
+ const Navbar: React.FC<Props> = ({ detached, routes }) => {
+   const [expanded, setExpanded] = useState(false);
+   const router = useRouter();\n

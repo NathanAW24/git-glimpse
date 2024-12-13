@@ -1,0 +1,83 @@
+Pull Request Number: 382
+Title: Input {required} parameter fix (again)
+Base Branch: next
+Head Branch: fix/InputRequiredParameter
+Author: richtone
+URL: https://github.com/nextui-org/nextui/pull/382
+State: MERGED
+Created At: 2022-03-31T21:58:54Z
+Merged At: 2022-04-01T00:28:16Z
+Participants: richtone, jrgarciadev
+
+Description:
+[LEVEL]/[COMPONENT]
+TASK: 
+Re-uploading Input "required" parameter fix.
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+
+
+Screenshots - Animations
+
+Commits:
+- fix(docs-button): loading description\n- Input {required} parameter fix (again)\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Thanks again! @richtone 🙌🏻 \n
+
+Files Changed:
+- apps/docs/content/docs/components/button.mdx (modified, 7 changes)\n  Patch: @@ -26,7 +26,6 @@ import { Button } from '@nextui-org/react';
+   title="Disabled"
+   desc="Unusable and un-clickable `Button`."
+   files={buttonContent.disabled_button}
+-  
+ />
+ 
+ <Playground
+@@ -39,19 +38,17 @@ import { Button } from '@nextui-org/react';
+   title="Colors"
+   desc="You can change the color of the `Button` with the property `color`."
+   files={buttonContent.color}
+-  
+ />
+ 
+ <Playground
+   title="Shadow"
+   desc="You can add a shadow effect with the property `shadow`."
+   files={buttonContent.shadow}
+-  
+ />
+ 
+ <Playground
+   title="Loading"
+-  desc="You can add a `loading` status with the loading property. You can change the `loader` with the `loaderType` property"
++  desc="You can add a `Loading` children to the `Button` and disable interactions by using the `clickable={false}` property."
+   files={buttonContent.loading}
+ />
+ 
+@@ -157,4 +154,4 @@ type NormalSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+ 
+ ```ts
+ type NormalWeights = 'light' | 'normal' | 'bold' | 'extrabold' | 'black';
+-```
+\ No newline at end of file
++```\n- packages/react/src/input/input.tsx (modified, 1 changes)\n  Patch: @@ -329,6 +329,7 @@ const Input = React.forwardRef<FormElement, InputProps>(
+               placeholder={inputPlaceholder}
+               disabled={disabled}
+               readOnly={readOnly}
++              required={required}
+               onFocus={focusHandler}
+               onBlur={blurHandler}
+               onChange={changeHandler}\n

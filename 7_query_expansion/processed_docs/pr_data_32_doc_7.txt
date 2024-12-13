@@ -1,0 +1,106 @@
+Pull Request Number: 62
+Title: fix: icon position when has contentRight 
+Base Branch: main
+Head Branch: fix_61/input-clear-button-wrong-position
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/62
+State: MERGED
+Created At: 2021-10-03T01:06:27Z
+Merged At: 2021-10-03T01:11:52Z
+Participants: jrgarciadev, codecov-commenter
+
+Description:
+#61
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Position relative added when input has content at right, also the height was changed to auto
+
+
+
+Screenshots - Animations
+
+Commits:
+- fix: icon position when has contentRight\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: :warning: Please install the !['codecov app svg image'](https://github.com/codecov/engineering-team/assets/152432831/e90313f4-9d3a-4b63-8b54-cfe14e7ec20d) to ensure uploads and comments are reliably processed by Codecov.
+
+## [Codecov](https://app.codecov.io/gh/nextui-org/nextui/pull/62?dropdown=coverage&src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+All modified and coverable lines are covered by tests :white_check_mark:
+> Project coverage is 86.73%. Comparing base [(`0db8c58`)](https://app.codecov.io/gh/nextui-org/nextui/commit/0db8c5899820252471872784d3fa64495b6cb7ad?dropdown=coverage&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) to head [(`593e92a`)](https://app.codecov.io/gh/nextui-org/nextui/commit/593e92a7e4016d7a73506ce73ad8ca6c3b251e19?dropdown=coverage&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> Report is 2590 commits behind head on main.
+
+:exclamation: Your organization needs to install the [Codecov GitHub app](https://github.com/apps/codecov/installations/select_target) to enable full functionality.
+
+<details><summary>Additional details and impacted files</summary>
+
+
+```diff
+@@           Coverage Diff           @@
+##             main      #62   +/-   ##
+=======================================
+  Coverage   86.73%   86.73%           
+=======================================
+  Files          93       93           
+  Lines        1546     1546           
+  Branches      525      525           
+=======================================
+  Hits         1341     1341           
+  Misses        200      200           
+  Partials        5        5           
+```
+
+</details>
+
+[:umbrella: View full report in Codecov by Sentry](https://app.codecov.io/gh/nextui-org/nextui/pull/62?dropdown=coverage&src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).   
+:loudspeaker: Have feedback on the report? [Share it here](https://about.codecov.io/codecov-pr-comment-feedback/?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- packages/nextui/src/input/input-icon-clear.tsx (modified, 3 changes)\n  Patch: @@ -64,7 +64,7 @@ const InputIconClear: React.FC<Props> = ({
+           margin: 0;
+           display: inline-flex;
+           align-items: center;
+-          height: 100%;
++          height: auto;
+           padding: 0 ${theme.layout.gapHalf};
+           cursor: ${disabled ? 'not-allowed' : 'pointer'};
+           box-sizing: border-box;
+@@ -76,6 +76,7 @@ const InputIconClear: React.FC<Props> = ({
+         }
+         .has-content-right {
+           padding: 0;
++          position: relative;
+           transform: translateX(30%);
+         }
+         .visible {\n- packages/nextui/src/input/input.tsx (modified, 6 changes)\n  Patch: @@ -12,8 +12,8 @@ import { ContentPosition } from '../utils/prop-types';
+ import InputLabel from './input-label';
+ import InputBlockLabel from './input-block-label';
+ import InputContent from './input-content';
+-import InputClearIcon from './input-icon-clear';
+-import Textarea from '../textarea/textarea';
++import InputIconClear from './input-icon-clear';
++import Textarea from '../textarea';
+ import InputPassword from './input-password';
+ import { getSizes, getColors } from './styles';
+ import { getId } from '../utils/collections';
+@@ -283,7 +283,7 @@ const Input = React.forwardRef<
+               {...inputProps}
+             />
+             {clearable && (
+-              <InputClearIcon
++              <InputIconClear
+                 status={status}
+                 visible={Boolean(selfValue)}
+                 hasContentRight={!!contentRight}\n

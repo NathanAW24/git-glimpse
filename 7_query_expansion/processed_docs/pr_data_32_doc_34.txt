@@ -1,0 +1,257 @@
+Pull Request Number: 17
+Title: Feat/layouts
+Base Branch: main
+Head Branch: feat/layouts
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/17
+State: MERGED
+Created At: 2021-05-13T14:14:15Z
+Merged At: 2021-05-13T16:22:11Z
+Participants: jrgarciadev
+
+Description:
+
+
+Commits:
+- fix: build\n- fix: build compilation and package json improvements\n- Merge branch 'main' into feat/layouts\n
+
+Labels:
+
+
+Comments:
+- vercel: This pull request is being automatically deployed with Vercel ([learn more](https://vercel.link/github-learn-more)).  
+To see the status of your deployment, click below or on the icon next to each commit.
+
+🔍 Inspect: [https://vercel.com/jrgarciadev/nextui-storybook/HxFuBD3vvtjATxpjgyTUcqWdmhjp](https://vercel.com/jrgarciadev/nextui-storybook/HxFuBD3vvtjATxpjgyTUcqWdmhjp)  
+✅ Preview: [https://nextui-storybook-git-feat-layouts-jrgarciadev.vercel.app](https://nextui-storybook-git-feat-layouts-jrgarciadev.vercel.app)
+
+\n
+
+Files Changed:
+- packages/docs/package.json (modified, 41 changes)\n  Patch: @@ -1,23 +1,22 @@
+ {
+-  "name": "@nextui/docs",
+-  "version": "0.1.2",
+-  "private": true,
+-  "scripts": {
+-    "dev": "next dev",
+-    "build": "next build",
+-    "start": "next start"
+-  },
+-  "dependencies": {
+-    "@mdx-js/loader": "^1.6.22",
+-    "@next/mdx": "^10.1.3",
+-    "@nextui/react": "0.1.3",
+-    "next": "10.1.3",
+-    "react": "^17.0.2",
+-    "react-dom": "^17.0.2",
+-    "styled-jsx": "^3.4.4"
+-  },
+-  "devDependencies": {
+-    "babel-plugin-module-resolver": "^4.1.0",
+-    "typescript": "^4.2.4"
+-  }
++    "name": "@nextui/docs",
++    "version": "0.1.3",
++    "private": true,
++    "scripts": {
++      "dev": "next dev",
++      "build": "next build",
++      "start": "next start"
++    },
++    "dependencies": {
++      "@nextui/react": "0.1.3",
++      "next": "10.1.3",
++      "react": "^17.0.2",
++      "react-dom": "^17.0.2",
++      "@next/mdx": "^10.1.3",
++      "@mdx-js/loader": "^1.6.22",
++      "styled-jsx": "^3.4.4"
++    },
++    "devDependencies": {
++      "typescript": "^4.2.4"
++    }
+ }\n- packages/nextui/buildconfig/tsconfig.json (modified, 95 changes)\n  Patch: @@ -1,46 +1,55 @@
+ {
+-  "compilerOptions": {
+-    "outDir": "../dist",
+-    "baseUrl": "../",
+-    "declaration": true,
+-    "emitDeclarationOnly": true,
+-    "strictNullChecks": true,
+-    "moduleResolution": "node",
+-    "esModuleInterop": true,
+-    "experimentalDecorators": true,
+-    "jsx": "preserve",
+-    "noUnusedParameters": true,
+-    "noUnusedLocals": true,
+-    "noImplicitAny": true,
+-    "target": "es6",
+-    "lib": [
+-      "dom",
+-      "es2017"
++    "compilerOptions": {
++      "outDir": "../dist",
++      "baseUrl": "../",
++      "paths": {
++          "@components": ["./src/components/index.ts"],
++          "@components/*": ["./src/components/*"],
++          "@hooks/*": ["./src/hooks/*"],
++          "@utils/*": ["./src/utils/*"],
++          "@theme/*": ["./src/theme/*"],
++          "@tests/*": ["./tests/*"]
++      },
++      "declaration": true,
++      "emitDeclarationOnly": true,
++      "strictNullChecks": true,
++      "moduleResolution": "node",
++      "esModuleInterop": true,
++      "experimentalDecorators": true,
++      "jsx": "preserve",
++      "noUnusedParameters": true,
++      "noUnusedLocals": true,
++      "noImplicitAny": true,
++      "target": "es6",
++      "lib": [
++        "dom",
++        "es2017"
++      ],
++      "skipLibCheck": true,
++      "allowJs": true,
++      "strict": false,
++      "forceConsistentCasingInFileNames": true,
++      "module": "esnext",
++      "resolveJsonModule": true,
++      "isolatedModules": true,
++    },
++    "include": [
++      "../src/index.ts",
++      "../typings/**/*",
+     ],
+-    "skipLibCheck": true,
+-    "allowJs": true,
+-    "strict": false,
+-    "forceConsistentCasingInFileNames": true,
+-    "module": "esnext",
+-    "resolveJsonModule": true,
+-    "isolatedModules": true,
+-  },
+-  "include": [
+-    "../src/index.ts",
+-    "../typings/**/*",
+-  ],
+-  "exclude": [
+-    "lib",
+-    "es",
+-    "node_modules", 
+-    "dist",
+-    "storybook-static", 
+-    "coverage", 
+-    "jest.config.js", 
+-    "**/*-spec.ts",
+-    "**/*.test.tsx", 
+-    "tests",
+-    "**/*.stories.mdx",
+-    "**/*.stories.@(js|jsx|ts|tsx)"
+-  ]
++    "exclude": [
++      "lib",
++      "es",
++      "node_modules", 
++      "dist",
++      "storybook-static", 
++      "coverage", 
++      "jest.config.js", 
++      "**/*-spec.ts",
++      "**/*.test.tsx", 
++      "tests",
++      "**/*.stories.mdx",
++      "**/*.stories.@(js|jsx|ts|tsx)"
++    ]
++  }
+ }\n- packages/nextui/package.json (modified, 16 changes)\n  Patch: @@ -23,14 +23,16 @@
+   "main": "./dist/index.js",
+   "module": "./esm/index.js",
+   "types": "./dist/index.d.ts",
+-  "unpkg": "./dist/index.min.js",
++  "unpkg": "./dist/index.umd.js",
+   "sideEffects": false,
+   "scripts": {
+     "clear": "rm -rf ./dist ./esm",
++    "clear:packages": "rm -rf ./dist/packages",
+     "build:types": "tsc -p ./buildconfig",
+-    "build:webpack": "yarn webpack --config buildconfig/webpack.config.js",
+-    "build:esm": "yarn babel --config-file ./buildconfig/babel.config.js --extensions \".js,.ts,.tsx\" ./src/components --out-dir ./esm --ignore \"**/__tests__/**/*,**/*.d.ts,**/*.stories.tsx,**/*.stories.js\"",
+-    "build": "yarn clear && yarn build:esm && yarn build:webpack && yarn build:types",
++    "build:prod": "yarn clear && microbundle build --jsx React.createElement --jsxFragment React.Fragment --tsconfig tsconfig.build.json --compress --strict --format modern,cjs",
++    "build:watch": "yarn clear && microbundle watch --jsx React.createElement --jsxFragment React.Fragment --no-compress --format modern,cjs",
++    "build": "yarn build:prod && yarn build:types && yarn clear:packages",
++    "watch": "yarn build:watch",
+     "storybook": "start-storybook -p 6006 --no-manager-cache",
+     "build-storybook": "build-storybook",
+     "start-storybook": "yarn build-storybook && http-server ./storybook-static",
+@@ -44,9 +46,11 @@
+     "/dist",
+     "/esm"
+   ],
++  "peerDependencies": {
++    "react": ">=16.8.x || ^17",
++    "react-dom": ">=16.8.x || ^17"
++  },
+   "dependencies": {
+-    "react": "^17.0.2",
+-    "react-dom": "^17.0.2",
+     "styled-jsx": "^3.4.4"
+   },
+   "devDependencies": {\n- packages/nextui/src/components/button/utils.tsx (modified, 4 changes)\n  Patch: @@ -29,7 +29,7 @@ export const getButtonChildrenWithIcon = (
+     );
+   }
+   return (
+-    <>
++    <React.Fragment>
+       <ButtonIcon isRight={isRight}>{hasIcon}</ButtonIcon>
+       <div className={`text ${isRight ? 'right' : 'left'}`}>
+         {children}
+@@ -42,7 +42,7 @@ export const getButtonChildrenWithIcon = (
+           }
+         `}</style>
+       </div>
+-    </>
++    </React.Fragment>
+   );
+ };
+ \n- packages/nextui/src/components/code/code.tsx (modified, 4 changes)\n  Patch: @@ -25,7 +25,7 @@ const Code: React.FC<React.PropsWithChildren<CodeProps>> = ({
+   if (!block) return <code {...props}>{children}</code>;
+ 
+   return (
+-    <>
++    <React.Fragment>
+       <pre className={className} {...props}>
+         <code>{children}</code>
+       </pre>
+@@ -42,7 +42,7 @@ const Code: React.FC<React.PropsWithChildren<CodeProps>> = ({
+           color: white;
+         }
+       `}</style>
+-    </>
++    </React.Fragment>
+   );
+ };
+ \n- packages/nextui/src/components/text/child.tsx (modified, 4 changes)\n  Patch: @@ -43,7 +43,7 @@ const TextChild: React.FC<React.PropsWithChildren<TextChildProps>> = ({
+   }, [size]);
+ 
+   return (
+-    <>
++    <React.Fragment>
+       <Component
+         className={`${size ? 'custom-size' : ''} ${
+           capitalize ? 'capitalize' : ''
+@@ -63,7 +63,7 @@ const TextChild: React.FC<React.PropsWithChildren<TextChildProps>> = ({
+           text-transform: capitalize;
+         }
+       `}</style>
+-    </>
++    </React.Fragment>
+   );
+ };
+ \n

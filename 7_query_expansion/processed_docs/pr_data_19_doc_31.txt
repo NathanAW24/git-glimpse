@@ -1,0 +1,164 @@
+Pull Request Number: 1696
+Title: fix(docs): require is undefined
+Base Branch: main
+Head Branch: fix_require
+Author: lalalazero
+URL: https://github.com/nextui-org/nextui/pull/1696
+State: CLOSED
+Created At: 2023-09-26T06:26:21Z
+Merged At: None
+Participants: lalalazero, jrgarciadev, jguddas
+
+Description:
+Hello~
+This is to fix that storybook complain "require is not defined" in card example.
+Closes # 
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- fix(docs): require is undefined\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 3320533029f30d4036fa92388a9acdcfeedb86a2
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/lalalazero/nextui/new/fix_require?filename=.changeset/unlucky-bottles-kick.md&value=---%0A%22%40nextui-org%2Fcard%22%3A%20patch%0A---%0A%0Afix(docs)%3A%20require%20is%20undefined%0A)
+
+\n- vercel: [vc]: #QAIrbgsAHchllteS14SjLk5kfcXtCryhKW71WqOm6mI=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNFJXVkZoVEx6OTFWdmpQaWpEVUc0VGZ3eVQ4WSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWxhbGFsYXplcm8tZml4cmVxdWlyZS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay1sYWxhbGF6ZXJvLWZpeHJlcXVpcmUtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/4RWVFhTLz91VvjPijDUG4TfwyT8Y)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-lalalazero-fixrequire-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-lalalazero-fixrequire-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 26, 2023 6:28am |
+
+\n- vercel: @lalalazero is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%223320533029f30d4036fa92388a9acdcfeedb86a2%22%7D%2C%22id%22%3A%22QmdMgbgQqvs3jDUDvDqEwp83wLV2SagtitqMrJzxmwUMvV%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1696%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Fixed https://github.com/nextui-org/nextui/commit/655599982d496675d99a088f0cb0a585be7be1a8\n
+
+Files Changed:
+- packages/components/card/stories/card.stories.tsx (modified, 28 changes)\n  Patch: @@ -8,6 +8,8 @@ import {Image} from "@nextui-org/image";
+ 
+ import {Card, CardBody, CardHeader, CardFooter, CardProps} from "../src";
+ 
++const getImageSrc = (path: string) => new URL(path, import.meta.url).href;
++
+ export default {
+   title: "Components/Card",
+   component: Card,
+@@ -137,7 +139,7 @@ const WithAbsImageHeaderTemplate = (args: CardProps) => (
+       alt="Card background"
+       className="w-full h-[440px] object-cover"
+       height={440}
+-      src={require("./assets/apple-event.jpeg")}
++      src={getImageSrc("./assets/apple-event.jpeg")}
+       width={330}
+     />
+   </Card>
+@@ -159,7 +161,7 @@ const WithAbsImgHeaderFooterTemplate = (args: CardProps) => (
+       alt="Card background"
+       className="w-full h-[440px] pt-10 object-contain"
+       height={440}
+-      src={require("./assets/homepod.jpeg")}
++      src={getImageSrc("./assets/homepod.jpeg")}
+       width={300}
+     />
+     <CardFooter className="justify-between absolute bottom-0 z-10">
+@@ -244,7 +246,7 @@ const CoverImgTemplate = (args: CardProps) => (
+           <img
+             alt="Breathing app icon"
+             className="rounded-full w-10 h-11 bg-black"
+-            src={require("./assets/breathing-app-icon.jpeg")}
++            src={getImageSrc("./assets/breathing-app-icon.jpeg")}
+           />
+           <div className="flex flex-col">
+             <p className="text-xs text-white/60">Breathing App</p>
+@@ -268,7 +270,7 @@ const CenterImgTemplate = (args: CardProps) => (
+       <Image
+         isBlurred
+         alt="Card background"
+-        src={require("./assets/local-image-1.jpeg")}
++        src={getImageSrc("./assets/local-image-1.jpeg")}
+         width={300}
+       />
+     </CardBody>
+@@ -352,39 +354,39 @@ const CenterImgWithHeaderTemplate = (args: CardProps) => {
+   const list = [
+     {
+       title: "Mac",
+-      img: require("./assets/mac.png"),
++      img: getImageSrc("./assets/mac.png"),
+     },
+     {
+       title: "iPhone",
+-      img: require("./assets/iphone.png"),
++      img: getImageSrc("./assets/iphone.png"),
+     },
+     {
+       title: "iPad",
+-      img: require("./assets/ipad.png"),
++      img: getImageSrc("./assets/ipad.png"),
+     },
+     {
+       title: "Apple Watch",
+-      img: require("./assets/apple-watch.png"),
++      img: getImageSrc("./assets/apple-watch.png"),
+     },
+     {
+       title: "AirPods",
+-      img: require("./assets/airpods.png"),
++      img: getImageSrc("./assets/airpods.png"),
+     },
+     {
+       title: "AirTag",
+-      img: require("./assets/airtag.png"),
++      img: getImageSrc("./assets/airtag.png"),
+     },
+     {
+       title: "Apple TV",
+-      img: require("./assets/appletv.png"),
++      img: getImageSrc("./assets/appletv.png"),
+     },
+     {
+       title: "HomePod mini",
+-      img: require("./assets/homepod-mini.png"),
++      img: getImageSrc("./assets/homepod-mini.png"),
+     },
+     {
+       title: "Accessories",
+-      img: require("./assets/accessories.png"),
++      img: getImageSrc("./assets/accessories.png"),
+     },
+   ];
+ \n

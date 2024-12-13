@@ -1,0 +1,89 @@
+Pull Request Number: 377
+Title: Fix #288 modal animation behavior
+Base Branch: next
+Head Branch: fix/modal-animation-behavior
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/377
+State: MERGED
+Created At: 2022-03-28T15:51:02Z
+Merged At: 2022-03-29T13:51:06Z
+Participants: tianenpang, jrgarciadev
+
+Description:
+[react]/[backdrop]
+TASK: #288
+Types of changes
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Add the same opacity animation to BackdropContent as the Modal
+Screenshots - Animations
+
+  
+    
+    
+
+    screenshot.mov
+
+Commits:
+- fix: add appearance-in animation for backdrop content\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/react/src/backdrop/backdrop.styles.ts (modified, 29 changes)\n  Patch: @@ -1,4 +1,16 @@
+-import { styled, VariantProps } from '../theme/stitches.config';
++import { styled, keyframes, VariantProps } from '../theme/stitches.config';
++
++const appearanceIn = keyframes({
++  '0%': {
++    opacity: 0
++  },
++  '60%': {
++    opacity: 0.75
++  },
++  '100%': {
++    opacity: 1
++  }
++});
+ 
+ export const StyledBackdropContent = styled('div', {
+   position: 'relative',
+@@ -11,6 +23,21 @@ export const StyledBackdropContent = styled('div', {
+   '@sm': {
+     width: '90%',
+     maxWidth: '90%'
++  },
++  variants: {
++    animated: {
++      true: {
++        '&': {
++          animationName: appearanceIn,
++          animationDuration: '200ms',
++          animationTimingFunction: 'ease-in',
++          animationDirection: 'normal'
++        }
++      },
++      false: {
++        transition: 'none'
++      }
++    }
+   }
+ });
+ \n- packages/react/src/backdrop/backdrop.tsx (modified, 1 changes)\n  Patch: @@ -123,6 +123,7 @@ const Backdrop: React.FC<React.PropsWithChildren<BackdropProps>> = React.memo(
+             blur={blur}
+           />
+           <StyledBackdropContent
++            animated={animated}
+             className={`${preClass}-content`}
+             onClick={childrenClickHandler}
+             css={{\n

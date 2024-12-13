@@ -1,0 +1,66 @@
+Pull Request Number: 1179
+Title: fix: accordion warning keys
+Base Branch: feat/v2
+Head Branch: fix/accordion-warning-keys
+Author: ryhrm-gz
+URL: https://github.com/nextui-org/nextui/pull/1179
+State: MERGED
+Created At: 2023-07-03T14:41:39Z
+Merged At: 2023-07-03T18:53:23Z
+Participants: ryhrm-gz, jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+This PR fixes warning-keys in Accordion components.
+⛳️ Current behavior (updates)
+The following warning appear when using the Accordion component.
+Warning: Each child in a list should have a unique "key" prop.
+🚀 New behavior
+No warning appears.
+💣 Is this a breaking change (Yes/No):
+No
+
+📝 Additional Information
+
+Commits:
+- fix: warning keys accordion\n
+
+Labels:
+
+
+Comments:
+- vercel: @ryhrm-gz is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22330cae3fcaf4011221653d777fa09a21bea43a8b%22%7D%2C%22id%22%3A%22QmcEtTwBhAP1UFsRxf6ZCuqm1um4J9aEMMv3VP4w5BBwQ2%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1179%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/accordion/src/accordion.tsx (modified, 6 changes)\n  Patch: @@ -1,6 +1,7 @@
+ import {forwardRef} from "@nextui-org/system";
+ import {LayoutGroup} from "framer-motion";
+ import {Divider} from "@nextui-org/divider";
++import {Fragment} from "react";
+ 
+ import {UseAccordionProps, useAccordion} from "./use-accordion";
+ import {AccordionProvider} from "./accordion-context";
+@@ -25,16 +26,15 @@ const AccordionGroup = forwardRef<AccordionProps, "div">((props, ref) => {
+   });
+ 
+   const content = [...state.collection].map((item, index) => (
+-    <>
++    <Fragment key={item.key}>
+       <AccordionItem
+-        key={item.key}
+         item={item}
+         onFocusChange={(isFocused) => handleFocusChanged(isFocused, item.key)}
+         {...item.props}
+         classNames={{...itemClasses, ...(item.props.classNames || {})}}
+       />
+       {!isSplitted && showDivider && index < state.collection.size - 1 && <Divider />}
+-    </>
++    </Fragment>
+   ));
+ 
+   return (\n

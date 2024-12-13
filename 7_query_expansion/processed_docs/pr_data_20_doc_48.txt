@@ -1,0 +1,83 @@
+Pull Request Number: 1532
+Title: fix: #1531 title prop of a tab should be a string
+Base Branch: main
+Head Branch: main
+Author: akshayaqburst
+URL: https://github.com/nextui-org/nextui/pull/1532
+State: CLOSED
+Created At: 2023-09-01T12:10:01Z
+Merged At: None
+Participants: akshayaqburst, jguddas, akshayantony55
+
+Description:
+Closes #1531
+📝When the title prop of Tab is not a string, it should not be passed to HTML elements
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No): No
+
+Commits:
+- fix: title prop of a tab should be a string\n- fix: title prop of a tab should be a string\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: c8ebcc773089a7693975a418881c709f42d652d4
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/tabs  | Major |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/qburst/nextui_qb_1/new/main?filename=.changeset/khaki-carpets-sell.md&value=---%0A%22%40nextui-org%2Ftabs%22%3A%20patch%0A---%0A%0Afix%3A%20%231531%20title%20prop%20of%20a%20tab%20should%20be%20a%20string%0A)
+
+\n- vercel: [vc]: #3X693HkOOmBdfFIeui6Yn/zdtYf8YWPMAsV+2PReMMk=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRkRWbkRqZVNLTUdib2lhUW1uQUJnaHJ2dGpQVSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXFidXJzdC1tYWluLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXFidXJzdC1tYWluLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/FDVnDjeSKMGboiaQmnABghrvtjPU)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-qburst-main-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-qburst-main-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 1, 2023 0:18am |
+
+\n- vercel: @akshayantony55 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f8226bdfcea7a208c5e84628b8c822862c08500d%22%7D%2C%22id%22%3A%22QmZceETj3P2d15ja4RbGAWMFGWwCSMxsrrs38HaxUrfH22%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1532%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/friendly-teachers-work.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/tabs": major
++---
++
++Title prop of a tab should be a string\n- packages/components/tabs/src/base/tab-item-base.ts (modified, 2 changes)\n  Patch: @@ -8,7 +8,7 @@ interface Props<T extends object = {}> extends Omit<ItemProps<"div", T>, "childr
+   /**
+    * The title of the component.
+    */
+-  title?: ReactNode | null;
++  title?: string;
+ }
+ 
+ export type TabItemProps<T extends object = {}> = Props<T>;\n- packages/components/tabs/src/tab.tsx (modified, 4 changes)\n  Patch: @@ -85,6 +85,10 @@ const Tab = forwardRef<"button", TabItemProps>((props, ref) => {
+     });
+   };
+ 
++  if (otherProps && otherProps.title && typeof otherProps.title !== "string") {
++    otherProps.title = "";
++  }
++
+   return (
+     <Component
+       ref={domRef}\n

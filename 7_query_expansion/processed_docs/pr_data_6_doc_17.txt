@@ -1,0 +1,310 @@
+Pull Request Number: 3637
+Title: refactor(select): auto scroll selected item to center
+Base Branch: canary
+Head Branch: feat/select
+Author: better-owlet
+URL: https://github.com/nextui-org/nextui/pull/3637
+State: OPEN
+Created At: 2024-08-12T04:34:36Z
+Merged At: None
+Participants: better-owlet, wingkwong
+
+Description:
+Closes # 
+📝 Description
+Auto scroll selected item to center
+use scrollIntoView https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+Before：
+
+When the mouse is pressed down, the listbox triggers scrolling, causing flickering;
+Selected item is not absolutely centered and is affected by the expanded animation
+
+
+  
+    
+    
+
+    iShot_2024-08-12_15.43.14.mp4
+    
+  
+
+  
+
+  
+
+
+After: selected item just scroll into the viewport, not centered
+
+  
+    
+    
+
+    iShot_2024-08-12_15.44.11.mp4
+    
+  
+
+  
+
+  
+
+
+
+Summary by CodeRabbit
+Summary by CodeRabbit
+
+New Features
+
+Introduced automatic scrolling to center the selected item in the dropdown list.
+Enhanced accessibility and usability for lengthy selection lists.
+
+
+Improvements
+
+Simplified listbox scrolling behavior to automatically center the selected item in view.
+Enhanced code readability and reduced complexity by utilizing built-in functionality.
+Improved robustness through safe handling of potentially undefined elements.
+
+
+Tests
+
+Added type annotations for improved type safety in the test suite for the Select component.
+
+Commits:
+- Merge pull request #1 from nextui-org/main
+
+Main\n- Merge pull request #2 from nextui-org/main
+
+Main\n- Merge pull request #3 from nextui-org/main
+
+Main\n- refactor(select): auto scroll selected item to viewport\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 59261d865cd45a38e968c0c3d30e645c9c1f1ef9
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name               | Type  |
+| ------------------ | ----- |
+| @nextui-org/select | Patch |
+| @nextui-org/react  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/better-owlet/nextui/new/feat/select?filename=.changeset/lovely-files-swim.md&value=---%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A---%0A%0A%5BWIP%5Drefactor(select)%3A%20auto%20scroll%20selected%20item%20to%20center%0A)
+
+\n- vercel: @better-owlet is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22e6cb22f3ba71dad7744bc5841bf02cf0c5b43c40%22%7D%2C%22id%22%3A%22QmchxUU2E7rSpKuQzNUxqzUDTzq2fVEkY5wW6U8Bajhpu7%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3637%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent updates to the `useSelect` function in `use-select.ts` streamline the scrolling behavior of the listbox by utilizing the built-in `scrollIntoView` method instead of manual calculations. This change improves code readability, reduces complexity, and ensures that the selected item is automatically centered in the view, enhancing the overall robustness and maintainability of the component. Additionally, type safety in tests has been improved.
+
+## Changes
+
+| Files                                        | Change Summary                                                                                       |
+|----------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `packages/components/select/src/use-select.ts` | Simplified scrolling logic in `useSelect` by using `scrollIntoView` instead of manual calculations, enhancing readability and reducing complexity. |
+| `packages/components/select/__tests__/select.test.tsx` | Added type annotation to `user` variable in tests, improving type safety and code clarity.          |
+
+## Sequence Diagram(s)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant SelectComponent
+    participant Listbox
+
+    User->>SelectComponent: Select an item
+    SelectComponent->>Listbox: Update selected item
+    Listbox->>Listbox: scrollIntoView(selectedItem)
+    Listbox-->>User: Item is now in view
+```
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```
+packages/components/select/src/use-select.ts: ## AI-generated summary of changes
+
+The modifications in the `useSelect` function within the `use-select.ts` file simplify the scrolling behavior of the listbox when an item is selected. The previous implementation involved a detailed manual calculation of the scroll position, which required determining the dimensions and offsets of both the selected item and a shadow element. This approach was complex and prone to errors.
+
+The new implementation replaces this intricate logic with a single call to `scrollIntoView`, which automatically adjusts the view to bring the selected item into focus. This change significantly enhances code clarity and reduces the potential for bugs by utilizing built-in browser capabilities. The use of optional chaining (`?.`) ensures that the operation is safe, accommodating scenarios where either `selectedItem` or `scrollIntoView` may not exist. This update streamlines the control flow associated with scrolling, making it more efficient and easier to follow.
+
+Overall, the change leads to a more maintainable and robust implementation of the component's behavior regarding item selection and visibility.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useSelect<T extends object>(originalProps: UseSelectProps<T>)` in `packages/components/select/src/use-select.ts` → No changes in the function signature.
+
+---
+
+packages/components/select/__tests__/select.test.tsx: ## AI-generated summary of changes
+
+The diff introduces a type annotation to the `user` variable within the test suite for the `Select` component. Specifically, the variable `user`, which was previously declared without a type, is now explicitly typed as `ReturnType<typeof userEvent.setup>`. This change enhances type safety and clarity by ensuring that `user` is recognized as the return type of the `userEvent.setup` function, which is part of the testing library used. The modification does not alter the functionality of the tests but improves the overall code quality by providing better type information.
+
+## Alterations to the declarations of exported or public entities
+
+- `let user;` in `packages/components/select/__tests__/select.test.tsx` → `let user: ReturnType<typeof userEvent.setup>;` in `packages/components/select/__tests__/select.test.tsx
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "refactor(select): auto scroll selected item to center" introduces an enhancement to the select component by implementing an automatic scrolling feature. This feature ensures that when a user selects an item from the dropdown, the selected item is scrolled into view, improving its visibility. The implementation utilizes the `scrollIntoView` method, as referenced in the MDN documentation.
+
+Currently, the select component exhibits issues where the selected item is not centered in the viewport, leading to potential flickering during scrolling when the mouse is pressed down. The proposed changes aim to resolve these issues by ensuring that the selected item is displayed prominently within the visible area of the dropdown.
+
+The author has confirmed that this change is not a breaking change, meaning it will not disrupt existing functionality or usage of the select component. Additionally, no new external dependencies have been introduced, and the focus remains solely on this specific enhancement.
+
+In summary, this pull request addresses the visibility of selected items within the dropdown menu, enhancing accessibility and usability for users by creating a more intuitive interaction.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- e6cb22f3ba71dad7744bc5841bf02cf0c5b43c40 -->
+<!-- 827b5b033c535d0053c07196312f12c405dc9312 -->
+<!-- 59261d865cd45a38e968c0c3d30e645c9c1f1ef9 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #z6iW9X1G6/YqYnRcyZr5nHwUHVtulIGUgspDl1zTE6c=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNW56dFJzZU02c3FpSlM5dHM2TUdnUUJqU0dYbSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWJldHRlci1vd2xldC1mZWEtNmNlZmNiLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWJldHRlci1vd2xldC1mZWEtNmNlZmNiLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/5nztRseM6sqiJS9ts6MGgQBjSGXm)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-better-owlet-fea-6cefcb-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-better-owlet-fea-6cefcb-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 15, 2024 4:39am |
+
+\n
+
+Files Changed:
+- .changeset/cold-beans-visit.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/select": patch
++---
++
++Auto scroll selected item to center\n- packages/components/select/__tests__/select.test.tsx (modified, 2 changes)\n  Patch: @@ -51,7 +51,7 @@ const itemsSectionData = [
+ ];
+ 
+ describe("Select", () => {
+-  let user;
++  let user: ReturnType<typeof userEvent.setup>;
+ 
+   beforeEach(() => {
+     user = userEvent.setup();\n- packages/components/select/src/use-select.ts (modified, 12 changes)\n  Patch: @@ -346,18 +346,8 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+   useEffect(() => {
+     if (state.isOpen && popoverRef.current && listBoxRef.current) {
+       let selectedItem = listBoxRef.current.querySelector("[aria-selected=true] [data-label=true]");
+-      let scrollShadow = scrollShadowRef.current;
+ 
+-      // scroll the listbox to the selected item
+-      if (selectedItem && scrollShadow && selectedItem.parentElement) {
+-        let scrollShadowRect = scrollShadow?.getBoundingClientRect();
+-        let scrollShadowHeight = scrollShadowRect.height;
+-
+-        scrollShadow.scrollTop =
+-          selectedItem.parentElement.offsetTop -
+-          scrollShadowHeight / 2 +
+-          selectedItem.parentElement.clientHeight / 2;
+-      }
++      selectedItem?.scrollIntoView?.({block: "nearest"});
+     }
+   }, [state.isOpen, disableAnimation]);
+ \n

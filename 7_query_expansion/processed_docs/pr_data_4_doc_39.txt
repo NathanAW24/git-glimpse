@@ -1,0 +1,392 @@
+Pull Request Number: 3853
+Title: fix(select): label placement discrepancy in Select
+Base Branch: canary
+Head Branch: macci001/label-placement-correction
+Author: macci001
+URL: https://github.com/nextui-org/nextui/pull/3853
+State: MERGED
+Created At: 2024-10-07T07:10:16Z
+Merged At: 2024-10-11T09:06:57Z
+Participants: macci001, wingkwong
+
+Description:
+Closes #3841
+📝 Description
+The PR makes changes to use the label placement in select according to the shouldLabelBeOutside rather than isOutsideLeft. This resolves the label placement issues in case of multiline.
+⛳️ Current behavior (updates)
+Label is not placed outside when the multiline is true.
+Eg. for the below code sample:
+<Select
+    labelPlacement={"outside"}
+    label="User Properties"
+    placeholder="Select properties"
+    className="w-full"
+    variant="bordered"
+    selectedKeys={selection}
+    items={properties}
+    isMultiline={true}
+>
+    {properties.map((prop) => (
+        <SelectItem key={prop} value={prop}>
+            {prop}
+        </SelectItem>
+    ))}
+</Select>
+
+The output is follows:
+
+🚀 New behavior
+After the changes in the PR, the same code above appears as follows:
+
+Additional Details
+There shouldn't be any side effect to this as it targets only the following variant:
+{
+      labelPlacement: "outside",
+      isMultiline: true,
+      class: {
+        label: "pb-1.5",
+      },
+    },
+
+Again, just for sanity check. Some tests are made as follows:
+
+When labelPlacement is outside-left and multiline is true:
+
+
+
+When labelPlacement is inside multiline is true:
+
+
+
+When labelPlacement is outside multiline is false:
+
+
+
+When labelPlacement is outside-left multiline is false:
+
+
+
+When labelPlacement is inside multiline is false:
+
+
+
+Summary by CodeRabbit
+
+
+New Features
+
+Improved label placement logic in the select component for better handling of multiline scenarios.
+
+
+
+Bug Fixes
+
+Resolved issues related to label placement, enhancing usability and accessibility.
+
+
+
+Documentation
+
+Updated property name from isOutsideLeft to shouldLabelBeOutside for clarity in the select component's props interface.
+
+Commits:
+- fix(select): label placement incorrect in case of multiline\n- chore(select): adding the changeset\n- chore(select): adding the tests\n- chore(select): code imrovement, wkw's suggestions\n- chore(changeset): update changeset message\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 9efd1d112df92e6e1f6469e53e517e301a372c98
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name               | Type  |
+| ------------------ | ----- |
+| @nextui-org/select | Patch |
+| @nextui-org/react  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/macci001/nextui/new/macci001/label-placement-correction?filename=.changeset/unlucky-goats-glow.md&value=---%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A---%0A%0Afix(select)%3A%20Label%20placement%20discrepancy%20in%20case%20of%20select%0A)
+
+\n- vercel: @macci001 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%226f7da96235bf4abdbf57e88a1b666651a3ae70da%22%7D%2C%22id%22%3A%22QmZbeXbbSDWEUHDJN3apVZbMNxQM4ikXvgk6aqJ6r1Ewg3%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3853%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The changes in this pull request update the `@nextui-org/select` package by modifying the logic for label placement within the select component. The condition for determining label placement has been changed from `isOutsideLeft` to `shouldLabelBeOutside`, addressing issues with multiline scenarios as outlined in issue #3841. Additionally, the property `isOutsideLeft` has been renamed to `shouldLabelBeOutside` in the component's props interface, and new test cases have been added to validate these changes.
+
+## Changes
+
+| File Path                                     | Change Summary                                                                                   |
+|-----------------------------------------------|-------------------------------------------------------------------------------------------------|
+| `packages/components/select/src/select.tsx`  | Renamed property `isOutsideLeft` to `shouldLabelBeOutside` in `Props<T>` interface; updated conditional rendering of `labelContent`. |
+| `packages/components/select/__tests__/select.test.tsx` | Added new test cases for label placement based on `labelPlacement` prop.                       |
+
+## Assessment against linked issues
+
+| Objective                                                                                     | Addressed | Explanation                                  |
+|-----------------------------------------------------------------------------------------------|-----------|----------------------------------------------|
+| Label placement should not depend on `isMultiline` value (the label should be outside) (3841) | ✅        |                                              |
+
+## Possibly related PRs
+- **#3081**: Addresses a bug in the Select component related to placeholder text display, relevant to the changes in label placement.
+- **#3568**: Focuses on preventing the Select component from closing instantly when clicking on its label, directly relating to the changes in label placement logic.
+- **#3663**: Modifies the styling of the Select component to ensure the selected value's color aligns with design standards, relevant to overall functionality improvements.
+- **#3768**: Fixes the `fullWidth` functionality in the Select component, related to rendering and behavior adjustments made in the main PR.
+
+## Suggested labels
+`👀 Status: In Review`
+
+## Suggested reviewers
+- jrgarciadev
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+.changeset/dull-bags-divide.md:
+
+"""
+## AI-generated summary of changes
+
+The changes introduced in this patch for the `@nextui-org/select` package modify the logic governing label placement within the select component. Specifically, the label placement is now determined by the `shouldLabelBeOutside` condition instead of the previous `isOutsideLeft` condition. This adjustment addresses and resolves issues related to label placement when dealing with multiline scenarios, effectively fixing issue #3841. Additionally, several new test cases have been introduced in the `select.test.tsx` file, focusing on the placement of the label based on the `labelPlacement` prop. Two new tests verify that the label is placed outside the select component when `labelPlacement` is set to "outside", and that it is placed inside when the `labelPlacement` prop is not provided. The existing test suite remains intact, ensuring thorough validation of the component's functionality alongside the new label placement tests.
+
+## Alterations to the declarations of exported or public entities
+
+- Property renamed in `Props<T>` interface: `isOutsideLeft` → `shouldLabelBeOutside` in `Select` component in `packages/components/select/src/select.tsx`
+- No alterations to the declarations of exported or public entities were made in the test file `packages/components/select/__tests__/select.test.tsx`.
+"""
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(select): Label placement discrepancy in case of select" by user macci001 addresses an issue related to the label placement in the Select component of the NextUI library. This PR resolves the problem where the label was not positioned outside the select element when the `isMultiline` property was set to true, despite the `labelPlacement` being specified as "outside". The changes made in this PR ensure that the label placement adheres to the `shouldLabelBeOutside` condition rather than the previous `isOutsideLeft` condition.
+
+The current behavior demonstrated that when `isMultiline` was true, the label appeared inside the select border, which was not the expected outcome. The PR includes a code example illustrating the issue and provides visual comparisons of the output before and after the changes. The new behavior correctly positions the label outside the select element when multiline is true. The PR also notes that the changes specifically target the variant where `labelPlacement` is "outside" and `isMultiline` is true, and it includes tests to verify the expected outcomes under various configurations.
+
+## Objectives from Linked Issues
+
+The linked issue, identified as #3841, describes a bug concerning the label placement in the Select component when using the properties `labelPlacement="outside"` and `isMultiline={true}`. The issue highlights that with `isMultiline` set to true, the label incorrectly displays inside the select border, contrary to the expected behavior where the label should remain outside regardless of the multiline setting.
+
+The issue provides a code example that replicates the problem and includes visual evidence of the incorrect label placement. It also notes that this discrepancy is documented in the NextUI documentation. The expected behavior outlined in the issue is that the label's position should not be influenced by the `isMultiline` property, ensuring consistent label placement outside the select element. The objective of the linked issue is to correct this behavior, which the pull request aims to achieve.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai -->
+
+---
+
+<details>
+<summary>📜 Recent review details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>📥 Commits</summary>
+
+Files that changed from the base of the PR and between 57bfd32f2db9f34f7989ef6458259a493411c8e8 and 9efd1d112df92e6e1f6469e53e517e301a372c98.
+
+</details>
+
+<details>
+<summary>📒 Files selected for processing (1)</summary>
+
+* .changeset/dull-bags-divide.md (1 hunks)
+
+</details>
+
+<details>
+<summary>🚧 Files skipped from review as they are similar to previous changes (1)</summary>
+
+* .changeset/dull-bags-divide.md
+
+</details>
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- 6f7da96235bf4abdbf57e88a1b666651a3ae70da -->
+<!-- c3c475ca852bc1f3f5cd6c80954d6d06f956040c -->
+<!-- 57bfd32f2db9f34f7989ef6458259a493411c8e8 -->
+<!-- 9efd1d112df92e6e1f6469e53e517e301a372c98 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #d5+mTpY4Fu6+lRebDk+hOmdw1c4+K+1lN4ns9Kqr1YE=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9HRGhuNWpndHBXTGhVMmZOcWFIaWVDQmNTQjU4IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAxLWxhYi00ZWY4ODktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAxLWxhYi00ZWY4ODktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstbWFjY2kwMDEtbWFjY2kwMC05MzFlMzktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn0sImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvM1pVM2VOZzNDTTYxaTc1Yzc1U3ZWbXgzSE5jdyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAtOTMxZTM5LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCJ9XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/GDhn5jgtpWLhU2fNqaHieCBcSB58)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-macci001-macci001-lab-4ef889-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-macci001-macci001-lab-4ef889-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 11, 2024 9:00am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/3ZU3eNg3CM61i75c75SvVmx3HNcw)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-macci001-macci00-931e39-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-macci001-macci00-931e39-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 11, 2024 9:00am |
+
+
+\n
+
+Files Changed:
+- .changeset/dull-bags-divide.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/select": patch
++---
++
++update label placement in Select to use `shouldLabelBeOutside` instead of `isOutsideLeft`, resolving multiline label placement issues (#3841).\n- packages/components/select/__tests__/select.test.tsx (modified, 57 changes)\n  Patch: @@ -720,6 +720,63 @@ describe("Select", () => {
+       expect(onChange).toBeCalledTimes(1);
+     });
+   });
++
++  it("should place the label outside when labelPlacement is outside", () => {
++    const labelContent = "Favorite Animal Label";
++
++    render(
++      <Select
++        aria-label="Favorite Animal"
++        data-testid="select"
++        label={labelContent}
++        labelPlacement="outside"
++        placeholder="placeholder"
++      >
++        <SelectItem key="penguin" value="penguin">
++          Penguin
++        </SelectItem>
++        <SelectItem key="zebra" value="zebra">
++          Zebra
++        </SelectItem>
++        <SelectItem key="shark" value="shark">
++          Shark
++        </SelectItem>
++      </Select>,
++    );
++
++    const base = document.querySelector("[data-slot=base]");
++    const trigger = document.querySelector("[data-slot=trigger]");
++
++    expect(base).toHaveTextContent(labelContent);
++    expect(trigger).not.toHaveTextContent(labelContent);
++  });
++
++  it("should place the label inside when labelPlacement prop is not passed", () => {
++    const labelContent = "Favorite Animal Label";
++
++    render(
++      <Select
++        aria-label="Favorite Animal"
++        data-testid="select"
++        label={labelContent}
++        placeholder="placeholder"
++      >
++        <SelectItem key="penguin" value="penguin">
++          Penguin
++        </SelectItem>
++        <SelectItem key="zebra" value="zebra">
++          Zebra
++        </SelectItem>
++        <SelectItem key="shark" value="shark">
++          Shark
++        </SelectItem>
++      </Select>,
++    );
++
++    const trigger = document.querySelector("[data-slot=trigger]");
++
++    expect(trigger).toHaveTextContent(labelContent);
++  });
+ });
+ 
+ describe("Select with React Hook Form", () => {\n- packages/components/select/src/select.tsx (modified, 6 changes)\n  Patch: @@ -29,7 +29,7 @@ function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectE
+     endContent,
+     placeholder,
+     renderValue,
+-    isOutsideLeft,
++    shouldLabelBeOutside,
+     disableAnimation,
+     getBaseProps,
+     getLabelProps,
+@@ -117,10 +117,10 @@ function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectE
+   return (
+     <div {...getBaseProps()}>
+       <HiddenSelect {...getHiddenSelectProps()} />
+-      {isOutsideLeft ? labelContent : null}
++      {shouldLabelBeOutside ? labelContent : null}
+       <div {...getMainWrapperProps()}>
+         <Component {...getTriggerProps()}>
+-          {!isOutsideLeft ? labelContent : null}
++          {!shouldLabelBeOutside ? labelContent : null}
+           <div {...getInnerWrapperProps()}>
+             {startContent}
+             <span {...getValueProps()}>{renderSelectedItem}</span>\n

@@ -1,0 +1,63 @@
+Pull Request Number: 448
+Title: Fix 431/checkbox initial checked
+Base Branch: next
+Head Branch: fix_431/checkbox-initial-checked
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/448
+State: MERGED
+Created At: 2022-05-02T02:14:57Z
+Merged At: 2022-05-02T02:17:51Z
+Participants: jrgarciadev
+
+Description:
+Closes #431
+📝 Description
+Checkbox's initialChecked prop was being passed to the html
+⛳️ Current behavior (updates)
+React doesn't recognize the initialChecked prop on a DOM element
+🚀 New behavior
+The initialChecked prop was taken out from the checkboxProps, this prop will be renamed to defaultSelected in a near future
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+The initialChecked  will be renamed to defaultSelected in a near future to have a better @react-aria integration
+
+Commits:
+- fix(react-checkbox): initialChecked taken out from the props\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/react/src/checkbox/checkbox.tsx (modified, 8 changes)\n  Patch: @@ -22,6 +22,7 @@ import {
+   StyledCheckboxText
+ } from './checkbox.styles';
+ import { mapPropsToReactAriaAttr } from './utils';
++import { __DEV__ } from '../utils/assertion';
+ import clsx from '../utils/clsx';
+ 
+ interface Props
+@@ -91,6 +92,8 @@ const Checkbox = React.forwardRef<HTMLLabelElement, CheckboxProps>(
+       labelColor,
+       animated,
+       autoFocus,
++      // @ts-ignore
++      initialChecked,
+       ...props
+     } = checkboxProps;
+ 
+@@ -205,7 +208,10 @@ const Checkbox = React.forwardRef<HTMLLabelElement, CheckboxProps>(
+ 
+ Checkbox.defaultProps = defaultProps;
+ 
+-Checkbox.displayName = 'NextUI.Checkbox';
++if (__DEV__) {
++  Checkbox.displayName = 'NextUI.Checkbox';
++}
++
+ Checkbox.toString = () => '.nextui-checkbox';
+ 
+ type CheckboxComponent<T, P = {}> = React.ForwardRefExoticComponent<\n

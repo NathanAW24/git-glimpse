@@ -1,0 +1,136 @@
+Pull Request Number: 147
+Title: Implement #138
+Base Branch: main
+Head Branch: disableElevationAnimation
+Author: remorses
+URL: https://github.com/nextui-org/nextui/pull/147
+State: CLOSED
+Created At: 2022-01-22T14:48:28Z
+Merged At: None
+Participants: remorses, codecov-commenter, jrgarciadev
+
+Description:
+react/input
+TASK:  #138
+Types of changes
+Added disableElevationAnimation prop
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Screenshots - Animations
+
+  
+    
+    
+
+    Registrazione.schermo.2022-01-22.alle.15.48.00.mov
+
+Commits:
+- Added disableElevationAnimation prop to Input\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/147?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#147](https://codecov.io/gh/nextui-org/nextui/pull/147?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (913df53) into [main](https://codecov.io/gh/nextui-org/nextui/commit/adf6544b4150e26c3fbd5bcd3596c03a5b8e2af5?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (adf6544) will **decrease** coverage by `0.05%`.
+> The diff coverage is `33.33%`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/147/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/147?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@            Coverage Diff             @@
+##             main     #147      +/-   ##
+==========================================
+- Coverage   76.01%   75.95%   -0.06%     
+==========================================
+  Files         140      140              
+  Lines        2264     2267       +3     
+  Branches      680      683       +3     
+==========================================
++ Hits         1721     1722       +1     
+- Misses        538      539       +1     
+- Partials        5        6       +1     
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/147?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/react/src/input/input-props.ts](https://codecov.io/gh/nextui-org/nextui/pull/147/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2lucHV0L2lucHV0LXByb3BzLnRz) | `100.00% <ø> (ø)` | |
+| [packages/react/src/input/input.tsx](https://codecov.io/gh/nextui-org/nextui/pull/147/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2lucHV0L2lucHV0LnRzeA==) | `90.38% <33.33%> (-1.70%)` | :arrow_down: |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/147?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/147?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [adf6544...913df53](https://codecov.io/gh/nextui-org/nextui/pull/147?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n- jrgarciadev: Hey @remorses I'm going to close this PR since we will apply this from another approach, thanks 🙏🏻\n
+
+Files Changed:
+- apps/docs/content/docs/components/input.mdx (modified, 12 changes)\n  Patch: @@ -462,6 +462,18 @@ import { Input } from '@nextui-org/react';
+ `}
+ />
+ 
++<Playground
++  title="Disable input elevation animation"
++  desc="You can disable the translateY animation of the `Input` with the `disableElevationAnimation` prop"
++  code={`
++    <>
++      <Input disableElevationAnimation placeholder="Without elevation" />
++      <Spacer y={0.5} />
++      <Input bordered disableElevationAnimation placeholder="Bordered without elevation" />
++    </>
++`}
++/>
++
+ <Spacer y={3} />
+ 
+ ### APIs\n- packages/react/src/input/input-props.ts (modified, 1 changes)\n  Patch: @@ -51,6 +51,7 @@ export interface Props
+     e: React.MouseEvent<HTMLDivElement>
+   ) => void;
+   autoComplete?: string;
++  disableElevationAnimation?: boolean;
+ }
+ 
+ export const defaultProps = {\n- packages/react/src/input/input.stories.tsx (modified, 11 changes)\n  Patch: @@ -436,3 +436,14 @@ export const Uncontrolled = () => {
+     </>
+   );
+ };
++
++export const WithoutElevationAnimation = () => (
++  <>
++    <Spacer y={1.5} />
++    <Input placeholder="Next UI" disableElevationAnimation />
++    <Spacer y={1.5} />
++    <Input bordered labelPlaceholder="Next UI" disableElevationAnimation />
++    <Spacer y={1.5} />
++    <Input rounded placeholder="Next UI" disableElevationAnimation />
++  </>
++);\n- packages/react/src/input/input.tsx (modified, 8 changes)\n  Patch: @@ -92,6 +92,7 @@ const Input = React.forwardRef<FormElement, InputProps>(
+       underlined,
+       rounded,
+       css,
++      disableElevationAnimation,
+       ...props
+     },
+     ref: React.Ref<FormElement | null>
+@@ -259,6 +260,13 @@ const Input = React.forwardRef<FormElement, InputProps>(
+           underlined={underlined}
+           isReadOnly={readOnly}
+           focused={hover}
++          css={
++            disableElevationAnimation
++              ? {
++                  transform: 'none',
++                }
++              : {}
++          }
+           className={clsx(
+             `${preClass}-container`,
+             `${preClass}-container--${getState}`,\n

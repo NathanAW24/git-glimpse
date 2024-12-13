@@ -1,0 +1,88 @@
+Pull Request Number: 949
+Title: fix(react-theme): white border of the focus ring
+Base Branch: next
+Head Branch: fix/focus-ring
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/949
+State: MERGED
+Created At: 2022-12-12T16:13:53Z
+Merged At: 2022-12-14T00:25:02Z
+Participants: tianenpang, jguddas, jrgarciadev
+
+Description:
+📝 Description
+There is a white border in the animation of the focus ring caused by the outline property.
+⛳️ Current behavior (updates)
+
+Remove outline styles from the isFocusVisible variant.
+
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Note Based on next branch.
+
+Take Radio's focus ring as an example, however, not all components have white border in the animation of the focus ring.
+Before:
+
+  
+    
+    
+
+    before.webm
+    
+  
+
+  
+
+  
+
+
+After:
+
+  
+    
+    
+
+    after.webm
+
+Commits:
+- fix(react-theme): white border of the focus ring\n- fix(react-theme): no outline by default for focus ring\n
+
+Labels:
+
+
+Comments:
+- vercel: @tianenpang is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2253abb7e4430ad5dfbcca4ea283b5a2822746b403%22%7D%2C%22id%22%3A%22QmZATcXYCNhFZJpVsTxQ5FFg7cqxV9hipA9LXMqjUMtmPs%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A949%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/FqfxVfB1L3MbFcv52MMVRVgwi5fW)) | [Visit Preview](https://nextui-storybook-git-fork-tianenpang-fix-focus-ring-nextui-org.vercel.app) | Dec 12, 2022 at 7:28PM (UTC) |
+
+\n- jguddas: There are a lot of unrelated changes in this PR that block me from testing that all the other components that use the focus ring still work.\n
+
+Files Changed:
+- packages/react/src/theme/shared-css.ts (modified, 7 changes)\n  Patch: @@ -16,16 +16,13 @@ export const sharedFocus = css({
+ });
+ 
+ export const cssFocusVisible = css({
++  outline: "none",
+   variants: {
+     isFocusVisible: {
+       true: {
+-        outline: "transparent solid 2px",
+-        outlineOffset: "2px",
+         boxShadow: "0 0 0 2px $colors$background, 0 0 0 4px $colors$primary",
+       },
+-      false: {
+-        outline: "none",
+-      },
++      false: {},
+     },
+   },
+ });\n

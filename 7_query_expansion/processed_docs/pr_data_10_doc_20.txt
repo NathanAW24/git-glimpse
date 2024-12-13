@@ -1,0 +1,344 @@
+Pull Request Number: 3088
+Title: fix(datePicker): prevent year, month change in showMonthAndYearPickers mode
+Base Branch: canary
+Head Branch: fix/issue-#3059
+Author: KumJungMin
+URL: https://github.com/nextui-org/nextui/pull/3088
+State: MERGED
+Created At: 2024-05-27T04:52:00Z
+Merged At: 2024-07-08T00:01:36Z
+Participants: KumJungMin, jrgarciadev, wingkwong
+
+Description:
+📝 Description
+
+fix issue (#3072)
+
+
+There is an issue that the year and month change when repeatedly opening and closing the datePicker component in showMonthAndYearPickers mode.
+This issue occurs when opening and closing the datePicker, causing the month and year information to be lost and default values to be set.
+
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Resolved issues with hours and month clearing in showMonthAndYearPickers mode for @nextui-org/calendar and @nextui-org/date-picker packages.
+Ensured the selected date remains unchanged when the picker is toggled in showMonthAndYearPickers mode.
+
+
+
+Improvements
+
+Added a conditional check to prevent unnecessary scrolling to the selected month/year when the calendar component is mounted/opened/closed.
+
+Commits:
+- fix: prevent year, month change error in showMonthAndYearPickers mode\n- docs: add changeset\n- docs: edit changeset\n- test:  add test code about date clear issue in date picker\n- test: update test code\n- test: check application aria is same with current date\n- chore(changeset): revise package and add issue number\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 30e4f3c3120799807402ba3067de42f5dd1b86b1
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/KumJungMin/nextui/new/fix/issue-#3059?filename=.changeset/serious-days-fetch.md&value=---%0A%22%40fake-scope%2Ffake-pkg%22%3A%20patch%0A---%0A%0Afix%3A%20prevent%20year%2C%20month%20change%20error%20in%20showMonthAndYearPickers%20mode%20(%233059)%0A)
+
+\n- vercel: [vc]: #hupnsSiCh+y4sMT7P7/7aN6AhE0AkzWo4/lnTi9mMto=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNVpSeHRUMzVWNXc4ZVNZUmhxUnJNaUdXZ2RKdCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWt1bWp1bmdtaW4tZml4LWktZjc2YmVhLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWt1bWp1bmdtaW4tZml4LWktZjc2YmVhLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/5ZRxtT35V5w8eSYRhqRrMiGWgdJt)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-kumjungmin-fix-i-f76bea-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-kumjungmin-fix-i-f76bea-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 27, 2024 1:48pm |
+
+\n- vercel: @KumJungMin is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2230e4f3c3120799807402ba3067de42f5dd1b86b1%22%7D%2C%22id%22%3A%22QmdgeNzcLjAM7YTiuX5XhkfZrhw1n7sB69tz3Vy5v1DhW3%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3088%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes primarily address issues related to the `showMonthAndYearPickers` mode in the `@nextui-org/calendar` and `@nextui-org/date-picker` packages. A new conditional check was added to the `useCalendarPicker` function to prevent unnecessary scrolling. Additionally, new test cases were introduced to ensure the selected date remains unchanged when toggling the picker in the specified mode. These modifications enhance the stability and functionality of the date and calendar pickers.
+
+## Changes
+
+| Files                                                                                     | Change Summary                                                                                                           |
+|-------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| `packages/components/calendar/src/use-calendar-picker.ts`                                 | Added a conditional check to prevent scrolling when the header is not expanded.                                          |
+| `packages/components/date-picker/__tests__/date-picker.test.tsx`                          | Introduced a new test case to ensure the selected date remains unchanged when toggling the picker in specific modes.     |
+| `.changeset/tidy-squids-knock.md`                                                         | Introduced a patch for `@nextui-org/calendar` and `@nextui-org/date-picker` to fix issues with hours and month clearing. |
+
+## Sequence Diagram(s) (Beta)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant DatePickerComponent
+    participant CalendarComponent
+    participant useCalendarPicker
+
+    User->>DatePickerComponent: Open Date Picker
+    DatePickerComponent->>useCalendarPicker: Initialize
+    useCalendarPicker->>useCalendarPicker: Check if header is expanded
+    alt Header is not expanded
+        useCalendarPicker-->>DatePickerComponent: Skip scrolling
+    else Header is expanded
+        useCalendarPicker-->>DatePickerComponent: Scroll to selected month/year
+    end
+    DatePickerComponent-->>User: Display Date Picker
+
+    User->>DatePickerComponent: Toggle Picker
+    DatePickerComponent->>CalendarComponent: Toggle Month/Year Picker
+    CalendarComponent-->>DatePickerComponent: Update view
+    DatePickerComponent-->>User: Display updated picker
+```
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+# Existing changesets
+
+# Existing changesets
+
+# Existing changesets
+
+# Existing changesets
+
+packages/components/calendar/src/use-calendar-picker.ts: ## Summary
+
+In the `useCalendarPicker` function in `packages/components/calendar/src/use-calendar-picker.ts`, a conditional check `if (!isHeaderExpanded) return;` was added before scrolling to the selected month/year when the component is mounted/opened/closed.
+
+# New changesets
+
+.changeset/tidy-squids-knock.md: ## Summary
+
+The new file introduces a patch for the `@nextui-org/calendar` package to fix issues related to hours and month clearing in the `showMonthAndYearPickers` mode.
+
+# New changesets
+
+.changeset/tidy-squids-knock.md: ## Summary
+
+The new file introduces a patch for the `@nextui-org/date-picker` package to fix issues related to hours and month clearing in the `showMonthAndYearPickers` mode.
+
+# New changesets
+
+packages/components/date-picker/__tests__/date-picker.test.tsx: ### Summary
+
+In the `date-picker.test.tsx` file, the change introduces a new test case to ensure that the selected date remains unchanged when the picker is toggled in `showMonthAndYearPickers` mode.
+
+### Alterations to the declarations of exported or public entities
+
+No alterations to the declarations of exported or public entities were identified in the provided diff.
+
+# New changesets
+
+packages/components/date-picker/__tests__/date-picker.test.tsx: ### Summary
+
+In the `date-picker.test.tsx` file, the change introduces a new test case to ensure that the selected date remains unchanged when the picker is toggled in `showMonthAndYearPickers` mode.
+
+### Alterations to the declarations of exported or public entities
+
+No alterations to the declarations of exported or public entities were identified in the provided diff.
+
+# New changesets
+
+.changeset/tidy-squids-knock.md: ## Summary
+
+The new file introduces a patch for the `@nextui-org/calendar` and `@nextui-org/date-picker` packages to address issues with hours and month clearing in the `showMonthAndYearPickers` mode.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+### PR Summary
+
+**Title:** fix(datePicker): prevent year, month change in showMonthAndYearPickers mode  
+**User:** KumJungMin  
+**Number:** 3088  
+
+**Description:**  
+This pull request addresses an issue in the datePicker component when it is in `showMonthAndYearPickers` mode. The problem occurs when the datePicker is repeatedly opened and closed, causing the month and year information to be lost and default values to be set. The fix ensures that the year and month do not change under these circumstances. The issue being fixed is tracked in [issue #3072](https://github.com/nextui-org/nextui/issues/3072).
+
+### Comments Summary
+
+**KumJungMin:**  
+- Added changelog and test code.
+  - **Changelog:** [Link to changelog](https://github.com/nextui-org/nextui/pull/3088/files#diff-ceefd03514683d1108cec0153b1eb6890e542708fb9139221ff3b1dd317f5b84)
+  - **Test code:** [Link to test code](https://github.com/nextui-org/nextui/pull/3088/files#diff-90c0f7fb18ed1a5f40703a251c8bcd3c30af4956fb24d6bce4e7127686207ac5)
+    - The test code checks whether the application's label is correct.
+    - An image showing the bug is attached:  
+      ![Bug Screenshot](https://github.com/nextui-org/nextui/assets/37934668/df020309-a0a7-4570-ad1c-8d63c6e9ff95)
+
+**jrgarciadev:**  
+- Expressed gratitude to KumJungMin for the contributions.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated summary of generated summaries
+
+The recent changes primarily focus on enhancements and bug fixes for the `@nextui-org/calendar` and `@nextui-org/date-picker` packages. Key updates include:
+
+1. **Calendar Component**:
+   - **Conditional Check Addition**: In the `useCalendarPicker` function (`packages/components/calendar/src/use-calendar-picker.ts`), a conditional check `if (!isHeaderExpanded) return;` was added. This ensures that scrolling to the selected month/year only occurs when the header is expanded, improving the component's behavior during mount/open/close events.
+
+2. **Date Picker Component**:
+   - **Patch for Clearing Issues**: A new changeset file (`.changeset/tidy-squids-knock.md`) introduces a patch for both `@nextui-org/calendar` and `@nextui-org/date-picker` packages. This patch addresses issues related to clearing hours and months when the `showMonthAndYearPickers` mode is enabled.
+   - **New Test Case**: In the `date-picker.test.tsx` file (`packages/components/date-picker/__tests__/date-picker.test.tsx`), a new test case was added. This test ensures that the selected date remains unchanged when the picker is toggled in `showMonthAndYearPickers` mode.
+
+### Alterations to the declarations of exported or public entities
+
+No alterations to the declarations of exported or public entities were identified in the provided diff.
+- **Feedback from the user on the previous review**: undefined
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 30e4f3c3120799807402ba3067de42f5dd1b86b1 -->
+<!-- c13401b2aa778a303517a26396f0b43b843f7cfe -->
+<!-- 4ef3a89e910b1ad96e992cfd373c6c5a0f1f4b88 -->
+<!-- ac31e00c5ba0f8271f7856b7226bd580d7902a87 -->
+<!-- 56207f4ffcc7132b0c46f5f2e6450c08c25278c9 -->
+<!-- 339a7b9e085aee8f7f01e6416dc0bf5e4695fff8 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to full the review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- KumJungMin: i added the changelog and test code :)
+- changelog: https://github.com/nextui-org/nextui/pull/3088/files#diff-ceefd03514683d1108cec0153b1eb6890e542708fb9139221ff3b1dd317f5b84
+- testcode: https://github.com/nextui-org/nextui/pull/3088/files#diff-90c0f7fb18ed1a5f40703a251c8bcd3c30af4956fb24d6bce4e7127686207ac5
+	- When configuring the test code, 
+	- I checked whether the application's label was correct. I am attached an image showing the bug. 
+<img width="1711" alt="스크린샷 2024-05-27 오후 10 20 31" src="https://github.com/nextui-org/nextui/assets/37934668/df020309-a0a7-4570-ad1c-8d63c6e9ff95">
+
+
+@wingkwong 
+
+\n- jrgarciadev: Thank you! @KumJungMin \n
+
+Files Changed:
+- .changeset/tidy-squids-knock.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/calendar": patch
++"@nextui-org/date-picker": patch
++---
++
++fix hours, month clear issue in `showMonthAndYearPickers` mode (#3072).\n- packages/components/calendar/src/use-calendar-picker.ts (modified, 2 changes)\n  Patch: @@ -115,6 +115,8 @@ export function useCalendarPicker(props: CalendarPickerProps) {
+ 
+   // scroll to the selected month/year when the component is mounted/opened/closed
+   useEffect(() => {
++    if (!isHeaderExpanded) return;
++
+     scrollTo(date.month, "months", false);
+     scrollTo(date.year, "years", false);
+   }, [isHeaderExpanded]);\n- packages/components/date-picker/__tests__/date-picker.test.tsx (modified, 22 changes)\n  Patch: @@ -457,5 +457,27 @@ describe("DatePicker", () => {
+       expect(onChange).toHaveBeenCalledWith(new CalendarDate(2019, 2, 4));
+       expect(getTextValue(combobox)).toBe("2/4/2019"); // uncontrolled
+     });
++
++    it("should keep the selected date when the picker is opened, in showMonthAndYearPickers mode", function () {
++      const {getByRole, getAllByRole} = render(
++        <DatePicker showMonthAndYearPickers label="Date" value={new CalendarDate(2024, 5, 1)} />,
++      );
++
++      let combobox = getAllByRole("group")[0];
++
++      expect(getTextValue(combobox)).toBe("5/1/2024");
++
++      let button = getByRole("button");
++
++      triggerPress(button);
++
++      let dialog = getByRole("dialog");
++
++      expect(dialog).toBeVisible();
++
++      const content = getByRole("application");
++
++      expect(content).toHaveAttribute("aria-label", "May 2024");
++    });
+   });
+ });\n

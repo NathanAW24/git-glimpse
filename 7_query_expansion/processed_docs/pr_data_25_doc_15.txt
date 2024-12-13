@@ -1,0 +1,143 @@
+Pull Request Number: 959
+Title: fix(build): version upgrade in all packages
+Base Branch: main
+Head Branch: next
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/959
+State: MERGED
+Created At: 2022-12-21T01:38:55Z
+Merged At: 2022-12-21T01:46:06Z
+Participants: jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+Fix build step
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- fix(build): version upgrade in all packages\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/3vPdq9qqAgzZycAyPKQtDXkGHkM3)) | [Visit Preview](https://preview.nextui.org) | ✅ [1 resolved](https://vercel.live/open-feedback/preview.nextui.org?nextHash=show-comment-archive%3Dtrue&nextPath=%2Fdocs%2Flayout%2Fspacer) | Dec 21, 2022 at 1:45AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/4Cd2rnioAsrM5JVJvWVhi6WQtFLR)) | [Visit Preview](https://nextui-storybook-git-next-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-next-nextui-org.vercel.app) | Dec 21, 2022 at 1:45AM (UTC) |
+
+
+\n
+
+Files Changed:
+- apps/docs/package.json (modified, 4 changes)\n  Patch: @@ -1,6 +1,6 @@
+ {
+   "name": "@nextui-org/docs",
+-  "version": "1.0.0-beta.10",
++  "version": "1.0.0-beta.11",
+   "private": true,
+   "scripts": {
+     "dev": "next dev",
+@@ -16,7 +16,7 @@
+     "@codesandbox/sandpack-react": "0.14.3",
+     "@mapbox/rehype-prism": "^0.6.0",
+     "@mdx-js/react": "^1.6.22",
+-    "@nextui-org/react": "1.0.0-beta.10",
++    "@nextui-org/react": "1.0.0-beta.11",
+     "@types/lodash": "^4.14.170",
+     "algoliasearch": "^4.10.3",
+     "canvas-confetti": "^1.4.0",\n- examples/create-next-app/package.json (modified, 2 changes)\n  Patch: @@ -9,7 +9,7 @@
+     "lint": "next lint"
+   },
+   "dependencies": {
+-    "@nextui-org/react": "1.0.0-beta.10",
++    "@nextui-org/react": "1.0.0-beta.11",
+     "next": "11.0.0",
+     "react": "17.0.2",
+     "react-dom": "17.0.2"\n- examples/create-react-app/package.json (modified, 2 changes)\n  Patch: @@ -3,7 +3,7 @@
+   "version": "0.1.0",
+   "private": true,
+   "dependencies": {
+-    "@nextui-org/react": "1.0.0-beta.10",
++    "@nextui-org/react": "1.0.0-beta.11",
+     "@testing-library/jest-dom": "^5.11.4",
+     "@testing-library/react": "^11.1.0",
+     "@testing-library/user-event": "^12.1.10",\n- examples/vite-react-typescript/package.json (modified, 2 changes)\n  Patch: @@ -8,7 +8,7 @@
+     "preview": "vite preview"
+   },
+   "dependencies": {
+-    "@nextui-org/react": "1.0.0-beta.10",
++    "@nextui-org/react": "1.0.0-beta.11",
+     "react": "^17.0.2",
+     "react-dom": "^17.0.2"
+   },\n- examples/with-tailwindcss/package.json (modified, 2 changes)\n  Patch: @@ -3,7 +3,7 @@
+   "version": "0.1.0",
+   "private": true,
+   "dependencies": {
+-    "@nextui-org/react": "^1.0.0-beta.10",
++    "@nextui-org/react": "^1.0.0-beta.11",
+     "@testing-library/jest-dom": "^5.16.4",
+     "@testing-library/react": "^13.1.1",
+     "@testing-library/user-event": "^13.5.0",\n- package.json (modified, 2 changes)\n  Patch: @@ -17,7 +17,7 @@
+     "start:docs": "turbo run start --scope=@nextui-org/docs --no-deps",
+     "start:sb": "turbo run start --scope=@nextui-org/react-storybook --no-deps",
+     "build:docs": "turbo run build --scope=@nextui-org/docs",
+-    "build": "turbo run build",
++    "build": "turbo run build --concurrency=1",
+     "build:nextui": "turbo run build --scope=@nextui-org/react --no-deps",
+     "build:sb": "turbo run build --scope=@nextui-org/react-storybook --no-deps",
+     "turbo:graph": "yarn build --graph=dependency-graph.png",\n- packages/react/package.json (modified, 6 changes)\n  Patch: @@ -41,7 +41,7 @@
+     "publish:dry-run": "npm publish ./lib --dry-run",
+     "build": "node ./scripts/build.js",
+     "build:minify": "node ./scripts/minify.js",
+-    "build:types": "yarn tsc -p ./buildconfig -d --emitDeclarationOnly --outDir types",
++    "build:types": "tsc -p ./buildconfig -d --emitDeclarationOnly --outDir types",
+     "build:dev-types": "tsc -p ./buildconfig -d --emitDeclarationOnly --outDir lib/esm",
+     "build:webpack": "webpack --config ./buildconfig/webpack.common.js",
+     "build:watch": "node ./scripts/build-watch.js",
+@@ -84,8 +84,8 @@
+     "@react-types/grid": "3.1.4",
+     "@react-types/menu": "3.7.2",
+     "@react-types/overlays": "3.6.4",
+-    "@react-types/shared": "3.15.0",
+-    "@stitches/react": "1.2.8"
++    "@stitches/react": "1.2.8",
++    "@react-types/shared": "3.15.0"
+   },
+   "peerDependencies": {
+     "react": ">=16.8.0",\n- packages/react/src/dropdown/dropdown-menu.tsx (modified, 4 changes)\n  Patch: @@ -35,12 +35,12 @@ interface Props<T> extends AriaMenuProps<T>, DOMProps, AriaLabelingProps {
+    * @default 'default'
+    */
+   textColor?: SimpleColors;
+-  containerCss?: CSS;
+ }
+ 
+ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props<object>>;
+ 
+-export type DropdownMenuProps<T = object> = Props<T> & NativeAttrs & {css?: CSS};
++export type DropdownMenuProps<T = object> = Props<T> &
++  NativeAttrs & {css?: CSS; containerCss?: CSS};
+ 
+ const DropdownMenu = React.forwardRef(
+   (props: DropdownMenuProps, ref: React.Ref<HTMLUListElement | null>) => {\n- packages/storybook/package.json (modified, 2 changes)\n  Patch: @@ -4,7 +4,7 @@
+   "main": "index.js",
+   "license": "MIT",
+   "dependencies": {
+-    "@nextui-org/react": "1.0.0-beta.10"
++    "@nextui-org/react": "1.0.0-beta.11"
+   },
+   "devDependencies": {
+     "@babel/core": "^7.16.7",\n- yarn.lock (modified, 3200 changes)\n  Patch: No patch available\n

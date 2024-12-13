@@ -1,0 +1,979 @@
+Pull Request Number: 860
+Title: chore: lint
+Base Branch: feat/new-project-structure
+Head Branch: chore/linter
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/860
+State: MERGED
+Created At: 2022-11-05T22:19:15Z
+Merged At: 2022-11-06T01:20:16Z
+Participants: tianenpang, jrgarciadev
+
+Description:
+📝 Description
+Add commit hook for lint and commit msg.
+commit-types: feat, feature, fix, refactor, docs, build, test, ci, chore
+# above types and optional scope
+git commit -m "type(scope?): subject"
+Update npm scripts and dependencies
+
+script: turbo
+fix pnpm and package-manager version
+up-version: turbo, tsup, storybook, jest and eslint
+
+Separate prettier config
+for prettier-cli formatting, the eslint-config-prettier will auto apply the .prettierrc.json
+Storybook docs theme
+apply the same light or dark theme as the canvas panel.
+Contributing
+correct the install command to pnpm i
+Chore
+add $schema for each json config file
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+The packages, plop, scripts has been reformatted
+
+Commits:
+- build: update scripts and dependencies; add husky, lint-staged and commitlint\n- feat: git commit hooks for formatting and msg check\n- chore: separate prettier config\n- chore: custom theme for storybook docs\n- chore: install command\n- chore: re-format and ignore scripts\n
+
+Labels:
+
+
+Comments:
+- vercel: @tianenpang is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%220712e72c7456aee74d1ad1158c29e3e3b8e34894%22%7D%2C%22id%22%3A%22QmX4g8okq2dg5BEPDA8G3BJZtkbbu1AiWcNDimcDDn7Xim%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A860%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .commitlintrc.cjs (added, 16 changes)\n  Patch: @@ -0,0 +1,16 @@
++const conventional = require("@commitlint/config-conventional");
++
++module.exports = {
++  extends: ["@commitlint/config-conventional"],
++  plugins: ["commitlint-plugin-function-rules"],
++  helpUrl: "https://github.com/nextui-org/nextui/blob/main/CONTRIBUTING.MD#commit-convention",
++  rules: {
++    ...conventional.rules,
++    "type-enum": [
++      2,
++      "always",
++      ["feat", "feature", "fix", "refactor", "docs", "build", "test", "ci", "chore"],
++    ],
++    "function-rules/header-max-length": [0],
++  },
++};\n- .editorconfig (modified, 6 changes)\n  Patch: @@ -1,9 +1,9 @@
+ root = true
+ 
+ [*]
++indent_size = 2
++max_line_length = 100
+ insert_final_newline = true
++trim_trailing_whitespace = true
+ charset = utf-8
+ indent_style = space
+-indent_size = 2
+-trim_trailing_whitespace = true
+-max_line_length = 80\n- .eslintignore (modified, 10 changes)\n  Patch: @@ -5,12 +5,18 @@ examples/*
+ dist
+ esm/*
+ public/*
+-scripts/*
+ tests/*
++scripts/*
+ *.config.js
+ .DS_Store
+ node_modules
+ coverage
+ .next
+ build
+-
++!.storybook
++!.commitlintrc.cjs
++!.lintstagedrc.cjs
++!jest.config.js
++!plopfile.js
++!react-shim.js
++!tsup.config.ts\n- .eslintrc.json (modified, 19 changes)\n  Patch: @@ -1,4 +1,5 @@
+ {
++  "$schema": "https://json.schemastore.org/eslintrc.json",
+   "env": {
+     "browser": false,
+     "es2021": true,
+@@ -32,19 +33,7 @@
+     "react-hooks/exhaustive-deps": "off",
+     "jsx-a11y/click-events-have-key-events": "warn",
+     "jsx-a11y/interactive-supports-focus": "warn",
+-    "prettier/prettier": [
+-      "warn",
+-      {
+-        "printWidth": 100,
+-        "trailingComma": "all",
+-        "tabWidth": 2,
+-        "semi": true,
+-        "singleQuote": false,
+-        "bracketSpacing": false,
+-        "arrowParens": "always",
+-        "endOfLine": "auto"
+-      }
+-    ],
++    "prettier/prettier": "warn",
+     "@typescript-eslint/no-unused-vars": [
+       "warn",
+       {
+@@ -88,8 +77,8 @@
+     ],
+     "padding-line-between-statements": [
+       "warn",
+-      { "blankLine": "always", "prev": "*", "next": "return" },
+-      { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
++      {"blankLine": "always", "prev": "*", "next": "return"},
++      {"blankLine": "always", "prev": ["const", "let", "var"], "next": "*"},
+       {
+         "blankLine": "any",
+         "prev": ["const", "let", "var"],\n- .husky/commit-msg (added, 4 changes)\n  Patch: @@ -0,0 +1,4 @@
++#!/usr/bin/env sh
++. "$(dirname -- "$0")/_/husky.sh"
++
++pnpm commitlint --config .commitlintrc.cjs --edit ${1}\n- .husky/pre-commit (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++#!/usr/bin/env sh
++. "$(dirname -- "$0")/_/husky.sh"
++
++# Avoid excessive outputs
++if [ -t 2 ]; then
++  exec >/dev/tty 2>&1
++fi
++
++pnpm lint-staged\n- .lintstagedrc.cjs (added, 27 changes)\n  Patch: @@ -0,0 +1,27 @@
++const {relative} = require("path");
++
++const {ESLint} = require("eslint");
++
++const removeIgnoredFiles = async (files) => {
++  const cwd = process.cwd();
++  const eslint = new ESLint();
++  const relativePaths = files.map((file) => relative(cwd, file));
++  const isIgnored = await Promise.all(relativePaths.map((file) => eslint.isPathIgnored(file)));
++  const filteredFiles = files.filter((_, i) => !isIgnored[i]);
++
++  return filteredFiles.join(" ");
++};
++
++module.exports = {
++  // *.!(js|ts|jsx|tsx|d.ts)
++  "**/*.{js,cjs,mjs,ts,jsx,tsx,json,md}": async (files) => {
++    const filesToLint = await removeIgnoredFiles(files);
++
++    return [`prettier --config .prettierrc.json --ignore-path --write ${filesToLint}`];
++  },
++  "**/*.{js,cjs,mjs,ts,jsx,tsx}": async (files) => {
++    const filesToLint = await removeIgnoredFiles(files);
++
++    return [`eslint -c .eslintrc.json --max-warnings=0 --fix ${filesToLint}`];
++  },
++};\n- .prettierignore (modified, 11 changes)\n  Patch: @@ -1,5 +1,16 @@
+ dist
++examples
+ node_modules
++plop
+ coverage
+ .next
+ build
++scripts
++pnpm-lock.yaml
++!.storybook
++!.commitlintrc.cjs
++!.lintstagedrc.cjs
++!jest.config.js
++!plopfile.js
++!react-shim.js
++!tsup.config.ts\n- .prettierrc.json (added, 12 changes)\n  Patch: @@ -0,0 +1,12 @@
++{
++  "$schema": "https://json.schemastore.org/prettierrc.json",
++  "tabWidth": 2,
++  "printWidth": 100,
++  "semi": true,
++  "useTabs": false,
++  "singleQuote": false,
++  "bracketSpacing": false,
++  "endOfLine": "auto",
++  "arrowParens": "always",
++  "trailingComma": "all"
++}\n- .storybook/main.js (modified, 13 changes)\n  Patch: @@ -4,6 +4,7 @@ const fs = require("fs");
+ // [Workaround] This logic means `"../packages/components/*/stories/*.stories.tsx"` but it's much faster.
+ function getStories(pkg) {
+   const scope = pkg ? [pkg] : fs.readdirSync("packages/components");
++
+   return scope
+     .map((package) => `packages/components/${package}/stories`)
+     .filter((storyDir) => fs.existsSync(storyDir))
+@@ -25,13 +26,11 @@ module.exports = {
+   webpackFinal: async (config) => {
+     config.resolve.alias = {
+       ...config.resolve.alias,
+-      "@nextui-org/react": path.resolve(
+-        __dirname,
+-        "../packages/core/react/src",
+-      ),
+-    }
+-    config.resolve.extensions.push(".ts", ".tsx")
+-    return config
++      "@nextui-org/react": path.resolve(__dirname, "../packages/core/react/src"),
++    };
++    config.resolve.extensions.push(".ts", ".tsx");
++
++    return config;
+   },
+   typescript: {
+     reactDocgen: false,\n- .storybook/manager.js (modified, 7 changes)\n  Patch: @@ -1,6 +1,7 @@
+-import { addons } from '@storybook/addons';
+-import theme from './theme';
++import {addons} from "@storybook/addons";
++
++import theme from "./theme";
+ 
+ addons.setConfig({
+-  theme: theme
++  theme: theme,
+ });\n- .storybook/preview.js (modified, 139 changes)\n  Patch: @@ -1,75 +1,126 @@
+-import React from 'react';
+-import { themes } from '@storybook/theming';
+-import { useDarkMode } from 'storybook-dark-mode';
+-import { createTheme, NextUIProvider, styled } from '@nextui-org/react';
++import React from "react";
++import {themes} from "@storybook/theming";
++import {useDarkMode} from "storybook-dark-mode";
++import {DocsContainer} from "@storybook/addon-docs";
++import {createTheme, NextUIProvider, styled} from "@nextui-org/react";
+ 
+ const lightTheme = createTheme({
+-  type: 'light',
+-  className: 'light-theme'
++  type: "light",
++  className: "light-theme",
+ });
+ 
+ const darkTheme = createTheme({
+-  type: 'dark',
+-  className: 'dark-theme'
++  type: "dark",
++  className: "dark-theme",
+ });
+ 
+-const Box = styled('div', {
+-  display: 'flex',
+-  bg: '$background',
+-  color: '$text',
+-  flexDirection: 'row',
+-  justifyContent: 'center',
+-  alignItems: 'center',
+-  flexWrap: 'wrap',
+-  width: '100vw',
+-  height: '100vh'
++const Box = styled("div", {
++  size: "100%",
++  color: "$text",
++  bg: "$background",
++  variants: {
++    mode: {
++      docs: {
++        ".sbdocs": {
++          bg: "$accents0",
++        },
++        ".sbdocs-title, .sbdocs-h2, .sbdocs-h3": {
++          color: "$text",
++        },
++        ".docblock-emptyblock": {
++          border: "none",
++          color: "$text",
++          bg: "$accents1",
++          borderRadius: "$xs",
++        },
++        ".os-host-foreign": {
++          bg: "$accents1",
++        },
++        ".sbdocs-preview": {
++          boxShadow: "$sm",
++          borderRadius: "$xs",
++        },
++        "div.docs-story": {
++          bg: "none !important",
++          "div:has(button.docblock-code-toggle)": {
++            us: "none",
++            bg: "$accents1",
++            overflow: "hidden",
++            borderTopLeftRadius: "$xs",
++          },
++        },
++      },
++      canvas: {
++        display: "flex",
++        flexFlow: "row wrap",
++        alignItems: "center",
++        justifyContent: "flex-start",
++        padding: "$md $lg",
++      },
++    },
++  },
++  defaultVariants: {
++    mode: "canvas",
++  },
+ });
+ 
++const DocsContainerTheme = (props) => {
++  return (
++    <NextUIProvider theme={useDarkMode() ? darkTheme : lightTheme}>
++      <Box mode="docs">
++        <DocsContainer {...props} />
++      </Box>
++    </NextUIProvider>
++  );
++};
++
+ export const decorators = [
+   (Story) => (
+     <NextUIProvider theme={useDarkMode() ? darkTheme : lightTheme}>
+       <Box>
+         <Story />
+       </Box>
+     </NextUIProvider>
+-  )
++  ),
+ ];
+ 
+ export const parameters = {
+-  layout: 'fullscreen',
+-  actions: { argTypesRegex: '^on[A-Z].*' },
++  layout: "fullscreen",
++  actions: {argTypesRegex: "^on[A-Z].*"},
+   darkMode: {
+     stylePreview: true,
+-    darkClass: 'dark-theme',
+-    lightClass: 'light-theme',
++    darkClass: darkTheme.className,
++    lightClass: lightTheme.className,
++    light: {
++      ...themes.normal,
++      appBg: "#F1F3F5",
++      barBg: "#ECEEF0",
++      background: "#F1F3F5",
++      appContentBg: "#F1F3F5",
++      appBorderRadius: 7,
++    },
+     dark: {
+       ...themes.dark,
+-      // accent0, accent1
+-      appBg: '#161616',
+-      barBg: '#262626',
+-      background: '#161616',
+-      appContentBg: '#161616',
+-      // radii xs
+-      appBorderRadius: 7
++      appBg: "#16181A",
++      barBg: "#26292B",
++      background: "#16181A",
++      appContentBg: "#16181A",
++      appBorderRadius: 7,
+     },
+-    light: {
+-      ...themes.normal,
+-      // accent0, accent1
+-      appBg: '#F5F5F5',
+-      barBg: '#EDEDED',
+-      background: '#F5F5F5',
+-      appContentBg: '#F5F5F5',
+-      // radii xs
+-      appBorderRadius: 7
+-    }
+   },
+   backgrounds: {
+-    default: 'light'
++    disable: true,
++    grid: {
++      disable: true,
++    },
+   },
+   controls: {
+     matchers: {
+       color: /(background|color)$/i,
+-      date: /Date$/
+-    }
+-  }
++      date: /Date$/,
++    },
++  },
++  docs: {
++    container: (props) => <DocsContainerTheme {...props} />,
++  },
+ };\n- .storybook/theme.js (modified, 10 changes)\n  Patch: @@ -1,8 +1,8 @@
+-import { create } from '@storybook/theming';
++import {create} from "@storybook/theming";
+ 
+ export default create({
+-  base: 'light',
+-  brandTitle: 'NextUI',
+-  brandUrl: 'https://nextui.org',
+-  //   brandImage: 'https://nextui.org/logotipo.svg',
++  base: "light",
++  brandTitle: "NextUI",
++  brandUrl: "https://nextui.org",
++  // brandImage: 'https://nextui.org/logotipo.svg',
+ });\n- CONTRIBUTING.MD (modified, 2 changes)\n  Patch: @@ -105,7 +105,7 @@ After cloning the repository, execute the following commands in the root folder:
+ 1. Install dependencies
+ 
+ ```bash
+-pnpm
++pnpm i
+ 
+ #or
+ \n- apps/docs/next-redirect.js (modified, 77 changes)\n  Patch: @@ -1,78 +1,81 @@
+-const shell = require('shelljs');
+-const path = require('path');
++const path = require("path");
+ 
+-const rootDir = path.join(__dirname, '.');
+-const contentDir = path.join(rootDir, 'content');
+-const docsDir = path.join(contentDir, 'docs');
+-const componentsDocsDir = path.join(docsDir, 'components');
++const shell = require("shelljs");
++
++const rootDir = path.join(__dirname, ".");
++const contentDir = path.join(rootDir, "content");
++const docsDir = path.join(contentDir, "docs");
++const componentsDocsDir = path.join(docsDir, "components");
+ 
+ const getComponentsName = () => {
+   const names = shell
+-    .ls('-R', componentsDocsDir)
++    .ls("-R", componentsDocsDir)
+     .map((file) => path.join(process.cwd(), componentsDocsDir, file))
+-    .filter((file) => file.endsWith('.mdx'))
+-    .map((file) => path.basename(file, '.mdx'));
++    .filter((file) => file.endsWith(".mdx"))
++    .map((file) => path.basename(file, ".mdx"));
++
+   return names;
+ };
+ const getComponentsRoute = (names = []) => {
+   return names.map((name) => {
+     return {
+       source: `/${name}`,
+       destination: `/docs/components/${name}`,
+-      permanent: true
++      permanent: true,
+     };
+   });
+ };
+ 
+ async function redirect() {
+   const componentsName = getComponentsName();
++
+   return [
+     ...getComponentsRoute(componentsName),
+     {
+-      source: '/docs',
+-      destination: '/docs/guide/getting-started',
+-      permanent: true
++      source: "/docs",
++      destination: "/docs/guide/getting-started",
++      permanent: true,
+     },
+     {
+-      source: '/docs/getting-started',
+-      destination: '/docs/guide/getting-started',
+-      permanent: true
++      source: "/docs/getting-started",
++      destination: "/docs/guide/getting-started",
++      permanent: true,
+     },
+     {
+-      source: '/guide',
+-      destination: '/docs/guide/getting-started',
+-      permanent: true
++      source: "/guide",
++      destination: "/docs/guide/getting-started",
++      permanent: true,
+     },
+     {
+-      source: '/learn',
+-      destination: '/docs/guide/getting-started',
+-      permanent: true
++      source: "/learn",
++      destination: "/docs/guide/getting-started",
++      permanent: true,
+     },
+     {
+-      source: '/theme',
+-      destination: '/docs/theme/default-theme',
+-      permanent: true
++      source: "/theme",
++      destination: "/docs/theme/default-theme",
++      permanent: true,
+     },
+     {
+-      source: '/docs/theme',
+-      destination: '/docs/theme/default-theme',
+-      permanent: true
++      source: "/docs/theme",
++      destination: "/docs/theme/default-theme",
++      permanent: true,
+     },
+     {
+-      source: '/components/:path*',
++      source: "/components/:path*",
+       permanent: true,
+-      destination: '/docs/components/:path*'
++      destination: "/docs/components/:path*",
+     },
+     {
+-      source: '/docs/components',
+-      destination: '/docs/components/button',
+-      permanent: true
++      source: "/docs/components",
++      destination: "/docs/components/button",
++      permanent: true,
+     },
+     {
+-      source: '/components',
+-      destination: '/docs/components/button',
+-      permanent: true
+-    }
++      source: "/components",
++      destination: "/docs/components/button",
++      permanent: true,
++    },
+   ];
+ }
+ \n- apps/docs/next.config.js (modified, 10 changes)\n  Patch: @@ -1,11 +1,11 @@
+ module.exports = {
+-  pageExtensions: ['jsx', 'js', 'mdx', 'md', 'ts', 'tsx'],
+-  redirects: require('./next-redirect'),
++  pageExtensions: ["jsx", "js", "mdx", "md", "ts", "tsx"],
++  redirects: require("./next-redirect"),
+   reactStrictMode: false,
+   eslint: {
+-    ignoreDuringBuilds: true
++    ignoreDuringBuilds: true,
+   },
+   typescript: {
+-    ignoreBuildErrors: process.env.IS_VERCEL_ENV === 'true'
+-  }
++    ignoreBuildErrors: process.env.IS_VERCEL_ENV === "true",
++  },
+ };\n- apps/docs/tsconfig.json (modified, 63 changes)\n  Patch: @@ -2,47 +2,23 @@
+   "compilerOptions": {
+     "baseUrl": ".",
+     "paths": {
+-      "@components": [
+-        "./src/components/index.ts"
+-      ],
+-      "@primitives": [
+-        "./src/components/primitives/index.ts"
+-      ],
+-      "@components/": [
+-        "./src/components/*"
+-      ],
+-      "@content/*": [
+-        "./content/*"
+-      ],
+-      "@layouts/*": [
+-        "./src/layouts/*"
+-      ],
+-      "@hooks/*": [
+-        "./src/hooks/*"
+-      ],
+-      "@utils/*": [
+-        "./src/utils/*"
+-      ],
+-      "@theme/*": [
+-        "./src/theme/*"
+-      ],
+-      "@lib/*": [
+-        "./src/lib/*"
+-      ]
++      "@components": ["./src/components/index.ts"],
++      "@primitives": ["./src/components/primitives/index.ts"],
++      "@components/": ["./src/components/*"],
++      "@content/*": ["./content/*"],
++      "@layouts/*": ["./src/layouts/*"],
++      "@hooks/*": ["./src/hooks/*"],
++      "@utils/*": ["./src/utils/*"],
++      "@theme/*": ["./src/theme/*"],
++      "@lib/*": ["./src/lib/*"]
+     },
+-    "lib": [
+-      "dom",
+-      "es2015",
+-      "ESNext.String"
+-    ],
++    "lib": ["dom", "es2015", "ESNext.String"],
+     "target": "esnext",
+     "jsx": "preserve",
+     "allowJs": true,
+     "esModuleInterop": true,
+     "allowSyntheticDefaultImports": true,
+-    "types": [
+-      "node"
+-    ],
++    "types": ["node"],
+     "strict": false,
+     "forceConsistentCasingInFileNames": true,
+     "noEmit": true,
+@@ -56,20 +32,9 @@
+     "noImplicitAny": true,
+     "skipLibCheck": true,
+     "module": "esnext",
+-    "typeRoots": [
+-      "../../node_modules/@types",
+-      "./typings"
+-    ],
++    "typeRoots": ["../../node_modules/@types", "./typings"],
+     "incremental": true
+   },
+-  "include": [
+-    "**/*.ts",
+-    "**/*.tsx",
+-    "**/*.js",
+-    "**/*.jsx",
+-    "next-env.d.ts"
+-  ],
+-  "exclude": [
+-    "node_modules"
+-  ]
++  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts"],
++  "exclude": ["node_modules"]
+ }\n- jest.config.js (modified, 17 changes)\n  Patch: @@ -2,25 +2,16 @@ module.exports = {
+   testEnvironment: "jsdom",
+   collectCoverageFrom: ["packages/**/*.{ts,tsx}"],
+   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
+-  modulePathIgnorePatterns: [
+-    "<rootDir>/examples",
+-    "<rootDir>/tooling/cra-template*",
+-  ],
++  modulePathIgnorePatterns: ["<rootDir>/examples", "<rootDir>/tooling/cra-template*"],
+   transform: {
+     "^.+\\.(ts|tsx|js|jsx)?$": "@swc-node/jest",
+   },
+   transformIgnorePatterns: ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
+-  setupFilesAfterEnv: [
+-    "@testing-library/jest-dom/extend-expect",
+-    "./scripts/setup-test.ts",
+-  ],
++  setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect", "./scripts/setup-test.ts"],
+   globals: {
+     "ts-jest": {
+       tsconfig: "tsconfig.json",
+     },
+   },
+-  watchPlugins: [
+-    "jest-watch-typeahead/filename",
+-    "jest-watch-typeahead/testname",
+-  ],
+-}
++  watchPlugins: ["jest-watch-typeahead/filename", "jest-watch-typeahead/testname"],
++};\n- package.json (modified, 116 changes)\n  Patch: @@ -1,55 +1,50 @@
+ {
+   "name": "nextui",
+   "private": true,
++  "license": "MIT",
+   "author": {
+     "name": "Junior Garcia",
+     "email": "jrgarciadev@gmail.com"
+   },
+-  "license": "MIT",
+   "repository": {
+     "type": "git",
+     "url": "https://github.com/nextui-org/nextui"
+   },
+-  "engines": {
+-    "node": "16.x",
+-    "pnpm": ">=1.12.x"
+-  },
+   "scripts": {
+-    "clean:pn-types": "rimraf node_modules/.pnpm/csstype*",
+-    "dev:docs": "turbo run dev --scope=@nextui-org/docs --no-deps",
+-    "start:docs": "turbo run start --scope=@nextui-org/docs --no-deps",
+-    "build:docs": "turbo run build --scope=@nextui-org/docs",
+-    "build": "turbo run build --filter=!./examples/* --filter=!./apps/* --filter=!./packages/components/snippet",
+-    "build:fast": "turbo run build:fast --filter=!./examples/*",
+-    "sb": "pnpm storybook",
+-    "storybook": "start-storybook -p 6006",
++    "dev": "turbo dev --filter=!@nextui-org/docs",
++    "build": "turbo build --filter=!@nextui-org/docs --filter=!@nextui-org/snippet",
++    "build:fast": "turbo build:fast --filter=!@nextui-org/docs",
++    "dev:docs": "turbo dev --filter=@nextui-org/docs",
++    "build:docs": "turbo build --filter=@nextui-org/docs",
++    "build:docs-meta": "node ./scripts/update-index-docs.js",
++    "start:docs": "turbo start --filter=@nextui-org/docs",
++    "deploy:docs": "pnpm --filter @nextui-org/docs deploy",
++    "deploy:stage-docs": "pnpm --filter @nextui-org/docs deploy:stage",
++    "sb": "pnpm dev:sb",
++    "dev:sb": "start-storybook -p 6006",
+     "build:sb": "pnpm build-storybook",
+     "start:sb": "pnpx serve storybook-static",
+-    "format:check": "prettier --check packages/**/**/src/*.{ts,tsx}",
+-    "format:write": "prettier --write packages/**/**/src/*.{ts,tsx}",
+-    "turbo:graph": "pnpm build --graph=dependency-graph.png",
+-    "turbo:clean": "rm -rf ./node_modules/.cache/turbo",
+-    "deploy:docs": "pnpm workspace @nextui-org/docs deploy",
+-    "deploy:stage-docs": "pnpm workspace @nextui-org/docs deploy:stage",
+-    "build:docs-meta": "node ./scripts/update-index-docs.js",
+-    "eslint": "eslint packages/**/**/src --ext .ts,.tsx --config .eslintrc.json",
+-    "lint": "turbo run lint",
+     "test": "jest --verbose",
+-    "clean": "pnpm turbo:clean",
++    "typecheck": "turbo typecheck",
++    "lint": "eslint -c .eslintrc.json ./packages/**/**/*.{ts,tsx}",
++    "lint:fix": "eslint --fix -c .eslintrc.json ./packages/**/**/*.{ts,tsx}",
++    "turbo:clean": "turbo clean && rimraf ./node_modules/.cache/turbo",
++    "turbo:graph": "pnpm build --graph=dependency-graph.png",
++    "clean": "pnpm turbo:clean && pnpm clean:node-modules && pnpm install",
++    "clean:pn-types": "rimraf ./node_modules/.pnpm/csstype*",
++    "clean:node-modules": "rimraf ./apps/**/node_modules && rimraf ./packages/**/**/node_modules && rm -rf ./node_modules",
+     "create:cmp": "plop component",
+     "create:pkg": "plop package",
+     "create:hook": "plop hook",
+     "version": "changeset version",
+-    "release": "changeset publish",
+     "version:dev": "changeset version --snapshot dev",
++    "release": "changeset publish",
+     "release:dev": "changeset publish --tag dev",
+-    "postinstall": "pnpm clean:pn-types"
++    "postinstall": "husky install && pnpm clean:pn-types"
+   },
+-  "dependencies": {
++  "devDependencies": {
+     "@babel/cli": "^7.14.5",
+     "@babel/core": "^7.16.7",
+-    "@react-types/link": "^3.3.3",
+-    "@react-types/shared": "^3.15.0",
+     "@babel/plugin-proposal-object-rest-spread": "^7.15.6",
+     "@babel/plugin-transform-runtime": "^7.14.5",
+     "@babel/preset-env": "^7.14.5",
+@@ -59,17 +54,24 @@
+     "@changesets/cli": "2.24.1",
+     "@changesets/get-release-plan": "3.0.12",
+     "@changesets/types": "5.1.0",
++    "@commitlint/cli": "^17.2.0",
++    "@commitlint/config-conventional": "^17.2.0",
+     "@docusaurus/utils": "2.0.0-beta.3",
+     "@react-bootstrap/babel-preset": "^2.1.0",
+-    "@storybook/addon-a11y": "^6.5.3",
+-    "@storybook/addon-actions": "^6.5.3",
+-    "@storybook/addon-essentials": "^6.5.3",
+-    "@storybook/addon-links": "^6.5.3",
+-    "@storybook/addon-storysource": "^6.5.3",
+-    "@storybook/builder-webpack5": "^6.5.3",
+-    "@storybook/manager-webpack5": "^6.5.3",
+-    "@storybook/react": "^6.5.3",
++    "@react-types/link": "^3.3.3",
++    "@react-types/shared": "^3.15.0",
++    "@storybook/addon-a11y": "^6.5.13",
++    "@storybook/addon-actions": "^6.5.13",
++    "@storybook/addon-essentials": "^6.5.13",
++    "@storybook/addon-links": "^6.5.13",
++    "@storybook/addon-storysource": "^6.5.13",
++    "@storybook/builder-webpack5": "^6.5.13",
++    "@storybook/manager-webpack5": "^6.5.13",
++    "@storybook/react": "^6.5.13",
++    "@swc-node/jest": "^1.5.2",
++    "@swc/core": "^1.2.177",
+     "@testing-library/dom": "^8.1.0",
++    "@testing-library/jest-dom": "^5.16.4",
+     "@testing-library/react": "^12.1.2",
+     "@testing-library/react-hooks": "^7.0.0",
+     "@testing-library/user-event": "^13.2.0",
+@@ -79,39 +81,39 @@
+     "@types/react-dom": "17.0.9",
+     "@types/shelljs": "^0.8.9",
+     "@types/styled-jsx": "^2.2.8",
+-    "@types/uuid": "^8.3.1",
+     "@types/testing-library__jest-dom": "5.14.5",
+-    "@typescript-eslint/eslint-plugin": "^4.27.0",
+-    "@typescript-eslint/parser": "^4.27.0",
++    "@types/uuid": "^8.3.1",
++    "@typescript-eslint/eslint-plugin": "^5.42.0",
++    "@typescript-eslint/parser": "^5.42.0",
+     "algoliasearch": "^4.10.3",
+-    "jest": "^28.1.1",
+-    "jest-environment-jsdom": "^28.1.1",
+-    "jest-watch-typeahead": "1.1.0",
+-    "@swc-node/jest": "^1.5.2",
+-    "@swc/core": "^1.2.177",
+-    "@testing-library/jest-dom": "^5.16.4",
+     "chalk": "^4.1.2",
+-    "eslint": "^7.29.0",
+-    "eslint-config-airbnb": "^18.2.1",
+-    "eslint-config-airbnb-typescript": "^12.3.1",
++    "commitlint-plugin-function-rules": "^1.7.1",
++    "eslint": "^8.26.0",
++    "eslint-config-airbnb": "^19.0.4",
++    "eslint-config-airbnb-typescript": "^17.0.0",
+     "eslint-config-prettier": "^8.2.0",
+-    "eslint-config-react-app": "^6.0.0",
++    "eslint-config-react-app": "^7.0.1",
+     "eslint-config-ts-lambdas": "^1.2.3",
+-    "eslint-import-resolver-typescript": "^2.4.0",
++    "eslint-import-resolver-typescript": "^3.5.2",
+     "eslint-loader": "^4.0.2",
+     "eslint-plugin-import": "^2.26.0",
+-    "eslint-plugin-jest": "^24.3.6",
++    "eslint-plugin-jest": "^27.1.3",
+     "eslint-plugin-jsx-a11y": "^6.4.1",
+     "eslint-plugin-node": "^11.1.0",
+     "eslint-plugin-prettier": "^4.0.0",
+-    "eslint-plugin-promise": "^6.0.0",
++    "eslint-plugin-promise": "^6.1.1",
+     "eslint-plugin-react": "^7.24.0",
+     "eslint-plugin-react-hooks": "^4.6.0",
+     "execa": "^5.1.1",
+     "find-up": "^6.3.0",
+     "fs-extra": "^10.0.0",
+     "graceful-fs": "^4.2.6",
+     "gray-matter": "^4.0.3",
++    "husky": "^8.0.1",
++    "jest": "^28.1.1",
++    "jest-environment-jsdom": "^28.1.1",
++    "jest-watch-typeahead": "1.1.0",
++    "lint-staged": "^13.0.3",
+     "markdown-toc": "^1.2.0",
+     "npm-run-all": "^4.1.5",
+     "p-iteration": "^1.1.8",
+@@ -125,8 +127,8 @@
+     "rimraf": "^3.0.2",
+     "shelljs": "^0.8.4",
+     "storybook-dark-mode": "^1.1.0",
+-    "tsup": "6.1.3",
+-    "turbo": "1.3.4",
++    "tsup": "6.4.0",
++    "turbo": "1.6.3",
+     "typescript": "4.6.2",
+     "uuid": "^8.3.2",
+     "webpack": "^5.53.0",
+@@ -139,5 +141,9 @@
+       "@types/react": "17.0.33"
+     }
+   },
+-  "packageManager": "pnpm@1.22.17"
++  "engines": {
++    "node": ">=16.x",
++    "pnpm": ">=7.x"
++  },
++  "packageManager": "pnpm@7.14.2"
+ }\n- packages/components/avatar/README.md (modified, 2 changes)\n  Patch: @@ -21,4 +21,4 @@ for details.
+ ## Licence
+ 
+ This project is licensed under the terms of the
+-[MIT license](https://github.com/nextui-org/nextui/blob/master/LICENSE).
+\ No newline at end of file
++[MIT license](https://github.com/nextui-org/nextui/blob/master/LICENSE).\n- packages/components/avatar/clean-package.config.json (modified, 14 changes)\n  Patch: @@ -1,3 +1,11 @@
+-{ "replace": { "main": "dist/index.cjs.js", "module": "dist/index.esm.js",
+-"types": "dist/index.d.ts", "exports": { ".": { "import": "./dist/index.esm.js",
+-"require": "./dist/index.cjs.js" }, "./package.json": "./package.json" } } }
+\ No newline at end of file
++{
++  "replace": {
++    "main": "dist/index.cjs.js",
++    "module": "dist/index.esm.js",
++    "types": "dist/index.d.ts",
++    "exports": {
++      ".": {"import": "./dist/index.esm.js", "require": "./dist/index.cjs.js"},
++      "./package.json": "./package.json"
++    }
++  }
++}\n- packages/components/badge/README.md (modified, 2 changes)\n  Patch: @@ -21,4 +21,4 @@ for details.
+ ## Licence
+ 
+ This project is licensed under the terms of the
+-[MIT license](https://github.com/nextui-org/nextui/blob/master/LICENSE).
+\ No newline at end of file
++[MIT license](https://github.com/nextui-org/nextui/blob/master/LICENSE).\n- packages/components/badge/clean-package.config.json (modified, 14 changes)\n  Patch: @@ -1,3 +1,11 @@
+-{ "replace": { "main": "dist/index.cjs.js", "module": "dist/index.esm.js",
+-"types": "dist/index.d.ts", "exports": { ".": { "import": "./dist/index.esm.js",
+-"require": "./dist/index.cjs.js" }, "./package.json": "./package.json" } } }
+\ No newline at end of file
++{
++  "replace": {
++    "main": "dist/index.cjs.js",
++    "module": "dist/index.esm.js",
++    "types": "dist/index.d.ts",
++    "exports": {
++      ".": {"import": "./dist/index.esm.js", "require": "./dist/index.cjs.js"},
++      "./package.json": "./package.json"
++    }
++  }
++}\n- packages/components/button/README.md (modified, 2 changes)\n  Patch: @@ -21,4 +21,4 @@ for details.
+ ## Licence
+ 
+ This project is licensed under the terms of the
+-[MIT license](https://github.com/nextui-org/nextui/blob/master/LICENSE).
+\ No newline at end of file
++[MIT license](https://github.com/nextui-org/nextui/blob/master/LICENSE).\n- packages/components/button/clean-package.config.json (modified, 14 changes)\n  Patch: @@ -1,3 +1,11 @@
+-{ "replace": { "main": "dist/index.cjs.js", "module": "dist/index.esm.js",
+-"types": "dist/index.d.ts", "exports": { ".": { "import": "./dist/index.esm.js",
+-"require": "./dist/index.cjs.js" }, "./package.json": "./package.json" } } }
+\ No newline at end of file
++{
++  "replace": {
++    "main": "dist/index.cjs.js",
++    "module": "dist/index.esm.js",
++    "types": "dist/index.d.ts",
++    "exports": {
++      ".": {"import": "./dist/index.esm.js", "require": "./dist/index.cjs.js"},
++      "./package.json": "./package.json"
++    }
++  }
++}\n- packages/components/card/README.md (modified, 2 changes)\n  Patch: @@ -21,4 +21,4 @@ for details.
+ ## Licence
+ 
+ This project is licensed under the terms of the
+-[MIT license](https://github.com/nextui-org/nextui/blob/master/LICENSE).
+\ No newline at end of file
++[MIT license](https://github.com/nextui-org/nextui/blob/master/LICENSE).\n- packages/components/card/clean-package.config.json (modified, 14 changes)\n  Patch: @@ -1,3 +1,11 @@
+-{ "replace": { "main": "dist/index.cjs.js", "module": "dist/index.esm.js",
+-"types": "dist/index.d.ts", "exports": { ".": { "import": "./dist/index.esm.js",
+-"require": "./dist/index.cjs.js" }, "./package.json": "./package.json" } } }
+\ No newline at end of file
++{
++  "replace": {
++    "main": "dist/index.cjs.js",
++    "module": "dist/index.esm.js",
++    "types": "dist/index.d.ts",
++    "exports": {
++      ".": {"import": "./dist/index.esm.js", "require": "./dist/index.cjs.js"},
++      "./package.json": "./package.json"
++    }
++  }
++}\n- packages/components/card/tsconfig.json (modified, 2 changes)\n  Patch: @@ -3,7 +3,7 @@
+   "compilerOptions": {
+     "paths": {
+       "@stitches/react": ["../../../node_modules/@stitches/react"]
+-    },
++    }
+   },
+   "include": ["src", "index.ts"]
+ }\n- packages/components/checkbox/README.md (modified, 2 changes)\n  Patch: @@ -21,4 +21,4 @@ for details.
+ ## Licence
+ 
+ This project is licensed under the terms of the
+-[MIT license](https://github.com/nextui-org/nextui/blob/master/LICENSE).
+\ No newline at end of file
++[MIT license](https://github.com/nextui-org/nextui/blob/master/LICENSE).\n- packages/components/checkbox/clean-package.config.json (modified, 14 changes)\n  Patch: @@ -1,3 +1,11 @@
+-{ "replace": { "main": "dist/index.cjs.js", "module": "dist/index.esm.js",
+-"types": "dist/index.d.ts", "exports": { ".": { "import": "./dist/index.esm.js",
+-"require": "./dist/index.cjs.js" }, "./package.json": "./package.json" } } }
+\ No newline at end of file
++{
++  "replace": {
++    "main": "dist/index.cjs.js",
++    "module": "dist/index.esm.js",
++    "types": "dist/index.d.ts",
++    "exports": {
++      ".": {"import": "./dist/index.esm.js", "require": "./dist/index.cjs.js"},
++      "./package.json": "./package.json"
++    }
++  }
++}\n
