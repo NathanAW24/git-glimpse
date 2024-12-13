@@ -31,11 +31,12 @@ PROMPT_TEMPLATES = {
 Your query will be passed to search engine or vector retrieval with database of pull request (description, code changes, comments), 
 Prioritize on querying the component name.
 Your response must immediately begin with the query - Do not put "Relevant Query:" at the beginning.
-Your query should be exactly 10-15 words. Choose the words that are most unique (means only the correct pull request will have that keyword for the user query.)
+Your query should be maximum of 10 words. Choose the words that are most unique (means only the correct pull request will have that keyword for the user query.)
 """,
         "user": """Original user query: {query}\nPlease refine and expand this query to improve document retrieval."""
     },
 }
+
 
 # Step 1: Define your questions for evaluation (unchanged)
 questions = [[
@@ -119,11 +120,12 @@ questions = [[
 ]]
 
 # Reranking parameters
-top_n_initial = 10  # Get initial top 10 or 15
+top_n_initial = 5  # Get initial top 10 or 15, configurable
 top_n_final = 5     # After reranking, choose top 5
 
+
 # Step 2: Load your documents
-folder_path = "processed_docs"
+folder_path = "processed_docs"  # Ensure the path matches your folder structure
 documents = _read_documents_from_folder(folder_path)
 doc_dict = {doc[0]: doc[1] for doc in documents}
 
@@ -135,7 +137,7 @@ VECTOR_DB_DIR = "final_all-MiniLM-L6-v2"
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 embedding_model = HuggingFaceEmbeddings(
     model_name=MODEL_NAME,
-    model_kwargs={"device": "mps"},
+    model_kwargs={"device": "mps"},  # adjust as needed
     encode_kwargs={"normalize_embeddings": True}
 )
 vectorstore = Chroma(
@@ -143,8 +145,11 @@ vectorstore = Chroma(
     embedding_function=embedding_model
 )
 vector_retriever = vectorstore.as_retriever(
+    # we will control top_n later
     search_type="similarity", search_kwargs={"k": top_n_initial}
 )
+
+# Step 3: Initialize the LLM judge using GPT-4 (unchanged)
 
 
 class RelevanceScore(BaseModel):
@@ -157,6 +162,7 @@ structured_llm = model.with_structured_output(RelevanceScore)
 
 
 def query_llm(content, question):
+    """Query the LLM to rate the relevance of a document."""
     prompt = f"""
 You are tasked with evaluating the relevance of a pull request (PR) document to a given user query. 
 The goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. 
@@ -207,6 +213,24 @@ Respond with the relevance score only (e.g., 7).
     return response.score
 
 
+# Load cross-encoder reranker
+# Make sure you have sentence-transformers installed: pip install sentence-transformers
+cross_encoder_model = CrossEncoder("BAAI/bge-reranker-base")
+
+# Define thresholds for relevance
+RELEVANCE_THRESHOLD = 7
+
+results = {}
+overall_metrics = {
+    "Precision": [],
+    "MAP": [],
+    "MRR": [],
+    "nDCG": [],
+    "average_score": [],
+    "max_score": []
+}
+
+
 def expand_query(query):
     # Expand the query using the PROMPT_TEMPLATES and the model
     messages = [
@@ -222,32 +246,18 @@ def expand_query(query):
     return expanded_query
 
 
-# Load cross-encoder reranker
-cross_encoder_model = CrossEncoder("BAAI/bge-reranker-base")
-
-RELEVANCE_THRESHOLD = 7
-
-results = {}
-overall_metrics = {
-    "Precision": [],
-    "MAP": [],
-    "MRR": [],
-    "nDCG": [],
-    "average_score": [],
-    "max_score": []
-}
-
 for [file_name_query, question] in questions:
+    print("Evaluating: ", question)
     print("Evaluating original question: ", question)
     expanded_query = expand_query(question)
     print("   Expanded Query: ", expanded_query)
 
-    # Retrieve from BM25 using expanded_query
+    # Retrieve from BM25
     bm25_results = bm25_retriever.retrieve(expanded_query, top_n=top_n_initial)
     bm25_docs = [(documents[idx][0], documents[idx][1])
                  for idx, _ in bm25_results]
 
-    # Retrieve from vector store using expanded_query
+    # Retrieve from vector store
     vector_retriever.search_kwargs["k"] = top_n_initial
     vector_results = vector_retriever.invoke(expanded_query)
     vector_docs = []
@@ -265,23 +275,32 @@ for [file_name_query, question] in questions:
         if fname not in combined_docs:
             combined_docs[fname] = content
 
-    # Rerank using Cross-Encoder with expanded_query
-    doc_items = list(combined_docs.items())  # [(fname, content), ...]
-    pairs = [(expanded_query, content) for fname, content in doc_items]
-    rerank_scores = cross_encoder_model.predict(pairs)
+    # Rerank using Cross-Encoder
+    # Prepare pairs: (query, doc)
+    # doc_items = list(combined_docs.items())  # [(fname, content), ...]
+    # pairs = [(question, content) for fname, content in doc_items]
 
-    scored_docs = list(zip(doc_items, rerank_scores))
-    scored_docs.sort(key=lambda x: x[1], reverse=True)
-    final_docs = scored_docs[:top_n_final]
+    # # Get scores from CrossEncoder
+    # rerank_scores = cross_encoder_model.predict(pairs)
 
+    # # Attach scores and sort
+    # scored_docs = list(zip(doc_items, rerank_scores))
+    # # Higher is more relevant
+    # scored_docs.sort(key=lambda x: x[1], reverse=True)
+
+    # # Now take only the top_n_final after reranking
+    # final_docs = scored_docs[:top_n_final]
+
+    # Evaluate with LLM scoring (no changes to LLM call)
     doc_scores = []
-    for ((fname, content), _) in final_docs:
+    for fname, content in combined_docs.items():
         if fname == file_name_query:
-            score = 10
+            score = 10  # Known relevant doc
         else:
             score = query_llm(content, question)
         doc_scores.append(score)
 
+    # Metrics calculation (unchanged)
     binary_relevance = [1 if score >=
                         RELEVANCE_THRESHOLD else 0 for score in doc_scores]
     relevant_count = sum(binary_relevance)
@@ -331,7 +350,7 @@ results["overall_averages"] = {
     metric: np.mean(values) for metric, values in overall_metrics.items()
 }
 
-with open("evaluation_results_ensemble_rerank10_with_expansion_promptv5.json", "w") as json_file:
+with open("evaluation_results_ensemble_no_reranking.json", "w") as json_file:
     json.dump(results, json_file, indent=4)
 
 print("Results have been saved to evaluation_results_ensemble.json.")

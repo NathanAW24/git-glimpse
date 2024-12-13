@@ -130,6 +130,14 @@
         "documentation": {}
     },
     {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
         "label": "evaluate",
         "kind": 6,
         "isExtraImport": true,
@@ -321,11 +329,11 @@
         "documentation": {}
     },
     {
-        "label": "HuggingFaceEmbeddings",
-        "importPath": "langchain_huggingface",
-        "description": "langchain_huggingface",
+        "label": "Chroma",
+        "importPath": "langchain_chroma",
+        "description": "langchain_chroma",
         "isExtraImport": true,
-        "detail": "langchain_huggingface",
+        "detail": "langchain_chroma",
         "documentation": {}
     },
     {
@@ -398,6 +406,30 @@
         "description": "langchain_huggingface",
         "isExtraImport": true,
         "detail": "langchain_huggingface",
+        "documentation": {}
+    },
+    {
+        "label": "HuggingFaceEmbeddings",
+        "importPath": "langchain_huggingface",
+        "description": "langchain_huggingface",
+        "isExtraImport": true,
+        "detail": "langchain_huggingface",
+        "documentation": {}
+    },
+    {
+        "label": "HuggingFaceEmbeddings",
+        "importPath": "langchain_huggingface",
+        "description": "langchain_huggingface",
+        "isExtraImport": true,
+        "detail": "langchain_huggingface",
+        "documentation": {}
+    },
+    {
+        "label": "Document",
+        "importPath": "langchain.schema",
+        "description": "langchain.schema",
+        "isExtraImport": true,
+        "detail": "langchain.schema",
         "documentation": {}
     },
     {
@@ -537,6 +569,22 @@
         "documentation": {}
     },
     {
+        "label": "ChatOpenAI",
+        "importPath": "langchain_openai",
+        "description": "langchain_openai",
+        "isExtraImport": true,
+        "detail": "langchain_openai",
+        "documentation": {}
+    },
+    {
+        "label": "PromptTemplate",
+        "importPath": "langchain_core.prompts",
+        "description": "langchain_core.prompts",
+        "isExtraImport": true,
+        "detail": "langchain_core.prompts",
+        "documentation": {}
+    },
+    {
         "label": "PromptTemplate",
         "importPath": "langchain_core.prompts",
         "description": "langchain_core.prompts",
@@ -662,6 +710,30 @@
         "description": "langchain_core.runnables",
         "isExtraImport": true,
         "detail": "langchain_core.runnables",
+        "documentation": {}
+    },
+    {
+        "label": "RunnablePassthrough",
+        "importPath": "langchain_core.runnables",
+        "description": "langchain_core.runnables",
+        "isExtraImport": true,
+        "detail": "langchain_core.runnables",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
         "documentation": {}
     },
     {
@@ -960,6 +1032,30 @@
         "description": "bm25",
         "isExtraImport": true,
         "detail": "bm25",
+        "documentation": {}
+    },
+    {
+        "label": "BM25Retriever",
+        "importPath": "bm25",
+        "description": "bm25",
+        "isExtraImport": true,
+        "detail": "bm25",
+        "documentation": {}
+    },
+    {
+        "label": "_read_documents_from_folder",
+        "importPath": "bm25",
+        "description": "bm25",
+        "isExtraImport": true,
+        "detail": "bm25",
+        "documentation": {}
+    },
+    {
+        "label": "CrossEncoder",
+        "importPath": "sentence_transformers",
+        "description": "sentence_transformers",
+        "isExtraImport": true,
+        "detail": "sentence_transformers",
         "documentation": {}
     },
     {
@@ -2426,7 +2522,7 @@
         "kind": 6,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "class RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the retrieval from 0 to 10\")\nmodel = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)\ndef query_llm(content, question):\n    \"\"\"Query the LLM to rate the relevance of a document.\"\"\"\n    prompt = f\"\"\"\nYou are tasked with evaluating the relevance of a pull request (PR) document to a given user query. \nThe goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. ",
+        "peekOfCode": "class RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the retrieval from 0 to 10\")\nmodel = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)\ndef query_llm(content, question):\n    prompt = f\"\"\"\nYou are tasked with evaluating the relevance of a pull request (PR) document to a given user query. \nThe goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. \nEach PR is a chunk of data stored in a text file and includes metadata, descriptions, and file changes.",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2435,7 +2531,25 @@
         "kind": 2,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "def query_llm(content, question):\n    \"\"\"Query the LLM to rate the relevance of a document.\"\"\"\n    prompt = f\"\"\"\nYou are tasked with evaluating the relevance of a pull request (PR) document to a given user query. \nThe goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. \nEach PR is a chunk of data stored in a text file and includes metadata, descriptions, and file changes.\nRate the relevance of the PR document to the user query on a scale from 0 to 10. Follow these specific instructions:\n1. **Evaluation Criteria**:\n    - Assess how specifically and accurately the PR addresses or provides relevant information for the query.\n    - Consider whether the PR contains meaningful file changes, code implementations, or documentation that directly answer the query.",
+        "peekOfCode": "def query_llm(content, question):\n    prompt = f\"\"\"\nYou are tasked with evaluating the relevance of a pull request (PR) document to a given user query. \nThe goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. \nEach PR is a chunk of data stored in a text file and includes metadata, descriptions, and file changes.\nRate the relevance of the PR document to the user query on a scale from 0 to 10. Follow these specific instructions:\n1. **Evaluation Criteria**:\n    - Assess how specifically and accurately the PR addresses or provides relevant information for the query.\n    - Consider whether the PR contains meaningful file changes, code implementations, or documentation that directly answer the query.\n2. **Scoring Scale**:",
+        "detail": "7_query_expansion.with_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "expand_query",
+        "kind": 2,
+        "importPath": "7_query_expansion.with_reranking_with_expansion",
+        "description": "7_query_expansion.with_reranking_with_expansion",
+        "peekOfCode": "def expand_query(query):\n    # Expand the query using the PROMPT_TEMPLATES and the model\n    messages = [\n        {\"role\": \"system\",\n            \"content\": PROMPT_TEMPLATES[\"query_refinement\"][\"system\"]},\n        {\"role\": \"user\", \"content\": PROMPT_TEMPLATES[\"query_refinement\"][\"user\"].format(\n            query=query)},\n    ]\n    # Call the base model (model) with messages.\n    # ChatOpenAI can be called with a list of messages.",
+        "detail": "7_query_expansion.with_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "PROMPT_TEMPLATES",
+        "kind": 5,
+        "importPath": "7_query_expansion.with_reranking_with_expansion",
+        "description": "7_query_expansion.with_reranking_with_expansion",
+        "peekOfCode": "PROMPT_TEMPLATES = {\n    \"query_refinement\": {\n        \"system\": \"\"\"Your job is to refine and expand any given user query related to a software codebase or feature. \n- Add relevant keywords or technologies that might be involved.\n- Ensure the query is well-targeted. Example: Instead of \"How can I build a button?\" Your query should be \"button, typescript, component\"\n- Avoid non unique keywords like \"pull request, development, methods\"\nYour query will be passed to search engine or vector retrieval with database of pull request (description, code changes, comments), \nPrioritize on querying the component name.\nYour response must immediately begin with the query - Do not put \"Relevant Query:\" at the beginning.\nYour query should be exactly 10-15 words. Choose the words that are most unique (means only the correct pull request will have that keyword for the user query.)",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2453,7 +2567,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "top_n_initial = 10  # Get initial top 10 or 15, configurable\ntop_n_final = 5     # After reranking, choose top 5\n# Step 2: Load your documents\nfolder_path = \"processed_docs\"  # Ensure the path matches your folder structure\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"",
+        "peekOfCode": "top_n_initial = 10  # Get initial top 10 or 15\ntop_n_final = 5     # After reranking, choose top 5\n# Step 2: Load your documents\nfolder_path = \"processed_docs\"\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2462,7 +2576,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "top_n_final = 5     # After reranking, choose top 5\n# Step 2: Load your documents\nfolder_path = \"processed_docs\"  # Ensure the path matches your folder structure\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"",
+        "peekOfCode": "top_n_final = 5     # After reranking, choose top 5\n# Step 2: Load your documents\nfolder_path = \"processed_docs\"\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2471,7 +2585,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "folder_path = \"processed_docs\"  # Ensure the path matches your folder structure\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,",
+        "peekOfCode": "folder_path = \"processed_docs\"\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2480,7 +2594,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "documents = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},  # adjust as needed",
+        "peekOfCode": "documents = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2489,7 +2603,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "doc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},  # adjust as needed\n    encode_kwargs={\"normalize_embeddings\": True}",
+        "peekOfCode": "doc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},\n    encode_kwargs={\"normalize_embeddings\": True}",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2498,7 +2612,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "bm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},  # adjust as needed\n    encode_kwargs={\"normalize_embeddings\": True}\n)\nvectorstore = Chroma(",
+        "peekOfCode": "bm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},\n    encode_kwargs={\"normalize_embeddings\": True}\n)\nvectorstore = Chroma(",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2507,7 +2621,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "VECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},  # adjust as needed\n    encode_kwargs={\"normalize_embeddings\": True}\n)\nvectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model",
+        "peekOfCode": "VECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},\n    encode_kwargs={\"normalize_embeddings\": True}\n)\nvectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2516,7 +2630,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "MODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},  # adjust as needed\n    encode_kwargs={\"normalize_embeddings\": True}\n)\nvectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model\n)",
+        "peekOfCode": "MODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},\n    encode_kwargs={\"normalize_embeddings\": True}\n)\nvectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model\n)",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2525,7 +2639,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "embedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},  # adjust as needed\n    encode_kwargs={\"normalize_embeddings\": True}\n)\nvectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model\n)\nvector_retriever = vectorstore.as_retriever(",
+        "peekOfCode": "embedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},\n    encode_kwargs={\"normalize_embeddings\": True}\n)\nvectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model\n)\nvector_retriever = vectorstore.as_retriever(",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2534,7 +2648,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "vectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model\n)\nvector_retriever = vectorstore.as_retriever(\n    # we will control top_n later\n    search_type=\"similarity\", search_kwargs={\"k\": top_n_initial}\n)\n# Step 3: Initialize the LLM judge using GPT-4 (unchanged)\nclass RelevanceScore(BaseModel):",
+        "peekOfCode": "vectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model\n)\nvector_retriever = vectorstore.as_retriever(\n    search_type=\"similarity\", search_kwargs={\"k\": top_n_initial}\n)\nclass RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the retrieval from 0 to 10\")",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2543,7 +2657,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "vector_retriever = vectorstore.as_retriever(\n    # we will control top_n later\n    search_type=\"similarity\", search_kwargs={\"k\": top_n_initial}\n)\n# Step 3: Initialize the LLM judge using GPT-4 (unchanged)\nclass RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the retrieval from 0 to 10\")\nmodel = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)",
+        "peekOfCode": "vector_retriever = vectorstore.as_retriever(\n    search_type=\"similarity\", search_kwargs={\"k\": top_n_initial}\n)\nclass RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the retrieval from 0 to 10\")\nmodel = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)\ndef query_llm(content, question):\n    prompt = f\"\"\"",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2552,7 +2666,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "model = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)\ndef query_llm(content, question):\n    \"\"\"Query the LLM to rate the relevance of a document.\"\"\"\n    prompt = f\"\"\"\nYou are tasked with evaluating the relevance of a pull request (PR) document to a given user query. \nThe goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. \nEach PR is a chunk of data stored in a text file and includes metadata, descriptions, and file changes.\nRate the relevance of the PR document to the user query on a scale from 0 to 10. Follow these specific instructions:\n1. **Evaluation Criteria**:",
+        "peekOfCode": "model = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)\ndef query_llm(content, question):\n    prompt = f\"\"\"\nYou are tasked with evaluating the relevance of a pull request (PR) document to a given user query. \nThe goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. \nEach PR is a chunk of data stored in a text file and includes metadata, descriptions, and file changes.\nRate the relevance of the PR document to the user query on a scale from 0 to 10. Follow these specific instructions:\n1. **Evaluation Criteria**:\n    - Assess how specifically and accurately the PR addresses or provides relevant information for the query.",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2561,7 +2675,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "structured_llm = model.with_structured_output(RelevanceScore)\ndef query_llm(content, question):\n    \"\"\"Query the LLM to rate the relevance of a document.\"\"\"\n    prompt = f\"\"\"\nYou are tasked with evaluating the relevance of a pull request (PR) document to a given user query. \nThe goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. \nEach PR is a chunk of data stored in a text file and includes metadata, descriptions, and file changes.\nRate the relevance of the PR document to the user query on a scale from 0 to 10. Follow these specific instructions:\n1. **Evaluation Criteria**:\n    - Assess how specifically and accurately the PR addresses or provides relevant information for the query.",
+        "peekOfCode": "structured_llm = model.with_structured_output(RelevanceScore)\ndef query_llm(content, question):\n    prompt = f\"\"\"\nYou are tasked with evaluating the relevance of a pull request (PR) document to a given user query. \nThe goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. \nEach PR is a chunk of data stored in a text file and includes metadata, descriptions, and file changes.\nRate the relevance of the PR document to the user query on a scale from 0 to 10. Follow these specific instructions:\n1. **Evaluation Criteria**:\n    - Assess how specifically and accurately the PR addresses or provides relevant information for the query.\n    - Consider whether the PR contains meaningful file changes, code implementations, or documentation that directly answer the query.",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2570,7 +2684,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "cross_encoder_model = CrossEncoder(\"BAAI/bge-reranker-base\")\n# Define thresholds for relevance\nRELEVANCE_THRESHOLD = 7\nresults = {}\noverall_metrics = {\n    \"Precision\": [],\n    \"MAP\": [],\n    \"MRR\": [],\n    \"nDCG\": [],\n    \"average_score\": [],",
+        "peekOfCode": "cross_encoder_model = CrossEncoder(\"BAAI/bge-reranker-base\")\nRELEVANCE_THRESHOLD = 7\nresults = {}\noverall_metrics = {\n    \"Precision\": [],\n    \"MAP\": [],\n    \"MRR\": [],\n    \"nDCG\": [],\n    \"average_score\": [],\n    \"max_score\": []",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2597,7 +2711,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "overall_metrics = {\n    \"Precision\": [],\n    \"MAP\": [],\n    \"MRR\": [],\n    \"nDCG\": [],\n    \"average_score\": [],\n    \"max_score\": []\n}\nfor [file_name_query, question] in questions:\n    print(\"Evaluating: \", question)",
+        "peekOfCode": "overall_metrics = {\n    \"Precision\": [],\n    \"MAP\": [],\n    \"MRR\": [],\n    \"nDCG\": [],\n    \"average_score\": [],\n    \"max_score\": []\n}\nfor [file_name_query, question] in questions:\n    print(\"Evaluating original question: \", question)",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2606,7 +2720,7 @@
         "kind": 5,
         "importPath": "7_query_expansion.with_reranking_with_expansion",
         "description": "7_query_expansion.with_reranking_with_expansion",
-        "peekOfCode": "results[\"overall_averages\"] = {\n    metric: np.mean(values) for metric, values in overall_metrics.items()\n}\nwith open(\"evaluation_results_ensemble.json\", \"w\") as json_file:\n    json.dump(results, json_file, indent=4)\nprint(\"Results have been saved to evaluation_results_ensemble.json.\")",
+        "peekOfCode": "results[\"overall_averages\"] = {\n    metric: np.mean(values) for metric, values in overall_metrics.items()\n}\nwith open(\"evaluation_results_ensemble_rerank10_with_expansion_promptv5.json\", \"w\") as json_file:\n    json.dump(results, json_file, indent=4)\nprint(\"Results have been saved to evaluation_results_ensemble.json.\")",
         "detail": "7_query_expansion.with_reranking_with_expansion",
         "documentation": {}
     },
@@ -2797,6 +2911,213 @@
         "description": "7_query_expansion.without_reranking",
         "peekOfCode": "results[\"overall_averages\"] = {\n    metric: np.mean(values) for metric, values in overall_metrics.items()\n}\nwith open(\"evaluation_results_ensemble_no_reranking.json\", \"w\") as json_file:\n    json.dump(results, json_file, indent=4)\nprint(\"Results have been saved to evaluation_results_ensemble.json.\")",
         "detail": "7_query_expansion.without_reranking",
+        "documentation": {}
+    },
+    {
+        "label": "RelevanceScore",
+        "kind": 6,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "class RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the retrieval from 0 to 10\")\nmodel = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)\ndef query_llm(content, question):\n    \"\"\"Query the LLM to rate the relevance of a document.\"\"\"\n    prompt = f\"\"\"\nYou are tasked with evaluating the relevance of a pull request (PR) document to a given user query. \nThe goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. ",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "query_llm",
+        "kind": 2,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "def query_llm(content, question):\n    \"\"\"Query the LLM to rate the relevance of a document.\"\"\"\n    prompt = f\"\"\"\nYou are tasked with evaluating the relevance of a pull request (PR) document to a given user query. \nThe goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. \nEach PR is a chunk of data stored in a text file and includes metadata, descriptions, and file changes.\nRate the relevance of the PR document to the user query on a scale from 0 to 10. Follow these specific instructions:\n1. **Evaluation Criteria**:\n    - Assess how specifically and accurately the PR addresses or provides relevant information for the query.\n    - Consider whether the PR contains meaningful file changes, code implementations, or documentation that directly answer the query.",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "expand_query",
+        "kind": 2,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "def expand_query(query):\n    # Expand the query using the PROMPT_TEMPLATES and the model\n    messages = [\n        {\"role\": \"system\",\n            \"content\": PROMPT_TEMPLATES[\"query_refinement\"][\"system\"]},\n        {\"role\": \"user\", \"content\": PROMPT_TEMPLATES[\"query_refinement\"][\"user\"].format(\n            query=query)},\n    ]\n    # Call the base model (model) with messages.\n    # ChatOpenAI can be called with a list of messages.",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "PROMPT_TEMPLATES",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "PROMPT_TEMPLATES = {\n    \"query_refinement\": {\n        \"system\": \"\"\"Your job is to refine and expand any given user query related to a software codebase or feature. \n- Add relevant keywords or technologies that might be involved.\n- Ensure the query is well-targeted. Example: Instead of \"How can I build a button?\" Your query should be \"button, typescript, component\"\n- Avoid non unique keywords like \"pull request, development, methods\"\nYour query will be passed to search engine or vector retrieval with database of pull request (description, code changes, comments), \nPrioritize on querying the component name.\nYour response must immediately begin with the query - Do not put \"Relevant Query:\" at the beginning.\nYour query should be maximum of 10 words. Choose the words that are most unique (means only the correct pull request will have that keyword for the user query.)",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "questions",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "questions = [[\n    \"pr_data_0_doc_7.txt\",\n    \"How can I enhance the validation capabilities of a Select component to prevent the default browser error UI from appearing, while also supporting required fields, custom validation functions, and server-side validation? Additionally, what changes would be needed to integrate these features into the multi-select component for better user interaction and validation logic?\"\n],\n    [\n        \"pr_data_21_doc_3.txt\",\n        \"How can I extend the props for the NextUIProvider to allow direct styling of the container element created by the OverlayProvider, and ensure that the children components are correctly inheriting styles from the body element? Additionally, how can I update the default locale setting within the NextUIProvider without introducing breaking changes?\"\n],\n    [\n        \"pr_data_27_doc_4.txt\",",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "top_n_initial",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "top_n_initial = 5  # Get initial top 10 or 15, configurable\ntop_n_final = 5     # After reranking, choose top 5\n# Step 2: Load your documents\nfolder_path = \"processed_docs\"  # Ensure the path matches your folder structure\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "top_n_final",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "top_n_final = 5     # After reranking, choose top 5\n# Step 2: Load your documents\nfolder_path = \"processed_docs\"  # Ensure the path matches your folder structure\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "folder_path",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "folder_path = \"processed_docs\"  # Ensure the path matches your folder structure\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "documents",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "documents = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},  # adjust as needed",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "doc_dict",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "doc_dict = {doc[0]: doc[1] for doc in documents}\n# Initialize BM25 Retriever\nbm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},  # adjust as needed\n    encode_kwargs={\"normalize_embeddings\": True}",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "bm25_retriever",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "bm25_retriever = BM25Retriever(documents)\n# Initialize Vector Retrieval\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},  # adjust as needed\n    encode_kwargs={\"normalize_embeddings\": True}\n)\nvectorstore = Chroma(",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "VECTOR_DB_DIR",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "VECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},  # adjust as needed\n    encode_kwargs={\"normalize_embeddings\": True}\n)\nvectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "MODEL_NAME",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "MODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},  # adjust as needed\n    encode_kwargs={\"normalize_embeddings\": True}\n)\nvectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model\n)",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "embedding_model",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "embedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},  # adjust as needed\n    encode_kwargs={\"normalize_embeddings\": True}\n)\nvectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model\n)\nvector_retriever = vectorstore.as_retriever(",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "vectorstore",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "vectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model\n)\nvector_retriever = vectorstore.as_retriever(\n    # we will control top_n later\n    search_type=\"similarity\", search_kwargs={\"k\": top_n_initial}\n)\n# Step 3: Initialize the LLM judge using GPT-4 (unchanged)\nclass RelevanceScore(BaseModel):",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "vector_retriever",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "vector_retriever = vectorstore.as_retriever(\n    # we will control top_n later\n    search_type=\"similarity\", search_kwargs={\"k\": top_n_initial}\n)\n# Step 3: Initialize the LLM judge using GPT-4 (unchanged)\nclass RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the retrieval from 0 to 10\")\nmodel = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "model = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)\ndef query_llm(content, question):\n    \"\"\"Query the LLM to rate the relevance of a document.\"\"\"\n    prompt = f\"\"\"\nYou are tasked with evaluating the relevance of a pull request (PR) document to a given user query. \nThe goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. \nEach PR is a chunk of data stored in a text file and includes metadata, descriptions, and file changes.\nRate the relevance of the PR document to the user query on a scale from 0 to 10. Follow these specific instructions:\n1. **Evaluation Criteria**:",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "structured_llm",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "structured_llm = model.with_structured_output(RelevanceScore)\ndef query_llm(content, question):\n    \"\"\"Query the LLM to rate the relevance of a document.\"\"\"\n    prompt = f\"\"\"\nYou are tasked with evaluating the relevance of a pull request (PR) document to a given user query. \nThe goal is to assess how well this PR aligns with the query in the context of building a search engine for a Retrieval-Augmented Generation (RAG) application. \nEach PR is a chunk of data stored in a text file and includes metadata, descriptions, and file changes.\nRate the relevance of the PR document to the user query on a scale from 0 to 10. Follow these specific instructions:\n1. **Evaluation Criteria**:\n    - Assess how specifically and accurately the PR addresses or provides relevant information for the query.",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "cross_encoder_model",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "cross_encoder_model = CrossEncoder(\"BAAI/bge-reranker-base\")\n# Define thresholds for relevance\nRELEVANCE_THRESHOLD = 7\nresults = {}\noverall_metrics = {\n    \"Precision\": [],\n    \"MAP\": [],\n    \"MRR\": [],\n    \"nDCG\": [],\n    \"average_score\": [],",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "RELEVANCE_THRESHOLD",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "RELEVANCE_THRESHOLD = 7\nresults = {}\noverall_metrics = {\n    \"Precision\": [],\n    \"MAP\": [],\n    \"MRR\": [],\n    \"nDCG\": [],\n    \"average_score\": [],\n    \"max_score\": []\n}",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "results",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "results = {}\noverall_metrics = {\n    \"Precision\": [],\n    \"MAP\": [],\n    \"MRR\": [],\n    \"nDCG\": [],\n    \"average_score\": [],\n    \"max_score\": []\n}\ndef expand_query(query):",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "overall_metrics",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "overall_metrics = {\n    \"Precision\": [],\n    \"MAP\": [],\n    \"MRR\": [],\n    \"nDCG\": [],\n    \"average_score\": [],\n    \"max_score\": []\n}\ndef expand_query(query):\n    # Expand the query using the PROMPT_TEMPLATES and the model",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
+        "documentation": {}
+    },
+    {
+        "label": "results[\"overall_averages\"]",
+        "kind": 5,
+        "importPath": "7_query_expansion.without_reranking_with_expansion",
+        "description": "7_query_expansion.without_reranking_with_expansion",
+        "peekOfCode": "results[\"overall_averages\"] = {\n    metric: np.mean(values) for metric, values in overall_metrics.items()\n}\nwith open(\"evaluation_results_ensemble_no_reranking.json\", \"w\") as json_file:\n    json.dump(results, json_file, indent=4)\nprint(\"Results have been saved to evaluation_results_ensemble.json.\")",
+        "detail": "7_query_expansion.without_reranking_with_expansion",
         "documentation": {}
     },
     {
