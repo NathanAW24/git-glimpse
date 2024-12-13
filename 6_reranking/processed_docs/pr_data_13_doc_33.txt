@@ -1,0 +1,303 @@
+Pull Request Number: 2674
+Title: fix(autocomplete): empty items with allowCustomValue
+Base Branch: main
+Head Branch: fix/eng-530
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2674
+State: MERGED
+Created At: 2024-04-09T15:02:18Z
+Merged At: 2024-04-14T14:29:53Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes #2554
+📝 Description
+In useComboBox.ts, when state.isOpen, it will pass input ref and popover ref to ariaHideOutside, where the error was thrown. If we have autocomplete with empty items + allowCustomValue, when we open the popover, the ref will be null causing the issue.
+ref: useComboBox.ts#L321 and ariaHideOutside.ts#L112
+⛳️ Current behavior (updates)
+Autocomplete with empty items + allowCustomValue -> open popover -> see the error
+import.mjs:1290 Uncaught TypeError: Cannot read properties of null (reading 'contains')
+    at eval (import.mjs:1290:33)
+    at Array.some (<anonymous>)
+    at MutationObserver.eval (import.mjs:1290:15)
+
+🚀 New behavior
+No error is shown
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Patched the "@nextui-org/autocomplete" package to fix an issue where empty items with allowCustomValue would not render properly due to a null node problem.
+
+
+
+New Features
+
+Enhanced the Autocomplete component to render an empty div when there are no suggestions, improving the user interface.
+
+Commits:
+- feat(autocomplete): add & export getEmptyPopoverProps\n- fix(autocomplete): avoid null node in `ariaHideOutside` from `@react-aria/overlays`\n- feat(changeset): add changeset\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-530/[bug]-autocomplete-error-when-items-is-an-empty-array">ENG-530 [BUG] - AutoComplete error when items is an empty array</a></p>\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: a926914174fc4c3f799c43c892e5f196b54c9fd3
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/react        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/eng-530?filename=.changeset/cool-dryers-buy.md&value=---%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A---%0A%0Afix(autocomplete)%3A%20empty%20items%20with%20allowCustomValue%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update addresses a bug in the `@nextui-org/autocomplete` package where an error occurred if the autocomplete items array was empty. To resolve this, a new function `getEmptyPopoverProps` has been introduced to ensure that an empty `div` is rendered when there are no suggestions, improving the user interface and preventing null node errors related to `ariaHideOutside` from `@react-aria/overlays`.
+
+## Changes
+
+| File Path                                           | Change Summary                                                                                      |
+|-----------------------------------------------------|------------------------------------------------------------------------------------------------------|
+| `.../autocomplete/src/autocomplete.tsx`             | Added `getEmptyPopoverProps` to render an empty `div` for empty suggestions.                        |
+| `.../autocomplete/src/use-autocomplete.ts`          | Introduced `getEmptyPopoverProps` function to return properties for handling empty suggestions.     |
+| `.changeset/chatty-singers-remember.md`             | Patch notes for fixing empty items issue with `allowCustomValue` by addressing a null node issue.  |
+
+## Assessment against linked issues
+
+| Objective                                           | Addressed | Explanation |
+|-----------------------------------------------------|-----------|-------------|
+| Fix AutoComplete error when items array is empty (#2554) | ✅        |             |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/chatty-singers-remember.md: The new file introduces a patch for the "@nextui-org/autocomplete" package. It fixes empty items with allowCustomValue by addressing a null node issue in `ariaHideOutside` from `@react-aria/overlays`.
+
+---
+
+packages/components/autocomplete/src/autocomplete.tsx: 
+- In the `Autocomplete` component of `autocomplete.tsx`, a new function `getEmptyPopoverProps` has been added to handle empty popover properties. The component now renders an empty `div` using these props when there are no suggestions, enhancing the user interface.
+
+- In the `use-autocomplete.ts` file, a new function `getEmptyPopoverProps` has been added to return popover properties with a specific class to avoid a null node issue. This function is now included in the exported functions from `useAutocomplete`.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+This pull request, numbered 2674 and titled "fix(autocomplete): empty items with allowCustomValue," addresses a specific bug identified in issue #2554. The bug occurs within the context of using an autocomplete feature, where a combination of empty items and the allowance of custom values leads to an error when the popover is opened. The root of the problem lies in the `useComboBox.ts` file of the `@react-aria/combobox` package, specifically when the `state.isOpen` condition is true. This condition leads to a scenario where `ariaHideOutside` is called with null references, resulting in a TypeError due to attempting to read properties of null.
+
+The error manifests as an uncaught TypeError in the console, specifically when the items array for the autocomplete is empty, either initially or as a result of an async fetch operation returning an empty array. This scenario is particularly common in async filtering autocomplete implementations, where the search term might not always yield results, leading to an empty items array and subsequently, the error.
+
+The pull request proposes changes to address this issue by ensuring that no error is shown when the autocomplete is used with empty items and the `allowCustomValue` option is enabled. This involves modifications to the `autocomplete.tsx` and `use-autocomplete.ts` files within the `@nextui-org/autocomplete` package. A new function, `getEmptyPopoverProps`, has been introduced to handle cases where the suggestions list is empty, rendering an empty `div` with specific properties to avoid the null node issue. This adjustment ensures a smoother user experience by preventing the error from occurring and potentially allowing for a more graceful handling of zero-state scenarios in autocomplete implementations.
+
+### AI-Generated Summary of Generated Summaries
+
+The pull request introduces a fix for a bug in the autocomplete functionality, specifically when used with empty items and the `allowCustomValue` option. The issue, documented in #2554, arises from a null reference error in the `useComboBox.ts` file of the `@react-aria/combobox` package, triggered when the autocomplete popover is opened with an empty items array. To resolve this, the PR implements changes in the `@nextui-org/autocomplete` package, particularly within the `autocomplete.tsx` and `use-autocomplete.ts` files.
+
+A key addition is the `getEmptyPopoverProps` function, designed to provide properties for rendering an empty `div` when there are no suggestions available. This function is introduced in both the `autocomplete.tsx` component and the `use-autocomplete.ts` hook, ensuring that the autocomplete feature can handle empty items arrays without resulting in a TypeError. This adjustment not only fixes the immediate error but also enhances the user interface by providing a more graceful handling of scenarios where no suggestions are available. The changes are encapsulated in a patch for the "@nextui-org/autocomplete" package, specifically addressing the null node issue and improving the overall robustness of the autocomplete feature in scenarios involving empty items and the allowance of custom values.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai -->
+
+---
+
+<details>
+
+<summary>Recent Review Status</summary>
+
+**Configuration used: .coderabbit.yaml**
+
+<details>
+<summary>Commits</summary>
+Files that changed from the base of the PR and between ebab10804c096f0aed0ef5ec473e8fc549c002f2 and a926914174fc4c3f799c43c892e5f196b54c9fd3.
+</details>
+
+
+<details>
+<summary>Files selected for processing (3)</summary>
+
+* .changeset/chatty-singers-remember.md (1 hunks)
+* packages/components/autocomplete/src/autocomplete.tsx (2 hunks)
+* packages/components/autocomplete/src/use-autocomplete.ts (2 hunks)
+
+</details>
+
+
+
+
+
+
+
+<details><summary>Additional comments not posted (4)</summary><blockquote>
+<details><summary>.changeset/chatty-singers-remember.md (1)</summary><blockquote>
+
+`1-5`: The changeset description is clear and accurately reflects the changes made in this pull request. Good job on providing a concise yet informative summary.
+
+</blockquote></details>
+<details><summary>packages/components/autocomplete/src/autocomplete.tsx (2)</summary><blockquote>
+
+`29-29`: The addition of `getEmptyPopoverProps` is a well-thought-out solution to handle empty suggestions gracefully. Good job on enhancing the user experience.
+
+---
+
+`46-48`: Rendering an empty `div` when there are no suggestions is a clean and effective way to avoid errors related to null nodes. This change improves the robustness of the component.
+
+</blockquote></details>
+<details><summary>packages/components/autocomplete/src/use-autocomplete.ts (1)</summary><blockquote>
+
+`403-409`: The implementation of `getEmptyPopoverProps` in the `useAutocomplete` hook is a smart way to handle the null node issue. This addition enhances the component's error handling capabilities.
+
+</blockquote></details></blockquote></details>
+
+
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- a926914174fc4c3f799c43c892e5f196b54c9fd3 -->
+
+<!-- commit_ids_reviewed_end --><!-- tweet_start -->
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<!-- tweet_end --><!-- tips_start -->
+
+---
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #IUfPYJ+ioIqPAGdktw60HLpsSrguZKExN0opJKtVLC0=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi80b2MxVUU3Wkc4S01XVEdGTkJGampCM2JXMUVmIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTUzMC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQifSx7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvb2ZmeFBuVDc5V01UU3k1TUI2S3o4dmJKMk5HSiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1maXgtZW5nLTUzMC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated (UTC) |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/4oc1UE7ZG8KMWTGFNBFjjB3bW1Ef)) | [Visit Preview](https://nextui-docs-v2-git-fix-eng-530-nextui-org.vercel.app) | Apr 9, 2024 3:02pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/offxPnT79WMTSy5MB6Kz8vbJ2NGJ)) | [Visit Preview](https://nextui-storybook-v2-git-fix-eng-530-nextui-org.vercel.app) | Apr 9, 2024 3:02pm |
+
+
+\n
+
+Files Changed:
+- .changeset/chatty-singers-remember.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/autocomplete": patch
++---
++
++Fixed empty items with allowCustomValue by avoiding null node in `ariaHideOutside` from `@react-aria/overlays`\n- packages/components/autocomplete/src/autocomplete.tsx (modified, 5 changes)\n  Patch: @@ -26,6 +26,7 @@ function Autocomplete<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLI
+     getInputProps,
+     getListBoxProps,
+     getPopoverProps,
++    getEmptyPopoverProps,
+     getClearButtonProps,
+     getListBoxWrapperProps,
+     getEndContentWrapperProps,
+@@ -42,7 +43,9 @@ function Autocomplete<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLI
+         <Listbox {...getListBoxProps()} />
+       </ScrollShadow>
+     </FreeSoloPopover>
+-  ) : null;
++  ) : (
++    <div {...getEmptyPopoverProps()} />
++  );
+ 
+   return (
+     <Component {...getBaseProps()}>\n- packages/components/autocomplete/src/use-autocomplete.ts (modified, 9 changes)\n  Patch: @@ -400,6 +400,14 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     } as unknown as PopoverProps;
+   };
+ 
++  const getEmptyPopoverProps = () => {
++    // avoid null node in `ariaHideOutside` from `@react-aria/overlays`
++    return {
++      ref: popoverRef,
++      classNames: "hidden",
++    };
++  };
++
+   const getListBoxWrapperProps: PropGetter = (props: any = {}) => ({
+     ...mergeProps(slotsProps.scrollShadowProps, props),
+     className: slots.listboxWrapper({
+@@ -443,6 +451,7 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     getInputProps,
+     getListBoxProps,
+     getPopoverProps,
++    getEmptyPopoverProps,
+     getClearButtonProps,
+     getSelectorButtonProps,
+     getListBoxWrapperProps,\n

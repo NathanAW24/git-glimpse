@@ -1,0 +1,565 @@
+Pull Request Number: 882
+Title: feat(Link): add externalIcon prop
+Base Branch: main
+Head Branch: feat/externalIcon
+Author: sun0day
+URL: https://github.com/nextui-org/nextui/pull/882
+State: CLOSED
+Created At: 2022-11-15T12:52:49Z
+Merged At: None
+Participants: sun0day, gauravkrp, tianenpang, cyanxiao, chainerprince, denniskigen, danielsimao, nerdjfpb, psyirius, wangly19, jrgarciadev, rguarascia, suguru, Nadhum
+
+Description:
+📝 Description
+
+Add a brief description
+
+
+add new props externalIcon to control Link suffix external icon.
+set Link rel="noopener" and target="_blank" when isExternal=true
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+
+
+
+💣 Is this a breaking change (Yes/No):
+
+No
+📝 Additional Information
+
+Commits:
+- chore(repo): upgraded storybook * to version 6.5.8\n- chore(react): cleaned up the css prop of any type\n- chore(docs): cleaned up the css prop of any type\n- chore(react): fixed storybook react version conflicts\n- fix: animation for backdrop\n- fix: modal set to visible\n- fix: remove blur opacity transition\n- fix: animate backdropFilter\n- Merge remote-tracking branch 'upstream/next' into story/storybook-6.5.8\n- chore(react): format code with eslint\n- chore(repo): upgraded storybook to latest version\n- fix(react): card shadow in stories\n- Merge remote-tracking branch 'upstream/next' into story/storybook-6.5.8\n- fix(react-pagination): add active page to memoized callback deps\n- change title\n- docs: fix grammar in loading docs
+
+The property color should be changed to color property.\n- Fix typo\n- fix(react-avatar): imgRef prop added\n- fix(react-avatar): format\n- Fix: Docs navbar height issue in tablet size\n- Chores: removing props from upper level and remove unnecessary import\n- Disabled `<Input/>` autofill highlighting.\n- feat: Add isDisabled property to tooltip\n- refactor(react-checbox): new prop added to manage the container css, docs updated\n- Merge pull request #709 from nextui-org/refactor/checkbox-container-css
+
+refactor(react-checkbox): new prop added to manage the container css\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- fix(react-radio): radio group isRequired prop passed directly to the useRadioGgoup hook\n- Merge pull request #711 from nextui-org/fix/radio-group-required-param
+
+fix(react-radio): radio group isRequired prop passed directly to the …\n- fix(react-table): user select applied on non-selectable tables\n- Merge pull request #716 from nextui-org/fix_389/table-user-select
+
+Fix 389/table user select\n- fix_710/radio-group-is-required\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- fix: remove color-scheme suffix (fix #692)\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- fix(react-link): display inline-flex\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- Merge branch main of https://github.com/nextui-org/nextui into fix/removeColorSchemeSuffix\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- fix(input): remove textarea import\n- Merge pull request #738 from nextui-org/fix_707/textarea-input-circular-dependecy
+
+Fix 707/textarea input circular dependecy\n- fix(react-dropdown): supports popover content custom css, safari animation fixed\n- Merge pull request #740 from nextui-org/fix_730/dropdown-position-and-safari-animation
+
+fix(react-dropdown): supports popover content custom css, safari anim…\n- fix: Input should not change value itself when value props is set (fix #737)\n- fix: Link icon example missing isExternal prop (fix #742)\n- test(use-pagination): statements 100%, branches 100%\n
+
+Labels:
+
+
+Comments:
+- vercel: @sun0day is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2220c0f64fe145afaf7a723129e7e89cb675e8b11c%22%7D%2C%22id%22%3A%22QmTZCCs8rmYL3K6wZjN7VrForrhva5Wjk6EFVbqc4h18Ex%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A882%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/9XHU3P5BkHzmpJDwh2oSaJR9dgZL)) | [Visit Preview](https://nextui-storybook-git-fork-sun0day-feat-externalicon-nextui-org.vercel.app) | Nov 18, 2022 at 4:02AM (UTC) |
+
+\n- sun0day: @jrgarciadev cc\n
+
+Files Changed:
+- apps/docs/.env.example (modified, 5 changes)\n  Patch: @@ -10,6 +10,5 @@ NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=
+ IS_VERCEL_ENV=true/false
+ 
+ 
+-
+-
+-
++# Vercel preview env (is used for taking the docs directly from the project files)
++NEXT_PUBLIC_PREVIEW=true/false
+\ No newline at end of file\n- apps/docs/content/components/checkbox/color.ts (modified, 12 changes)\n  Patch: @@ -3,27 +3,27 @@ const App = `import { Checkbox, Spacer } from "@nextui-org/react";
+ export default function App() {
+   return (
+     <>
+-      <Checkbox color="primary" defaultSelected={true}>
++      <Checkbox color="primary" defaultSelected>
+         Primary
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="secondary" defaultSelected={true}>
++      <Checkbox color="secondary" defaultSelected>
+         Secondary
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="success" defaultSelected={true}>
++      <Checkbox color="success" defaultSelected>
+         Success
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="warning" defaultSelected={true}>
++      <Checkbox color="warning" defaultSelected>
+         Warning
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="error" defaultSelected={true}>
++      <Checkbox color="error" defaultSelected>
+         Error
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="gradient" defaultSelected={true}>
++      <Checkbox color="gradient" defaultSelected>
+         Gradient
+       </Checkbox>
+     </>\n- apps/docs/content/components/checkbox/controlled-vs-uncontrolled.ts (modified, 2 changes)\n  Patch: @@ -10,7 +10,7 @@ export default function App() {
+         Subscribe (controlled)
+       </Checkbox>
+       <Spacer x={1} />
+-      <Checkbox defaultSelected={true} color="success">
++      <Checkbox defaultSelected color="success">
+         Subscribe (uncontrolled)
+       </Checkbox>
+     </>\n- apps/docs/content/components/checkbox/default.ts (modified, 2 changes)\n  Patch: @@ -1,7 +1,7 @@
+ const App = `import { Checkbox } from "@nextui-org/react";
+ 
+ export default function App() {
+-  return <Checkbox defaultSelected={true}>Option</Checkbox>;
++  return <Checkbox defaultSelected>Option</Checkbox>;
+ }`;
+ 
+ const react = {\n- apps/docs/content/components/checkbox/disabled.ts (modified, 2 changes)\n  Patch: @@ -2,7 +2,7 @@ const App = `import { Checkbox } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+-    <Checkbox isDisabled={true} defaultSelected={true}>
++    <Checkbox isDisabled defaultSelected>
+       Default
+     </Checkbox>
+   );\n- apps/docs/content/components/checkbox/interminate.ts (modified, 2 changes)\n  Patch: @@ -2,7 +2,7 @@ const App = `import { Checkbox } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+-    <Checkbox isIndeterminate={true} defaultSelected={true}>
++    <Checkbox isIndeterminate defaultSelected>
+       Option
+     </Checkbox>
+   );\n- apps/docs/content/components/checkbox/label-color.ts (modified, 10 changes)\n  Patch: @@ -3,23 +3,23 @@ const App = `import { Checkbox, Spacer } from "@nextui-org/react";
+ export default function App() {
+   return (
+     <>
+-      <Checkbox color="primary" labelColor="primary" defaultSelected={true}>
++      <Checkbox color="primary" labelColor="primary" defaultSelected>
+         Primary
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="secondary" labelColor="secondary" defaultSelected={true}>
++      <Checkbox color="secondary" labelColor="secondary" defaultSelected>
+         Secondary
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="success" labelColor="success" defaultSelected={true}>
++      <Checkbox color="success" labelColor="success" defaultSelected>
+         Success
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="warning" labelColor="warning" defaultSelected={true}>
++      <Checkbox color="warning" labelColor="warning" defaultSelected>
+         Warning
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="error" labelColor="error" defaultSelected={true}>
++      <Checkbox color="error" labelColor="error" defaultSelected>
+         Error
+       </Checkbox>
+     </>\n- apps/docs/content/components/checkbox/line-through.ts (modified, 2 changes)\n  Patch: @@ -2,7 +2,7 @@ const App = `import { Checkbox } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+-    <Checkbox lineThrough={true} defaultSelected={true}>
++    <Checkbox lineThrough defaultSelected>
+       Option
+     </Checkbox>
+   );\n- apps/docs/content/components/checkbox/no-animated.ts (modified, 2 changes)\n  Patch: @@ -2,7 +2,7 @@ const App = `import { Checkbox } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+-    <Checkbox disableAnimation={true} defaultSelected={true} lineThrough={true}>
++    <Checkbox disableAnimation defaultSelected lineThrough>
+       Option
+     </Checkbox>
+   );\n- apps/docs/content/components/checkbox/rounded.ts (modified, 2 changes)\n  Patch: @@ -2,7 +2,7 @@ const App = `import { Checkbox } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+-    <Checkbox isRounded={true} defaultSelected={true} color="primary">
++    <Checkbox isRounded defaultSelected color="primary">
+       Rounded option
+     </Checkbox>
+   );\n- apps/docs/content/components/checkbox/size.ts (modified, 10 changes)\n  Patch: @@ -3,23 +3,23 @@ const App = `import { Checkbox, Spacer } from "@nextui-org/react";
+ export default function App() {
+   return (
+     <>
+-      <Checkbox defaultSelected={true} size="xs">
++      <Checkbox defaultSelected size="xs">
+         mini
+       </Checkbox>
+       <Spacer />
+-      <Checkbox defaultSelected={true} size="sm">
++      <Checkbox defaultSelected size="sm">
+         small
+       </Checkbox>
+       <Spacer />
+-      <Checkbox defaultSelected={true} size="md">
++      <Checkbox defaultSelected size="md">
+         medium
+       </Checkbox>
+       <Spacer />
+-      <Checkbox defaultSelected={true} size="lg">
++      <Checkbox defaultSelected size="lg">
+         large
+       </Checkbox>
+       <Spacer />
+-      <Checkbox defaultSelected={true} size="xl">
++      <Checkbox defaultSelected size="xl">
+         xlarge
+       </Checkbox>
+     </>\n- apps/docs/content/components/link/external.ts (renamed)\n  Previous Filename: apps/docs/content/components/link/icon.ts\n- apps/docs/content/components/link/index.ts (modified, 4 changes)\n  Patch: @@ -2,14 +2,14 @@ import default_link from "./default";
+ import color from "./color";
+ import variation from "./variation";
+ import block from "./block";
+-import icon from "./icon";
++import external from "./external";
+ import nextLink from "./nextLink";
+ 
+ export default {
+   default_link,
+   color,
+   variation,
+   block,
+-  icon,
++  external,
+   nextLink,
+ };\n- apps/docs/content/docs/components/checkbox.mdx (modified, 77 changes)\n  Patch: @@ -1,6 +1,6 @@
+ ---
+-title: 'Checkbox'
+-description: 'Checkboxes allow users to select multiple items from a list of individual items, or to mark one individual item as selected.'
++title: "Checkbox"
++description: "Checkboxes allow users to select multiple items from a list of individual items, or to mark one individual item as selected."
+ url: https://nextui.org/docs/components/checkbox
+ ---
+ 
+@@ -10,7 +10,7 @@ Checkboxes allow users to select multiple items from a list of individual items,
+ @react-aria/checkbox</a>
+ 
+ ```jsx
+-import { Checkbox } from '@nextui-org/react';
++import { Checkbox } from "@nextui-org/react";
+ ```
+ 
+ <CarbonAd />
+@@ -87,27 +87,28 @@ import { Checkbox } from '@nextui-org/react';
+ 
+ #### Checkbox Props
+ 
+-| Attribute            | Type                           | Description                                                                                                                                                    | Default   |
+-| -------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+-| **children**         | `ReactNode`                    | The label for the element                                                                                                                                      | -         |
+-| **value**            | `string`                       | The value of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefvalue) | -         |
+-| **label**            | `string`                       | The label for the element                                                                                                                                      | -         |
+-| **name**             | `string`                       | The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)   | -         |
+-| **color**            | [NormalColors](#normal-colors) | The color of the component                                                                                                                                     | `default` |
+-| **labelColor**       | [SimpleColors](#simple-colors) | The color of the label                                                                                                                                         | `default` |
+-| **size**             | [NormalSizes](#normal-sizes)   | The size of the component                                                                                                                                      | `md`      |
+-| **isSelected**       | `boolean`                      | Whether the element should be selected (controlled)                                                                                                            | `false`   |
+-| **defaultSelected**  | `boolean`                      | Whether the element should be selected (uncontrolled)                                                                                                          | `false`   |
+-| **disableAnimation** | `boolean`                      | Whether the checkbox has animations                                                                                                                            | `false`   |
+-| **isDisabled**       | `boolean`                      | Whether the input is disabled                                                                                                                                  | `false`   |
+-| **isIndeterminate**  | `boolean`                      | Indeterminism is presentational only. The indeterminate visual representation remains regardless of user interaction.                                          | `false`   |
+-| **isRounded**        | `boolean`                      | Whether the checkbox is rounded                                                                                                                                | `false`   |
+-| **lineThrough**      | `boolean`                      | Line in the middle of the label when the `Checkbox` is checked                                                                                                 | -         |
+-| **isReadOnly**       | `boolean`                      | Whether the input can be selected but not changed by the user.                                                                                                 | `false`   |
+-| **isRequired**       | `boolean`                      | Whether user input is required on the input before form submission.                                                                                            | `false`   |
+-| **autoFocus**        | `boolean`                      | Whether the element should receive focus on render                                                                                                             |
+-| **css**              | `Stitches.CSS`                 | Override Default CSS style                                                                                                                                     | -         |
+-| **as**               | `keyof JSX.IntrinsicElements`  | Changes which tag component outputs                                                                                                                            | `label`   |
++| Attribute              | Type                           | Description                                                                                                                                                    | Default   |
++| ---------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
++| **children**           | `ReactNode`                    | The label for the element                                                                                                                                      | -         |
++| **value**              | `string`                       | The value of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefvalue) | -         |
++| **label**              | `string`                       | The label for the element                                                                                                                                      | -         |
++| **name**               | `string`                       | The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)   | -         |
++| **color**              | [NormalColors](#normal-colors) | The color of the component                                                                                                                                     | `default` |
++| **labelColor**         | [SimpleColors](#simple-colors) | The color of the label                                                                                                                                         | `default` |
++| **size**               | [NormalSizes](#normal-sizes)   | The size of the component                                                                                                                                      | `md`      |
++| **isSelected**         | `boolean`                      | Whether the element should be selected (controlled)                                                                                                            | `false`   |
++| **defaultSelected**    | `boolean`                      | Whether the element should be selected (uncontrolled)                                                                                                          | `false`   |
++| **disableAnimation**   | `boolean`                      | Whether the checkbox has animations                                                                                                                            | `false`   |
++| **isDisabled**         | `boolean`                      | Whether the input is disabled                                                                                                                                  | `false`   |
++| **isIndeterminate**    | `boolean`                      | Indeterminism is presentational only. The indeterminate visual representation remains regardless of user interaction.                                          | `false`   |
++| **isRounded**          | `boolean`                      | Whether the checkbox is rounded                                                                                                                                | `false`   |
++| **lineThrough**        | `boolean`                      | Line in the middle of the label when the `Checkbox` is checked                                                                                                 | -         |
++| **isReadOnly**         | `boolean`                      | Whether the input can be selected but not changed by the user.                                                                                                 | `false`   |
++| **isRequired**         | `boolean`                      | Whether user input is required on the input before form submission.                                                                                            | `false`   |
++| **autoFocus**          | `boolean`                      | Whether the element should receive focus on render                                                                                                             |
++| **containerCss** `new` | `Stitches.CSS`                 | Override Default CSS Container style                                                                                                                           | -         |
++| **css**                | `Stitches.CSS`                 | Override Default CSS style                                                                                                                                     | -         |
++| **as**                 | `keyof JSX.IntrinsicElements`  | Changes which tag component outputs                                                                                                                            | `label`   |
+ 
+ <Spacer y={1} />
+ 
+@@ -147,31 +148,31 @@ import { Checkbox } from '@nextui-org/react';
+ 
+ ```ts
+ type NormalColors =
+-  | 'default'
+-  | 'primary'
+-  | 'secondary'
+-  | 'success'
+-  | 'warning'
+-  | 'error'
+-  | 'gradient';
++  | "default"
++  | "primary"
++  | "secondary"
++  | "success"
++  | "warning"
++  | "error"
++  | "gradient";
+ ```
+ 
+ #### Simple Colors
+ 
+ ```ts
+ type SimpleColors =
+-  | 'default'
+-  | 'primary'
+-  | 'secondary'
+-  | 'success'
+-  | 'warning'
+-  | 'error';
++  | "default"
++  | "primary"
++  | "secondary"
++  | "success"
++  | "warning"
++  | "error";
+ ```
+ 
+ #### Normal Sizes
+ 
+ ```ts
+-type NormalSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
++type NormalSizes = "xs" | "sm" | "md" | "lg" | "xl";
+ ```
+ 
+ #### Keyboard event\n- apps/docs/content/docs/components/dropdown.mdx (modified, 1 changes)\n  Patch: @@ -207,6 +207,7 @@ import { Dropdown } from "@nextui-org/react";
+ | **autoFocus**              | `boolean` [FocusStrategyType](#focus-strategy-type)                                                          | Where the focus should be set.                                                                          | `false`   |
+ | **shouldFocusWrap**        | `boolean`                                                                                                    | Whether keyboard navigation is circular.                                                                | `false`   |
+ | **css**                    | `Stitches.CSS`                                                                                               | Override Default CSS style.                                                                             | -         |
++| **containerCss** `new`     | `Stitches.CSS`                                                                                               | Override the dropdown mmenu container (`Popover.Content`) CSS style.                                    | -         |
+ | **as**                     | `keyof JSX.IntrinsicElements`                                                                                | Changes which tag component outputs.                                                                    | `ul`      |
+ 
+ <Spacer y={1} />\n- apps/docs/content/docs/components/link.mdx (modified, 5 changes)\n  Patch: @@ -42,8 +42,8 @@ import { Link } from "@nextui-org/react";
+ 
+ <Playground
+   title="External Link"
+-  desc="Show an icon in the `Link` with the `isExternal` prop."
+-  files={linkContent.icon}
++  desc="Open link in new tab with the `isExternal` prop, you can also define custom `externalIcon` by yourself."
++  files={linkContent.external}
+ />
+ 
+ <Playground
+@@ -70,6 +70,7 @@ import { Link } from "@nextui-org/react";
+ | **color**                | `LinkColors` `boolean` `string`                 | [LinkColors](#link-colors) | Change link color                   | `false` |
+ | **href**                 | `string`                                        | -                          | Link url                            | -       |
+ | **isExternal** `updated` | `boolean`                                       | `true/false`               | Show link icon                      | `false` |
++| **externalIcon** `updated` | `React.ReactNode`                             | -                          | Suffix link icon when `isExternal=true` | `<LinkIcon />` |
+ | **underline**            | `boolean`                                       | `true/false`               | Display underline                   | `false` |
+ | **block**                | `boolean`                                       | `true/false`               | Display as a separate block         | `false` |
+ | **ref**                  | <Code>Ref<HTMLAnchorElement &#124; null></Code> | -                          | forwardRef                          | -       |\n- apps/docs/content/docs/components/switch.mdx (modified, 3 changes)\n  Patch: @@ -32,7 +32,7 @@ import { Switch } from '@nextui-org/react';
+ <Playground
+   title="Disabled"
+   desc="Unusable and un-clickable `Switch`."
+-  files={switchContent.disabled}  
++  files={switchContent.disabled}
+ />
+ 
+ <Playground
+@@ -100,6 +100,7 @@ import { Switch } from '@nextui-org/react';
+ | **iconOn**         | `ReactNode`                                  | -                              | Add an icon for on status                                                 | -         |
+ | **iconOff**        | `ReactNode`                                  | -                              | Add an icon for off status                                                | -         |
+ | **preventDefault** | `boolean`                                    | `true/false`                   | Prevent default event on when is selected through the `Space, Enter` keys | `true`    |
++| **name**           | `string`                                     | -                              | Add a name to the **input** of the switch.                                | -         |
+ | **onChange**       | `(e:`[SwitchEvent](#switch-event)) `=> void` | -                              | The callback invoked when the checked state of the switch changes.        | -         |
+ | **css**            | `Stitches.CSS`                               | -                              | Override Default CSS style                                                | -         |
+ | **as**             | `keyof JSX.IntrinsicElements`                | -                              | Changes which tag component outputs                                       | `div`     |\n- apps/docs/content/docs/components/tooltip.mdx (modified, 1 changes)\n  Patch: @@ -85,6 +85,7 @@ import { Tooltip } from '@nextui-org/react';
+ | **rounded**         | `boolean`                     | `true/false`                                         | Rounded tooltip                                            | `false`   |
+ | **hideArrow**       | `boolean`                     | `true/false`                                         | Hide tooltip arrow icon                                    | -         |
+ | **keepMounted**     | `boolean`                     | `true/false`                                         | Keep tooltip mounted on the DOM                            | `false`   |
++| ***isDisabled**     | `boolean`                     | `true/false`                                         | Whether the tooltip content should be displayed or not     | `false`   |
+ | **trigger**         | `TriggerTypes`                | [TriggerTypes](#trigger-types)                       | Tooltip trigger mode                                       | `hover`   |
+ | **enterDelay(ms)**  | `number`                      | -                                                    | Delay before tooltip is shown                              | `0`       |
+ | **leaveDelay(ms)**  | `number`                      | -                                                    | Delay before tooltip is hidden (only works in 'hover' mode) | `0`       |\n- apps/docs/content/docs/guide/getting-started.mdx (modified, 5 changes)\n  Patch: @@ -188,6 +188,11 @@ Whether it's a feature request, bug report, or a project to showcase, please get
+ 
+ <Spacer y={2} />
+ 
++### Warning 🚧
++This project is still in development, it might have bugs and breaking changes so it is not recommended to use it in production. We hope to have a stable version soon 🚀.
++
++<Spacer y={2} />
++
+ ### Contributing
+ 
+ PR's on NextUI are always welcome, please see our [contribution guidelines](https://github.com/nextui-org/nextui/blob/main/CONTRIBUTING.MD) to learn how you can contribute to this project.\n- apps/docs/content/docs/manifest.json (modified, 3 changes)\n  Patch: @@ -155,7 +155,8 @@
+             {
+               "title": "Checkbox",
+               "keywords": "check, radio, selectable, checkbox, box",
+-              "path": "/docs/components/checkbox.mdx"
++              "path": "/docs/components/checkbox.mdx",
++              "updated": true
+             },
+             {
+               "title": "Checkbox Group",\n- apps/docs/next.config.js (modified, 10 changes)\n  Patch: @@ -1,11 +1,11 @@
+ module.exports = {
+-  pageExtensions: ['jsx', 'js', 'mdx', 'md', 'ts', 'tsx'],
+-  redirects: require('./next-redirect'),
++  pageExtensions: ["jsx", "js", "mdx", "md", "ts", "tsx"],
++  redirects: require("./next-redirect"),
+   reactStrictMode: false,
+   eslint: {
+-    ignoreDuringBuilds: true
++    ignoreDuringBuilds: true,
+   },
+   typescript: {
+-    ignoreBuildErrors: process.env.IS_VERCEL_ENV === 'true'
+-  }
++    ignoreBuildErrors: process.env.IS_VERCEL_ENV === "true",
++  },
+ };\n- apps/docs/src/components/anchor/index.tsx (modified, 3 changes)\n  Patch: @@ -5,6 +5,7 @@ import {Anchor} from "../icons";
+ 
+ export interface Props {
+   pure?: boolean;
++  children?: React.ReactNode;
+ }
+ 
+ export const virtualAnchorEncode = (text?: string) => {
+@@ -13,7 +14,7 @@ export const virtualAnchorEncode = (text?: string) => {
+   return text.toLowerCase().replace(/ /g, "-");
+ };
+ 
+-const VirtualAnchor: React.FC<React.PropsWithChildren<Props>> = ({children, pure}) => {
++const VirtualAnchor: React.FC<Props> = ({children, pure}) => {
+   const {theme} = useTheme();
+   const ref = useRef<HTMLAnchorElement>(null);
+   const [id, setId] = useState<string | undefined>();\n- apps/docs/src/components/badge/index.tsx (modified, 3 changes)\n  Patch: @@ -5,13 +5,14 @@ import {StyledBadge, BadgeVariantsProps} from "./badge.styles";
+ 
+ interface Props {
+   className?: string;
++  children?: React.ReactNode;
+ }
+ 
+ type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
+ 
+ type BadgeProps = Props & NativeAttrs & BadgeVariantsProps & {css?: CSS};
+ 
+-const Badge: React.FC<React.PropsWithChildren<BadgeProps>> = ({children, ...props}) => {
++const Badge: React.FC<BadgeProps> = ({children, ...props}) => {
+   return <StyledBadge {...props}>{children}</StyledBadge>;
+ };
+ \n- apps/docs/src/components/codeblock/index.tsx (modified, 2 changes)\n  Patch: @@ -10,7 +10,7 @@ const globalStyles = globalCss({
+   },
+ });
+ 
+-const Codeblock: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
++const Codeblock: React.FC<{children?: React.ReactNode}> = ({children}) => {
+   const codeTheme = makeCodeTheme();
+   const stringColor = codeTheme.styles.find((style) => style.types.includes("string"));
+   const punctuationColor = codeTheme.styles.find((style) => style.types.includes("punctuation"));\n- apps/docs/src/components/css-transition/index.tsx (modified, 3 changes)\n  Patch: @@ -8,6 +8,7 @@ interface Props {
+   clearTime?: number;
+   className?: string;
+   name?: string;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -21,7 +22,7 @@ const defaultProps = {
+ 
+ export type CSSTransitionProps = Props & typeof defaultProps;
+ 
+-const CSSTransition: React.FC<React.PropsWithChildren<CSSTransitionProps>> = ({
++const CSSTransition: React.FC<CSSTransitionProps> = ({
+   children,
+   className,
+   visible,\n- apps/docs/src/components/dots-container/index.tsx (modified, 2 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import * as React from "react";
+ import {useTheme} from "@nextui-org/react";
+ 
+-const DotsContainer: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
++const DotsContainer: React.FC<{children?: React.ReactNode}> = ({children}) => {
+   const {theme} = useTheme();
+ 
+   return (\n- apps/docs/src/components/features-grid/features-grid.tsx (modified, 4 changes)\n  Patch: @@ -44,8 +44,8 @@ const FeaturesGrid: React.FC<FeaturesGridProps> = ({
+   };
+ 
+   return (
+-    <Grid.Container css={{px: 0, ...(css as any)}} gap={2} {...props}>
+-      {features.map((feat, index) => (
++    <Grid.Container css={{px: 0, ...css}} gap={2} {...props}>
++      {features.map((feat: Feature, index: number) => (
+         <Grid key={`${feat.title}_${index}`} lg={lg} sm={sm} xs={xs}>
+           <FeatureItem
+             clickable={!!feat.href}\n- apps/docs/src/components/fixed/index.tsx (modified, 11 changes)\n  Patch: @@ -8,6 +8,7 @@ export interface FixedProps {
+   shadow?: boolean;
+   className?: string;
+   css?: CSS;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -29,17 +30,11 @@ const StyledFixed = styled("div", {
+   },
+ });
+ 
+-const Fixed: React.FC<React.PropsWithChildren<FixedProps>> = ({
+-  offset,
+-  children,
+-  shadow,
+-  className,
+-  css,
+-}) => {
++const Fixed: React.FC<FixedProps> = ({offset, children, shadow, className, css}) => {
+   return (
+     <StyledFixed
+       className={cn(className, {shadow})}
+-      css={{...(css as any), top: offset || 0}}
++      css={{...css, top: offset || 0}}
+       shadow={shadow}
+     >
+       {children}\n- apps/docs/src/components/heading/index.tsx (modified, 3 changes)\n  Patch: @@ -3,6 +3,7 @@ import withDefaults from "@utils/with-defaults";
+ 
+ export interface Props {
+   title: string;
++  children?: React.ReactNode;
+ }
+ 
+ const defaultProps = {
+@@ -13,7 +14,7 @@ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>;
+ 
+ export type HeadingProps = Props & typeof defaultProps & NativeAttrs;
+ 
+-const Heading: React.FC<React.PropsWithChildren<HeadingProps>> = ({title, children}) => {
++const Heading: React.FC<HeadingProps> = ({title, children}) => {
+   return (
+     <div className="heading">
+       <h4>{title}</h4>\n- apps/docs/src/components/hero/components.tsx (modified, 4 changes)\n  Patch: @@ -108,11 +108,11 @@ const HeroComponents = () => {
+           content={"Developers love Next.js"}
+           css={{
+             animation: `${levitating} 14s ease infinite 0.1s`,
+-            marginLeft: "-80px",
++            marginLeft: "-90px",
+             marginTop: "$2",
+             transform: "translate(0, 0)",
+           }}
+-          offset={50}
++          offset={124}
+           trigger="click"
+         >
+           <Button auto bordered borderWeight="bold" color="primary" size="sm">\n

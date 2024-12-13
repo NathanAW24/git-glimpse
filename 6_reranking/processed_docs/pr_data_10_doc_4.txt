@@ -1,0 +1,1747 @@
+Pull Request Number: 3137
+Title: fix: interactions with popover & focus issues
+Base Branch: fix/focus
+Head Branch: fix/eng-926
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/3137
+State: MERGED
+Created At: 2024-05-30T15:48:00Z
+Merged At: 2024-06-12T08:19:33Z
+Participants: wingkwong, Aryan-mor
+
+Description:
+Remove disableFocusManagement from Overlay so that FocusScope will be there to have focus trap.
+
+ref: #3204
+
+
+Bump react-aria versions and revise focus behaviour logic
+
+ref: #3132
+
+
+
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Addressed popover focus issues across several components.
+Improved conditions for closing popovers based on interactions outside the trigger element.
+
+
+
+New Features
+
+Enhanced ariaShouldCloseOnInteractOutside to handle focus scope elements.
+
+
+
+Refactor
+
+Simplified the structure of overlay elements in Modal and Popover components.
+Updated onSelectionChange function to accept null as a parameter.
+Refactored tests for Popover component.
+
+
+
+Dependencies
+
+Updated various @react-aria and related package versions for autocomplete, popover, and aria-utils components.
+
+Commits:
+- fix(aria-utils): handle click on listbox\n- Merge branch 'canary' into fix/eng-926\n- fix(popover): move useDialog to popover-content\n- fix(popover): move useDialog to free-solo-popover\n- refactor(popover): use const instead\n- feat(changset): add changeset\n- feat(popover): popover focus test\n- Merge branch 'fix/eng-830' into fix/eng-926\n- refactor(popover): getDialogProps\n- Merge branch 'fix/eng-830' into fix/eng-926\n- chore(utilities): remove ariaShouldCloseOnInteractOutside\n- chore(deps): pnpm-lock.yaml\n- fix(popover): remove disableFocusManagement\n- fix(modal): remove disableFocusManagement\n- fix(autocomplete): remove custom focus logic and remove ariaShouldCloseOnInteractOutside\n- fix(popover): rewrite shouldCloseOnInteractOutside logic\n- Merge branch 'canary' into fix/eng-926\n- chore(utilities): remove ariaShouldCloseOnInteractOutside\n- chore(deps): bump react-aria dependencies\n- chore(autocomplete): change back to focus\n- feat(changeset): update changeset\n- chore(docs): update type in onSelectionChange\n- fix(popover): revise popover test case\n- chore(deps): add @nextui-org/aria-utils\n- fix(autocomplete): add ariaShouldCloseOnInteractOutside\n- fix(date-picker): add ariaShouldCloseOnInteractOutside\n- fix(select): add ariaShouldCloseOnInteractOutside\n- chore(deps): add @nextui-org/aria-utils\n- fix(dropdown): add ariaShouldCloseOnInteractOutside\n- feat(utilities): rewrite ariaShouldCloseOnInteractOutside\n- fix(popover): use ariaShouldCloseOnInteractOutside\n- fix(autocomplete): add back shouldFocus\n- fix(utilities): include shouldFocus logic\n- chore(utilities): remove !\n- refactor(aria-utils): add more comments\n- chore(changeset): update packages\n- refactor(aria-utils): add more comments\n- feat(popover): add test\n- Merge branch 'fix/focus' into fix/eng-926\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-926/[bug]-autocomplete-and-select-in-popover-is-buggy">ENG-926 [BUG] - Autocomplete and Select in Popover is buggy</a></p>\n- vercel: [vc]: #nwr2R7g2PZw8NsjpPjyYmKgB0xV0h/JotrqaD616PlM=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9CNkFEWm9UNGRyUml0OXdKM1VwOTdTdER1blRBIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTkyNi1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZpeC1lbmctOTI2LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNFMySlMyOTJLbWszUzROTXc3clBpM2V1U1I4UyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1maXgtZW5nLTkyNi1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZml4LWVuZy05MjYtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/B6ADZoT4drRit9wJ3Up97StDunTA)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-926-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-926-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jun 12, 2024 8:19am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/4S2JS292Kmk3S4NMw7rPi3euSR8S)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-926-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-926-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jun 12, 2024 8:19am |
+
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 956e2b12696a728759b236020051bfb86a7e90bb
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 15 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/popover      | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/aria-utils   | Patch |
+| @nextui-org/modal        | Patch |
+| @nextui-org/date-picker  | Patch |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/select       | Patch |
+| @nextui-org/react        | Patch |
+| @nextui-org/accordion    | Patch |
+| @nextui-org/listbox      | Patch |
+| @nextui-org/menu         | Patch |
+| @nextui-org/tabs         | Patch |
+| @nextui-org/tooltip      | Patch |
+| @nextui-org/slider       | Patch |
+| @nextui-org/snippet      | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/eng-926?filename=.changeset/three-scissors-sing.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A%22%40nextui-org%2Fmodal%22%3A%20patch%0A%22%40nextui-org%2Fpopover%22%3A%20patch%0A%22%40nextui-org%2Faria-utils%22%3A%20patch%0A---%0A%0Afix%3A%20interactions%20with%20popover%20%26%20focus%20issues%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: skip review by coderabbit.ai -->
+
+> [!IMPORTANT]
+> ## Review skipped
+> 
+> Draft detected.
+> 
+> Please check the settings in the CodeRabbit UI or the `.coderabbit.yaml` file in this repository. To trigger a single review, invoke the `@coderabbitai review` command.
+> 
+> You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file.
+
+<!-- end of auto-generated comment: skip review by coderabbit.ai --><!-- walkthrough_start -->
+
+## Walkthrough
+
+This set of changes includes patch updates to several `@nextui-org` packages, focusing on improving focus management and addressing specific popover issues. Key modifications involve updating dependencies, refining component structures, and enhancing event handling logic. Additionally, the `onSelectionChange` function in the autocomplete example was updated to accept `null`, and tests for the popover component were refactored.
+
+## Changes
+
+| Files/Paths                                              | Change Summary                                                                                     |
+|----------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| `.changeset/clever-gifts-joke.md`, `.changeset/cold-peas-dream.md` | Documented patch updates for various `@nextui-org` packages to address focus issues and remove `disableFocusManagement`. |
+| `apps/docs/app/examples/autocomplete/fully-controlled/page.tsx` | Updated `onSelectionChange` function to accept an additional parameter of type `null`.             |
+| `packages/components/autocomplete/package.json`          | Updated versions of `@react-aria` and related packages.                                            |
+| `packages/components/modal/src/modal.tsx`, `packages/components/popover/src/popover.tsx` | Simplified structure of `overlay` elements by removing unnecessary wrapping elements.              |
+| `packages/components/popover/__tests__/popover.test.tsx` | Refactored tests including imports, button test IDs, and click events for opening and closing popovers. |
+| `packages/components/popover/package.json`               | Updated versions of dependencies for the `popover` component.                                      |
+| `packages/components/popover/src/use-aria-popover.ts`    | Added `ariaShouldCloseOnInteractOutside` to imports from `@nextui-org/aria-utils`.                 |
+| `packages/utilities/aria-utils/package.json`             | Updated versions of packages for `aria-utils`.                                                     |
+| `packages/utilities/aria-utils/src/overlays/ariaShouldCloseOnInteractOutside.ts` | Updated function to take `triggerRef` instead of `ref`, handle focus scope elements, and refine conditions for closing popovers. |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```markdown
+.changeset/clever-gifts-joke.md: ## Short Summary
+Added patch updates for `@nextui-org/autocomplete`, `@nextui-org/aria-utils`, and `@nextui-org/popover` packages to address popover focus issue (#3171, #2992).
+
+## Alterations to the declarations of exported or public entities
+- `@nextui-org/popover`: patch
+- `@nextui-org/autocomplete`: patch
+- `@nextui-org/aria-utils`: patch
+
+---
+
+.changeset/cold-peas-dream.md: ## Summary
+Patch updates to `@nextui-org/modal` and `@nextui-org/popover` with removal of `disableFocusManagement` from `Overlay`.
+
+---
+
+apps/docs/app/examples/autocomplete/fully-controlled/page.tsx: ## Short Summary
+Updated `onSelectionChange` function in `Page` component to accept an additional parameter of type `null`.
+
+## Alterations to the declarations of exported or public entities
+- `const onSelectionChange = (key: React.Key) => {` in `page.tsx` → `const onSelectionChange = (key: React.Key | null) => {` in `page.tsx`
+
+---
+
+packages/components/autocomplete/package.json: ## Short Summary
+Updated versions of `@react-aria` and related packages in `package.json` for the `autocomplete` component.
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/combobox`: Updated from "3.8.4" to "3.9.1"
+- `@react-aria/focus`: Updated from "3.16.2" to "3.17.1"
+- `@react-aria/interactions`: Updated from "3.21.1" to "3.21.3"
+- `@react-aria/visually-hidden`: Updated from "3.8.10" to "3.8.12"
+- `@react-stately/combobox`: Updated from "3.8.2" to "3.8.4"
+- `@react-types/combobox`: Updated from "3.10.1" to "3.11.1"
+
+---
+
+packages/components/modal/src/modal.tsx: ## Short Summary
+Simplified structure of `overlay` element in `Modal` component by removing unnecessary wrapping elements.
+
+## Alterations to the declarations of exported or public entities
+- `const overlay = <Overlay disableFocusManagement portalContainer={context.portalContainer}>{children}</Overlay>;` in `modal.tsx` → `const overlay = <Overlay portalContainer={context.portalContainer}>{children}</Overlay>;` in `modal.tsx`
+
+---
+
+packages/components/popover/__tests__/popover.test.tsx: ### Summary
+Refactored tests in `popover.test.tsx` including imports, button test IDs, and click events for opening and closing popovers.
+
+---
+
+packages/components/popover/package.json: ## Short Summary
+Updated versions of dependencies in `package.json` for the `popover` component.
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/dialog`: Updated from "3.5.12" to "3.5.14"
+- `@react-aria/focus`: Updated from "3.16.2" to "3.17.1"
+- `@react-aria/interactions`: Updated from "3.21.1" to "3.21.3"
+- `@react-aria/overlays`: Updated from "3.21.1" to "3.22.1"
+- `@react-stately/overlays`: Updated from "3.6.5" to "3.6.7"
+- `@react-types/button`: Updated from "3.9.2" to "3.9.4"
+- `@react-types/overlays`: Updated from "3.8.5" to "3.8.7"
+
+---
+
+packages/components/popover/src/popover.tsx: ### Summary
+Simplified structure of `overlay` variable in `Popover` component by removing unnecessary wrapping elements.
+
+---
+
+packages/components/popover/src/use-aria-popover.ts: ## Short Summary
+Added `ariaShouldCloseOnInteractOutside` to imports in `use-aria-popover.ts` from `@nextui-org/aria-utils`.
+
+## Alterations to the declarations of exported or public entities
+- `ariaShouldCloseOnInteractOutside` added to imports in `use-aria-popover.ts` from `@nextui-org/aria-utils`
+
+---
+
+packages/utilities/aria-utils/package.json: ## Short Summary
+Updated versions of packages in `package.json` for `packages/utilities/aria-utils`.
+
+## Alterations to the declarations of exported or public entities
+- `@react-stately/collections`: Updated from version "3.10.5" to "3.10.7"
+- `@react-stately/overlays`: Updated from version "3.6.5" to "3.6.7"
+- `@react-types/overlays`: Updated from version "3.8.5" to "3.8.7"
+
+---
+
+packages/utilities/aria-utils/src/overlays/ariaShouldCloseOnInteractOutside.ts: ### Summary
+Updated `ariaShouldCloseOnInteractOutside` function in `aria-utils` to take `triggerRef` instead of `ref`, handle focus scope elements for closing states, and refine conditions for closing popovers based on interactions outside the trigger element.
+
+## Alterations to the declarations of exported or public entities
+- `export const ariaShouldCloseOnInteractOutside = (` in `ariaShouldCloseOnInteractOutside.ts`
+  - Changed parameter `ref: RefObject<Element>,` to `triggerRef: RefObject<Element>,`
+  - Added logic for handling focus scope elements and refining conditions for closing popovers based on interactions outside the trigger element.
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated summary of generated summaries
+
+The recent updates across various packages and components primarily address focus management issues, dependency updates, and structural simplifications. Key changes include:
+
+1. **Patch Updates**:
+   - **Packages**: `@nextui-org/autocomplete`, `@nextui-org/aria-utils`, `@nextui-org/popover`, and `@nextui-org/modal` received patch updates to fix focus-related issues and remove unnecessary elements.
+   - **Dependencies**: Multiple dependencies within these packages were updated to newer versions, enhancing compatibility and functionality.
+
+2. **Focus Management**:
+   - **Popover**: Adjustments were made to the `Popover` component to simplify its structure and improve focus management. The `ariaShouldCloseOnInteractOutside` function was updated to handle focus scope elements and refine conditions for closing popovers based on interactions outside the trigger element.
+   - **Modal**: The `Modal` component's `overlay` element was simplified by removing the `disableFocusManagement` property, streamlining its structure.
+
+3. **Function Updates**:
+   - **Autocomplete**: The `onSelectionChange` function in the `Page` component was updated to accept an additional parameter of type `null`, enhancing its flexibility.
+
+4. **Testing and Refactoring**:
+   - **Popover Tests**: Tests for the `Popover` component were refactored to improve readability and maintainability, including updates to imports, button test IDs, and click event handling.
+
+### Alterations to the declarations of exported or public entities
+
+#### apps/docs/app/examples/autocomplete/fully-controlled/page.tsx
+- **Before**: `const onSelectionChange = (key: React.Key) => {`
+- **After**: `const onSelectionChange = (key: React.Key | null) => {`
+
+#### packages/components/modal/src/modal.tsx
+- **Before**: `const overlay = <Overlay disableFocusManagement portalContainer={context.portalContainer}>{children}</Overlay>;`
+- **After**: `const overlay = <Overlay portalContainer={context.portalContainer}>{children}</Overlay>;`
+
+#### packages/components/popover/src/use-aria-popover.ts
+- **Before**: No import for `ariaShouldCloseOnInteractOutside`
+- **After**: `import { ariaShouldCloseOnInteractOutside } from '@nextui-org/aria-utils';`
+
+#### packages/utilities/aria-utils/src/overlays/ariaShouldCloseOnInteractOutside.ts
+- **Before**: 
+  ```typescript
+  export const ariaShouldCloseOnInteractOutside = (
+    ref: RefObject<Element>,
+    ...
+  ) => { ... }
+  ```
+- **After**: 
+  ```typescript
+  export const ariaShouldCloseOnInteractOutside = (
+    triggerRef: RefObject<Element>,
+    ...
+  ) => { ... }
+  ```
+
+#### packages/components/autocomplete/package.json
+- **Before**:
+  ```json
+  {
+    "@react-aria/combobox": "3.8.4",
+    "@react-aria/focus": "3.16.2",
+    "@react-aria/interactions": "3.21.1",
+    "@react-aria/visually-hidden": "3.8.10",
+    "@react-stately/combobox": "3.8.2",
+    "@react-types/combobox": "3.10.1"
+  }
+  ```
+- **After**:
+  ```json
+  {
+    "@react-aria/combobox": "3.9.1",
+    "@react-aria/focus": "3.17.1",
+    "@react-aria/interactions": "3.21.3",
+    "@react-aria/visually-hidden": "3.8.12",
+    "@react-stately/combobox": "3.8.4",
+    "@react-types/combobox": "3.11.1"
+  }
+  ```
+
+#### packages/components/popover/package.json
+- **Before**:
+  ```json
+  {
+    "@react-aria/dialog": "3.5.12",
+    "@react-aria/focus": "3.16.2",
+    "@react-aria/interactions": "3.21.1",
+    "@react-aria/overlays": "3.21.1",
+    "@react-stately/overlays": "3.6.5",
+    "@react-types/button": "3.9.2",
+    "@react-types/overlays": "3.8.5"
+  }
+  ```
+- **After**:
+  ```json
+  {
+    "@react-aria/dialog": "3.5.14",
+    "@react-aria/focus": "3.17.1",
+    "@react-aria/interactions": "3.21.3",
+    "@react-aria/overlays": "3.22.1",
+    "@react-stately/overlays": "3.6.7",
+    "@react-types/button": "3.9.4",
+    "@react-types/overlays": "3.8.7"
+  }
+  ```
+
+#### packages/utilities/aria-utils/package.json
+- **Before**:
+  ```json
+  {
+    "@react-stately/collections": "3.10.5",
+    "@react-stately/overlays": "3.6.5",
+    "@react-types/overlays": "3.8.5"
+  }
+  ```
+- **After**:
+  ```json
+  {
+    "@react-stately/collections": "3.10.7",
+    "@react-stately/overlays": "3.6.7",
+    "@react-types/overlays": "3.8.7"
+  }
+  ```
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+### PR Summary
+
+**Title:** fix: interactions with popover & focus issues  
+**User:** wingkwong  
+**Number:** 3137  
+
+**Description:**  
+- Removed `disableFocusManagement` from Overlay to ensure `FocusScope` is present for focus trapping.  
+  - Reference: #3204  
+- Updated `react-aria` versions and revised focus behavior logic.  
+  - Reference: #3132  
+
+### Comments Summary
+
+1. **Aryan-mor:**  
+   - Asked how to test this version on their project.
+
+2. **wingkwong:**  
+   - Responded that the version cannot be tested yet as it is still a work in progress and there are parts still under internal discussion.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- Aryan-mor: How can I test this version on my project?\n- wingkwong: @Aryan-mor you can't. It's still wip. Besides, there is a part that we're still discussing internally.\n
+
+Files Changed:
+- .changeset/clever-gifts-joke.md (modified, 2 changes)\n  Patch: @@ -1,5 +1,7 @@
+ ---
+ "@nextui-org/popover": patch
++"@nextui-org/autocomplete": patch
++"@nextui-org/aria-utils": patch
+ ---
+ 
+ Fix popover focus issue (#3171, #2992)\n- .changeset/cold-peas-dream.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/modal": patch
++"@nextui-org/popover": patch
++---
++
++remove `disableFocusManagement` from Overlay\n- apps/docs/app/examples/autocomplete/fully-controlled/page.tsx (modified, 2 changes)\n  Patch: @@ -53,7 +53,7 @@ export default function Page() {
+ 
+   // Specify how each of the Autocomplete values should change when an
+   // option is selected from the list box
+-  const onSelectionChange = (key: React.Key) => {
++  const onSelectionChange = (key: React.Key | null) => {
+     setFieldState((prevState) => {
+       let selectedItem = prevState.items.find((option) => option.value === key);
+ \n- packages/components/autocomplete/package.json (modified, 12 changes)\n  Patch: @@ -53,14 +53,14 @@
+     "@nextui-org/use-aria-button": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/use-safe-layout-effect": "workspace:*",
+-    "@react-aria/combobox": "3.8.4",
+-    "@react-aria/focus": "3.16.2",
++    "@react-aria/combobox": "3.9.1",
++    "@react-aria/focus": "3.17.1",
+     "@react-aria/i18n": "3.10.2",
+-    "@react-aria/interactions": "3.21.1",
++    "@react-aria/interactions": "3.21.3",
+     "@react-aria/utils": "3.24.1",
+-    "@react-aria/visually-hidden": "3.8.10",
+-    "@react-stately/combobox": "3.8.2",
+-    "@react-types/combobox": "3.10.1",
++    "@react-aria/visually-hidden": "3.8.12",
++    "@react-stately/combobox": "3.8.4",
++    "@react-types/combobox": "3.11.1",
+     "@react-types/shared": "3.23.1"
+   },
+   "devDependencies": {\n- packages/components/modal/src/modal.tsx (modified, 6 changes)\n  Patch: @@ -17,11 +17,7 @@ const Modal = forwardRef<"div", ModalProps>((props, ref) => {
+   const {children, ...otherProps} = props;
+   const context = useModal({...otherProps, ref});
+ 
+-  const overlay = (
+-    <Overlay disableFocusManagement portalContainer={context.portalContainer}>
+-      {children}
+-    </Overlay>
+-  );
++  const overlay = <Overlay portalContainer={context.portalContainer}>{children}</Overlay>;
+ 
+   return (
+     <ModalProvider value={context}>\n- packages/components/popover/__tests__/popover.test.tsx (modified, 60 changes)\n  Patch: @@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
+ import {Button} from "@nextui-org/button";
+ 
+ import {Popover, PopoverContent, PopoverTrigger} from "../src";
++import {Select, SelectItem} from "../../select/src";
+ 
+ // e.g. console.error Warning: Function components cannot be given refs.
+ // Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
+@@ -247,29 +248,70 @@ describe("Popover", () => {
+     const wrapper = render(
+       <Popover>
+         <PopoverTrigger>
+-          <Button disableRipple data-testid="trigger-test">
+-            Open popover
+-          </Button>
++          <Button data-testid="popover-trigger">Open popover</Button>
+         </PopoverTrigger>
+         <PopoverContent>
+           <p>This is the content of the popover.</p>
+         </PopoverContent>
+       </Popover>,
+     );
+ 
+-    const trigger = wrapper.getByTestId("trigger-test");
++    const trigger = wrapper.getByTestId("popover-trigger");
+ 
+-    // open popover
+     await act(async () => {
++      // open popover
+       await userEvent.click(trigger);
++      // close popover
++      await userEvent.click(trigger);
++      // assert that the focus is restored back to trigger
++      expect(trigger).toHaveFocus();
+     });
++  });
++
++  it("should not close popover if nested select is closed", async () => {
++    const wrapper = render(
++      <Popover>
++        <PopoverTrigger>
++          <Button data-testid="popover">Open popover</Button>
++        </PopoverTrigger>
++        <PopoverContent>
++          <Select data-testid="select" label="Select country">
++            <SelectItem key="argentina">Argentina</SelectItem>
++            <SelectItem key="venezuela">Venezuela</SelectItem>
++            <SelectItem key="brazil">Brazil</SelectItem>
++          </Select>
++        </PopoverContent>
++      </Popover>,
++    );
++
++    const popover = wrapper.getByTestId("popover");
+ 
+-    // close popover
+     await act(async () => {
+-      await userEvent.click(trigger);
++      // open popover
++      await userEvent.click(popover);
++    });
++
++    // assert that the popover is open
++    expect(popover).toHaveAttribute("aria-expanded", "true");
++
++    const select = wrapper.getByTestId("select");
++
++    await act(async () => {
++      // open select
++      await userEvent.click(select);
++    });
++
++    // assert that the select is open
++    expect(select).toHaveAttribute("aria-expanded", "true");
++
++    await act(async () => {
++      await userEvent.click(document.body);
+     });
+ 
+-    // assert that the focus is restored back to trigger
+-    expect(trigger).toHaveFocus();
++    // assert that the select is closed
++    expect(select).toHaveAttribute("aria-expanded", "false");
++
++    // assert that the popover is still open
++    expect(popover).toHaveAttribute("aria-expanded", "true");
+   });
+ });\n- packages/components/popover/package.json (modified, 14 changes)\n  Patch: @@ -48,14 +48,14 @@
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/use-safe-layout-effect": "workspace:*",
+-    "@react-aria/dialog": "3.5.12",
+-    "@react-aria/focus": "3.16.2",
+-    "@react-aria/interactions": "3.21.1",
+-    "@react-aria/overlays": "3.21.1",
++    "@react-aria/dialog": "3.5.14",
++    "@react-aria/focus": "3.17.1",
++    "@react-aria/interactions": "3.21.3",
++    "@react-aria/overlays": "3.22.1",
+     "@react-aria/utils": "3.24.1",
+-    "@react-stately/overlays": "3.6.5",
+-    "@react-types/button": "3.9.2",
+-    "@react-types/overlays": "3.8.5",
++    "@react-stately/overlays": "3.6.7",
++    "@react-types/button": "3.9.4",
++    "@react-types/overlays": "3.8.7",
+     "react-remove-scroll": "^2.5.6"
+   },
+   "devDependencies": {\n- packages/components/popover/src/popover.tsx (modified, 6 changes)\n  Patch: @@ -20,11 +20,7 @@ const Popover = forwardRef<"div", PopoverProps>((props, ref) => {
+ 
+   const [trigger, content] = Children.toArray(children);
+ 
+-  const overlay = (
+-    <Overlay disableFocusManagement portalContainer={context.portalContainer}>
+-      {content}
+-    </Overlay>
+-  );
++  const overlay = <Overlay portalContainer={context.portalContainer}>{content}</Overlay>;
+ 
+   return (
+     <PopoverProvider value={context}>\n- packages/components/popover/src/use-aria-popover.ts (modified, 8 changes)\n  Patch: @@ -6,11 +6,15 @@ import {
+   useOverlayPosition,
+   AriaOverlayProps,
+ } from "@react-aria/overlays";
+-import {OverlayPlacement, ariaHideOutside, toReactAriaPlacement} from "@nextui-org/aria-utils";
++import {
++  OverlayPlacement,
++  ariaHideOutside,
++  toReactAriaPlacement,
++  ariaShouldCloseOnInteractOutside,
++} from "@nextui-org/aria-utils";
+ import {OverlayTriggerState} from "@react-stately/overlays";
+ import {mergeProps} from "@react-aria/utils";
+ import {useSafeLayoutEffect} from "@nextui-org/use-safe-layout-effect";
+-import {ariaShouldCloseOnInteractOutside} from "@nextui-org/aria-utils";
+ 
+ export interface Props {
+   /**\n- packages/utilities/aria-utils/package.json (modified, 6 changes)\n  Patch: @@ -42,9 +42,9 @@
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-rsc-utils": "workspace:*",
+     "@react-aria/utils": "3.24.1",
+-    "@react-stately/collections": "3.10.5",
+-    "@react-stately/overlays": "3.6.5",
+-    "@react-types/overlays": "3.8.5",
++    "@react-stately/collections": "3.10.7",
++    "@react-stately/overlays": "3.6.7",
++    "@react-types/overlays": "3.8.7",
+     "@react-types/shared": "3.23.1"
+   },
+   "devDependencies": {\n- packages/utilities/aria-utils/src/overlays/ariaShouldCloseOnInteractOutside.ts (modified, 46 changes)\n  Patch: @@ -4,38 +4,52 @@ import {MutableRefObject, RefObject} from "react";
+  * Used to handle the outside interaction for popover-based components
+  * e.g. dropdown, datepicker, date-range-picker, popover, select, autocomplete etc
+  * @param element - the element outside of the popover ref, originally from `shouldCloseOnInteractOutside`
+- * @param ref - The popover ref object that will interact outside with
+- * @param state - The popover state from the target component
++ * @param triggerRef - The trigger ref object
++ * @param state - The state from the popover component
+  * @param shouldFocus - a mutable ref boolean object to control the focus state
+  *                      (used in input-based component such as autocomplete)
+  * @returns - a boolean value which is same as shouldCloseOnInteractOutside
+  */
+ export const ariaShouldCloseOnInteractOutside = (
+   element: Element,
+-  ref: RefObject<Element>,
++  triggerRef: RefObject<Element>,
+   state: any,
+   shouldFocus?: MutableRefObject<boolean>,
+ ) => {
+-  let trigger = ref?.current;
++  const trigger = triggerRef?.current;
+ 
+-  // check if the click is on the underlay
+-  const clickOnUnderlay = element?.children?.[0]?.getAttribute("role") === "dialog" ?? false;
+-
+-  // if interacting outside the component
+   if (!trigger || !trigger.contains(element)) {
++    // if clicking outside the trigger,
+     // blur the component (e.g. autocomplete)
+     if (shouldFocus) shouldFocus.current = false;
+-    // if the click is not on the underlay,
+-    // trigger the state close to prevent from opening multiple popovers at the same time
+-    // e.g. open dropdown1 -> click dropdown2 (dropdown1 should be closed and dropdown2 should be open)
+-    if (!clickOnUnderlay) state.close();
++
++    // if there is focus scope block, there will be a pair of span[data-focus-scope-start] and span[data-focus-scope-end]
++    // the element with focus trap resides inbetween these two blocks
++    // we push all the elements in focus scope to `focusScopeElements`
++    const startElements = document.querySelectorAll("body > span[data-focus-scope-start]");
++    let focusScopeElements: Element[] = [];
++
++    startElements.forEach((startElement) => {
++      focusScopeElements.push(startElement.nextElementSibling!);
++    });
++
++    // if there is just one focusScopeElement, we close the state
++    // e.g. open a popover A -> click popover B
++    // then popover A should be closed and popover B should be open
++    // TODO: handle cases like modal > popover A -> click modal > popover B
++    // we should close the popover when it is the last opened
++    // however, currently ariaShouldCloseOnInteractOutside is called recursively
++    // and we need a way to check if there is something closed before that (i.e. nested elements)
++    // if so, popover shouldn't be closed in this case
++    if (focusScopeElements.length === 1) {
++      state.close();
++
++      return false;
++    }
+   } else {
+     // otherwise the component (e.g. autocomplete) should keep focused
+     if (shouldFocus) shouldFocus.current = true;
+   }
+ 
+-  // if the click is on the underlay,
+-  // clicking the overlay should close the popover instead of closing the modal
+-  // otherwise, allow interaction with other elements
+-  return clickOnUnderlay;
++  return !trigger || !trigger.contains(element);
+ };\n- pnpm-lock.yaml (modified, 558 changes)\n  Patch: @@ -723,29 +723,29 @@ importers:
+         specifier: workspace:*
+         version: link:../../hooks/use-safe-layout-effect
+       '@react-aria/combobox':
+-        specifier: 3.8.4
+-        version: 3.8.4(react-dom@18.2.0)(react@18.2.0)
++        specifier: 3.9.1
++        version: 3.9.1(react-dom@18.2.0)(react@18.2.0)
+       '@react-aria/focus':
+-        specifier: 3.16.2
+-        version: 3.16.2(react@18.2.0)
++        specifier: 3.17.1
++        version: 3.17.1(react@18.2.0)
+       '@react-aria/i18n':
+         specifier: 3.10.2
+         version: 3.10.2(react@18.2.0)
+       '@react-aria/interactions':
+-        specifier: 3.21.1
+-        version: 3.21.1(react@18.2.0)
++        specifier: 3.21.3
++        version: 3.21.3(react@18.2.0)
+       '@react-aria/utils':
+         specifier: 3.24.1
+         version: 3.24.1(react@18.2.0)
+       '@react-aria/visually-hidden':
+-        specifier: 3.8.10
+-        version: 3.8.10(react@18.2.0)
++        specifier: 3.8.12
++        version: 3.8.12(react@18.2.0)
+       '@react-stately/combobox':
+-        specifier: 3.8.2
+-        version: 3.8.2(react@18.2.0)
++        specifier: 3.8.4
++        version: 3.8.4(react@18.2.0)
+       '@react-types/combobox':
+-        specifier: 3.10.1
+-        version: 3.10.1(react@18.2.0)
++        specifier: 3.11.1
++        version: 3.11.1(react@18.2.0)
+       '@react-types/shared':
+         specifier: 3.23.1
+         version: 3.23.1(react@18.2.0)
+@@ -2018,29 +2018,29 @@ importers:
+         specifier: workspace:*
+         version: link:../../hooks/use-safe-layout-effect
+       '@react-aria/dialog':
+-        specifier: 3.5.12
+-        version: 3.5.12(react-dom@18.2.0)(react@18.2.0)
++        specifier: 3.5.14
++        version: 3.5.14(react-dom@18.2.0)(react@18.2.0)
+       '@react-aria/focus':
+-        specifier: 3.16.2
+-        version: 3.16.2(react@18.2.0)
++        specifier: 3.17.1
++        version: 3.17.1(react@18.2.0)
+       '@react-aria/interactions':
+-        specifier: 3.21.1
+-        version: 3.21.1(react@18.2.0)
++        specifier: 3.21.3
++        version: 3.21.3(react@18.2.0)
+       '@react-aria/overlays':
+-        specifier: 3.21.1
+-        version: 3.21.1(react-dom@18.2.0)(react@18.2.0)
++        specifier: 3.22.1
++        version: 3.22.1(react-dom@18.2.0)(react@18.2.0)
+       '@react-aria/utils':
+         specifier: 3.24.1
+         version: 3.24.1(react@18.2.0)
+       '@react-stately/overlays':
+-        specifier: 3.6.5
+-        version: 3.6.5(react@18.2.0)
++        specifier: 3.6.7
++        version: 3.6.7(react@18.2.0)
+       '@react-types/button':
+-        specifier: 3.9.2
+-        version: 3.9.2(react@18.2.0)
++        specifier: 3.9.4
++        version: 3.9.4(react@18.2.0)
+       '@react-types/overlays':
+-        specifier: 3.8.5
+-        version: 3.8.5(react@18.2.0)
++        specifier: 3.8.7
++        version: 3.8.7(react@18.2.0)
+       react-remove-scroll:
+         specifier: ^2.5.6
+         version: 2.5.9(@types/react@18.2.8)(react@18.2.0)
+@@ -3655,14 +3655,14 @@ importers:
+         specifier: 3.24.1
+         version: 3.24.1(react@18.2.0)
+       '@react-stately/collections':
+-        specifier: 3.10.5
+-        version: 3.10.5(react@18.2.0)
++        specifier: 3.10.7
++        version: 3.10.7(react@18.2.0)
+       '@react-stately/overlays':
+-        specifier: 3.6.5
+-        version: 3.6.5(react@18.2.0)
++        specifier: 3.6.7
++        version: 3.6.7(react@18.2.0)
+       '@react-types/overlays':
+-        specifier: 3.8.5
+-        version: 3.8.5(react@18.2.0)
++        specifier: 3.8.7
++        version: 3.8.7(react@18.2.0)
+       '@react-types/shared':
+         specifier: 3.23.1
+         version: 3.23.1(react@18.2.0)
+@@ -6727,22 +6727,47 @@ packages:
+     dependencies:
+       '@swc/helpers': 0.5.9
+ 
++  /@internationalized/date@3.5.4:
++    resolution: {integrity: sha512-qoVJVro+O0rBaw+8HPjUB1iH8Ihf8oziEnqMnvhJUSuVIrHOuZ6eNLHNvzXJKUvAtaDiqMnRlg8Z2mgh09BlUw==}
++    dependencies:
++      '@swc/helpers': 0.5.9
++    dev: false
++
+   /@internationalized/message@3.1.2:
+     resolution: {integrity: sha512-MHAWsZWz8jf6jFPZqpTudcCM361YMtPIRu9CXkYmKjJ/0R3pQRScV5C0zS+Qi50O5UAm8ecKhkXx6mWDDcF6/g==}
+     dependencies:
+       '@swc/helpers': 0.5.9
+       intl-messageformat: 10.5.11
+ 
++  /@internationalized/message@3.1.4:
++    resolution: {integrity: sha512-Dygi9hH1s7V9nha07pggCkvmRfDd3q2lWnMGvrJyrOwYMe1yj4D2T9BoH9I6MGR7xz0biQrtLPsqUkqXzIrBOw==}
++    dependencies:
++      '@swc/helpers': 0.5.9
++      intl-messageformat: 10.5.11
++    dev: false
++
+   /@internationalized/number@3.5.1:
+     resolution: {integrity: sha512-N0fPU/nz15SwR9IbfJ5xaS9Ss/O5h1sVXMZf43vc9mxEG48ovglvvzBjF53aHlq20uoR6c+88CrIXipU/LSzwg==}
+     dependencies:
+       '@swc/helpers': 0.5.9
+ 
++  /@internationalized/number@3.5.3:
++    resolution: {integrity: sha512-rd1wA3ebzlp0Mehj5YTuTI50AQEx80gWFyHcQu+u91/5NgdwBecO8BH6ipPfE+lmQ9d63vpB3H9SHoIUiupllw==}
++    dependencies:
++      '@swc/helpers': 0.5.9
++    dev: false
++
+   /@internationalized/string@3.2.1:
+     resolution: {integrity: sha512-vWQOvRIauvFMzOO+h7QrdsJmtN1AXAFVcaLWP9AseRN2o7iHceZ6bIXhBD4teZl8i91A3gxKnWBlGgjCwU6MFQ==}
+     dependencies:
+       '@swc/helpers': 0.5.9
+ 
++  /@internationalized/string@3.2.3:
++    resolution: {integrity: sha512-9kpfLoA8HegiWTeCbR2livhdVeKobCnVv8tlJ6M2jF+4tcMqDo94ezwlnrUANBWPgd8U7OXIHCk2Ov2qhk4KXw==}
++    dependencies:
++      '@swc/helpers': 0.5.9
++    dev: false
++
+   /@isaacs/cliui@8.0.2:
+     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
+     engines: {node: '>=12'}
+@@ -9635,8 +9660,8 @@ packages:
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+       '@react-stately/toggle': 3.7.2(react@18.2.0)
+       '@react-types/button': 3.9.2(react@18.2.0)
+@@ -9653,7 +9678,7 @@ packages:
+     dependencies:
+       '@internationalized/date': 3.5.2
+       '@react-aria/i18n': 3.10.2(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/live-announcer': 3.3.2
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+       '@react-stately/calendar': 3.4.4(react@18.2.0)
+@@ -9671,7 +9696,7 @@ packages:
+       react: ^18.2.0
+     dependencies:
+       '@react-aria/form': 3.0.3(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/label': 3.7.6(react@18.2.0)
+       '@react-aria/toggle': 3.10.2(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+@@ -9684,25 +9709,25 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
+-  /@react-aria/combobox@3.8.4(react-dom@18.2.0)(react@18.2.0):
+-    resolution: {integrity: sha512-HyTWIo2B/0xq0Of+sDEZCfJyf4BvCvDYIWG4UhjqL1kHIHIGQyyr+SldbVUjXVYnk8pP1eGB3ttiREujjjALPQ==}
++  /@react-aria/combobox@3.9.1(react-dom@18.2.0)(react@18.2.0):
++    resolution: {integrity: sha512-SpK92dCmT8qn8aEcUAihRQrBb5LZUhwIbDExFII8PvUvEFy/PoQHXIo3j1V29WkutDBDpMvBv/6XRCHGXPqrhQ==}
+     peerDependencies:
+       react: ^18.2.0
+       react-dom: ^18.2.0
+     dependencies:
+-      '@react-aria/i18n': 3.10.2(react@18.2.0)
+-      '@react-aria/listbox': 3.11.5(react-dom@18.2.0)(react@18.2.0)
+-      '@react-aria/live-announcer': 3.3.2
+-      '@react-aria/menu': 3.13.1(react-dom@18.2.0)(react@18.2.0)
+-      '@react-aria/overlays': 3.21.1(react-dom@18.2.0)(react@18.2.0)
+-      '@react-aria/selection': 3.17.5(react-dom@18.2.0)(react@18.2.0)
+-      '@react-aria/textfield': 3.14.3(react@18.2.0)
++      '@react-aria/i18n': 3.11.1(react@18.2.0)
++      '@react-aria/listbox': 3.12.1(react-dom@18.2.0)(react@18.2.0)
++      '@react-aria/live-announcer': 3.3.4
++      '@react-aria/menu': 3.14.1(react-dom@18.2.0)(react@18.2.0)
++      '@react-aria/overlays': 3.22.1(react-dom@18.2.0)(react@18.2.0)
++      '@react-aria/selection': 3.18.1(react-dom@18.2.0)(react@18.2.0)
++      '@react-aria/textfield': 3.14.5(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+-      '@react-stately/collections': 3.10.5(react@18.2.0)
+-      '@react-stately/combobox': 3.8.2(react@18.2.0)
+-      '@react-stately/form': 3.0.1(react@18.2.0)
+-      '@react-types/button': 3.9.2(react@18.2.0)
+-      '@react-types/combobox': 3.10.1(react@18.2.0)
++      '@react-stately/collections': 3.10.7(react@18.2.0)
++      '@react-stately/combobox': 3.8.4(react@18.2.0)
++      '@react-stately/form': 3.0.3(react@18.2.0)
++      '@react-types/button': 3.9.4(react@18.2.0)
++      '@react-types/combobox': 3.11.1(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+       '@swc/helpers': 0.5.9
+       react: 18.2.0
+@@ -9718,10 +9743,10 @@ packages:
+       '@internationalized/date': 3.5.2
+       '@internationalized/number': 3.5.1
+       '@internationalized/string': 3.2.1
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
+       '@react-aria/form': 3.0.3(react@18.2.0)
+       '@react-aria/i18n': 3.10.2(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/label': 3.7.6(react@18.2.0)
+       '@react-aria/spinbutton': 3.6.3(react-dom@18.2.0)(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+@@ -9743,7 +9768,7 @@ packages:
+       react: ^18.2.0
+       react-dom: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
+       '@react-aria/overlays': 3.21.1(react-dom@18.2.0)(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+       '@react-types/dialog': 3.5.8(react@18.2.0)
+@@ -9753,6 +9778,22 @@ packages:
+       react-dom: 18.2.0(react@18.2.0)
+     dev: false
+ 
++  /@react-aria/dialog@3.5.14(react-dom@18.2.0)(react@18.2.0):
++    resolution: {integrity: sha512-oqDCjQ8hxe3GStf48XWBf2CliEnxlR9GgSYPHJPUc69WBj68D9rVcCW3kogJnLAnwIyf3FnzbX4wSjvUa88sAQ==}
++    peerDependencies:
++      react: ^18.2.0
++      react-dom: ^18.2.0
++    dependencies:
++      '@react-aria/focus': 3.17.1(react@18.2.0)
++      '@react-aria/overlays': 3.22.1(react-dom@18.2.0)(react@18.2.0)
++      '@react-aria/utils': 3.24.1(react@18.2.0)
++      '@react-types/dialog': 3.5.10(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++      react-dom: 18.2.0(react@18.2.0)
++    dev: false
++
+   /@react-aria/focus@3.16.2(react@18.2.0):
+     resolution: {integrity: sha512-Rqo9ummmgotESfypzFjI3uh58yMpL+E+lJBbQuXkBM0u0cU2YYzu0uOrFrq3zcHk997udZvq1pGK/R+2xk9B7g==}
+     peerDependencies:
+@@ -9784,27 +9825,40 @@ packages:
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+       '@react-stately/form': 3.0.1(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+       '@swc/helpers': 0.5.9
+       react: 18.2.0
+     dev: false
+ 
++  /@react-aria/form@3.0.5(react@18.2.0):
++    resolution: {integrity: sha512-n290jRwrrRXO3fS82MyWR+OKN7yznVesy5Q10IclSTVYHHI3VI53xtAPr/WzNjJR1um8aLhOcDNFKwnNIUUCsQ==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
++      '@react-aria/utils': 3.24.1(react@18.2.0)
++      '@react-stately/form': 3.0.3(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++    dev: false
++
+   /@react-aria/grid@3.8.8(react-dom@18.2.0)(react@18.2.0):
+     resolution: {integrity: sha512-7Bzbya4tO0oIgqexwRb8D6ZdC0GASYq9f/pnkrqocgvG9e1SCld4zOioKbYQDvAK/NnbCgXmmdqFAcLM/iazaA==}
+     peerDependencies:
+       react: ^18.2.0
+       react-dom: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
+       '@react-aria/i18n': 3.10.2(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/live-announcer': 3.3.2
+       '@react-aria/selection': 3.17.5(react-dom@18.2.0)(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+-      '@react-stately/collections': 3.10.5(react@18.2.0)
++      '@react-stately/collections': 3.10.7(react@18.2.0)
+       '@react-stately/grid': 3.8.5(react@18.2.0)
+       '@react-stately/selection': 3.14.3(react@18.2.0)
+       '@react-stately/virtualizer': 3.6.8(react@18.2.0)
+@@ -9831,6 +9885,22 @@ packages:
+       '@swc/helpers': 0.5.9
+       react: 18.2.0
+ 
++  /@react-aria/i18n@3.11.1(react@18.2.0):
++    resolution: {integrity: sha512-vuiBHw1kZruNMYeKkTGGnmPyMnM5T+gT8bz97H1FqIq1hQ6OPzmtBZ6W6l6OIMjeHI5oJo4utTwfZl495GALFQ==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@internationalized/date': 3.5.4
++      '@internationalized/message': 3.1.4
++      '@internationalized/number': 3.5.3
++      '@internationalized/string': 3.2.3
++      '@react-aria/ssr': 3.9.4(react@18.2.0)
++      '@react-aria/utils': 3.24.1(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++    dev: false
++
+   /@react-aria/interactions@3.21.1(react@18.2.0):
+     resolution: {integrity: sha512-AlHf5SOzsShkHfV8GLLk3v9lEmYqYHURKcXWue0JdYbmquMRkUsf/+Tjl1+zHVAQ8lKqRnPYbTmc4AcZbqxltw==}
+     peerDependencies:
+@@ -9866,13 +9936,24 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
++  /@react-aria/label@3.7.8(react@18.2.0):
++    resolution: {integrity: sha512-MzgTm5+suPA3KX7Ug6ZBK2NX9cin/RFLsv1BdafJ6CZpmUSpWnGE/yQfYUB7csN7j31OsZrD3/P56eShYWAQfg==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-aria/utils': 3.24.1(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++    dev: false
++
+   /@react-aria/link@3.6.5(react@18.2.0):
+     resolution: {integrity: sha512-kg8CxKqkciQFzODvLAfxEs8gbqNXFZCW/ISOE2LHYKbh9pA144LVo71qO3SPeYVVzIjmZeW4vEMdZwqkNozecw==}
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+       '@react-types/link': 3.5.3(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+@@ -9900,7 +9981,7 @@ packages:
+       react: ^18.2.0
+       react-dom: ^18.2.0
+     dependencies:
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/label': 3.7.6(react@18.2.0)
+       '@react-aria/selection': 3.17.5(react-dom@18.2.0)(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+@@ -9913,21 +9994,46 @@ packages:
+       react-dom: 18.2.0(react@18.2.0)
+     dev: false
+ 
++  /@react-aria/listbox@3.12.1(react-dom@18.2.0)(react@18.2.0):
++    resolution: {integrity: sha512-7JiUp0NGykbv/HgSpmTY1wqhuf/RmjFxs1HZcNaTv8A+DlzgJYc7yQqFjP3ZA/z5RvJFuuIxggIYmgIFjaRYdA==}
++    peerDependencies:
++      react: ^18.2.0
++      react-dom: ^18.2.0
++    dependencies:
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
++      '@react-aria/label': 3.7.8(react@18.2.0)
++      '@react-aria/selection': 3.18.1(react-dom@18.2.0)(react@18.2.0)
++      '@react-aria/utils': 3.24.1(react@18.2.0)
++      '@react-stately/collections': 3.10.7(react@18.2.0)
++      '@react-stately/list': 3.10.5(react@18.2.0)
++      '@react-types/listbox': 3.4.9(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++      react-dom: 18.2.0(react@18.2.0)
++    dev: false
++
+   /@react-aria/live-announcer@3.3.2:
+     resolution: {integrity: sha512-aOyPcsfyY9tLCBhuUaYCruwcd1IrYLc47Ou+J7wMzjeN9v4lsaEfiN12WFl8pDqOwfy6/7It2wmlm5hOuZY8wQ==}
+     dependencies:
+       '@swc/helpers': 0.5.9
+     dev: false
+ 
++  /@react-aria/live-announcer@3.3.4:
++    resolution: {integrity: sha512-w8lxs35QrRrn6pBNzVfyGOeqWdxeVKf9U6bXIVwhq7rrTqRULL8jqy8RJIMfIs1s8G5FpwWYjyBOjl2g5Cu1iA==}
++    dependencies:
++      '@swc/helpers': 0.5.9
++    dev: false
++
+   /@react-aria/menu@3.13.1(react-dom@18.2.0)(react@18.2.0):
+     resolution: {integrity: sha512-jF80YIcvD16Fgwm5pj7ViUE3Dj7z5iewQixLaFVdvpgfyE58SD/ZVU9/JkK5g/03DYM0sjpUKZGkdFxxw8eKnw==}
+     peerDependencies:
+       react: ^18.2.0
+       react-dom: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
+       '@react-aria/i18n': 3.10.2(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/overlays': 3.21.1(react-dom@18.2.0)(react@18.2.0)
+       '@react-aria/selection': 3.17.5(react-dom@18.2.0)(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+@@ -9942,21 +10048,65 @@ packages:
+       react-dom: 18.2.0(react@18.2.0)
+     dev: false
+ 
++  /@react-aria/menu@3.14.1(react-dom@18.2.0)(react@18.2.0):
++    resolution: {integrity: sha512-BYliRb38uAzq05UOFcD5XkjA5foQoXRbcH3ZufBsc4kvh79BcP1PMW6KsXKGJ7dC/PJWUwCui6QL1kUg8PqMHA==}
++    peerDependencies:
++      react: ^18.2.0
++      react-dom: ^18.2.0
++    dependencies:
++      '@react-aria/focus': 3.17.1(react@18.2.0)
++      '@react-aria/i18n': 3.11.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
++      '@react-aria/overlays': 3.22.1(react-dom@18.2.0)(react@18.2.0)
++      '@react-aria/selection': 3.18.1(react-dom@18.2.0)(react@18.2.0)
++      '@react-aria/utils': 3.24.1(react@18.2.0)
++      '@react-stately/collections': 3.10.7(react@18.2.0)
++      '@react-stately/menu': 3.7.1(react@18.2.0)
++      '@react-stately/tree': 3.8.1(react@18.2.0)
++      '@react-types/button': 3.9.4(react@18.2.0)
++      '@react-types/menu': 3.9.9(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++      react-dom: 18.2.0(react@18.2.0)
++    dev: false
++
+   /@react-aria/overlays@3.21.1(react-dom@18.2.0)(react@18.2.0):
+     resolution: {integrity: sha512-djEBDF+TbIIOHWWNpdm19+z8xtY8U+T+wKVQg/UZ6oWnclSqSWeGl70vu73Cg4HVBJ4hKf1SRx4Z/RN6VvH4Yw==}
+     peerDependencies:
+       react: ^18.2.0
+       react-dom: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
+       '@react-aria/i18n': 3.10.2(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/ssr': 3.9.2(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+-      '@react-aria/visually-hidden': 3.8.10(react@18.2.0)
+-      '@react-stately/overlays': 3.6.5(react@18.2.0)
+-      '@react-types/button': 3.9.2(react@18.2.0)
+-      '@react-types/overlays': 3.8.5(react@18.2.0)
++      '@react-aria/visually-hidden': 3.8.12(react@18.2.0)
++      '@react-stately/overlays': 3.6.7(react@18.2.0)
++      '@react-types/button': 3.9.4(react@18.2.0)
++      '@react-types/overlays': 3.8.7(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++      react-dom: 18.2.0(react@18.2.0)
++    dev: false
++
++  /@react-aria/overlays@3.22.1(react-dom@18.2.0)(react@18.2.0):
++    resolution: {integrity: sha512-GHiFMWO4EQ6+j6b5QCnNoOYiyx1Gk8ZiwLzzglCI4q1NY5AG2EAmfU4Z1+Gtrf2S5Y0zHbumC7rs9GnPoGLUYg==}
++    peerDependencies:
++      react: ^18.2.0
++      react-dom: ^18.2.0
++    dependencies:
++      '@react-aria/focus': 3.17.1(react@18.2.0)
++      '@react-aria/i18n': 3.11.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
++      '@react-aria/ssr': 3.9.4(react@18.2.0)
++      '@react-aria/utils': 3.24.1(react@18.2.0)
++      '@react-aria/visually-hidden': 3.8.12(react@18.2.0)
++      '@react-stately/overlays': 3.6.7(react@18.2.0)
++      '@react-types/button': 3.9.4(react@18.2.0)
++      '@react-types/overlays': 3.8.7(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+       '@swc/helpers': 0.5.9
+       react: 18.2.0
+@@ -9982,10 +10132,10 @@ packages:
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
+       '@react-aria/form': 3.0.3(react@18.2.0)
+       '@react-aria/i18n': 3.10.2(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/label': 3.7.6(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+       '@react-stately/radio': 3.10.2(react@18.2.0)
+@@ -10012,14 +10162,31 @@ packages:
+       react-dom: 18.2.0(react@18.2.0)
+     dev: false
+ 
++  /@react-aria/selection@3.18.1(react-dom@18.2.0)(react@18.2.0):
++    resolution: {integrity: sha512-GSqN2jX6lh7v+ldqhVjAXDcrWS3N4IsKXxO6L6Ygsye86Q9q9Mq9twWDWWu5IjHD6LoVZLUBCMO+ENGbOkyqeQ==}
++    peerDependencies:
++      react: ^18.2.0
++      react-dom: ^18.2.0
++    dependencies:
++      '@react-aria/focus': 3.17.1(react@18.2.0)
++      '@react-aria/i18n': 3.11.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
++      '@react-aria/utils': 3.24.1(react@18.2.0)
++      '@react-stately/selection': 3.15.1(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++      react-dom: 18.2.0(react@18.2.0)
++    dev: false
++
+   /@react-aria/slider@3.7.6(react@18.2.0):
+     resolution: {integrity: sha512-ZeZhyHzhk9gxGuThPKgX2K3RKsxPxsFig1iYoJvqP8485NtHYQIPht2YcpEKA9siLxGF0DR9VCfouVhSoW0AEA==}
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
+       '@react-aria/i18n': 3.10.2(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/label': 3.7.6(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+       '@react-stately/slider': 3.5.2(react@18.2.0)
+@@ -10038,7 +10205,7 @@ packages:
+       '@react-aria/i18n': 3.10.2(react@18.2.0)
+       '@react-aria/live-announcer': 3.3.2
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+-      '@react-types/button': 3.9.2(react@18.2.0)
++      '@react-types/button': 3.9.4(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+       '@swc/helpers': 0.5.9
+       react: 18.2.0
+@@ -10081,13 +10248,13 @@ packages:
+       react: ^18.2.0
+       react-dom: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
+       '@react-aria/grid': 3.8.8(react-dom@18.2.0)(react@18.2.0)
+       '@react-aria/i18n': 3.10.2(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/live-announcer': 3.3.2
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+-      '@react-aria/visually-hidden': 3.8.10(react@18.2.0)
++      '@react-aria/visually-hidden': 3.8.12(react@18.2.0)
+       '@react-stately/collections': 3.10.5(react@18.2.0)
+       '@react-stately/flags': 3.0.1
+       '@react-stately/table': 3.11.6(react@18.2.0)
+@@ -10107,7 +10274,7 @@ packages:
+       react: ^18.2.0
+       react-dom: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
+       '@react-aria/i18n': 3.10.2(react@18.2.0)
+       '@react-aria/selection': 3.17.5(react-dom@18.2.0)(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+@@ -10124,7 +10291,7 @@ packages:
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
+       '@react-aria/form': 3.0.3(react@18.2.0)
+       '@react-aria/label': 3.7.6(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+@@ -10136,13 +10303,30 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
++  /@react-aria/textfield@3.14.5(react@18.2.0):
++    resolution: {integrity: sha512-hj7H+66BjB1iTKKaFXwSZBZg88YT+wZboEXZ0DNdQB2ytzoz/g045wBItUuNi4ZjXI3P+0AOZznVMYadWBAmiA==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-aria/focus': 3.17.1(react@18.2.0)
++      '@react-aria/form': 3.0.5(react@18.2.0)
++      '@react-aria/label': 3.7.8(react@18.2.0)
++      '@react-aria/utils': 3.24.1(react@18.2.0)
++      '@react-stately/form': 3.0.3(react@18.2.0)
++      '@react-stately/utils': 3.10.1(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@react-types/textfield': 3.9.3(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++    dev: false
++
+   /@react-aria/toggle@3.10.2(react@18.2.0):
+     resolution: {integrity: sha512-DgitscHWgI6IFgnvp2HcMpLGX/cAn+XX9kF5RJQbRQ9NqUgruU5cEEGSOLMrEJ6zXDa2xmOiQ+kINcyNhA+JLg==}
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+       '@react-stately/toggle': 3.7.2(react@18.2.0)
+       '@react-types/checkbox': 3.7.1(react@18.2.0)
+@@ -10155,8 +10339,8 @@ packages:
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-aria/focus': 3.16.2(react@18.2.0)
+-      '@react-aria/interactions': 3.21.1(react@18.2.0)
++      '@react-aria/focus': 3.17.1(react@18.2.0)
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
+       '@react-aria/utils': 3.24.1(react@18.2.0)
+       '@react-stately/tooltip': 3.4.7(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+@@ -10218,6 +10402,18 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
++  /@react-aria/visually-hidden@3.8.12(react@18.2.0):
++    resolution: {integrity: sha512-Bawm+2Cmw3Xrlr7ARzl2RLtKh0lNUdJ0eNqzWcyx4c0VHUAWtThmH5l+HRqFUGzzutFZVo89SAy40BAbd0gjVw==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-aria/interactions': 3.21.3(react@18.2.0)
++      '@react-aria/utils': 3.24.1(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++    dev: false
++
+   /@react-bootstrap/babel-preset@2.2.0:
+     resolution: {integrity: sha512-lJNNow6APKf1pH5/R60i7c/QGYbx/VCKdqzWWIMDyyXvNDGFwcM2T0DNOBqe9Rjz8rEROS/mKGLN3C1Im6+adQ==}
+     dependencies:
+@@ -10292,18 +10488,28 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
+-  /@react-stately/combobox@3.8.2(react@18.2.0):
+-    resolution: {integrity: sha512-f+IHuFW848VoMbvTfSakn2WIh2urDxO355LrKxnisXPCkpQHpq3lvT2mJtKJwkPxjAy7xPjpV8ejgga2R6p53Q==}
++  /@react-stately/collections@3.10.7(react@18.2.0):
++    resolution: {integrity: sha512-KRo5O2MWVL8n3aiqb+XR3vP6akmHLhLWYZEmPKjIv0ghQaEebBTrN3wiEjtd6dzllv0QqcWvDLM1LntNfJ2TsA==}
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-stately/collections': 3.10.5(react@18.2.0)
+-      '@react-stately/form': 3.0.1(react@18.2.0)
+-      '@react-stately/list': 3.10.3(react@18.2.0)
+-      '@react-stately/overlays': 3.6.5(react@18.2.0)
+-      '@react-stately/select': 3.6.2(react@18.2.0)
+-      '@react-stately/utils': 3.9.1(react@18.2.0)
+-      '@react-types/combobox': 3.10.1(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++    dev: false
++
++  /@react-stately/combobox@3.8.4(react@18.2.0):
++    resolution: {integrity: sha512-iLVGvKRRz0TeJXZhZyK783hveHpYA6xovOSdzSD+WGYpiPXo1QrcrNoH3AE0Z2sHtorU+8nc0j58vh5PB+m2AA==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-stately/collections': 3.10.7(react@18.2.0)
++      '@react-stately/form': 3.0.3(react@18.2.0)
++      '@react-stately/list': 3.10.5(react@18.2.0)
++      '@react-stately/overlays': 3.6.7(react@18.2.0)
++      '@react-stately/select': 3.6.4(react@18.2.0)
++      '@react-stately/utils': 3.10.1(react@18.2.0)
++      '@react-types/combobox': 3.11.1(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+       '@swc/helpers': 0.5.9
+       react: 18.2.0
+@@ -10350,12 +10556,22 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
++  /@react-stately/form@3.0.3(react@18.2.0):
++    resolution: {integrity: sha512-92YYBvlHEWUGUpXgIaQ48J50jU9XrxfjYIN8BTvvhBHdD63oWgm8DzQnyT/NIAMzdLnhkg7vP+fjG8LjHeyIAg==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++    dev: false
++
+   /@react-stately/grid@3.8.5(react@18.2.0):
+     resolution: {integrity: sha512-KCzi0x0p1ZKK+OptonvJqMbn6Vlgo6GfOIlgcDd0dNYDP8TJ+3QFJAFre5mCr7Fubx7LcAOio4Rij0l/R8fkXQ==}
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-stately/collections': 3.10.5(react@18.2.0)
++      '@react-stately/collections': 3.10.7(react@18.2.0)
+       '@react-stately/selection': 3.14.3(react@18.2.0)
+       '@react-types/grid': 3.2.4(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+@@ -10383,26 +10599,51 @@ packages:
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-stately/collections': 3.10.5(react@18.2.0)
++      '@react-stately/collections': 3.10.7(react@18.2.0)
+       '@react-stately/selection': 3.14.3(react@18.2.0)
+       '@react-stately/utils': 3.9.1(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+       '@swc/helpers': 0.5.9
+       react: 18.2.0
+     dev: false
+ 
++  /@react-stately/list@3.10.5(react@18.2.0):
++    resolution: {integrity: sha512-fV9plO+6QDHiewsYIhboxcDhF17GO95xepC5ki0bKXo44gr14g/LSo/BMmsaMnV+1BuGdBunB05bO4QOIaigXA==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-stately/collections': 3.10.7(react@18.2.0)
++      '@react-stately/selection': 3.15.1(react@18.2.0)
++      '@react-stately/utils': 3.10.1(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++    dev: false
++
+   /@react-stately/menu@3.6.1(react@18.2.0):
+     resolution: {integrity: sha512-3v0vkTm/kInuuG8jG7jbxXDBnMQcoDZKWvYsBQq7+POt0LmijbLdbdZPBoz9TkZ3eo/OoP194LLHOaFTQyHhlw==}
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-stately/overlays': 3.6.5(react@18.2.0)
++      '@react-stately/overlays': 3.6.7(react@18.2.0)
+       '@react-types/menu': 3.9.7(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+       '@swc/helpers': 0.5.9
+       react: 18.2.0
+     dev: false
+ 
++  /@react-stately/menu@3.7.1(react@18.2.0):
++    resolution: {integrity: sha512-mX1w9HHzt+xal1WIT2xGrTQsoLvDwuB2R1Er1MBABs//MsJzccycatcgV/J/28m6tO5M9iuFQQvLV+i1dCtodg==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-stately/overlays': 3.6.7(react@18.2.0)
++      '@react-types/menu': 3.9.9(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++    dev: false
++
+   /@react-stately/overlays@3.6.5(react@18.2.0):
+     resolution: {integrity: sha512-U4rCFj6TPJPXLUvYXAcvh+yP/CO2W+7f0IuqP7ZZGE+Osk9qFkT+zRK5/6ayhBDFpmueNfjIEAzT9gYPQwNHFw==}
+     peerDependencies:
+@@ -10414,6 +10655,17 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
++  /@react-stately/overlays@3.6.7(react@18.2.0):
++    resolution: {integrity: sha512-6zp8v/iNUm6YQap0loaFx6PlvN8C0DgWHNlrlzMtMmNuvjhjR0wYXVaTfNoUZBWj25tlDM81ukXOjpRXg9rLrw==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-stately/utils': 3.10.1(react@18.2.0)
++      '@react-types/overlays': 3.8.7(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++    dev: false
++
+   /@react-stately/radio@3.10.2(react@18.2.0):
+     resolution: {integrity: sha512-JW5ZWiNMKcZvMTsuPeWJQLHXD5rlqy7Qk6fwUx/ZgeibvMBW/NnW19mm2+IMinzmbtERXvR6nsiA837qI+4dew==}
+     peerDependencies:
+@@ -10427,15 +10679,15 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
+-  /@react-stately/select@3.6.2(react@18.2.0):
+-    resolution: {integrity: sha512-duOxdHKol93h6Ew6fap6Amz+zngoERKZLSKVm/8I8uaBgkoBhEeTFv7mlpHTgINxymMw3mMrvy6GL/gfKFwkqg==}
++  /@react-stately/select@3.6.4(react@18.2.0):
++    resolution: {integrity: sha512-whZgF1N53D0/dS8tOFdrswB0alsk5Q5620HC3z+5f2Hpi8gwgAZ8TYa+2IcmMYRiT+bxVuvEc/NirU9yPmqGbA==}
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-stately/form': 3.0.1(react@18.2.0)
+-      '@react-stately/list': 3.10.3(react@18.2.0)
+-      '@react-stately/overlays': 3.6.5(react@18.2.0)
+-      '@react-types/select': 3.9.2(react@18.2.0)
++      '@react-stately/form': 3.0.3(react@18.2.0)
++      '@react-stately/list': 3.10.5(react@18.2.0)
++      '@react-stately/overlays': 3.6.7(react@18.2.0)
++      '@react-types/select': 3.9.4(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+       '@swc/helpers': 0.5.9
+       react: 18.2.0
+@@ -10446,13 +10698,25 @@ packages:
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-stately/collections': 3.10.5(react@18.2.0)
++      '@react-stately/collections': 3.10.7(react@18.2.0)
+       '@react-stately/utils': 3.9.1(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+       '@swc/helpers': 0.5.9
+       react: 18.2.0
+     dev: false
+ 
++  /@react-stately/selection@3.15.1(react@18.2.0):
++    resolution: {integrity: sha512-6TQnN9L0UY9w19B7xzb1P6mbUVBtW840Cw1SjgNXCB3NPaCf59SwqClYzoj8O2ZFzMe8F/nUJtfU1NS65/OLlw==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-stately/collections': 3.10.7(react@18.2.0)
++      '@react-stately/utils': 3.10.1(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++    dev: false
++
+   /@react-stately/slider@3.5.2(react@18.2.0):
+     resolution: {integrity: sha512-ntH3NLRG+AwVC7q4Dx9DcmMkMh9vmHjHNXAgaoqNjhvwfSIae7sQ69CkVe6XeJjIBy6LlH81Kgapz+ABe5a1ZA==}
+     peerDependencies:
+@@ -10470,7 +10734,7 @@ packages:
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-stately/collections': 3.10.5(react@18.2.0)
++      '@react-stately/collections': 3.10.7(react@18.2.0)
+       '@react-stately/flags': 3.0.1
+       '@react-stately/grid': 3.8.5(react@18.2.0)
+       '@react-stately/selection': 3.14.3(react@18.2.0)
+@@ -10510,7 +10774,7 @@ packages:
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-stately/overlays': 3.6.5(react@18.2.0)
++      '@react-stately/overlays': 3.6.7(react@18.2.0)
+       '@react-types/tooltip': 3.4.7(react@18.2.0)
+       '@swc/helpers': 0.5.9
+       react: 18.2.0
+@@ -10529,6 +10793,19 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
++  /@react-stately/tree@3.8.1(react@18.2.0):
++    resolution: {integrity: sha512-LOdkkruJWch3W89h4B/bXhfr0t0t1aRfEp+IMrrwdRAl23NaPqwl5ILHs4Xu5XDHqqhg8co73pHrJwUyiTWEjw==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-stately/collections': 3.10.7(react@18.2.0)
++      '@react-stately/selection': 3.15.1(react@18.2.0)
++      '@react-stately/utils': 3.10.1(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      '@swc/helpers': 0.5.9
++      react: 18.2.0
++    dev: false
++
+   /@react-stately/utils@3.10.1(react@18.2.0):
+     resolution: {integrity: sha512-VS/EHRyicef25zDZcM/ClpzYMC5i2YGN6uegOeQawmgfGjb02yaCX0F0zR69Pod9m2Hr3wunTbtpgVXvYbZItg==}
+     peerDependencies:
+@@ -10585,6 +10862,15 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
++  /@react-types/button@3.9.4(react@18.2.0):
++    resolution: {integrity: sha512-raeQBJUxBp0axNF74TXB8/H50GY8Q3eV6cEKMbZFP1+Dzr09Ngv0tJBeW0ewAxAguNH5DRoMUAUGIXtSXskVdA==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      react: 18.2.0
++    dev: false
++
+   /@react-types/calendar@3.4.4(react@18.2.0):
+     resolution: {integrity: sha512-hV1Thmb/AES5OmfPvvmyjSkmsEULjiDfA7Yyy70L/YKuSNKb7Su+Bf2VnZuDW3ec+GxO4JJNlpJ0AkbphWBvcg==}
+     peerDependencies:
+@@ -10604,8 +10890,8 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
+-  /@react-types/combobox@3.10.1(react@18.2.0):
+-    resolution: {integrity: sha512-XMno1rgVRNta49vf5nV7VJpVSVAV20tt79t618gG1qRKH5Kt2Cy8lz2fQ5vHG6UTv/6jUOvU8g5Pc93sLaTmoA==}
++  /@react-types/combobox@3.11.1(react@18.2.0):
++    resolution: {integrity: sha512-UNc3OHt5cUt5gCTHqhQIqhaWwKCpaNciD8R7eQazmHiA9fq8ROlV+7l3gdNgdhJbTf5Bu/V5ISnN7Y1xwL3zqQ==}
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+@@ -10625,12 +10911,22 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
++  /@react-types/dialog@3.5.10(react@18.2.0):
++    resolution: {integrity: sha512-S9ga+edOLNLZw7/zVOnZdT5T40etpzUYBXEKdFPbxyPYnERvRxJAsC1/ASuBU9fQAXMRgLZzADWV+wJoGS/X9g==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-types/overlays': 3.8.7(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      react: 18.2.0
++    dev: false
++
+   /@react-types/dialog@3.5.8(react@18.2.0):
+     resolution: {integrity: sha512-RX8JsMvty8ADHRqVEkppoynXLtN4IzUh8d5z88UEBbcvWKlHfd6bOBQjQcBH3AUue5wjfpPIt6brw2VzgBY/3Q==}
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-types/overlays': 3.8.5(react@18.2.0)
++      '@react-types/overlays': 3.8.7(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+       react: 18.2.0
+     dev: false
+@@ -10670,12 +10966,31 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
++  /@react-types/listbox@3.4.9(react@18.2.0):
++    resolution: {integrity: sha512-S5G+WmNKUIOPZxZ4svWwWQupP3C6LmVfnf8QQmPDvwYXGzVc0WovkqUWyhhjJirFDswTXRCO9p0yaTHHIlkdwQ==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      react: 18.2.0
++    dev: false
++
+   /@react-types/menu@3.9.7(react@18.2.0):
+     resolution: {integrity: sha512-K6KhloJVoGsqwkdeez72fkNI9dfrmLI/sNrB4XuOKo2crDQ/eyZYWyJmzz8giz/tHME9w774k487rVoefoFh5w==}
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-types/overlays': 3.8.5(react@18.2.0)
++      '@react-types/overlays': 3.8.7(react@18.2.0)
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      react: 18.2.0
++    dev: false
++
++  /@react-types/menu@3.9.9(react@18.2.0):
++    resolution: {integrity: sha512-FamUaPVs1Fxr4KOMI0YcR2rYZHoN7ypGtgiEiJ11v/tEPjPPGgeKDxii0McCrdOkjheatLN1yd2jmMwYj6hTDg==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-types/overlays': 3.8.7(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+       react: 18.2.0
+     dev: false
+@@ -10689,6 +11004,15 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
++  /@react-types/overlays@3.8.7(react@18.2.0):
++    resolution: {integrity: sha512-zCOYvI4at2DkhVpviIClJ7bRrLXYhSg3Z3v9xymuPH3mkiuuP/dm8mUCtkyY4UhVeUTHmrQh1bzaOP00A+SSQA==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      react: 18.2.0
++    dev: false
++
+   /@react-types/progress@3.5.2(react@18.2.0):
+     resolution: {integrity: sha512-aQql22kusEudsHwDEzq6y/Mh29AM+ftRDKdS5E5g4MkCY5J4FMbOYco1T5So83NIvvG9+eKcxPoJUMjQQACAyA==}
+     peerDependencies:
+@@ -10716,6 +11040,15 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
++  /@react-types/select@3.9.4(react@18.2.0):
++    resolution: {integrity: sha512-xI7dnOW2st91fPPcv6hdtrTdcfetYiqZuuVPZ5TRobY7Q10/Zqqe/KqtOw1zFKUj9xqNJe4Ov3xP5GSdcO60Eg==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      react: 18.2.0
++    dev: false
++
+   /@react-types/shared@3.23.1(react@18.2.0):
+     resolution: {integrity: sha512-5d+3HbFDxGZjhbMBeFHRQhexMFt4pUce3okyRtUVKbbedQFUrtXSBg9VszgF2RTeQDKDkMCIQDtz5ccP/Lk1gw==}
+     peerDependencies:
+@@ -10769,12 +11102,21 @@ packages:
+       react: 18.2.0
+     dev: false
+ 
++  /@react-types/textfield@3.9.3(react@18.2.0):
++    resolution: {integrity: sha512-DoAY6cYOL0pJhgNGI1Rosni7g72GAt4OVr2ltEx2S9ARmFZ0DBvdhA9lL2nywcnKMf27PEJcKMXzXc10qaHsJw==}
++    peerDependencies:
++      react: ^18.2.0
++    dependencies:
++      '@react-types/shared': 3.23.1(react@18.2.0)
++      react: 18.2.0
++    dev: false
++
+   /@react-types/tooltip@3.4.7(react@18.2.0):
+     resolution: {integrity: sha512-rV4HZRQxLRNhe24yATOxnFQtGRUmsR7mqxMupXCmd1vrw8h+rdKlQv1zW2q8nALAKNmnRXZJHxYQ1SFzb98fgg==}
+     peerDependencies:
+       react: ^18.2.0
+     dependencies:
+-      '@react-types/overlays': 3.8.5(react@18.2.0)
++      '@react-types/overlays': 3.8.7(react@18.2.0)
+       '@react-types/shared': 3.23.1(react@18.2.0)
+       react: 18.2.0
+     dev: false\n

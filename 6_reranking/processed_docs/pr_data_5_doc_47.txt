@@ -1,0 +1,817 @@
+Pull Request Number: 3698
+Title: fix(select): pass portalContainer to the pop-over
+Base Branch: canary
+Head Branch: macci001/pass-portal-container-prop-to-popover-in-select
+Author: macci001
+URL: https://github.com/nextui-org/nextui/pull/3698
+State: OPEN
+Created At: 2024-09-01T08:13:09Z
+Merged At: None
+Participants: macci001, wingkwong, jrgarciadev
+
+Description:
+Closes #3695
+Closes #3571
+📝 Description
+
+Currently the select component do not pass the portalContainer prop to it's child pop-over.
+The pop-over hence takes default value of portalContainer i.e document.body
+Due to this (when parent of the select component is scrollable) the scroll closes the pop-over immediately due to the scroll.
+This makes it impossible for the pop-over to open.
+The PR adds the portalContainer prop to the pop-over.
+
+⛳️ Current behavior (updates)
+
+When trying to open the select, after selecting an element after certain height, the parent scrolls which closes the pop-over.
+
+
+  
+    
+    
+
+    Screen.Recording.2024-09-01.at.1.07.52.PM.mov
+    
+  
+
+  
+
+  
+
+
+
+The pop-over does not get added as a child of  base slot of select
+
+
+🚀 New behavior
+
+The select works.
+
+
+  
+    
+    
+
+    Screen.Recording.2024-09-01.at.1.01.49.PM.mov
+    
+  
+
+  
+
+  
+
+
+
+The pop-over gets added as a child of  base slot of select
+
+
+💣 Is this a breaking change (Yes/No): No
+
+Summary by CodeRabbit
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced a portalContainer prop for the select component's pop-over, improving usability within scrollable parent components.
+Added a previewHeight property to enhance visual consistency in documentation examples.
+
+
+
+Bug Fixes
+
+Removed the items-center class from the select component's wrapper to adjust layout styling.
+
+
+
+Tests
+
+Added a test case to ensure the select component remains open when the parent is scrollable, verifying improved functionality and user experience.
+
+
+
+These changes collectively enhance the user experience by ensuring the pop-over remains accessible and functional.
+
+Commits:
+- fix(select): pass portalContainer to the pop-over\n- feat(select): adding the unit test\n- fix(select): updating the changeset comment\n- chore(docs): add preview height to the docs\n
+
+Labels:
+🚥 Status: On Hold
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: ae0f5fae267420874d68cc2b33e4ddd75a40c025
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name               | Type  |
+| ------------------ | ----- |
+| @nextui-org/select | Patch |
+| @nextui-org/react  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/macci001/nextui/new/macci001/pass-portal-container-prop-to-popover-in-select?filename=.changeset/twelve-dodos-fold.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A---%0A%0Afix(select)%3A%20pass%20portalContainer%20to%20the%20pop-over%0A)
+
+\n- vercel: @macci001 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2229de5440ceee0094c0914c11e6bc38f12a327112%22%7D%2C%22id%22%3A%22QmZ4SxDYAE1VEjhc52nWWwkTgEjuKShXDJZRoxTmbag4ZF%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3698%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update enhances the select component by introducing a `portalContainer` prop for its child pop-over, allowing developers to specify a custom container. This change addresses usability issues with scrollable parent components, ensuring the pop-over remains accessible. Additionally, a new reference, `baseRef`, is added to manage a base HTML element, improving the component's interaction and accessibility without altering its core logic.
+
+## Changes
+
+| Files                                      | Change Summary                                                                 |
+|--------------------------------------------|--------------------------------------------------------------------------------|
+| `packages/components/select/src/use-select.ts` | Added `portalContainer` prop to manage pop-over behavior; introduced `baseRef` for improved element interaction. |
+| `packages/components/select/__tests__/select.test.tsx` | Added a test case to ensure the select component remains open when the parent is scrollable. |
+| `apps/docs/content/components/select/open-state.ts` | Removed `items-center` class from the wrapping `div` element, affecting layout styling. |
+| `apps/docs/content/docs/components/select.mdx` | Added `previewHeight` property to `CodeDemo` component instances for visual consistency. |
+
+## Assessment against linked issues
+
+| Objective                                           | Addressed | Explanation                             |
+|----------------------------------------------------|-----------|-----------------------------------------|
+| Select component auto closes in flex layout (#3695) | ✅         |                                         |
+| Select scrolls page and immediately closes popover on click (#3571) | ✅         |                                         |
+
+## Possibly related PRs
+
+- **#2041**: Improves RTL support for the select component, which may relate to overall functionality enhancements.
+- **#2854**: Addresses focus behavior in popovers, relevant to the `portalContainer` prop changes.
+- **#3414**: Fixes popover behavior while scrolling, related to enhancements made in this PR.
+- **#3568**: Resolves issues with the select menu closing unexpectedly, relevant to the changes in this PR.
+- **#3663**: Fixes color discrepancies in the select component, aligning with the main PR's focus on usability and visual consistency.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```
+.changeset/clean-eagles-clean.md: ## AI-generated summary of changes
+
+This update introduces a significant enhancement to the select component by adding the `portalContainer` prop to its child pop-over. Previously, the pop-over defaulted to using `document.body` as its container, which caused issues when the parent of the select component was scrollable. The new logic ensures that the `portalContainer` prop is correctly passed to the pop-over, allowing developers to specify a different container. This improvement enhances usability and ensures that the pop-over can function correctly even in scrollable contexts, ultimately providing better control over its positioning and behavior. 
+
+Additionally, the changes in the `use-select.ts` file introduce a new reference, `baseRef`, which is used to manage a new HTML div element. This addition enhances the component's ability to handle its base element, likely improving its integration with the overall UI structure. The `baseRef` is initialized using `useRef` and is passed to the `getBaseProps` function, which constructs properties for the base element, including a reference to `baseRef`. The dependency array of the `useCallback` hook for `getBaseProps` is updated to include `baseRef`, ensuring that it reacts to changes in `baseRef`. Furthermore, `baseRef` is utilized in the `getPopoverProps` function to set the `portalContainer` property, allowing for dynamic rendering of the popover based on the current state of `baseRef`. The overall control flow is adjusted to accommodate these changes, enhancing the component's functionality and responsiveness.
+
+The diff also reflects a minor modification in the JSX structure of the `App` component within the `open-state.ts` file. Specifically, the change involves the removal of the `items-center` class from the `div` element that wraps the `Select` component. This alteration affects the layout styling of the component, as the `items-center` class is typically used in Tailwind CSS to align items vertically in the center of a flex container. By removing this class, the vertical alignment of the items within the `div` may change, potentially impacting the visual presentation of the `Select` component and its label. However, the core functionality and logic of the component remain unchanged. Additionally, modifications to the `select.mdx` documentation file enhance the `CodeDemo` component instances by adding a `previewHeight` property to each, standardizing the height of the previews across various examples and improving the visual consistency of the documentation.
+
+## Alterations to the declarations of exported or public entities
+
+- Added: `portalContainer` prop in the select component's child pop-over in `@nextui-org/select`
+- Added: `const baseRef = useRef<HTMLDivElement>(null);` in `useSelect` function in `packages/components/select/src/use-select.ts`
+- Removed: `items-center` class from the `div` element in `apps/docs/content/components/select/open-state.ts`
+- Added: `previewHeight` property to `CodeDemo` component instances in `apps/docs/content/docs/components/select.mdx`
+
+---
+
+packages/components/select/__tests__/select.test.tsx: ## AI-generated summary of changes
+
+The diff introduces a new test case within the existing test suite for the `Select` component, specifically focusing on its behavior when the parent container is scrollable. The newly added test, titled "should not close when parent is scrollable," verifies that the `Select` component remains open when clicked, even if the parent element is scrollable. This is achieved by rendering the `Select` component within a scrollable wrapper and simulating user interactions using `fireEvent` and `userEvent`. The test checks that the `aria-expanded` attribute remains set to "true" after clicking the select element, confirming that the dropdown does not close unexpectedly. Additionally, the test ensures that the correct number of listbox items is rendered and that a selection can be made without closing the dropdown. The import statement for the testing library has been updated to include `fireEvent`, which is utilized in the new test case.
+
+## Alterations to the declarations of exported or public entities
+
+- Added: `it("should not close when parent is scrollable", async () => {...})` in the test suite for `Select` in `packages/components/select/__tests__/select.test.tsx`
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(select): pass portalContainer to the pop-over" addresses issues with the select component in the NextUI library, specifically resolving problems identified in issues #3695 and #3571. The current implementation fails to pass the `portalContainer` prop to its child pop-over, causing the pop-over to default to `document.body`. This behavior leads to the pop-over closing immediately when the parent component is scrollable, making it challenging to open the pop-over after selecting an item. The proposed changes ensure that the `portalContainer` prop is correctly passed to the pop-over, allowing it to function as intended. The PR demonstrates that the select component now operates correctly, with the pop-over being added as a child of the `base` slot of the select component, thus resolving the scrolling issue.
+
+## Objectives from Linked Issues
+
+The linked issue #3695 describes a bug where the select component fails to open after a value is selected, particularly in a flex layout when other elements are rendered alongside it. Users reported that the select component auto-closes when scrolling, preventing them from selecting options. This issue occurs in both desktop and mobile environments, especially when the select component is part of a flex layout. The expected behavior is for the dropdown to remain open, allowing users to select values without interruption. The issue was demonstrated with a code snippet and a link to a reproduction repository, highlighting the steps to reproduce the bug. The objective is to ensure that the select component functions correctly, allowing users to select options without the dropdown closing unexpectedly during scrolling.
+
+The linked issue #3571 highlights a similar problem where clicking a `<Select/>` trigger causes the page to scroll and the popover to close immediately, particularly when the selected key is far down the list. This behavior disrupts the user experience, as the dropdown does not open correctly until a second click is made. The goal is to resolve this issue to ensure that the dropdown opens normally without causing unwanted page scrolling.
+
+## Comments Summary
+
+In the comments section of the PR, user macci001 addressed a concern regarding the code snippet provided in the PR description. They noted that the implementation of the `portalContainer` prop might lead to unexpected behavior when multiple select components are used together. Specifically, they observed that when one select component is open and another is clicked, the first select closes but does not open the second select until it is clicked again. This behavior could hinder user experience, especially in scenarios where multiple selects are present.
+
+macci001 expressed their intention to investigate this issue further, indicating that they are looking into the interaction between multiple select components and the newly implemented `portalContainer` functionality. This suggests a proactive approach to ensure that the changes made in the PR do not introduce new bugs or usability issues.
+
+Additionally, macci001 provided an update stating that they added tests for the changes and shared code snippets to reproduce the issue. They mentioned that the problem of the select component misbehaving when multiple selects are present seems to be resolved with the use of the `useAriaOverlay` hook. This indicates a collaborative effort to refine the functionality of the select component and ensure that it meets user expectations across various use cases.
+
+The ongoing dialogue emphasizes the importance of thorough testing and consideration of edge cases when implementing changes to UI components, particularly those that involve complex interactions like dropdowns and pop-overs. Overall, the comments reflect a commitment to improving the select component's usability and functionality, ensuring that it operates smoothly in various layouts and scenarios.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 29de5440ceee0094c0914c11e6bc38f12a327112 -->
+<!-- a2a54683aace67883c4dccc10597e011b4d41d28 -->
+<!-- bd7666b574f5fe9de3c29260defc96852b15568c -->
+<!-- 3a3cd1122d8232e1319159397ddfad621919a1c7 -->
+<!-- bf7fe71f50a8cfa2fec9f7000a62be0fe0751608 -->
+<!-- ae0f5fae267420874d68cc2b33e4ddd75a40c025 -->
+
+<!-- commit_ids_reviewed_end -->
+
+---
+
+<details>
+<summary>Recent review details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>Commits</summary>
+
+Files that changed from the base of the PR and between bf7fe71f50a8cfa2fec9f7000a62be0fe0751608 and ae0f5fae267420874d68cc2b33e4ddd75a40c025.
+
+</details>
+
+
+<details>
+<summary>Files selected for processing (5)</summary>
+
+* .changeset/clean-eagles-clean.md (1 hunks)
+* apps/docs/content/components/select/open-state.ts (1 hunks)
+* apps/docs/content/docs/components/select.mdx (9 hunks)
+* packages/components/select/__tests__/select.test.tsx (2 hunks)
+* packages/components/select/src/use-select.ts (5 hunks)
+
+</details>
+
+
+
+
+
+
+
+
+<details>
+<summary>Files skipped from review due to trivial changes (1)</summary>
+
+* apps/docs/content/components/select/open-state.ts
+
+</details>
+
+<details>
+<summary>Files skipped from review as they are similar to previous changes (3)</summary>
+
+* .changeset/clean-eagles-clean.md
+* packages/components/select/__tests__/select.test.tsx
+* packages/components/select/src/use-select.ts
+
+</details>
+
+<details>
+<summary>Additional context used</summary>
+
+<details>
+<summary>LanguageTool</summary><blockquote>
+
+<details>
+<summary>apps/docs/content/docs/components/select.mdx</summary><blockquote>
+
+[uncategorized] ~122-~122: Did you mean: “By default,”?
+Context: ...t="350px" />  ### Custom Selector Icon  By default the select uses a `chevron-down` icon a...
+
+(BY_DEFAULT_COMMA)
+
+---
+
+[uncategorized] ~176-~176: Did you mean: “By default,”?
+Context: ...ht="350px" />  ### Custom Render Value  By default the select will render the selected ite...
+
+(BY_DEFAULT_COMMA)
+
+---
+
+[typographical] ~250-~250: It appears that a comma is missing.
+Context: ...ing the `renderValue` property. In this example we are using the [Chip](/docs/component...
+
+(DURING_THAT_TIME_COMMA)
+
+</blockquote></details>
+
+</blockquote></details>
+
+</details>
+<details>
+<summary>Additional comments not posted (10)</summary><blockquote>
+
+<details>
+<summary>apps/docs/content/docs/components/select.mdx (10)</summary><blockquote>
+
+`48-48`: **LGTM!**
+
+Setting a fixed `previewHeight` for the code demo helps maintain visual consistency.
+
+---
+
+`57-57`: **LGTM!**
+
+Setting a fixed `previewHeight` for the code demo helps maintain visual consistency.
+
+---
+
+`63-63`: **LGTM!**
+
+Setting a fixed `previewHeight` for the code demo helps maintain visual consistency.
+
+---
+
+`73-73`: **LGTM!**
+
+Setting a fixed `previewHeight` for the code demo helps maintain visual consistency.
+
+---
+
+`80-80`: **LGTM!**
+
+Setting a fixed `previewHeight` for the code demo helps maintain visual consistency.
+
+---
+
+`84-84`: **LGTM!**
+
+Setting a fixed `previewHeight` for the code demo helps maintain visual consistency. The increased height of `"500px"` may be necessary to accommodate the content of this specific code demo.
+
+---
+
+`88-88`: **LGTM!**
+
+Setting a fixed `previewHeight` for the code demo helps maintain visual consistency. The increased height of `"550px"` may be necessary to accommodate the content of this specific code demo.
+
+---
+
+`92-92`: **LGTM!**
+
+Setting a fixed `previewHeight` for the code demo helps maintain visual consistency. The increased height of `"550px"` may be necessary to accommodate the content of this specific code demo.
+
+---
+
+`96-96`: **LGTM!**
+
+Setting a fixed `previewHeight` for the code demo helps maintain visual consistency. The increased height of `"500px"` may be necessary to accommodate the content of this specific code demo.
+
+---
+
+`102-102`: **LGTM!**
+
+Setting a fixed `previewHeight` for the code demo helps maintain visual consistency. The increased height of `"500px"` may be necessary to accommodate the content of this specific code demo.
+
+</blockquote></details>
+
+</blockquote></details>
+
+</details><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+-- `I pushed a fix in commit <commit_id>, please review it.`
+-- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+-- `@coderabbitai generate unit testing code for this file.`
+--	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+-- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+-- `@coderabbitai read src/utils.ts and generate unit testing code.`
+-- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+-- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+
+
+<!-- tips_end -->\n- macci001: hi @wingkwong 
+The code used in the PR description:
+><div className="w-[100vw] h-[100vh] flex flex-col items-center">
+    <div>
+      {
+        [...Array(50).keys()].map((_, idx) => (
+          <div className="p-4" key={idx}>{idx}</div>
+        ))
+      }
+    </div>
+    <Select className="w-[500px] fixed bottom-2" color={color} label="Favorite Animal">
+      {
+        animalsData.map((data) => (
+          <SelectItem key={data.value} value={data.value}>{data.label}</SelectItem>
+        ))
+      }
+    </Select>
+</div>
+
+I think the fix to add the portalContainer, the UI with multiple selects misbehaves(when select1 is open, the click on select2 closes the select1 but does not open the select2 until one more click on it.)
+I am currently looking into this.
+\n- macci001: Update: 
+* Added the test for the change.
+* Following code can be used to reproduce the issue. (first click will scroll rather than opening the select pop-over)
+```
+<div className="h-screen w-screen m-10">
+        <Select
+          aria-label="Favorite Animal"
+          className="fixed bottom-2"
+          data-testid="select"
+          label="Favorite Animal"
+        >
+          {itemsData.map((item) => (
+            <SelectItem key={item.id} value={item.label}>
+              {item.label}
+            </SelectItem>
+          ))}
+        </Select>
+      </div>,
+```
+* The issue mentioned in [comment](https://github.com/nextui-org/nextui/pull/3698#issuecomment-2330781504) seems to be resolved as we now `useAriaOverlay` hook.
+
+// cc @wingkwong \n- vercel: [vc]: #m+wH+9uZjtS1VdSj2Uif1FHffZWnE/OxjMMRiuJiXOM=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9CMnozc0xRZGQ3Z0hod2dQejN3M1VoOVBzTnNiIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAxLXBhcy1mNjk0ZjktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAxLXBhcy1mNjk0ZjktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi82TDRkVFZwTXJ5QmtTeGNta2UzRndhY2E0ZVFZIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstbWFjY2kwMDEtbWFjY2kwMC0xNjAwN2MtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstbWFjY2kwMDEtbWFjY2kwMC0xNjAwN2MtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/B2z3sLQdd7gHhwgPz3w3Uh9PsNsb)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-macci001-macci001-pas-f694f9-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-macci001-macci001-pas-f694f9-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 12, 2024 1:37pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/6L4dTVpMryBkSxcmke3Fwaca4eQY)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-macci001-macci00-16007c-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-macci001-macci00-16007c-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 12, 2024 1:37pm |
+
+
+\n- macci001: Hi @wingkwong,
+This PR will required the use of the `useAriaOverlay` in Select. While this was implemented in the [pr3467](https://github.com/nextui-org/nextui/pull/3467)
+Since the pr3467 was rolled back here in [pr3759](https://github.com/nextui-org/nextui/pull/3759).
+I think this PR needs to wait for the `useAriaOverlay` implementation to get in.
+Can you please mark this as blocked on [issue 3619](https://github.com/nextui-org/nextui/issues/3619) which tracks the above work?
+
+Edit:
+Also, the issue with docs you mentioned is fixed by adding an preview height to the demo code. The fix is added to the PR.
+Reference video of docs containing the fix:
+
+https://github.com/user-attachments/assets/380ae6de-69ee-4e0a-9d48-536db2258a8c
+\n- wingkwong: Marked as on hold first. I think setting previewHeight is not correct. It shouldn't behave this way. \n
+
+Files Changed:
+- .changeset/clean-eagles-clean.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/select": patch
++---
++
++Currently, the select component does not pass the `portalContainer` prop to its child pop-over. Consequently, the pop-over defaults to using `document.body` as the `portalContainer`. This causes the pop-over to close immediately when the parent of the select component is scrollable. This fix ensures that the `portalContainer` prop is correctly passed to the pop-over, addressing the issue.\n- apps/docs/content/components/select/open-state.ts (modified, 2 changes)\n  Patch: @@ -21,7 +21,7 @@ export default function App() {
+   const [isOpen, setIsOpen] = React.useState(false);
+ 
+   return (
+-    <div className="flex w-full max-w-xs items-center gap-2">
++    <div className="flex w-full max-w-xs gap-2">
+       <Select
+         isOpen={isOpen}
+         label="Favorite Animal"\n- apps/docs/content/docs/components/select.mdx (modified, 50 changes)\n  Patch: @@ -45,7 +45,7 @@ NextUI exports 3 select-related components:
+ 
+ ## Usage
+ 
+-<CodeDemo title="Usage" files={selectContent.usage} />
++<CodeDemo title="Usage" files={selectContent.usage} previewHeight="350px" />
+ 
+ ### Dynamic items
+ 
+@@ -54,13 +54,13 @@ Select follows the [Collection Components API](https://react-spectrum.adobe.com/
+ - **Static**: The usage example above shows the static implementation, which can be used when the full list of options is known ahead of time.
+ - **Dynamic**: The example below can be used when the options come from an external data source such as an API call, or update over time.
+ 
+-<CodeDemo title="Dynamic items" highlightedLines="8" files={selectContent.dynamic} />
++<CodeDemo title="Dynamic items" highlightedLines="8" files={selectContent.dynamic} previewHeight="350px" />
+ 
+ ### Multiple Selection
+ 
+ You can use the `selectionMode="multiple"` property to allow multiple selection.
+ 
+-<CodeDemo title="Multiple Selection" files={selectContent.multiple} />
++<CodeDemo title="Multiple Selection" files={selectContent.multiple} previewHeight="350px" />
+ 
+ ### Disabled
+ 
+@@ -70,36 +70,36 @@ You can use the `selectionMode="multiple"` property to allow multiple selection.
+ 
+ You can disable specific items by using the `disabledKeys` property.
+ 
+-<CodeDemo title="Disabled Items" highlightedLines="10" files={selectContent.disabledItems} />
++<CodeDemo title="Disabled Items" highlightedLines="10" files={selectContent.disabledItems} previewHeight="350px" />
+ 
+ ### Required
+ 
+ If you pass the `isRequired` property to the select, it will have a `danger` asterisk at
+ the end of the label and the select will be required.
+ 
+-<CodeDemo title="Required" highlightedLines="8" files={selectContent.required} />
++<CodeDemo title="Required" highlightedLines="8" files={selectContent.required} previewHeight="350px" />
+ 
+ ### Sizes
+ 
+-<CodeDemo title="Sizes" highlightedLines="13,24" files={selectContent.sizes} />
++<CodeDemo title="Sizes" highlightedLines="13,24" files={selectContent.sizes} previewHeight="500px"  />
+ 
+ ### Colors
+ 
+-<CodeDemo title="Colors" files={selectContent.colors} />
++<CodeDemo title="Colors" files={selectContent.colors} previewHeight="550px" />
+ 
+ ### Variants
+ 
+-<CodeDemo title="Variants" files={selectContent.variants} />
++<CodeDemo title="Variants" files={selectContent.variants} previewHeight="550px" />
+ 
+ ### Radius
+ 
+-<CodeDemo title="Radius" files={selectContent.radius} />
++<CodeDemo title="Radius" files={selectContent.radius} previewHeight="500px" />
+ 
+ ### Label Placements
+ 
+ You can change the position of the label by setting the `labelPlacement` property to `inside`, `outside` or `outside-left`.
+ 
+-<CodeDemo title="Label Placements" highlightedLines="19,37" files={selectContent.labelPlacements} />
++<CodeDemo title="Label Placements" highlightedLines="19,37" files={selectContent.labelPlacements} previewHeight="500px" />
+ 
+ > **Note**: If the `label` is not passed, the `labelPlacement` property will be `outside` by default.
+ 
+@@ -108,22 +108,22 @@ You can change the position of the label by setting the `labelPlacement` propert
+ You can use the `startContent` and `endContent` properties to add content to the start and end of
+ the select.
+ 
+-<CodeDemo title="Start Content" highlightedLines="13" files={selectContent.startContent} />
++<CodeDemo title="Start Content" highlightedLines="13" files={selectContent.startContent} previewHeight="350px"/>
+ 
+ ### Item Start & End Content
+ 
+ Since the `Select` component uses the [Listbox](/docs/components/listbox) component under the hood, you can
+ use the `startContent` and `endContent` properties of the `SelectItem` component to add content to the start
+ and end of the select item.
+ 
+-<CodeDemo title="Item Start Content" files={selectContent.itemStartContent} />
++<CodeDemo title="Item Start Content" files={selectContent.itemStartContent} previewHeight="350px" />
+ 
+ ### Custom Selector Icon
+ 
+ By default the select uses a `chevron-down` icon as the selector icon which rotates when the select is open. You can
+ customize this icon by passing a custom one to the `selectorIcon` property.
+ 
+-<CodeDemo title="Custom Selector Icon" files={selectContent.customSelectorIcon} />
++<CodeDemo title="Custom Selector Icon" files={selectContent.customSelectorIcon} previewHeight="350px" />
+ 
+ > **Note**: Use the `disableSelectorIconRotation` property to disable the rotation of the icon.
+ 
+@@ -132,29 +132,29 @@ customize this icon by passing a custom one to the `selectorIcon` property.
+ Select component uses the [ScrollShadow](/docs/components/scroll-shadow) under the hood to show a shadow when the select content is scrollable.
+ You can disable this shadow by passing using the `scrollShadowProps` property.
+ 
+-<CodeDemo title="Without Scroll Shadow" files={selectContent.withoutScrollShadow} />
++<CodeDemo title="Without Scroll Shadow" files={selectContent.withoutScrollShadow} previewHeight="350px" />
+ 
+ > **Note**: You can also use the `showScrollIndicators` property to disable the scroll indicators.
+ 
+ ### With Description
+ 
+ You can add a description to the select by passing the `description` property.
+ 
+-<CodeDemo title="With Description" files={selectContent.description} />
++<CodeDemo title="With Description" files={selectContent.description} previewHeight="350px" />
+ 
+ ### With Error Message
+ 
+ You can combine the `isInvalid` and `errorMessage` properties to show an invalid select.
+ 
+-<CodeDemo title="With Error Message" files={selectContent.errorMessage} />
++<CodeDemo title="With Error Message" files={selectContent.errorMessage} previewHeight="350px"/>
+ 
+ ### Controlled
+ 
+ You can use the `selectedKeys` and `onSelectionChange` / `onChange` properties to control the select value.
+ 
+ Using `onSelectionChange`:
+ 
+-<CodeDemo title="Controlled with onSelectionChange" files={selectContent.singleControlled} />
++<CodeDemo title="Controlled with onSelectionChange" files={selectContent.singleControlled} previewHeight="350px"/>
+ 
+ Using `onChange`:
+ 
+@@ -164,19 +164,19 @@ Using `onChange`:
+ 
+ You can control the open state of the select by using the `isOpen` and `onOpenChange` / `onClose` properties.
+ 
+-<CodeDemo title="Controlling the open state" files={selectContent.openState} />
++<CodeDemo title="Controlling the open state" files={selectContent.openState} previewHeight="350px" />
+ 
+ ### Custom Items
+ 
+ You can customize the select items by modifying the `SelectItem` children.
+ 
+-<CodeDemo title="Custom Items" files={selectContent.customItems} />
++<CodeDemo title="Custom Items" files={selectContent.customItems} previewHeight="350px" />
+ 
+ ### Custom Render Value
+ 
+ By default the select will render the selected item's text value, but you can customize this by passing a `renderValue` function.
+ 
+-<CodeDemo title="Custom Render Value" files={selectContent.customRenderValue} />
++<CodeDemo title="Custom Render Value" files={selectContent.customRenderValue} previewHeight="350px"/>
+ 
+ The `renderValue` function receives the selected items as a parameter and must return a
+ `ReactNode`. Check the [Render Value Function](#render-value-function) section for more details.
+@@ -217,13 +217,13 @@ import {useInfiniteScroll} from "@nextui-org/use-infinite-scroll";
+ 
+ You can use the `SelectSection` component to group select items.
+ 
+-<CodeDemo title="With Sections" files={selectContent.sections} />
++<CodeDemo title="With Sections" files={selectContent.sections} previewHeight="350px" />
+ 
+ ### Custom Sections Style
+ 
+ You can customize the sections style by using the `classNames` property of the `SelectSection` component.
+ 
+-<CodeDemo title="Custom Sections Style" files={selectContent.customSectionsStyle} />
++<CodeDemo title="Custom Sections Style" files={selectContent.customSectionsStyle} previewHeight="350px" />
+ 
+ ### Multiple Select Controlled
+ 
+@@ -234,21 +234,23 @@ Using `onSelectionChange`:
+ <CodeDemo
+   title="Multiple Selection Controlled with onSelectionChange"
+   files={selectContent.multipleControlled}
++  previewHeight="350px"
+ />
+ 
+ Using `onChange`:
+ 
+ <CodeDemo
+   title="Multiple Selection Controlled with onChange"
+   files={selectContent.multipleControlledOnChange}
++  previewHeight="350px"
+ />
+ 
+ ### Multiple With Chips
+ 
+ You can render any component as the select value by using the `renderValue` property. In this example we are
+ using the [Chip](/docs/components/chip) component to render the selected items.
+ 
+-<CodeDemo title="Multiple Selection with Chips" files={selectContent.multipleWithChips} />
++<CodeDemo title="Multiple Selection with Chips" files={selectContent.multipleWithChips} previewHeight="350px" />
+ 
+ > **Note**: Make sure to pass the `isMultiline` property to the `Select` component to allow the chips to wrap.
+ 
+@@ -261,7 +263,7 @@ You can customize any slot of the select by using the `classNames` property. Sel
+ component also provides the [popoverProps](/docs/components/popover#api) and [listboxProps](/docs/components/listbox#api) properties to customize
+ the popover and listbox components.
+ 
+-<CodeDemo title="Custom Styles" files={selectContent.customStyles} />
++<CodeDemo title="Custom Styles" files={selectContent.customStyles} previewHeight="500px" />
+ 
+ ## Slots
+ \n- packages/components/select/__tests__/select.test.tsx (modified, 43 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import type {SelectProps} from "../src";
+ 
+ import * as React from "react";
+-import {render, renderHook, act} from "@testing-library/react";
++import {render, renderHook, act, fireEvent} from "@testing-library/react";
+ import userEvent from "@testing-library/user-event";
+ import {useForm} from "react-hook-form";
+ 
+@@ -720,6 +720,47 @@ describe("Select", () => {
+       expect(onChange).toBeCalledTimes(1);
+     });
+   });
++
++  it("should not close when parent is scrollable", async () => {
++    const wrapper = render(
++      <div className="h-screen w-screen m-10">
++        <Select
++          aria-label="Favorite Animal"
++          className="fixed bottom-2"
++          data-testid="select"
++          label="Favorite Animal"
++        >
++          {itemsData.map((item) => (
++            <SelectItem key={item.id} value={item.label}>
++              {item.label}
++            </SelectItem>
++          ))}
++        </Select>
++      </div>,
++    );
++
++    const select = wrapper.getByTestId("select");
++
++    expect(select).not.toBeNull();
++
++    // open the select listbox by clicking selector button
++    fireEvent.click(select);
++
++    // assert that the select listbox is open
++    expect(select).toHaveAttribute("aria-expanded", "true");
++
++    const listboxItems = wrapper.getAllByRole("option");
++
++    expect(listboxItems.length).toBe(13);
++
++    await act(async () => {
++      await user.click(listboxItems[12]);
++    });
++
++    fireEvent.click(select);
++    // asserting that the click is able to open the pop-over(not getting closed due to the scroll)
++    expect(select).toHaveAttribute("aria-expanded", "true");
++  });
+ });
+ 
+ describe("Select with React Hook Form", () => {\n- packages/components/select/src/use-select.ts (modified, 7 changes)\n  Patch: @@ -232,6 +232,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+   const triggerRef = useRef<HTMLElement>(null);
+   const listBoxRef = useRef<HTMLUListElement>(null);
+   const popoverRef = useRef<HTMLDivElement>(null);
++  const baseRef = useRef<HTMLDivElement>(null);
+ 
+   let state = useMultiSelectState<T>({
+     ...props,
+@@ -380,6 +381,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+ 
+   const getBaseProps: PropGetter = useCallback(
+     (props = {}) => ({
++      ref: baseRef,
+       "data-slot": "base",
+       "data-filled": dataAttr(isFilled),
+       "data-has-value": dataAttr(hasValue),
+@@ -391,7 +393,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+       }),
+       ...props,
+     }),
+-    [slots, hasHelper, hasValue, hasLabel, isFilled, baseStyles],
++    [baseRef, slots, hasHelper, hasValue, hasLabel, isFilled, baseStyles],
+   );
+ 
+   const getTriggerProps: PropGetter = useCallback(
+@@ -519,6 +521,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+         "data-slot": "popover",
+         scrollRef: listBoxRef,
+         triggerType: "listbox",
++        portalContainer: baseRef.current ?? undefined,
+         classNames: {
+           content: slots.popoverContent({
+             class: clsx(classNames?.popoverContent, props.className),
+@@ -540,6 +543,8 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+       classNames?.popoverContent,
+       slotsProps.popoverProps,
+       triggerRef,
++      listBoxRef,
++      baseRef,
+       state,
+       state.selectedItems,
+     ],\n

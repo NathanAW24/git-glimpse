@@ -1,0 +1,155 @@
+Pull Request Number: 1206
+Title: feat: improved animations
+Base Branch: feat/v2
+Head Branch: feat/improved-animations
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1206
+State: MERGED
+Created At: 2023-07-17T20:41:50Z
+Merged At: 2023-07-17T23:32:42Z
+Participants: jguddas, jrgarciadev
+
+Description:
+removed pressed transition from button when animations are disabled
+removed pressed transition from switch thumb when animations are disabled
+added pressed transition to checkbox, radio and pagination.
+
+Commits:
+- feat: improved animations\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2203722db45e5fb5fc501360032c5ac45cdf8f372f%22%7D%2C%22id%22%3A%22QmYH3mCbSEEHgsMoMXT9aLw2xoxVigYWWfpqfPZK4FuEPt%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1206%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/pagination/src/use-pagination-item.ts (modified, 3 changes)\n  Patch: @@ -70,7 +70,7 @@ export function usePaginationItem(props: UsePaginationItemProps) {
+     [value, isActive],
+   );
+ 
+-  const {pressProps} = usePress({
++  const {isPressed, pressProps} = usePress({
+     isDisabled,
+     onPress,
+   });
+@@ -90,6 +90,7 @@ export function usePaginationItem(props: UsePaginationItemProps) {
+       "data-active": dataAttr(isActive),
+       "data-focus": dataAttr(isFocused),
+       "data-hover": dataAttr(isHovered),
++      "data-pressed": dataAttr(isPressed),
+       "data-focus-visible": dataAttr(isFocusVisible),
+       ...mergeProps(props, pressProps, focusProps, hoverProps, otherProps),
+       className: clsx(className, props.className),\n- packages/core/theme/src/components/button.ts (modified, 4 changes)\n  Patch: @@ -35,7 +35,6 @@ const button = tv({
+     "min-w-max",
+     "font-normal",
+     "subpixel-antialiased",
+-    "data-[pressed=true]:scale-95",
+     "overflow-hidden",
+     "tap-highlight-transparent",
+     // focus ring
+@@ -89,7 +88,8 @@ const button = tv({
+     },
+     disableAnimation: {
+       true: "!transition-none",
+-      false: "transition-transform-colors motion-reduce:transition-none",
++      false:
++        "data-[pressed=true]:scale-95 transition-transform-colors motion-reduce:transition-none",
+     },
+   },
+   defaultVariants: {\n- packages/core/theme/src/components/checkbox.ts (modified, 3 changes)\n  Patch: @@ -48,7 +48,6 @@ const checkbox = tv({
+       "group-data-[selected=true]:after:opacity-100",
+       // hover
+       "group-data-[hover=true]:before:bg-default-100",
+-      "group-data-[hover=true]:before:bg-default-100",
+       // focus ring
+       ...groupDataFocusVisibleClasses,
+     ],
+@@ -167,6 +166,8 @@ const checkbox = tv({
+       false: {
+         wrapper: [
+           "before:transition-background",
++          "group-data-[pressed=true]:scale-95",
++          "transition-transform",
+           "after:transition-transform-opacity",
+           "after:!ease-linear",
+           "after:!duration-200",\n- packages/core/theme/src/components/pagination.ts (modified, 2 changes)\n  Patch: @@ -134,7 +134,7 @@ const pagination = tv({
+         cursor: "transition-none",
+       },
+       false: {
+-        item: "transition-background",
++        item: ["data-[pressed=true]:scale-95", "transition-transform-background"],
+         cursor: ["transition-transform", "!duration-300"],
+       },
+     },\n- packages/core/theme/src/components/radio.ts (modified, 2 changes)\n  Patch: @@ -125,7 +125,7 @@ const radio = tv({
+     disableAnimation: {
+       true: {},
+       false: {
+-        wrapper: "transition-background",
++        wrapper: ["group-data-[pressed=true]:scale-95", "transition-transform-background"],
+         control: "transition-transform-opacity",
+       },
+     },\n- packages/core/theme/src/components/toggle.ts (modified, 32 changes)\n  Patch: @@ -105,9 +105,6 @@ const toggle = tv({
+           "w-4 h-4 text-tiny",
+           //selected
+           "group-data-[selected=true]:ml-4",
+-          // pressed
+-          "group-data-[pressed=true]:w-5",
+-          "group-data-[selected]:group-data-[pressed]:ml-4",
+         ],
+         endContent: "text-tiny",
+         startContent: "text-tiny",
+@@ -119,9 +116,6 @@ const toggle = tv({
+           "w-5 h-5 text-small",
+           //selected
+           "group-data-[selected=true]:ml-5",
+-          // pressed
+-          "group-data-[pressed=true]:w-6",
+-          "group-data-[selected]:group-data-[pressed]:ml-4",
+         ],
+         endContent: "text-small",
+         startContent: "text-small",
+@@ -133,9 +127,6 @@ const toggle = tv({
+           "w-6 h-6 text-medium",
+           //selected
+           "group-data-[selected=true]:ml-6",
+-          // pressed
+-          "group-data-[pressed=true]:w-7",
+-          "group-data-[selected]:group-data-[pressed]:ml-5",
+         ],
+         endContent: "text-medium",
+         startContent: "text-medium",
+@@ -177,6 +168,29 @@ const toggle = tv({
+     isDisabled: false,
+     disableAnimation: false,
+   },
++  compoundVariants: [
++    {
++      disableAnimation: false,
++      size: "sm",
++      class: {
++        thumb: ["group-data-[pressed=true]:w-5", "group-data-[selected]:group-data-[pressed]:ml-4"],
++      },
++    },
++    {
++      disableAnimation: false,
++      size: "md",
++      class: {
++        thumb: ["group-data-[pressed=true]:w-6", "group-data-[selected]:group-data-[pressed]:ml-4"],
++      },
++    },
++    {
++      disableAnimation: false,
++      size: "lg",
++      class: {
++        thumb: ["group-data-[pressed=true]:w-7", "group-data-[selected]:group-data-[pressed]:ml-5"],
++      },
++    },
++  ],
+ });
+ 
+ export type ToggleVariantProps = VariantProps<typeof toggle>;\n

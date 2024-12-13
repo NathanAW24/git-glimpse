@@ -1,0 +1,110 @@
+Pull Request Number: 24
+Title: feat: pipeline improved to tag and relase on github the new library v…
+Base Branch: main
+Head Branch: refactor/pipeline
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/24
+State: MERGED
+Created At: 2021-08-15T19:11:25Z
+Merged At: 2021-08-15T19:15:41Z
+Participants: jrgarciadev, codecov-commenter
+
+Description:
+[LEVEL]/[COMPONENT]
+TASK: 
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Pipeline improved to tag and release on GitHub the new library version
+Created new pipeline:
+
+release.yaml
+
+
+
+
+Screenshots - Animations
+
+Commits:
+- feat: pipeline improved to tag and relase on github the new library version\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/24?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#24](https://codecov.io/gh/nextui-org/nextui/pull/24?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (a3c0170) into [main](https://codecov.io/gh/nextui-org/nextui/commit/1ae82afbf1c55cca61d11ce3c7607c6654f24bff?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (1ae82af) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/24/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/24?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main      #24   +/-   ##
+=======================================
+  Coverage   96.08%   96.08%           
+=======================================
+  Files          52       52           
+  Lines         741      741           
+  Branches      243      243           
+=======================================
+  Hits          712      712           
+  Misses         27       27           
+  Partials        2        2           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/24?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/24?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [1ae82af...a3c0170](https://codecov.io/gh/nextui-org/nextui/pull/24?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- .github/workflows/main.yaml (modified, 8 changes)\n  Patch: @@ -92,11 +92,17 @@ jobs:
+         with:
+           token: ${{ secrets.NPM_TOKEN }}
+           package: './packages/nextui/package.json'
+-
+       - name: Show published version
+         if: steps.publish.outputs.type != 'none'
+         run: |
+           echo "Version changed: ${{ steps.publish.outputs.old-version }} => ${{ steps.publish.outputs.version }}"
++      - name: Tag new version
++        if: steps.publish.outputs.type != 'none'
++        uses: Klemensas/action-autotag@stable
++        with:
++          GITHUB_TOKEN: ${{ github.token }}
++          tag_prefix: "v"
++          package_root: "./packages/nextui"
+ 
+   deploy:
+     needs: [publish]\n- .github/workflows/release.yaml (added, 17 changes)\n  Patch: @@ -0,0 +1,17 @@
++name: Tagged Release
++
++on:
++  push:
++    tags:
++      - "v*"
++
++jobs:
++  tagged-release:
++    name: Tagged Release
++    runs-on: ubuntu-18.04
++
++    steps:
++      - uses: "marvinpinto/action-automatic-releases@latest"
++        with:
++          repo_token: "${{ github.token }}"
++          prerelease: false
+\ No newline at end of file\n

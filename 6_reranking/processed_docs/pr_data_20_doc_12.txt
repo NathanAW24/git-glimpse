@@ -1,0 +1,205 @@
+Pull Request Number: 1618
+Title: Fix/1597
+Base Branch: main
+Head Branch: fix_1597/docs-modal-assignable-type
+Author: chongruei
+URL: https://github.com/nextui-org/nextui/pull/1618
+State: MERGED
+Created At: 2023-09-13T13:10:58Z
+Merged At: 2023-09-14T20:13:07Z
+Participants: chongruei, jrgarciadev
+
+Description:
+Closes #1597
+📝 Description
+Modal(scrollBehavior) - Type 'string' is not assignable to type '"inside" | "normal" | "outside" | undefined'.ts(2322)
+const [scrollBehavior, setScrollBehavior] = React.useState("inside");
+  
+<Modal
+  isOpen={isOpen}
+  onOpenChange={onOpenChange}
+  scrollBehavior={scrollBehavior} // <- unassignable type
+>
+  {children}
+</Modal>
+⛳️ Current behavior (updates)
+compile error
+🚀 New behavior
+add ts support
+💣 Is this a breaking change (Yes/No): No
+📝 Additional Information
+
+Commits:
+- fix(docs): add scrollbehavior ts support\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: ed04ededece65ab3500e0b4f9d65b31e03143c1c
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/chongruei/nextui/new/fix_1597/docs-modal-assignable-type?filename=.changeset/wild-rivers-smoke.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0AFix%2F1597%0A)
+
+\n- vercel: [vc]: #vnQQm01cu48+9q2OeS1z16q+7i3PQHW9lHYu5pzVPpE=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvM3o2TVFoMW0yQ2FKcHBldUhZUXV5Sll3d3BTaiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWNob25ncnVlaS1maXgxNTktZThjNjk0LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWNob25ncnVlaS1maXgxNTktZThjNjk0LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/3z6MQh1m2CaJppeuHYQuyJYwwpSj)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-chongruei-fix159-e8c694-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-chongruei-fix159-e8c694-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 13, 2023 1:12pm |
+
+\n- vercel: @chongruei is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22ed04ededece65ab3500e0b4f9d65b31e03143c1c%22%7D%2C%22id%22%3A%22QmdG1aDbRsEQquTXJpmQXWtHi2ebbs3odaJpdHKSZ8wdzx%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1618%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Thank you! @chongruei \n
+
+Files Changed:
+- apps/docs/content/components/modal/overflow.ts (modified, 126 changes)\n  Patch: @@ -119,10 +119,136 @@ export default function App() {
+   );
+ }`;
+ 
++const AppTs = `import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalProps, Button, useDisclosure, RadioGroup, Radio} from "@nextui-org/react";
++
++export default function App() {
++  const {isOpen, onOpen, onOpenChange} = useDisclosure();
++  const [scrollBehavior, setScrollBehavior] = React.useState<ModalProps["scrollBehavior"]>("inside");
++
++  return (
++    <div className="flex flex-col gap-2">
++      <Button onPress={onOpen}>Open Modal</Button>
++      <RadioGroup
++        label="Select scroll behavior"
++        orientation="horizontal"
++        value={scrollBehavior}
++        onValueChange={setScrollBehavior}
++      >
++        <Radio value="inside">inside</Radio>
++        <Radio value="outside">outside</Radio>
++      </RadioGroup>
++      <Modal
++        isOpen={isOpen}
++        onOpenChange={onOpenChange}
++        scrollBehavior={scrollBehavior}
++      >
++        <ModalContent>
++          {(onClose) => (
++            <>
++              <ModalHeader className="flex flex-col gap-1">
++                Modal Title
++              </ModalHeader>
++              <ModalBody>
++                <p>
++                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
++                  Nullam pulvinar risus non risus hendrerit venenatis.
++                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
++                </p>
++                <p>
++                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
++                  Nullam pulvinar risus non risus hendrerit venenatis.
++                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
++                </p>
++                <p>
++                  Magna exercitation reprehenderit magna aute tempor cupidatat
++                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
++                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
++                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
++                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
++                  eiusmod et. Culpa deserunt nostrud ad veniam.
++                </p>
++                <p>
++                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
++                  Nullam pulvinar risus non risus hendrerit venenatis.
++                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
++                  Magna exercitation reprehenderit magna aute tempor cupidatat
++                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
++                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
++                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
++                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
++                  eiusmod et. Culpa deserunt nostrud ad veniam.
++                </p>
++                <p>
++                  Mollit dolor eiusmod sunt ex incididunt cillum quis. Velit
++                  duis sit officia eiusmod Lorem aliqua enim laboris do dolor
++                  eiusmod. Et mollit incididunt nisi consectetur esse laborum
++                  eiusmod pariatur proident Lorem eiusmod et. Culpa deserunt
++                  nostrud ad veniam. Lorem ipsum dolor sit amet, consectetur
++                  adipiscing elit. Nullam pulvinar risus non risus hendrerit
++                  venenatis. Pellentesque sit amet hendrerit risus, sed
++                  porttitor quam. Magna exercitation reprehenderit magna aute
++                  tempor cupidatat consequat elit dolor adipisicing. Mollit
++                  dolor eiusmod sunt ex incididunt cillum quis. Velit duis sit
++                  officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. Et
++                  mollit incididunt nisi consectetur esse laborum eiusmod
++                  pariatur proident Lorem eiusmod et. Culpa deserunt nostrud ad
++                  veniam.
++                </p>
++                <p>
++                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
++                  Nullam pulvinar risus non risus hendrerit venenatis.
++                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
++                </p>
++                <p>
++                  Magna exercitation reprehenderit magna aute tempor cupidatat
++                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
++                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
++                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
++                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
++                  eiusmod et. Culpa deserunt nostrud ad veniam.
++                </p>
++                <p>
++                  Mollit dolor eiusmod sunt ex incididunt cillum quis. Velit
++                  duis sit officia eiusmod Lorem aliqua enim laboris do dolor
++                  eiusmod. Et mollit incididunt nisi consectetur esse laborum
++                  eiusmod pariatur proident Lorem eiusmod et. Culpa deserunt
++                  nostrud ad veniam. Lorem ipsum dolor sit amet, consectetur
++                  adipiscing elit. Nullam pulvinar risus non risus hendrerit
++                  venenatis. Pellentesque sit amet hendrerit risus, sed
++                  porttitor quam. Magna exercitation reprehenderit magna aute
++                  tempor cupidatat consequat elit dolor adipisicing. Mollit
++                  dolor eiusmod sunt ex incididunt cillum quis. Velit duis sit
++                  officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. Et
++                  mollit incididunt nisi consectetur esse laborum eiusmod
++                  pariatur proident Lorem eiusmod et. Culpa deserunt nostrud ad
++                  veniam.
++                </p>
++              </ModalBody>
++              <ModalFooter>
++                <Button color="danger" variant="light" onPress={onClose}>
++                  Close
++                </Button>
++                <Button color="primary" onPress={onClose}>
++                  Action
++                </Button>
++              </ModalFooter>
++            </>
++          )}
++        </ModalContent>
++      </Modal>
++    </div>
++  );
++}`;
++
+ const react = {
+   "/App.jsx": App,
+ };
+ 
++const reactTs = {
++  "/App.tsx": AppTs,
++};
++
+ export default {
+   ...react,
++  ...reactTs,
+ };\n

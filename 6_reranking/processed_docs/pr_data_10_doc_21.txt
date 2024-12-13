@@ -1,0 +1,286 @@
+Pull Request Number: 3087
+Title: fix(calendar): apply inert attribute according to isHeaderExpanded
+Base Branch: canary
+Head Branch: fix/calendar-inert-error
+Author: KumJungMin
+URL: https://github.com/nextui-org/nextui/pull/3087
+State: CLOSED
+Created At: 2024-05-27T04:38:14Z
+Merged At: None
+Participants: KumJungMin, jrgarciadev, wingkwong
+
+Description:
+📝 Description
+
+(In Firefox / develop mode) when i open datePicker, the attribute value error is occurred
+
+
+error console
+
+
+
+So I fixed to toggle inert attribute according to isHeaderExpanded
+
+{...{inert: isHeaderExpanded ? "" : undefined}}
+
+Summary by CodeRabbit
+
+Refactor
+
+Improved the assignment of the inert attribute in the calendar components for better code clarity and maintainability.
+
+Commits:
+- fix: apply inert attribute according to isHeaderExpanded\n- Merge branch 'canary' into fix/calendar-inert-error\n- docs: add changeset\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: cd3c622670632dda2459e7e2ba2032c69d0981a6
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                    | Type  |
+| ----------------------- | ----- |
+| @nextui-org/calendar    | Patch |
+| @nextui-org/date-picker | Patch |
+| @nextui-org/react       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/KumJungMin/nextui/new/fix/calendar-inert-error?filename=.changeset/good-mayflies-call.md&value=---%0A%22%40nextui-org%2Fcalendar%22%3A%20patch%0A---%0A%0Afix(calendar)%3A%20apply%20inert%20attribute%20according%20to%20isHeaderExpanded%0A)
+
+\n- vercel: [vc]: #vTmvsTH4tVHfQKSvxrFEYsxQuWUhtJ64qe9ASuG6d5U=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNnpIaHZ2Z2RuY1M2Z2l4VGhIVXJwTjl6YnhTWiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWt1bWp1bmdtaW4tZml4LWMtZWRlMzkwLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWt1bWp1bmdtaW4tZml4LWMtZWRlMzkwLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/6zHhvvgdncS6gixThHUrpN9zbxSZ)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-kumjungmin-fix-c-ede390-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-kumjungmin-fix-c-ede390-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 29, 2024 0:04am |
+
+\n- vercel: @KumJungMin is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2201aa9cd0c15461312ef1370b86d13ebcd63dd418%22%7D%2C%22id%22%3A%22QmcgQw4KfCX2myVbEt5cr6Jj4avnS7y9rPQ51fm7iUUBQX%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3087%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes involve updating the `inert` attribute assignment in the `CalendarMonth` and `CalendarPicker` components. This update replaces the previous conditional assignment with a spread syntax approach to improve code readability and maintainability.
+
+## Changes
+
+| Files                                                      | Change Summary                                                                                   |
+|------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| `packages/components/calendar/src/calendar-month.tsx`      | Updated `inert` attribute assignment using spread syntax: `inert={isHeaderExpanded ? true : undefined}` to `{...{inert: isHeaderExpanded ? "" : undefined}}` |
+| `packages/components/calendar/src/calendar-picker.tsx`     | Updated `inert` attribute assignment using spread syntax: `inert={isHeaderExpanded ? true : undefined}` to `{...{inert: isHeaderExpanded ? "" : undefined}}` |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+packages/components/calendar/src/calendar-month.tsx: ## Short Summary
+The change in functionality involves updating the `inert` attribute assignment within the `CalendarMonth` component in `calendar-month.tsx` to use spread syntax for conditional assignment.
+
+## Alterations to the declarations of exported or public entities
+- `export function CalendarMonth(props: CalendarMonthProps)` in `packages/components/calendar/src/calendar-month.tsx`
+  - Change: Updated the assignment of the `inert` attribute using spread syntax.
+    - Before: `inert={isHeaderExpanded ? true : undefined}`
+    - After: `{...{inert: isHeaderExpanded ? "" : undefined}}`
+
+---
+
+packages/components/calendar/src/calendar-picker.tsx: ## Update existing summary
+
+## Summary
+In the `CalendarPicker` function in `calendar-picker.tsx`, the `inert` attribute assignment has been modified to use spread syntax with a conditional expression, changing from `inert={isHeaderExpanded ? true : undefined}` to `{...{inert: isHeaderExpanded ? "" : undefined}}`
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+### PR Summary
+
+**Title**: fix(calendar): apply inert attribute according to isHeaderExpanded
+
+**Description**: 
+- The pull request addresses an issue in Firefox (in development mode) where opening the datePicker results in an attribute value error.
+- The error is documented with screenshots showing the console error and the problematic UI.
+- The fix involves toggling the `inert` attribute based on the `isHeaderExpanded` state.
+- The code change is as follows:
+  ```js
+  {...{inert: isHeaderExpanded ? "" : undefined}}
+  ```
+
+### Comments Summary
+
+**jrgarciadev**: Requested KumJungMin to add the changeset.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated summary of generated summaries
+
+The updates in the `CalendarMonth` and `CalendarPicker` components involve modifying the assignment of the `inert` attribute. Previously, the `inert` attribute was conditionally assigned using `inert={isHeaderExpanded ? true : undefined}`. This has been changed to use spread syntax with a conditional expression: `{...{inert: isHeaderExpanded ? "" : undefined}}`. This change ensures a more concise and potentially more readable way of handling the conditional assignment of the `inert` attribute.
+
+### Alterations to the declarations of exported or public entities
+
+#### `packages/components/calendar/src/calendar-month.tsx`
+
+- **Before:**
+  ```typescript
+  export function CalendarMonth(props: CalendarMonthProps) {
+    // inert attribute assignment
+    inert={isHeaderExpanded ? true : undefined}
+  }
+  ```
+
+- **After:**
+  ```typescript
+  export function CalendarMonth(props: CalendarMonthProps) {
+    // inert attribute assignment
+    {...{inert: isHeaderExpanded ? "" : undefined}}
+  }
+  ```
+
+#### `packages/components/calendar/src/calendar-picker.tsx`
+
+- **Before:**
+  ```typescript
+  export function CalendarPicker(props: CalendarPickerProps) {
+    // inert attribute assignment
+    inert={isHeaderExpanded ? true : undefined}
+  }
+  ```
+
+- **After:**
+  ```typescript
+  export function CalendarPicker(props: CalendarPickerProps) {
+    // inert attribute assignment
+    {...{inert: isHeaderExpanded ? "" : undefined}}
+  }
+  ```
+- **Feedback from the user on the previous review**: undefined
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 01aa9cd0c15461312ef1370b86d13ebcd63dd418 -->
+<!-- cd3c622670632dda2459e7e2ba2032c69d0981a6 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to full the review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- jrgarciadev: @KumJungMin please add the changeset\n- KumJungMin: > @KumJungMin please add the changeset
+
+thank you comment :)
+i added changeset file ([cd3c622](https://github.com/nextui-org/nextui/pull/3087/commits/cd3c622670632dda2459e7e2ba2032c69d0981a6))
+\n- wingkwong: @KumJungMin can you double check if this issue is still reproducible in the current nextui documentation? I tired to use firebox to reproduce but i didn't see this error. Probably it could have been resolved in [this PR](https://github.com/nextui-org/nextui/pull/3054).\n- KumJungMin: > @KumJungMin can you double check if this issue is still reproducible in the current nextui documentation? I tired to use firebox to reproduce but i didn't see this error. Probably it could have been resolved in [this PR](https://github.com/nextui-org/nextui/pull/3054).
+
+---
+
+Oh! the issue was resolved :) thank you for check!
+
+\n
+
+Files Changed:
+- .changeset/two-snakes-behave.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/calendar": patch
++---
++
++fix inert attribute value error\n- packages/components/calendar/src/calendar-month.tsx (modified, 2 changes)\n  Patch: @@ -42,7 +42,7 @@ export function CalendarMonth(props: CalendarMonthProps) {
+       // makes the browser ignore the element and its children when tabbing
+       // TODO: invert inert when switching to React 19 (ref: https://github.com/facebook/react/issues/17157)
+       // @ts-ignore
+-      inert={isHeaderExpanded ? "" : undefined}
++      {...{inert: isHeaderExpanded ? "" : undefined}}
+     >
+       {state
+         .getDatesInWeek(weekIndex, startDate)\n- packages/components/calendar/src/calendar-picker.tsx (modified, 2 changes)\n  Patch: @@ -68,7 +68,7 @@ export function CalendarPicker(props: CalendarPickerProps) {
+       // makes the browser ignore the element and its children when tabbing
+       // TODO: invert inert when switching to React 19 (ref: https://github.com/facebook/react/issues/17157)
+       // @ts-ignore
+-      inert={isHeaderExpanded ? undefined : ""}
++      {...{inert: isHeaderExpanded ? "" : undefined}}
+     >
+       <div
+         ref={highlightRef}\n

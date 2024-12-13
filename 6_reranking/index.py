@@ -1,3 +1,4 @@
+from sentence_transformers import CrossEncoder
 from dotenv import load_dotenv
 import os
 import re
@@ -6,11 +7,8 @@ import numpy as np
 from pydantic import BaseModel, Field
 import sys
 
-# If these imports fail, ensure you have these modules available in your environment.
-# These are hypothetical local modules or code previously provided.
+# Existing imports and modules
 from bm25 import BM25Retriever, _read_documents_from_folder
-
-# LangChain / LLM related imports
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.schema import Document
@@ -18,16 +16,13 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 
-
 # Load environment variables
 load_dotenv()
 
-# Set OpenAI API Key
 if "OPENAI_API_KEY" not in os.environ:
     os.environ["OPENAI_API_KEY"] = input("Enter your OpenAI API key: ")
 
-
-# Step 1: Define your questions for evaluation
+# Step 1: Define your questions for evaluation (unchanged)
 questions = [[
     "pr_data_0_doc_7.txt",
     "How can I enhance the validation capabilities of a Select component to prevent the default browser error UI from appearing, while also supporting required fields, custom validation functions, and server-side validation? Additionally, what changes would be needed to integrate these features into the multi-select component for better user interaction and validation logic?"
@@ -108,23 +103,25 @@ questions = [[
         "How can I remove the extra bottom space in the Select component when using helper components to ensure consistent layout with the Input component?"
 ]]
 
+# Reranking parameters
+top_n_initial = 10  # Get initial top 10 or 15, configurable
+top_n_final = 5     # After reranking, choose top 5
+
+
 # Step 2: Load your documents
 folder_path = "processed_docs"  # Ensure the path matches your folder structure
 documents = _read_documents_from_folder(folder_path)
-
-# Create a mapping from file_name to content for quick lookup
 doc_dict = {doc[0]: doc[1] for doc in documents}
 
 # Initialize BM25 Retriever
 bm25_retriever = BM25Retriever(documents)
 
 # Initialize Vector Retrieval
-VECTOR_DB_DIR = "vector_db"
-MODEL_NAME = "thenlper/gte-small"
-
+VECTOR_DB_DIR = "final_all-MiniLM-L6-v2"
+MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 embedding_model = HuggingFaceEmbeddings(
     model_name=MODEL_NAME,
-    model_kwargs={"device": "mps"},  # or "cpu"/"cuda" depending on your system
+    model_kwargs={"device": "mps"},  # adjust as needed
     encode_kwargs={"normalize_embeddings": True}
 )
 vectorstore = Chroma(
@@ -132,10 +129,13 @@ vectorstore = Chroma(
     embedding_function=embedding_model
 )
 vector_retriever = vectorstore.as_retriever(
-    search_type="similarity", search_kwargs={"k": 5})
+    # we will control top_n later
+    search_type="similarity", search_kwargs={"k": top_n_initial}
+)
+
+# Step 3: Initialize the LLM judge using GPT-4 (unchanged)
 
 
-# Step 3: Initialize the LLM judge using GPT-4
 class RelevanceScore(BaseModel):
     score: int = Field(
         description="The relevance score of the retrieval from 0 to 10")
@@ -182,6 +182,7 @@ Rate the relevance of the PR document to the user query on a scale from 0 to 10.
     - **0**: The PR is completely off-topic, providing no useful information for the query.
         Example: the PR is about a Python backend service unrelated to the query.
 
+
 3. **Response Format**:
     - Your response must be a single integer from 0 to 10.
     - Do **not** include any text, explanation, or additional characters.
@@ -196,10 +197,13 @@ Respond with the relevance score only (e.g., 7).
     return response.score
 
 
+# Load cross-encoder reranker
+# Make sure you have sentence-transformers installed: pip install sentence-transformers
+cross_encoder_model = CrossEncoder("BAAI/bge-reranker-base")
+
 # Define thresholds for relevance
 RELEVANCE_THRESHOLD = 7
 
-# Step 4: Evaluate each question
 results = {}
 overall_metrics = {
     "Precision": [],
@@ -214,24 +218,20 @@ for [file_name_query, question] in questions:
     print("Evaluating: ", question)
 
     # Retrieve from BM25
-    bm25_results = bm25_retriever.retrieve(question, top_n=5)
-    # bm25_results is a list of tuples: (doc_index, score)
-    bm25_docs = []
-    for doc_index, _ in bm25_results:
-        fname, content = documents[doc_index]
-        bm25_docs.append((fname, content))
+    bm25_results = bm25_retriever.retrieve(question, top_n=top_n_initial)
+    bm25_docs = [(documents[idx][0], documents[idx][1])
+                 for idx, _ in bm25_results]
 
     # Retrieve from vector store
+    vector_retriever.search_kwargs["k"] = top_n_initial
     vector_results = vector_retriever.invoke(question)
-    # vector_results is a list of Documents with metadata and page_content
     vector_docs = []
     for doc in vector_results:
         fname = doc.metadata["file_name"]
         content = doc.page_content
         vector_docs.append((fname, content))
 
-    # Combine results: Ensemble
-    # We will combine top 5 from BM25 and top 5 from vector, remove duplicates by file name
+    # Combine results
     combined_docs = {}
     for fname, content in bm25_docs:
         if fname not in combined_docs:
@@ -240,27 +240,36 @@ for [file_name_query, question] in questions:
         if fname not in combined_docs:
             combined_docs[fname] = content
 
-    # Now we have a combined set of documents from both BM25 and Vector search
-    # Evaluate each doc with LLM scoring (except if it matches the ground truth file_name_query)
+    # Rerank using Cross-Encoder
+    # Prepare pairs: (query, doc)
+    doc_items = list(combined_docs.items())  # [(fname, content), ...]
+    pairs = [(question, content) for fname, content in doc_items]
+
+    # Get scores from CrossEncoder
+    rerank_scores = cross_encoder_model.predict(pairs)
+
+    # Attach scores and sort
+    scored_docs = list(zip(doc_items, rerank_scores))
+    # Higher is more relevant
+    scored_docs.sort(key=lambda x: x[1], reverse=True)
+
+    # Now take only the top_n_final after reranking
+    final_docs = scored_docs[:top_n_final]
+
+    # Evaluate with LLM scoring (no changes to LLM call)
     doc_scores = []
-    for fname, content in combined_docs.items():
+    for ((fname, content), _) in final_docs:
         if fname == file_name_query:
-            # If filename matches the known relevant doc, assign score=10
-            score = 10
-            print("Match found!", fname)
+            score = 10  # Known relevant doc
         else:
             score = query_llm(content, question)
         doc_scores.append(score)
 
-    # Normalize scores to binary relevance (1 for relevant, 0 for not relevant)
+    # Metrics calculation (unchanged)
     binary_relevance = [1 if score >=
                         RELEVANCE_THRESHOLD else 0 for score in doc_scores]
-
-    # Calculate Precision
     relevant_count = sum(binary_relevance)
     precision = relevant_count / len(doc_scores) if doc_scores else 0
-
-    # Calculate Average Precision
     precision_values = [
         sum(binary_relevance[:i + 1]) / (i + 1)
         for i in range(len(binary_relevance))
@@ -268,19 +277,14 @@ for [file_name_query, question] in questions:
     ]
     average_precision = sum(precision_values) / \
         relevant_count if relevant_count > 0 else 0
-
-    # MAP (Mean Average Precision) for a single query is the AP of that query
     map_score = average_precision
 
-    # Calculate MRR
     mrr = 0
     for i, is_relevant in enumerate(binary_relevance):
         if is_relevant == 1:
             mrr = 1 / (i + 1)
             break
 
-    # Calculate nDCG
-    # DCG: sum over all results (binary_relevance[i] / log2(i+2))
     dcg = sum(binary_relevance[idx] / np.log2(idx + 2)
               for idx in range(len(binary_relevance)))
     idcg = sum(1 / np.log2(idx + 2) for idx in range(relevant_count))
@@ -289,7 +293,6 @@ for [file_name_query, question] in questions:
     average_score = np.mean(doc_scores) if doc_scores else 0
     max_score = max(doc_scores) if doc_scores else 0
 
-    # Add metrics for this query
     results[question] = {
         "scores": doc_scores,
         "cumulative_score": sum(doc_scores),
@@ -301,7 +304,6 @@ for [file_name_query, question] in questions:
         "nDCG": ndcg,
     }
 
-    # Aggregate overall metrics
     overall_metrics["Precision"].append(precision)
     overall_metrics["MAP"].append(map_score)
     overall_metrics["MRR"].append(mrr)
@@ -309,12 +311,10 @@ for [file_name_query, question] in questions:
     overall_metrics["average_score"].append(average_score)
     overall_metrics["max_score"].append(max_score)
 
-# Compute overall averages
 results["overall_averages"] = {
     metric: np.mean(values) for metric, values in overall_metrics.items()
 }
 
-# Save results to JSON file
 with open("evaluation_results_ensemble.json", "w") as json_file:
     json.dump(results, json_file, indent=4)
 

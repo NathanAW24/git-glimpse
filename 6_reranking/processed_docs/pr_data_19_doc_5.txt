@@ -1,0 +1,95 @@
+Pull Request Number: 1800
+Title: fix(button): show only spinner if button isLoading & isIconOnly
+Base Branch: v2.2.0
+Head Branch: fix/loading-icon-only-btn
+Author: qWici
+URL: https://github.com/nextui-org/nextui/pull/1800
+State: MERGED
+Created At: 2023-10-23T11:41:56Z
+Merged At: 2023-10-23T13:43:23Z
+Participants: qWici, jrgarciadev
+
+Description:
+📝 Description
+The button with only icon doesn't look very good during loading, in my opinion. That's why I decided to suggest displaying only the spinner when loading is in progress.
+⛳️ Current behavior (updates)
+
+
+🚀 New behavior
+
+
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- fix(button): show only spinner if button isLoading & isIconOnly\n- chore: add changeset\n- fix(button): remove repeating code\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 22c35cec68fdb1044b82ddae50325e6dbedb43b5
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 6 packages</summary>
+
+  | Name                 | Type  |
+| -------------------- | ----- |
+| @nextui-org/button   | Patch |
+| @nextui-org/dropdown | Patch |
+| @nextui-org/popover  | Patch |
+| @nextui-org/snippet  | Patch |
+| @nextui-org/react    | Patch |
+| @nextui-org/select   | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/qWici/nextui/new/fix/loading-icon-only-btn?filename=.changeset/eighty-worms-move.md&value=---%0A%22%40nextui-org%2Fbutton%22%3A%20patch%0A---%0A%0Afix(button)%3A%20show%20only%20spinner%20if%20button%20isLoading%20%26%20isIconOnly%0A)
+
+\n- vercel: [vc]: #JehnikMEkmWkhnohDZVHCEaw80ayMcMa7yjqjkjuZiU=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNVdHcXZSa0MzZkFrazFvdTJaTDZWUWlYdjJlWiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXF3aWNpLWZpeC1sb2FkaW4tNDY1NjMxLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXF3aWNpLWZpeC1sb2FkaW4tNDY1NjMxLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/5WGqvRkC3fAkk1ou2ZL6VQiXv2eZ)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-qwici-fix-loadin-465631-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-qwici-fix-loadin-465631-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 23, 2023 0:34am |
+
+\n- vercel: @qWici is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22a778412a4c77e5e96272efbd47eec8627b36d01a%22%7D%2C%22id%22%3A%22QmSB6Rfb9xCrfQRduMyTPmBt666hPRzCa9gXuTRU6AhhU1%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1800%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/chatty-tools-invent.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/button": patch
++---
++
++The button with only the icon now displays only the spinner during loading\n- packages/components/button/src/button.tsx (modified, 3 changes)\n  Patch: @@ -21,13 +21,14 @@ const Button = forwardRef<"button", ButtonProps>((props, ref) => {
+     disableRipple,
+     getButtonProps,
+     getRippleProps,
++    isIconOnly,
+   } = useButton({...props, ref});
+ 
+   return (
+     <Component ref={domRef} className={styles} {...getButtonProps()}>
+       {startContent}
+       {isLoading && spinnerPlacement === "start" && spinner}
+-      {children}
++      {isLoading && isIconOnly ? null : children}
+       {isLoading && spinnerPlacement === "end" && spinner}
+       {endContent}
+       {!disableRipple && <Ripple {...getRippleProps()} />}\n- packages/components/button/src/use-button.ts (modified, 1 changes)\n  Patch: @@ -229,6 +229,7 @@ export function useButton(props: UseButtonProps) {
+     disableRipple,
+     getButtonProps,
+     getRippleProps,
++    isIconOnly,
+   };
+ }
+ \n

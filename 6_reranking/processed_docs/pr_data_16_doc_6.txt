@@ -1,0 +1,124 @@
+Pull Request Number: 2379
+Title: fix(chip): avoid chip malformed (#2350)
+Base Branch: main
+Head Branch: fix_#2350
+Author: sudongyuer
+URL: https://github.com/nextui-org/nextui/pull/2379
+State: MERGED
+Created At: 2024-02-19T07:00:28Z
+Merged At: 2024-03-03T20:53:47Z
+Participants: sudongyuer, jrgarciadev
+
+Description:
+Closes # 
+#2350
+📝 Description
+fix(chip): add min width avoid chip malformed (#2350)
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+No
+
+📝 Additional Information
+
+Commits:
+- fix(chip): add min width avoid chip malformed(#2350)\n- chore: add change log\n- fix(chip): fix isOneChar compound variants avoid chip malformed(#2350)\n- chore: update change log\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #YGobSKhYugve9ckCqYoy7TZ/7Zmz2hFLxWD5wvYKtpo=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNlJOcGpjNU5DdjZOeGRuNXRFSk1aRUZ4ZWZnUCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXN1ZG9uZ3l1ZXItZml4MjM1MC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay1zdWRvbmd5dWVyLWZpeDIzNTAtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/6RNpjc5NCv6Nxdn5tEJMZEFxefgP)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-sudongyuer-fix2350-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-sudongyuer-fix2350-nextui-org.vercel.app?via=pr-comment-feedback-link) | Feb 20, 2024 3:29am |
+
+\n- vercel: @sudongyuer is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f222691bc2768001ab4107bbf7655ac775cbcb41%22%7D%2C%22id%22%3A%22QmdBHUAQiWNevqUsho1zcYrpr4XDVivFUfjLEG7yXHYihU%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2379%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: @sudongyuer please add the previous behavior and the current one (screenshot or video) 🙏🏻\n- sudongyuer: > @sudongyuer please add the previous behavior and the current one (screenshot or video) 🙏🏻
+
+Sure thing!
+
+Before fix :
+
+<img width="287" alt="image" src="https://github.com/nextui-org/nextui/assets/76603360/05803925-378e-447e-be08-1c65096c8462">
+
+After fix:
+
+<img width="208" alt="image" src="https://github.com/nextui-org/nextui/assets/76603360/a7c3b100-569a-44b3-84ca-74a4e607c515">
+\n
+
+Files Changed:
+- .changeset/rare-bears-cross.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/theme": patch
++---
++
++fix(chip): fix isOneChar compound variants avoid chip malformed(#2350)\n- packages/core/theme/src/components/chip.ts (modified, 11 changes)\n  Patch: @@ -25,6 +25,7 @@ const chip = tv({
+     base: [
+       "relative",
+       "max-w-fit",
++      "min-w-min",
+       "inline-flex",
+       "items-center",
+       "justify-between",
+@@ -414,20 +415,26 @@ const chip = tv({
+     // isOneChar / size
+     {
+       isOneChar: true,
++      hasStartContent: false,
++      hasEndContent: false,
+       size: "sm",
+       class: {
+         base: "w-5 h-5 min-w-unit-5 min-h-5",
+       },
+     },
+     {
+       isOneChar: true,
++      hasStartContent: false,
++      hasEndContent: false,
+       size: "md",
+       class: {
+         base: "w-6 h-6 min-w-unit-6 min-h-6",
+       },
+     },
+     {
+       isOneChar: true,
++      hasStartContent: false,
++      hasEndContent: false,
+       size: "lg",
+       class: {
+         base: "w-7 h-7 min-w-unit-7 min-h-7",
+@@ -437,6 +444,8 @@ const chip = tv({
+     {
+       isOneChar: true,
+       isCloseable: false,
++      hasStartContent: false,
++      hasEndContent: false,
+       class: {
+         base: "px-0 justify-center",
+         content: "px-0 flex-none",
+@@ -445,6 +454,8 @@ const chip = tv({
+     {
+       isOneChar: true,
+       isCloseable: true,
++      hasStartContent: false,
++      hasEndContent: false,
+       class: {
+         base: "w-auto",
+       },\n

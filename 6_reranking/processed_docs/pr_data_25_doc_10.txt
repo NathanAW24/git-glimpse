@@ -1,0 +1,55 @@
+Pull Request Number: 974
+Title: Fix: Tooltip trigger click event
+Base Branch: next
+Head Branch: fix/tooltip-trigger-click-event
+Author: joaoGabriel55
+URL: https://github.com/nextui-org/nextui/pull/974
+State: MERGED
+Created At: 2022-12-29T14:07:24Z
+Merged At: 2023-01-02T02:23:37Z
+Participants: joaoGabriel55, jrgarciadev
+
+Description:
+Closes #968
+📝 Description
+When setting the trigger to click, the tooltip isn't displayed even if clicked.
+🚀 New behavior
+The StyledTooltipTrigger onClick event was not being triggered as expected, and changed it to onClickCapture in order to ensure that the event is correctly captured and handled.
+The onClick event is a bubbling event, which means that it is triggered on the element that is clicked, and then it bubbles up the DOM tree to be handled by parent elements if needed. In contrast, the onClickCapture event is a capturing event, which means that it is triggered on the element's parent first, and then it propagates down the DOM tree to be handled by the element itself and any of its children.
+By using the onClickCapture event instead of the onClick event, you can make sure that the event is captured and handled by the parent element before it reaches the element itself. This can be useful in cases where the parent element needs to handle the event before the child element does, or where the child element's behavior depends on the parent's handling of the event.
+Thanks for the help @Isaac-alencar and @BrunoViveiros
+📝 Additional Information
+References:
+https://www.freecodecamp.org/news/event-propagation-event-bubbling-event-catching-beginners-guide/
+
+Commits:
+- fix: Tooltip trigger click event\n
+
+Labels:
+
+
+Comments:
+- vercel: @joaoGabriel55 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22cc35b6c1e300bc8859abecccaa0a295cf95eac59%22%7D%2C%22id%22%3A%22QmeNR3aWaRrnYJywPTVfvdTpRYCzSVsquepqXt5vE7cpUA%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A974%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/8VdVMjnQ2LAcfQUfas94K2qypeyG)) | [Visit Preview](https://nextui-docs-git-fork-joaogabriel55-fix-toolti-50329f-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-docs-git-fork-joaogabriel55-fix-toolti-50329f-nextui-org.vercel.app) | Jan 2, 2023 at 2:13AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/BwqidtuTsgYEfHrNtpyVbfZgUbJH)) | [Visit Preview](https://nextui-storybook-git-fork-joaogabriel55-fix-t-c7cb68-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-joaogabriel55-fix-t-c7cb68-nextui-org.vercel.app) | Jan 2, 2023 at 2:13AM (UTC) |
+
+
+\n
+
+Files Changed:
+- packages/react/src/tooltip/tooltip.tsx (modified, 2 changes)\n  Patch: @@ -150,7 +150,7 @@ const Tooltip: React.FC<TooltipProps> = ({
+       role="button"
+       tabIndex={-1}
+       onBlur={() => mouseEventHandler(false)}
+-      onClick={clickEventHandler}
++      onClickCapture={clickEventHandler}
+       onFocus={() => mouseEventHandler(true)}
+       onKeyUp={() => mouseEventHandler(true)}
+       onMouseEnter={() => mouseEventHandler(true)}\n

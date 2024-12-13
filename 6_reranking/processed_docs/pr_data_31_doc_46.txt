@@ -1,0 +1,91 @@
+Pull Request Number: 79
+Title: fix: "Report a bug" button issue (fix #71)
+Base Branch: main
+Head Branch: main
+Author: ibrahimtelman
+URL: https://github.com/nextui-org/nextui/pull/79
+State: MERGED
+Created At: 2021-10-10T14:42:54Z
+Merged At: 2021-10-10T17:48:50Z
+Participants: ibrahimtelman, codecov-commenter, jrgarciadev
+
+Description:
+[docs]/[playground]
+TASK: #71
+Types of changes
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+The issue is caused by the event handler added for the live editor tab. I add a new handler for the "Report a bug" button. Now simulating anchor click for a virtual anchor.
+While handling the anchor with stopPropagation in Chrome is sufficient, this solution does not work in Safari. So I used virtual anchor.
+
+Commits:
+- fix: "Report a bug" button issue\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/79?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#79](https://codecov.io/gh/nextui-org/nextui/pull/79?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (819405c) into [main](https://codecov.io/gh/nextui-org/nextui/commit/0c931bd422d29f9e1099e06d597a436203c42419?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (0c931bd) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/79/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/79?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main      #79   +/-   ##
+=======================================
+  Coverage   83.69%   83.69%           
+=======================================
+  Files          94       94           
+  Lines        1625     1625           
+  Branches      556      556           
+=======================================
+  Hits         1360     1360           
+  Misses        259      259           
+  Partials        6        6           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/79?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/79?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [0c931bd...819405c](https://codecov.io/gh/nextui-org/nextui/pull/79?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- packages/docs/src/components/playground/editor.tsx (modified, 12 changes)\n  Patch: @@ -42,6 +42,17 @@ const Editor: React.FC = () => {
+     }, 200);
+   };
+ 
++  const linkHandler = (event: React.MouseEvent) => {
++    event.stopPropagation();
++    event.preventDefault();
++    
++    Object.assign(document.createElement('a'), {
++      target: '_blank',
++      rel: "noopener noreferrer",
++      href: `${ISSUE_REPORT_URL}${componentTitle}`,
++    }).click();
++  };
++
+   return (
+     <div className="editor">
+       <details open={visible}>
+@@ -83,6 +94,7 @@ const Editor: React.FC = () => {
+                     title="Report a bug"
+                     rel="noopener noreferrer"
+                     target="_blank"
++                    onClick={linkHandler}
+                     href={`${ISSUE_REPORT_URL}${componentTitle}`}
+                   >
+                     <BugIcon fill={theme.palette.accents_6} size={18} />\n

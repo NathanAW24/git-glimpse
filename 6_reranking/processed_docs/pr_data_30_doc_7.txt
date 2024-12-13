@@ -1,0 +1,91 @@
+Pull Request Number: 277
+Title: fix(button): Change the default of Button type props
+Base Branch: next
+Head Branch: fix/issue-274
+Author: TokiyaHorikawa
+URL: https://github.com/nextui-org/nextui/pull/277
+State: MERGED
+Created At: 2022-02-12T15:43:07Z
+Merged At: 2022-03-21T02:47:38Z
+Participants: TokiyaHorikawa, jrgarciadev
+
+Description:
+[nextui]/[button]
+TASK: #274
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+Add type to defaultProps of Button component
+Change the default of type props in the Button component documentation to button
+
+
+Screenshots - Animations
+
+Commits:
+- fix(docs): Change the default of Button type props\n- feat: Add type to defaultProps of Button component\n- chore: Change the default of type props in the Button component docs to 'button'\n
+
+Labels:
+⏳ Status: Waiting for Next Release
+
+Comments:
+- jrgarciadev: Hey @TokiyaHorikawa thanks for your contribution, however it looks like this is a misunderstanding, the way to fix this is by creating a new `Button` prop called `type` and set `button` value by default 
+
+Here's a detailed implementation
+
+react/src/button/button.tsx
+
+```tsx
+export interface Props {
+  ...
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
+}
+```
+
+
+```tsx
+const defaultProps = {
+...
+type: 'button'
+...
+}
+```
+
+Then we have to change the `Button` documentation and set `button` as the default value for the `type` prop, looking forward to this 🙌🏻  \n- TokiyaHorikawa: @jrgarciadev 
+Thank you for kindly teaching me!
+I pushed the code change. Is this right?\n
+
+Files Changed:
+- apps/docs/content/docs/components/button.mdx (modified, 2 changes)\n  Patch: @@ -408,7 +408,7 @@ import { Button } from '@nextui-org/react';
+ | **onClick**      | `MouseEventHandler`                             | -                                | Button click handler                      | -         |
+ | **icon**         | `ReactNode`                                     | -                                | Show icon in button                       | -         |
+ | **iconRight**    | `ReactNode`                                     | -                                | Show icon on the other side of the button | -         |
+-| **type**         | `ButtonHTMLAttributes.type`                     | `button` `reset` `submit`        | Native type of button element             | `submit`  |
++| **type**         | `ButtonHTMLAttributes.type`                     | `button` `reset` `submit`        | Native type of button element             | `button`  |
+ | **ref**          | <Code>Ref<HTMLButtonElement &#124; null></Code> | -                                | forwardRef                                | -         |
+ | ...              | `ButtonHTMLAttributes`                          | `'id', 'className', ...`         | Button native props                       | -         |
+ \n- packages/react/src/button/button.tsx (modified, 4 changes)\n  Patch: @@ -37,6 +37,7 @@ export interface Props {
+   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+   as?: keyof JSX.IntrinsicElements;
+   className?: string;
++  type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
+ }
+ 
+ const defaultProps = {
+@@ -47,7 +48,8 @@ const defaultProps = {
+   animated: true,
+   disabled: false,
+   auto: false,
+-  className: ''
++  className: '',
++  type: 'button'
+ };
+ 
+ type NativeAttrs = Omit<React.ButtonHTMLAttributes<unknown>, keyof Props>;\n

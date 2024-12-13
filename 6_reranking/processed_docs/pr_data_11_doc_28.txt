@@ -1,0 +1,314 @@
+Pull Request Number: 2906
+Title: fix(range-calendar): hide only dates outside the month
+Base Branch: canary
+Head Branch: fix/range-calendar
+Author: ShrinidhiUpadhyaya
+URL: https://github.com/nextui-org/nextui/pull/2906
+State: MERGED
+Created At: 2024-04-28T22:32:22Z
+Merged At: 2024-04-29T05:16:22Z
+Participants: ShrinidhiUpadhyaya, wingkwong
+
+Description:
+Closes #2890
+📝 Description
+The unavailable dates are disabled after the first selection and cellButton: "data-[disabled=true]:opacity-0" used to hide them.
+⛳️ Current behavior (updates)
+The unavailable dates are getting hidden after first selection.
+
+🚀 New behavior
+Only the dates outside the month are hidden.
+
+💣 Is this a breaking change (Yes/No):
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Fixed a bug in the calendar component that incorrectly displayed unavailable dates.
+
+
+Style
+
+Updated calendar styling to better hide disabled dates based on additional conditions.
+
+Commits:
+- fix(range-calendar): hide only dates outside the month #2890\n- fix(range-calendar): corrected spelling mistake in changeset description\n- fix(range-calendar): corrected capitalization in changeset description\n- chore(changeset): patch @nextui-org/theme\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: b8c823e7993e975714d3f3cff0e9799779a67e49
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 4 packages</summary>
+
+  | Name                    | Type  |
+| ----------------------- | ----- |
+| @nextui-org/calendar    | Patch |
+| @nextui-org/theme       | Patch |
+| @nextui-org/date-picker | Patch |
+| @nextui-org/react       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/ShrinidhiUpadhyaya/nextui/new/fix/range-calendar?filename=.changeset/proud-oranges-train.md&value=---%0A%22%40nextui-org%2Fcalendar%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(range-calendar)%3A%20hide%20only%20dates%20outside%20the%20month%20%232890%0A)
+
+\n- vercel: [vc]: #RW49ETd93sY4dOY4D5HMlNW2dukvSxO9qfIyG34Ssjs=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvM1UxNkNLdEhaUjRxNG1lZVNGZHJmSnRnRUp3biIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXNocmluaWRoaXVwYWRoeWEtZGJjZmNiLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXNocmluaWRoaXVwYWRoeWEtZGJjZmNiLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/3U16CKtHZR4q4meeSFdrfJtgEJwn)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-shrinidhiupadhya-dbcfcb-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-shrinidhiupadhya-dbcfcb-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 29, 2024 3:59am |
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The recent changes aim to address issues within the `@nextui-org/calendar` component, specifically improving the handling of unavailable dates in the `RangeCalendar`. These updates involve refining the logic for determining cell availability and adjusting styling conditions for disabled dates outside the current month.
+
+## Changes
+
+| File Path                              | Change Summary                                                                                         |
+|----------------------------------------|--------------------------------------------------------------------------------------------------------|
+| `.changeset/nasty-pillows-travel.md`   | Introduced a patch to address hiding unavailable dates in the `RangeCalendar`.                         |
+| `.../calendar/src/calendar-cell.tsx`   | Updated the logic in `CalendarCell` to correctly handle cell availability.                              |
+| `.../theme/src/components/calendar.ts` | Modified the `cellButton` style in `hideDisabledDates` to consider `outside-month=true` condition.       |
+
+## Assessment against linked issues
+
+| Objective                                                                                   | Addressed | Explanation |
+|---------------------------------------------------------------------------------------------|-----------|-------------|
+| [#2890: isDateUnavailable should remain visible on selection](#2890)                        | ✅        |             |
+| [#2890: Fix `isDateUnavailable` function together with `hideDisabledDates`](#2890)           | ✅        |             |
+
+The changes directly address the core issue reported in #2890, ensuring that the behavior of `isDateUnavailable` aligns with expectations when used alongside `hideDisabledDates`. These adjustments aim to maintain the visibility of date values and enhance the handling of unavailable dates effectively.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/nasty-pillows-travel.md: The new file introduces a patch for the "@nextui-org/calendar" and "@nextui-org/theme" components, fixing the hiding of unavailable dates in RangeCalendar (#2890).
+
+---
+
+packages/components/calendar/src/calendar-cell.tsx: ## Short Summary
+The change in functionality involves removing the condition `!isDisabled` from the calculation of `isUnavailable` in the `CalendarCell` function, affecting the logic related to cell availability.
+
+## Alterations to the declarations of exported or public entities
+- `export function CalendarCell(originalProps: CalendarCellProps)` in `packages/components/calendar/src/calendar-cell.tsx`:
+  - Before: `const isUnavailable = state.isCellUnavailable(props.date) && !isDisabled;`
+  - After: `const isUnavailable = state.isCellUnavailable(props.date);`
+
+---
+
+packages/core/theme/src/components/calendar.ts: ## Short Summary
+In the `calendar.ts` file, the change involves updating the `cellButton` style property in the `hideDisabledDates` object to include an additional condition for `outside-month=true`.
+
+## Alterations to the declarations of exported or public entities
+- `calendar.ts`:
+  - `hideDisabledDates` object:
+    - Updated `cellButton` property from `"data-[disabled=true]:opacity-0"` to `"data-[disabled=true]:data-[outside-month=true]:opacity-0"`
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+The pull request titled "fix(range-calendar): hide only dates outside the month #2890" (PR #2906) addresses an issue with the handling of unavailable dates in the RangeCalendar component of the NextUI library. The problem, as detailed in the linked issue #2890, involves the `isDateUnavailable` function causing dates to incorrectly hide upon selection when used in conjunction with the `hideDisabledDates` property.
+
+Previously, the RangeCalendar component was hiding unavailable dates after the first selection, which was not the intended behavior. The PR aims to correct this by ensuring that only dates outside the current month are hidden, thereby improving the usability and functionality of the calendar component.
+
+The PR includes visual evidence of the current and new behaviors, demonstrating the issue and the effect of the proposed fix. Additionally, the PR modifies the code to adjust how date availability is determined and how styles are applied to disabled dates, specifically targeting those outside the current month.
+
+### AI-Generated Summary of Generated Summaries
+
+The pull request introduces changes primarily in two files within the NextUI library: `calendar-cell.tsx` and `calendar.ts`. These changes are aimed at fixing the behavior of the RangeCalendar component by refining how unavailable and disabled dates are handled and displayed.
+
+1. **calendar-cell.tsx**: The modification in this file involves the logic for determining if a calendar cell is unavailable. Previously, the unavailability of a date was determined by both the `isCellUnavailable` function and the `isDisabled` state. The updated logic removes the dependency on the `isDisabled` state, making the unavailability solely dependent on the `isCellUnavailable` function. This change ensures that the unavailability logic is more straightforward and focused solely on the criteria defined within `isCellUnavailable`.
+
+2. **calendar.ts**: The changes in this file pertain to the styling of calendar cells, particularly those that are disabled. The original style rule made all disabled dates fully transparent, which contributed to the issue of dates disappearing upon selection. The updated style rule now specifically targets disabled dates that are also outside the current month, applying the transparency only to these dates. This adjustment ensures that only dates that are both disabled and outside the month are hidden, which aligns with the intended behavior of the `hideDisabledDates` feature.
+
+These changes collectively refine the functionality of the RangeCalendar, ensuring that it behaves as expected by users, particularly in scenarios involving the selection and display of unavailable dates.
+
+### Alterations to the Declarations of Exported or Public Entities
+
+**File: packages/components/calendar/src/calendar-cell.tsx**
+- **Function: CalendarCell**
+  - **Before Change**: 
+    ```typescript
+    const isUnavailable = state.isCellUnavailable(props.date) && !isDisabled;
+    ```
+  - **After Change**: 
+    ```typescript
+    const isUnavailable = state.isCellUnavailable(props.date);
+    ```
+
+**File: packages/core/theme/src/components/calendar.ts**
+- **Object: hideDisabledDates**
+  - **Property: cellButton**
+    - **Before Change**: 
+      ```typescript
+      "data-[disabled=true]:opacity-0"
+      ```
+    - **After Change**: 
+      ```typescript
+      "data-[disabled=true]:data-[outside-month=true]:opacity-0"
+      ```
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai -->
+
+---
+
+<details>
+
+<summary>Recent Review Details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>Commits</summary>
+Files that changed from the base of the PR and between 1b2137440d80b929e0014ce34f38d81e6955df3a and b8c823e7993e975714d3f3cff0e9799779a67e49.
+</details>
+
+
+<details>
+<summary>Files selected for processing (1)</summary>
+
+* .changeset/nasty-pillows-travel.md (1 hunks)
+
+</details>
+
+
+
+
+
+
+<details>
+<summary>Additional Context Used</summary>
+
+<details><summary>LanguageTool (1)</summary><blockquote>
+
+<details><summary>.changeset/nasty-pillows-travel.md (1)</summary><blockquote>
+
+Near line 6: Possible spelling mistake found.
+Context: ...-  Fixed hiding of unavailable dates in RangeCalendar (#2890) 
+
+</blockquote></details>
+
+</blockquote></details>
+
+</details>
+
+
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- 4cc7ed4b983a61e12f4bd6595d794847ed782af9 -->
+<!-- 1b2137440d80b929e0014ce34f38d81e6955df3a -->
+<!-- b8c823e7993e975714d3f3cff0e9799779a67e49 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: Someone is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%224cc7ed4b983a61e12f4bd6595d794847ed782af9%22%7D%2C%22id%22%3A%22QmNwNokePgFQwHmT5uiUzGmd47q2ZSenTUh15MLxz1qLA1%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2906%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/nasty-pillows-travel.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/calendar": patch
++"@nextui-org/theme": patch
++---
++
++Fixed hiding of unavailable dates in RangeCalendar (#2890)\n- packages/components/calendar/src/calendar-cell.tsx (modified, 2 changes)\n  Patch: @@ -42,7 +42,7 @@ export function CalendarCell(originalProps: CalendarCellProps) {
+     ref,
+   );
+ 
+-  const isUnavailable = state.isCellUnavailable(props.date) && !isDisabled;
++  const isUnavailable = state.isCellUnavailable(props.date);
+   const isLastSelectedBeforeDisabled =
+     !isDisabled && !isInvalid && state.isCellUnavailable(props.date.add({days: 1}));
+   const isFirstSelectedAfterDisabled =\n- packages/core/theme/src/components/calendar.ts (modified, 2 changes)\n  Patch: @@ -106,7 +106,7 @@ const calendar = tv({
+     },
+     hideDisabledDates: {
+       true: {
+-        cellButton: "data-[disabled=true]:opacity-0",
++        cellButton: "data-[disabled=true]:data-[outside-month=true]:opacity-0",
+       },
+       false: {},
+     },\n

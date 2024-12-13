@@ -1,0 +1,1259 @@
+Pull Request Number: 4094
+Title: Feat/virtualization for autocomplete
+Base Branch: beta/release-next
+Head Branch: feat/virtualization-for-autocomplete
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/4094
+State: MERGED
+Created At: 2024-11-16T18:45:02Z
+Merged At: 2024-11-16T18:46:56Z
+Participants: jrgarciadev, vinroger
+
+Description:
+Original PR: #4000
+Author: https://github.com/vinroger
+Closes #3047 
+📝 Description
+This PR adds virtualization support to the Autocomplete component to improve performance when handling large datasets. The implementation uses the react-window library to efficiently render only the visible portion of the list
+
+⛳️ Current behavior (updates)
+Previously, the Autocomplete component rendered all options in the DOM, which led to performance issues if we have large lists.
+The delays in rendering and interacting with the component reach about 3-5 seconds for 1,000 lists.
+Upon profiling, I discovered that the delay in the autocomplete feature is primarily due to the rendering of the DOM for the React component list, as there is currently no virtualization implemented.
+Image: Delay in the multiple react dom function call (creating 1000 list items) -> amounting to total ~26 seconds for 1000 items
+
+Image: Delay in the actual search algorithm (or finding the matched items), which takes not-so-significant time (approximately 2-3 ms).
+
+Details about benchmark on my comment on the github issue: #3047 (comment)
+Question: Why not using virtualizer by react-aria? #3047 (comment)
+Based on RA release note on July 2024, the virtualizer component is "unstable" and they mentioned that it is not intended for public use.
+Link to RA release notes: https://react-spectrum.adobe.com/releases/2024-07-22.html
+"We are also working on bringing virtualization support to React Aria Components, which is available as an unstable API in this version."
+
+There is no mention of virtualizer update ever since. July 2024 was their second latest release.
+Hence, I proceed with using react-window, https://www.npmjs.com/package/react-window
+
+🚀 New behavior
+With the introduction of virtualization using react-window, the Autocomplete component now renders only the list items that are visible within the scroll viewport, plus a small buffer.
+This will enhance performance, making the component responsive even with large datasets.
+
+💣 Is this a breaking change (Yes/No): No.
+This change is not breaking. The existing API remains the same, existing users can continue using the component as before, while benefiting from improved performance.
+
+📝 Additional Information
+The virtualized list is configured with a maxListboxHeight and itemHeight to ensure consistent rendering performance.
+Performance tests show significant improvements in rendering time and responsiveness. (from 5-10s to unnnoticeable)
+To test: autocomplete with large datasets (>10,000 items).
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced a VirtualizedListbox component for improved performance in the Autocomplete feature.
+Added support for handling large datasets in the Autocomplete component with new templates for testing.
+
+
+
+Bug Fixes
+
+Removed maximum height constraint from the listboxWrapper style for better adaptability.
+
+
+
+Documentation
+
+Updated type definitions to include new properties for virtualization in the autocomplete functionality.
+
+
+
+Chores
+
+Added a new dependency for virtualization support in the listbox component.
+
+Commits:
+- feat: add react-window virtualization for autocomplete\n- fix: wrong imports and wrong sizing\n- fix: update pnpm lock\n- chore: add test cases for large dataset (1000 and 10000 items)\n- chore: move virtualized-listbox to listbox components folder, implement isVirtualized conditional\n- feat: implement dynamic listboxheight n item height, add story\n- chore: rename props, remove unnecessary line changes\n- fix: maxHeight style 256px for default, conditional usage of virtualizer\n- feat: migrate to tan-stack virtual. (todo: fix scroll shadow)\n- fix: merge conflicts\n- feat: virtualization support\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #MVpenBAAx2eu/vNVOLIHHXFRLc+PKSOieUkXCHTaB4o=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi8xNENTMVZuM2V4R0Q3OFFyZVJMR0E0OFNFV0g2IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mZWF0LXZpcnR1YWxpemF0aW9uLWZvci1hdS1lNWZlOGYtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IlBFTkRJTkciLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZlYXQtdmlydHVhbGl6YXRpb24tZm9yLWF1LWU1ZmU4Zi1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX0seyJuYW1lIjoibmV4dHVpLXN0b3J5Ym9vay12MiIsInJvb3REaXJlY3RvcnkiOiJwYWNrYWdlcy9zdG9yeWJvb2siLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLXYyL0FGOE5qcXN5a3lwVm9pTHUzYTY0blZpSnkyU2EiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZmVhdC12aXJ0dWFsaXphdGlvbi1mLWRlMjc0Yy1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiUEVORElORyIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mZWF0LXZpcnR1YWxpemF0aW9uLWYtZGUyNzRjLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/14CS1Vn3exGD78QreRLGA48SEWH6)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-feat-virtualization-for-au-e5fe8f-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-feat-virtualization-for-au-e5fe8f-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 16, 2024 6:45pm |
+| **nextui-storybook-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/AF8NjqsykypVoiLu3a64nViJy2Sa)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-feat-virtualization-f-de274c-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-feat-virtualization-f-de274c-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 16, 2024 6:45pm |
+
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: f1e4f00876114ac66008f749d59f643cc46bb5db
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 5 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/listbox      | Patch |
+| @nextui-org/theme        | Patch |
+| @nextui-org/react        | Patch |
+| @nextui-org/select       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/feat/virtualization-for-autocomplete?filename=.changeset/old-falcons-appear.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0AFeat%2Fvirtualization%20for%20autocomplete%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: skip review by coderabbit.ai -->
+
+> [!IMPORTANT]
+> ## Review skipped
+> 
+> More than 25% of the files skipped due to max files limit. The review is being skipped to prevent a low-quality review.
+> 
+> 165 files out of 248 files are above the max files limit of 75. Please upgrade to Pro plan to get higher limits.
+> 
+> You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file.
+
+<!-- end of auto-generated comment: skip review by coderabbit.ai -->
+
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/proud-chicken-impress.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/autocomplete": patch
++"@nextui-org/listbox": patch
++"@nextui-org/theme": patch
++---
++
++Virtualization support added to Listbox & Autocomplete\n- apps/docs/components/docs/sidebar.tsx (modified, 2 changes)\n  Patch: @@ -171,7 +171,7 @@ function TreeItem<T>(props: TreeItemProps<T>) {
+         </span>
+         {isUpdated && (
+           <Chip
+-            className="ml-1 py-1 text-tiny text-default-400 bg-default-100/50"
++            className="ml-1 py-1 text-tiny text-default-500 dark:text-default-400 bg-default-100 dark:bg-default-100/50"
+             color="default"
+             size="sm"
+             variant="flat"\n- apps/docs/config/routes.json (modified, 40 changes)\n  Patch: @@ -143,7 +143,8 @@
+           "key": "autocomplete",
+           "title": "Autocomplete",
+           "keywords": "autocomplete, auto suggest, search, typeahead",
+-          "path": "/docs/components/autocomplete.mdx"
++          "path": "/docs/components/autocomplete.mdx",
++          "updated": true
+         },
+         {
+           "key": "alert",
+@@ -162,8 +163,7 @@
+           "key": "badge",
+           "title": "Badge",
+           "keywords": "badge, markers, status indication, count display",
+-          "path": "/docs/components/badge.mdx",
+-          "updated": true
++          "path": "/docs/components/badge.mdx"
+         },
+         {
+           "key": "breadcrumbs",
+@@ -175,14 +175,14 @@
+           "key": "button",
+           "title": "Button",
+           "keywords": "button, interactive, action trigger, click events",
+-          "path": "/docs/components/button.mdx"
++          "path": "/docs/components/button.mdx",
++          "updated": true
+         },
+         {
+           "key": "calendar",
+           "title": "Calendar",
+           "keywords": "calendar, date picker, month picker, year picker",
+-          "path": "/docs/components/calendar.mdx",
+-          "newPost": true
++          "path": "/docs/components/calendar.mdx"
+         },
+         {
+           "key": "card",
+@@ -194,8 +194,7 @@
+           "key": "checkbox",
+           "title": "Checkbox",
+           "keywords": "checkbox, binary choice, selection control, toggle",
+-          "path": "/docs/components/checkbox.mdx",
+-          "updated": true
++          "path": "/docs/components/checkbox.mdx"
+         },
+         {
+           "key": "checkbox-group",
+@@ -225,22 +224,18 @@
+           "key": "date-input",
+           "title": "Date Input",
+           "keywords": "date-input, time, input, timezone",
+-          "path": "/docs/components/date-input.mdx",
+-          "newPost": true
+-        },
++          "path": "/docs/components/date-input.mdx"        },
+         {
+           "key": "date-picker",
+           "title": "Date Picker",
+           "keywords": "date-picker, time, input, timezone",
+-          "path": "/docs/components/date-picker.mdx",
+-          "newPost": true
++          "path": "/docs/components/date-picker.mdx"
+         },
+         {
+           "key": "date-range-picker",
+           "title": "Date Range Picker",
+           "keywords": "date-range-picker, date-picker, time, input, timezone",
+-          "path": "/docs/components/date-range-picker.mdx",
+-          "newPost": true
++          "path": "/docs/components/date-range-picker.mdx"
+         },
+         {
+           "key": "divider",
+@@ -332,8 +327,7 @@
+           "key": "range-calendar",
+           "title": "Range Calendar",
+           "keywords": "range calendar, date picker, month picker, year picker",
+-          "path": "/docs/components/range-calendar.mdx",
+-          "newPost": true
++          "path": "/docs/components/range-calendar.mdx"
+         },
+         {
+           "key": "scroll-shadow",
+@@ -351,8 +345,7 @@
+           "key": "skeleton",
+           "title": "Skeleton",
+           "keywords": "skeleton, loading state, placeholder, content preview",
+-          "path": "/docs/components/skeleton.mdx",
+-          "updated": true
++          "path": "/docs/components/skeleton.mdx"
+         },
+         {
+           "key": "slider",
+@@ -394,8 +387,7 @@
+           "key": "tabs",
+           "title": "Tabs",
+           "keywords": "tabs, section navigation, categorized content, tabbed interface",
+-          "path": "/docs/components/tabs.mdx",
+-          "updated": true
++          "path": "/docs/components/tabs.mdx"
+         },
+         {
+           "key": "textarea",
+@@ -407,15 +399,13 @@
+           "key": "time-input",
+           "title": "Time Input",
+           "keywords": "timeinput, time, input, timezone",
+-          "path": "/docs/components/time-input.mdx",
+-          "newPost": true
++          "path": "/docs/components/time-input.mdx"
+         },
+         {
+           "key": "tooltip",
+           "title": "Tooltip",
+           "keywords": "tooltip, hint, descriptive message, hover info",
+-          "path": "/docs/components/tooltip.mdx",
+-          "updated": true
++          "path": "/docs/components/tooltip.mdx"
+         },
+         {
+           "key": "user",\n- apps/docs/content/components/autocomplete/index.ts (modified, 8 changes)\n  Patch: @@ -26,6 +26,10 @@ import customSectionsStyle from "./custom-sections-style";
+ import customStyles from "./custom-styles";
+ import customEmptyContentMessage from "./custom-empty-content-message";
+ import readOnly from "./read-only";
++import virtualization from "./virtualization";
++import virtualizationTenThousand from "./virtualization-ten-thousand";
++import virtualizationMaxListboxHeight from "./virtualization-max-listbox-height";
++import virtualizationCustomItemHeight from "./virtualization-custom-item-height";
+ 
+ export const autocompleteContent = {
+   usage,
+@@ -56,4 +60,8 @@ export const autocompleteContent = {
+   customStyles,
+   customEmptyContentMessage,
+   readOnly,
++  virtualization,
++  virtualizationTenThousand,
++  virtualizationMaxListboxHeight,
++  virtualizationCustomItemHeight,
+ };\n- apps/docs/content/components/autocomplete/virtualization-custom-item-height.ts (added, 65 changes)\n  Patch: @@ -0,0 +1,65 @@
++const App = `import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: \`\${item}\${i}\`,
++      value: \`\${item.toLowerCase()}\${i}\`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(1000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Autocomplete 
++        isVirtualized
++        label="Search from 1000 items" 
++        className="max-w-xs"
++        defaultItems={items}
++        placeholder="Search..."
++        maxListboxHeight={400}
++        itemHeight={40}
++      >
++        {(item) => (
++          <AutocompleteItem key={item.value}>
++            {item.label}
++          </AutocompleteItem>
++        )}
++      </Autocomplete>
++    </div>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/autocomplete/virtualization-max-listbox-height.ts (added, 64 changes)\n  Patch: @@ -0,0 +1,64 @@
++const App = `import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: \`\${item}\${i}\`,
++      value: \`\${item.toLowerCase()}\${i}\`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(1000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Autocomplete 
++        isVirtualized
++        label="Search from 1000 items" 
++        className="max-w-xs"
++        defaultItems={items}
++        placeholder="Search..."
++        maxListboxHeight={400}
++      >
++        {(item) => (
++          <AutocompleteItem key={item.value}>
++            {item.label}
++          </AutocompleteItem>
++        )}
++      </Autocomplete>
++    </div>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/autocomplete/virtualization-ten-thousand.ts (added, 63 changes)\n  Patch: @@ -0,0 +1,63 @@
++const App = `import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: \`\${item}\${i}\`,
++      value: \`\${item.toLowerCase()}\${i}\`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(10000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Autocomplete 
++        isVirtualized
++        label="Search from 1000 items" 
++        className="max-w-xs"
++        defaultItems={items}
++        placeholder="Search..."
++      >
++        {(item) => (
++          <AutocompleteItem key={item.value}>
++            {item.label}
++          </AutocompleteItem>
++        )}
++      </Autocomplete>
++    </div>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/autocomplete/virtualization.ts (added, 63 changes)\n  Patch: @@ -0,0 +1,63 @@
++const App = `import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: \`\${item}\${i}\`,
++      value: \`\${item.toLowerCase()}\${i}\`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(1000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Autocomplete 
++        isVirtualized
++        label="Search from 1000 items" 
++        className="max-w-xs"
++        defaultItems={items}
++        placeholder="Search..."
++      >
++        {(item) => (
++          <AutocompleteItem key={item.value}>
++            {item.label}
++          </AutocompleteItem>
++        )}
++      </Autocomplete>
++    </div>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/docs/components/autocomplete.mdx (modified, 147 changes)\n  Patch: @@ -13,7 +13,7 @@ An autocomplete combines a text input with a listbox, allowing users to filter a
+ 
+ ---
+ 
+-<CarbonAd/>
++<CarbonAd />
+ 
+ ## Installation
+ 
+@@ -24,11 +24,10 @@ An autocomplete combines a text input with a listbox, allowing users to filter a
+     npm: "npm install @nextui-org/autocomplete",
+     yarn: "yarn add @nextui-org/autocomplete",
+     pnpm: "pnpm add @nextui-org/autocomplete",
+-    bun: "bun add @nextui-org/autocomplete"
++    bun: "bun add @nextui-org/autocomplete",
+   }}
+ />
+ 
+-
+ ## Import
+ 
+ NextUI exports 3 autocomplete-related components:
+@@ -84,7 +83,7 @@ the end of the label and the autocomplete will be required.
+ 
+ ### Read Only
+ 
+-If you pass the `isReadOnly` property to the Autocomplete, the Listbox will open to display 
++If you pass the `isReadOnly` property to the Autocomplete, the Listbox will open to display
+ all available options, but users won't be able to select any of the listed options.
+ 
+ <CodeDemo title="Read Only" highlightedLines="8" files={autocompleteContent.readOnly} />
+@@ -243,7 +242,10 @@ You can customize the autocomplete items by modifying the `AutocompleteItem` chi
+ 
+ By default, a message `No results found.` will be shown if there is no result matching a query with your filter. You can customize the empty content message by modifying the `emptyContent` in `listboxProps`.
+ 
+-<CodeDemo title="Custom Empty Content Message" files={autocompleteContent.customEmptyContentMessage} />
++<CodeDemo
++  title="Custom Empty Content Message"
++  files={autocompleteContent.customEmptyContentMessage}
++/>
+ 
+ ### Custom Filtering
+ 
+@@ -316,6 +318,36 @@ import {useInfiniteScroll} from "@nextui-org/use-infinite-scroll";
+   files={autocompleteContent.asyncLoadingItems}
+ />
+ 
++### Virtualization
++
++Autocomplete supports virtualization, in the example below we are using the `isVirtualized` prop to enable virtualization.
++
++<CodeDemo
++  title="Virtualization"
++  highlightedLines="41"
++  files={autocompleteContent.virtualization}
++/>
++
++> **Note**: The virtualization strategy is based on the [@tanstack/react-virtual](https://tanstack.com/virtual/latest) package, which provides efficient rendering of large lists by only rendering items that are visible in the viewport.
++
++#### Ten Thousand Items
++
++Virtualization with 10,000 items.
++
++<CodeDemo title="Ten Thousand Items" files={autocompleteContent.virtualizationTenThousand} />
++
++#### Max Listbox Height
++
++The `maxListboxHeight` prop is used to set the maximum height of the listbox. This is required when using virtualization. By default, it's set to `256`.
++
++<CodeDemo title="Max Listbox Height" files={autocompleteContent.virtualizationMaxListboxHeight} />
++
++#### Custom Item Height
++
++The `itemHeight` prop is used to set the height of each item in the listbox. This is required when using virtualization. By default, it's set to `32`.
++
++<CodeDemo title="Custom Item Height" files={autocompleteContent.virtualizationCustomItemHeight} />
++
+ ### With Sections
+ 
+ You can use the `AutocompleteSection` component to group autocomplete items.
+@@ -412,57 +444,60 @@ properties to customize the popover, listbox and input components.
+ 
+ ### Autocomplete Props
+ 
+-| Attribute                   | Type                                                                                                                                  | Description                                                                                                                                                   | Default                  |
+-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+-| children\*                  | `ReactNode[]`                                                                                                                         | The children to render. Usually a list of `AutocompleteItem` and `AutocompleteSection` elements.                                                              | -                        |
+-| label                       | `ReactNode`                                                                                                                           | The content to display as the label.                                                                                                                          | -                        |
+-| name                        | `string`                                                                                                                              | The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname). | -                        |
+-| variant                     | `flat` \| `bordered` \| `faded` \| `underlined`                                                                                       | The variant of the Autocomplete.                                                                                                                              | `flat`                   |
+-| color                       | `default` \| `primary` \| `secondary` \| `success` \| `warning` \| `danger`                                                           | The color of the Autocomplete.                                                                                                                                | `default`                |
+-| size                        | `sm` \| `md` \| `lg`                                                                                                                  | The size of the Autocomplete.                                                                                                                                 | `md`                     |
+-| radius                      | `none` \| `sm` \| `md` \| `lg` \| `full`                                                                                              | The radius of the Autocomplete.                                                                                                                               | -                        |
+-| items                       | [`Iterable<T>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)                                | The list of Autocomplete items. (controlled)                                                                                                                  | -                        |
+-| defaultItems                | [`Iterable<T>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)                                | The list of Autocomplete items (uncontrolled).                                                                                                                | -                        |
+-| inputValue                  | `string`                                                                                                                              | The value of the Autocomplete input (controlled).                                                                                                             | -                        |
+-| defaultInputValue           | `string`                                                                                                                              | The value of the Autocomplete input (uncontrolled).                                                                                                           | -                        |
+-| allowsCustomValue           | `boolean`                                                                                                                             | Whether the Autocomplete allows a non-item matching input value to be set.                                                                                    | `false`                  |
+-| allowsEmptyCollection       | `boolean`                                                                                                                             | Whether the autocomplete allows the menu to be open when the collection is empty.                                                                             | `true`                   |
+-| shouldCloseOnBlur           | `boolean`                                                                                                                             | Whether the Autocomplete should close when the input is blurred.                                                                                              | `true`                   |
+-| placeholder                 | `string`                                                                                                                              | Temporary text that occupies the text input when it is empty.                                                                                                 | -                        |
+-| description                 | `ReactNode`                                                                                                                           | A description for the field. Provides a hint such as specific requirements for what to choose.                                                                | -                        |
+-| menuTrigger                 | `focus` \| `input` \| `manual`                                                                                                        | The action that causes the menu to open.                                                                                                                      | `focus`                  |
+-| labelPlacement              | `inside` \| `outside` \| `outside-left`                                                                                               | The position of the label.                                                                                                                                    | `inside`                 |
+-| selectedKey                 | `React.Key`                                                                                                                           | The currently selected key in the collection (controlled).                                                                                                    | -                        |
+-| defaultSelectedKey          | `React.Key`                                                                                                                           | The initial selected key in the collection (uncontrolled).                                                                                                    | -                        |
+-| disabledKeys                | `all` \| `React.Key[]`                                                                                                                | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with.                                                       | -                        |
+-| errorMessage                | `ReactNode` \| `((v: ValidationResult) => ReactNode)`                                                                                 | An error message to display below the field.                                                                                                                  | -                        |
+-| validate                    | `(value: { inputValue: string, selectedKey: React.Key }) => ValidationError ｜ true ｜ null ｜ undefined`                              | Validate input values when committing (e.g. on blur), and return error messages for invalid values.                                                           | -                        |
+-| validationBehavior          | `native` \| `aria`                                                                                                                    | Whether to use native HTML form validation to prevent form submission when the value is missing or invalid, or mark the field as required or invalid via ARIA.| `aria`                   |
+-| startContent                | `ReactNode`                                                                                                                           | Element to be rendered in the left side of the Autocomplete.                                                                                                  | -                        |
+-| endContent                  | `ReactNode`                                                                                                                           | Element to be rendered in the right side of the Autocomplete.                                                                                                 | -                        |
+-| autoFocus                   | `boolean`                                                                                                                             | Whether the Autocomplete should be focused on render.                                                                                                         | `false`                  |
+-| defaultFilter               | `(textValue: string, inputValue: string) => boolean`                                                                                  | The filter function used to determine if a option should be included in the Autocomplete list.                                                                | -                        |
+-| filterOptions               | [Intl.CollatorOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Collator/Collator)            | The options used to create the collator used for filtering.                                                                                                   | `{ sensitivity: 'base'}` |
+-| isReadOnly                  | `boolean`                                                                                                                             | Whether the Autocomplete is read only.                                                                                                                        | `false`                  |
+-| isRequired                  | `boolean`                                                                                                                             | Whether the Autocomplete is required.                                                                                                                         | `false`                  |
+-| isInvalid                   | `boolean`                                                                                                                             | Whether the Autocomplete is invalid.                                                                                                                          | `false`                  |
+-| isDisabled                  | `boolean`                                                                                                                             | Whether the Autocomplete is disabled.                                                                                                                         | `false`                  |
+-| fullWidth                   | `boolean`                                                                                                                             | Whether the input should take up the width of its parent.                                                                                                     | `true`                   |
+-| selectorIcon                | `ReactNode`                                                                                                                           | The icon that represents the autocomplete open state. Usually a chevron icon.                                                                                 | -                        |
+-| clearIcon                   | `ReactNode`                                                                                                                           | The icon to be used in the clear button. Usually a cross icon.                                                                                                | -                        |
+-| showScrollIndicators        | `boolean`                                                                                                                             | Whether the scroll indicators should be shown when the listbox is scrollable.                                                                                 | `true`                   |
+-| scrollRef                   | `React.RefObject<HTMLElement>`                                                                                                        | A ref to the scrollable element.                                                                                                                              | -                        |
+-| inputProps                  | [InputProps](/docs/components/input#api)                                                                                              | Props to be passed to the Input component.                                                                                                                    | -                        |
+-| popoverProps                | [PopoverProps](/docs/components/popover#api)                                                                                          | Props to be passed to the Popover component.                                                                                                                  | -                        |
+-| listboxProps                | [ListboxProps](/docs/components/listbox#api)                                                                                          | Props to be passed to the Listbox component.                                                                                                                  | -                        |
+-| scrollShadowProps           | [ScrollShadowProps](/docs/components/scroll-shadow#api)                                                                               | Props to be passed to the ScrollShadow component.                                                                                                             | -                        |
+-| selectorButtonProps         | [ButtonProps](/docs/components/button#api)                                                                                            | Props to be passed to the selector button.                                                                                                                    | -                        |
+-| clearButtonProps            | [ButtonProps](/docs/components/button#api)                                                                                            | Props to be passed to the clear button.                                                                                                                       | -                        |
+-| isClearable                 | `boolean`                                                                                                                             | Whether the clear button should be shown.                                                                                                                     | `true`                   |
+-| disableClearable            | `boolean`                                                                                                                             | Whether the clear button should be hidden. (**Deprecated**) Use `isClearable` instead.                                                                        | `false`                  |
+-| disableAnimation            | `boolean`                                                                                                                             | Whether the Autocomplete should be animated.                                                                                                                  | `true`                   |
+-| disableSelectorIconRotation | `boolean`                                                                                                                             | Whether the select should disable the rotation of the selector icon.                                                                                          | `false`                  |
+-| classNames                  | `Record<"base"｜ "listboxWrapper"｜ "listbox"｜ "popoverContent" ｜ "endContentWrapper"｜ "clearButton" ｜ "selectorButton", string>` | Allows to set custom class names for the Autocomplete slots.                                                                                                  | -                        |
++| Attribute                   | Type                                                                                                                                  | Description                                                                                                                                                    | Default                  |
++| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
++| children\*                  | `ReactNode[]`                                                                                                                         | The children to render. Usually a list of `AutocompleteItem` and `AutocompleteSection` elements.                                                               | -                        |
++| label                       | `ReactNode`                                                                                                                           | The content to display as the label.                                                                                                                           | -                        |
++| name                        | `string`                                                                                                                              | The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname).  | -                        |
++| variant                     | `flat` \| `bordered` \| `faded` \| `underlined`                                                                                       | The variant of the Autocomplete.                                                                                                                               | `flat`                   |
++| color                       | `default` \| `primary` \| `secondary` \| `success` \| `warning` \| `danger`                                                           | The color of the Autocomplete.                                                                                                                                 | `default`                |
++| size                        | `sm` \| `md` \| `lg`                                                                                                                  | The size of the Autocomplete.                                                                                                                                  | `md`                     |
++| radius                      | `none` \| `sm` \| `md` \| `lg` \| `full`                                                                                              | The radius of the Autocomplete.                                                                                                                                | -                        |
++| items                       | [`Iterable<T>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)                                | The list of Autocomplete items. (controlled)                                                                                                                   | -                        |
++| defaultItems                | [`Iterable<T>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)                                | The list of Autocomplete items (uncontrolled).                                                                                                                 | -                        |
++| inputValue                  | `string`                                                                                                                              | The value of the Autocomplete input (controlled).                                                                                                              | -                        |
++| defaultInputValue           | `string`                                                                                                                              | The value of the Autocomplete input (uncontrolled).                                                                                                            | -                        |
++| allowsCustomValue           | `boolean`                                                                                                                             | Whether the Autocomplete allows a non-item matching input value to be set.                                                                                     | `false`                  |
++| allowsEmptyCollection       | `boolean`                                                                                                                             | Whether the autocomplete allows the menu to be open when the collection is empty.                                                                              | `true`                   |
++| shouldCloseOnBlur           | `boolean`                                                                                                                             | Whether the Autocomplete should close when the input is blurred.                                                                                               | `true`                   |
++| placeholder                 | `string`                                                                                                                              | Temporary text that occupies the text input when it is empty.                                                                                                  | -                        |
++| description                 | `ReactNode`                                                                                                                           | A description for the field. Provides a hint such as specific requirements for what to choose.                                                                 | -                        |
++| menuTrigger                 | `focus` \| `input` \| `manual`                                                                                                        | The action that causes the menu to open.                                                                                                                       | `focus`                  |
++| labelPlacement              | `inside` \| `outside` \| `outside-left`                                                                                               | The position of the label.                                                                                                                                     | `inside`                 |
++| selectedKey                 | `React.Key`                                                                                                                           | The currently selected key in the collection (controlled).                                                                                                     | -                        |
++| defaultSelectedKey          | `React.Key`                                                                                                                           | The initial selected key in the collection (uncontrolled).                                                                                                     | -                        |
++| disabledKeys                | `all` \| `React.Key[]`                                                                                                                | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with.                                                        | -                        |
++| errorMessage                | `ReactNode` \| `((v: ValidationResult) => ReactNode)`                                                                                 | An error message to display below the field.                                                                                                                   | -                        |
++| validate                    | `(value: { inputValue: string, selectedKey: React.Key }) => ValidationError ｜ true ｜ null ｜ undefined`                             | Validate input values when committing (e.g. on blur), and return error messages for invalid values.                                                            | -                        |
++| validationBehavior          | `native` \| `aria`                                                                                                                    | Whether to use native HTML form validation to prevent form submission when the value is missing or invalid, or mark the field as required or invalid via ARIA. | `aria`                   |
++| startContent                | `ReactNode`                                                                                                                           | Element to be rendered in the left side of the Autocomplete.                                                                                                   | -                        |
++| endContent                  | `ReactNode`                                                                                                                           | Element to be rendered in the right side of the Autocomplete.                                                                                                  | -                        |
++| autoFocus                   | `boolean`                                                                                                                             | Whether the Autocomplete should be focused on render.                                                                                                          | `false`                  |
++| defaultFilter               | `(textValue: string, inputValue: string) => boolean`                                                                                  | The filter function used to determine if a option should be included in the Autocomplete list.                                                                 | -                        |
++| filterOptions               | [Intl.CollatorOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Collator/Collator)            | The options used to create the collator used for filtering.                                                                                                    | `{ sensitivity: 'base'}` |
++| maxListboxHeight            | `number`                                                                                                                              | The maximum height of the listbox in pixels. Required when using virtualization.                                                                               | `256`                    |
++| itemHeight                  | `number`                                                                                                                              | The fixed height of each item in pixels. Required when using virtualization.                                                                                   | `32`                     |
++| isVirtualized               | `boolean`                                                                                                                             | Whether to enable virtualization. By default, it's enabled when the number of items exceeds 50.                                                                | `undefined`              |
++| isReadOnly                  | `boolean`                                                                                                                             | Whether the Autocomplete is read only.                                                                                                                         | `false`                  |
++| isRequired                  | `boolean`                                                                                                                             | Whether the Autocomplete is required.                                                                                                                          | `false`                  |
++| isInvalid                   | `boolean`                                                                                                                             | Whether the Autocomplete is invalid.                                                                                                                           | `false`                  |
++| isDisabled                  | `boolean`                                                                                                                             | Whether the Autocomplete is disabled.                                                                                                                          | `false`                  |
++| fullWidth                   | `boolean`                                                                                                                             | Whether the input should take up the width of its parent.                                                                                                      | `true`                   |
++| selectorIcon                | `ReactNode`                                                                                                                           | The icon that represents the autocomplete open state. Usually a chevron icon.                                                                                  | -                        |
++| clearIcon                   | `ReactNode`                                                                                                                           | The icon to be used in the clear button. Usually a cross icon.                                                                                                 | -                        |
++| showScrollIndicators        | `boolean`                                                                                                                             | Whether the scroll indicators should be shown when the listbox is scrollable.                                                                                  | `true`                   |
++| scrollRef                   | `React.RefObject<HTMLElement>`                                                                                                        | A ref to the scrollable element.                                                                                                                               | -                        |
++| inputProps                  | [InputProps](/docs/components/input#api)                                                                                              | Props to be passed to the Input component.                                                                                                                     | -                        |
++| popoverProps                | [PopoverProps](/docs/components/popover#api)                                                                                          | Props to be passed to the Popover component.                                                                                                                   | -                        |
++| listboxProps                | [ListboxProps](/docs/components/listbox#api)                                                                                          | Props to be passed to the Listbox component.                                                                                                                   | -                        |
++| scrollShadowProps           | [ScrollShadowProps](/docs/components/scroll-shadow#api)                                                                               | Props to be passed to the ScrollShadow component.                                                                                                              | -                        |
++| selectorButtonProps         | [ButtonProps](/docs/components/button#api)                                                                                            | Props to be passed to the selector button.                                                                                                                     | -                        |
++| clearButtonProps            | [ButtonProps](/docs/components/button#api)                                                                                            | Props to be passed to the clear button.                                                                                                                        | -                        |
++| isClearable                 | `boolean`                                                                                                                             | Whether the clear button should be shown.                                                                                                                      | `true`                   |
++| disableClearable            | `boolean`                                                                                                                             | Whether the clear button should be hidden. (**Deprecated**) Use `isClearable` instead.                                                                         | `false`                  |
++| disableAnimation            | `boolean`                                                                                                                             | Whether the Autocomplete should be animated.                                                                                                                   | `true`                   |
++| disableSelectorIconRotation | `boolean`                                                                                                                             | Whether the select should disable the rotation of the selector icon.                                                                                           | `false`                  |
++| classNames                  | `Record<"base"｜ "listboxWrapper"｜ "listbox"｜ "popoverContent" ｜ "endContentWrapper"｜ "clearButton" ｜ "selectorButton", string>` | Allows to set custom class names for the Autocomplete slots.                                                                                                   | -                        |
+ 
+ ### Autocomplete Events
+ \n- packages/components/autocomplete/src/use-autocomplete.ts (modified, 42 changes)\n  Patch: @@ -110,13 +110,30 @@ interface Props<T> extends Omit<HTMLNextUIProps<"input">, keyof ComboBoxProps<T>
+    * Callback fired when the select menu is closed.
+    */
+   onClose?: () => void;
++  /**
++   * Whether to enable virtualization of the listbox items.
++   * By default, virtualization is automatically enabled when the number of items is greater than 50.
++   * @default undefined
++   */
++  isVirtualized?: boolean;
+ }
+ 
+ export type UseAutocompleteProps<T> = Props<T> &
+   Omit<InputProps, "children" | "value" | "isClearable" | "defaultValue" | "classNames"> &
+   ComboBoxProps<T> &
+   AsyncLoadable &
+-  AutocompleteVariantProps;
++  AutocompleteVariantProps & {
++    /**
++     * The height of each item in the listbox.
++     * This is required for virtualized listboxes to calculate the height of each item.
++     */
++    itemHeight?: number;
++    /**
++     * The max height of the listbox (which will be rendered in a popover).
++     * This is required for virtualized listboxes to set the maximum height of the listbox.
++     */
++    maxListboxHeight?: number;
++  };
+ 
+ export function useAutocomplete<T extends object>(originalProps: UseAutocompleteProps<T>) {
+   const globalContext = useProviderContext();
+@@ -158,6 +175,9 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     clearButtonProps = {},
+     showScrollIndicators = true,
+     allowsCustomValue = false,
++    isVirtualized,
++    maxListboxHeight = 256,
++    itemHeight = 32,
+     validationBehavior = globalContext?.validationBehavior ?? "aria",
+     className,
+     classNames,
+@@ -425,14 +445,25 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+       onClick: chain(slotsProps.inputProps.onClick, otherProps.onClick),
+     } as unknown as InputProps);
+ 
+-  const getListBoxProps = () =>
+-    ({
++  const getListBoxProps = () => {
++    // Use isVirtualized prop if defined, otherwise fallback to default behavior
++    const shouldVirtualize = isVirtualized ?? state.collection.size > 50;
++
++    return {
+       state,
+       ref: listBoxRef,
++      isVirtualized: shouldVirtualize,
++      virtualization: shouldVirtualize
++        ? {
++            maxListboxHeight,
++            itemHeight,
++          }
++        : undefined,
+       ...mergeProps(slotsProps.listboxProps, listBoxProps, {
+         shouldHighlightOnFocus: true,
+       }),
+-    } as ListboxProps);
++    } as ListboxProps;
++  };
+ 
+   const getPopoverProps = (props: DOMAttributes = {}) => {
+     const popoverProps = mergeProps(slotsProps.popoverProps, props);
+@@ -479,6 +510,9 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+         props?.className,
+       ),
+     }),
++    style: {
++      maxHeight: originalProps.maxListboxHeight ?? 256,
++    },
+   });
+ 
+   const getEndContentWrapperProps: PropGetter = (props: any = {}) => ({\n- packages/components/autocomplete/stories/autocomplete.stories.tsx (modified, 91 changes)\n  Patch: @@ -100,6 +100,58 @@ const items = animalsData.map((item) => (
+   </AutocompleteItem>
+ ));
+ 
++interface LargeDatasetSchema {
++  label: string;
++  value: string;
++  description: string;
++}
++
++function generateLargeDataset(n: number): LargeDatasetSchema[] {
++  const dataset: LargeDatasetSchema[] = [];
++
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++}
++
++const LargeDatasetTemplate = (args: AutocompleteProps & {numItems: number}) => {
++  const largeDataset = generateLargeDataset(args.numItems);
++
++  return (
++    <Autocomplete label={`Search from ${args.numItems} items`} {...args}>
++      {largeDataset.map((item, index) => (
++        <AutocompleteItem key={index} value={item.value}>
++          {item.label}
++        </AutocompleteItem>
++      ))}
++    </Autocomplete>
++  );
++};
++
+ const Template = (args: AutocompleteProps) => (
+   <Autocomplete label="Favorite Animal" {...args}>
+     <AutocompleteItem key="red_panda">Red Panda</AutocompleteItem>
+@@ -1061,3 +1113,42 @@ export const FullyControlled = {
+     ...defaultProps,
+   },
+ };
++
++export const OneThousandList = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    placeholder: "Search...",
++    numItems: 1000,
++  },
++};
++
++export const TenThousandList = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    placeholder: "Search...",
++    numItems: 10000,
++  },
++};
++
++export const CustomMaxListboxHeight = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    placeholder: "Search...",
++    numItems: 1000,
++    maxListboxHeight: 400,
++  },
++};
++
++export const CustomItemHeight = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    placeholder: "Search...",
++    numItems: 1000,
++    maxListboxHeight: 400,
++    itemHeight: 40,
++  },
++};\n- packages/components/listbox/package.json (modified, 17 changes)\n  Patch: @@ -40,11 +40,12 @@
+     "@nextui-org/system": ">=2.3.0-beta.0"
+   },
+   "dependencies": {
++    "@nextui-org/aria-utils": "workspace:*",
++    "@nextui-org/divider": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+-    "@nextui-org/divider": "workspace:*",
+-    "@nextui-org/aria-utils": "workspace:*",
+     "@nextui-org/use-is-mobile": "workspace:*",
++    "@tanstack/react-virtual": "^3.10.9",
+     "@react-aria/utils": "3.25.2",
+     "@react-aria/listbox": "3.13.3",
+     "@react-stately/list": "3.10.8",
+@@ -54,14 +55,14 @@
+     "@react-types/shared": "3.24.1"
+   },
+   "devDependencies": {
+-    "@nextui-org/theme": "workspace:*",
+-    "@nextui-org/system": "workspace:*",
+-    "clean-package": "2.2.0",
++    "@nextui-org/avatar": "workspace:*",
++    "@nextui-org/chip": "workspace:*",
++    "@nextui-org/scroll-shadow": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/stories-utils": "workspace:*",
+-    "@nextui-org/scroll-shadow": "workspace:*",
+-    "@nextui-org/chip": "workspace:*",
+-    "@nextui-org/avatar": "workspace:*",
++    "@nextui-org/system": "workspace:*",
++    "@nextui-org/theme": "workspace:*",
++    "clean-package": "2.2.0",
+     "react": "^18.0.0",
+     "react-dom": "^18.0.0"
+   },\n- packages/components/listbox/src/listbox.tsx (modified, 25 changes)\n  Patch: @@ -2,13 +2,26 @@ import {ForwardedRef, ReactElement, Ref} from "react";
+ import {forwardRef} from "@nextui-org/system";
+ import {mergeProps} from "@react-aria/utils";
+ 
+-import {UseListboxProps, useListbox} from "./use-listbox";
++import {UseListboxProps, UseListboxReturn, useListbox} from "./use-listbox";
+ import ListboxSection from "./listbox-section";
+ import ListboxItem from "./listbox-item";
++import VirtualizedListbox from "./virtualized-listbox";
+ 
+-interface Props<T> extends UseListboxProps<T> {}
++export interface VirtualizationProps {
++  maxListboxHeight: number;
++  itemHeight: number;
++}
++
++interface Props<T> extends UseListboxProps<T> {
++  isVirtualized?: boolean;
++  virtualization?: VirtualizationProps;
++}
+ 
+ function Listbox<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLUListElement>) {
++  const {isVirtualized, ...restProps} = props;
++
++  const useListboxProps = useListbox<T>({...restProps, ref});
++
+   const {
+     Component,
+     state,
+@@ -24,7 +37,13 @@ function Listbox<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLUListE
+     disableAnimation,
+     getEmptyContentProps,
+     getListProps,
+-  } = useListbox<T>({...props, ref});
++  } = useListboxProps;
++
++  if (isVirtualized) {
++    return (
++      <VirtualizedListbox {...(props as Props<T>)} {...(useListboxProps as UseListboxReturn)} />
++    );
++  }
+ 
+   const content = (
+     <Component {...getListProps()}>\n- packages/components/listbox/src/virtualized-listbox.tsx (added, 159 changes)\n  Patch: @@ -0,0 +1,159 @@
++import {ReactElement, useRef} from "react";
++import {forwardRef} from "@nextui-org/system";
++import {mergeProps} from "@react-aria/utils";
++import {useVirtualizer} from "@tanstack/react-virtual";
++import {isEmpty} from "@nextui-org/shared-utils";
++
++import ListboxItem from "./listbox-item";
++import ListboxSection from "./listbox-section";
++import {VirtualizationProps} from "./listbox";
++import {UseListboxReturn} from "./use-listbox";
++
++interface Props extends UseListboxReturn {
++  isVirtualized?: boolean;
++  virtualization?: VirtualizationProps;
++}
++
++function VirtualizedListbox(props: Props) {
++  const {
++    Component,
++    state,
++    color,
++    variant,
++    itemClasses,
++    getBaseProps,
++    topContent,
++    bottomContent,
++    hideEmptyContent,
++    hideSelectedIcon,
++    shouldHighlightOnFocus,
++    disableAnimation,
++    getEmptyContentProps,
++    getListProps,
++  } = props;
++
++  const {virtualization} = props;
++
++  if (
++    !virtualization ||
++    (!isEmpty(virtualization) && !virtualization.maxListboxHeight && !virtualization.itemHeight)
++  ) {
++    throw new Error(
++      "You are using a virtualized listbox. VirtualizedListbox requires 'virtualization' props with 'maxListboxHeight' and 'itemHeight' properties. This error might have originated from autocomplete components that use VirtualizedListbox. Please provide these props to use the virtualized listbox.",
++    );
++  }
++  const {maxListboxHeight, itemHeight} = virtualization;
++
++  const listHeight = Math.min(maxListboxHeight, itemHeight * state.collection.size);
++
++  const parentRef = useRef(null);
++
++  const rowVirtualizer = useVirtualizer({
++    count: state.collection.size,
++    getScrollElement: () => parentRef.current,
++    estimateSize: () => itemHeight,
++  });
++
++  const virtualItems = rowVirtualizer.getVirtualItems();
++
++  const renderRow = ({
++    index,
++    style: virtualizerStyle,
++  }: {
++    index: number;
++    style: React.CSSProperties;
++  }) => {
++    const item = [...state.collection][index];
++
++    const itemProps = {
++      color,
++      item,
++      state,
++      variant,
++      disableAnimation,
++      hideSelectedIcon,
++      ...item.props,
++    };
++
++    if (item.type === "section") {
++      return (
++        <ListboxSection
++          key={item.key}
++          {...itemProps}
++          itemClasses={itemClasses}
++          style={{...virtualizerStyle, ...itemProps.style}}
++        />
++      );
++    }
++
++    let listboxItem = (
++      <ListboxItem
++        key={item.key}
++        {...itemProps}
++        classNames={mergeProps(itemClasses, item.props?.classNames)}
++        shouldHighlightOnFocus={shouldHighlightOnFocus}
++        style={{...virtualizerStyle, ...itemProps.style}}
++      />
++    );
++
++    if (item.wrapper) {
++      listboxItem = item.wrapper(listboxItem);
++    }
++
++    return listboxItem;
++  };
++
++  const content = (
++    <Component {...getListProps()}>
++      {!state.collection.size && !hideEmptyContent && (
++        <li>
++          <div {...getEmptyContentProps()} />
++        </li>
++      )}
++      <div
++        ref={parentRef}
++        style={{
++          height: maxListboxHeight,
++          overflow: "auto",
++        }}
++      >
++        {listHeight > 0 && itemHeight > 0 && (
++          <div
++            style={{
++              height: `${rowVirtualizer.getTotalSize()}px`,
++              width: "100%",
++              position: "relative",
++            }}
++          >
++            {virtualItems.map((virtualItem) =>
++              renderRow({
++                index: virtualItem.index,
++                style: {
++                  position: "absolute",
++                  top: 0,
++                  left: 0,
++                  width: "100%",
++                  height: `${virtualItem.size}px`,
++                  transform: `translateY(${virtualItem.start}px)`,
++                },
++              }),
++            )}
++          </div>
++        )}
++      </div>
++    </Component>
++  );
++
++  return (
++    <div {...getBaseProps()}>
++      {topContent}
++      {content}
++      {bottomContent}
++    </div>
++  );
++}
++
++VirtualizedListbox.displayName = "NextUI.VirtualizedListbox";
++
++// forwardRef doesn't support generic parameters, so cast the result to the correct type
++export default forwardRef(VirtualizedListbox) as (props: Props) => ReactElement;\n- packages/core/theme/src/components/autocomplete.ts (modified, 2 changes)\n  Patch: @@ -5,7 +5,7 @@ import {tv} from "../utils/tv";
+ const autocomplete = tv({
+   slots: {
+     base: "group inline-flex flex-column w-full",
+-    listboxWrapper: "scroll-py-6 max-h-64 w-full",
++    listboxWrapper: "scroll-py-6 w-full",
+     listbox: "",
+     popoverContent: "w-full p-1 overflow-hidden",
+     endContentWrapper: "relative flex h-full items-center -mr-2",\n- pnpm-lock.yaml (modified, 20 changes)\n  Patch: @@ -1783,6 +1783,9 @@ importers:
+       '@react-types/shared':
+         specifier: 3.24.1
+         version: 3.24.1(react@18.3.1)
++      '@tanstack/react-virtual':
++        specifier: ^3.10.9
++        version: 3.10.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+     devDependencies:
+       '@nextui-org/avatar':
+         specifier: workspace:*
+@@ -7524,6 +7527,15 @@ packages:
+     peerDependencies:
+       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20'
+ 
++  '@tanstack/react-virtual@3.10.9':
++    resolution: {integrity: sha512-OXO2uBjFqA4Ibr2O3y0YMnkrRWGVNqcvHQXmGvMu6IK8chZl3PrDxFXdGZ2iZkSrKh3/qUYoFqYe+Rx23RoU0g==}
++    peerDependencies:
++      react: ^18.2.0
++      react-dom: ^18.2.0
++
++  '@tanstack/virtual-core@3.10.9':
++    resolution: {integrity: sha512-kBknKOKzmeR7lN+vSadaKWXaLS0SZZG+oqpQ/k80Q6g9REn6zRHS/ZYdrIzHnpHgy/eWs00SujveUN/GJT2qTw==}
++
+   '@testing-library/dom@10.4.0':
+     resolution: {integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==}
+     engines: {node: '>=18'}
+@@ -21187,6 +21199,14 @@ snapshots:
+       postcss-selector-parser: 6.0.10
+       tailwindcss: 3.4.15(ts-node@10.9.2(@swc/core@1.9.2(@swc/helpers@0.5.15))(@types/node@20.2.5)(typescript@5.6.3))
+ 
++  '@tanstack/react-virtual@3.10.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
++    dependencies:
++      '@tanstack/virtual-core': 3.10.9
++      react: 18.3.1
++      react-dom: 18.3.1(react@18.3.1)
++
++  '@tanstack/virtual-core@3.10.9': {}
++
+   '@testing-library/dom@10.4.0':
+     dependencies:
+       '@babel/code-frame': 7.26.2\n

@@ -1,0 +1,50 @@
+Pull Request Number: 309
+Title: fix: changeTheme function to avoid empty strings
+Base Branch: main
+Head Branch: fix/issue-308-semicolons
+Author: j0nl1
+URL: https://github.com/nextui-org/nextui/pull/309
+State: MERGED
+Created At: 2022-02-28T05:03:06Z
+Merged At: 2022-02-28T13:28:55Z
+Participants: j0nl1, jrgarciadev
+
+Description:
+[LEVEL]/[COMPONENT]
+TASK: 308
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+I added an extra condition to avoid empty strings in this case the next map wouldn't add the semicolon when string is empty.
+
+It avoid to add unnecessary semicolons in document style tag.
+
+Screenshots - Animations
+
+Commits:
+- fix changeTheme function to avoid empty strings\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Thank  you so much @j0nl1  🙌🏻 \n
+
+Files Changed:
+- packages/react/src/theme/utils.ts (modified, 2 changes)\n  Patch: @@ -114,7 +114,7 @@ export const changeTheme = (theme: ThemeType | string) => {
+     el
+       ?.getAttribute('style')
+       ?.split(';')
+-      .filter((stl) => !stl.includes('color-scheme'))
++      .filter((stl) => !stl.includes('color-scheme') && stl.length)
+       .map((el) => `${el};`) || [];
+ 
+   el?.setAttribute('class', clsx(prevClasses, `${getThemeName(theme)}-theme`));\n

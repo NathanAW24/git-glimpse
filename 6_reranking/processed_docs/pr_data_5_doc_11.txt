@@ -1,0 +1,376 @@
+Pull Request Number: 3788
+Title: fix(autocomplete): popover should remain open after clicking clear button
+Base Branch: canary
+Head Branch: autocomplete-clearbutton-fix
+Author: abhinav700
+URL: https://github.com/nextui-org/nextui/pull/3788
+State: MERGED
+Created At: 2024-09-20T15:29:18Z
+Merged At: 2024-09-28T03:56:29Z
+Participants: abhinav700, wingkwong, ryo-manba
+
+Description:
+Closes #3783 
+📝 Description
+Added state.open()  so that dropdown does not close when clear button is clicked.
+based on this PR
+💣 Is this a breaking change (Yes/No): No
+
+
+Summary by CodeRabbit
+Summary by CodeRabbit
+
+New Features
+
+Enhanced the autocomplete component to keep the dropdown open when the clear button is pressed, allowing for a smoother user interaction experience.
+
+Commits:
+- fix: add state.open() so that dropdown is not closed\n- chore: add changeset\n- chore(autocomplete): add testcases for keeping lisbox open when clearButton is clicked\n- chore: update changeset\n- chore(autocomplete): change the docs for test cases\n- chore(changeset): update changeset message and add issue number\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 61278406df7b5888e786d3319bea4f1b58555389
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/react        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/abhinav700/nextui/new/autocomplete-clearbutton-fix?filename=.changeset/wet-islands-remember.md&value=---%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A---%0A%0Afix(autocomplete)%3A%20popover%20should%20remain%20open%20after%20clicking%20clear%20button%0A)
+
+\n- vercel: @abhinav700 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%229979a79176d0da4d8c039817689093ccb58de61f%22%7D%2C%22id%22%3A%22Qmex1qj7o4EJLmVQMsCs12kDEgMmTDzEdxYHVHbNwC7sVY%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3788%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The pull request introduces modifications to the `@nextui-org/autocomplete` package, specifically altering the behavior of the clear button within the autocomplete component. The changes ensure that the dropdown remains open when the clear button is pressed, allowing users to continue interacting with the dropdown seamlessly. The `state.open()` method is now invoked on the clear button's `onPress` event, while the `state.close()` method has been removed.
+
+## Changes
+
+| Files                                   | Change Summary                                                                                                                                      |
+|-----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| .changeset/dirty-moles-refuse.md       | Introduces updates to the clear button behavior in the autocomplete component, ensuring the dropdown remains open after clearing the input.       |
+| autocomplete.test.tsx                  | Adds two test cases to verify that the autocomplete listbox remains open after clicking the clear button, for both standard and controlled components. |
+
+## Assessment against linked issues
+
+| Objective                                                                 | Addressed | Explanation                                                |
+|---------------------------------------------------------------------------|-----------|------------------------------------------------------------|
+| Autocomplete does not work when the clear button is hit (regression) (#3783) | ✅         |                                                            |
+
+## Possibly related PRs
+- **#2854**: Modifies the behavior of the clear button in the autocomplete component.
+- **#3000**: Addresses focus management of the clear button in the autocomplete component.
+- **#3464**: Removes unnecessary `state.close()` call in the autocomplete component.
+- **#3726**: Enhances keyboard navigation in the `AutocompleteSection`.
+
+## Suggested reviewers
+- jrgarciadev
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+.changeset/dirty-moles-refuse.md:
+
+"""
+## AI-generated summary of changes
+
+The new file introduces a patch to the `@nextui-org/autocomplete` package, enhancing the functionality of the clear button within the autocomplete component. The update ensures that when the clear button is clicked, the selected value is cleared while keeping the dropdown open. This modification allows users to continue interacting with the dropdown without it closing unexpectedly after clearing the selection. Additionally, the `state.open()` method has been added to the `onPress` prop of the clear button, and the `state.close()` method has been removed. The `onPress` event handler within the `useAutocomplete` function has also been modified to remove the call to `state.close()` when a custom value is allowed and to add a call to `state.open()` unconditionally at the end of the `onPress` handler, enhancing the user interaction flow. Furthermore, two new test cases have been added to the `autocomplete.test.tsx` file to verify this behavior. The first test case, titled "should keep the ListBox open after clicking clear button," checks that the autocomplete listbox remains open after the clear button is clicked. The second test case, "should keep the ListBox open after clicking clear button (controlled)," confirms the same behavior for the `ControlledAutocomplete` component. Both tests ensure consistent functionality of the autocomplete component when interacting with the clear button.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made.
+"""
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(autocomplete): popover should remain open after clicking clear button" was created by the user abhinav700 and is identified as PR number 3788. The primary objective of this PR is to address a bug related to the autocomplete functionality in the NextUI library. Specifically, it aims to ensure that the dropdown remains open when the clear button is clicked. The solution involves adding the `state.open()` method to maintain the dropdown's visibility after the clear action. This change is based on a previous pull request (#2148) that dealt with similar functionality. The author confirms that this update does not introduce any breaking changes for existing users of NextUI.
+
+## Objectives from Linked Issues
+
+The linked issue, identified as #3783, describes a regression bug in the autocomplete feature of the NextUI library. The issue arises when the clear button is pressed; after this action, the autocomplete dropdown fails to open, although change events continue to function correctly. This bug can be observed on the NextUI documentation page. The issue is noted to have been previously fixed in an earlier pull request (#2146), but it has resurfaced. The expected behavior is that the clear button should not disrupt the functionality of the autocomplete feature. Users have reported that the dropdown only reopens if they focus out and then refocus the input field, which is not the desired outcome. The issue has been reported on macOS using the Chrome browser.
+
+## Comments Summary
+
+In the comments section of the pull request, the author abhinav700 responded to a user, ryo-manba, indicating a willingness to add test cases to the implementation. This suggests that the author is open to enhancing the robustness of the changes made in the PR by ensuring that the new functionality is adequately tested. The comment reflects a collaborative approach to improving the code quality and addressing any potential issues that may arise from the changes introduced in the pull request.
+
+Subsequently, abhinav700 confirmed that they have added the test cases. However, they noted that the new test cases do not check if the value is being cleared, as that functionality is already covered in previous test cases. This indicates a focused approach to testing, ensuring that the new changes are validated without redundancy.
+
+Overall, the interaction highlights the importance of testing in the development process, especially when addressing bugs that affect user experience. The author's commitment to adding test cases demonstrates a proactive stance towards maintaining the integrity of the autocomplete feature in the NextUI library. The collaborative dialogue between the author and reviewers underscores the community-driven nature of the project, emphasizing the shared goal of improving the library's functionality and reliability.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 9979a79176d0da4d8c039817689093ccb58de61f -->
+<!-- 10817323dff39fff11249eb094cf55981e415725 -->
+<!-- a8e2ed33d5ab060560267194a94893300bb35b7e -->
+<!-- 046a9df995162cb2d9f68d1c5cdd23e8a163d03a -->
+<!-- 61278406df7b5888e786d3319bea4f1b58555389 -->
+
+<!-- commit_ids_reviewed_end -->
+
+---
+
+<details>
+<summary>📜 Recent review details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>📥 Commits</summary>
+
+Files that changed from the base of the PR and between 046a9df995162cb2d9f68d1c5cdd23e8a163d03a and 61278406df7b5888e786d3319bea4f1b58555389.
+
+</details>
+
+<details>
+<summary>📒 Files selected for processing (1)</summary>
+
+* .changeset/dirty-moles-refuse.md (1 hunks)
+
+</details>
+
+<details>
+<summary>🚧 Files skipped from review as they are similar to previous changes (1)</summary>
+
+* .changeset/dirty-moles-refuse.md
+
+</details>
+
+</details><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- abhinav700: @ryo-manba Sure, I will try to add some test cases\n- abhinav700: @ryo-manba I have added the test cases.
+
+In the new test cases, I have not checked if the value is being cleared or not because that functionality is already covered in the previous test cases.\n- abhinav700: @ryo-manba I have made the changes.\n
+
+Files Changed:
+- .changeset/dirty-moles-refuse.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/autocomplete": patch
++---
++
++Clicking the clear button clears the selected value without closing the dropdown. (#3788)
+\ No newline at end of file\n- packages/components/autocomplete/__tests__/autocomplete.test.tsx (modified, 94 changes)\n  Patch: @@ -223,7 +223,7 @@ describe("Autocomplete", () => {
+ 
+     expect(clearButton).not.toBeNull();
+ 
+-    // select the target item
++    // click the clear button
+     await act(async () => {
+       await userEvent.click(clearButton);
+     });
+@@ -235,6 +235,55 @@ describe("Autocomplete", () => {
+     expect(autocomplete).toHaveFocus();
+   });
+ 
++  it("should keep the ListBox open after clicking clear button", async () => {
++    const wrapper = render(
++      <Autocomplete aria-label="Favorite Animal" data-testid="autocomplete" label="Favorite Animal">
++        <AutocompleteItem key="penguin" value="penguin">
++          Penguin
++        </AutocompleteItem>
++        <AutocompleteItem key="zebra" value="zebra">
++          Zebra
++        </AutocompleteItem>
++        <AutocompleteItem key="shark" value="shark">
++          Shark
++        </AutocompleteItem>
++      </Autocomplete>,
++    );
++
++    const autocomplete = wrapper.getByTestId("autocomplete");
++
++    // open the select listbox
++    await act(async () => {
++      await userEvent.click(autocomplete);
++    });
++
++    // assert that the autocomplete listbox is open
++    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++
++    let options = wrapper.getAllByRole("option");
++
++    // select the target item
++    await act(async () => {
++      await userEvent.click(options[0]);
++    });
++
++    const {container} = wrapper;
++
++    const clearButton = container.querySelector(
++      "[data-slot='inner-wrapper'] button:nth-of-type(1)",
++    )!;
++
++    expect(clearButton).not.toBeNull();
++
++    // click the clear button
++    await act(async () => {
++      await userEvent.click(clearButton);
++    });
++
++    // assert that the autocomplete listbox is open
++    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++  });
++
+   it("should clear value after clicking clear button (controlled)", async () => {
+     const wrapper = render(
+       <ControlledAutocomplete data-testid="autocomplete" items={itemsData}>
+@@ -267,7 +316,7 @@ describe("Autocomplete", () => {
+ 
+     expect(clearButton).not.toBeNull();
+ 
+-    // select the target item
++    /// click the clear button
+     await act(async () => {
+       await userEvent.click(clearButton);
+     });
+@@ -279,6 +328,47 @@ describe("Autocomplete", () => {
+     expect(autocomplete).toHaveFocus();
+   });
+ 
++  it("should keep the ListBox open after clicking clear button (controlled)", async () => {
++    const wrapper = render(
++      <ControlledAutocomplete data-testid="autocomplete" items={itemsData}>
++        {(item) => <AutocompleteItem key={item.value}>{item.value}</AutocompleteItem>}
++      </ControlledAutocomplete>,
++    );
++
++    const autocomplete = wrapper.getByTestId("autocomplete");
++
++    // open the select listbox
++    await act(async () => {
++      await userEvent.click(autocomplete);
++    });
++
++    // assert that the autocomplete listbox is open
++    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++
++    let options = wrapper.getAllByRole("option");
++
++    // select the target item
++    await act(async () => {
++      await userEvent.click(options[0]);
++    });
++
++    const {container} = wrapper;
++
++    const clearButton = container.querySelector(
++      "[data-slot='inner-wrapper'] button:nth-of-type(1)",
++    )!;
++
++    expect(clearButton).not.toBeNull();
++
++    // click the clear button
++    await act(async () => {
++      await userEvent.click(clearButton);
++    });
++
++    // assert that the autocomplete listbox is open
++    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++  });
++
+   it("should open and close listbox by clicking selector button", async () => {
+     const wrapper = render(
+       <Autocomplete aria-label="Favorite Animal" data-testid="autocomplete" label="Favorite Animal">\n- packages/components/autocomplete/src/use-autocomplete.ts (modified, 3 changes)\n  Patch: @@ -385,16 +385,15 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+       },
+       onPress: (e: PressEvent) => {
+         slotsProps.clearButtonProps?.onPress?.(e);
+-
+         if (state.selectedItem) {
+           state.setInputValue("");
+           state.setSelectedKey(null);
+         } else {
+           if (allowsCustomValue) {
+             state.setInputValue("");
+-            state.close();
+           }
+         }
++        state.open();
+       },
+       "data-visible": !!state.selectedItem || state.inputValue?.length > 0,
+       className: slots.clearButton({\n

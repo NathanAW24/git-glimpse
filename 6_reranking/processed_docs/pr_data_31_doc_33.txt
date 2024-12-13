@@ -1,0 +1,394 @@
+Pull Request Number: 97
+Title: feat/progressbar
+Base Branch: feat/progress
+Head Branch: feat/progress-bar
+Author: yuriwithowsky
+URL: https://github.com/nextui-org/nextui/pull/97
+State: MERGED
+Created At: 2021-10-26T15:57:22Z
+Merged At: 2021-10-27T01:57:43Z
+Participants: yuriwithowsky, jrgarciadev
+
+Description:
+[Feat]/[ProgressBar]
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+
+
+A new ProgressBar component.
+Screenshots - Animations
+
+Commits:
+- feat: new component progress bar created\n- fix: merge conflicts\n- Merge branch 'main' of github.com:nextui-org/nextui into pr/97\n- chore(progress): progress bar renamed to progress\n- chore(docs): progress bar renamed\n- chore(utils): transform value to perfect function\n- refactor(progress): bordered option removed,  accessibility added, animated added\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Hey, @yuriwithowsky thank you so much for this, I improved it a little bit the API, added animations and improved the accessibility, due to it's a core component and are still missing pieces I'm going to merge this with the branch `feat/progress` in order to release it as soon as possible
+
+\n
+
+Files Changed:
+- packages/docs/content/docs/components/progress.mdx (added, 74 changes)\n  Patch: @@ -0,0 +1,74 @@
++---
++title: 'Progress'
++description: 'The Progress component allows you to view the progress of any activity.'
++url: https://nextui.com/docs/components/progress-bar
++---
++
++# Progress
++
++The Progress Bar component allows you to view the progress of any activity.
++
++```jsx
++import { Progress } from '@nextui-org/react';
++```
++
++<CarbonAd />
++
++<Playground
++  title="Default"
++  desc="You can control the current value of progress"
++  code={`
++ <Grid.Container xs={6} gap={2}>
++    <Grid>
++        <Progress value={75} />
++    </Grid>
++    <Grid>
++        <Progress value={55} />
++    </Grid>
++    <Grid>
++        <Progress value={35} />
++    </Grid>
++</Grid.Container>
++`}
++/>
++
++<Spacer y={3} />
++
++### APIs
++
++<Spacer y={2} />
++
++#### Progress Props
++
++| Attribute        | Type                    | Accepted values                  | Description                           | Default   |
++| ---------------- | ----------------------- | -------------------------------- | ------------------------------------- | --------- |
++| **color**        | `NormalColors` `string` | [NormalColors](#normal-colors)   | Change filler bar color               | `default` |
++| **value**        | `number`                | -                                | Current value                         | -         |
++| **max**          | `number`                | -                                | Progress max value                    | `100`     |
++| **bordered**     | `boolean`               | `true/false`                     | Bodered progress                      | `false`   |
++| **borderWeight** | `NormalWeights`         | [NormalWeights](#normal-weights) | Border weight for `bordered` progress | `normal`  |
++
++<Spacer y={2} />
++
++### Progress types
++
++<Spacer y={1} />
++
++#### Normal Colors
++
++```ts
++type NormalColors =
++  | 'default'
++  | 'primary'
++  | 'secondary'
++  | 'success'
++  | 'warning'
++  | 'error'
++  | 'gradient';
++```
++
++#### Normal Weights
++
++```ts
++type NormalWeights = 'light' | 'normal' | 'bold';
++```\n- packages/docs/content/docs/manifest.json (modified, 9 changes)\n  Patch: @@ -90,8 +90,7 @@
+                         {
+                             "title": "Collapse",
+                             "keywords": "collapse, accordion, expand, reveal",
+-                            "path": "/docs/components/collapse.mdx",
+-                            "newPost": true
++                            "path": "/docs/components/collapse.mdx"
+                         },
+                         {
+                             "title": "Input",
+@@ -113,6 +112,12 @@
+                             "keywords": "check, radio, select",
+                             "path": "/docs/components/radio.mdx"
+                         },
++                        {
++                            "title": "Progress",
++                            "keywords": "progress, bar, task, display, activity",
++                            "path": "/docs/components/progress.mdx",
++                            "newPost": true
++                        },
+                         {
+                             "title": "Tooltip",
+                             "keywords": "tool, popover, tooltip, hoverable",\n- packages/docs/src/lib/docs/config.ts (modified, 2 changes)\n  Patch: @@ -1,5 +1,5 @@
+ // Tag to use if FORCE_TAG is enabled
+-export const TAG = 'main';
++export const TAG = 'feat/progress-bar';
+ 
+ export const CONTENT_PATH = '/packages/docs/content';
+ \n- packages/nextui/src/index.ts (modified, 2 changes)\n  Patch: @@ -83,3 +83,5 @@ export { default as useModal } from './modal/use-modal';
+ export { default as Backdrop } from './backdrop';
+ 
+ export { default as Collapse } from './collapse';
++
++export { default as Progress } from './progress';\n- packages/nextui/src/progress/__tests__/index.test.tsx (added, 24 changes)\n  Patch: @@ -0,0 +1,24 @@
++import { mount } from 'enzyme';
++import React from 'react';
++import ProgressBar from '../progress';
++
++describe('ProgressBar', () => {
++  it('should render correctly', () => {
++    const wrapper = mount(<ProgressBar value={50} />);
++    expect(() => wrapper.unmount()).not.toThrow();
++  });
++
++  it('should support all colors', () => {
++    const wrapper = mount(
++      <div>
++        <ProgressBar value={45} color="primary" />
++        <ProgressBar value={45} color="secondary" />
++        <ProgressBar value={45} color="success" />
++        <ProgressBar value={45} color="warning" />
++        <ProgressBar value={45} color="error" />
++        <ProgressBar value={45} color="gradient" />
++      </div>
++    );
++    expect(() => wrapper.unmount()).not.toThrow();
++  });
++});\n- packages/nextui/src/progress/index.ts (added, 3 changes)\n  Patch: @@ -0,0 +1,3 @@
++import Progress from './progress';
++
++export default Progress;\n- packages/nextui/src/progress/progress.stories.tsx (added, 67 changes)\n  Patch: @@ -0,0 +1,67 @@
++import React from 'react';
++import { Meta } from '@storybook/react';
++import ProgressBar from './index';
++import { Spacer } from '../index';
++
++export default {
++  title: 'General/Progress',
++  component: ProgressBar
++} as Meta;
++
++export const Default = () => {
++  return <ProgressBar value={50} />;
++};
++
++export const Colors = () => (
++  <>
++    <ProgressBar value={50} color="primary" />
++    <Spacer y={0.5} />
++    <ProgressBar value={30} color="secondary" />
++    <Spacer y={0.5} />
++    <ProgressBar value={70} color="success" />
++    <Spacer y={0.5} />
++    <ProgressBar value={150} color="warning" />
++    <Spacer y={0.5} />
++    <ProgressBar value={10} color="error" />
++    <Spacer y={0.5} />
++    <ProgressBar value={20} color="gradient" />
++    <Spacer y={0.5} />
++    <ProgressBar value={45} color="#f4a" />
++  </>
++);
++
++export const Striped = () => {
++  return (
++    <>
++      <ProgressBar striped value={200} max={250} />
++      <Spacer y={0.5} />
++      <ProgressBar striped value={45} />
++      <Spacer y={0.5} />
++      <ProgressBar striped value={29} />
++    </>
++  );
++};
++
++export const Squared = () => {
++  return (
++    <>
++      <ProgressBar squared value={200} max={250} />
++      <Spacer y={0.5} />
++      <ProgressBar squared value={45} />
++      <Spacer y={0.5} />
++      <ProgressBar squared value={29} />
++    </>
++  );
++};
++
++export const NoAnimated = () => {
++  return (
++    <>
++      <ProgressBar animated={false} value={200} max={250} />
++      <Spacer y={0.5} />
++      <ProgressBar animated={false} value={45} />
++      <Spacer y={0.5} />
++      <ProgressBar animated={false} value={29} />
++    </>
++  );
++};\n- packages/nextui/src/progress/progress.tsx (added, 141 changes)\n  Patch: @@ -0,0 +1,141 @@
++import React, { useMemo } from 'react';
++import useTheme from '../use-theme';
++import CSSTransition from '../utils/css-transition';
++import { NormalColors } from '../utils/prop-types';
++import withDefaults from '../utils/with-defaults';
++import { getNormalColor } from '../utils/color';
++import { valueToPercent } from '../utils/numbers';
++import clsx from '../utils/clsx';
++import { __DEV__ } from '../utils/assertion';
++
++interface Props {
++  value: number;
++  striped?: boolean;
++  animated?: boolean;
++  squared?: boolean;
++  max?: number;
++  min?: number;
++  color?: NormalColors | string;
++  className?: string;
++}
++
++const defaultProps = {
++  color: 'primary' as NormalColors | string,
++  striped: false,
++  animated: true,
++  squared: false,
++  value: 0,
++  min: 0,
++  max: 100,
++  className: ''
++};
++
++type NativeAttrs = Omit<
++  Partial<
++    React.ProgressHTMLAttributes<unknown> & React.HTMLAttributes<unknown>
++  >,
++  keyof Props
++>;
++
++export type ProgressBarProps = Props & typeof defaultProps & NativeAttrs;
++
++const ProgressBar: React.FC<ProgressBarProps> = ({
++  color,
++  value,
++  max,
++  min,
++  striped,
++  animated,
++  squared,
++  className,
++  ...props
++}) => {
++  const theme = useTheme();
++
++  const percent = useMemo(
++    () => valueToPercent(value, min, max),
++    [value, min, max]
++  );
++
++  const radius = squared ? '4px' : theme.layout.radius;
++
++  const fillerColor = useMemo(
++    () => getNormalColor(color, theme.palette, theme.palette.primary),
++    [color, theme.palette]
++  );
++
++  return (
++    <div className={clsx('progress', className)} {...props}>
++      <CSSTransition
++        visible
++        name="progress-wrapper"
++        enterTime={0}
++        leaveTime={0}
++        clearTime={300}
++      >
++        <div
++          role="progressbar"
++          className={clsx('filler', { striped })}
++          aria-valuenow={value}
++          aria-valuemin={min}
++          aria-valuemax={max}
++          {...props}
++        />
++      </CSSTransition>
++      <style jsx>
++        {`
++          .progress {
++            margin: 0;
++            padding: 0;
++            width: 100%;
++            min-width: 50px;
++            height: 20px;
++            background: ${theme.palette.accents_2};
++            border-radius: ${radius};
++          }
++          .filler {
++            margin: 0;
++            padding: 0;
++            width: 0;
++            opacity: 0;
++            height: 100%;
++            min-width: inherit;
++            background: ${fillerColor};
++            border-radius: inherit;
++            transition: ${animated
++              ? 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
++              : 'none'};
++          }
++          .progress-wrapper-enter {
++            opacity: 0;
++          }
++          .progress-wrapper-enter-active {
++            opacity: 1;
++            width: ${percent}%;
++          }
++          .filler.striped {
++            background-image: linear-gradient(
++              45deg,
++              rgba(0, 0, 0, 0.1) 25%,
++              transparent 25%,
++              transparent 50%,
++              rgba(0, 0, 0, 0.1) 50%,
++              rgba(0, 0, 0, 0.1) 75%,
++              transparent 75%,
++              transparent
++            );
++            background-size: ${theme.layout.gap} ${theme.layout.gap};
++          }
++        `}
++      </style>
++    </div>
++  );
++};
++
++ProgressBar.defaultProps = defaultProps;
++
++if (__DEV__) {
++  ProgressBar.displayName = 'NextUI - Progress';
++}
++
++export default withDefaults(React.memo(ProgressBar), defaultProps);\n- packages/nextui/src/utils/numbers.ts (added, 10 changes)\n  Patch: @@ -0,0 +1,10 @@
++/**
++ * Convert a value to percentage based on lower and upper bound values
++ *
++ * @param value the value in number
++ * @param min the minimum value
++ * @param max the maximum value
++ */
++export function valueToPercent(value: number, min: number, max: number) {
++  return ((value - min) * 100) / (max - min);
++}\n

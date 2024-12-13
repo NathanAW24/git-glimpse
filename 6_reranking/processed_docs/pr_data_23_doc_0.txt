@@ -1,0 +1,75 @@
+Pull Request Number: 1303
+Title: fix: show focus ring when table row is focused in read mode
+Base Branch: main
+Head Branch: fix/show-focus-ring-when-table-row-is-focused-in-read-mode
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1303
+State: MERGED
+Created At: 2023-08-06T18:58:59Z
+Merged At: 2023-08-26T13:41:35Z
+Participants: jguddas, jrgarciadev
+
+Description:
+A table is still focusable in read mode and should still show a focus ring.
+Steps to reproduce:
+
+Open https://storybook.nextui.org/iframe.html?args=&id=components-table--static&viewMode=story
+Press tab
+Press leftleftleftleft
+
+Fixed:
+
+  
+    
+    
+
+    simplescreenrecorder-2023-08-06_21.00.42.mp4
+
+Commits:
+- fix: show focus ring when table row is focused in read mode\n- Create witty-trees-buy.md\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%227c3f3e6e2ebfac9d128012a3d37ac168a63cab34%22%7D%2C%22id%22%3A%22QmStKCysugEQnJ2fiJ3Uo2vFyJz2wG8jnqxcwp8Nci8vZb%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1303%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 5f86ac9020ea7a4371c76ae54db933da176a85b6
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/table | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/jguddas/nextui/new/fix/show-focus-ring-when-table-row-is-focused-in-read-mode?filename=.changeset/wise-cougars-cross.md&value=---%0A%22%40nextui-org%2Ftable%22%3A%20patch%0A---%0A%0Afix%3A%20show%20focus%20ring%20when%20table%20row%20is%20focused%20in%20read%20mode%0A)
+
+\n
+
+Files Changed:
+- .changeset/witty-trees-buy.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/table": patch
++---
++
++fix: show focus ring when table row is focused in read mode\n- packages/components/table/src/table-row.tsx (modified, 3 changes)\n  Patch: @@ -70,7 +70,8 @@ const TableRow = forwardRef<"tr", TableRowProps>((props, ref) => {
+       data-selected={dataAttr(isSelected)}
+       {...mergeProps(
+         rowProps,
+-        isSelectable ? {...hoverProps, ...focusProps} : {},
++        focusProps,
++        isSelectable ? hoverProps : {},
+         filterDOMProps(node.props, {
+           enabled: shouldFilterDOMProps,
+         }),\n

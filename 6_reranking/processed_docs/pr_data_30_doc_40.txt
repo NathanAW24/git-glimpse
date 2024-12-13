@@ -1,0 +1,104 @@
+Pull Request Number: 209
+Title: use `useTheme` from nextui instead of next-themes
+Base Branch: main
+Head Branch: patch-1
+Author: erenkulaksiz
+URL: https://github.com/nextui-org/nextui/pull/209
+State: MERGED
+Created At: 2022-01-31T19:12:11Z
+Merged At: 2022-02-03T17:27:58Z
+Participants: erenkulaksiz, jrgarciadev, codecov-commenter
+
+Description:
+[LEVEL]/[COMPONENT]
+TASK: Potential fix for #200
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Instead of getting isDark state from next-themes, it will be better to get it from next-ui to sync up with theme. Also this might fix the pull request i put above.
+Screenshots - Animations
+
+Commits:
+- use `useTheme` from nextui instead of next-themes
+
+Potential fix for https://github.com/nextui-org/nextui/pull/200\n- Merge branch 'nextui-org:main' into patch-1\n- change theme-toggle useTheme() hook to nextui\n- fix, 209#issuecomment-1029071754\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Hey @erenkulaksiz could you please also apply this to the `theme-switch` component? thanks 🙌🏼.  \n- erenkulaksiz: Done 👍\n- jrgarciadev: Hey @erenkulaksiz  could you please resolve the comment?, you should remove theme `theme` object from  `const { setTheme, theme } = useNextTheme();` , before sending the commit please run `yarn build:docs`, thanks 🙏🏻  \n- erenkulaksiz: > Hey @erenkulaksiz could you please resolve the comment?, you should remove theme `theme` object from `const { setTheme, theme } = useNextTheme();` , before sending the commit please run `yarn build:docs`, thanks 🙏🏻
+
+Hey, sorry for the inconvenience. I fixed it and checked, https://github.com/nextui-org/nextui/pull/200 issue is now fixed.\n- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/209?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#209](https://codecov.io/gh/nextui-org/nextui/pull/209?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (a34714f) into [main](https://codecov.io/gh/nextui-org/nextui/commit/25d9b9d202aee305a326a2075b1b32fe73885498?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (25d9b9d) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/209/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/209?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main     #209   +/-   ##
+=======================================
+  Coverage   76.13%   76.13%           
+=======================================
+  Files         140      140           
+  Lines        2275     2275           
+  Branches      681      681           
+=======================================
+  Hits         1732     1732           
+  Misses        538      538           
+  Partials        5        5           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/209?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/209?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [25d9b9d...a34714f](https://codecov.io/gh/nextui-org/nextui/pull/209?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- apps/docs/package-lock.json (added, 13956 changes)\n  Patch: No patch available\n- apps/docs/src/components/theme-switch/index.tsx (modified, 6 changes)\n  Patch: @@ -1,11 +1,11 @@
+ import React from 'react';
+ import { Moon, Sun } from '../icons';
+-import { Switch, SwitchProps } from '@nextui-org/react';
++import { Switch, SwitchProps, useTheme } from '@nextui-org/react';
+ import { useTheme as useNextTheme } from 'next-themes';
+ 
+ export const ThemeToggle: React.FC<Partial<SwitchProps>> = ({ ...props }) => {
+-  const { setTheme, theme } = useNextTheme();
+-  const isDark = theme === 'dark';
++  const { setTheme } = useNextTheme();
++  const { isDark } = useTheme();
+ 
+   const handleToggleTheme = () => {
+     setTheme(isDark ? 'light' : 'dark');\n- apps/docs/src/components/theme-toggle/index.tsx (modified, 6 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import React from 'react';
+ import cn from 'classnames';
+ import { Moon, Sun } from '../icons';
+-import { CSS, styled } from '@nextui-org/react';
++import { CSS, styled, useTheme } from '@nextui-org/react';
+ import { useTheme as useNextTheme } from 'next-themes';
+ import Blockholder from '../blockholder';
+ import useIsMounted from '@hooks/use-is-mounted';
+@@ -28,8 +28,8 @@ const StyledButton = styled('button', {
+ 
+ export const ThemeToggle: React.FC<Props> = ({ className, css }) => {
+   const isMounted = useIsMounted();
+-  const { setTheme, theme } = useNextTheme();
+-  const isDark = theme === 'dark';
++  const { setTheme } = useNextTheme();
++  const { isDark } = useTheme();
+ 
+   if (!isMounted) {
+     return (\n

@@ -1,0 +1,293 @@
+Pull Request Number: 416
+Title: add remix example
+Base Branch: main
+Head Branch: add/remix-example
+Author: rguarascia
+URL: https://github.com/nextui-org/nextui/pull/416
+State: MERGED
+Created At: 2022-04-17T15:55:59Z
+Merged At: 2022-04-24T20:35:52Z
+Participants: rguarascia, jrgarciadev
+
+Description:
+[add]/[remix-demo]
+TASK: 
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+
+
+Added a quick template for using Remix with NextUI. Uses the standard typescript Vercel template.
+Screenshots - Animations
+
+Commits:
+- add remix example\n- Remove `package-lock`\n
+
+Labels:
+👀 Status: In Review
+
+Comments:
+- jrgarciadev: Hey @rguarascia thanks a lot for contributing, could you please remove the `package-lock.json`?\n- rguarascia: Removed package-lock 👌🏻 \n
+
+Files Changed:
+- examples/create-remix-app/.gitignore (added, 12 changes)\n  Patch: @@ -0,0 +1,12 @@
++node_modules
++
++.cache
++.env
++.vercel
++.output
++
++/build/
++/public/build
++/api/index.js
++
++package-lock.json
+\ No newline at end of file\n- examples/create-remix-app/README.md (added, 34 changes)\n  Patch: @@ -0,0 +1,34 @@
++# Welcome to Remix!
++
++- [Remix Docs](https://remix.run/docs)
++
++## Deployment
++
++After having run the `create-remix` command and selected "Vercel" as a deployment target, you only need to [import your Git repository](https://vercel.com/new) into Vercel, and it will be deployed.
++
++If you'd like to avoid using a Git repository, you can also deploy the directory by running [Vercel CLI](https://vercel.com/cli):
++
++```sh
++npm i -g vercel
++vercel
++```
++
++It is generally recommended to use a Git repository, because future commits will then automatically be deployed by Vercel, through its [Git Integration](https://vercel.com/docs/concepts/git).
++
++## Development
++
++To run your Remix app locally, make sure your project's local dependencies are installed:
++
++```sh
++npm install
++```
++
++Afterwards, start the Remix development server like so:
++
++```sh
++npm run dev
++```
++
++Open up [http://localhost:3000](http://localhost:3000) and you should be ready to go!
++
++If you're used to using the `vercel dev` command provided by [Vercel CLI](https://vercel.com/cli) instead, you can also use that, but it's not needed.\n- examples/create-remix-app/api/index.js.map (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "sources": ["<stdin>", "../node_modules/@remix-run/dev/compiler/shims/react.ts", "../app/entry.server.tsx", "/Users/ryan/Documents/nextui/examples/create-remix-app/app/root.tsx", "/Users/ryan/Documents/nextui/examples/create-remix-app/app/routes/index.tsx", "server-assets-manifest:@remix-run/dev/assets-manifest", "server-entry-module:@remix-run/dev/server-build"],
++  "sourcesContent": ["export * from \"@remix-run/dev/server-build\";", "// eslint-disable-next-line import/no-extraneous-dependencies\nimport * as React from \"react\";\nexport { React };\n", "import type { EntryContext } from \"@remix-run/node\";\nimport { RemixServer } from \"@remix-run/react\";\nimport { renderToString } from \"react-dom/server\";\nimport { CssBaseline } from \"@nextui-org/react\";\n\nexport default function handleRequest(\n  request: Request,\n  responseStatusCode: number,\n  responseHeaders: Headers,\n  remixContext: EntryContext\n) {\n  const styles = CssBaseline.flush();\n  let html = renderToString(\n    <RemixServer context={remixContext} url={request.url} />\n  ).replace(\n    /<\\/head>/,\n    `<style id=\"stitches\">${styles.props.dangerouslySetInnerHTML.__html}</style></head>`\n  );\n\n  responseHeaders.set(\"Content-Type\", \"text/html\");\n\n  return new Response(\"<!DOCTYPE html>\" + html, {\n    status: responseStatusCode,\n    headers: responseHeaders,\n  });\n}\n", "import type { MetaFunction } from \"@remix-run/node\";\nimport {\n  Links,\n  LiveReload,\n  Meta,\n  Outlet,\n  Scripts,\n  ScrollRestoration,\n} from \"@remix-run/react\";\nimport { createTheme, NextUIProvider } from \"@nextui-org/react\";\nimport useDarkMode from \"use-dark-mode\";\n\nconst lightTheme = createTheme({\n  type: \"light\",\n  theme: {},\n});\n\nconst darkTheme = createTheme({\n  type: \"dark\",\n  theme: {},\n});\n\nexport const meta: MetaFunction = () => ({\n  charset: \"utf-8\",\n  title: \"Remix with NextUI\",\n  viewport: \"width=device-width,initial-scale=1\",\n});\n\nexport default function App() {\n  const darkMode = useDarkMode(false);\n\n  return (\n    <html lang=\"en\">\n      <head>\n        <Meta />\n        <Links />\n      </head>\n      <body>\n        <NextUIProvider theme={darkMode.value ? darkTheme : lightTheme}>\n          <Outlet />\n          <ScrollRestoration />\n          <Scripts />\n          <LiveReload />\n        </NextUIProvider>\n      </body>\n    </html>\n  );\n}\n", "import {\n  Container,\n  Grid,\n  Switch,\n  Text,\n  useTheme,\n  Link,\n} from \"@nextui-org/react\";\nimport useDarkMode from \"use-dark-mode\";\n\nexport default function Index() {\n  const darkMode = useDarkMode(false);\n  const { isDark } = useTheme();\n  return (\n    <Container>\n      <Text h1 margin={\"0 0 $4 0\"} css={{ ta: \"center\" }}>\n        Welcome to <Link href=\"https://remix.run/\">Remix</Link> with{\" \"}\n        <Link color={\"secondary\"} href=\"https://nextui.org/\">\n          NextUI\n        </Link>\n      </Text>\n      <Grid.Container\n        justify=\"center\"\n        alignContent=\"center\"\n        css={{ gap: \"$8\", mb: \"$8\" }}\n      >\n        <Text>Enable {isDark ? \"light\" : \"dark\"} mode</Text>\n        <Switch\n          shadow\n          color=\"primary\"\n          checked={isDark}\n          onChange={() => darkMode.toggle()}\n        />\n      </Grid.Container>\n    </Container>\n  );\n}\n", "export default {'version':'78f9df5e','entry':{'module':'/build/entry.client-7FMK5Z5F.js','imports':['/build/_shared/chunk-QQ53KUNF.js','/build/_shared/chunk-IYRIQ6PI.js']},'routes':{'root':{'id':'root','parentId':undefined,'path':'','index':undefined,'caseSensitive':undefined,'module':'/build/root-JYFVDJUT.js','imports':['/build/_shared/chunk-G3OQTDJE.js'],'hasAction':false,'hasLoader':false,'hasCatchBoundary':false,'hasErrorBoundary':false},'routes/index':{'id':'routes/index','parentId':'root','path':undefined,'index':true,'caseSensitive':undefined,'module':'/build/routes/index-FD5CD3US.js','imports':undefined,'hasAction':false,'hasLoader':false,'hasCatchBoundary':false,'hasErrorBoundary':false}},'url':'/build/manifest-78F9DF5E.js'};", "\nimport * as entryServer from \"/Users/ryan/Documents/nextui/examples/create-remix-app/app/entry.server.tsx\";\nimport * as route0 from \"/Users/ryan/Documents/nextui/examples/create-remix-app/app/root.tsx\";\nimport * as route1 from \"/Users/ryan/Documents/nextui/examples/create-remix-app/app/routes/index.tsx\";\n  export { default as assets } from \"@remix-run/dev/assets-manifest\";\n  export const entry = { module: entryServer };\n  export const routes = {\n    \"root\": {\n      id: \"root\",\n      parentId: undefined,\n      path: \"\",\n      index: undefined,\n      caseSensitive: undefined,\n      module: route0\n    },\n  \"routes/index\": {\n      id: \"routes/index\",\n      parentId: \"root\",\n      path: undefined,\n      index: true,\n      caseSensitive: undefined,\n      module: route1\n    }\n  };"],
++  "mappings": "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",
++  "names": []
++}\n- examples/create-remix-app/app/entry.client.tsx (added, 4 changes)\n  Patch: @@ -0,0 +1,4 @@
++import { RemixBrowser } from "@remix-run/react";
++import { hydrate } from "react-dom";
++
++hydrate(<RemixBrowser />, document);\n- examples/create-remix-app/app/entry.server.tsx (added, 26 changes)\n  Patch: @@ -0,0 +1,26 @@
++import type { EntryContext } from "@remix-run/node";
++import { RemixServer } from "@remix-run/react";
++import { renderToString } from "react-dom/server";
++import { CssBaseline } from "@nextui-org/react";
++
++export default function handleRequest(
++  request: Request,
++  responseStatusCode: number,
++  responseHeaders: Headers,
++  remixContext: EntryContext
++) {
++  const styles = CssBaseline.flush();
++  let html = renderToString(
++    <RemixServer context={remixContext} url={request.url} />
++  ).replace(
++    /<\/head>/,
++    `<style id="stitches">${styles.props.dangerouslySetInnerHTML.__html}</style></head>`
++  );
++
++  responseHeaders.set("Content-Type", "text/html");
++
++  return new Response("<!DOCTYPE html>" + html, {
++    status: responseStatusCode,
++    headers: responseHeaders,
++  });
++}\n- examples/create-remix-app/app/root.tsx (added, 48 changes)\n  Patch: @@ -0,0 +1,48 @@
++import type { MetaFunction } from "@remix-run/node";
++import {
++  Links,
++  LiveReload,
++  Meta,
++  Outlet,
++  Scripts,
++  ScrollRestoration,
++} from "@remix-run/react";
++import { createTheme, NextUIProvider } from "@nextui-org/react";
++import useDarkMode from "use-dark-mode";
++
++const lightTheme = createTheme({
++  type: "light",
++  theme: {},
++});
++
++const darkTheme = createTheme({
++  type: "dark",
++  theme: {},
++});
++
++export const meta: MetaFunction = () => ({
++  charset: "utf-8",
++  title: "Remix with NextUI",
++  viewport: "width=device-width,initial-scale=1",
++});
++
++export default function App() {
++  const darkMode = useDarkMode(false);
++
++  return (
++    <html lang="en">
++      <head>
++        <Meta />
++        <Links />
++      </head>
++      <body>
++        <NextUIProvider theme={darkMode.value ? darkTheme : lightTheme}>
++          <Outlet />
++          <ScrollRestoration />
++          <Scripts />
++          <LiveReload />
++        </NextUIProvider>
++      </body>
++    </html>
++  );
++}\n- examples/create-remix-app/app/routes/index.tsx (added, 37 changes)\n  Patch: @@ -0,0 +1,37 @@
++import {
++  Container,
++  Grid,
++  Switch,
++  Text,
++  useTheme,
++  Link,
++} from "@nextui-org/react";
++import useDarkMode from "use-dark-mode";
++
++export default function Index() {
++  const darkMode = useDarkMode(false);
++  const { isDark } = useTheme();
++  return (
++    <Container>
++      <Text h1 margin={"0 0 $4 0"} css={{ ta: "center" }}>
++        Welcome to <Link href="https://remix.run/">Remix</Link> with{" "}
++        <Link color={"secondary"} href="https://nextui.org/">
++          NextUI
++        </Link>
++      </Text>
++      <Grid.Container
++        justify="center"
++        alignContent="center"
++        css={{ gap: "$8", mb: "$8" }}
++      >
++        <Text>Enable {isDark ? "light" : "dark"} mode</Text>
++        <Switch
++          shadow
++          color="primary"
++          checked={isDark}
++          onChange={() => darkMode.toggle()}
++        />
++      </Grid.Container>
++    </Container>
++  );
++}\n- examples/create-remix-app/package.json (added, 35 changes)\n  Patch: @@ -0,0 +1,35 @@
++{
++  "name": "remix-template-vercel",
++  "private": true,
++  "description": "",
++  "license": "",
++  "sideEffects": false,
++  "scripts": {
++    "build": "remix build",
++    "dev": "remix dev"
++  },
++  "dependencies": {
++    "@nextui-org/react": "^1.0.8-beta.5",
++    "@remix-run/node": "^1.4.0",
++    "@remix-run/react": "^1.4.0",
++    "@remix-run/vercel": "^1.4.0",
++    "@vercel/node": "^1.14.0",
++    "add": "^2.0.6",
++    "react": "^17.0.2",
++    "react-dom": "^17.0.2",
++    "use-dark-mode": "^2.3.1",
++    "yarn": "^1.22.18"
++  },
++  "devDependencies": {
++    "@remix-run/dev": "^1.4.0",
++    "@remix-run/eslint-config": "^1.4.0",
++    "@remix-run/serve": "^1.4.0",
++    "@types/react": "^17.0.24",
++    "@types/react-dom": "^17.0.9",
++    "eslint": "^8.11.0",
++    "typescript": "^4.5.5"
++  },
++  "engines": {
++    "node": ">=14"
++  }
++}\n- examples/create-remix-app/public/favicon.ico (added, 0 changes)\n  Patch: No patch available\n- examples/create-remix-app/remix.config.js (added, 15 changes)\n  Patch: @@ -0,0 +1,15 @@
++/**
++ * @type {import('@remix-run/dev').AppConfig}
++ */
++module.exports = {
++  serverBuildTarget: "vercel",
++  // When running locally in development mode, we use the built in remix
++  // server. This does not understand the vercel lambda module format,
++  // so we default back to the standard build output.
++  server: process.env.NODE_ENV === "development" ? undefined : "./server.js",
++  ignoredRouteFiles: [".*"],
++  // appDirectory: "app",
++  // assetsBuildDirectory: "public/build",
++  // serverBuildPath: "api/index.js",
++  // publicPath: "/build/",
++};\n- examples/create-remix-app/remix.env.d.ts (added, 2 changes)\n  Patch: @@ -0,0 +1,2 @@
++/// <reference types="@remix-run/dev" />
++/// <reference types="@remix-run/node/globals" />\n- examples/create-remix-app/server.js (added, 4 changes)\n  Patch: @@ -0,0 +1,4 @@
++import { createRequestHandler } from "@remix-run/vercel";
++import * as build from "@remix-run/dev/server-build";
++
++export default createRequestHandler({ build, mode: process.env.NODE_ENV });\n- examples/create-remix-app/tsconfig.json (added, 20 changes)\n  Patch: @@ -0,0 +1,20 @@
++{
++  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
++  "compilerOptions": {
++    "lib": ["DOM", "DOM.Iterable", "ES2019"],
++    "isolatedModules": true,
++    "esModuleInterop": true,
++    "jsx": "react-jsx",
++    "moduleResolution": "node",
++    "resolveJsonModule": true,
++    "target": "ES2019",
++    "strict": true,
++    "baseUrl": ".",
++    "paths": {
++      "~/*": ["./app/*"]
++    },
++
++    // Remix takes care of building everything in `remix build`.
++    "noEmit": true
++  }
++}\n- examples/create-remix-app/vercel.json (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++{
++  "build": {
++    "env": {
++      "ENABLE_FILE_SYSTEM_API": "1"
++    }
++  }
++}\n

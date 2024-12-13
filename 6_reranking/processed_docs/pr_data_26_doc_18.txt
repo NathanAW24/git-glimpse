@@ -1,0 +1,105 @@
+Pull Request Number: 745
+Title: unit test coverage udpate
+Base Branch: next
+Head Branch: test
+Author: sun0day
+URL: https://github.com/nextui-org/nextui/pull/745
+State: MERGED
+Created At: 2022-09-07T09:26:20Z
+Merged At: 2022-11-05T21:17:38Z
+Participants: sun0day, jrgarciadev
+
+Description:
+📝 Description
+This is a long-term branch. All PRs from this branch intend to increase UT coverage and optimize nextui source code. I will continuously commit test code to this branch.
+All commits in this branch are atomic, feel free to merge PR at any time. @jrgarciadev
+💣 Is this a breaking change (Yes/No):
+No
+Updated UT Coverage
+
+use-pagination: statements 100% ⬆️ , branches 100% ⬆️
+
+Commits:
+- test(use-pagination): statements 100%, branches 100%\n- style(use-pagination): lint use-pagination.tes.tsx\n
+
+Labels:
+
+
+Comments:
+- vercel: @sun0day is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2207779abafa504424c10ed1f0db45c24ac95d7a80%22%7D%2C%22id%22%3A%22QmaZzeERsKx1D8wYJqvq3r86pKqzEXWXPVRiZ5HoyHBs6Z%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A745%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/FySWsaWBVnVm8edeFe18mwt45CZr)) | [Visit Preview](https://nextui-storybook-git-fork-sun0day-test-nextui-org.vercel.app) | Sep 7, 2022 at 2:52PM (UTC) |
+
+\n- sun0day: Should not change `activePage`  via calling `setActivePage` when `page` is set to specific number.
+
+https://github.com/nextui-org/nextui/blob/50f8f9dbcb1db177f125a1f144c346e3ec3fc29e/packages/react/src/use-pagination/index.ts#L28-L31\n
+
+Files Changed:
+- packages/react/src/use-pagination/__tests__/use-pagination.test.tsx (modified, 40 changes)\n  Patch: @@ -1,6 +1,6 @@
+ import {renderHook, act} from "@testing-library/react-hooks";
+ 
+-import usePagination from "../index";
++import usePagination, {PaginationParams} from "../index";
+ 
+ describe("UsePagination", () => {
+   it("setPage function sets active page", () => {
+@@ -24,12 +24,21 @@ describe("UsePagination", () => {
+   });
+ 
+   it("does not change range length between page changes", () => {
+-    const {result} = renderHook(() => usePagination({total: 10}));
++    const {result, rerender} = renderHook((props) => usePagination(props), {
++      initialProps: {total: 10} as PaginationParams,
++    });
+ 
+-    [...new Array(10).fill(null)].forEach(() => {
++    new Array(10).fill(null).forEach(() => {
+       expect(result.current.range.length).toBe(7);
+       act(() => result.current.next());
+     });
++
++    rerender({total: 10, siblings: 4});
++
++    new Array(10).fill(null).forEach(() => {
++      expect(result.current.range.length).toBe(10);
++      act(() => result.current.next());
++    });
+   });
+ 
+   it("returns correct initial state with custom parameters", () => {
+@@ -80,4 +89,29 @@ describe("UsePagination", () => {
+       act(() => result.current.next());
+     });
+   });
++
++  it("return correct state when page changes", () => {
++    const {result} = renderHook(() => usePagination({total: 10, initialPage: 1}));
++
++    act(() => result.current.next());
++    expect(result.current.active).toBe(2);
++    act(() => result.current.previous());
++    expect(result.current.active).toBe(1);
++    act(() => result.current.last());
++    expect(result.current.active).toBe(10);
++    act(() => result.current.first());
++    expect(result.current.active).toBe(1);
++  });
++
++  it("activePage keeps consistent with page parameter", () => {
++    const {result, rerender} = renderHook((props) => usePagination(props), {
++      initialProps: {total: 10, page: 1},
++    });
++
++    expect(result.current.active).toBe(1);
++
++    rerender({total: 10, page: 2});
++
++    expect(result.current.active).toBe(2);
++  });
+ });\n
