@@ -1328,22 +1328,6 @@
         "documentation": {}
     },
     {
-        "label": "AutoModelForCausalLM",
-        "importPath": "transformers",
-        "description": "transformers",
-        "isExtraImport": true,
-        "detail": "transformers",
-        "documentation": {}
-    },
-    {
-        "label": "AutoTokenizer",
-        "importPath": "transformers",
-        "description": "transformers",
-        "isExtraImport": true,
-        "detail": "transformers",
-        "documentation": {}
-    },
-    {
         "label": "GPT2LMHeadModel",
         "importPath": "transformers",
         "description": "transformers",
@@ -2474,7 +2458,7 @@
         "kind": 6,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "class RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the prediction from 0 to 10.\")\nmodel = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)\ndef compute_accuracy_llm(pred: str, ref: str) -> float:\n    \"\"\"Use an LLM to compute the accuracy score.\"\"\"\n    prompt = f\"\"\"\nYou are tasked with evaluating the accuracy of a predicted answer compared to a reference answer. \nProvide a relevance score from 0 to 10 based on the following criteria:",
+        "peekOfCode": "class RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the prediction from 0 to 10.\")\nmodel = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)\ndef compute_accuracy_llm(pred: str, ref: str) -> float:\n    prompt = f\"\"\"\nYou are tasked with evaluating the accuracy of a predicted answer compared to a reference answer. \nProvide a relevance score from 0 to 10 based on the following criteria:\nMatching/Accurate = the information is correct (investigation + code to be examined + proposed solutions)",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2483,7 +2467,7 @@
         "kind": 6,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "class EvaluationResults:\n    def __init__(self):\n        # list of dicts: {q_id, accuracy, bleu, meteor, bertscore, perplexity}\n        self.results = []\n    def add_result(self, q_id: int, pred: str, ref: str):\n        accuracy = compute_accuracy_llm(pred, ref)\n        bleu = compute_bleu(pred, ref)\n        meteor = compute_meteor(pred, ref)\n        bert = compute_bertscore(pred, ref)\n        ppl = compute_perplexity(pred)",
+        "peekOfCode": "class EvaluationResults:\n    def __init__(self):\n        self.results = []\n    def add_result(self, q_id: int, pred: str, ref: str):\n        accuracy = compute_accuracy_llm(pred, ref)\n        bleu = compute_bleu(pred, ref)\n        meteor_val = compute_meteor(pred, ref)\n        bert = compute_bertscore(pred, ref)\n        ppl = compute_perplexity(pred)\n        self.results.append({",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2492,7 +2476,7 @@
         "kind": 6,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "class RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the retrieval from 0 to 10\")\nmodel_refine = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm_refine = model_refine.with_structured_output(RelevanceScore)\ndef expand_query(query: str) -> str:\n    PROMPT_TEMPLATES = {\n        \"query_refinement\": {\n            \"system\": \"\"\"Your job is to refine and expand any given user query related to a software codebase or feature. \n- Add relevant keywords or technologies that might be involved.",
+        "peekOfCode": "class RelevanceScore(BaseModel):\n    score: int = Field(description=\"The relevance score of retrieval\")\nmodel_refine = ChatOpenAI(model=\"gpt-4o-mini\")\nPROMPT_TEMPLATES = {\n    \"query_refinement\": {\n        \"system\": \"\"\"You are a senior developer. Refine and expand the given user query related to a software codebase or feature:\n- Add relevant keywords or technologies\n- Ensure the query is well-targeted\nYour response must begin immediately with the query (10-15 words)\"\"\",\n        \"user\": \"\"\"Original user query: {query}\\nPlease refine and expand this query to improve document retrieval.\"\"\"",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2510,7 +2494,7 @@
         "kind": 2,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "def compute_meteor(pred: str, ref: str) -> float:\n    pred_tokens = pred.strip().split()\n    ref_tokens = ref.strip().split()\n    meteor = meteor_score([ref_tokens], pred_tokens)\n    return float(meteor)\ndef compute_bertscore(pred: str, ref: str) -> float:\n    P, R, F1 = bert_score([pred], [ref], lang=\"en\", verbose=False)\n    return float(F1.mean().item())\ndef compute_perplexity(text: str, model_id: str = 'gpt2') -> float:\n    \"\"\"",
+        "peekOfCode": "def compute_meteor(pred: str, ref: str) -> float:\n    pred_tokens = pred.strip().split()\n    ref_tokens = ref.strip().split()\n    meteor_val = meteor_score([ref_tokens], pred_tokens)\n    return float(meteor_val)\ndef compute_bertscore(pred: str, ref: str) -> float:\n    P, R, F1 = bert_score([pred], [ref], lang=\"en\", verbose=False)\n    return float(F1.mean().item())\ndef compute_perplexity(text: str, model_id: str = 'gpt2') -> float:\n    perplexity = evaluate.load(\"perplexity\", module_type=\"measurement\")",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2519,7 +2503,7 @@
         "kind": 2,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "def compute_bertscore(pred: str, ref: str) -> float:\n    P, R, F1 = bert_score([pred], [ref], lang=\"en\", verbose=False)\n    return float(F1.mean().item())\ndef compute_perplexity(text: str, model_id: str = 'gpt2') -> float:\n    \"\"\"\n    Compute the perplexity of a given text using a specified pre-trained language model.\n    Args:\n        text (str): The input text for which to compute perplexity.\n        model_id (str): The name of the pre-trained model to use (default is 'gpt2').\n    Returns:",
+        "peekOfCode": "def compute_bertscore(pred: str, ref: str) -> float:\n    P, R, F1 = bert_score([pred], [ref], lang=\"en\", verbose=False)\n    return float(F1.mean().item())\ndef compute_perplexity(text: str, model_id: str = 'gpt2') -> float:\n    perplexity = evaluate.load(\"perplexity\", module_type=\"measurement\")\n    results = perplexity.compute(\n        model_id=model_id, add_start_token=True, data=[text])\n    return results['mean_perplexity']\nclass RelevanceScore(BaseModel):\n    score: int = Field(",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2528,7 +2512,7 @@
         "kind": 2,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "def compute_perplexity(text: str, model_id: str = 'gpt2') -> float:\n    \"\"\"\n    Compute the perplexity of a given text using a specified pre-trained language model.\n    Args:\n        text (str): The input text for which to compute perplexity.\n        model_id (str): The name of the pre-trained model to use (default is 'gpt2').\n    Returns:\n        float: The computed perplexity score.\n    \"\"\"\n    # Load the perplexity metric",
+        "peekOfCode": "def compute_perplexity(text: str, model_id: str = 'gpt2') -> float:\n    perplexity = evaluate.load(\"perplexity\", module_type=\"measurement\")\n    results = perplexity.compute(\n        model_id=model_id, add_start_token=True, data=[text])\n    return results['mean_perplexity']\nclass RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the prediction from 0 to 10.\")\nmodel = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2537,7 +2521,7 @@
         "kind": 2,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "def compute_accuracy_llm(pred: str, ref: str) -> float:\n    \"\"\"Use an LLM to compute the accuracy score.\"\"\"\n    prompt = f\"\"\"\nYou are tasked with evaluating the accuracy of a predicted answer compared to a reference answer. \nProvide a relevance score from 0 to 10 based on the following criteria:\nMatching/Accurate = the information is correct (investigation + code to be examined + proposed solutions)\n### Evaluation Context:\nYou are assessing whether the predicted answer matches the reference answer in terms of correctness and completeness. The evaluation focuses on:\n- Identifying the **correct files** to look at (based on the described investigation and implementation).\n- Proposing the **correct implementation steps** aligned with the reference structure.",
+        "peekOfCode": "def compute_accuracy_llm(pred: str, ref: str) -> float:\n    prompt = f\"\"\"\nYou are tasked with evaluating the accuracy of a predicted answer compared to a reference answer. \nProvide a relevance score from 0 to 10 based on the following criteria:\nMatching/Accurate = the information is correct (investigation + code to be examined + proposed solutions)\n### Evaluation Context:\nYou are assessing whether the predicted answer matches the reference answer in terms of correctness and completeness. The evaluation focuses on:\n- Identifying the **correct files** to look at (based on the described investigation and implementation).\n- Proposing the **correct implementation steps** aligned with the reference structure.\n- Following best practices such as documentation, clear instructions, and identifying possible pitfalls.",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2546,16 +2530,7 @@
         "kind": 2,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "def call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0.7):\n    \"\"\"Generic LLM call.\"\"\"\n    response = openai.chat.completions.create(\n        model=model,\n        messages=[\n            {\"role\": \"system\", \"content\": system_prompt},\n            {\"role\": \"user\", \"content\": user_prompt}\n        ],\n        temperature=temperature\n    )",
-        "detail": "10_answer_evaluation.chain_of_thought",
-        "documentation": {}
-    },
-    {
-        "label": "expand_query",
-        "kind": 2,
-        "importPath": "10_answer_evaluation.chain_of_thought",
-        "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "def expand_query(query: str) -> str:\n    PROMPT_TEMPLATES = {\n        \"query_refinement\": {\n            \"system\": \"\"\"Your job is to refine and expand any given user query related to a software codebase or feature. \n- Add relevant keywords or technologies that might be involved.\n- Ensure the query is well-targeted. \n- The query will be used to retrieve PR documents.\n- Your response must be exactly 10-15 words. Choose words that are unique and will likely retrieve relevant PRs.\n\"\"\",\n            \"user\": \"\"\"Original user query: {query}\\nPlease refine and expand this query to improve document retrieval.\"\"\"",
+        "peekOfCode": "def call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0.7):\n    response = openai.chat.completions.create(\n        model=model,\n        messages=[\n            {\"role\": \"system\", \"content\": system_prompt},\n            {\"role\": \"user\", \"content\": user_prompt}\n        ],\n        temperature=temperature\n    )\n    return str(response.choices[0].message.content)",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2564,7 +2539,52 @@
         "kind": 2,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "def summarize_document(query, content):\n    system_prompt = PROMPT_TEMPLATES[\"summarization\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"summarization\"][\"user\"].format(\n        query=query, content=content)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)\nif __name__ == \"__main__\":\n    evaluator = EvaluationResults()\n    # We'll store logs for each question in a separate data structure\n    logs = []\n    # Load Q/A pairs",
+        "peekOfCode": "def summarize_document(query, content):\n    system_prompt = PROMPT_TEMPLATES[\"summarization\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"summarization\"][\"user\"].format(\n        query=query, content=content)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)\ndef expand_query(query: str) -> str:\n    messages = [\n        {\"role\": \"system\",\n            \"content\": PROMPT_TEMPLATES[\"query_refinement\"][\"system\"]},\n        {\"role\": \"user\", \"content\": PROMPT_TEMPLATES[\"query_refinement\"][\"user\"].format(",
+        "detail": "10_answer_evaluation.chain_of_thought",
+        "documentation": {}
+    },
+    {
+        "label": "expand_query",
+        "kind": 2,
+        "importPath": "10_answer_evaluation.chain_of_thought",
+        "description": "10_answer_evaluation.chain_of_thought",
+        "peekOfCode": "def expand_query(query: str) -> str:\n    messages = [\n        {\"role\": \"system\",\n            \"content\": PROMPT_TEMPLATES[\"query_refinement\"][\"system\"]},\n        {\"role\": \"user\", \"content\": PROMPT_TEMPLATES[\"query_refinement\"][\"user\"].format(\n            query=query)},\n    ]\n    expanded_response = model(messages)\n    return expanded_response.content.strip()\ndef retrieve_and_rerank(query_str: str):",
+        "detail": "10_answer_evaluation.chain_of_thought",
+        "documentation": {}
+    },
+    {
+        "label": "retrieve_and_rerank",
+        "kind": 2,
+        "importPath": "10_answer_evaluation.chain_of_thought",
+        "description": "10_answer_evaluation.chain_of_thought",
+        "peekOfCode": "def retrieve_and_rerank(query_str: str):\n    # Best retrieval method\n    # BM25\n    bm25_results = bm25_retriever.retrieve(query_str, top_n=10)\n    bm25_docs = [(documents[idx][0], documents[idx][1])\n                 for idx, _ in bm25_results]\n    # Vector retrieval\n    vector_retriever.search_kwargs[\"k\"] = 10\n    vector_results = vector_retriever.invoke(query_str)\n    vector_docs = [(doc.metadata[\"file_name\"], doc.page_content)",
+        "detail": "10_answer_evaluation.chain_of_thought",
+        "documentation": {}
+    },
+    {
+        "label": "get_thought_queries",
+        "kind": 2,
+        "importPath": "10_answer_evaluation.chain_of_thought",
+        "description": "10_answer_evaluation.chain_of_thought",
+        "peekOfCode": "def get_thought_queries(question, partial_answer, current_context):\n    # Ask LLM what queries to do next\n    system_prompt = PROMPT_TEMPLATES[\"thought_process\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"thought_process\"][\"user\"].format(\n        question=question,\n        partial_answer=partial_answer,\n        current_context=current_context\n    )\n    response = call_llm(system_prompt, user_prompt,\n                        model=\"gpt-4o-mini\", temperature=0)",
+        "detail": "10_answer_evaluation.chain_of_thought",
+        "documentation": {}
+    },
+    {
+        "label": "get_partial_answer",
+        "kind": 2,
+        "importPath": "10_answer_evaluation.chain_of_thought",
+        "description": "10_answer_evaluation.chain_of_thought",
+        "peekOfCode": "def get_partial_answer(question, all_context, partial_answers):\n    system_prompt = PROMPT_TEMPLATES[\"partial_answer\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"partial_answer\"][\"user\"].format(\n        question=question,\n        all_context=all_context,\n        partial_answers=partial_answers\n    )\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0.7)\ndef get_final_answer(question, all_context, partial_answers):\n    system_prompt = PROMPT_TEMPLATES[\"final_answer\"][\"system\"]",
+        "detail": "10_answer_evaluation.chain_of_thought",
+        "documentation": {}
+    },
+    {
+        "label": "get_final_answer",
+        "kind": 2,
+        "importPath": "10_answer_evaluation.chain_of_thought",
+        "description": "10_answer_evaluation.chain_of_thought",
+        "peekOfCode": "def get_final_answer(question, all_context, partial_answers):\n    system_prompt = PROMPT_TEMPLATES[\"final_answer\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"final_answer\"][\"user\"].format(\n        question=question,\n        all_context=all_context,\n        partial_answers=partial_answers\n    )\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o\", temperature=0.7)\ntemplate = \"\"\"\nNow generate the answer in this format. ",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2609,7 +2629,7 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "model = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)\ndef compute_accuracy_llm(pred: str, ref: str) -> float:\n    \"\"\"Use an LLM to compute the accuracy score.\"\"\"\n    prompt = f\"\"\"\nYou are tasked with evaluating the accuracy of a predicted answer compared to a reference answer. \nProvide a relevance score from 0 to 10 based on the following criteria:\nMatching/Accurate = the information is correct (investigation + code to be examined + proposed solutions)\n### Evaluation Context:\nYou are assessing whether the predicted answer matches the reference answer in terms of correctness and completeness. The evaluation focuses on:",
+        "peekOfCode": "model = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm = model.with_structured_output(RelevanceScore)\ndef compute_accuracy_llm(pred: str, ref: str) -> float:\n    prompt = f\"\"\"\nYou are tasked with evaluating the accuracy of a predicted answer compared to a reference answer. \nProvide a relevance score from 0 to 10 based on the following criteria:\nMatching/Accurate = the information is correct (investigation + code to be examined + proposed solutions)\n### Evaluation Context:\nYou are assessing whether the predicted answer matches the reference answer in terms of correctness and completeness. The evaluation focuses on:\n- Identifying the **correct files** to look at (based on the described investigation and implementation).",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2618,7 +2638,7 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "structured_llm = model.with_structured_output(RelevanceScore)\ndef compute_accuracy_llm(pred: str, ref: str) -> float:\n    \"\"\"Use an LLM to compute the accuracy score.\"\"\"\n    prompt = f\"\"\"\nYou are tasked with evaluating the accuracy of a predicted answer compared to a reference answer. \nProvide a relevance score from 0 to 10 based on the following criteria:\nMatching/Accurate = the information is correct (investigation + code to be examined + proposed solutions)\n### Evaluation Context:\nYou are assessing whether the predicted answer matches the reference answer in terms of correctness and completeness. The evaluation focuses on:\n- Identifying the **correct files** to look at (based on the described investigation and implementation).",
+        "peekOfCode": "structured_llm = model.with_structured_output(RelevanceScore)\ndef compute_accuracy_llm(pred: str, ref: str) -> float:\n    prompt = f\"\"\"\nYou are tasked with evaluating the accuracy of a predicted answer compared to a reference answer. \nProvide a relevance score from 0 to 10 based on the following criteria:\nMatching/Accurate = the information is correct (investigation + code to be examined + proposed solutions)\n### Evaluation Context:\nYou are assessing whether the predicted answer matches the reference answer in terms of correctness and completeness. The evaluation focuses on:\n- Identifying the **correct files** to look at (based on the described investigation and implementation).\n- Proposing the **correct implementation steps** aligned with the reference structure.",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2636,7 +2656,7 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "openai.api_key = os.getenv(\"OPENAI_API_KEY\")\ndef call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0.7):\n    \"\"\"Generic LLM call.\"\"\"\n    response = openai.chat.completions.create(\n        model=model,\n        messages=[\n            {\"role\": \"system\", \"content\": system_prompt},\n            {\"role\": \"user\", \"content\": user_prompt}\n        ],\n        temperature=temperature",
+        "peekOfCode": "openai.api_key = os.getenv(\"OPENAI_API_KEY\")\ndef call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0.7):\n    response = openai.chat.completions.create(\n        model=model,\n        messages=[\n            {\"role\": \"system\", \"content\": system_prompt},\n            {\"role\": \"user\", \"content\": user_prompt}\n        ],\n        temperature=temperature\n    )",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2645,7 +2665,7 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "qna_folder = \"./QnA\"\nquestion_files = sorted(glob.glob(os.path.join(qna_folder, \"question_*.txt\")))\nanswer_files = sorted(glob.glob(os.path.join(qna_folder, \"answer_*.txt\")))\n# Setup Retrieval\nfolder_path = \"processed_docs\"\ndocuments = _read_documents_from_folder(folder_path)\n# Create doc dictionary\ndoc_dict = {doc[0]: doc[1] for doc in documents}\nbm25_retriever = BM25Retriever(documents)\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"",
+        "peekOfCode": "qna_folder = \"./QnA\"\nquestion_files = sorted(glob.glob(os.path.join(qna_folder, \"question_*.txt\")))\nanswer_files = sorted(glob.glob(os.path.join(qna_folder, \"answer_*.txt\")))\nfolder_path = \"processed_docs\"\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\nbm25_retriever = BM25Retriever(documents)\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2654,7 +2674,7 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "question_files = sorted(glob.glob(os.path.join(qna_folder, \"question_*.txt\")))\nanswer_files = sorted(glob.glob(os.path.join(qna_folder, \"answer_*.txt\")))\n# Setup Retrieval\nfolder_path = \"processed_docs\"\ndocuments = _read_documents_from_folder(folder_path)\n# Create doc dictionary\ndoc_dict = {doc[0]: doc[1] for doc in documents}\nbm25_retriever = BM25Retriever(documents)\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"",
+        "peekOfCode": "question_files = sorted(glob.glob(os.path.join(qna_folder, \"question_*.txt\")))\nanswer_files = sorted(glob.glob(os.path.join(qna_folder, \"answer_*.txt\")))\nfolder_path = \"processed_docs\"\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\nbm25_retriever = BM25Retriever(documents)\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2663,7 +2683,7 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "answer_files = sorted(glob.glob(os.path.join(qna_folder, \"answer_*.txt\")))\n# Setup Retrieval\nfolder_path = \"processed_docs\"\ndocuments = _read_documents_from_folder(folder_path)\n# Create doc dictionary\ndoc_dict = {doc[0]: doc[1] for doc in documents}\nbm25_retriever = BM25Retriever(documents)\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(",
+        "peekOfCode": "answer_files = sorted(glob.glob(os.path.join(qna_folder, \"answer_*.txt\")))\nfolder_path = \"processed_docs\"\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\nbm25_retriever = BM25Retriever(documents)\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2672,7 +2692,7 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "folder_path = \"processed_docs\"\ndocuments = _read_documents_from_folder(folder_path)\n# Create doc dictionary\ndoc_dict = {doc[0]: doc[1] for doc in documents}\nbm25_retriever = BM25Retriever(documents)\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},",
+        "peekOfCode": "folder_path = \"processed_docs\"\ndocuments = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\nbm25_retriever = BM25Retriever(documents)\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},\n    encode_kwargs={\"normalize_embeddings\": True}",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2681,7 +2701,7 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "documents = _read_documents_from_folder(folder_path)\n# Create doc dictionary\ndoc_dict = {doc[0]: doc[1] for doc in documents}\nbm25_retriever = BM25Retriever(documents)\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},\n    encode_kwargs={\"normalize_embeddings\": True}",
+        "peekOfCode": "documents = _read_documents_from_folder(folder_path)\ndoc_dict = {doc[0]: doc[1] for doc in documents}\nbm25_retriever = BM25Retriever(documents)\nVECTOR_DB_DIR = \"final_all-MiniLM-L6-v2\"\nMODEL_NAME = \"sentence-transformers/all-MiniLM-L6-v2\"\nembedding_model = HuggingFaceEmbeddings(\n    model_name=MODEL_NAME,\n    model_kwargs={\"device\": \"mps\"},\n    encode_kwargs={\"normalize_embeddings\": True}\n)",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2735,7 +2755,7 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "vectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model\n)\nvector_retriever = vectorstore.as_retriever(\n    search_type=\"similarity\", search_kwargs={\"k\": 10})\nclass RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the retrieval from 0 to 10\")\nmodel_refine = ChatOpenAI(model=\"gpt-4o-mini\")",
+        "peekOfCode": "vectorstore = Chroma(\n    persist_directory=VECTOR_DB_DIR,\n    embedding_function=embedding_model\n)\nvector_retriever = vectorstore.as_retriever(\n    search_type=\"similarity\", search_kwargs={\"k\": 10})\nclass RelevanceScore(BaseModel):\n    score: int = Field(description=\"The relevance score of retrieval\")\nmodel_refine = ChatOpenAI(model=\"gpt-4o-mini\")\nPROMPT_TEMPLATES = {",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2744,7 +2764,7 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "vector_retriever = vectorstore.as_retriever(\n    search_type=\"similarity\", search_kwargs={\"k\": 10})\nclass RelevanceScore(BaseModel):\n    score: int = Field(\n        description=\"The relevance score of the retrieval from 0 to 10\")\nmodel_refine = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm_refine = model_refine.with_structured_output(RelevanceScore)\ndef expand_query(query: str) -> str:\n    PROMPT_TEMPLATES = {\n        \"query_refinement\": {",
+        "peekOfCode": "vector_retriever = vectorstore.as_retriever(\n    search_type=\"similarity\", search_kwargs={\"k\": 10})\nclass RelevanceScore(BaseModel):\n    score: int = Field(description=\"The relevance score of retrieval\")\nmodel_refine = ChatOpenAI(model=\"gpt-4o-mini\")\nPROMPT_TEMPLATES = {\n    \"query_refinement\": {\n        \"system\": \"\"\"You are a senior developer. Refine and expand the given user query related to a software codebase or feature:\n- Add relevant keywords or technologies\n- Ensure the query is well-targeted",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2753,16 +2773,16 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "model_refine = ChatOpenAI(model=\"gpt-4o-mini\")\nstructured_llm_refine = model_refine.with_structured_output(RelevanceScore)\ndef expand_query(query: str) -> str:\n    PROMPT_TEMPLATES = {\n        \"query_refinement\": {\n            \"system\": \"\"\"Your job is to refine and expand any given user query related to a software codebase or feature. \n- Add relevant keywords or technologies that might be involved.\n- Ensure the query is well-targeted. \n- The query will be used to retrieve PR documents.\n- Your response must be exactly 10-15 words. Choose words that are unique and will likely retrieve relevant PRs.",
+        "peekOfCode": "model_refine = ChatOpenAI(model=\"gpt-4o-mini\")\nPROMPT_TEMPLATES = {\n    \"query_refinement\": {\n        \"system\": \"\"\"You are a senior developer. Refine and expand the given user query related to a software codebase or feature:\n- Add relevant keywords or technologies\n- Ensure the query is well-targeted\nYour response must begin immediately with the query (10-15 words)\"\"\",\n        \"user\": \"\"\"Original user query: {query}\\nPlease refine and expand this query to improve document retrieval.\"\"\"\n    },\n    \"thought_process\": {",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
     {
-        "label": "structured_llm_refine",
+        "label": "PROMPT_TEMPLATES",
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "structured_llm_refine = model_refine.with_structured_output(RelevanceScore)\ndef expand_query(query: str) -> str:\n    PROMPT_TEMPLATES = {\n        \"query_refinement\": {\n            \"system\": \"\"\"Your job is to refine and expand any given user query related to a software codebase or feature. \n- Add relevant keywords or technologies that might be involved.\n- Ensure the query is well-targeted. \n- The query will be used to retrieve PR documents.\n- Your response must be exactly 10-15 words. Choose words that are unique and will likely retrieve relevant PRs.\n\"\"\",",
+        "peekOfCode": "PROMPT_TEMPLATES = {\n    \"query_refinement\": {\n        \"system\": \"\"\"You are a senior developer. Refine and expand the given user query related to a software codebase or feature:\n- Add relevant keywords or technologies\n- Ensure the query is well-targeted\nYour response must begin immediately with the query (10-15 words)\"\"\",\n        \"user\": \"\"\"Original user query: {query}\\nPlease refine and expand this query to improve document retrieval.\"\"\"\n    },\n    \"thought_process\": {\n        \"system\": \"\"\"You are a senior developer using a chain-of-thought approach. You have a user question and some partial context. You will break the problem into multiple thought steps. At each step:",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2771,7 +2791,7 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "cross_encoder_model = CrossEncoder(\"BAAI/bge-reranker-base\")\nRELEVANCE_THRESHOLD = 7\n# The prompt structure for final answer generation\nsystem_prompt = \"You are a helpful assistant that provides solutions. Follow instructions carefully.\"\ntemplate = \"\"\"\nNow generate the answer in this format. \n(Do not put “purpose” again in your response, The purpose is for your reference.)\nGeneral Answer Structure\n1. Investigation / Analysis\nPurpose: Understand the problem or request thoroughly before attempting a fix or implementation.",
+        "peekOfCode": "cross_encoder_model = CrossEncoder(\"BAAI/bge-reranker-base\")\nRELEVANCE_THRESHOLD = 7\ndef summarize_document(query, content):\n    system_prompt = PROMPT_TEMPLATES[\"summarization\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"summarization\"][\"user\"].format(\n        query=query, content=content)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)\ndef expand_query(query: str) -> str:\n    messages = [\n        {\"role\": \"system\",",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2780,16 +2800,7 @@
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "RELEVANCE_THRESHOLD = 7\n# The prompt structure for final answer generation\nsystem_prompt = \"You are a helpful assistant that provides solutions. Follow instructions carefully.\"\ntemplate = \"\"\"\nNow generate the answer in this format. \n(Do not put “purpose” again in your response, The purpose is for your reference.)\nGeneral Answer Structure\n1. Investigation / Analysis\nPurpose: Understand the problem or request thoroughly before attempting a fix or implementation.\n* If it is FIXING ISSUE → identify what should be tested.",
-        "detail": "10_answer_evaluation.chain_of_thought",
-        "documentation": {}
-    },
-    {
-        "label": "system_prompt",
-        "kind": 5,
-        "importPath": "10_answer_evaluation.chain_of_thought",
-        "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "system_prompt = \"You are a helpful assistant that provides solutions. Follow instructions carefully.\"\ntemplate = \"\"\"\nNow generate the answer in this format. \n(Do not put “purpose” again in your response, The purpose is for your reference.)\nGeneral Answer Structure\n1. Investigation / Analysis\nPurpose: Understand the problem or request thoroughly before attempting a fix or implementation.\n* If it is FIXING ISSUE → identify what should be tested.\n* Contextual Review: Summarize the scenario or requirement. For example, \"We need to add virtualization to the NextUI Table component to handle large datasets efficiently.\"\n* Inspection of Existing Code and Behavior: Mention which files, components, or logic currently handle the functionality. For example, \"Check table.tsx and related hooks that manage the Table selection logic.\"",
+        "peekOfCode": "RELEVANCE_THRESHOLD = 7\ndef summarize_document(query, content):\n    system_prompt = PROMPT_TEMPLATES[\"summarization\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"summarization\"][\"user\"].format(\n        query=query, content=content)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)\ndef expand_query(query: str) -> str:\n    messages = [\n        {\"role\": \"system\",\n            \"content\": PROMPT_TEMPLATES[\"query_refinement\"][\"system\"]},",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
@@ -2803,11 +2814,11 @@
         "documentation": {}
     },
     {
-        "label": "PROMPT_TEMPLATES",
+        "label": "system_prompt",
         "kind": 5,
         "importPath": "10_answer_evaluation.chain_of_thought",
         "description": "10_answer_evaluation.chain_of_thought",
-        "peekOfCode": "PROMPT_TEMPLATES = {\n    \"query_refinement\": {\n        \"system\": \"\"\"You are a senior developer at a large company. Your job is to refine and expand any given user query related to a software codebase or feature. The user is a newcomer developer who needs more specific, detailed, and actionable queries to find the right documents. Your refined query should:\n- Add relevant keywords or technologies that might be involved.\n- Ensure the query is well-targeted so that the retrieval system can find the most pertinent PRs or code references. (there is no need to mention \"check for PR\" as everything in the database is PR already. You should focus on the component name, concepts, tech, or terms)\nYour query will be passed to search engine or vector retrieval. \nPriortize on querying the component name.\nYour response must immediately begin with the query - Do not put \"Relevant Query:\" at the beginning.\n\"\"\",\n        \"user\": \"\"\"Original user query: {query}\\nPlease refine and expand this query to improve document retrieval.\"\"\"",
+        "peekOfCode": "system_prompt = \"You will be given a template to answer with guide or instruction to help onboard developer faster. You will be given a template - follow the template. You will be given partial answers - combine them. You will be given the question and the PR context. Pay attention to those\"\nif __name__ == \"__main__\":\n    evaluator = EvaluationResults()\n    logs = []\n    for i, (q_file, a_file) in enumerate(zip(question_files, answer_files), start=1):\n        with open(q_file, \"r\") as fq, open(a_file, \"r\") as fa:\n            question = fq.read().strip()\n            reference_answer = fa.read().strip()\n        # First expand query to get a good starting point\n        expanded_query_str = expand_query(question)",
         "detail": "10_answer_evaluation.chain_of_thought",
         "documentation": {}
     },
