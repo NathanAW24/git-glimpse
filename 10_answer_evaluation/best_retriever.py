@@ -5,6 +5,7 @@ import json
 from statistics import mean
 from pydantic import BaseModel, Field
 import glob
+from typing import List
 
 # Additional imports for metrics
 import nltk
@@ -15,23 +16,28 @@ import torch
 from transformers import GPT2LMHeadModel, GPT2TokenizerFast
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
+import numpy as np
+from sentence_transformers import CrossEncoder
 
+# LangChain imports for retrieval
+from bm25 import BM25Retriever, _read_documents_from_folder
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain.schema import Document
+from langchain_core.prompts import PromptTemplate
+
+# Uncomment if necessary
 # nltk.download('wordnet', quiet=True)  # Ensure wordnet is downloaded for METEOR
 
-# Load a pre-trained language model for perplexity calculation
+###################################
+# Metrics and Model Initialization
+###################################
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 gpt2_model_name = "gpt2"
 gpt2_tokenizer = GPT2TokenizerFast.from_pretrained(gpt2_model_name)
 gpt2_model = GPT2LMHeadModel.from_pretrained(gpt2_model_name).to(device)
 gpt2_model.eval()
-
-########################
-# Metrics Implementations
-########################
-
-
-def compute_accuracy(pred: str, ref: str) -> float:
-    return 1.0 if pred.strip() == ref.strip() else 0.0
 
 
 def compute_bleu(pred: str, ref: str) -> float:
@@ -44,7 +50,6 @@ def compute_bleu(pred: str, ref: str) -> float:
 
 
 def compute_meteor(pred: str, ref: str) -> float:
-    # Tokenize inputs before passing to meteor_score
     pred_tokens = pred.strip().split()
     ref_tokens = ref.strip().split()
     meteor = meteor_score([ref_tokens], pred_tokens)
@@ -67,8 +72,6 @@ def compute_perplexity(text: str) -> float:
 ########################
 # LLM Accuracy via Relevance Score
 ########################
-
-# LangChain structured output setup for relevance scoring
 
 
 class RelevanceScore(BaseModel):
@@ -108,7 +111,7 @@ Provide a score from 0 to 10 based on the following:
 - **0**: The predicted answer is completely inaccurate or off-topic, providing no useful information.
 
 ### Response Format:
-Provide a single integer from 0 to 10 as the accuracy score. Do not include any explanation, text, or additional characters.
+Provide a single integer (0-10). No explanation.
 
 ### Reference Answer:
 {ref}
@@ -119,8 +122,7 @@ Provide a single integer from 0 to 10 as the accuracy score. Do not include any 
 Provide your accuracy score (0-10):
 """
     response = structured_llm.invoke(prompt)
-    return response.score / 10.0  # Normalize to a 0-1 scale
-
+    return response.score / 10.0  # Normalize to 0-1
 
 ########################
 # LLM Call Function
@@ -150,11 +152,10 @@ def call_llm(system_prompt, user_prompt, model="gpt-4o-mini", temperature=0.7):
 
 class EvaluationResults:
     def __init__(self):
-        # list of dicts: each dict has {q_id, accuracy, bleu, meteor, bertscore, perplexity}
+        # list of dicts: {q_id, accuracy, bleu, meteor, bertscore, perplexity}
         self.results = []
 
     def add_result(self, q_id: int, pred: str, ref: str):
-        """Compute metrics and store result."""
         accuracy = compute_accuracy_llm(pred, ref)
         bleu = compute_bleu(pred, ref)
         meteor = compute_meteor(pred, ref)
@@ -171,7 +172,6 @@ class EvaluationResults:
         })
 
     def to_json(self):
-        """Print results per Q/A and the overall averages in JSON format."""
         if not self.results:
             return json.dumps({"results": [], "averages": {}}, indent=2)
 
@@ -195,32 +195,77 @@ class EvaluationResults:
 
 
 ########################
-# Example Workflow
+# Best Retriever Workflow
 ########################
 
-# Assuming the folder structure:
-# 10_answer_evaluation/
-# ├── QnA
-# │   ├── question_1.txt
-# │   ├── answer_1.txt
-# │   ├── question_2.txt
-# │   ├── answer_2.txt
-# ...
-# ├── vanilla.py
-#
-# We will load each question and answer pair, call the LLM, and evaluate.
+# Questions and references assumed to be present in QnA folder
+qna_folder = "./QnA"
+question_files = sorted(glob.glob(os.path.join(qna_folder, "question_*.txt")))
+answer_files = sorted(glob.glob(os.path.join(qna_folder, "answer_*.txt")))
 
-if __name__ == "__main__":
-    qna_folder = "./QnA"
-    question_files = sorted(
-        glob.glob(os.path.join(qna_folder, "question_*.txt")))
-    answer_files = sorted(glob.glob(os.path.join(qna_folder, "answer_*.txt")))
+# Setup Retrieval
+folder_path = "processed_docs"
+documents = _read_documents_from_folder(folder_path)
 
-    # This prompt structure is what the LLM will see when generating answers:
-    # (The instructions say: "For now just vanilla its ok. so no context provided just direct LLM.")
-    # Example system prompt and user prompt from your instructions:
-    system_prompt = "You are a helpful assistant that provides solutions. Follow instructions carefully."
-    template = """
+# Create doc dictionary
+doc_dict = {doc[0]: doc[1] for doc in documents}
+
+bm25_retriever = BM25Retriever(documents)
+
+VECTOR_DB_DIR = "final_all-MiniLM-L6-v2"
+MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+embedding_model = HuggingFaceEmbeddings(
+    model_name=MODEL_NAME,
+    model_kwargs={"device": "mps"},
+    encode_kwargs={"normalize_embeddings": True}
+)
+vectorstore = Chroma(
+    persist_directory=VECTOR_DB_DIR,
+    embedding_function=embedding_model
+)
+vector_retriever = vectorstore.as_retriever(
+    search_type="similarity", search_kwargs={"k": 10})
+
+
+class RelevanceScore(BaseModel):
+    score: int = Field(
+        description="The relevance score of the retrieval from 0 to 10")
+
+
+model_refine = ChatOpenAI(model="gpt-4o-mini")
+structured_llm_refine = model_refine.with_structured_output(RelevanceScore)
+
+
+def expand_query(query: str) -> str:
+    PROMPT_TEMPLATES = {
+        "query_refinement": {
+            "system": """Your job is to refine and expand any given user query related to a software codebase or feature. 
+- Add relevant keywords or technologies that might be involved.
+- Ensure the query is well-targeted. 
+- The query will be used to retrieve PR documents.
+- Your response must be exactly 10-15 words. Choose words that are unique and will likely retrieve relevant PRs.
+""",
+            "user": """Original user query: {query}\nPlease refine and expand this query to improve document retrieval."""
+        },
+    }
+
+    messages = [
+        {"role": "system",
+            "content": PROMPT_TEMPLATES["query_refinement"]["system"]},
+        {"role": "user", "content": PROMPT_TEMPLATES["query_refinement"]["user"].format(
+            query=query)},
+    ]
+    expanded_response = model(messages)
+    expanded_query = expanded_response.content.strip()
+    return expanded_query
+
+
+cross_encoder_model = CrossEncoder("BAAI/bge-reranker-base")
+RELEVANCE_THRESHOLD = 7
+
+# The prompt structure for final answer generation
+system_prompt = "You are a helpful assistant that provides solutions. Follow instructions carefully."
+template = """
 Now generate the answer in this format. 
 (Do not put “purpose” again in your response, The purpose is for your reference.)
 
@@ -258,20 +303,62 @@ Purpose: Ensure that all changes are clearly communicated and easy to understand
 * Add Release Notes: "In the project’s CHANGELOG, mention the new virtualization support and the fixed interaction bug."
 """
 
+if __name__ == "__main__":
     evaluator = EvaluationResults()
 
-    # Iterate over Q/A pairs
+    # Load Q/A pairs
     for i, (q_file, a_file) in enumerate(zip(question_files, answer_files), start=1):
         with open(q_file, "r") as fq, open(a_file, "r") as fa:
             question = fq.read().strip()
             reference_answer = fa.read().strip()
 
-        # Get predicted answer from LLM
-        user_prompt = f"{question}\n\n{template}"
+        # Retrieval and Reranking Workflow
+        expanded_query_str = expand_query(question)
+
+        # BM25 retrieval
+        bm25_results = bm25_retriever.retrieve(expanded_query_str, top_n=10)
+        bm25_docs = [(documents[idx][0], documents[idx][1])
+                     for idx, _ in bm25_results]
+
+        # Vector retrieval
+        vector_retriever.search_kwargs["k"] = 10
+        vector_results = vector_retriever.invoke(expanded_query_str)
+        vector_docs = [(doc.metadata["file_name"], doc.page_content)
+                       for doc in vector_results]
+
+        combined_docs = {}
+        for fname, content in bm25_docs:
+            if fname not in combined_docs:
+                combined_docs[fname] = content
+        for fname, content in vector_docs:
+            if fname not in combined_docs:
+                combined_docs[fname] = content
+
+        doc_items = list(combined_docs.items())  # [(fname, content), ...]
+        pairs = [(expanded_query_str, content) for fname, content in doc_items]
+        rerank_scores = cross_encoder_model.predict(pairs)
+
+        scored_docs = list(zip(doc_items, rerank_scores))
+        scored_docs.sort(key=lambda x: x[1], reverse=True)
+
+        # Take top 5 after reranking
+        final_docs = scored_docs[:5]
+
+        # Choose top 3 PR to use as context
+        top_3_docs = final_docs[:3]
+
+        # Create context from top 3 docs
+        context_str = "\n\n".join(
+            [f"---\n{fname}\n{content}\n" for ((fname, content), _) in top_3_docs])
+
+        # Generate answer using LLM with context
+        # The user prompt: includes question, template, and context
+        user_prompt = f"{question}\n\nContext from Top PRs:\n{context_str}\n\n{template}"
+
         predicted_answer = call_llm(
             system_prompt, user_prompt, model="gpt-4o-mini", temperature=0.7)
 
-        # Store metrics
+        # Evaluate result
         evaluator.add_result(i, predicted_answer, reference_answer)
 
     # Print out results as JSON
