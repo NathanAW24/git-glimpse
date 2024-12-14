@@ -152,6 +152,14 @@
         "documentation": {}
     },
     {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -1732,6 +1740,22 @@
         "description": "retriever",
         "isExtraImport": true,
         "detail": "retriever",
+        "documentation": {}
+    },
+    {
+        "label": "EnsembleRetriever",
+        "importPath": "retriever",
+        "description": "retriever",
+        "isExtraImport": true,
+        "detail": "retriever",
+        "documentation": {}
+    },
+    {
+        "label": "ThreadPoolExecutor",
+        "importPath": "concurrent.futures",
+        "description": "concurrent.futures",
+        "isExtraImport": true,
+        "detail": "concurrent.futures",
         "documentation": {}
     },
     {
@@ -4940,145 +4964,334 @@
     {
         "label": "call_llm",
         "kind": 2,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "def call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0.7):\n    \"\"\"Generic LLM call.\"\"\"\n    response = openai.chat.completions.create(\n        model=model,\n        messages=[\n            {\"role\": \"system\", \"content\": system_prompt},\n            {\"role\": \"user\", \"content\": user_prompt}\n        ],\n        temperature=temperature\n    )",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "prompt_clean_and_expand",
         "kind": 2,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "def prompt_clean_and_expand(query):\n    system_prompt = PROMPT_TEMPLATES[\"query_refinement\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"query_refinement\"][\"user\"].format(\n        query=query)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)\ndef summarize_document(query, content):\n    system_prompt = PROMPT_TEMPLATES[\"summarization\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"summarization\"][\"user\"].format(\n        query=query, content=content)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "summarize_document",
         "kind": 2,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "def summarize_document(query, content):\n    system_prompt = PROMPT_TEMPLATES[\"summarization\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"summarization\"][\"user\"].format(\n        query=query, content=content)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)\ndef generate_final_answer(query, summaries):\n    context = \"\\n\\n\".join(\n        [f\"Document {i+1} summary:\\n{summ}\" for i, summ in enumerate(summaries)])\n    system_prompt = PROMPT_TEMPLATES[\"final_answer\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"final_answer\"][\"user\"].format(",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "generate_final_answer",
         "kind": 2,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "def generate_final_answer(query, summaries):\n    context = \"\\n\\n\".join(\n        [f\"Document {i+1} summary:\\n{summ}\" for i, summ in enumerate(summaries)])\n    system_prompt = PROMPT_TEMPLATES[\"final_answer\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"final_answer\"][\"user\"].format(\n        query=query, context=context)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)\ndef extract_pr_info(text):\n    pr_number_pattern = r\"Pull Request Number:\\s*(\\d+)\"\n    pr_title_pattern = r\"Title:\\s*(.*)\"",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "extract_pr_info",
         "kind": 2,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "def extract_pr_info(text):\n    pr_number_pattern = r\"Pull Request Number:\\s*(\\d+)\"\n    pr_title_pattern = r\"Title:\\s*(.*)\"\n    pr_url_pattern = r\"URL:\\s*(https?://[^\\s]+)\"\n    pr_num = re.search(pr_number_pattern, text)\n    pr_title = re.search(pr_title_pattern, text)\n    pr_url = re.search(pr_url_pattern, text)\n    if pr_num and pr_url:\n        return pr_num.group(1), (pr_title.group(1) if pr_title else \"No Title Found\"), pr_url.group(1)\n    return None",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "add_citations_to_answer",
         "kind": 2,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "def add_citations_to_answer(final_answer, references):\n    refs_str = \"\\n\".join(\n        [f\"PR Number: {ref['pr_number']}, Title: {ref['title']}, URL: {ref['url']}\" for ref in references]\n    )\n    system_prompt = \"\"\"You are a post-processing assistant that adds citations to a previously generated answer.\nYou are given a final answer text and a list of PR references. Insert citations in the answer where relevant.\nEven if it is slightly relevant or little relevant, YOU SHOULD STILL PUT THE CITATION.\nIdeally every line of your answer or every information should be cited by citation.\nRules:\n- Use the format: <citation pr_number=\"...\" title=\"...\" url=\"...\" />.",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "parse_citations",
         "kind": 2,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "def parse_citations(annotated_answer):\n    pattern = r'<citation\\s+pr_number=\"([^\"]+)\"\\s+title=\"([^\"]+)\"\\s+url=\"([^\"]+)\"\\s*/>'\n    matches = re.findall(pattern, annotated_answer)\n    citations = []\n    for pr_number, title, url in matches:\n        citations.append({\"pr_number\": pr_number, \"title\": title, \"url\": url})\n    return citations\ndef replace_citations_with_links(text):\n    pattern = r'<citation\\s+pr_number=\"([^\"]+)\"\\s+title=\"([^\"]+)\"\\s+url=\"([^\"]+)\"\\s*/>'\n    def repl(match):",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "replace_citations_with_links",
         "kind": 2,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "def replace_citations_with_links(text):\n    pattern = r'<citation\\s+pr_number=\"([^\"]+)\"\\s+title=\"([^\"]+)\"\\s+url=\"([^\"]+)\"\\s*/>'\n    def repl(match):\n        pr_number = match.group(1)\n        title = match.group(2)\n        url = match.group(3)\n        return f\"[(PR #{pr_number})]({url})\"\n    return re.sub(pattern, repl, text)\n# Streamlit Workflow\nuser_query = st.text_input(",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "openai.api_key",
         "kind": 5,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "openai.api_key = os.getenv(\"OPENAI_API_KEY\")\n# Explanation of GitGlimpse (for context, not part of the app logic):\n# GitGlimpse is a specialized search engine designed to help developers quickly\n# locate and understand relevant pull requests (PRs) from vast repositories.\n# By leveraging Retrieval-Augmented Generation (RAG) and LLM-powered summarization,\n# GitGlimpse transforms PR data into actionable insights. Developers can input\n# queries about specific tasks or features, and GitGlimpse retrieves and ranks PRs\n# based on relevance, providing concise summaries and context. This reduces time\n# spent searching through unrelated PRs, accelerating feature development and\n# enhancing collaboration.",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "folder_path",
         "kind": 5,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "folder_path = \"processed_docs\"  # adjust as needed\nvector_db_dir = \"vector_db\"\nmodel_name = \"thenlper/gte-small\"\nretriever = EnsembleRetriever(\n    folder_path, vector_db_dir, model_name=model_name, device=\"cpu\")\nst.set_page_config(page_title=\"RAG Demo\", page_icon=\"🌐\", layout=\"wide\")\nst.title(\"RAG Demo: Retrieval Augmented Generation\")\n# Explanation / Instructions\nst.markdown(\"\"\"\n### Instructions",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "vector_db_dir",
         "kind": 5,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "vector_db_dir = \"vector_db\"\nmodel_name = \"thenlper/gte-small\"\nretriever = EnsembleRetriever(\n    folder_path, vector_db_dir, model_name=model_name, device=\"cpu\")\nst.set_page_config(page_title=\"RAG Demo\", page_icon=\"🌐\", layout=\"wide\")\nst.title(\"RAG Demo: Retrieval Augmented Generation\")\n# Explanation / Instructions\nst.markdown(\"\"\"\n### Instructions\n1. Type your question into the input box below.",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "model_name",
         "kind": 5,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "model_name = \"thenlper/gte-small\"\nretriever = EnsembleRetriever(\n    folder_path, vector_db_dir, model_name=model_name, device=\"cpu\")\nst.set_page_config(page_title=\"RAG Demo\", page_icon=\"🌐\", layout=\"wide\")\nst.title(\"RAG Demo: Retrieval Augmented Generation\")\n# Explanation / Instructions\nst.markdown(\"\"\"\n### Instructions\n1. Type your question into the input box below.\n2. The system will:",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "retriever",
         "kind": 5,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "retriever = EnsembleRetriever(\n    folder_path, vector_db_dir, model_name=model_name, device=\"cpu\")\nst.set_page_config(page_title=\"RAG Demo\", page_icon=\"🌐\", layout=\"wide\")\nst.title(\"RAG Demo: Retrieval Augmented Generation\")\n# Explanation / Instructions\nst.markdown(\"\"\"\n### Instructions\n1. Type your question into the input box below.\n2. The system will:\n   - Clean and expand your query using an LLM.",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "PROMPT_TEMPLATES",
         "kind": 5,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "PROMPT_TEMPLATES = {\n    \"query_refinement\": {\n        \"system\": \"\"\"You are a senior developer at a large company. Your job is to refine and expand any given user query related to a software codebase or feature. The user is a newcomer developer who needs more specific, detailed, and actionable queries to find the right documents. Your refined query should:\n- Add relevant keywords or technologies that might be involved.\n- Ensure the query is well-targeted so that the retrieval system can find the most pertinent PRs or code references. (there is no need to mention \"check for PR\" as everything in the database is PR already. You should focus on the component name, concepts, tech, or terms)\nYour query will be passed to search engine or vector retrieval. \nPriortize on querying the component name.\nYour response must immediately begin with the query - Do not put \"Relevant Query:\" at the beginning.\n\"\"\",\n        \"user\": \"\"\"Original user query: {query}\\nPlease refine and expand this query to improve document retrieval.\"\"\"",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "user_query",
         "kind": 5,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "user_query = st.text_input(\n    \"Ask a question:\", \"How to add virtualization support to NextUI component?\")\n# I want to solve flickering issue in next ui button. How can i investigate this? describe a good investigation workflow.\nrun_button = st.button(\"Run\")\nif run_button:\n    st.subheader(\"Chain of Thought\")\n    # Step 1: Query Refinement\n    st.markdown(\"**1️⃣ Step 1: Query Refinement**\")\n    refined_query = prompt_clean_and_expand(user_query)\n    st.write(\"**Refined Query:**\", refined_query)",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
         "documentation": {}
     },
     {
         "label": "run_button",
         "kind": 5,
-        "importPath": "UI DEMO.streamlit_app",
-        "description": "UI DEMO.streamlit_app",
+        "importPath": "UI DEMO.streamlit_best_retrieval",
+        "description": "UI DEMO.streamlit_best_retrieval",
         "peekOfCode": "run_button = st.button(\"Run\")\nif run_button:\n    st.subheader(\"Chain of Thought\")\n    # Step 1: Query Refinement\n    st.markdown(\"**1️⃣ Step 1: Query Refinement**\")\n    refined_query = prompt_clean_and_expand(user_query)\n    st.write(\"**Refined Query:**\", refined_query)\n    # Step 2: Retrieve Relevant Documents\n    st.markdown(\"**2️⃣ Step 2: Retrieve Documents**\")\n    retrieved_docs = retriever.get_documents(refined_query)",
-        "detail": "UI DEMO.streamlit_app",
+        "detail": "UI DEMO.streamlit_best_retrieval",
+        "documentation": {}
+    },
+    {
+        "label": "call_llm",
+        "kind": 2,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "def call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0.7):\n    response = openai.chat.completions.create(\n        model=model,\n        messages=[\n            {\"role\": \"system\", \"content\": system_prompt},\n            {\"role\": \"user\", \"content\": user_prompt}\n        ],\n        temperature=temperature\n    )\n    return str(response.choices[0].message.content)",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "prompt_clean_and_expand",
+        "kind": 2,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "def prompt_clean_and_expand(query):\n    system_prompt = PROMPT_TEMPLATES[\"query_refinement\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"query_refinement\"][\"user\"].format(\n        query=query)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)\ndef summarize_document(query, content):\n    system_prompt = PROMPT_TEMPLATES[\"summarization\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"summarization\"][\"user\"].format(\n        query=query, content=content)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "summarize_document",
+        "kind": 2,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "def summarize_document(query, content):\n    system_prompt = PROMPT_TEMPLATES[\"summarization\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"summarization\"][\"user\"].format(\n        query=query, content=content)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)\ndef generate_final_answer(query, summaries):\n    context = \"\\n\\n\".join(\n        [f\"Document {i+1} summary:\\n{summ}\" for i, summ in enumerate(summaries)])\n    system_prompt = PROMPT_TEMPLATES[\"final_answer\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"final_answer\"][\"user\"].format(",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "generate_final_answer",
+        "kind": 2,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "def generate_final_answer(query, summaries):\n    context = \"\\n\\n\".join(\n        [f\"Document {i+1} summary:\\n{summ}\" for i, summ in enumerate(summaries)])\n    system_prompt = PROMPT_TEMPLATES[\"final_answer\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"final_answer\"][\"user\"].format(\n        query=query, context=context)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)\ndef extract_pr_info(text):\n    pr_number_pattern = r\"Pull Request Number:\\s*(\\d+)\"\n    pr_title_pattern = r\"Title:\\s*(.*)\"",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "extract_pr_info",
+        "kind": 2,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "def extract_pr_info(text):\n    pr_number_pattern = r\"Pull Request Number:\\s*(\\d+)\"\n    pr_title_pattern = r\"Title:\\s*(.*)\"\n    pr_url_pattern = r\"URL:\\s*(https?://[^\\s]+)\"\n    pr_num = re.search(pr_number_pattern, text)\n    pr_title = re.search(pr_title_pattern, text)\n    pr_url = re.search(pr_url_pattern, text)\n    if pr_num and pr_url:\n        return pr_num.group(1), (pr_title.group(1) if pr_title else \"No Title Found\"), pr_url.group(1)\n    return None",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "add_citations_to_answer",
+        "kind": 2,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "def add_citations_to_answer(final_answer, references):\n    refs_str = \"\\n\".join(\n        [f\"PR Number: {ref['pr_number']}, Title: {ref['title']}, URL: {ref['url']}\" for ref in references]\n    )\n    system_prompt = \"\"\"You are a post-processing assistant that adds citations to a previously generated answer.\nYou are given a final answer text and a list of PR references. Insert citations in the answer where relevant.\nEven if it is slightly relevant or little relevant, YOU SHOULD STILL PUT THE CITATION.\nIdeally every line of your answer or every information should be cited by citation.\nRules:\n- Use the format: <citation pr_number=\"...\" title=\"...\" url=\"...\" />.",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "parse_citations",
+        "kind": 2,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "def parse_citations(annotated_answer):\n    pattern = r'<citation\\s+pr_number=\"([^\"]+)\"\\s+title=\"([^\"]+)\"\\s+url=\"([^\"]+)\"\\s*/>'\n    matches = re.findall(pattern, annotated_answer)\n    citations = []\n    for pr_number, title, url in matches:\n        citations.append({\"pr_number\": pr_number, \"title\": title, \"url\": url})\n    return citations\ndef replace_citations_with_links(text):\n    pattern = r'<citation\\s+pr_number=\"([^\"]+)\"\\s+title=\"([^\"]+)\"\\s+url=\"([^\"]+)\"\\s*/>'\n    def repl(match):",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "replace_citations_with_links",
+        "kind": 2,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "def replace_citations_with_links(text):\n    pattern = r'<citation\\s+pr_number=\"([^\"]+)\"\\s+title=\"([^\"]+)\"\\s+url=\"([^\"]+)\"\\s*/>'\n    def repl(match):\n        pr_number = match.group(1)\n        title = match.group(2)\n        url = match.group(3)\n        return f\"[(PR #{pr_number})]({url})\"\n    return re.sub(pattern, repl, text)\n#########################################\n# Chain-of-Thought Logic",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "call_llm_raw",
+        "kind": 2,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "def call_llm_raw(system, user, model=\"gpt-4o-mini\", temperature=0):\n    response = openai.chat.completions.create(\n        model=model,\n        messages=[\n            {\"role\": \"system\", \"content\": system},\n            {\"role\": \"user\", \"content\": user}\n        ],\n        temperature=temperature\n    )\n    return response.choices[0].message.content.strip()",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "get_thought_queries",
+        "kind": 2,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "def get_thought_queries(question, partial_answers, current_context):\n    system_prompt = COT_PROMPT_TEMPLATES[\"thought_process\"][\"system\"]\n    user_prompt = COT_PROMPT_TEMPLATES[\"thought_process\"][\"user\"].format(\n        question=question,\n        partial_answers=partial_answers,\n        current_context=current_context\n    )\n    response = call_llm_raw(system_prompt, user_prompt,\n                            model=\"gpt-4o-mini\", temperature=0)\n    try:",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "get_partial_answer",
+        "kind": 2,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "def get_partial_answer(question, all_context, partial_answers):\n    system_prompt = COT_PROMPT_TEMPLATES[\"partial_answer\"][\"system\"]\n    user_prompt = COT_PROMPT_TEMPLATES[\"partial_answer\"][\"user\"].format(\n        question=question,\n        all_context=all_context,\n        partial_answers=partial_answers\n    )\n    return call_llm_raw(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0.7)\ndef retrieve_and_summarize_docs_for_queries(queries, refined_query_context):\n    # For each query, retrieve and summarize top docs",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "retrieve_and_summarize_docs_for_queries",
+        "kind": 2,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "def retrieve_and_summarize_docs_for_queries(queries, refined_query_context):\n    # For each query, retrieve and summarize top docs\n    # Return list of summaries\n    summaries_for_all_queries = []\n    for q in queries:\n        with st.spinner(f\"Retrieving documents for query: {q}...\"):\n            retrieved_docs = retriever.get_documents(q)\n        query_section = f\"**Query:** {q}\"\n        references = []\n        doc_names = list(retrieved_docs.keys())",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "openai.api_key",
+        "kind": 5,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "openai.api_key = os.getenv(\"OPENAI_API_KEY\")\n# Explanation of GitGlimpse (for context, not part of the app logic):\n# GitGlimpse is a specialized search engine designed to help developers quickly\n# locate and understand relevant pull requests (PRs) from vast repositories.\n# By leveraging Retrieval-Augmented Generation (RAG) and LLM-powered summarization,\n# GitGlimpse transforms PR data into actionable insights. Developers can input\n# queries about specific tasks or features, and GitGlimpse retrieves and ranks PRs\n# based on relevance, providing concise summaries and context. This reduces time\n# spent searching through unrelated PRs, accelerating feature development and\n# enhancing collaboration.",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "folder_path",
+        "kind": 5,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "folder_path = \"processed_docs\"  # adjust as needed\nvector_db_dir = \"vector_db\"\nmodel_name = \"thenlper/gte-small\"\nretriever = EnsembleRetriever(\n    folder_path, vector_db_dir, model_name=model_name, device=\"cpu\")\nst.set_page_config(page_title=\"RAG Demo\", page_icon=\"🌐\", layout=\"wide\")\nst.title(\"RAG Demo: Retrieval Augmented Generation with Chain-of-Thought\")\n# Explanation / Instructions\nst.markdown(\"\"\"\n### Instructions",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "vector_db_dir",
+        "kind": 5,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "vector_db_dir = \"vector_db\"\nmodel_name = \"thenlper/gte-small\"\nretriever = EnsembleRetriever(\n    folder_path, vector_db_dir, model_name=model_name, device=\"cpu\")\nst.set_page_config(page_title=\"RAG Demo\", page_icon=\"🌐\", layout=\"wide\")\nst.title(\"RAG Demo: Retrieval Augmented Generation with Chain-of-Thought\")\n# Explanation / Instructions\nst.markdown(\"\"\"\n### Instructions\n1. Type your question into the input box below.",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "model_name",
+        "kind": 5,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "model_name = \"thenlper/gte-small\"\nretriever = EnsembleRetriever(\n    folder_path, vector_db_dir, model_name=model_name, device=\"cpu\")\nst.set_page_config(page_title=\"RAG Demo\", page_icon=\"🌐\", layout=\"wide\")\nst.title(\"RAG Demo: Retrieval Augmented Generation with Chain-of-Thought\")\n# Explanation / Instructions\nst.markdown(\"\"\"\n### Instructions\n1. Type your question into the input box below.\n2. The system will:",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "retriever",
+        "kind": 5,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "retriever = EnsembleRetriever(\n    folder_path, vector_db_dir, model_name=model_name, device=\"cpu\")\nst.set_page_config(page_title=\"RAG Demo\", page_icon=\"🌐\", layout=\"wide\")\nst.title(\"RAG Demo: Retrieval Augmented Generation with Chain-of-Thought\")\n# Explanation / Instructions\nst.markdown(\"\"\"\n### Instructions\n1. Type your question into the input box below.\n2. The system will:\n   - Clean and expand your query using an LLM (initial step).",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "PROMPT_TEMPLATES",
+        "kind": 5,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "PROMPT_TEMPLATES = {\n    \"query_refinement\": {\n        \"system\": \"\"\"You are a senior developer at a large company. Your job is to refine and expand any given user query related to a software codebase or feature. The user is a newcomer developer who needs more specific, detailed, and actionable queries to find the right documents. Your refined query should:\n- Add relevant keywords or technologies that might be involved.\n- Ensure the query is well-targeted so that the retrieval system can find the most pertinent PRs or code references. (there is no need to mention \"check for PR\" as everything in the database is PR already. You should focus on the component name, concepts, tech, or terms)\nYour query will be passed to search engine or vector retrieval. \nPriortize on querying the component name.\nYour response must immediately begin with the query - Do not put \"Relevant Query:\" at the beginning.\n\"\"\",\n        \"user\": \"\"\"Original user query: {query}\\nPlease refine and expand this query to improve document retrieval.\"\"\"",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "COT_PROMPT_TEMPLATES",
+        "kind": 5,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "COT_PROMPT_TEMPLATES = {\n    \"thought_process\": {\n        \"system\": \"\"\"You are a senior developer using a chain-of-thought approach. You have a user question and some partial context. You will break the problem into multiple thought steps. At each step:\n- Consider what additional information is needed.\n- Generate 1-3 new refined queries (short, unique terms) to retrieve more docs. Focus on unique terms.\n- Do NOT solve the user's question fully yet. Just propose queries to get more info.\nReturn the queries in a JSON array, no extra text.\"\"\",\n        \"user\": \"\"\"User question: {question}\nCurrent partial answers: {partial_answers}\nCurrent known context (summaries): {current_context}",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "user_query",
+        "kind": 5,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "user_query = st.text_input(\n    \"Ask a question:\", \"How to add virtualization support to NextUI component?\")\nrun_button = st.button(\"Run\")\nif run_button:\n    # Step 1: Query Refinement\n    st.markdown(\"### 1️⃣ Step 1: Query Refinement\")\n    refined_query = prompt_clean_and_expand(user_query)\n    st.write(\"**Refined Query:**\", refined_query)\n    # We now implement the chain-of-thought approach\n    # We'll do a maximum of 3 thoughts",
+        "detail": "UI DEMO.streamlit_cot",
+        "documentation": {}
+    },
+    {
+        "label": "run_button",
+        "kind": 5,
+        "importPath": "UI DEMO.streamlit_cot",
+        "description": "UI DEMO.streamlit_cot",
+        "peekOfCode": "run_button = st.button(\"Run\")\nif run_button:\n    # Step 1: Query Refinement\n    st.markdown(\"### 1️⃣ Step 1: Query Refinement\")\n    refined_query = prompt_clean_and_expand(user_query)\n    st.write(\"**Refined Query:**\", refined_query)\n    # We now implement the chain-of-thought approach\n    # We'll do a maximum of 3 thoughts\n    max_thoughts = 3\n    partial_answers = []",
+        "detail": "UI DEMO.streamlit_cot",
         "documentation": {}
     }
 ]
