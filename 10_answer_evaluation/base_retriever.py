@@ -6,8 +6,6 @@ from statistics import mean
 from pydantic import BaseModel, Field
 import glob
 from typing import List
-
-# Additional imports for metrics
 import nltk
 from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 from nltk.translate.meteor_score import meteor_score
@@ -15,21 +13,14 @@ from bert_score import score as bert_score
 import torch
 from transformers import GPT2LMHeadModel, GPT2TokenizerFast
 from langchain_openai import ChatOpenAI
-from pydantic import BaseModel, Field
 import numpy as np
-from sentence_transformers import CrossEncoder
+import evaluate
 
 # LangChain imports for retrieval
-from bm25 import BM25Retriever, _read_documents_from_folder
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.schema import Document
-from langchain_core.prompts import PromptTemplate
-from transformers import AutoModelForCausalLM, AutoTokenizer
-import evaluate
 
-
-# Uncomment if necessary
 nltk.download('wordnet', quiet=True)  # Ensure wordnet is downloaded for METEOR
 
 ###################################
@@ -67,22 +58,10 @@ def compute_bertscore(pred: str, ref: str) -> float:
 def compute_perplexity(text: str, model_id: str = 'gpt2') -> float:
     """
     Compute the perplexity of a given text using a specified pre-trained language model.
-
-    Args:
-        text (str): The input text for which to compute perplexity.
-        model_id (str): The name of the pre-trained model to use (default is 'gpt2').
-
-    Returns:
-        float: The computed perplexity score.
     """
-    # Load the perplexity metric
     perplexity = evaluate.load("perplexity", module_type="measurement")
-
-    # Compute perplexity
     results = perplexity.compute(
         model_id=model_id, add_start_token=True, data=[text])
-
-    # Return the mean perplexity
     return results['mean_perplexity']
 
 ########################
@@ -188,7 +167,6 @@ class EvaluationResults:
         })
 
     def to_dict(self):
-        # Return results as a dict
         if not self.results:
             return {"results": [], "averages": {}}
 
@@ -214,77 +192,40 @@ class EvaluationResults:
         data = self.to_dict()
         return json.dumps(data, indent=2)
 
-
 ########################
-# Best Retriever Workflow
+# Base Retriever Workflow
 ########################
 
-# Questions and references assumed to be present in QnA folder
+
+# Folder with Q&A
 qna_folder = "./QnA"
 question_files = sorted(glob.glob(os.path.join(qna_folder, "question_*.txt")))
 answer_files = sorted(glob.glob(os.path.join(qna_folder, "answer_*.txt")))
 
-# Setup Retrieval
-folder_path = "processed_docs"
-documents = _read_documents_from_folder(folder_path)
+# We use only the vector retriever from the gte-small-v2 vector DB.
+VECTOR_DB_DIR = "gte_small-v2"
+MODEL_NAME = "gnn_model"  # placeholder name, replace if needed
 
-# Create doc dictionary
-doc_dict = {doc[0]: doc[1] for doc in documents}
-
-bm25_retriever = BM25Retriever(documents)
-
-VECTOR_DB_DIR = "final_all-MiniLM-L6-v2"
-MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+# Load embeddings for GTE-Small (replace model_name with the actual embedding model name if needed)
 embedding_model = HuggingFaceEmbeddings(
-    model_name=MODEL_NAME,
+    # A known GTE model on HuggingFace if available
+    model_name="thenlper/gte-small",
     model_kwargs={"device": "mps"},
     encode_kwargs={"normalize_embeddings": True}
 )
+
+# Load vector store
 vectorstore = Chroma(
     persist_directory=VECTOR_DB_DIR,
     embedding_function=embedding_model
 )
+
+# We'll directly retrieve top 3 documents using the vector retriever with no expansions, no rerank.
 vector_retriever = vectorstore.as_retriever(
-    search_type="similarity", search_kwargs={"k": 10})
+    search_type="similarity", search_kwargs={"k": 3}
+)
 
-
-class RelevanceScore(BaseModel):
-    score: int = Field(
-        description="The relevance score of the retrieval from 0 to 10")
-
-
-model_refine = ChatOpenAI(model="gpt-4o-mini")
-structured_llm_refine = model_refine.with_structured_output(RelevanceScore)
-
-
-def expand_query(query: str) -> str:
-    PROMPT_TEMPLATES = {
-        "query_refinement": {
-            "system": """Your job is to refine and expand any given user query related to a software codebase or feature. 
-- Add relevant keywords or technologies that might be involved.
-- Ensure the query is well-targeted. 
-- The query will be used to retrieve PR documents.
-- Your response must be exactly 10-15 words. Choose words that are unique and will likely retrieve relevant PRs.
-""",
-            "user": """Original user query: {query}\nPlease refine and expand this query to improve document retrieval."""
-        },
-    }
-
-    messages = [
-        {"role": "system",
-            "content": PROMPT_TEMPLATES["query_refinement"]["system"]},
-        {"role": "user", "content": PROMPT_TEMPLATES["query_refinement"]["user"].format(
-            query=query)},
-    ]
-    expanded_response = model(messages)
-    expanded_query = expanded_response.content.strip()
-    return expanded_query
-
-
-cross_encoder_model = CrossEncoder("BAAI/bge-reranker-base")
-RELEVANCE_THRESHOLD = 7
-
-# The prompt structure for final answer generation
+# The prompt structure for final answer generation (no summarization)
 system_prompt = "You are a helpful assistant that provides solutions. Follow instructions carefully."
 template = """
 Now generate the answer in this format. 
@@ -323,143 +264,44 @@ Purpose: Ensure that all changes are clearly communicated and easy to understand
 * Update Documentation: "Add usage examples and prop definitions for the new virtualization feature in docs/components/table.mdx."
 * Add Release Notes: "In the project’s CHANGELOG, mention the new virtualization support and the fixed interaction bug."
 """
-PROMPT_TEMPLATES = {
-    "query_refinement": {
-        "system": """You are a senior developer at a large company. Your job is to refine and expand any given user query related to a software codebase or feature. The user is a newcomer developer who needs more specific, detailed, and actionable queries to find the right documents. Your refined query should:
-- Add relevant keywords or technologies that might be involved.
-- Ensure the query is well-targeted so that the retrieval system can find the most pertinent PRs or code references. (there is no need to mention "check for PR" as everything in the database is PR already. You should focus on the component name, concepts, tech, or terms)
-Your query will be passed to search engine or vector retrieval. 
-Priortize on querying the component name.
-Your response must immediately begin with the query - Do not put "Relevant Query:" at the beginning.
-""",
-        "user": """Original user query: {query}\nPlease refine and expand this query to improve document retrieval."""
-    },
-    "summarization": {
-        "system": """You are a senior developer summarizing a document (e.g., a PR). The summary should:
-- Focus on the context relevant to the given query.
-- Highlight code changes that might be helpful or good to know for the developers.
-- Highlight which files or modules are touched.
-- Mention coding conventions, library usage, or patterns observed.
-- Note any pitfalls, best practices, or insights from PR discussions.
-- Identify if there are utilities or frameworks already used, so a new developer doesn't have to re-invent solutions.
-If the context does not provide relevant topics, skip them.
-Your answer must be concise.
-""",
-        "user": """Query: {query}\nDocument Content:\n{content}\nSummarize the above document with these objectives in mind."""
-    },
-    "final_answer": {
-        "system": """You are a senior developer synthesizing the final answer for a newcomer developer. You have several summarized documents (PRs) that relate to the user's question. Your final answer should:
-- Directly answer the user's question.
-- Suggest files or directories to look at.
-- Highlight relevant coding patterns, naming conventions, or established best practices found in the PRs.
-- Explain your findings in the previous PRs that you have explored.
-- Suggest libraries or existing utilities that can be leveraged.
-- Point out common pitfalls and how previous developers addressed them.
-- Include why certain decisions were made and how to align with the project's standards.
-If the context does not provide you with a relevant topics - skip explaining about that topics.
-Your answer must be detailed but using easy to understand and concise language.
-This is about empowering the new developer to ramp up quickly and make informed decisions based on relevant previous PRs.
-Remember to make sure your response answer the user question as well.
-""",
-        "user": """User question: {query}\nContext from Summarized Pull Request Documents:\n{context}\nProvide the best possible answer, incorporating all the mentioned developer onboarding guidance."""
-    }
-}
-
-
-def summarize_document(query, content):
-    system_prompt = PROMPT_TEMPLATES["summarization"]["system"]
-    user_prompt = PROMPT_TEMPLATES["summarization"]["user"].format(
-        query=query, content=content)
-    return call_llm(system_prompt, user_prompt, model="gpt-4o-mini", temperature=0)
-
 
 if __name__ == "__main__":
     evaluator = EvaluationResults()
-
-    # We'll store logs for each question in a separate data structure
     logs = []
 
-    # Load Q/A pairs
     for i, (q_file, a_file) in enumerate(zip(question_files, answer_files), start=1):
         with open(q_file, "r") as fq, open(a_file, "r") as fa:
             question = fq.read().strip()
             reference_answer = fa.read().strip()
 
-        # Retrieval and Reranking Workflow
-        expanded_query_str = expand_query(question)
+        # Direct vector retrieval (no expansions, no rerank)
+        retrieved_docs = vector_retriever.get_relevant_documents(question)
 
-        print("expanded query", expanded_query_str)
-
-        # BM25 retrieval
-        bm25_results = bm25_retriever.retrieve(expanded_query_str, top_n=10)
-        bm25_docs = [(documents[idx][0], documents[idx][1])
-                     for idx, _ in bm25_results]
-
-        # Vector retrieval
-        vector_retriever.search_kwargs["k"] = 10
-        vector_results = vector_retriever.invoke(expanded_query_str)
-        vector_docs = [(doc.metadata["file_name"], doc.page_content)
-                       for doc in vector_results]
-
-        combined_docs = {}
-        for fname, content in bm25_docs:
-            if fname not in combined_docs:
-                combined_docs[fname] = content
-        for fname, content in vector_docs:
-            if fname not in combined_docs:
-                combined_docs[fname] = content
-
-        doc_items = list(combined_docs.items())  # [(fname, content), ...]
-        pairs = [(expanded_query_str, content) for fname, content in doc_items]
-        rerank_scores = cross_encoder_model.predict(pairs)
-
-        scored_docs = list(zip(doc_items, rerank_scores))
-        scored_docs.sort(key=lambda x: x[1], reverse=True)
-
-        # Take top 5 after reranking
-        final_docs = scored_docs[:5]
-
-        # Choose top 3 PR to use as context
-        top_3_docs = final_docs[:3]
-
-        # Summarize
-
-        list_of_summary_string = []
-        for ((fname, content), _) in top_3_docs:
-            summary = summarize_document(question, content)
-            list_of_summary_string.append((fname, summary))
-
-        # Create context from top 3 docs
+        # Use top 3 documents as context (already k=3 in retrieval)
         context_str = "\n\n".join(
-            [f"---\n{fname}\n{content}\n" for (fname, content) in list_of_summary_string])
+            [f"---\n{doc.metadata.get('file_name','unknown')}\n{doc.page_content}\n" for doc in retrieved_docs])
 
-        # Generate answer using LLM with context
+        # Generate final answer using LLM
         user_prompt = f"{question}\n\nContext from Top PRs:\n{context_str}\n\n{template}"
         predicted_answer = call_llm(
             system_prompt, user_prompt, model="gpt-4o-mini", temperature=0.7)
 
-        # Evaluate result
+        # Evaluate
         evaluator.add_result(i, predicted_answer, reference_answer)
-
-        # Get the last result from evaluator to store in logs
         last_result = evaluator.results[-1]
 
-        # Store logs
         logs.append({
             "q_id": i,
             "question": question,
-            "expanded_query": expanded_query_str,
-            "context_docs": [fname for ((fname, _), _) in top_3_docs],
+            "context_docs": [doc.metadata.get("file_name", "unknown") for doc in retrieved_docs],
             "context": context_str,
             "predicted_answer": predicted_answer,
             "reference_answer": reference_answer,
             "metrics": last_result
         })
 
-    # Print out results as JSON
-    evaluation_data = evaluator.to_dict()
-
     # Store evaluation results
+    evaluation_data = evaluator.to_dict()
     with open("evaluation_results.json", "w") as f:
         json.dump(evaluation_data, f, indent=2)
 
