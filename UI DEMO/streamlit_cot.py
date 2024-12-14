@@ -185,7 +185,7 @@ References (PRs):
 Please insert citations as instructed.
 """
     annotated_answer = call_llm(
-        system_prompt, user_prompt, model="gpt-4o", temperature=0)
+        system_prompt, user_prompt, model="gpt-4o-mini", temperature=0)
     return annotated_answer
 
 
@@ -307,7 +307,7 @@ def retrieve_and_summarize_docs_for_queries(queries, refined_query_context):
         doc_contents = list(retrieved_docs.values())
 
         # Summarize these docs
-        with st.write(f"Show retrieved documents for query: {q}"):
+        with st.expander(f"Show retrieved documents for query: {q}", expanded=False):
             for fname, content in retrieved_docs.items():
                 pr_info = extract_pr_info(content)
                 if pr_info:
@@ -334,13 +334,13 @@ def retrieve_and_summarize_docs_for_queries(queries, refined_query_context):
                 summaries[i] = summary
 
         # Display summaries in collapsible sections
-        with st.expander(f"Summaries for query: {q}", expanded=False):
-            for i, fname in enumerate(doc_names):
-                st.markdown(f"**Document: {fname}**")
-                with st.expander("View Summary"):
-                    st.write(summaries[i])
-                with st.expander("View Full Content"):
-                    st.write(doc_contents[i])
+        st.write(f"Summaries for query: {q}")
+        for i, fname in enumerate(doc_names):
+            st.markdown(f"**Document: {fname}**")
+            st.expander("View Summary")
+            st.write(summaries[i])
+            st.expander("View Full Content")
+            st.write(doc_contents[i])
 
         # Combine all summaries for this query into one string block
         combined_summaries = "\n\n".join(
@@ -374,35 +374,35 @@ if run_button:
 
     for thought_i in range(1, max_thoughts+1):
         st.markdown(f"### Thought Cycle {thought_i}")
-        with st.expander(f"Initiate Thought {thought_i}", expanded=True):
-            current_context = "\n\n".join(all_context_pieces)
-            current_partial_answers = "\n\n".join(partial_answers)
+        st.write(f"Initiate Thought {thought_i}")
+        current_context = "\n\n".join(all_context_pieces)
+        current_partial_answers = "\n\n".join(partial_answers)
 
-            # Get queries for this thought
-            queries = get_thought_queries(
-                user_query, current_partial_answers, current_context)
-            if not queries:
-                st.write("No new queries generated. Stopping chain-of-thought.")
-                break
+        # Get queries for this thought
+        queries = get_thought_queries(
+            user_query, current_partial_answers, current_context)
+        if not queries:
+            st.write("No new queries generated. Stopping chain-of-thought.")
+            break
 
-            st.write("**Queries generated:**", queries)
-            # Retrieve and summarize docs for these queries
-            context_from_queries = retrieve_and_summarize_docs_for_queries(
-                queries, refined_query)
-            # Add the new context
-            all_context_pieces.append(context_from_queries)
+        st.write("**Queries generated:**", queries)
+        # Retrieve and summarize docs for these queries
+        context_from_queries = retrieve_and_summarize_docs_for_queries(
+            queries, refined_query)
+        # Add the new context
+        all_context_pieces.append(context_from_queries)
 
-            # Produce a new partial answer
-            st.write(
-                "Generating partial answer based on current aggregated context and previous partial answers...")
-            combined_context = "\n\n".join(all_context_pieces)
-            current_partial_answers = "\n\n".join(partial_answers)
-            new_partial_answer = get_partial_answer(
-                user_query, combined_context, current_partial_answers)
-            partial_answers.append(new_partial_answer)
+        # Produce a new partial answer
+        st.write(
+            "Generating partial answer based on current aggregated context and previous partial answers...")
+        combined_context = "\n\n".join(all_context_pieces)
+        current_partial_answers = "\n\n".join(partial_answers)
+        new_partial_answer = get_partial_answer(
+            user_query, combined_context, current_partial_answers)
+        partial_answers.append(new_partial_answer)
 
-            with st.expander(f"Partial Answer after Thought {thought_i}", expanded=False):
-                st.write(new_partial_answer)
+        with st.expander(f"Partial Answer after Thought {thought_i}", expanded=False):
+            st.write(new_partial_answer)
 
     # After all thoughts, produce final answer
     st.markdown("### Final Answer Generation")
