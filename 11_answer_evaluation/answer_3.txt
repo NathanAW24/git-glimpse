@@ -1,0 +1,136 @@
+### 1. Investigation / Analysis
+
+**Purpose:**  
+Understand the problem or request thoroughly before attempting a fix or implementation.
+
+**Contextual Review:**  
+The issue involves inconsistent `onClick` event handling in interactive components like `MenuItem`, `ListboxItem`, `Link`, and `Button`. The goal is to align the behavior with modern accessibility standards by deprecating `onClick` in favor of `onPress`, updating internal utilities, and reducing bundle size by removing unnecessary dependencies.
+
+**Inspection of Existing Code and Behavior:**  
+Analyze the existing event-handling logic for the following components to identify how `onClick` is implemented and where it may cause inconsistencies or redundancies:
+- **MenuItem**: Verify the current implementation in `menu-item-base.tsx` and `use-menu-item.ts`.
+- **ListboxItem**: Inspect `listbox-item-base.tsx` and `use-listbox-item.ts`.
+- **Button**: Examine `use-button.ts` for `onClick` handling and its interactions with `onPress`.
+- **Link**: Check `use-link.ts` for `onClick` logic and ensure consistency in interaction handling.
+  
+**Relevant Files to Look At:**  
+- `menu-item-base.tsx` (Handles rendering and logic for menu items.)
+- `use-menu-item.ts` (Manages interaction logic for menu items.)
+- `listbox-item-base.tsx` (Handles rendering of listbox items.)
+- `use-listbox-item.ts` (Manages interaction logic for listbox items.)
+- `use-button.ts` (Core hook for button components.)
+- `use-link.ts` (Handles rendering and logic for links.)
+- Test files:
+  - `menu.test.tsx`
+  - `listbox.test.tsx`
+  - `button.test.tsx`
+  - `link.test.tsx`
+
+**Error and Performance Analysis:**  
+- **Root Cause:**  
+  The issue arises because `onClick` behavior is inconsistent across devices (e.g., firing twice on mobile) and does not align with accessibility standards. Some components use outdated event-handling logic, leading to performance bottlenecks and increased complexity.
+- **Current Limitations:**  
+  - Redundant event listeners and outdated utilities in `React Aria`.
+  - Increased bundle size due to unnecessary dependencies.
+
+---
+
+### 2. Proposed Solution / Implementation Steps
+
+**Purpose:**  
+Align event handling with modern accessibility standards, improve consistency across devices, and reduce complexity and bundle size.
+
+**Files to Create or Add:**  
+1. **New Files:**  
+   - **DeprecationWarnings.tsx**: A utility file for issuing deprecation warnings during development.
+   
+2. **Updated Files:**  
+   - `menu-item-base.tsx`  
+   - `use-menu-item.ts`  
+   - `listbox-item-base.tsx`  
+   - `use-listbox-item.ts`  
+   - `use-button.ts`  
+   - `use-link.ts`  
+   - Test files (`menu.test.tsx`, `listbox.test.tsx`, `button.test.tsx`, `link.test.tsx`).
+
+**High-Level Changes:**  
+1. Deprecate `onClick` in favor of `onPress` for all interactive components.
+2. Add mobile-specific handling to ensure compatibility with `onPress`.
+3. Remove unnecessary packages and update utilities from `React Aria` for performance improvements.
+
+**Specific Technical Steps:**  
+1. **Dependencies:**  
+   - Install the latest version of `@react-aria/interactions` to handle `onPress`.
+   - Remove unused dependencies like `@nextui-org/use-aria-menu` and `@nextui-org/use-aria-toggle-button`.
+
+   ```bash
+   npm install @react-aria/interactions
+   npm uninstall @nextui-org/use-aria-menu @nextui-org/use-aria-toggle-button
+   ```
+
+2. **Event Refactoring:**  
+   - Update the `use-menu-item.ts` and `menu-item-base.tsx` components:
+     - Add a `handlePress` function to wrap both `onPress` and the deprecated `onClick` event, ensuring backward compatibility.
+     - Issue a deprecation warning when `onClick` is used.
+
+   ```typescript
+   const handlePress = (e: PressEvent) => {
+       if (deprecatedOnClick) {
+           warn("onClick is deprecated, please use onPress instead.");
+           deprecatedOnClick(e as React.MouseEvent);
+       }
+       onPress?.(e);
+   };
+   ```
+
+   - Similar updates should be made for `use-listbox-item.ts`, `use-button.ts`, and `use-link.ts`.
+
+3. **Test Updates:**  
+   - Write unit tests to verify the functionality of both `onPress` and deprecated `onClick`.
+   - Ensure the tests cover edge cases like event propagation, mobile behavior, and accessibility compliance.
+
+4. **Bundle Optimization:**  
+   - Remove redundant dependencies and utilities (e.g., `@nextui-org/use-aria-menu`).
+   - Update imports in affected files to use the optimized utilities from `React Aria`.
+
+5. **Backward Compatibility:**  
+   - Make `onClick` support optional and log deprecation warnings when used.
+   - Document the migration path for developers: replace `onClick` with `onPress`.
+
+---
+
+### 3. Post-Fix / Post-Implementation Checks
+
+**Purpose:**  
+Validate that the solution works as intended and does not introduce regressions.
+
+1. **Unit Tests:**  
+   - Update existing tests to check for the correct firing of `onPress` and backward compatibility with `onClick`.
+
+2. **Integration Testing:**  
+   - Ensure that all interactive components (`MenuItem`, `ListboxItem`, `Button`, and `Link`) behave consistently across devices and browsers.
+   - Verify that `onPress` handles events correctly and that `onClick` issues a warning without breaking functionality.
+
+3. **Performance Testing:**  
+   - Measure bundle size reduction after removing unused dependencies.
+   - Test rendering performance and interaction latency for updated components.
+
+---
+
+### 4. Documentation and Communication
+
+**Purpose:**  
+Ensure that all changes are documented and communicated clearly.
+
+1. **Update Documentation:**  
+   - Add usage examples for `onPress` in the respective component documentation.
+   - Document the migration path from `onClick` to `onPress`.
+
+2. **Add Release Notes:**  
+   - In the project’s `CHANGELOG`, include a summary of the updates:
+     - Deprecation of `onClick`.
+     - Introduction of `onPress`.
+     - Removal of unnecessary dependencies.
+
+3. **Inline Comments:**  
+   - Add comments in updated files explaining the changes, e.g., why `onClick` was deprecated and how `onPress` improves accessibility.

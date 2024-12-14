@@ -98,7 +98,7 @@ Remember to make sure your response answer the user question as well.
 }
 
 
-def call_llm(system_prompt, user_prompt, model="gpt-4o", temperature=0.7):
+def call_llm(system_prompt, user_prompt, model="gpt-4o-mini", temperature=0.7):
     """Generic LLM call."""
     response = openai.chat.completions.create(
         model=model,
@@ -115,14 +115,14 @@ def prompt_clean_and_expand(query):
     system_prompt = PROMPT_TEMPLATES["query_refinement"]["system"]
     user_prompt = PROMPT_TEMPLATES["query_refinement"]["user"].format(
         query=query)
-    return call_llm(system_prompt, user_prompt, model="gpt-4o", temperature=0)
+    return call_llm(system_prompt, user_prompt, model="gpt-4o-mini", temperature=0)
 
 
 def summarize_document(query, content):
     system_prompt = PROMPT_TEMPLATES["summarization"]["system"]
     user_prompt = PROMPT_TEMPLATES["summarization"]["user"].format(
         query=query, content=content)
-    return call_llm(system_prompt, user_prompt, model="gpt-4o", temperature=0)
+    return call_llm(system_prompt, user_prompt, model="gpt-4o-mini", temperature=0)
 
 
 def generate_final_answer(query, summaries):
@@ -131,7 +131,7 @@ def generate_final_answer(query, summaries):
     system_prompt = PROMPT_TEMPLATES["final_answer"]["system"]
     user_prompt = PROMPT_TEMPLATES["final_answer"]["user"].format(
         query=query, context=context)
-    return call_llm(system_prompt, user_prompt, model="gpt-4o", temperature=0)
+    return call_llm(system_prompt, user_prompt, model="gpt-4o-mini", temperature=0)
 
 
 def extract_pr_info(text):

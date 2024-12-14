@@ -1,0 +1,80 @@
+### 1. Investigation / Analysis
+
+**Purpose:** Understand the problem or request thoroughly before attempting a fix or implementation.
+
+- **Contextual Review:**  
+  The requirement is to add virtualization to the NextUI Table component to handle large datasets efficiently. This ensures that only visible rows are rendered in the DOM, minimizing DOM node usage and enhancing performance.
+
+- **Inspection of Existing Code and Behavior:**  
+  Analyze the current table implementation and identify where rendering logic is managed. Focus on ensuring compatibility with the existing selection and row interaction features.
+
+- **Relevant Files (to look at):**  
+  - **Existing Files:**
+    - `table.tsx`: Handles table rendering and logic.
+    - `table-body.tsx`: Manages rendering rows and body-related logic.
+    - `use-table.ts`: Core hook for table data handling and state management.
+    - `table.stories.tsx`: Demonstrates current table features in Storybook.
+  - **Error and Performance Analysis:**  
+    No errors in the current implementation, but rendering large datasets leads to performance bottlenecks. Inspect how rows are rendered and look for areas to implement virtualization seamlessly.
+
+---
+
+### 2. Proposed Solution / Implementation Steps
+
+**Purpose:** Outline the solution clearly, focusing on what changes need to be made and where.
+
+- **Files to Create or Add:**
+  - **New Files:**
+    - `virtualized-table-body.tsx`: Renders virtualized table rows using @tanstack/react-virtual.
+    - `virtualized-table.tsx`: Entry point for a virtualized version of the Table component.
+  - **Purpose of New Files:**
+    - `virtualized-table-body.tsx`: Implements row virtualization using the `Virtualizer` from @tanstack/react-virtual.
+    - `virtualized-table.tsx`: Integrates the virtualization logic with existing table components.
+
+- **High-Level Changes:**  
+  Introduce virtualization using @tanstack/react-virtual to render only visible rows in the viewport. Adjust table rendering logic to switch between virtualized and non-virtualized modes based on a new prop (`isVirtualized`).
+
+- **Specific Technical Steps:**
+  1. **Install Dependencies:**
+     - Add `@tanstack/react-virtual` to the project:  
+       ```bash
+       npm install @tanstack/react-virtual
+       ```
+  2. **Implement Virtualization Logic:**
+     - Create `virtualized-table-body.tsx` to manage the rendering of rows using the `Virtualizer` library.
+     - Add props for `rowHeight`, `maxTableHeight`, and `isVirtualized` to control virtualization behavior.
+  3. **Integrate Virtualized Table:**
+     - In `table.tsx`, introduce a condition to render `virtualized-table.tsx` when `isVirtualized` is enabled.
+     - Refactor existing rendering logic to support both virtualized and standard rendering modes seamlessly.
+  4. **Enhance Storybook:**
+     - Add examples for the virtualized table in `table.stories.tsx` to demonstrate scenarios with 500 rows, 10,000 rows, and custom configurations.
+  5. **Backward Compatibility:**
+     - Ensure the new implementation is opt-in by defaulting `isVirtualized` to `undefined` or `false`.
+
+---
+
+### 3. Post-Fix / Post-Implementation Checks
+
+**Purpose:** Validate that the solution works and does not introduce regressions.
+
+- **Testing and Verification:**
+  - Write unit tests for new virtualization features, ensuring proper row rendering and scrolling behavior.
+  - Validate interactions such as row selection, "select all," and focus handling in both virtualized and non-virtualized modes.
+- **Performance and Reliability:**
+  - Test with large datasets (e.g., 10,000 rows) to ensure smooth scrolling and efficient DOM usage.
+  - Measure rendering times to confirm improvements over the non-virtualized implementation.
+
+---
+
+### 4. Documentation and Communication
+
+**Purpose:** Ensure that all changes are clearly communicated and easy to understand for future maintainers and users.
+
+- **Update Documentation:**
+  - Add examples demonstrating virtualization usage in `docs/components/table.mdx`, showcasing configurations for `rowHeight`, `maxTableHeight`, and `isVirtualized`.
+- **Add Release Notes:**
+  - In the project’s `CHANGELOG`, include a section about the new virtualization feature and its benefits.
+  - Mention new props and backward compatibility considerations.
+- **Inline Comments:**
+  - Add comments in `virtualized-table-body.tsx` and `virtualized-table.tsx` explaining the virtualization logic and integration with existing table components.  
+

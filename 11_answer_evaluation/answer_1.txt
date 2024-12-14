@@ -1,0 +1,63 @@
+### Investigation / Analysis
+
+**Purpose:** Understand the problem, its root cause, and related files/components.  
+
+- **Issue Summary:** Multi-select checkboxes in a table component are not registering selections. Rows are only selectable when clicked outside the checkboxes. The "select all" checkbox in the header is also non-functional.  
+- **Root Cause:** Likely caused by incorrect handling of `onClick` or `onChange` events in the checkbox or table logic, possibly related to focus management and propagation of parent/child events.  
+- **Files/Code to Investigate:**
+  - `checkbox.tsx` – Check `getInputProps` and event handlers for the checkbox.
+  - `table.tsx` – Verify selection logic and event handling for rows and headers.
+  - `use-checkbox.ts` – Ensure proper focus and interaction logic for hidden inputs.
+
+---
+
+### Proposed Solution / Implementation Steps
+
+**Purpose:** Provide clear steps to resolve the issue or implement the feature.
+
+1. **Dependencies to Install:**  
+   - None required. Use existing project setup.
+
+2. **Files to Modify and Changes:**
+   - **`checkbox.tsx`:**  
+     - Add a `hiddenInput` slot for better accessibility and interaction handling.
+     - Ensure `getInputProps` includes necessary `onChange` and `onFocus` handlers.
+   - **`table.tsx`:**  
+     - Refactor selection logic to properly handle checkbox events without interfering with row-level events.
+   - **`use-checkbox.ts`:**  
+     - Update focus management to prevent unwanted propagation of focus events to parent elements.
+
+3. **Implementation Steps:**
+   - Ensure `hiddenInput` classes in `checkbox.tsx` handle interactions and are correctly styled for accessibility.
+   - Refactor table selection logic to correctly detect checkbox interactions without affecting row-level clicks.
+   - Add debounce logic or event chaining (if necessary) to handle focus and selection events seamlessly.
+   - Add unit tests for both checkboxes and table row selection.
+
+---
+
+### Post-Fix / Post-Implementation Checks
+
+**Purpose:** Validate that the fix works and doesn’t introduce regressions.
+
+- **Testing Scenarios:**
+  - Verify multi-select functionality in tables with various row sizes (small, medium, large).
+  - Test "select all" functionality in the table header for multiple rows.
+  - Confirm focus and interaction behavior do not introduce usability issues (e.g., double clicks or unintentional deselection).
+- **Performance Checks:**
+  - Measure interaction latency for large datasets to ensure responsiveness.
+  - Check memory usage and ensure the solution doesn’t introduce performance bottlenecks.
+
+---
+
+### Documentation and Communication
+
+**Purpose:** Ensure the change is documented for future use.
+
+- **Documentation Updates:**
+  - Add examples of multi-select table functionality in `docs/components/table.mdx`.
+  - Include code snippets demonstrating how to use the `hiddenInput` slot for checkboxes.
+- **Release Notes:**
+  - Update the `CHANGELOG` with details of the fix.
+  - Mention improved multi-select functionality and accessibility in release notes.
+- **Code Comments:**
+  - Add inline comments in `checkbox.tsx` and `table.tsx` explaining the changes for future maintainability.  
