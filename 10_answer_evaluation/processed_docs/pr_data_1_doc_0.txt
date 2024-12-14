@@ -1,0 +1,261 @@
+Pull Request Number: 4201
+Title: fix: accordion item focus effect input focus event
+Base Branch: canary
+Head Branch: fix/accordion-item
+Author: chioio
+URL: https://github.com/nextui-org/nextui/pull/4201
+State: OPEN
+Created At: 2024-12-01T08:49:55Z
+Merged At: None
+Participants: chioio, jrgarciadev, wingkwong
+
+Description:
+📝 Description
+Fix: input focus error when using in accordion with selected/default expand keys on page loaded.
+Mini-reproduction: nextui-input-focus-error
+⛳️ Current behavior (updates)
+Add onClick, onFocus event in accordion item content render.
+🚀 New behavior
+Input component focus behavior normal in accordion component with selected/default expand keys
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+Nothing!
+
+Summary by CodeRabbit
+
+New Features
+
+Enhanced event control in the Accordion component, improving user interaction by preventing unintended parent event triggers when the accordion content is open.
+
+
+Tests
+
+Added a new test case to ensure the input field within a default expanded accordion item receives focus correctly upon rendering.
+
+Commits:
+- fix: accordion item focus effect input focus event\n- test: input focus error in default expanded accordion item\n- chore: fix focus error changeset\n- test: accordion test\n- fix: completed accordion item content event\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 10f3e6a0e6fc01836bbef795fad2c45a5c406f68
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                  | Type  |
+| --------------------- | ----- |
+| @nextui-org/accordion | Patch |
+| @nextui-org/react     | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/chioio/nextui/new/fix/accordion-item?filename=.changeset/clean-teachers-confess.md&value=---%0A%22%40nextui-org%2Faccordion%22%3A%20patch%0A---%0A%0Afix%3A%20accordion%20item%20focus%20effect%20input%20focus%20event%0A)
+
+\n- vercel: @chioio is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22514f9b6379d01b87afde24b2b64ec026d6098e3d%22%7D%2C%22id%22%3A%22QmVfQs8BkGJ4syL7UecM6LvigUnCU5NhQ7ogdfETuViez1%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A4201%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The changes in this pull request focus on the `AccordionItem` component within the `accordion-item.tsx` file. Two new event handlers, `onClick` and `onFocus`, have been added to the `<m.section>` element inside the `AnimatePresence` block. These handlers utilize `e.stopPropagation()` to prevent event bubbling, thereby enhancing control over event propagation when the accordion content is open. Additionally, a new test case has been introduced to verify the focus behavior of an input field within a default expanded accordion item.
+
+## Changes
+
+| File Path                                     | Change Summary                                                                                     |
+|-----------------------------------------------|---------------------------------------------------------------------------------------------------|
+| packages/components/accordion/src/accordion-item.tsx | Added `onClick` and `onFocus` event handlers to `<m.section>` to prevent event bubbling.         |
+| packages/components/accordion/__tests__/accordion.test.tsx | Added a new test case to check that an input inside a default expanded accordion item receives focus correctly. |
+
+## Possibly related PRs
+- **#2854**: Modifies focus behavior in autocomplete components, which is relevant to the changes in the `AccordionItem` component that also involve event handling and focus management.
+- **#3137**: Addresses focus issues related to popovers, which may intersect with the focus management changes in the `AccordionItem` component.
+- **#3291**: Introduces changes to the `AccordionItem` component, specifically regarding variants and styles, which directly relates to the modifications made in the main PR.
+- **#3419**: Adds functionality to allow cursor navigation within text in the `AccordionItem`, which is relevant to the event handling changes in the main PR.
+- **#3726**: Enhances keyboard navigation in the `AutocompleteSection`, which is related to the focus and event handling improvements in the `AccordionItem` component.
+
+## Suggested reviewers
+- **wingkwong**
+- **ryo-manba**
+- **jrgarciadev**
+
+<!-- walkthrough_end -->
+
+
+
+
+
+---
+
+<details>
+<summary>📜 Recent review details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>📥 Commits</summary>
+
+Reviewing files that changed from the base of the PR and between 40eaad168affce3b2fe1c4c481960872cc427109 and 10f3e6a0e6fc01836bbef795fad2c45a5c406f68.
+
+</details>
+
+<details>
+<summary>📒 Files selected for processing (2)</summary>
+
+* `packages/components/accordion/__tests__/accordion.test.tsx` (1 hunks)
+* `packages/components/accordion/src/accordion-item.tsx` (2 hunks)
+
+</details>
+
+<details>
+<summary>🚧 Files skipped from review as they are similar to previous changes (2)</summary>
+
+* packages/components/accordion/src/accordion-item.tsx
+* packages/components/accordion/__tests__/accordion.test.tsx
+
+</details>
+
+</details>
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- jrgarciadev: @wingkwong @ryo-manba please review\n- chioio: > 1. please add a changeset
+> 2. please add a test
+> 3. please elaborate the issue more. I'm not sure what you're trying to fix here. The before & after look the same to me with the given sandbox.
+
+Test, changeset added, please review. @wingkwong 
+
+I resolved it in my project by using a pnpm patch to add the code.\n- chioio: > With such change, the keyboard navigation will be broken (e.g. space / enter won't open accordion).
+
+I gave it a try, and it works.\n
+
+Files Changed:
+- .changeset/short-bulldogs-divide.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/accordion": patch
++---
++
++Fix input focus error in default expanded accordion item, add `onClick`, `onFocus` to `AccordionItem` content wrapper\n- packages/components/accordion/__tests__/accordion.test.tsx (modified, 18 changes)\n  Patch: @@ -345,4 +345,22 @@ describe("Accordion", () => {
+ 
+     expect(getByRole("separator")).toHaveClass("bg-rose-500");
+   });
++
++  it("should focus input inside default expanded accordion item correctly", async () => {
++    const wrapper = render(
++      <Accordion defaultExpandedKeys={["1"]}>
++        <AccordionItem key="1" title="Accordion Item 1">
++          <Input label="name" type="text" />
++        </AccordionItem>
++      </Accordion>,
++    );
++
++    const input = wrapper.container.querySelector("input");
++
++    expect(input).not.toBeNull();
++
++    await user.click(input!);
++
++    expect(input).toHaveFocus();
++  });
+ });\n- packages/components/accordion/src/accordion-item.tsx (modified, 12 changes)\n  Patch: @@ -71,6 +71,12 @@ const AccordionItem = forwardRef<"button", AccordionItemProps>((props, ref) => {
+           initial="exit"
+           style={{willChange}}
+           variants={transitionVariants}
++          onClick={(e) => {
++            e.stopPropagation();
++          }}
++          onFocus={(e) => {
++            e.stopPropagation();
++          }}
+           onKeyDown={(e) => {
+             e.stopPropagation();
+           }}
+@@ -90,6 +96,12 @@ const AccordionItem = forwardRef<"button", AccordionItemProps>((props, ref) => {
+               initial="exit"
+               style={{willChange}}
+               variants={transitionVariants}
++              onClick={(e) => {
++                e.stopPropagation();
++              }}
++              onFocus={(e) => {
++                e.stopPropagation();
++              }}
+               onKeyDown={(e) => {
+                 e.stopPropagation();
+               }}\n

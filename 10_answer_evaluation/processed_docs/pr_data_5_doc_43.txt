@@ -1,0 +1,275 @@
+Pull Request Number: 3718
+Title: fix(accordion): add missing ref to AccordionItem
+Base Branch: canary
+Head Branch: fix/accordion-item-does-not-forward-ref
+Author: AnthonyPaulO
+URL: https://github.com/nextui-org/nextui/pull/3718
+State: OPEN
+Created At: 2024-09-05T13:37:22Z
+Merged At: None
+Participants: AnthonyPaulO, wingkwong
+
+Description:
+Closes #3498
+📝 Description
+Fix issue where AccordionItem ref is not properly implemented, add typescript typing
+⛳️ Current behavior (updates)
+AccordionItem does not currently support ref.
+🚀 New behavior
+AccordionItem now implements ref.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced the AccordionItem component to support ref forwarding, improving focus management and interactivity.
+Added a reference to AccordionItem within the accordion package for better organization and accessibility.
+
+
+
+Tests
+
+Added a new test case to verify the correct forwarding of refs in the AccordionItem, increasing test coverage and reliability.
+
+Commits:
+- fix: add ref to AccordionItem #3498\n- fix: addded changeset #3498\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 97ddc6d7b5c51e01d38ef6a997b8a2b61ae77c9b
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                  | Type  |
+| --------------------- | ----- |
+| @nextui-org/accordion | Patch |
+| @nextui-org/react     | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/AnthonyPaulO/nextui/new/fix/accordion-item-does-not-forward-ref?filename=.changeset/smart-walls-talk.md&value=---%0A%22%40nextui-org%2Faccordion%22%3A%20patch%0A---%0A%0Afix%3A%20add%20ref%20to%20AccordionItem%20%233498%0A)
+
+\n- vercel: Someone is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22094dffe2c210e0966e0139fb2128097f0cdfdbdd%22%7D%2C%22id%22%3A%22QmZYrzJUY4QrNvHegtUZjwr7niv6d84SmADBppzti6PtGw%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3718%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes introduce a `ref` prop to the `AccordionItem` component, allowing it to forward references to its underlying DOM element. This functionality is validated through a new test case that ensures the ref is correctly attached when the component is rendered. Additionally, the type definition for `AccordionItemBaseProps` is updated to accept the new `ref` prop, enhancing the component's usability in React applications.
+
+## Changes
+
+| File Path                                          | Change Summary                                                                                       |
+|----------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `packages/components/accordion/__tests__/accordion.test.tsx` | Added a test case to verify ref forwarding for `AccordionItem`.                                     |
+| `packages/components/accordion/src/accordion.tsx` | Modified `AccordionItem` to accept and forward a ref prop from `AccordionGroup`.                   |
+| `packages/components/accordion/src/base/accordion-item-base.tsx` | Updated `AccordionItemBaseProps` to include an optional `ref` property of type `Ref<HTMLButtonElement>`. |
+
+## Assessment against linked issues
+
+| Objective                                      | Addressed | Explanation                             |
+|------------------------------------------------|-----------|-----------------------------------------|
+| AccordionItem should accept the ref prop (#3498) | ✅         |                                         |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+packages/components/accordion/__tests__/accordion.test.tsx: ## AI-generated summary of changes
+
+The diff introduces a new test case within the existing test suite for the `Accordion` component. Specifically, it adds a test to verify that the `ref` for the `AccordionItem` is correctly forwarded when the component is rendered. This involves creating a reference using `React.createRef<HTMLButtonElement>()` and passing it to the `AccordionItem`. The test checks that after rendering the `Accordion` with the `AccordionItem`, the `ref.current` is not null, confirming that the reference has been successfully attached to the underlying DOM element. This change enhances the test coverage for the `Accordion` component by ensuring that the ref forwarding functionality works as intended.
+
+## Alterations to the declarations of exported or public entities
+
+- No changes to the declarations of exported or public entities were made in this diff.
+
+---
+
+packages/components/accordion/src/accordion.tsx: ## AI-generated summary of changes
+
+The diff introduces a modification to the `AccordionItem` component within the `AccordionGroup` functional component. Specifically, it adds a new `ref` prop to the `AccordionItem`, which is derived from the `children` prop of the `AccordionGroup`. The new line of code ensures that the `ref` is passed down to the `AccordionItem`, allowing it to reference the appropriate child component based on the current index. This change enhances the ability to manage focus and potentially other DOM manipulations on the `AccordionItem`, improving the component's interactivity and responsiveness to user actions.
+
+## Alterations to the declarations of exported or public entities
+
+- No changes to the declarations of exported or public entities were made in this diff.
+
+---
+
+packages/components/accordion/src/base/accordion-item-base.tsx: ## AI-generated summary of changes
+
+The diff introduces modifications to the `AccordionItemBaseProps` type definition within the `accordion-item-base.tsx` file. Specifically, it adds an optional `ref` property of type `Ref<HTMLButtonElement>` to the existing type. This change enhances the functionality of the `AccordionItemBase` component by allowing it to accept a reference to a button element, which can be useful for managing focus or other DOM manipulations. Additionally, the import statement for `Ref` from React has been included to support this new functionality. Overall, the changes improve the component's flexibility and usability in React applications.
+
+## Alterations to the declarations of exported or public entities
+
+- `export type AccordionItemBaseProps<T extends object = {}>` in `packages/components/accordion/src/base/accordion-item-base.tsx` → `export type AccordionItemBaseProps<T extends object = {}> = Props<T> & AccordionItemVariantProps & {ref?: Ref<HTMLButtonElement>}` in `packages/components/accordion/src/base/accordion-item-base.tsx`
+
+
+# New changesets
+
+.changeset/neat-trains-sit.md: ## AI-generated summary of changes
+
+This change introduces a reference to `AccordionItem` within the context of the `@nextui-org/accordion` package. The addition enhances the functionality of the accordion component by explicitly linking to the `AccordionItem`, which likely allows for better organization and management of individual items within an accordion structure. This reference may facilitate improved accessibility, styling, or interaction capabilities for the accordion items, thereby enriching the user experience and component usability. The change is minimal but indicates a step towards more modular and maintainable code within the accordion implementation.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- Added reference to `AccordionItem` in the `@nextui-org/accordion` package.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix: add ref to AccordionItem #3498" addresses an issue where the `AccordionItem` component in the NextUI library does not properly implement the `ref` prop. The author, AnthonyPaulO, has made changes to ensure that the `AccordionItem` now supports the `ref` functionality. This update includes the addition of TypeScript typing to enhance type safety. Previously, the `AccordionItem` did not accept a `ref` prop, which was identified as a limitation. The new behavior introduced by this pull request allows the `AccordionItem` to correctly forward the `ref`, thus resolving the issue. The author confirms that this change is not a breaking change, meaning it will not disrupt existing functionality for users of the component. Additionally, the pull request includes images demonstrating the fix and the successful passing of tests related to the `AccordionItem` component.
+
+## Objectives from Linked Issues
+
+The linked issue, titled "AccordionItem does not forward ref," outlines the problem that the `AccordionItem` component in the NextUI library does not accept a `ref` prop. This limitation prevents developers from using `ref` to directly interact with the `AccordionItem` component, which is a common requirement in React applications for accessing DOM elements or component instances. The issue was reported for the NextUI version `@nextui-org/accordion@2.0.34`. The expected behavior is that the `AccordionItem` should accept and properly forward the `ref` prop, allowing for more flexible component usage. The issue includes a screenshot illustrating the problem and specifies that the bug can be reproduced by attempting to add a `ref` prop to the `AccordionItem`, which currently does not function as intended. The objective of the pull request is to resolve this issue by implementing the necessary changes to support `ref` forwarding in the `AccordionItem` component.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 094dffe2c210e0966e0139fb2128097f0cdfdbdd -->
+<!-- 97ddc6d7b5c51e01d38ef6a997b8a2b61ae77c9b -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+
+
+<!-- tips_end -->\n- AnthonyPaulO: > please include changeset
+
+oops, done!\n
+
+Files Changed:
+- .changeset/neat-trains-sit.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/accordion": patch
++---
++
++Added ref to AccordionItem\n- packages/components/accordion/__tests__/accordion.test.tsx (modified, 11 changes)\n  Patch: @@ -375,4 +375,15 @@ describe("Accordion", () => {
+ 
+     expect(getByRole("separator")).toHaveClass("bg-rose-500");
+   });
++
++  it("AccordionItem ref should be forwarded", () => {
++    const ref = React.createRef<HTMLButtonElement>();
++
++    render(
++      <Accordion>
++        <AccordionItem ref={ref}>Accordion Item</AccordionItem>
++      </Accordion>,
++    );
++    expect(ref.current).not.toBeNull();
++  });
+ });\n- packages/components/accordion/src/accordion.tsx (modified, 1 changes)\n  Patch: @@ -36,6 +36,7 @@ const AccordionGroup = forwardRef<"div", AccordionProps>((props, ref) => {
+       return (
+         <Fragment key={item.key}>
+           <AccordionItem
++            ref={(props.children[index] || props.children).ref}
+             item={item}
+             variant={props.variant}
+             onFocusChange={handleFocusChanged}\n- packages/components/accordion/src/base/accordion-item-base.tsx (modified, 5 changes)\n  Patch: @@ -7,7 +7,7 @@ import type {
+ import {As} from "@nextui-org/system";
+ import {ItemProps, BaseItem} from "@nextui-org/aria-utils";
+ import {FocusableProps, PressEvents} from "@react-types/shared";
+-import {ReactNode, MouseEventHandler} from "react";
++import {ReactNode, MouseEventHandler, Ref} from "react";
+ import {HTMLMotionProps} from "framer-motion";
+ 
+ export type AccordionItemIndicatorProps = {
+@@ -94,7 +94,8 @@ export interface Props<T extends object = {}>
+   HeadingComponent?: As;
+ }
+ 
+-export type AccordionItemBaseProps<T extends object = {}> = Props<T> & AccordionItemVariantProps;
++export type AccordionItemBaseProps<T extends object = {}> = Props<T> &
++  AccordionItemVariantProps & {ref?: Ref<HTMLButtonElement>};
+ 
+ const AccordionItemBase = BaseItem as (props: AccordionItemBaseProps) => JSX.Element;
+ \n

@@ -1,0 +1,336 @@
+Pull Request Number: 4294
+Title: feat(docs): preserve scrolling position when navigating to new page
+Base Branch: canary
+Head Branch: eng-1643-preserve-scrolling-when-navigating-docs
+Author: vinroger
+URL: https://github.com/nextui-org/nextui/pull/4294
+State: OPEN
+Created At: 2024-12-09T12:28:58Z
+Merged At: None
+Participants: vinroger
+
+Description:
+Preview (Tested on Safari, Chrome, Firefox)
+BEFORE
+
+  
+    
+    
+
+    nextui.sidebar.before.mp4
+    
+  
+
+  
+
+  
+
+
+AFTER (Chrome)
+
+  
+    
+    
+
+    preserverscrolling.mp4
+    
+  
+
+  
+
+  
+
+
+AFTER (Safari)
+
+  
+    
+    
+
+    safari.preserve.scrolling.mp4
+    
+  
+
+  
+
+  
+
+
+📝 Description
+This PR introduces functionality to preserve the scroll position in the documentation sidebar when navigating between pages. This feature enhances user experience by ensuring the sidebar retains its position, preventing the need to scroll back to the previous section manually.
+⛳️ Current behavior (updates)
+Currently, the sidebar scroll position is reset to the top whenever a user navigates to a new page. This behavior can be disruptive, particularly when exploring deeply nested sections or returning to a previous part of the documentation.
+🚀 New behavior
+
+Scroll Position Preservation:
+
+Upon navigation, the sidebar retains its scroll position by saving and restoring the position using sessionStorage.
+Scroll events are tracked, and the position is stored whenever the user scrolls the sidebar.
+When a new page is loaded, the saved scroll position is retrieved and applied to the sidebar.
+
+
+
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+
+The implementation leverages the useLayoutEffect hook to ensure that the scroll position is restored after the sidebar is rendered.
+Updates include modifications to the ScrollArea and Tree components to accommodate the scroll preservation logic.
+This update does not introduce any new dependencies and adheres to the current architectural conventions of the project.
+
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced scroll management in the sidebar for improved user experience.
+Added functionality to preserve and restore scroll position across component mounts.
+
+
+
+Bug Fixes
+
+Updated tree content to ensure it reflects changes in props appropriately.
+
+
+
+Documentation
+
+Improved clarity in component props for better integration and usage.
+
+Commits:
+- feat: preserve scrolling position\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-1643/preserve-scrolling-position-when-navigating-nextui-docs">ENG-1643 Preserve scrolling position when navigating NextUI docs</a></p>\n- vercel: [vc]: #93h5abNsYyIsMgbJ/cCIcmI0gbCO12iLFehTwfaEn3o=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWVuZy0xNjQzLXByZXNlcnZlLXNjcm9sbGluLWFkY2QxNS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifSwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLWRvY3MtdjIvQ1R3Uk1yQXNNRmZkdHJVVlJNOVlvZ1JYVGk4aSIsInByZXZpZXdVcmwiOiJuZXh0dWktZG9jcy12Mi1naXQtZW5nLTE2NDMtcHJlc2VydmUtc2Nyb2xsaW4tYWRjZDE1LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCJ9LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWVuZy0xNjQzLXByZXNlcnZlLXNjci02MzhkODEtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn0sImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRkRiUllZaGlhTjJCQVNHZW1UMnJSV253emhReCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1lbmctMTY0My1wcmVzZXJ2ZS1zY3ItNjM4ZDgxLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCJ9XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/CTwRMrAsMFfdtrUVRM9YogRXTi8i)) | [Visit Preview](https://nextui-docs-v2-git-eng-1643-preserve-scrollin-adcd15-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-eng-1643-preserve-scrollin-adcd15-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 9, 2024 0:29am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/FDbRYYhiaN2BASGemT2rRWnwzhQx)) | [Visit Preview](https://nextui-storybook-v2-git-eng-1643-preserve-scr-638d81-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-eng-1643-preserve-scr-638d81-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 9, 2024 0:29am |
+
+
+\n- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 8765f0a1f499b4170174ac3bc15c7e6e87f3ae26
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/eng-1643-preserve-scrolling-when-navigating-docs?filename=.changeset/fast-phones-knock.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Afeat(docs)%3A%20preserve%20scrolling%20position%20when%20navigating%20to%20new%20page%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+
+
+<!-- walkthrough_start -->
+
+## Walkthrough
+The pull request introduces modifications to the `sidebar.tsx` and `scroll-area.tsx` files, enhancing the functionality of the `Tree`, `DocsSidebar`, and `ScrollArea` components. Key changes include the addition of a `scrollViewPortRef` to manage scroll state, updates to props for handling scroll events, and adjustments to memoization dependencies. The changes aim to improve user experience by preserving scroll positions and facilitating better interactions with the sidebar and scroll area components.
+
+## Changes
+
+| File Path                                   | Change Summary                                                                                     |
+|---------------------------------------------|---------------------------------------------------------------------------------------------------|
+| apps/docs/components/docs/sidebar.tsx       | - Added `scrollViewPortRef` to `Tree` component. <br> - Updated `treeContent` memoization to include `slug` and `tag`. <br> - Introduced `useLayoutEffect` for restoring scroll position from session storage. <br> - Defined `handleScroll` function for updating scroll position in session storage. |
+| apps/docs/components/scroll-area.tsx       | - Enhanced `ScrollArea` props to include `scrollViewPortRef`. <br> - Updated destructuring of props to separate `onScroll` and `scrollViewPortRef`. <br> - Passed `scrollViewPortRef` and `onScroll` to `ScrollAreaPrimitive.Viewport`. |
+
+## Possibly related PRs
+- **#3522**: The changes in this PR enhance dropdown functionality during scrolling, which relates to the scroll management improvements made in the main PR's `Tree` and `DocsSidebar` components.
+- **#3595**: This PR introduces a feature to control popover behavior on scroll, which aligns with the main PR's focus on managing scroll state and enhancing user experience in the sidebar.
+- **#3752**: This PR modifies the behavior of a floating component to allow scrolling while it is displayed, which is relevant to the scroll management improvements in the main PR.
+
+## Suggested reviewers
+- wingkwong
+- jrgarciadev
+
+<!-- walkthrough_end -->
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- apps/docs/components/docs/sidebar.tsx (modified, 32 changes)\n  Patch: @@ -1,16 +1,15 @@
+ "use client";
+ 
+-import {FC, useEffect, useState} from "react";
++import {FC, useEffect, useState, useRef, useMemo, useLayoutEffect} from "react";
+ import {usePostHog} from "posthog-js/react";
+ import {ChevronIcon} from "@nextui-org/shared-icons";
+ import {CollectionBase, Expandable, MultipleSelection, Node, ItemProps} from "@react-types/shared";
+ import {BaseItem} from "@nextui-org/aria-utils";
+-import React, {useRef, useMemo} from "react";
+ import {useFocusRing} from "@react-aria/focus";
+ import {TreeState, useTreeState} from "@react-stately/tree";
+ import {useSelectableCollection} from "@react-aria/selection";
+ import {usePress} from "@react-aria/interactions";
+-import {clsx, dataAttr} from "@nextui-org/shared-utils";
++import {clsx, dataAttr, isEmpty} from "@nextui-org/shared-utils";
+ import {
+   SpacerProps,
+   Spacer,
+@@ -19,7 +18,6 @@ import {
+   dataFocusVisibleClasses,
+ } from "@nextui-org/react";
+ import Link from "next/link";
+-import {isEmpty} from "@nextui-org/shared-utils";
+ import {usePathname, useRouter} from "next/navigation";
+ 
+ import {ScrollArea} from "../scroll-area";
+@@ -243,6 +241,8 @@ function Tree<T extends object>(props: CollectionBase<T> & Expandable & Multiple
+ 
+   let ref = useRef<HTMLDivElement>(null);
+ 
++  const scrollViewPortRef = useRef<HTMLDivElement>(null);
++
+   let keyboardDelegate = useMemo(
+     // @ts-expect-error
+     () => new TreeKeyboardDelegate(state.collection, state.disabledKeys),
+@@ -255,12 +255,34 @@ function Tree<T extends object>(props: CollectionBase<T> & Expandable & Multiple
+     keyboardDelegate,
+   });
+ 
++  /*  Handle scroll preservation */
++  useLayoutEffect(() => {
++    if (typeof window !== "undefined") {
++      const savedPosition = sessionStorage.getItem("docsSidebarScrollPosition");
++
++      if (savedPosition && scrollViewPortRef.current) {
++        scrollViewPortRef.current.scrollTop = Number(savedPosition);
++      }
++    }
++  }, []);
++
++  const handleScroll = () => {
++    if (typeof window !== "undefined" && scrollViewPortRef.current) {
++      sessionStorage.setItem(
++        "docsSidebarScrollPosition",
++        scrollViewPortRef.current.scrollTop.toString(),
++      );
++    }
++  };
++
+   return (
+     <ScrollArea
+       ref={ref}
+       className="h-full max-w-[90%] lg:max-h-[calc(100vh_-_64px)]"
+       role="tree"
+       {...collectionProps}
++      scrollViewPortRef={scrollViewPortRef}
++      onScroll={handleScroll}
+     >
+       {[...state.collection].map((item) => {
+         if (item.type === "section") {
+@@ -317,7 +339,7 @@ export const DocsSidebar: FC<DocsSidebarProps> = ({routes, slug, tag, className}
+         )}
+       </Tree>
+     );
+-  }, [routes]);
++  }, [routes, slug, tag]);
+ 
+   return (
+     <div\n- apps/docs/components/scroll-area.tsx (modified, 14 changes)\n  Patch: @@ -6,15 +6,23 @@ import {cn} from "@nextui-org/react";
+ 
+ const ScrollArea = React.forwardRef<
+   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
+-  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
++  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & {
++    scrollViewPortRef: React.RefObject<HTMLDivElement>;
++  }
+ >(({className, children, ...props}, ref) => {
++  const {onScroll, scrollViewPortRef, ...restProps} = props;
++
+   return (
+     <ScrollAreaPrimitive.Root
+       ref={ref}
+       className={cn("relative overflow-hidden", className)}
+-      {...props}
++      {...restProps}
+     >
+-      <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit] pb-28">
++      <ScrollAreaPrimitive.Viewport
++        ref={scrollViewPortRef}
++        className="h-full w-full rounded-[inherit] pb-28"
++        onScroll={onScroll}
++      >
+         {children}
+       </ScrollAreaPrimitive.Viewport>
+       <ScrollBar />\n

@@ -1,0 +1,313 @@
+Pull Request Number: 2741
+Title: fix(popover): isDisabled prop on a DOM element
+Base Branch: main
+Head Branch: fix/isDisabled-prop-on-dom-elements
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2741
+State: MERGED
+Created At: 2024-04-16T17:07:10Z
+Merged At: 2024-04-18T02:50:42Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes #2474
+📝 Description
+Reported from here.
+isDisabled prop is introduced in getMenuTriggerProps() in use-dropdown.ts. If DropdownTrigger is a DOM element and isDisabled is false, it will cause that error.
+
+P.S. isDisabled prop is always here
+P.S.S if isDisabled is not specified, then the value will be false.
+
+Example
+const Template = ({color, variant, ...args}: DropdownProps & DropdownMenuProps) => (
+  <Dropdown {...args}>
+    <DropdownTrigger data-test="Test">foo</DropdownTrigger>
+    <DropdownMenu aria-label="Actions" color={color} variant={variant} onAction={alert}>
+      <DropdownItem key="new">New file</DropdownItem>
+      <DropdownItem key="copy">Copy link</DropdownItem>
+      <DropdownItem key="edit">Edit file</DropdownItem>
+      <DropdownItem key="delete" className="text-danger" color="danger">
+        Delete file
+      </DropdownItem>
+    </DropdownMenu>
+  </Dropdown>
+);
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Improved handling of the isDisabled property for elements in the popover component to ensure proper functionality and compatibility.
+
+Commits:
+- fix(popover): isDisabled prop on a DOM element\n- refactor(popover): filter non-react props\n- fix(dropdown): tests\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 31d1d01b4ccb115414b142d8ddee87bcdfeef8e4
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 6 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/popover      | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/date-picker  | Patch |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/select       | Patch |
+| @nextui-org/react        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/isDisabled-prop-on-dom-elements?filename=.changeset/tough-spiders-learn.md&value=---%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A%22%40nextui-org%2Fpopover%22%3A%20patch%0A---%0A%0Afix(popover)%3A%20isDisabled%20prop%20on%20a%20DOM%20element%0A)
+
+\n- vercel: [vc]: #q70SDmB7pIsLSPlFKq1z0JQsWtsxLW1CuEq6A/4mIDs=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi8zY1hUYmhRMmNoWjhKc1doSmJwWlN3SjZaVjROIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtaXNkaXNhYmxlZC1wcm9wLW9uLWRvbS0yNTFjMjctbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtaXNkaXNhYmxlZC1wcm9wLW9uLWRvbS0yNTFjMjctbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi9IOGo3U2NuVW1heWprMkVESjJFOVJyWlVlOU43IiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC1pc2Rpc2FibGVkLXByb3Atby02OTM3ZWYtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC1pc2Rpc2FibGVkLXByb3Atby02OTM3ZWYtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/3cXTbhQ2chZ8JsWhJbpZSwJ6ZV4N)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-isdisabled-prop-on-dom-251c27-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-isdisabled-prop-on-dom-251c27-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 18, 2024 2:49am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/H8j7ScnUmayjk2EDJ2E9RrZUe9N7)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-isdisabled-prop-o-6937ef-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-isdisabled-prop-o-6937ef-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 18, 2024 2:49am |
+
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This update addresses the issue of React not recognizing the `isDisabled` prop on DOM elements by patching the `@nextui-org/popover` package. The adjustments made to the `PopoverTrigger` component ensure proper handling of the prop, resolving React recognition issues.
+
+## Changes
+
+| File Path                                         | Change Summary                                                                                   |
+|---------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| `.changeset/hot-paws-smell.md`                    | Introduced a patch to fix the `isDisabled` prop issue on DOM elements in the `@nextui-org/popover` package. |
+| `packages/components/dropdown/stories/dropdown.stories.tsx` | Removed the `onAction={alert}` prop from the `DropdownMenu` component, impacting action handling within the dropdown menu. |
+| `packages/components/popover/src/popover-trigger.tsx` | Updated `PopoverTrigger` component to handle `isDisabled` prop differently for DOM elements, ensuring proper prop recognition and filtering. |
+
+## Assessment against linked issues
+
+| Objective                                            | Addressed | Explanation                                                                                           |
+|------------------------------------------------------|-----------|--------------------------------------------------------------------------------------------------------|
+| [BUG] - React does not recognize the `isDisabled` prop on a DOM element (#2474) | ✅        |                                                                                                        |
+
+## Possibly related issues
+- **nextui-org/nextui#2626**: The changes in this PR directly address the issue of React not recognizing the `isDisabled` prop on a DOM element, resolving the reported problem effectively.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/hot-paws-smell.md: The new file introduces a patch for the `@nextui-org/popover` package that fixes the `isDisabled` prop on a DOM element.
+
+---
+
+packages/components/dropdown/stories/dropdown.stories.tsx: In the given diff for `dropdown.stories.tsx`, the change involves removing the `onAction={alert}` prop from the `DropdownMenu` component, affecting the handling of actions triggered within the dropdown menu.
+
+---
+
+packages/components/dropdown/__tests__/dropdown.test.tsx: Added an `@ts-ignore` comment before a JSX expression in the `Dropdown` component test file.
+
+---
+
+packages/components/popover/src/popover-trigger.tsx: The functionality of the `PopoverTrigger` component in `popover-trigger.tsx` has been updated to handle the `isDisabled` prop differently for DOM elements to avoid React recognition issues. The logic for handling `isDisabled` and filtering DOM props has been adjusted, ensuring proper recognition of props on DOM elements.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+This pull request, numbered 2741, aims to resolve an issue with the `isDisabled` prop within the NextUI library. The problem was reported in a GitHub issue comment and pertains to the `getMenuTriggerProps()` function in `use-dropdown.ts`. Specifically, when `DropdownTrigger` is a DOM element and `isDisabled` is set to `false`, it triggers an error due to the prop not being recognized by DOM elements.
+
+The objective of this PR is to rectify this issue by adjusting how the `isDisabled` prop is handled within the `PopoverTrigger` component in `popover-trigger.tsx`. By refining the logic that filters props for DOM elements, the fix ensures that `isDisabled` is appropriately managed to prevent the error from occurring.
+
+### AI-Generated Summary of Generated Summaries
+
+This PR introduces a patch to the `@nextui-org/popover` package, focusing on enhancing the handling of the `isDisabled` prop within the `PopoverTrigger` component. By filtering out `isDisabled` when the component is a DOM element, the update mitigates errors related to unrecognized props. This adjustment internally manages the prop instead of passing it directly to the DOM element, aligning with React's expectations for DOM prop handling.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai -->
+
+---
+
+<details>
+
+<summary>Recent Review Details</summary>
+
+**Configuration used: .coderabbit.yaml**
+
+<details>
+<summary>Commits</summary>
+Files that changed from the base of the PR and between 766c66b5ece4c852bbe6f3ca3f1d26c4bb24a7d5 and 31d1d01b4ccb115414b142d8ddee87bcdfeef8e4.
+</details>
+
+
+<details>
+<summary>Files selected for processing (2)</summary>
+
+* packages/components/dropdown/__tests__/dropdown.test.tsx (1 hunks)
+* packages/components/popover/src/popover-trigger.tsx (2 hunks)
+
+</details>
+
+
+
+
+<details>
+<summary>Files skipped from review due to trivial changes (1)</summary>
+
+* packages/components/dropdown/__tests__/dropdown.test.tsx
+
+</details>
+
+<details>
+<summary>Files skipped from review as they are similar to previous changes (1)</summary>
+
+* packages/components/popover/src/popover-trigger.tsx
+
+</details>
+
+
+
+
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- 557a3c011e8721935f5dce4713c0e4263654ffe6 -->
+<!-- 766c66b5ece4c852bbe6f3ca3f1d26c4bb24a7d5 -->
+<!-- 31d1d01b4ccb115414b142d8ddee87bcdfeef8e4 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/hot-paws-smell.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/popover": patch
++---
++
++Fixes isDisabled prop on a DOM element\n- packages/components/dropdown/__tests__/dropdown.test.tsx (modified, 1 changes)\n  Patch: @@ -109,6 +109,7 @@ describe("Dropdown", () => {
+               items={section.children}
+               title={section.title}
+             >
++              {/* @ts-ignore */}
+               {(item: any) => <DropdownItem key={item.key}>{item.name}</DropdownItem>}
+             </DropdownSection>
+           )}\n- packages/components/dropdown/stories/dropdown.stories.tsx (modified, 2 changes)\n  Patch: @@ -137,7 +137,7 @@ const Template = ({color, variant, ...args}: DropdownProps & DropdownMenuProps)
+     <DropdownTrigger>
+       <Button>Trigger</Button>
+     </DropdownTrigger>
+-    <DropdownMenu aria-label="Actions" color={color} variant={variant} onAction={alert}>
++    <DropdownMenu aria-label="Actions" color={color} variant={variant}>
+       <DropdownItem key="new">New file</DropdownItem>
+       <DropdownItem key="copy">Copy link</DropdownItem>
+       <DropdownItem key="edit">Edit file</DropdownItem>\n- packages/components/popover/src/popover-trigger.tsx (modified, 11 changes)\n  Patch: @@ -1,6 +1,6 @@
+ import React, {Children, cloneElement, useMemo} from "react";
+ import {forwardRef, isNextUIEl} from "@nextui-org/system";
+-import {pickChildren, filterDOMProps} from "@nextui-org/react-utils";
++import {filterDOMProps, pickChildren} from "@nextui-org/react-utils";
+ import {useAriaButton} from "@nextui-org/use-aria-button";
+ import {Button} from "@nextui-org/button";
+ import {mergeProps} from "@react-aria/utils";
+@@ -42,18 +42,11 @@ const PopoverTrigger = forwardRef<"button", PopoverTriggerProps>((props, _) => {
+     return triggerChildren?.[0] !== undefined;
+   }, [triggerChildren]);
+ 
+-  const isDisabled = !!restProps?.isDisabled;
+-
+-  const isNextUIElement = isNextUIEl(child);
+-
+   return cloneElement(
+     child,
+     mergeProps(
+-      // if we add `isDisabled` prop to DOM elements,
+-      // react will fail to recognize it on a DOM element,
+-      // hence, apply filterDOMProps for such case
+       filterDOMProps(restProps, {
+-        enabled: isDisabled && !isNextUIElement,
++        enabled: !isNextUIEl(child),
+       }),
+       hasNextUIButton ? {onPress} : buttonProps,
+     ),\n

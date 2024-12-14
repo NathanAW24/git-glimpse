@@ -1,0 +1,160 @@
+Pull Request Number: 952
+Title: fix(react-link): classnames mismatch during hydration
+Base Branch: next
+Head Branch: fix/link-mismatch
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/952
+State: MERGED
+Created At: 2022-12-14T11:31:09Z
+Merged At: 2022-12-21T00:16:04Z
+Participants: tianenpang, HAJJSS, jrgarciadev
+
+Description:
+Closes #851
+Closes #769
+Closes #948
+Closes #763
+Closes #703 Navbar.Link mismatch only and separate fix #953
+📝 Description
+Dynamic linkBackgroundColor is implemented by using getTokenValue, but the getTokenValue can only get the value on the client-side, which causes the classnames mismatch between server-side and client-side.
+⛳️ Current behavior (updates)
+
+Apply colors dynamically based on pre-defined tokens.
+Unify the color tokens into the color scheme.
+Fix width: fit-content typo.
+
+🚀 New behavior
+
+Add the tokens required for the Link's background color.
+
+// light theme
+const colors = {
+  ...rest,
+  textLight: addColorAlpha(gray.gray900, 0.2),
+  linkLight: addColorAlpha(blue.blue600, 0.2)
+};
+
+// dark theme
+const colors = {
+  ...rest,
+  textLight: addColorAlpha(grayDark.gray900, 0.2),
+  linkLight: addColorAlpha(blueDark.blue600, 0.2)
+};
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Note Based on next branch.
+
+Commits:
+- fix(react-link): classname mismatch during hydration\n
+
+Labels:
+
+
+Comments:
+- vercel: @tianenpang is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22e6fd22dd2cb1d47e565f213e8138ee88e159264a%22%7D%2C%22id%22%3A%22QmPMcNX8AnC7TkiAJY8EfME4PAtArSruMrabTxQHG7PeBt%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A952%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-storybook/8LHLiaXTeiayVdbCs9ZHxNFdJH9N)) |  | Dec 14, 2022 at 11:32AM (UTC) |
+
+\n- HAJJSS: what a stupid thing, screw with the entire application because of color\n
+
+Files Changed:
+- packages/react/src/link/link.styles.ts (modified, 4 changes)\n  Patch: @@ -16,14 +16,14 @@ export const StyledLink = styled(
+     alignItems: "center",
+     lineHeight: "inherit",
+     textDecoration: "none",
+-    width: "fitContent",
++    width: "$fit",
+     backgroundColor: "transparent",
+     backgroundImage: "inherit",
+     backgroundClip: "inherit",
+     WebkitTextFillColor: "inherit",
+     color: "$$linkColor",
+     outline: "none",
+-    maxW: "max-content",
++    maxW: "$max",
+     "&:hover": {
+       opacity: 0.8,
+     },\n- packages/react/src/link/link.tsx (modified, 12 changes)\n  Patch: @@ -9,8 +9,6 @@ import {useFocusRing} from "@react-aria/focus";
+ import {HTMLNextUIProps, forwardRef} from "../utils/system";
+ import {useDOMRef} from "../utils/dom";
+ import clsx from "../utils/clsx";
+-import useTheme from "../use-theme";
+-import {getTokenValue} from "../theme/utils";
+ import {__DEV__} from "../utils/assertion";
+ 
+ import LinkIcon from "./icon";
+@@ -50,8 +48,6 @@ const Link = forwardRef<LinkProps, "a">((props, ref) => {
+     ...otherProps
+   } = props;
+ 
+-  const {isDark} = useTheme();
+-
+   const domRef = useDOMRef(ref);
+ 
+   const {linkProps}: ILinkAria = useLink({...otherProps, elementType: as} as AriaLinkProps, domRef);
+@@ -62,15 +58,15 @@ const Link = forwardRef<LinkProps, "a">((props, ref) => {
+ 
+     switch (color) {
+       case "inherit": {
+-        linkBackgroundColor = getTokenValue("colors", "text", 0.2);
++        linkBackgroundColor = "$colors$textLight";
+         break;
+       }
+       case "default": {
+-        linkBackgroundColor = getTokenValue("colors", "link", 0.2);
++        linkBackgroundColor = "$colors$linkLight";
+         break;
+       }
+       case "text": {
+-        linkBackgroundColor = getTokenValue("colors", "text", 0.2);
++        linkBackgroundColor = "$colors$textLight";
+         break;
+       }
+     }
+@@ -79,7 +75,7 @@ const Link = forwardRef<LinkProps, "a">((props, ref) => {
+       ...css,
+       $$linkBackgroundColor: linkBackgroundColor,
+     };
+-  }, [css, color, isDark]);
++  }, [css, color]);
+ 
+   return (
+     <StyledLink\n- packages/react/src/theme/dark-theme.ts (modified, 4 changes)\n  Patch: @@ -1,3 +1,5 @@
++import {addColorAlpha} from "../utils/color";
++
+ import {
+   blueDark,
+   greenDark,
+@@ -62,7 +64,9 @@ export default {
+     neutralSolidContrast: "$white",
+ 
+     // misc
++    textLight: addColorAlpha(grayDark.gray900, 0.2),
+     text: "$gray900",
++    linkLight: addColorAlpha(blueDark.blue600, 0.2),
+     link: "$blue700",
+     codeLight: "$cyan50",
+     code: "$cyan600",\n- packages/react/src/theme/light-theme.ts (modified, 4 changes)\n  Patch: @@ -1,3 +1,5 @@
++import {addColorAlpha} from "../utils/color";
++
+ import {blue, purple, green, yellow, red, cyan, pink, gray} from "./colors";
+ 
+ export default {
+@@ -19,7 +21,9 @@ export default {
+     ...gray,
+ 
+     // misc
++    textLight: addColorAlpha(gray.gray900, 0.2),
+     text: "$gray900",
++    linkLight: addColorAlpha(blue.blue600, 0.2),
+     link: "$blue600",
+     codeLight: "$pink100",
+     code: "$pink600",\n

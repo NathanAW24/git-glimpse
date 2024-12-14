@@ -1,0 +1,440 @@
+Pull Request Number: 3628
+Title: fix(pagination): animation when activepage is greater than total
+Base Branch: canary
+Head Branch: fix/pagination-dynamic-total
+Author: awesome-pro
+URL: https://github.com/nextui-org/nextui/pull/3628
+State: CLOSED
+Created At: 2024-08-10T03:29:49Z
+Merged At: None
+Participants: awesome-pro, wingkwong
+
+Description:
+Closes #3590
+📝 Description
+Fixed the pagination movement when the active page is greater than value of   total page & total is dynamic in value.
+This PR handles most of the cases when total > 0 and even when the total < 0 (generally not possible, but in case, user has any error in his code ) [the cursor animation for case (total = 0), is missing and will be solved soon ]
+this is the code of testing the behaviour (for total = 0 case, update accordingly)
+export const DynamicTotal = () => {
+  const [total, setTotal] = React.useState(0);
+  const [currentPage, setCurrentPage] = React.useState(3);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setTotal((prev) => (prev === 7 ? 0 : prev + 1));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  });
+
+  return (
+    <div>
+      <Pagination
+        showControls
+        showShadow
+        color="secondary"
+        page={currentPage}
+        total={total}
+        onChange={setCurrentPage}
+      />
+      <p>Current page: {currentPage}</p>
+      <p>Total: {total}</p>
+    </div>
+  );
+};
+⛳️ Current behavior (updates)
+
+  
+    
+    
+
+    prev-pagination.mov
+    
+  
+
+  
+
+  
+
+
+🚀 New behavior
+
+total > 0
+
+
+  
+    
+    
+
+    total_._0.mov
+    
+  
+
+  
+
+  
+
+
+
+total < 0
+
+
+  
+    
+    
+
+    total_._0.mov
+    
+  
+
+  
+
+  
+
+
+
+total = 0
+
+
+  
+    
+    
+
+    total_._0.mov
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No): NO
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+New Features
+
+Improved pagination animation and responsiveness for dynamic item counts.
+Introduced a DynamicTotal component to showcase dynamic pagination behavior in stories.
+
+
+Documentation
+
+Enhanced CLI usage instructions with a structured component for better readability.
+Upgraded installation instructions to support multiple package managers in a user-friendly format.
+
+
+Bug Fixes
+
+Addressed issues with cursor visibility and pagination state management for invalid page numbers.
+
+Commits:
+- fix(navbar): fixed the height when style h-full\n- fix(navbar): fixed the height when style h-full\n- Merge branch 'nextui-org:canary' into canary\n- Merge branch 'nextui-org:canary' into canary\n- docs(changeset): resolved extra file\n- fix(docs): added missing package manager tabs in docs\n- refactor(cli-docs): changed line 33\n- fix(pagination): animation when total is dynamic\n- refactor(files): removed unnecessary files\n- refactor(files): removed unnecessary files\n- refactor(files): removed unnecessary files\n- refactor(files): removed unnecessary files\n- refactor(files): removed unnecessary files\n- refactor(use-pagination): changed code logic\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 3fb21a5783edd05fe85c02efc0014fbaa5941f5d
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                       | Type  |
+| -------------------------- | ----- |
+| @nextui-org/pagination     | Patch |
+| @nextui-org/use-pagination | Patch |
+| @nextui-org/react          | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/awesome-pro/nextui/new/fix/pagination-dynamic-total?filename=.changeset/six-buses-add.md&value=---%0A%22%40nextui-org%2Fpagination%22%3A%20patch%0A%22%40nextui-org%2Fuse-pagination%22%3A%20patch%0A---%0A%0Afix(pagination)%3A%20animation%20when%20activepage%20is%20greater%20than%20total%0A)
+
+\n- vercel: @awesome-pro is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2206923dec48737b0668cac8f0c4e16dd96ea450c3%22%7D%2C%22id%22%3A%22QmbWac6RVWkeByfwiVLrqcGeF11HSR5mr5P7KcE2BxVSYD%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3628%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes primarily enhance the pagination components in the `@nextui-org/pagination` and `@nextui-org/use-pagination` packages, improving user experience by addressing issues related to pagination animations and state management. Additionally, the updates to CLI documentation provide clearer instructions for users, while the introduction of a dynamic pagination total ensures that the components respond better to varying data sets.
+
+## Changes
+
+| Files                                                                 | Change Summary                                                                 |
+|-----------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| .changeset/pretty-socks-invite.md, apps/docs/content/docs/guide/*.md | Enhanced documentation with a structured `<PackageManagers>` component for CLI commands. |
+| packages/components/pagination/src/use-pagination.ts, packages/hooks/use-pagination/src/index.ts | Improved `usePagination` logic for better state management and responsiveness.  |
+
+## Assessment against linked issues
+
+| Objective                                        | Addressed | Explanation                                  |
+|--------------------------------------------------|-----------|----------------------------------------------|
+| Ensure first page is visually selected (3590)    | ✅        |                                              |
+| Improve pagination responsiveness with dynamic data | ✅        |                                              |
+| Enhance visual feedback for pagination states    | ❓        | Unclear if all visual feedback issues are resolved. |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```
+.changeset/pretty-socks-invite.md: ## AI-generated summary of changes
+
+This new file introduces a patch for the `@nextui-org/pagination` and `@nextui-org/use-pagination` packages, addressing an issue related to pagination animation when the total number of items is dynamic. The fix enhances the user experience by ensuring that the pagination component behaves smoothly and responsively, adapting to changes in the total item count without visual glitches. This improvement is particularly important for applications that rely on dynamic data, as it ensures that users can navigate through paginated content seamlessly. The change is likely to improve the overall performance and usability of pagination in various contexts where these packages are utilized.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made.
+
+---
+
+apps/docs/content/docs/guide/cli.mdx: ## AI-generated summary of changes
+
+The changes in this diff primarily enhance the CLI usage instructions by replacing plain code blocks with a structured `<PackageManagers>` component. This new component organizes and presents commands for various package managers (npm, yarn, pnpm, bun) in a more user-friendly format. The specific sections affected include the instructions for using the CLI without global installation and for installing dependencies to start a local server. The previous simple bash command examples have been transformed into a unified format that improves readability and accessibility for users, allowing them to easily identify the appropriate command for their package manager of choice. Overall, this update improves the documentation's clarity and usability without altering the underlying functionality of the CLI.
+
+## Alterations to the declarations of exported or public entities
+
+- `<PackageManagers commands={{ npm: "npx nextui-cli@latest", yarn: "yarn dlx nextui-cli@latest", pnpm: "pnpm dlx nextui-cli@latest", bun: "bunx nextui-cli@latest", }} />` in `apps/docs/content/docs/guide/cli.mdx` → `<PackageManagers commands={{ npm: "cd my-nextui-app && npm install", yarn: "cd my-nextui-app && yarn install", pnpm: "cd my-nextui-app && pnpm install", bun: "cd my-nextui-app && bun install", }} />` in `apps/docs/content/docs/guide/cli.mdx`
+- `<PackageManagers commands={{ npm: "npm run dev", yarn: "yarn run dev", pnpm: "pnpm run dev", bun: "bun run dev", }} />` in `apps/docs/content/docs/guide/cli.mdx` → `<PackageManagers commands={{ npm: "cd my-nextui-app && npm install", yarn: "cd my-nextui-app && yarn install", pnpm: "cd my-nextui-app && pnpm install", bun: "cd my-nextui-app && bun install", }} />` in `apps/docs/content/docs/guide/cli.mdx`
+
+---
+
+apps/docs/content/docs/guide/installation.mdx: ## AI-generated summary of changes
+
+The diff introduces a significant enhancement to the installation instructions by replacing static code blocks with a dynamic component, `<PackageManagers>`, which encapsulates the commands for various package managers. This change improves the clarity and flexibility of the documentation, allowing users to see commands for multiple package managers (npm, yarn, pnpm, bun) in a structured format. The previous static commands for installing dependencies and starting the local server have been removed and replaced with this new component, which takes an object of commands as a prop. This modification not only streamlines the installation process but also makes it easier to maintain and update the documentation as new package managers or commands may be added in the future.
+
+The overall control flow remains unchanged, but the presentation and usability of the instructions are significantly enhanced, catering to a broader audience by supporting multiple package management tools.
+
+## Alterations to the declarations of exported or public entities
+
+- `<PackageManagers commands={{ npm: "cd my-nextui-app && npm install", yarn: "cd my-nextui-app && yarn install", pnpm: "cd my-nextui-app && pnpm install", bun: "cd my-nextui-app && bun install", }} />` in `apps/docs/content/docs/guide/installation.mdx` → `<PackageManagers commands={{ npm: "npm run dev", yarn: "yarn run dev", pnpm: "pnpm run dev", bun: "bun run dev", }} />` in `apps/docs/content/docs/guide/installation.mdx`
+
+---
+
+packages/components/pagination/src/use-pagination.ts: ## AI-generated summary of changes
+
+The diff introduces significant enhancements to the `usePagination` function, particularly within the `scrollTo` internal function. A new conditional block is added to manage scenarios where the `value` parameter is less than or equal to zero. When this condition is met, the cursor's visibility and transformation styles are reset, and a timeout is established to ensure the cursor's "moving" state is accurately updated post-transition. This modification improves the visual feedback of the cursor by ensuring it is hidden and reset appropriately when scrolling to an invalid or non-existent pagination item.
+
+Furthermore, the dependency array of the `useEffect` hook at the end of the function is updated to include `total`, indicating that the effect will now re-run when the `total` prop changes. This change enhances the responsiveness of the pagination component to updates in the total number of items, which can affect the pagination state.
+
+Overall, these changes enhance both the user interface experience and the responsiveness of the pagination component.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function usePagination(originalProps: UsePaginationProps)` in `packages/components/pagination/src/use-pagination.ts` → `export function usePagination(originalProps: UsePaginationProps)` in `packages/components/pagination/src/use-pagination.ts` (no signature change, but functionality modified)
+
+---
+
+packages/hooks/use-pagination/src/index.ts: ## AI-generated summary of changes
+
+The diff modifies the `usePagination` function in the `packages/hooks/use-pagination/src/index.ts` file. The primary change is the declaration of the `activePage` state variable, which has been switched from `const` to `let`, allowing it to be modified within the function. This change is significant as it enables dynamic updates to `activePage`.
+
+Additionally, a new `useEffect` hook has been introduced that monitors changes to the `total` variable. If `activePage` exceeds `total`, it resets `activePage` to `total`. This enhancement adds a layer of validation to the pagination logic, ensuring that the active page remains within valid bounds, thereby improving error handling and robustness in pagination state management.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function usePagination(props: UsePaginationProps)` in `packages/hooks/use-pagination/src/index.ts` → No changes to the function signature.
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(pagination): animation when activepage is greater than total" addresses a pagination issue in the NextUI library. It specifically resolves the problem of pagination movement when the active page exceeds the total number of pages, particularly in scenarios where the total is dynamic. The changes ensure correct behavior for cases where the total is greater than zero and even when it is less than zero, although the latter is generally an error condition. The PR includes a code example demonstrating dynamic total behavior, where the total updates every second. The implementation notes that the cursor animation for the case when the total equals zero is still pending resolution. The author confirms that this change is not a breaking change for existing NextUI users.
+
+## Objectives from Linked Issues
+
+The linked issue, identified as #3590, describes a bug in the pagination component where the first page is not visually selected when the page value is initialized to 1. Users reported that the styling for the selected page item does not appear until the user navigates away from the page and returns. This issue is particularly relevant for users of NextUI version ^2.4.6. The expected behavior is that when the pagination component is rendered with the page set to 1, the first page should be visually highlighted. The issue can be reproduced by implementing the pagination component as described in the documentation. The PR aims to resolve this bug by ensuring that the pagination component correctly reflects the active page state, thus enhancing user experience and interface consistency.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 06923dec48737b0668cac8f0c4e16dd96ea450c3 -->
+<!-- eb0dac2e08a3373f5e1e495821b14e9785b4b598 -->
+<!-- 3fb21a5783edd05fe85c02efc0014fbaa5941f5d -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- wingkwong: Turning back to draft due to 
+
+> the cursor animation for case (total = 0), is missing and will be solved soon \n
+
+Files Changed:
+- .changeset/pretty-socks-invite.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/pagination": patch
++"@nextui-org/use-pagination": patch
++---
++
++Fixed the pagination animation when total is dynamic (#3590)\n- packages/components/pagination/src/use-pagination.ts (modified, 24 changes)\n  Patch: @@ -224,12 +224,35 @@ export function usePagination(originalProps: UsePaginationProps) {
+   function scrollTo(value: number, skipAnimation: boolean) {
+     const map = getItemsRefMap();
+ 
++    if (value <= 0) {
++      if (cursorRef.current) {
++        // Reset the cursor position and style
++        cursorRef.current.setAttribute("data-moving", "false");
++        cursorRef.current.style.visibility = "hidden";
++        cursorRef.current.style.transform = `translateX(0px) scale(1)`;
++        cursorRef.current.style.transition = skipAnimation
++          ? "none"
++          : `transform ${CURSOR_TRANSITION_TIMEOUT}ms`;
++
++        // Ensure that the cursor style is reset after the transition
++        cursorTimer.current = setTimeout(() => {
++          cursorRef.current?.setAttribute("data-moving", "false");
++          cursorTimer.current && clearTimeout(cursorTimer.current);
++        }, CURSOR_TRANSITION_TIMEOUT);
++      }
++
++      return;
++    }
++
+     const node = map.get(value);
+ 
+     if (!node || !cursorRef.current) return;
+ 
+     // clean up the previous cursor timer (if any)
+     cursorTimer.current && clearTimeout(cursorTimer.current);
++    if (cursorRef.current) {
++      cursorRef.current.style.visibility = "visible";
++    }
+ 
+     // scroll parent to the item
+     scrollIntoView(node, {
+@@ -286,6 +309,7 @@ export function usePagination(originalProps: UsePaginationProps) {
+     }
+     activePageRef.current = activePage;
+   }, [
++    total,
+     activePage,
+     disableAnimation,
+     disableCursorAnimation,\n- packages/components/pagination/stories/pagination.stories.tsx (modified, 28 changes)\n  Patch: @@ -266,3 +266,31 @@ export const CustomWithHooks = () => {
+     </div>
+   );
+ };
++
++export const DynamicTotal = () => {
++  const [total, setTotal] = React.useState(0);
++  const [currentPage, setCurrentPage] = React.useState(3);
++
++  React.useEffect(() => {
++    const interval = setInterval(() => {
++      setTotal((prev) => (prev === 7 ? 0 : prev + 1));
++    }, 1000);
++
++    return () => clearInterval(interval);
++  });
++
++  return (
++    <div>
++      <Pagination
++        showControls
++        showShadow
++        color="secondary"
++        page={currentPage}
++        total={total}
++        onChange={setCurrentPage}
++      />
++      <p>Current page: {currentPage}</p>
++      <p>Total: {total}</p>
++    </div>
++  );
++};\n- packages/hooks/use-pagination/src/index.ts (modified, 8 changes)\n  Patch: @@ -55,7 +55,13 @@ export function usePagination(props: UsePaginationProps) {
+     showControls = false,
+     onChange,
+   } = props;
+-  const [activePage, setActivePage] = useState(page || initialPage);
++  let [activePage, setActivePage] = useState(page || initialPage);
++
++  useEffect(() => {
++    if (activePage > total) {
++      setActivePage(total);
++    }
++  }, [total]);
+ 
+   const {direction} = useLocale();
+ \n

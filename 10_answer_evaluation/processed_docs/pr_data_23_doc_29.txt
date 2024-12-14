@@ -1,0 +1,70 @@
+Pull Request Number: 1216
+Title: fix: added missing helper text wrapper to textarea
+Base Branch: feat/v2
+Head Branch: fix/added-missing-helper-text-wrapper-to-textarea
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1216
+State: MERGED
+Created At: 2023-07-22T12:42:15Z
+Merged At: 2023-07-23T21:15:30Z
+Participants: jguddas, jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- fix: added missing helper text wrapper to textarea\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22ba2471c8cb0b98f868631728af1edf13f4d4d635%22%7D%2C%22id%22%3A%22QmbpruAH2KkoLyfsxVDCHGSmRCg4fMZdEgfUNxV6th9un9%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1216%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/input/src/textarea.tsx (modified, 13 changes)\n  Patch: @@ -67,6 +67,7 @@ const Textarea = forwardRef<TextAreaProps, "textarea">(
+       getLabelProps,
+       getInputProps,
+       getInputWrapperProps,
++      getHelperWrapperProps,
+       getDescriptionProps,
+       getErrorMessageProps,
+     } = useInput({ref, ...otherProps, isMultiline: true});
+@@ -88,11 +89,13 @@ const Textarea = forwardRef<TextAreaProps, "textarea">(
+             onHeightChange={onHeightChange}
+           />
+         </div>
+-        {errorMessage ? (
+-          <div {...getErrorMessageProps()}>{errorMessage}</div>
+-        ) : description ? (
+-          <div {...getDescriptionProps()}>{description}</div>
+-        ) : null}
++        <div {...getHelperWrapperProps()}>
++          {errorMessage ? (
++            <div {...getErrorMessageProps()}>{errorMessage}</div>
++          ) : description ? (
++            <div {...getDescriptionProps()}>{description}</div>
++          ) : null}
++        </div>
+       </Component>
+     );
+   },\n

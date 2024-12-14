@@ -1,0 +1,709 @@
+Pull Request Number: 3346
+Title: fix(pagination): active element incorrect position on first load
+Base Branch: canary
+Head Branch: fix/pagination-left-arrow
+Author: arindam1997007
+URL: https://github.com/nextui-org/nextui/pull/3346
+State: CLOSED
+Created At: 2024-06-27T20:53:42Z
+Merged At: None
+Participants: arindam1997007, TomTom-Labs, wingkwong, jrgarciadev
+
+Description:
+Closes #3151
+📝 Description
+Fixed Active Element positionon on first load, when pagination is rendered initially with display:hidden
+⛳️ Current behavior (updates)
+On first load, instead of left arrow button,  Page 1 active element is displayed
+🚀 New behavior
+Active Element position is fixed even on first load, using IntersectionObserver.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+According to code submitted by users which can be reproduced, issue occurs if pagination component is rendered using display:hidden for the first time, and then switching to display:block.
+Using IntersectionObserver, checking for display of pagination componenet in the viewport, and then running the required functions.
+
+  
+    
+    
+
+    fix-pagination.mov
+    
+  
+
+  
+
+  
+
+
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Resolved an issue with the Pagination component where the active element's position was incorrect when display: hidden was applied.
+
+
+
+New Features
+
+Introduced a new SubTabs component to manage tabs and content display within the pagination story.
+Added multiple new SVG icon components: ChevronDownIcon, PlusIcon, SearchIcon, and VerticalDotsIcon.
+Introduced a TableData component with advanced table features like filtering, sorting, pagination, and customizable column visibility.
+
+
+
+Enhancements
+
+Improved the usePagination function with better scrolling behavior and visibility checks.
+Enhanced table data management with predefined columns, status options, and user information for display purposes.
+
+Commits:
+- fix(pagination): left arrow shows on top of button
+
+- Using useIntersectionObserver to check for visibility of active element
+- If active element is visible, calling scrollTo method\n- chore: added changeset for the fix\n- chore: changeset content updated\n- chore: adding lockfile\n- Merge branch 'canary' into pr/3346\n- chore: modified pagination.stories for testing\n- Merge branch 'canary' of https://github.com/nextui-org/nextui into fix/pagination-left-arrow\n- Merge branch 'fix/pagination-left-arrow' of https://github.com/arindam1997007/nextui into fix/pagination-left-arrow\n- fix(pagination): active elem not showing for initialPage
+
+- Removed intersection observer for active page element
+- Added intersection observer for <ul> - container of all list elements
+- If <ul> goes from hidden to display, scrollTo is triggered\n- chore: updated pagination.stories
+
+- created a minimal story in pagination for the issue
+- resolved PR changes requested\n- chore: table dependency updated
+
+- pagination re-added to table's devDependencies\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 1bdb01a1c3c1c9ffc1d7d767d367c9f0038eeef2
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                   | Type  |
+| ---------------------- | ----- |
+| @nextui-org/pagination | Patch |
+| @nextui-org/react      | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/arindam1997007/nextui/new/fix/pagination-left-arrow?filename=.changeset/four-coats-nail.md&value=---%0A%22%40nextui-org%2Fpagination%22%3A%20patch%0A%22%40nextui-org%2Ftable%22%3A%20patch%0A---%0A%0Afix(pagination)%3A%20active%20element%20incorrect%20position%20on%20first%20load%0A)
+
+\n- vercel: [vc]: #mh2kMbuM9g5TTjkJFOfNcyUW7k88HGjd9JvFn4h4L5Y=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvQ2V3aFl0SGthR1Rkb2RIV0U0d1JMSGFzNFdSSiIsInByZXZpZXdVcmwiOiIiLCJuZXh0Q29tbWl0U3RhdHVzIjoiRkFJTEVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6IiJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/CewhYtHkaGTdodHWE4wRLHas4WRJ)) |  |  | Jul 22, 2024 7:29am |
+
+\n- vercel: @arindam1997007 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2208471fd1dd37463a2b822aab145c5f604cdeca84%22%7D%2C%22id%22%3A%22QmYJ5vwH2feq2ortziuShEUUMWUpgEnchgrBFFUJgcrebN%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3346%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update improves the Pagination component in the `@nextui-org/pagination` package by introducing a reference to a `<ul>` element, enhancing its interaction and visibility. The integration of the `useIntersectionObserver` hook manages scrolling behavior and visibility checks. Several new icon components and a dynamic `TableData` component have also been added, enriching the pagination stories with interactive features.
+
+## Changes
+
+| File/Directory                                                  | Summary                                                                                                                                                                                                 |
+|-----------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `packages/components/pagination/package.json`                   | Adds new dependencies for pagination: `@nextui-org/use-intersection-observer`, `@nextui-org/tabs`, `@nextui-org/table`, `@nextui-org/input`, `@nextui-org/button`, `@nextui-org/dropdown`, etc.        |
+| `packages/components/pagination/src/pagination.tsx`             | Introduces a reference to a `<ul>` element using `useRef` and passes this reference to the `usePagination` hook to enhance pagination functionalities.                                                 |
+| `packages/components/pagination/src/use-pagination.ts`          | Utilizes `useIntersectionObserver` for managing intersection visibility, altering scrolling behavior and visibility checks.                                                                             |
+| `packages/components/pagination/stories/pagination.stories.tsx` | Introduces a `SubTabs` component for managing tabs and content, enhancing pagination story with interactive tab functionality.                                                                            |
+| `packages/components/pagination/stories/table/...`              | New icon components (`ChevronDownIcon`, `PlusIcon`, `SearchIcon`, `VerticalDotsIcon`) for table stories, and `data.ts` for predefined data structures for table components.                              |
+| `packages/components/pagination/stories/table/index.tsx`        | Introduces a `TableData` component for displaying user data with features like filtering, sorting, pagination, and actions.                                                                               |
+| `packages/components/pagination/stories/table/types.ts`         | Introduces `IconSvgProps` type extending `SVGProps<SVGSVGElement>` with an optional `size` property.                                                                                                     |
+| `packages/components/pagination/stories/table/utils.ts`         | Adds `capitalize` function to capitalize the first letter of a given string.                                                                                                                             |
+| `packages/components/table/package.json`                        | Removes import for `"@nextui-org/pagination"` and adjusts `"@nextui-org/chip"`, indicating a change in dependency management.                                                                            |
+
+## Sequence Diagram(s)
+
+No sequence diagrams provided as the changes involve multiple small enhancements and fixes rather than a single feature or significant control flow modifications.
+
+## Assessment against linked issues
+
+| Objective (Issue #3151)                                                                                         | Addressed  | Explanation                                                                                                                                                                                                                                                                               |
+|------------------------------------------------------------------------------------------------------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Fix for Pagination component showing the left arrow button as page number 1 on the first load                    | ✅         |                                                                                                                                                                                                                                                                                            |
+| Ensure the left arrow is correctly displayed after the initial load                                              | ✅         |                                                                                                                                                                                                                                                                                            |
+| Introduce functionalities and dependencies to enhance the overall pagination component                          | ✅         |                                                                                                                                                                                                                                                                                            |
+| Validate the integration and behavior of new TableData component and related icons in pagination stories         | ✅         |                                                                                                                                                                                                                                                                                            |
+| Utilize `useIntersectionObserver` hook for managing intersection visibility and altering scrolling behavior      | ✅         |                                                                                                                                                                                                                                                                                            |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```md
+packages/components/pagination/package.json: ### Summary
+Added new dependencies for pagination functionality including `@nextui-org/use-intersection-observer`, `@nextui-org/tabs`, `@nextui-org/table`, `@nextui-org/input`, `@nextui-org/button`, `@nextui-org/dropdown`, `@nextui-org/chip`, and `@nextui-org/user`. Additionally, the package `@nextui-org/use-intersection-observer` is added with a version specification of `workspace:*`, enhancing the pagination component's ability to manage visibility or loading of elements based on their intersection with the viewport.
+
+## Alterations to the declarations of exported or public entities
+- `@nextui-org/use-intersection-observer` added as a dependency in `packages/components/pagination/package.json`
+
+---
+
+packages/components/pagination/src/pagination.tsx: ## Summary
+The changes in the `pagination.tsx` file introduce a new reference to a `ul` element within the `Pagination` component. The `useRef` hook is imported from React and used to create a reference called `ulElemRef`, which is initialized to `null`. This reference is passed to the `getWrapperProps` function and assigned to the `ref` attribute of the `ul` element in the component's return statement. Additionally, the `usePagination` hook is modified to accept `ulElemRef` as an argument, enhancing the component's ability to manage the `ul` element's properties, likely improving its interaction with pagination functionalities.
+
+## Alterations to the declarations of exported or public entities
+- `const Pagination = forwardRef<"nav", PaginationProps>((props, ref) => {...})` (no signature change, but internal logic modified)
+- `usePagination({...props, ref})` → `usePagination({...props, ulElemRef, ref})` (parameter change)
+
+---
+
+packages/components/pagination/src/use-pagination.ts: ## Summary
+The `usePagination` function in `use-pagination.ts` now utilizes the `useIntersectionObserver` hook to manage intersection visibility, introducing changes to scrolling behavior and visibility checks based on intersection status. A new property `ulElemRef` is added to the `Props` interface, allowing users to pass a reference to the `<ul>` element. This reference is utilized in the `useEffect` hook to set up the intersection observer, updating the `isActiveVisible` state based on whether the `<ul>` is currently visible.
+
+## Alterations to the declarations of exported or public entities
+- `interface Props` → Added property `ulElemRef?: RefObject<HTMLUListElement>`
+- `export function usePagination(originalProps: UsePaginationProps)` (no changes to the function signature, but now utilizes `ulElemRef` in its implementation)
+
+---
+
+packages/components/pagination/stories/pagination.stories.tsx: ## Summary
+The change introduces a new `SubTabs` component that manages tabs and content display, including a dynamic table component. It utilizes the `Tabs` and `Tab` components from `@nextui-org/tabs`, enhancing the pagination story with interactive tab functionality. Additionally, a new component called `ToggleDisplay` is introduced, which uses the `useState` hook to manage the visibility of the pagination controls. A button toggles the state of `showPagination`, determining whether the pagination component is displayed or hidden.
+
+## Alterations to the declarations of exported or public entities
+- `export const TogglePagination` → `export const TogglePagination = { render: ToggleDisplay }`
+
+---
+
+packages/components/pagination/stories/table/ChevronDownIcon.tsx: ## Summary
+The new file `ChevronDownIcon.tsx` introduces a React component called `ChevronDownIcon` that renders an SVG icon of a chevron pointing downwards. The component accepts certain props like `strokeWidth` and other SVG-related properties.
+
+---
+
+packages/components/pagination/stories/table/PlusIcon.tsx: ## Summary
+The new file `PlusIcon.tsx` defines a React component `PlusIcon` that renders a plus icon using SVG.
+
+---
+
+packages/components/pagination/stories/table/SearchIcon.tsx: ## Summary
+The new file `SearchIcon.tsx` introduces a React component `SearchIcon` that renders an SVG search icon with specified props.
+
+---
+
+packages/components/pagination/stories/table/VerticalDotsIcon.tsx: ## Summary
+The new file `VerticalDotsIcon.tsx` defines a React component `VerticalDotsIcon` that renders a vertical dots icon.
+
+---
+
+packages/components/pagination/stories/table/data.ts: ## Summary
+The new file `data.ts` introduces data structures for columns, status options, and user information related to a table component, providing predefined data for display purposes.
+
+---
+
+packages/components/pagination/stories/table/index.tsx: ## Summary
+The new file introduces a React component `TableData` that displays a table of user data with features like filtering, sorting, pagination, and actions. It fetches user data, allows searching by name, filtering by status, and customizing visible columns.
+
+---
+
+packages/components/pagination/stories/table/types.ts: ## Summary
+The new file introduces a new exported type `IconSvgProps` that extends `SVGProps<SVGSVGElement>` and includes an optional `size` property.
+
+---
+
+packages/components/pagination/stories/table/utils.ts: ## Summary
+Added a new exported function `capitalize` in `utils.ts` under the `pagination/stories/table` component that capitalizes the first letter of a given string.
+
+---
+
+packages/components/table/package.json: ### Summary
+In the `package.json` file of the `packages/components/table` directory, the import for `"@nextui-org/pagination"` has been removed, and `"@nextui-org/chip"` has been adjusted, indicating a change in dependency management within the project. The changes involve reformatting of dependency entries for the `@nextui-org/chip` and `@nextui-org/pagination` packages.
+
+## Alterations to the declarations of exported or public entities
+There are no alterations to the declarations of exported or public entities in this diff.
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR summary
+
+**Title:** fix(pagination): active element incorrect position on first load  
+**User:** arindam1997007  
+**Number:** 3346  
+**URL:** [https://github.com/nextui-org/nextui/pull/3346](https://github.com/nextui-org/nextui/pull/3346)  
+
+**Description:**  
+This PR addresses issue #3151 by correcting the position of the active element in the pagination component when it is initially rendered with `display: hidden`. Previously, the left arrow button was incorrectly displayed as **Page 1** on the first load. The new implementation ensures the active element's position is accurate by utilizing the IntersectionObserver to verify the pagination component's visibility in the viewport before executing the relevant functions.
+
+**Breaking change:** No
+
+**Additional Information:**  
+The problem arises when the pagination component is first rendered with `display: hidden` and later changed to `display: block`. The fix employs the IntersectionObserver to monitor the pagination component's display status.
+
+## Objectives from linked issues
+
+**Linked Issue:** [#3151: [BUG] Pagination left arrow shows page 1 on the first load](https://github.com/nextui-org/nextui/issues/3151)
+
+**NextUI Version:** 2.4.1
+
+**Bug Description:**  
+The pagination component displays the left arrow button as page number 1 during the initial load. This issue is particularly noticeable when data is fetched from a GraphQL endpoint, and the total number of pages is calculated based on the number of items and a `rowsPerPage` parameter. The left arrow button shows page 1 incorrectly at first but updates correctly after selecting a different page.
+
+**Steps to Reproduce:**
+1. Load data from a GraphQL endpoint.
+2. Calculate the number of pages based on the loaded items and `rowsPerPage`.
+3. Pass the page number to the Pagination component.
+4. Observe that the left arrow button displays page 1 on the first load.
+
+**Expected Behavior:**  
+The left arrow should display the correct page number on the first load.
+
+## Comments summary
+
+**arindam1997007:** Requested a review from @wingkwong.
+
+**TomTom-Labs:** Expressed eagerness for the fix to be merged.
+
+**wingkwong:** Indicated a re-review would occur later that evening.
+
+**arindam1997007:** Responded to wingkwong's feedback regarding missing highlights in the PR's functionality. Confirmed testing in Brave and Firefox, where the correct behavior was observed.
+
+**wingkwong:** Tested the code by cloning the sandbox and replacing the pagination import with a local one in Chrome.
+
+**arindam1997007:** Confirmed that testing in local Chrome yielded correct results. Suggested using IntersectionObserver for the fix and proposed publishing a forked pagination component to npm for further debugging.
+
+**wingkwong:** Requested the modified `pagination.stories.tsx` for review.
+
+**arindam1997007:** Agreed to commit the modified `pagination.stories.tsx` for review and indicated a rollback would follow.
+
+**wingkwong:** Noted discrepancies in behavior during local testing, mentioning that certain classes were missing and that changing the initial page did not update correctly after switching tabs.
+
+**arindam1997007:** Acknowledged these issues and stated they would investigate further.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 08471fd1dd37463a2b822aab145c5f604cdeca84 -->
+<!-- 8baf2a72c74b6cd38617eb88c865a75cefac1ba1 -->
+<!-- bf6fd6f6b7f408f6b601049434975f8344239824 -->
+<!-- 188c242c989bcec8ff7357e933055563d564be01 -->
+<!-- 1bdb01a1c3c1c9ffc1d7d767d367c9f0038eeef2 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- arindam1997007: Hi @wingkwong 
+Please review when you get the chance.\n- TomTom-Labs: Is there a way to merge these changes? I am eagerly awaiting a fix for the problem.\n- wingkwong: will re-review tonite\n- arindam1997007: > By using the [sandbox link](https://codesandbox.io/p/devbox/vsw923?migrateFrom=q2h7q8) posted in the original issue with Pagination in your PR, I see the following result - the numbers are okay but the highlight is missing
+> 
+> Your PR:
+> 
+> ![image](https://private-user-images.githubusercontent.com/35857179/347820692-e4be6969-8542-4768-9fef-45e07cf3fed6.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjA3MDQ2NTksIm5iZiI6MTcyMDcwNDM1OSwicGF0aCI6Ii8zNTg1NzE3OS8zNDc4MjA2OTItZTRiZTY5NjktODU0Mi00NzY4LTlmZWYtNDVlMDdjZjNmZWQ2LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA3MTElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNzExVDEzMjU1OVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWE0MWE0ODQ3YWE5ZGFiOWUyODRiMzBlZTM4MGIwZjc3YzMyNWMzYjgzNGViOTljNmRmYjQ3YWU3ZmQxMzBiNmYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.kktibEFammfRaPx73KCV3GSUjVxawhmMImTQWmekHlY)
+> 
+> Expected:
+> 
+> ![image](https://private-user-images.githubusercontent.com/35857179/347821458-bea52e69-d7db-4767-b15a-bcfcb0c0d214.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjA3MDQ2NTksIm5iZiI6MTcyMDcwNDM1OSwicGF0aCI6Ii8zNTg1NzE3OS8zNDc4MjE0NTgtYmVhNTJlNjktZDdkYi00NzY3LWIxNWEtYmNmY2IwYzBkMjE0LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA3MTElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNzExVDEzMjU1OVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWFkNmY5OTY1Nzk0NDIzYzZhMmQ0NmYwZjhhZDA3NDJmMzExNDhjMmJmNzY1MGM4YmI5MDFjODJkZWRiOTM4MmImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.Btn1dtlfNWkCqIUHho4D-cLyM2o3Az-5ZNbPutdDn9w)
+
+Hi @wingkwong where did you test it? In your local machine? Can you tell me which browser and version of browser you are using?
+
+I am checking it in Brave (Version 1.67.119) and Firefox (128.0)
+This is the ouput I am seeing on switching the tab for first time
+
+![image](https://github.com/nextui-org/nextui/assets/23236141/7558b890-30c0-4f07-a1f7-c6e9270d583d)
+\n- wingkwong: @arindam1997007 I cloned the sandbox code to my local and then replaced pagination import to local one. Tested in Chrome.\n- arindam1997007: > @arindam1997007 I cloned the sandbox code to my local and then replaced pagination import to local one. Tested in Chrome.
+
+Okay. I tested it in local Chrome as well. It is working. 
+I copied the code from the codesandbox, and put it in `pagination.stories.tsx` and then rendered it. 
+I have used IntersectionObserver to fix this. Could be that it's not getting invoked for some reason?
+
+@wingkwong Is it okay if I publish the `pagination component` which is forked by me in `npm`? And then test it in codesandbox to debug it. I will then delete the package after testing it. Or it will violate your policies?
+
+Otherwise is there any other ways to debug it?\n- wingkwong: Can you share your modified `pagination.stories.tsx` to me? You may commit it and rollback later on.\n- arindam1997007: > Can you share your modified `pagination.stories.tsx` to me? You may commit it and rollback later on.
+
+Sure. I am committin it.\n- arindam1997007: > Can you share your modified `pagination.stories.tsx` to me? You may commit it and rollback later on.
+
+@wingkwong I have committed the `pagination.stories` changes.
+Need to `pnpm i` before running. I have removed `pagination` dependency from `table` component for this testing purpose, since it was giving a cyclic dependency error.
+
+Pagination -> default (in storybook) has the changes.\n- wingkwong: 1. The difference is if i cloned and linked locally, `.data-[moving]opacity-100[data-moving]` is missing. And the logic happens to be `scrollTo` you've changed.
+2. if you change `initialPage` to `2`, after switching tab, the default page is still `1`.\n- arindam1997007: > 1. The difference is if i cloned and linked locally, `.data-[moving]opacity-100[data-moving]` is missing. And the logic happens to be `scrollTo` you've changed.
+> 2. if you change `initialPage` to `2`, after switching tab, the default page is still `1`.
+
+Okay, I am checking this.\n- arindam1997007: > 1. The difference is if i cloned and linked locally, `.data-[moving]opacity-100[data-moving]` is missing. And the logic happens to be `scrollTo` you've changed.
+> 2. if you change `initialPage` to `2`, after switching tab, the default page is still `1`.
+
+Hi @wingkwong 
+
+IntersectionObserver was not triggering for initialPage other than 1, because the other `<li>` elements were not rendering initially for some reason.
+Moved `IntersectionObserver` to the container `<ul>`, now it's triggering for different values of `initialPage` or setting the `page` prop manually.
+
+Please review when you are free\n- arindam1997007: > storybook deployment failed. will leave comments for storybook part once it is ready.
+
+Hi @wingkwong 
+
+Should I remove the storybook changes? It was introduced because I needed to show you the issue that was faced by the users (going from `display:none` to `display:block`).
+
+The fix doesn't need this, so I can remove those extra changes in the storybook.
+
+\n- wingkwong: The failed deployment was due to you removed the pagination dependencies from table package.\n- arindam1997007: > The failed deployment was due to you removed the pagination dependencies from table package.
+
+Yeah I removed it because Turborepo was throwing a cyclic dependency error.
+Because, `pagination` is using the `table` component as a dependency.
+
+And `table` component was using `pagination` as a dependency. 
+
+So, only for this testing this particular use case, I removed the pagination dependency from Table. \n- wingkwong: second thought - do you really need the table? does the issue only reproduce when using table + pagination?\n- arindam1997007: > second thought - do you really need the table? does the issue only reproduce when using table + pagination?
+
+Hey @wingkwong 
+
+The issue can be reproduced without using table/tabs as well. The issue arises when `<Pagination>` component is initially rendered with `display: hidden` and later made visible in the UI.
+
+I have two doubts
+1. Should I create a new story specifically for this issue that will be deployed? Or will the story only be used for testing purposes at the moment?
+2. If the story is created for deployment, what should be the title of the story?\n- wingkwong: For testing only so you can just make it as minimal as possible. Ideally there should be a test covering the logic of the fix.\n- arindam1997007: > For testing only so you can just make it as minimal as possible. Ideally there should be a test covering the logic of the fix.
+
+Hi @wingkwong 
+
+I have made changes to create a simple story to illustrate the issue.
+I tried creating a test covering the logic, but I am unable to get the selected element's (which is a span) inline `transform` style when running the tests. `element.style.transform` is coming as empty and I am not sure why.
+
+Test code:
+
+```js
+it("the pagination cursor should be positioned properly", async () => {
+    const wrapper = render(
+      <Pagination
+        {...pagination.defaultVariants}        
+        showControls
+        initialPage={4}
+        total={10}
+      />,
+    );
+
+    const paginationElement = wrapper.container.firstChild as HTMLElement;
+
+    if (paginationElement) {
+
+      const highlightedSpan = paginationElement.querySelector(
+         'span[aria-hidden="true"]',
+       ) as HTMLElement;
+
+      console.log(
+        highlightedSpan.outerHTML,
+        highlightedSpan.innerHTML,
+        highlightedSpan.style.transform,
+      );     
+    }
+  });
+});
+```
+
+Test Output ( `transform` is not present in the outerHTML ) :
+```
+highlightedSpan.outerHTML:
+
+'<span aria-hidden="true" data-slot="cursor" data-testid="span-highlight" class="absolute flex overflow-visible items-center justify-center origin-center left-0 select-none touch-none pointer-events-none z-20 data-[moving=true]:transition-transform !data-[moving=true]:duration-300 opacity-0 data-[moving]:opacity-100 shadow-primary/40 bg-primary text-primary-foreground shadow-md min-w-9 w-9 h-9 text-small rounded-medium">4</span>'
+
+highlightedSpan.innerHTML:
+
+'4'
+
+highlightedSpan.style.transform:
+
+''
+```\n- wingkwong: > > For testing only so you can just make it as minimal as possible. Ideally there should be a test covering the logic of the fix.
+> 
+> Hi @wingkwong
+> 
+> I have made changes to create a simple story to illustrate the issue. I tried creating a test covering the logic, but I am unable to get the selected element's (which is a span) inline `transform` style when running the tests. `element.style.transform` is coming as empty and I am not sure why.
+> 
+> Test code:
+> 
+> ```js
+> it("the pagination cursor should be positioned properly", async () => {
+>     const wrapper = render(
+>       <Pagination
+>         {...pagination.defaultVariants}        
+>         showControls
+>         initialPage={4}
+>         total={10}
+>       />,
+>     );
+> 
+>     const paginationElement = wrapper.container.firstChild as HTMLElement;
+> 
+>     if (paginationElement) {
+> 
+>       const highlightedSpan = paginationElement.querySelector(
+>          'span[aria-hidden="true"]',
+>        ) as HTMLElement;
+> 
+>       console.log(
+>         highlightedSpan.outerHTML,
+>         highlightedSpan.innerHTML,
+>         highlightedSpan.style.transform,
+>       );     
+>     }
+>   });
+> });
+> ```
+> 
+> Test Output ( `transform` is not present in the outerHTML ) :
+> 
+> ```
+> highlightedSpan.outerHTML:
+> 
+> '<span aria-hidden="true" data-slot="cursor" data-testid="span-highlight" class="absolute flex overflow-visible items-center justify-center origin-center left-0 select-none touch-none pointer-events-none z-20 data-[moving=true]:transition-transform !data-[moving=true]:duration-300 opacity-0 data-[moving]:opacity-100 shadow-primary/40 bg-primary text-primary-foreground shadow-md min-w-9 w-9 h-9 text-small rounded-medium">4</span>'
+> 
+> highlightedSpan.innerHTML:
+> 
+> '4'
+> 
+> highlightedSpan.style.transform:
+> 
+> ''
+> ```
+
+@arindam1997007  The logic in your test is incomplete. What are you trying to do with `highlightedSpan.style.transform`? You may explore `getComputedStyle` if you want to get the value of the style.\n- wingkwong: @arindam1997007 any update?\n- arindam1997007: Hi @wingkwong 
+I tried but wasn't able to complete the tests for this. 
+If the tests are important, you may reassign the task. 
+Sorry for the holdup. \n- wingkwong: resolved in #4222\n
+
+Files Changed:
+- .changeset/tricky-stingrays-relax.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/pagination": patch
++---
++
++Fix Pagination component position of active element, when rendered with `display:hidden` (#3151)\n- packages/components/pagination/package.json (modified, 1 changes)\n  Patch: @@ -44,6 +44,7 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/use-pagination": "workspace:*",
++    "@nextui-org/use-intersection-observer": "workspace:*",
+     "@react-aria/focus": "3.17.1",
+     "@react-aria/i18n": "3.11.1",
+     "@react-aria/interactions": "3.21.3",\n- packages/components/pagination/src/pagination.tsx (modified, 8 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import {PaginationItemValue} from "@nextui-org/use-pagination";
+-import {useCallback} from "react";
++import {useCallback, useRef} from "react";
+ import {useLocale} from "@react-aria/i18n";
+ import {forwardRef} from "@nextui-org/system";
+ import {PaginationItemType} from "@nextui-org/use-pagination";
+@@ -13,6 +13,8 @@ import PaginationCursor from "./pagination-cursor";
+ export interface PaginationProps extends UsePaginationProps {}
+ 
+ const Pagination = forwardRef<"nav", PaginationProps>((props, ref) => {
++  const ulElemRef = useRef<HTMLUListElement>(null);
++
+   const {
+     Component,
+     dotsJump,
+@@ -34,7 +36,7 @@ const Pagination = forwardRef<"nav", PaginationProps>((props, ref) => {
+     getWrapperProps,
+     getItemProps,
+     getCursorProps,
+-  } = usePagination({...props, ref});
++  } = usePagination({...props, ulElemRef, ref});
+ 
+   const {direction} = useLocale();
+ 
+@@ -196,7 +198,7 @@ const Pagination = forwardRef<"nav", PaginationProps>((props, ref) => {
+ 
+   return (
+     <Component {...getBaseProps()}>
+-      <ul {...getWrapperProps()}>
++      <ul {...getWrapperProps()} ref={ulElemRef}>
+         {!disableCursorAnimation && !disableAnimation && <PaginationCursor {...getCursorProps()} />}
+         {range.map(renderItem)}
+       </ul>\n- packages/components/pagination/src/use-pagination.ts (modified, 24 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import type {PaginationSlots, PaginationVariantProps, SlotsToClasses} from "@nextui-org/theme";
+-import type {Key, ReactNode, Ref} from "react";
++import type {Key, ReactNode, Ref, RefObject} from "react";
+ import type {HTMLNextUIProps, PropGetter} from "@nextui-org/system";
+ 
+ import {objectToDeps, Timer} from "@nextui-org/shared-utils";
+@@ -16,6 +16,7 @@ import scrollIntoView from "scroll-into-view-if-needed";
+ import {pagination} from "@nextui-org/theme";
+ import {useDOMRef} from "@nextui-org/react-utils";
+ import {clsx, dataAttr} from "@nextui-org/shared-utils";
++import {useIntersectionObserver} from "@nextui-org/use-intersection-observer";
+ import {PressEvent} from "@react-types/shared";
+ 
+ export type PaginationItemRenderProps = {
+@@ -112,6 +113,12 @@ interface Props extends Omit<HTMLNextUIProps<"nav">, "onChange"> {
+    * Ref to the DOM node.
+    */
+   ref?: Ref<HTMLElement>;
++
++  /**
++   * Ref to the <ul> container element.
++   */
++  ulElemRef?: RefObject<HTMLUListElement>;
++
+   /**
+    * Number of pages that are added or subtracted on the '...' button.
+    * @default 5
+@@ -170,6 +177,7 @@ export function usePagination(originalProps: UsePaginationProps) {
+   const {
+     as,
+     ref,
++    ulElemRef,
+     classNames,
+     dotsJump = 5,
+     loop = false,
+@@ -192,6 +200,9 @@ export function usePagination(originalProps: UsePaginationProps) {
+   const cursorRef = useRef<HTMLElement>(null);
+   const itemsRef = useRef<Map<number, HTMLElement>>();
+ 
++  const {ref: activeIntersectionRef, isIntersecting: isActiveVisible} = useIntersectionObserver({
++    freezeOnceVisible: true,
++  });
+   const cursorTimer = useRef<Timer>();
+ 
+   const {direction} = useLocale();
+@@ -281,12 +292,21 @@ export function usePagination(originalProps: UsePaginationProps) {
+   const activePageRef = useRef(activePage);
+ 
+   useEffect(() => {
+-    if (activePage && !disableAnimation) {
++    // Setting intersectionObserver to ulELement
++    if (ulElemRef?.current) activeIntersectionRef(ulElemRef.current);
++  }, [ulElemRef?.current]);
++
++  useEffect(() => {
++    // Initially, isActiveVisible will be false because initialIsIntersecting
++    // in use-intersection-observer is set to false. Once the <ul> enters the viewport,
++    // isActiveVisible will become true.
++    if (activePage && !disableAnimation && isActiveVisible) {
+       scrollTo(activePage, activePage === activePageRef.current);
+     }
+     activePageRef.current = activePage;
+   }, [
+     activePage,
++    isActiveVisible,
+     disableAnimation,
+     disableCursorAnimation,
+     originalProps.dotsJump,\n- packages/components/pagination/stories/pagination.stories.tsx (modified, 27 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import React from "react";
++import React, {useState} from "react";
+ import {Meta} from "@storybook/react";
+ import {button, pagination} from "@nextui-org/theme";
+ import {cn} from "@nextui-org/theme";
+@@ -137,6 +137,31 @@ export const Controlled = () => {
+   );
+ };
+ 
++const ToggleDisplay = () => {
++  const [showPagination, setShowPagination] = useState(false);
++
++  return (
++    <div>
++      <button onClick={() => setShowPagination(!showPagination)}>Toggle Pagination</button>
++      <div className={showPagination ? "block" : "hidden"}>
++        <Pagination
++          {...defaultProps}
++          isCompact
++          showControls
++          showShadow
++          color="primary"
++          initialPage={4}
++          total={10}
++        />
++      </div>
++    </div>
++  );
++};
++
++export const TogglePagination = {
++  render: ToggleDisplay,
++};
++
+ export const CustomItems = () => {
+   const renderItem = ({
+     ref,\n- packages/components/table/package.json (modified, 4 changes)\n  Patch: @@ -59,8 +59,8 @@
+     "@nextui-org/theme": "workspace:*",
+     "@nextui-org/system": "workspace:*",
+     "@nextui-org/button": "workspace:*",
+-    "@nextui-org/chip": "workspace:*",
+-    "@nextui-org/pagination": "workspace:*",
++    "@nextui-org/chip": "workspace:*",   
++    "@nextui-org/pagination": "workspace:*", 
+     "@nextui-org/spinner": "workspace:*",
+     "@nextui-org/tooltip": "workspace:*",
+     "@nextui-org/use-infinite-scroll": "workspace:*",\n- pnpm-lock.yaml (modified, 27476 changes)\n  Patch: No patch available\n

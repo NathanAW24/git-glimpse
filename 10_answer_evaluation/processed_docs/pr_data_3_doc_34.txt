@@ -1,0 +1,970 @@
+Pull Request Number: 4000
+Title: Feat(autocomplete): listbox virtualization to increase performance (6s -> 0s)
+Base Branch: beta/release-next
+Head Branch: feat/virtualization-for-autocomplete
+Author: vinroger
+URL: https://github.com/nextui-org/nextui/pull/4000
+State: CLOSED
+Created At: 2024-11-06T05:13:32Z
+Merged At: None
+Participants: vinroger, jrgarciadev, ryo-manba
+
+Description:
+Closes #3047 
+
+This PR is moved to: #4094
+Please check out the updated PR - Thanks!
+
+
+
+📝 Description
+This PR adds virtualization support to the Autocomplete component to improve performance when handling large datasets. The implementation uses the react-window library to efficiently render only the visible portion of the list
+
+⛳️ Current behavior (updates)
+Previously, the Autocomplete component rendered all options in the DOM, which led to performance issues if we have large lists.
+The delays in rendering and interacting with the component reach about 3-5 seconds for 1,000 lists.
+Upon profiling, I discovered that the delay in the autocomplete feature is primarily due to the rendering of the DOM for the React component list, as there is currently no virtualization implemented.
+Image: Delay in the multiple react dom function call (creating 1000 list items) -> amounting to total ~26 seconds for 1000 items
+
+Image: Delay in the actual search algorithm (or finding the matched items), which takes not-so-significant time (approximately 2-3 ms).
+
+Details about benchmark on my comment on the github issue: #3047 (comment)
+Question: Why not using virtualizer by react-aria? #3047 (comment)
+Based on RA release note on July 2024, the virtualizer component is "unstable" and they mentioned that it is not intended for public use.
+Link to RA release notes: https://react-spectrum.adobe.com/releases/2024-07-22.html
+"We are also working on bringing virtualization support to React Aria Components, which is available as an unstable API in this version."
+
+There is no mention of virtualizer update ever since. July 2024 was their second latest release.
+Hence, I proceed with using react-window, https://www.npmjs.com/package/react-window
+
+🚀 New behavior
+With the introduction of virtualization using react-window, the Autocomplete component now renders only the list items that are visible within the scroll viewport, plus a small buffer.
+This will enhance performance, making the component responsive even with large datasets.
+
+💣 Is this a breaking change (Yes/No): No.
+This change is not breaking. The existing API remains the same, existing users can continue using the component as before, while benefiting from improved performance.
+
+📝 Additional Information
+The virtualized list is configured with a maxListboxHeight and itemHeight to ensure consistent rendering performance.
+Performance tests show significant improvements in rendering time and responsiveness. (from 5-10s to unnnoticeable)
+To test: autocomplete with large datasets (>10,000 items).
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced a VirtualizedListbox component for improved performance in the Autocomplete feature.
+Added support for handling large datasets in the Autocomplete component with new templates for testing.
+
+
+
+Bug Fixes
+
+Removed maximum height constraint from the listboxWrapper style for better adaptability.
+
+
+
+Documentation
+
+Updated type definitions to include new properties for virtualization in the autocomplete functionality.
+
+
+
+Chores
+
+Added a new dependency for virtualization support in the listbox component.
+
+Commits:
+- feat: add react-window virtualization for autocomplete\n- fix: wrong imports and wrong sizing\n- fix: update pnpm lock\n- chore: add test cases for large dataset (1000 and 10000 items)\n- chore: move virtualized-listbox to listbox components folder, implement isVirtualized conditional\n- feat: implement dynamic listboxheight n item height, add story\n- chore: rename props, remove unnecessary line changes\n- fix: maxHeight style 256px for default, conditional usage of virtualizer\n- feat: migrate to tan-stack virtual. (todo: fix scroll shadow)\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: e3a5dda3a165f1e18b1192a918713fc6c9b0ba09
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/vinroger/nextui/new/feat/virtualization-for-autocomplete?filename=.changeset/wicked-spies-beg.md&value=---%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A%22%40nextui-org%2Flistbox%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0AFeat(autocomplete)%3A%20listbox%20virtualization%20to%20increase%20performance%20(6s%20-%3E%200s)%0A)
+
+\n- vercel: @vinroger is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%224a8779952fc404c6429d66fc9860f22bffd69555%22%7D%2C%22id%22%3A%22QmXaST6kvSKiWNNHhWhAEAfuJDb9CBPoibg6DuybGAqFWb%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A4000%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: skip review by coderabbit.ai -->
+
+> [!IMPORTANT]
+> ## Review skipped
+> 
+> Auto reviews are disabled on base/target branches other than the default branch.
+> 
+> <details>
+> <summary>🗂️ Base branches to auto review (5)</summary>
+> 
+> * main
+> * canary
+> * fix/.*
+> * chore/.*
+> * feat/.*
+> 
+> </details>
+> 
+> Please check the settings in the CodeRabbit UI or the `.coderabbit.yaml` file in this repository. To trigger a single review, invoke the `@coderabbitai review` command.
+> 
+> You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file.
+
+<!-- end of auto-generated comment: skip review by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The changes introduce a new `VirtualizedListbox` component to enhance the `Autocomplete` component's performance when handling large datasets. The `Autocomplete` now utilizes virtualization properties such as `maxListboxHeight` and `itemHeight`. Additionally, a new dataset generation function and interface are added to facilitate testing with large datasets. The `Listbox` component is modified to support virtualization, and a new `virtualized-listbox.tsx` file is created to implement the virtualized rendering logic. The overall structure remains consistent, with updates primarily focused on improving efficiency and performance.
+
+## Changes
+
+| File | Change Summary |
+|------|----------------|
+| `packages/components/autocomplete/src/autocomplete.tsx` | Introduced `VirtualizedListbox`, updated rendering logic, removed `Listbox` import. |
+| `packages/components/autocomplete/stories/autocomplete.stories.tsx` | Added `LargeDatasetSchema` interface, `generateLargeDataset` function, and `LargeDatasetTemplate` component. Introduced new exports for testing large datasets. |
+| `packages/components/autocomplete/src/use-autocomplete.ts` | Updated `UseAutocompleteProps` to include `itemHeight` and `maxListboxHeight`, modified `getListBoxProps` for virtualization. |
+| `packages/components/listbox/package.json` | Added dependency on `react-window`. |
+| `packages/components/listbox/src/listbox.tsx` | Introduced `VirtualizationProps` interface, updated `Props` interface, modified rendering logic to support virtualization. |
+| `packages/components/listbox/src/virtualized-listbox.tsx` | Created `VirtualizedListbox` component with virtualization logic using `react-window`. |
+| `packages/core/theme/src/components/autocomplete.ts` | Modified `listboxWrapper` style by removing `max-h-64` constraint. |
+
+## Assessment against linked issues
+
+| Objective | Addressed | Explanation |
+|-----------|-----------|-------------|
+| Optimize `Autocomplete` for large datasets (#3047) | ✅ |  |
+| Implement virtualization for improved performance (#3047) | ✅ |  |
+
+## Possibly related PRs
+- **#3743**: This PR focuses on a different component (dropdown) and does not involve any shared functionality or code with the current changes.
+
+<!-- walkthrough_end -->
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- jrgarciadev: - Add tests
+- Add a storybook\n- ryo-manba: Thanks for the PR. This issue might be resolved by using the new [virtualizer from react-aria](https://react-spectrum.adobe.com/releases/2024-07-22.html#api-updates). I'll start working on this approach. I believe it could be a better solution than adding new dependencies.
+\n- vinroger: Hi @ryo-manba, thank you for the suggestion :)
+
+Just to add a context here why I did not use react-aria's virtualizer: 
+in the react-aria docs, the virtualizer component is still marked as "unstable" (in their storybook stories) and "not intended for public use" (in the release notes) 
+
+> Because of various breaking changes, several packages are being bumped a major version, specifically @react-aria/virtualizer , @react-stately/virtualizer , and @react-stately/layout. While these packages were **undocumented** and **not yet intended for public use**, we know this is not always the case, so please review the updated code carefully.
+
+Link to storybook where they marked virtualizer as **unstable**: https://github.com/adobe/react-spectrum/blob/main/packages/react-aria-components/stories/ListBox.stories.tsx
+
+What do you think of this?
+Also if we decided to move forward with the virtualizer from react-aria, may I take this feature? :) 🙇‍♂️🙇‍♂️
+
+Thanks!
+
+cc: @jrgarciadev \n- ryo-manba: @vinroger 
+Sorry, I missed that this was already mentioned in the PR.
+Thanks for pointing it out! Please go ahead as planned.\n- vinroger: Hi! @jrgarciadev 
+
+Thanks a lot for the feedbacks - I have updated the PR according to your requests. 
+
+### Tests / Storybook Stories
+- Added tests for autocomplete with large dataset (1,000 and 10,000 dataset)
+- Added tests for autocomplete with custom itemHeight and maxListboxHeight (passed as props to autocomplete components)
+
+### Listbox
+- Implemented isVirtualized logic in virtualized-listbox.tsx
+- Moved virtualized-listbox to the listbox components folder
+- Implemented maxListboxHeight, itemHeight as props (no longer static value) -> this adds 2 props to the autocomplete component (use-autocomplete.tsx)
+
+### Miscellaneous
+- Misc enhancement: fix wrong imports, rename component name, rename props name
+
+Let me know if you have any more change requests! 
+\n- jrgarciadev: Hey @vinroger Thanks for updating the code! I should have mentioned this sooner, but could you use [TanStack’s React Virtual](https://tanstack.com/virtual/latest/docs/framework/react/react-virtual) instead of react-window? The react-window package hasn’t been updated in years, and I don’t want it to prevent us from fully supporting React 19 and Next.js 15
+
+Also the default behaviour should be `isVirtualized: false` \n- jrgarciadev: Hey @vinroger please fix the conflicts, it works great thank you!, let's tackle the scroll shadow issue in another PR\n- jrgarciadev: Hey @vinroger I'm closing this in favour of this one https://github.com/nextui-org/nextui/pull/4094 ( I had to push some changes, you gonna appear as the core contributor) thank you! 🙏🏻 \n
+
+Files Changed:
+- packages/components/autocomplete/src/use-autocomplete.ts (modified, 34 changes)\n  Patch: @@ -116,7 +116,18 @@ export type UseAutocompleteProps<T> = Props<T> &
+   Omit<InputProps, "children" | "value" | "isClearable" | "defaultValue" | "classNames"> &
+   ComboBoxProps<T> &
+   AsyncLoadable &
+-  AutocompleteVariantProps;
++  AutocompleteVariantProps & {
++    /**
++     * The height of each item in the listbox.
++     * This is required for virtualized listboxes to calculate the height of each item.
++     */
++    itemHeight?: number;
++    /**
++     * The max height of the listbox (which will be rendered in a popover).
++     * This is required for virtualized listboxes to set the maximum height of the listbox.
++     */
++    maxListboxHeight?: number;
++  };
+ 
+ export function useAutocomplete<T extends object>(originalProps: UseAutocompleteProps<T>) {
+   const globalContext = useProviderContext();
+@@ -425,14 +436,26 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+       onClick: chain(slotsProps.inputProps.onClick, otherProps.onClick),
+     } as unknown as InputProps);
+ 
+-  const getListBoxProps = () =>
+-    ({
++  const getListBoxProps = () => {
++    // We prefer to use the normal listbox without 3rd party virtualizer package
++    // if dataset is small
++    const isVirtualized = state.collection.size > 50;
++
++    return {
+       state,
+       ref: listBoxRef,
++      isVirtualized,
++      virtualization: isVirtualized
++        ? {
++            maxListboxHeight: originalProps.maxListboxHeight ?? 256,
++            itemHeight: originalProps.itemHeight ?? 32,
++          }
++        : undefined,
+       ...mergeProps(slotsProps.listboxProps, listBoxProps, {
+         shouldHighlightOnFocus: true,
+       }),
+-    } as ListboxProps);
++    } as ListboxProps;
++  };
+ 
+   const getPopoverProps = (props: DOMAttributes = {}) => {
+     const popoverProps = mergeProps(slotsProps.popoverProps, props);
+@@ -479,6 +502,9 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+         props?.className,
+       ),
+     }),
++    style: {
++      maxHeight: originalProps.maxListboxHeight ?? 256,
++    },
+   });
+ 
+   const getEndContentWrapperProps: PropGetter = (props: any = {}) => ({\n- packages/components/autocomplete/stories/autocomplete.stories.tsx (modified, 91 changes)\n  Patch: @@ -100,6 +100,58 @@ const items = animalsData.map((item) => (
+   </AutocompleteItem>
+ ));
+ 
++interface LargeDatasetSchema {
++  label: string;
++  value: string;
++  description: string;
++}
++
++function generateLargeDataset(n: number): LargeDatasetSchema[] {
++  const dataset: LargeDatasetSchema[] = [];
++
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++}
++
++const LargeDatasetTemplate = (args: AutocompleteProps & {numItems: number}) => {
++  const largeDataset = generateLargeDataset(args.numItems);
++
++  return (
++    <Autocomplete label={`Search from ${args.numItems} items`} {...args}>
++      {largeDataset.map((item, index) => (
++        <AutocompleteItem key={index} value={item.value}>
++          {item.label}
++        </AutocompleteItem>
++      ))}
++    </Autocomplete>
++  );
++};
++
+ const Template = (args: AutocompleteProps) => (
+   <Autocomplete label="Favorite Animal" {...args}>
+     <AutocompleteItem key="red_panda">Red Panda</AutocompleteItem>
+@@ -1061,3 +1113,42 @@ export const FullyControlled = {
+     ...defaultProps,
+   },
+ };
++
++export const OneThousandList = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    placeholder: "Search...",
++    numItems: 1000,
++  },
++};
++
++export const TenThousandList = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    placeholder: "Search...",
++    numItems: 10000,
++  },
++};
++
++export const CustomMaxListboxHeight = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    placeholder: "Search...",
++    numItems: 1000,
++    maxListboxHeight: 400,
++  },
++};
++
++export const CustomItemHeight = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    placeholder: "Search...",
++    numItems: 1000,
++    maxListboxHeight: 400,
++    itemHeight: 40,
++  },
++};\n- packages/components/listbox/package.json (modified, 32 changes)\n  Patch: @@ -34,34 +34,36 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18",
+-    "react-dom": ">=18",
++    "@nextui-org/system": ">=2.0.0",
+     "@nextui-org/theme": ">=2.1.0",
+-    "@nextui-org/system": ">=2.0.0"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
++    "@nextui-org/aria-utils": "workspace:*",
++    "@nextui-org/divider": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+-    "@nextui-org/divider": "workspace:*",
+-    "@nextui-org/aria-utils": "workspace:*",
+     "@nextui-org/use-is-mobile": "workspace:*",
+-    "@react-aria/utils": "3.24.1",
+-    "@react-aria/listbox": "3.12.1",
+-    "@react-stately/list": "3.10.5",
+     "@react-aria/focus": "3.17.1",
+     "@react-aria/interactions": "3.21.3",
++    "@react-aria/listbox": "3.12.1",
++    "@react-aria/utils": "3.24.1",
++    "@react-stately/list": "3.10.5",
+     "@react-types/menu": "3.9.9",
+-    "@react-types/shared": "3.23.1"
++    "@react-types/shared": "3.23.1",
++    "@tanstack/react-virtual": "^3.10.9",
++    "react-window": "^1.8.10"
+   },
+   "devDependencies": {
+-    "@nextui-org/theme": "workspace:*",
+-    "@nextui-org/system": "workspace:*",
+-    "clean-package": "2.2.0",
++    "@nextui-org/avatar": "workspace:*",
++    "@nextui-org/chip": "workspace:*",
++    "@nextui-org/scroll-shadow": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/stories-utils": "workspace:*",
+-    "@nextui-org/scroll-shadow": "workspace:*",
+-    "@nextui-org/chip": "workspace:*",
+-    "@nextui-org/avatar": "workspace:*",
++    "@nextui-org/system": "workspace:*",
++    "@nextui-org/theme": "workspace:*",
++    "clean-package": "2.2.0",
+     "react": "^18.0.0",
+     "react-dom": "^18.0.0"
+   },\n- packages/components/listbox/src/listbox.tsx (modified, 25 changes)\n  Patch: @@ -2,13 +2,26 @@ import {ForwardedRef, ReactElement, Ref} from "react";
+ import {forwardRef} from "@nextui-org/system";
+ import {mergeProps} from "@react-aria/utils";
+ 
+-import {UseListboxProps, useListbox} from "./use-listbox";
++import {UseListboxProps, UseListboxReturn, useListbox} from "./use-listbox";
+ import ListboxSection from "./listbox-section";
+ import ListboxItem from "./listbox-item";
++import VirtualizedListbox from "./virtualized-listbox";
+ 
+-interface Props<T> extends UseListboxProps<T> {}
++export interface VirtualizationProps {
++  maxListboxHeight: number;
++  itemHeight: number;
++}
++
++interface Props<T> extends UseListboxProps<T> {
++  isVirtualized?: boolean;
++  virtualization?: VirtualizationProps;
++}
+ 
+ function Listbox<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLUListElement>) {
++  const {isVirtualized, ...restProps} = props;
++
++  const useListboxProps = useListbox<T>({...restProps, ref});
++
+   const {
+     Component,
+     state,
+@@ -24,7 +37,13 @@ function Listbox<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLUListE
+     disableAnimation,
+     getEmptyContentProps,
+     getListProps,
+-  } = useListbox<T>({...props, ref});
++  } = useListboxProps;
++
++  if (isVirtualized) {
++    return (
++      <VirtualizedListbox {...(props as Props<T>)} {...(useListboxProps as UseListboxReturn)} />
++    );
++  }
+ 
+   const content = (
+     <Component {...getListProps()}>\n- packages/components/listbox/src/virtualized-listbox.tsx (added, 155 changes)\n  Patch: @@ -0,0 +1,155 @@
++import {ReactElement, useRef} from "react";
++import {forwardRef} from "@nextui-org/system";
++import {mergeProps} from "@react-aria/utils";
++import {useVirtualizer} from "@tanstack/react-virtual";
++
++import ListboxItem from "./listbox-item";
++import ListboxSection from "./listbox-section";
++import {VirtualizationProps} from "./listbox";
++import {UseListboxReturn} from "./use-listbox";
++
++interface Props extends UseListboxReturn {
++  isVirtualized?: boolean;
++  virtualization?: VirtualizationProps;
++}
++
++function VirtualizedListbox(props: Props) {
++  const {
++    Component,
++    state,
++    color,
++    variant,
++    itemClasses,
++    getBaseProps,
++    topContent,
++    bottomContent,
++    hideEmptyContent,
++    hideSelectedIcon,
++    shouldHighlightOnFocus,
++    disableAnimation,
++    getEmptyContentProps,
++    getListProps,
++  } = props;
++
++  const {virtualization} = props;
++
++  if (!virtualization) {
++    throw new Error(
++      "You are using a virtualized listbox. VirtualizedListbox requires 'virtualization' props with 'maxListboxHeight' and 'itemHeight' properties. This error might have originated from autocomplete components that use VirtualizedListbox. Please provide these props to use the virtualized listbox.",
++    );
++  }
++  const {maxListboxHeight, itemHeight} = virtualization;
++
++  const listHeight = Math.min(maxListboxHeight, itemHeight * state.collection.size);
++
++  const parentRef = useRef(null);
++
++  const rowVirtualizer = useVirtualizer({
++    count: state.collection.size,
++    getScrollElement: () => parentRef.current,
++    estimateSize: () => itemHeight,
++  });
++
++  const virtualItems = rowVirtualizer.getVirtualItems();
++
++  const renderRow = ({
++    index,
++    style: virtualizerStyle,
++  }: {
++    index: number;
++    style: React.CSSProperties;
++  }) => {
++    const item = [...state.collection][index];
++
++    const itemProps = {
++      color,
++      item,
++      state,
++      variant,
++      disableAnimation,
++      hideSelectedIcon,
++      ...item.props,
++    };
++
++    if (item.type === "section") {
++      return (
++        <ListboxSection
++          key={item.key}
++          {...itemProps}
++          itemClasses={itemClasses}
++          style={{...virtualizerStyle, ...itemProps.style}}
++        />
++      );
++    }
++
++    let listboxItem = (
++      <ListboxItem
++        key={item.key}
++        {...itemProps}
++        classNames={mergeProps(itemClasses, item.props?.classNames)}
++        shouldHighlightOnFocus={shouldHighlightOnFocus}
++        style={{...virtualizerStyle, ...itemProps.style}}
++      />
++    );
++
++    if (item.wrapper) {
++      listboxItem = item.wrapper(listboxItem);
++    }
++
++    return listboxItem;
++  };
++
++  const content = (
++    <Component {...getListProps()}>
++      {!state.collection.size && !hideEmptyContent && (
++        <li>
++          <div {...getEmptyContentProps()} />
++        </li>
++      )}
++      <div
++        ref={parentRef}
++        style={{
++          height: maxListboxHeight,
++          overflow: "auto",
++        }}
++      >
++        {listHeight > 0 && itemHeight > 0 && (
++          <div
++            style={{
++              height: `${rowVirtualizer.getTotalSize()}px`,
++              width: "100%",
++              position: "relative",
++            }}
++          >
++            {virtualItems.map((virtualItem) =>
++              renderRow({
++                index: virtualItem.index,
++                style: {
++                  position: "absolute",
++                  top: 0,
++                  left: 0,
++                  width: "100%",
++                  height: `${virtualItem.size}px`,
++                  transform: `translateY(${virtualItem.start}px)`,
++                },
++              }),
++            )}
++          </div>
++        )}
++      </div>
++    </Component>
++  );
++
++  return (
++    <div {...getBaseProps()}>
++      {topContent}
++      {content}
++      {bottomContent}
++    </div>
++  );
++}
++
++VirtualizedListbox.displayName = "NextUI.VirtualizedListbox";
++
++// forwardRef doesn't support generic parameters, so cast the result to the correct type
++export default forwardRef(VirtualizedListbox) as (props: Props) => ReactElement;\n- packages/core/theme/src/components/autocomplete.ts (modified, 2 changes)\n  Patch: @@ -5,7 +5,7 @@ import {tv} from "../utils/tv";
+ const autocomplete = tv({
+   slots: {
+     base: "group inline-flex flex-column w-full",
+-    listboxWrapper: "scroll-py-6 max-h-64 w-full",
++    listboxWrapper: "scroll-py-6 w-full",
+     listbox: "",
+     popoverContent: "w-full p-1 overflow-hidden",
+     endContentWrapper: "relative flex h-full items-center -mr-2",\n- pnpm-lock.yaml (modified, 119 changes)\n  Patch: @@ -1682,6 +1682,12 @@ importers:
+       '@react-types/shared':
+         specifier: 3.23.1
+         version: 3.23.1(react@18.2.0)
++      '@tanstack/react-virtual':
++        specifier: ^3.10.9
++        version: 3.10.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
++      react-window:
++        specifier: ^1.8.10
++        version: 1.8.10(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+     devDependencies:
+       '@nextui-org/avatar':
+         specifier: workspace:*
+@@ -3034,7 +3040,7 @@ importers:
+         version: 18.2.0
+       tailwind-variants:
+         specifier: ^0.1.20
+-        version: 0.1.20(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@20.5.1)(typescript@5.6.2)))
++        version: 0.1.20(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@15.14.9)(typescript@4.9.5)))
+ 
+   packages/core/theme:
+     dependencies:
+@@ -3073,7 +3079,7 @@ importers:
+         version: 1.14.0
+       tailwind-variants:
+         specifier: ^0.1.20
+-        version: 0.1.20(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@20.5.1)(typescript@5.6.2)))
++        version: 0.1.20(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@15.14.9)(typescript@4.9.5)))
+     devDependencies:
+       '@types/color':
+         specifier: ^3.0.3
+@@ -3101,7 +3107,7 @@ importers:
+         version: 2.2.0
+       tailwindcss:
+         specifier: ^3.4.0
+-        version: 3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@20.5.1)(typescript@5.6.2))
++        version: 3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@15.14.9)(typescript@4.9.5))
+ 
+   packages/hooks/use-aria-accordion:
+     dependencies:
+@@ -7226,6 +7232,15 @@ packages:
+     peerDependencies:
+       tailwindcss: '>=3.0.0 || insiders'
+ 
++  '@tanstack/react-virtual@3.10.9':
++    resolution: {integrity: sha512-OXO2uBjFqA4Ibr2O3y0YMnkrRWGVNqcvHQXmGvMu6IK8chZl3PrDxFXdGZ2iZkSrKh3/qUYoFqYe+Rx23RoU0g==}
++    peerDependencies:
++      react: ^18.2.0
++      react-dom: ^18.2.0
++
++  '@tanstack/virtual-core@3.10.9':
++    resolution: {integrity: sha512-kBknKOKzmeR7lN+vSadaKWXaLS0SZZG+oqpQ/k80Q6g9REn6zRHS/ZYdrIzHnpHgy/eWs00SujveUN/GJT2qTw==}
++
+   '@testing-library/dom@10.4.0':
+     resolution: {integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==}
+     engines: {node: '>=18'}
+@@ -11971,6 +11986,9 @@ packages:
+     resolution: {integrity: sha512-74wDsex5tQDSClVkeK1vtxqYCAgCoXxx+K4NSHzgU/muYVYByFqa+0RnrPO9NM6naWm1+G9JmZ0p6QHhXmeYfA==}
+     engines: {node: '>= 4.0.0'}
+ 
++  memoize-one@5.2.1:
++    resolution: {integrity: sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==}
++
+   memoizerific@1.11.3:
+     resolution: {integrity: sha512-/EuHYwAPdLtXwAwSZkh/Gutery6pD2KYd44oQLhAvQp/50mpyduZh8Q7PYHXTCJ+wuXxt7oij2LXyIJOOYFPog==}
+ 
+@@ -13444,6 +13462,13 @@ packages:
+     peerDependencies:
+       react: ^18.2.0
+ 
++  react-window@1.8.10:
++    resolution: {integrity: sha512-Y0Cx+dnU6NLa5/EvoHukUD0BklJ8qITCtVEPY1C/nL8wwoZ0b5aEw8Ff1dOVHw7fCzMt55XfJDd8S8W8LCaUCg==}
++    engines: {node: '>8.0.0'}
++    peerDependencies:
++      react: ^18.2.0
++      react-dom: ^18.2.0
++
+   react-wrap-balancer@1.1.0:
+     resolution: {integrity: sha512-EhF3jOZm5Fjx+Cx41e423qOv2c2aOvXAtym2OHqrGeMUnwERIyNsRBgnfT3plB170JmuYvts8K2KSPEIerKr5A==}
+     peerDependencies:
+@@ -20496,6 +20521,14 @@ snapshots:
+       postcss-selector-parser: 6.0.10
+       tailwindcss: 3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@20.2.5)(typescript@5.6.2))
+ 
++  '@tanstack/react-virtual@3.10.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
++    dependencies:
++      '@tanstack/virtual-core': 3.10.9
++      react: 18.2.0
++      react-dom: 18.2.0(react@18.2.0)
++
++  '@tanstack/virtual-core@3.10.9': {}
++
+   '@testing-library/dom@10.4.0':
+     dependencies:
+       '@babel/code-frame': 7.24.2
+@@ -23144,8 +23177,8 @@ snapshots:
+       '@typescript-eslint/parser': 5.62.0(eslint@7.32.0)(typescript@5.6.2)
+       eslint: 7.32.0
+       eslint-import-resolver-node: 0.3.9
+-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@7.32.0)
+-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.6.1)(eslint@7.32.0)
++      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@7.32.0)
++      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1)(eslint@7.32.0))(eslint@7.32.0)
+       eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
+       eslint-plugin-react: 7.34.1(eslint@7.32.0)
+       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
+@@ -23202,13 +23235,13 @@ snapshots:
+     transitivePeerDependencies:
+       - supports-color
+ 
+-  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@7.32.0):
++  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@7.32.0):
+     dependencies:
+       debug: 4.3.4
+       enhanced-resolve: 5.16.0
+       eslint: 7.32.0
+-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@7.32.0))(eslint@7.32.0)
+-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.6.1)(eslint@7.32.0)
++      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@7.32.0))(eslint@7.32.0)
++      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1)(eslint@7.32.0))(eslint@7.32.0)
+       fast-glob: 3.3.2
+       get-tsconfig: 4.7.3
+       is-core-module: 2.13.1
+@@ -23240,14 +23273,14 @@ snapshots:
+     transitivePeerDependencies:
+       - supports-color
+ 
+-  eslint-module-utils@2.8.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@7.32.0))(eslint@7.32.0):
++  eslint-module-utils@2.8.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@7.32.0))(eslint@7.32.0):
+     dependencies:
+       debug: 3.2.7
+     optionalDependencies:
+-      '@typescript-eslint/parser': 5.62.0(eslint@7.32.0)(typescript@4.9.5)
++      '@typescript-eslint/parser': 5.62.0(eslint@7.32.0)(typescript@5.6.2)
+       eslint: 7.32.0
+       eslint-import-resolver-node: 0.3.9
+-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@7.32.0)
++      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@7.32.0)
+     transitivePeerDependencies:
+       - supports-color
+ 
+@@ -23263,7 +23296,7 @@ snapshots:
+       lodash: 4.17.21
+       string-natural-compare: 3.0.1
+ 
+-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1)(eslint@7.32.0):
++  eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1)(eslint@7.32.0))(eslint@7.32.0):
+     dependencies:
+       array-includes: 3.1.8
+       array.prototype.findlastindex: 1.2.5
+@@ -23273,7 +23306,7 @@ snapshots:
+       doctrine: 2.1.0
+       eslint: 7.32.0
+       eslint-import-resolver-node: 0.3.9
+-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1)(eslint@7.32.0))(eslint@7.32.0)
++      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@7.32.0))(eslint@7.32.0)
+       hasown: 2.0.2
+       is-core-module: 2.13.1
+       is-glob: 4.0.3
+@@ -23290,7 +23323,7 @@ snapshots:
+       - eslint-import-resolver-webpack
+       - supports-color
+ 
+-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@3.6.1)(eslint@7.32.0):
++  eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1)(eslint@7.32.0):
+     dependencies:
+       array-includes: 3.1.8
+       array.prototype.findlastindex: 1.2.5
+@@ -23300,7 +23333,7 @@ snapshots:
+       doctrine: 2.1.0
+       eslint: 7.32.0
+       eslint-import-resolver-node: 0.3.9
+-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@7.32.0))(eslint@7.32.0)
++      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1)(eslint@7.32.0))(eslint@7.32.0)
+       hasown: 2.0.2
+       is-core-module: 2.13.1
+       is-glob: 4.0.3
+@@ -26284,6 +26317,8 @@ snapshots:
+       tree-dump: 1.0.2(tslib@2.6.2)
+       tslib: 2.6.2
+ 
++  memoize-one@5.2.1: {}
++
+   memoizerific@1.11.3:
+     dependencies:
+       map-or-similar: 1.5.0
+@@ -27764,6 +27799,14 @@ snapshots:
+       postcss: 8.4.38
+       ts-node: 10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@15.14.9)(typescript@4.9.5)
+ 
++  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@15.14.9)(typescript@4.9.5)):
++    dependencies:
++      lilconfig: 3.1.1
++      yaml: 2.4.1
++    optionalDependencies:
++      postcss: 8.4.38
++      ts-node: 10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@15.14.9)(typescript@4.9.5)
++
+   postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@20.2.5)(typescript@5.6.2)):
+     dependencies:
+       lilconfig: 3.1.1
+@@ -28264,6 +28307,13 @@ snapshots:
+     transitivePeerDependencies:
+       - '@types/react'
+ 
++  react-window@1.8.10(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
++    dependencies:
++      '@babel/runtime': 7.24.4
++      memoize-one: 5.2.1
++      react: 18.2.0
++      react-dom: 18.2.0(react@18.2.0)
++
+   react-wrap-balancer@1.1.0(react@18.2.0):
+     dependencies:
+       react: 18.2.0
+@@ -29395,15 +29445,42 @@ snapshots:
+ 
+   tailwind-merge@1.14.0: {}
+ 
++  tailwind-variants@0.1.20(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@15.14.9)(typescript@4.9.5))):
++    dependencies:
++      tailwind-merge: 1.14.0
++      tailwindcss: 3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@15.14.9)(typescript@4.9.5))
++
+   tailwind-variants@0.1.20(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@20.2.5)(typescript@5.6.2))):
+     dependencies:
+       tailwind-merge: 1.14.0
+       tailwindcss: 3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@20.2.5)(typescript@5.6.2))
+ 
+-  tailwind-variants@0.1.20(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@20.5.1)(typescript@5.6.2))):
++  tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@15.14.9)(typescript@4.9.5)):
+     dependencies:
+-      tailwind-merge: 1.14.0
+-      tailwindcss: 3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@20.5.1)(typescript@5.6.2))
++      '@alloc/quick-lru': 5.2.0
++      arg: 5.0.2
++      chokidar: 3.6.0
++      didyoumean: 1.2.2
++      dlv: 1.1.3
++      fast-glob: 3.3.2
++      glob-parent: 6.0.2
++      is-glob: 4.0.3
++      jiti: 1.21.0
++      lilconfig: 2.1.0
++      micromatch: 4.0.5
++      normalize-path: 3.0.0
++      object-hash: 3.0.0
++      picocolors: 1.0.0
++      postcss: 8.4.38
++      postcss-import: 15.1.0(postcss@8.4.38)
++      postcss-js: 4.0.1(postcss@8.4.38)
++      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@15.14.9)(typescript@4.9.5))
++      postcss-nested: 6.0.1(postcss@8.4.38)
++      postcss-selector-parser: 6.0.16
++      resolve: 1.22.8
++      sucrase: 3.35.0
++    transitivePeerDependencies:
++      - ts-node
+ 
+   tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.4.13(@swc/helpers@0.5.9))(@types/node@20.2.5)(typescript@5.6.2)):
+     dependencies:
+@@ -29533,14 +29610,14 @@ snapshots:
+       '@swc/core': 1.4.13(@swc/helpers@0.5.9)
+       esbuild: 0.15.18
+ 
+-  terser-webpack-plugin@5.3.10(@swc/core@1.4.13(@swc/helpers@0.5.9))(esbuild@0.20.2)(webpack@5.91.0(@swc/core@1.4.13(@swc/helpers@0.5.9))(esbuild@0.15.18)(webpack-cli@3.3.12)):
++  terser-webpack-plugin@5.3.10(@swc/core@1.4.13(@swc/helpers@0.5.9))(esbuild@0.20.2)(webpack@5.91.0(@swc/core@1.4.13(@swc/helpers@0.5.9))(esbuild@0.20.2)(webpack-cli@3.3.12(webpack@5.91.0))):
+     dependencies:
+       '@jridgewell/trace-mapping': 0.3.25
+       jest-worker: 27.5.1
+       schema-utils: 3.3.0
+       serialize-javascript: 6.0.2
+       terser: 5.30.3
+-      webpack: 5.91.0(@swc/core@1.4.13(@swc/helpers@0.5.9))(esbuild@0.15.18)(webpack-cli@3.3.12)
++      webpack: 5.91.0(@swc/core@1.4.13(@swc/helpers@0.5.9))(esbuild@0.20.2)(webpack-cli@3.3.12(webpack@5.91.0))
+     optionalDependencies:
+       '@swc/core': 1.4.13(@swc/helpers@0.5.9)
+       esbuild: 0.20.2
+@@ -30443,7 +30520,7 @@ snapshots:
+       neo-async: 2.6.2
+       schema-utils: 3.3.0
+       tapable: 2.2.1
+-      terser-webpack-plugin: 5.3.10(@swc/core@1.4.13(@swc/helpers@0.5.9))(esbuild@0.20.2)(webpack@5.91.0(@swc/core@1.4.13(@swc/helpers@0.5.9))(esbuild@0.15.18)(webpack-cli@3.3.12))
++      terser-webpack-plugin: 5.3.10(@swc/core@1.4.13(@swc/helpers@0.5.9))(esbuild@0.20.2)(webpack@5.91.0(@swc/core@1.4.13(@swc/helpers@0.5.9))(esbuild@0.20.2)(webpack-cli@3.3.12(webpack@5.91.0)))
+       watchpack: 2.4.1
+       webpack-sources: 3.2.3
+     optionalDependencies:\n

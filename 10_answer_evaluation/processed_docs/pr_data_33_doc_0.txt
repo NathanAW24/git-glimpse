@@ -1,0 +1,477 @@
+Pull Request Number: 1
+Title: Workspaces
+Base Branch: main
+Head Branch: workspaces
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/1
+State: MERGED
+Created At: 2021-04-24T15:28:59Z
+Merged At: 2021-04-24T15:29:04Z
+Participants: jrgarciadev
+
+Description:
+
+
+Commits:
+- Changing structure\n- feat: split doc project and nextui in packages\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- .editorconfig (added, 28 changes)\n  Patch: @@ -0,0 +1,28 @@
++root = true
++
++[*.js]
++[*.jsx]
++[*.ts]
++[*.tsx]
++indent_style = space
++indent_size = 2
++end_of_line = lf
++charset = utf-8
++trim_trailing_whitespace = true
++insert_final_newline = true
++
++[*.json]
++indent_style = space
++indent_size = 2
++end_of_line = lf
++charset = utf-8
++trim_trailing_whitespace = true
++insert_final_newline = false
++
++[*.md]
++indent_style = space
++indent_size = 2
++end_of_line = lf
++charset = utf-8
++trim_trailing_whitespace = false
++insert_final_newline = false\n- .eslintrc.json (renamed)\n  Previous Filename: .eslintrc\n- package-lock.json (added, 51246 changes)\n  Patch: No patch available\n- package.json (modified, 153 changes)\n  Patch: @@ -1,106 +1,51 @@
+ {
+-  "name": "nextui",
+-  "version": "0.1.1",
+-  "license": "MIT",
+-  "description": "🚀 Beautiful and modern React UI library.",
+-  "homepage": "https://nextui.org",
+-  "bugs": {
+-    "url": "https://github.com/jrgarciadev/next-ui/issues/new/choose"
+-  },
+-  "repository": {
+-    "type": "git",
+-    "url": "https://github.com/jrgarciadev/next-ui"
+-  },
+-  "keywords": [
+-    "next",
+-    "next ui",
+-    "components",
+-    "modern components",
+-    "react components",
+-    "react ui"
+-  ],
+-  "main": "dist/index.js",
+-  "exports": "./dist/nextui.modern.js",
+-  "module": "dist/index.module.js",
+-  "types": "dist/index.d.ts",
+-  "unpkg": "dist/index.umd.js",
+-  "source": "./src/index.ts",
+-  "scripts": {
+-    "dev": "next dev",
+-    "start": "next start",
+-    "clear": "rm -rf ./dist ./esm",
+-    "build:prod": "yarn clear && yarn microbundle --compress --strict --format modern,cjs",
+-    "build:watch": "yarn clear && microbundle watch --no-compress --format modern,cjs",
+-    "build": "yarn build:prod",
+-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
+-    "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'",
+-    "prettier": "prettier --write .",
+-    "test": "jest --config .jest.config.js --no-cache",
+-    "test-update": "jest --config .jest.config.js --no-cache --update-snapshot",
+-    "coverage": "yarn test --coverage",
+-    "release": "yarn build && yarn publish --access public --non-interactive",
+-    "storybook": "start-storybook -p 6006 --no-manager-cache",
+-    "build-storybook": "build-storybook"
+-  },
+-  "files": [
+-    "/dist",
+-    "/esm"
+-  ],
+-  "dependencies": {
+-    "styled-jsx": "^3.4.4"
+-  },
+-  "devDependencies": {
+-    "@babel/cli": "^7.13.16",
+-    "@babel/core": "^7.13.16",
+-    "@babel/plugin-transform-runtime": "^7.13.15",
+-    "@babel/preset-typescript": "^7.13.0",
+-    "@babel/runtime": "^7.13.17",
+-    "@mapbox/rehype-prism": "^0.6.0",
+-    "@mdx-js/loader": "^1.6.22",
+-    "@next/mdx": "^10.1.3",
+-    "@storybook/addon-a11y": "^6.2.8",
+-    "@storybook/addon-actions": "^6.2.8",
+-    "@storybook/addon-docs": "^6.2.8",
+-    "@storybook/addon-essentials": "^6.2.8",
+-    "@storybook/addon-knobs": "^6.2.8",
+-    "@storybook/addon-links": "^6.2.8",
+-    "@storybook/addon-storysource": "^6.2.8",
+-    "@storybook/react": "^6.2.8",
+-    "@types/react": "^17.0.3",
+-    "@types/react-dom": "^17.0.3",
+-    "@types/styled-jsx": "^2.2.8",
+-    "@typescript-eslint/eslint-plugin": "^4.22.0",
+-    "@typescript-eslint/parser": "^4.22.0",
+-    "babel-eslint": "^10.1.0",
+-    "babel-jest": "^26.6.3",
+-    "babel-loader": "^8.2.2",
+-    "babel-plugin-module-resolver": "^4.1.0",
+-    "eslint": "^7.24.0",
+-    "eslint-config-airbnb": "^18.2.1",
+-    "eslint-config-airbnb-typescript": "^12.3.1",
+-    "eslint-config-prettier": "^8.2.0",
+-    "eslint-config-react-app": "^6.0.0",
+-    "eslint-config-ts-lambdas": "^1.2.3",
+-    "eslint-import-resolver-typescript": "^2.4.0",
+-    "eslint-loader": "^4.0.2",
+-    "eslint-plugin-flowtype": "^5.7.1",
+-    "eslint-plugin-import": "^2.22.1",
+-    "eslint-plugin-jsx-a11y": "^6.4.1",
+-    "eslint-plugin-prettier": "^3.4.0",
+-    "eslint-plugin-react": "^7.23.2",
+-    "eslint-plugin-react-hooks": "^4.2.0",
+-    "fs-extra": "^9.1.0",
+-    "microbundle": "^0.13.0",
+-    "next": "^10.1.3",
+-    "path": "^0.12.7",
+-    "prettier": "^2.2.1",
+-    "prettier-eslint": "^12.0.0",
+-    "prettier-eslint-cli": "^5.0.1",
+-    "react": "^17.0.2",
+-    "react-dom": "^17.0.2",
+-    "storybook-addon-react-docgen": "^1.2.42",
+-    "typescript": "^4.2.4",
+-    "webpack": "^5.35.0",
+-    "webpack-cli": "^4.6.0"
+-  }
++    "name": "root",
++    "private": true,
++    "workspaces": [
++        "packages/**"
++    ],
++    "engines": {
++        "npm": "7.9.0"
++    },
++    "scripts": {
++        "dev:docs": "npm run dev --workspace=@nextui/docs",
++        "build": "SKIP_PREFLIGHT_CHECK=true npm run build --workspace=@nextui/react",
++        "build:watch": "npm run watch --workspace=@nextui/react",
++        "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
++        "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'",
++        "prettier": "prettier --write .",
++        "test": "jest --config .jest.config.js --no-cache",
++        "test-update": "jest --config .jest.config.js --no-cache --update-snapshot",
++        "coverage": "yarn test --coverage",
++        "sb": "npm run storybook --workspace=@nextui/react",
++        "build:sb": "npm run build-storybook --workspace=@nextui/react",
++        "start:sb": "npm run start-storybook --workspace=@nextui/react"
++    },
++    "devDependencies": {
++        "@types/node": "^14.14.41",
++        "@types/react": "^17.0.3",
++        "@types/react-dom": "^17.0.3",
++        "@types/styled-jsx": "^2.2.8",
++        "@typescript-eslint/eslint-plugin": "^4.22.0",
++        "@typescript-eslint/parser": "^4.22.0",
++        "eslint": "^7.24.0",
++        "eslint-config-airbnb": "^18.2.1",
++        "eslint-config-airbnb-typescript": "^12.3.1",
++        "eslint-config-prettier": "^8.2.0",
++        "eslint-config-react-app": "^6.0.0",
++        "eslint-config-ts-lambdas": "^1.2.3",
++        "eslint-import-resolver-typescript": "^2.4.0",
++        "eslint-loader": "^4.0.2",
++        "eslint-plugin-flowtype": "^5.7.1",
++        "eslint-plugin-import": "^2.22.1",
++        "eslint-plugin-jsx-a11y": "^6.4.1",
++        "eslint-plugin-prettier": "^3.4.0",
++        "eslint-plugin-react": "^7.23.2",
++        "eslint-plugin-react-hooks": "^4.2.0",
++        "http-server": "^0.12.3",
++        "prettier": "^2.2.1",
++        "prettier-eslint": "^12.0.0",
++        "prettier-eslint-cli": "^5.0.1",
++        "typescript": "^4.2.4"
++    }
+ }\n- packages/docs/.eslintrc.json (added, 25 changes)\n  Patch: @@ -0,0 +1,25 @@
++{
++    "extends": ["../../.eslintrc.json"],
++    "ignorePatterns": ["!**/*"],
++    "overrides": [
++      {
++        "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
++        "parserOptions": {
++            "project": ["packages/docs/tsconfig(.*)?.json"],
++            "ecmaFeatures": {
++              "jsx": true
++            }
++        },
++        "rules": {}
++      },
++      {
++        "files": ["*.ts", "*.tsx"],
++        "rules": {}
++      },
++      {
++        "files": ["*.js", "*.jsx"],
++        "rules": {}
++      }
++    ]
++  }
++  
+\ No newline at end of file\n- packages/docs/.gitignore (added, 33 changes)\n  Patch: @@ -0,0 +1,33 @@
++
++# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
++
++# dependencies
++/node_modules
++/.pnp
++.pnp.js
++
++# testing
++/coverage
++
++# next.js
++/.next/
++/out/
++
++# production
++/build
++
++# misc
++.DS_Store
++.env*
++
++# debug
++npm-debug.log*
++yarn-debug.log*
++yarn-error.log*
++
++.now
++dist
++esm
++examples/**/yarn.lock
++examples/**/out
++examples/**/.next\n- packages/docs/LICENSE (added, 21 changes)\n  Patch: @@ -0,0 +1,21 @@
++MIT License
++
++Copyright (c) 2020 Next UI
++
++Permission is hereby granted, free of charge, to any person obtaining a copy
++of this software and associated documentation files (the "Software"), to deal
++in the Software without restriction, including without limitation the rights
++to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all
++copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
++SOFTWARE.\n- packages/docs/next-env.d.ts (added, 2 changes)\n  Patch: @@ -0,0 +1,2 @@
++/// <reference types="next" />
++/// <reference types="next/types/global" />\n- packages/docs/next.config.js (renamed)\n  Previous Filename: next.config.js\n- packages/docs/package.json (added, 23 changes)\n  Patch: @@ -0,0 +1,23 @@
++{
++    "name": "@nextui/docs",
++    "version": "1.0.0",
++    "private": true,
++    "scripts": {
++      "dev": "next dev",
++      "build": "next build",
++      "start": "next start"
++    },
++    "dependencies": {
++      "@nextui/react": "1.0.0",
++      "next": "10.1.3",
++      "react": "^17.0.2",
++      "react-dom": "^17.0.2",
++      "@next/mdx": "^10.1.3",
++      "@mdx-js/loader": "^1.6.22",
++      "styled-jsx": "^3.4.4"
++    },
++    "devDependencies": {
++      "typescript": "^4.2.4"
++    }
++  }
++  
+\ No newline at end of file\n- packages/docs/pages/_app.tsx (renamed)\n  Previous Filename: pages/_app.tsx\n- packages/docs/pages/index.tsx (renamed)\n  Previous Filename: pages/index.tsx\n- packages/docs/tsconfig.json (added, 19 changes)\n  Patch: @@ -0,0 +1,19 @@
++{
++    "extends": "../../tsconfig.base.json",
++    "compilerOptions": {
++      "baseUrl": ".",
++      "jsx": "preserve",
++      "allowJs": true,
++      "esModuleInterop": true,
++      "allowSyntheticDefaultImports": true,
++      "types": ["node"],
++      "strict": false,
++      "forceConsistentCasingInFileNames": true,
++      "noEmit": true,
++      "resolveJsonModule": true,
++      "isolatedModules": true,
++    },
++    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts"],
++    "exclude": ["node_modules"]
++  }
++  
+\ No newline at end of file\n- packages/nextui/.babelrc (renamed)\n  Previous Filename: .babelrc\n- packages/nextui/.eslintrc.json (added, 25 changes)\n  Patch: @@ -0,0 +1,25 @@
++{
++    "extends": ["../../.eslintrc.json"],
++    "ignorePatterns": ["!**/*"],
++    "overrides": [
++      {
++        "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
++        "parserOptions": {
++          "project": ["packages/nextui/tsconfig(.*)?.json"],
++          "ecmaFeatures": {
++            "jsx": true
++          }
++        },
++        "rules": {}
++      },
++      {
++        "files": ["*.ts", "*.tsx"],
++        "rules": {}
++      },
++      {
++        "files": ["*.js", "*.jsx"],
++        "rules": {}
++      }
++    ]
++  }
++  
+\ No newline at end of file\n- packages/nextui/.gitignore (added, 33 changes)\n  Patch: @@ -0,0 +1,33 @@
++
++# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
++
++# dependencies
++/node_modules
++/.pnp
++.pnp.js
++
++# testing
++/coverage
++
++# next.js
++/.next/
++/out/
++
++# production
++/build
++
++# misc
++.DS_Store
++.env*
++
++# debug
++npm-debug.log*
++yarn-debug.log*
++yarn-error.log*
++
++.now
++dist
++esm
++examples/**/yarn.lock
++examples/**/out
++examples/**/.next\n- packages/nextui/.storybook/main.js (renamed)\n  Previous Filename: .storybook/main.js\n- packages/nextui/.storybook/manager.js (renamed)\n  Previous Filename: .storybook/manager.js\n- packages/nextui/.storybook/preview.js (renamed)\n  Previous Filename: .storybook/preview.js\n- packages/nextui/.storybook/theme.js (renamed)\n  Previous Filename: .storybook/theme.js\n- packages/nextui/LICENSE (added, 21 changes)\n  Patch: @@ -0,0 +1,21 @@
++MIT License
++
++Copyright (c) 2020 Next UI
++
++Permission is hereby granted, free of charge, to any person obtaining a copy
++of this software and associated documentation files (the "Software"), to deal
++in the Software without restriction, including without limitation the rights
++to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all
++copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
++SOFTWARE.\n- packages/nextui/package.json (added, 63 changes)\n  Patch: @@ -0,0 +1,63 @@
++{
++  "name": "@nextui/react",
++  "version": "1.0.0",
++  "license": "MIT",
++  "description": "🚀 Beautiful and modern React UI library.",
++  "homepage": "https://nextui.org",
++  "bugs": {
++    "url": "https://github.com/jrgarciadev/next-ui/issues/new/choose"
++  },
++  "repository": {
++    "type": "git",
++    "url": "https://github.com/jrgarciadev/next-ui"
++  },
++  "keywords": [
++    "next",
++    "next ui",
++    "components",
++    "modern components",
++    "react components",
++    "react ui"
++  ],
++  "main": "./dist/index.js",
++  "exports": "./dist/index.modern.js",
++  "module": "./dist/index.module.js",
++  "types": "./dist/index.d.ts",
++  "unpkg": "./dist/index.umd.js",
++  "source": "./src/index.ts",
++  "scripts": {
++    "dev": "next dev",
++    "start": "next start",
++    "clear": "rm -rf ./dist ./esm",
++    "build:prod": "npm run clear && microbundle --compress --strict --format modern,cjs",
++    "build:watch": "npm run clear && microbundle watch --no-compress --format modern,cjs",
++    "build": "npm run build:prod",
++    "watch": "npm run build:watch",
++    "storybook": "start-storybook -p 6006 --no-manager-cache",
++    "build-storybook": "build-storybook",
++    "start-storybook": "npm run build-storybook && http-server ./storybook-static"
++  },
++  "files": [
++    "/dist",
++    "/esm"
++  ],
++  "dependencies": {
++    "styled-jsx": "^3.4.4"
++  },
++  "devDependencies": {
++    "microbundle": "^0.13.0",
++    "react": "^17.0.2",
++    "react-dom": "^17.0.2",
++    "typescript": "^4.2.4",
++    "babel-plugin-module-resolver": "^4.1.0",
++    "@storybook/addon-a11y": "^6.2.8",
++    "@storybook/addon-actions": "^6.2.8",
++    "@storybook/addon-docs": "^6.2.8",
++    "@storybook/addon-essentials": "^6.2.8",
++    "@storybook/addon-knobs": "^6.2.8",
++    "@storybook/addon-links": "^6.2.8",
++    "@storybook/addon-storysource": "^6.2.8",
++    "@storybook/react": "^6.2.8",
++    "storybook-addon-react-docgen": "^1.2.42"
++  }
++}\n- packages/nextui/src/components/checkbox/checkbox-context.ts (renamed)\n  Previous Filename: src/components/checkbox/checkbox-context.ts\n- packages/nextui/src/components/checkbox/checkbox-group.tsx (renamed)\n  Previous Filename: src/components/checkbox/checkbox-group.tsx\n- packages/nextui/src/components/checkbox/checkbox.stories.tsx (renamed)\n  Previous Filename: src/components/checkbox/checkbox.stories.tsx\n- packages/nextui/src/components/checkbox/checkbox.tsx (renamed)\n  Previous Filename: src/components/checkbox/checkbox.tsx\n- packages/nextui/src/components/checkbox/index.ts (renamed)\n  Previous Filename: src/components/checkbox/index.ts\n- packages/nextui/src/components/checkbox/styles.ts (renamed)\n  Previous Filename: src/components/checkbox/styles.ts\n- packages/nextui/src/components/css-baseline/css-baseline.tsx (renamed)\n  Previous Filename: src/components/css-baseline/css-baseline.tsx\n- packages/nextui/src/components/css-baseline/index.ts (renamed)\n  Previous Filename: src/components/css-baseline/index.ts\n

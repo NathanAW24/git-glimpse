@@ -1,0 +1,101 @@
+Pull Request Number: 2435
+Title: fix(components): isdisabled does not disable dropdown
+Base Branch: main
+Head Branch: fix/components/isdisabled-does-not-disable-dropdown
+Author: kuri-sun
+URL: https://github.com/nextui-org/nextui/pull/2435
+State: MERGED
+Created At: 2024-03-03T00:02:48Z
+Merged At: 2024-03-03T20:30:27Z
+Participants: kuri-sun, jrgarciadev
+
+Description:
+Closes #2276
+📝 Description
+Based on the docs, adding an isDisabled prop and setting it to true does not disable a dropdown
+⛳️ Current behavior (updates)
+The isDisabled prop does not work, because the Dropdown component does not pass the isDisabled prop to the PopoverTrigger component.
+🚀 New behavior
+It disables the trigger when isDisabled prop gets passed.
+
+  
+    
+    
+
+    Screen.Recording.2024-03-03.at.8.21.55.AM.mov
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+N/A
+
+Commits:
+- fix(components): isdisabled does not disable dropdown\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #v0R3BXhkNU5x9Kihjjd5zW0FZguH7cyhMJy/qrh1gs0=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvQ2ZwckoxQm9KdXVQcGR1dVh5U1Nib3FzU21HQyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWt1cmktc3VuLWZpeC1jb20tNjM4YWZiLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWt1cmktc3VuLWZpeC1jb20tNjM4YWZiLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/CfprJ1BoJuuPpduuXySSboqsSmGC)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-kuri-sun-fix-com-638afb-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-kuri-sun-fix-com-638afb-nextui-org.vercel.app?via=pr-comment-feedback-link) | Mar 3, 2024 0:05am |
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 6db752bc311f880c2f8f93012d9b07cf39250e4e
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                 | Type  |
+| -------------------- | ----- |
+| @nextui-org/dropdown | Major |
+| @nextui-org/react    | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/kuri-sun/nextui/new/fix/components/isdisabled-does-not-disable-dropdown?filename=.changeset/lemon-lobsters-refuse.md&value=---%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A---%0A%0Afix(components)%3A%20isdisabled%20does%20not%20disable%20dropdown%0A)
+
+\n- vercel: @kuri-sun is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%226db752bc311f880c2f8f93012d9b07cf39250e4e%22%7D%2C%22id%22%3A%22QmQyr2HjNKtSQyp5xEmD3z8YHfvBpD5PvZgHrCrLGcQNbx%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2435%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/two-lobsters-sip.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/dropdown": major
++---
++
++Fixed the bug: isDisabled does not disable dropdown\n- packages/components/dropdown/src/use-dropdown.ts (modified, 4 changes)\n  Patch: @@ -119,15 +119,15 @@ export function useDropdown(props: UseDropdownProps) {
+   });
+ 
+   const getMenuTriggerProps: PropGetter = (
+-    props = {},
++    originalProps = {},
+     _ref: Ref<any> | null | undefined = null,
+   ) => {
+     // These props are not needed for the menu trigger since it is handled by the popover trigger.
+     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+     const {onKeyDown, onPress, onPressStart, ...otherMenuTriggerProps} = menuTriggerProps;
+ 
+     return {
+-      ...mergeProps(otherMenuTriggerProps, props),
++      ...mergeProps(otherMenuTriggerProps, {isDisabled: props.isDisabled, originalProps}),
+       ref: mergeRefs(_ref, triggerRef),
+     };
+   };\n

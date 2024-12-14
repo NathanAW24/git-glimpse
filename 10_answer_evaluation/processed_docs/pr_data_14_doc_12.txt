@@ -1,0 +1,369 @@
+Pull Request Number: 2611
+Title: fix: lazy motion forward ref issue
+Base Branch: main
+Head Branch: fix/lazy-motion-forwardRef
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2611
+State: MERGED
+Created At: 2024-03-30T15:40:41Z
+Merged At: 2024-03-30T18:03:54Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+
+Applied the same fix as #2527
+
+⛳️ Current behavior (updates)
+if you run pnpm test popover or pnpm test modal, you can see the following error
+  console.error
+    Warning: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
+
+    Check the render method of `ForwardRef`.
+        at LazyMotion (/Users/wingkwong/Documents/GitHub/nextui/node_modules/.pnpm/framer-motion@10.16.4_react-dom@18.2.0_react@18.2.0/node_modules/framer-motion/dist/cjs/index.js:4977:23)
+        at /Users/wingkwong/Documents/GitHub/nextui/node_modules/.pnpm/react-remove-scroll@2.5.7_@types+react@18.2.8_react@18.2.0/node_modules/react-remove-scroll/dist/es5/UI.js:16:21
+        at div
+        at as (/Users/wingkwong/Documents/GitHub/nextui/packages/components/modal/src/modal-content.tsx:25:10)
+        at $a7a032acae3ddda9$export$20e40289641fbbb6 (/Users/wingkwong/Documents/GitHub/nextui/node_modules/.pnpm/@react-aria+focus@3.14.3_react@18.2.0/node_modules/@react-aria/focus/dist/packages/@react-aria/focus/src/FocusScope.tsx:83:8)
+        at $3596bae48579386f$export$cf75428e0b9ed1ea (/Users/wingkwong/Documents/GitHub/nextui/node_modules/.pnpm/@react-aria+interactions@3.19.1_react@18.2.0/node_modules/@react-aria/interactions/dist/packages/@react-aria/interactions/src/PressResponder.tsx:56:38)
+        at $745edbb83ab4296f$export$c6fdb837b070b4ff (/Users/wingkwong/Documents/GitHub/nextui/node_modules/.pnpm/@react-aria+overlays@3.18.1_react-dom@18.2.0_react@18.2.0/node_modules/@react-aria/overlays/dist/packages/@react-aria/overlays/src/Overlay.tsx:48:22)
+        at PresenceChild (/Users/wingkwong/Documents/GitHub/nextui/node_modules/.pnpm/framer-motion@10.16.4_react-dom@18.2.0_react@18.2.0/node_modules/framer-motion/dist/cjs/index.js:4706:26)
+        at AnimatePresence (/Users/wingkwong/Documents/GitHub/nextui/node_modules/.pnpm/framer-motion@10.16.4_react-dom@18.2.0_react@18.2.0/node_modules/framer-motion/dist/cjs/index.js:4808:28)
+        at children (/Users/wingkwong/Documents/GitHub/nextui/packages/components/modal/src/modal.tsx:17:10)
+
+🚀 New behavior
+the error is gone
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+New Features
+
+Enhanced modal and popover components with improved animation and scroll behavior control.
+
+
+Bug Fixes
+
+Fixed an issue related to lazy motion with forward references.
+
+
+Refactor
+
+Updated versions of modal and popover dependencies for better performance and stability.
+
+Commits:
+- fix(modal): lazy motion forward ref issue\n- fix(popover): lazy motion forward ref issue\n- feat(changeset): fixed lazy motion forwardRef issue\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: c3aaec44cb0694cab1d5a0274a8989e976b4fecd
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 6 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/modal        | Patch |
+| @nextui-org/popover      | Patch |
+| @nextui-org/react        | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/select       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/wingkwong/nextui/new/fix/lazy-motion-forwardRef?filename=.changeset/chilled-maps-notice.md&value=---%0A%22%40nextui-org%2Fmodal%22%3A%20patch%0A%22%40nextui-org%2Fpopover%22%3A%20patch%0A---%0A%0Afix%3A%20lazy%20motion%20forward%20ref%20issue%0A)
+
+\n- vercel: [vc]: #KI1MMIYBaEbxeflNn4RcP1p43VebazaEqJRfzfjwidA=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvOHFnQTdzdXRlUkJXb2k2R3hLYXI1VkFXNndXWCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtbGEtOThkMDU2LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtbGEtOThkMDU2LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/8qgA7suteRBWoi6GxKar5VAW6wWX)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-la-98d056-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-la-98d056-nextui-org.vercel.app?via=pr-comment-feedback-link) | Mar 30, 2024 3:43pm |
+
+\n- vercel: @wingkwong is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22c3aaec44cb0694cab1d5a0274a8989e976b4fecd%22%7D%2C%22id%22%3A%22Qmc8twUNafoYpMJrMaTpgN6zA2irHs4JbH2Kc4hbrehZAB%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2611%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The updates introduce enhancements to modal and popover components, focusing on improving the handling of animations and scroll behaviors. By integrating a `RemoveScrollWrapper` function, both components now offer a more refined control over content rendering, especially when animations are disabled. This approach not only streamlines the user experience but also optimizes performance by conditionally applying changes based on the `disableAnimation` flag.
+
+## Changes
+
+| Files                                              | Change Summary                                                                                   |
+|----------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| `.changeset/spicy-coats-exist.md`                  | Updated `@nextui-org/modal` and `@nextui-org/popover` versions; fixed a lazy motion `forwardRef` issue. |
+| `.../modal/src/modal-content.tsx`                  | Introduced `RemoveScrollWrapper` in `ModalContent` for better scroll and animation control.      |
+| `.../popover/src/popover-content.tsx`              | Added `RemoveScrollWrapper` in `PopoverContent` using `useCallback` for optimized rendering.     |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/spicy-coats-exist.md: Introduced functionality: The file updates the versions of "@nextui-org/modal" and "@nextui-org/popover" to patch versions and fixes a lazy motion forwardRef issue.
+
+---
+
+packages/components/modal/src/modal-content.tsx: ### Short Summary
+
+In the `ModalContent` component, the `ModalContent` function now includes a `RemoveScrollWrapper` function that conditionally wraps the content based on the `disableAnimation` flag. This change introduces a more structured approach to handling scroll removal and animation logic within the modal content rendering.
+
+---
+
+packages/components/popover/src/popover-content.tsx: ## Short summary
+
+In the `PopoverContent` component, the changes involve adding `useCallback` and `ReactElement` imports, defining a new `RemoveScrollWrapper` component using `useCallback`, and restructuring the rendering logic to conditionally render content based on `disableAnimation`.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+The pull request titled "fix: lazy motion forward ref issue" with the number 2611 aims to address a specific problem related to forward references in lazy motion components. Although the description section of the PR is quite brief and does not delve into the specifics of the issue, the title itself suggests that the focus is on fixing a bug related to the handling of `ref` in a context where components might be loaded lazily. This is a common scenario in modern web development where components are loaded on demand to improve performance and user experience.
+
+The PR does not explicitly link to a GitHub issue, as indicated by the placeholder comment, suggesting that the description might not have been fully updated or that the PR addresses a known problem without a formal issue being filed. The description outlines the standard structure for pull requests, including a brief description of the changes, the current behavior being modified, the new behavior introduced by the PR, and a confirmation that the changes do not constitute a breaking change. Additionally, it invites contributors to provide any additional information that might be relevant.
+
+The changes are concentrated in two packages: `@nextui-org/modal` and `@nextui-org/popover`. The PR updates the versions of these packages and introduces modifications to the `ModalContent` and `PopoverContent` components. Specifically, it involves structural changes to how these components handle scroll removal and animation logic, with a focus on improving the handling of content rendering when animations are disabled.
+
+### AI-Generated Summary of Generated Summaries
+
+The pull request introduces targeted fixes and enhancements to the `@nextui-org/modal` and `@nextui-org/popover` packages, specifically addressing issues related to the forward referencing of lazily loaded motion components. Key changes include the introduction of a `RemoveScrollWrapper` function in both the `ModalContent` and `PopoverContent` components. This function plays a crucial role in conditionally wrapping content to manage scroll removal and animation more effectively, particularly when animations are disabled. The changes aim to refine the rendering logic of these components, ensuring a smoother user experience by addressing the lazy motion forward ref issue.
+
+The modifications involve structural adjustments and the addition of new logic to handle content rendering based on the `disableAnimation` flag. This includes the use of `useCallback` to define the new `RemoveScrollWrapper` component in a more optimized manner. By restructuring the rendering logic to conditionally render content, the PR enhances the flexibility and performance of the modal and popover components within the NextUI framework.
+
+Overall, the PR achieves its objective of fixing the identified issue without introducing breaking changes, thereby improving the robustness and user experience of applications utilizing the NextUI framework's modal and popover components.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- c3aaec44cb0694cab1d5a0274a8989e976b4fecd -->
+
+<!-- commit_ids_reviewed_end --><!-- tweet_start -->
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<!-- tweet_end --><!-- tips_start -->
+
+---
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with CodeRabbit:
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- The JSON schema for the configuration file is available [here](https://coderabbit.ai/integrations/coderabbit-overrides.v2.json).
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/coderabbit-overrides.v2.json`
+
+### CodeRabbit Discord Community
+
+Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/spicy-coats-exist.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/modal": patch
++"@nextui-org/popover": patch
++---
++
++Fixed lazy motion forwardRef issue\n- packages/components/modal/src/modal-content.tsx (modified, 53 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import type {AriaDialogProps} from "@react-aria/dialog";
+ import type {HTMLMotionProps} from "framer-motion";
+ 
+-import {cloneElement, isValidElement, ReactNode, useMemo} from "react";
++import {cloneElement, isValidElement, ReactNode, useMemo, useCallback, ReactElement} from "react";
+ import {forwardRef} from "@nextui-org/system";
+ import {DismissButton} from "@react-aria/overlays";
+ import {TRANSITION_VARIANTS} from "@nextui-org/framer-transitions";
+@@ -90,27 +90,42 @@ const ModalContent = forwardRef<"div", ModalContentProps, KeysToOmit>((props, _)
+     );
+   }, [backdrop, disableAnimation, getBackdropProps]);
+ 
++  const RemoveScrollWrapper = useCallback(
++    ({children}: {children: ReactElement}) => {
++      return (
++        <RemoveScroll forwardProps enabled={shouldBlockScroll && isOpen} removeScrollBar={false}>
++          {children}
++        </RemoveScroll>
++      );
++    },
++    [shouldBlockScroll, isOpen],
++  );
++
++  const contents = disableAnimation ? (
++    <RemoveScrollWrapper>
++      <div className={slots.wrapper({class: classNames?.wrapper})}>{content}</div>
++    </RemoveScrollWrapper>
++  ) : (
++    <LazyMotion features={domAnimation}>
++      <RemoveScrollWrapper>
++        <m.div
++          animate="enter"
++          className={slots.wrapper({class: classNames?.wrapper})}
++          exit="exit"
++          initial="exit"
++          variants={scaleInOut}
++          {...motionProps}
++        >
++          {content}
++        </m.div>
++      </RemoveScrollWrapper>
++    </LazyMotion>
++  );
++
+   return (
+     <div tabIndex={-1}>
+       {backdropContent}
+-      <RemoveScroll forwardProps enabled={shouldBlockScroll && isOpen} removeScrollBar={false}>
+-        {disableAnimation ? (
+-          <div className={slots.wrapper({class: classNames?.wrapper})}>{content}</div>
+-        ) : (
+-          <LazyMotion features={domAnimation}>
+-            <m.div
+-              animate="enter"
+-              className={slots.wrapper({class: classNames?.wrapper})}
+-              exit="exit"
+-              initial="exit"
+-              variants={scaleInOut}
+-              {...motionProps}
+-            >
+-              {content}
+-            </m.div>
+-          </LazyMotion>
+-        )}
+-      </RemoveScroll>
++      {contents}
+     </div>
+   );
+ });\n- packages/components/popover/src/popover-content.tsx (modified, 55 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import type {AriaDialogProps} from "@react-aria/dialog";
+ import type {HTMLMotionProps} from "framer-motion";
+ 
+-import {DOMAttributes, ReactNode, useMemo, useRef} from "react";
++import {DOMAttributes, ReactNode, useMemo, useRef, useCallback, ReactElement} from "react";
+ import {forwardRef} from "@nextui-org/system";
+ import {DismissButton} from "@react-aria/overlays";
+ import {TRANSITION_VARIANTS} from "@nextui-org/framer-transitions";
+@@ -81,29 +81,42 @@ const PopoverContent = forwardRef<"div", PopoverContentProps>((props, _) => {
+     );
+   }, [backdrop, disableAnimation, getBackdropProps]);
+ 
++  const RemoveScrollWrapper = useCallback(
++    ({children}: {children: ReactElement}) => {
++      return (
++        <RemoveScroll forwardProps enabled={shouldBlockScroll && isOpen} removeScrollBar={false}>
++          {children}
++        </RemoveScroll>
++      );
++    },
++    [shouldBlockScroll, isOpen],
++  );
++
++  const contents = disableAnimation ? (
++    <RemoveScrollWrapper>{content}</RemoveScrollWrapper>
++  ) : (
++    <LazyMotion features={domAnimation}>
++      <RemoveScrollWrapper>
++        <m.div
++          animate="enter"
++          exit="exit"
++          initial="initial"
++          style={{
++            ...getTransformOrigins(placement === "center" ? "top" : placement),
++          }}
++          variants={TRANSITION_VARIANTS.scaleSpringOpacity}
++          {...motionProps}
++        >
++          {content}
++        </m.div>
++      </RemoveScrollWrapper>
++    </LazyMotion>
++  );
++
+   return (
+     <div {...getPopoverProps()}>
+       {backdropContent}
+-      <RemoveScroll forwardProps enabled={shouldBlockScroll && isOpen} removeScrollBar={false}>
+-        {disableAnimation ? (
+-          content
+-        ) : (
+-          <LazyMotion features={domAnimation}>
+-            <m.div
+-              animate="enter"
+-              exit="exit"
+-              initial="initial"
+-              style={{
+-                ...getTransformOrigins(placement === "center" ? "top" : placement),
+-              }}
+-              variants={TRANSITION_VARIANTS.scaleSpringOpacity}
+-              {...motionProps}
+-            >
+-              {content}
+-            </m.div>
+-          </LazyMotion>
+-        )}
+-      </RemoveScroll>
++      {contents}
+     </div>
+   );
+ });\n

@@ -1,0 +1,427 @@
+Pull Request Number: 55
+Title: Refactor/improving repo
+Base Branch: main
+Head Branch: refactor/improving-repo
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/55
+State: MERGED
+Created At: 2021-10-02T02:24:51Z
+Merged At: 2021-10-02T02:25:16Z
+Participants: jrgarciadev
+
+Description:
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Contributing guidelines updated, version increased, unnecessary scripts removed
+
+Commits:
+- Merge branch 'main' of github.com:nextui-org/nextui\n- chore: contributing guidelines updated, rollup removed\n- chore: microbundle removed\n- Merge branch 'main' of github.com:nextui-org/nextui into refactor/improving-repo\n- chore: contributing docs improved, version increased to v46\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- CONTRIBUTING.MD (modified, 66 changes)\n  Patch: @@ -5,10 +5,16 @@ Hello!, I am very excited that you are interested in contributing with Next UI.
+ - [Code of Conduct](https://github.com/jrgarciadev/nextui/blob/main/CODE_OF_CONDUCT.md)
+ - [Extraction request guidelines](#pull-request-guidelines)
+ - [Development Setup](#development-setup)
++- [Tests](#tests)
++- [Visual Changes](#visual-changes)
++- [Documentation](#documentation)
++- [Breaking Changes](#breaking-changes)
++- [Becoming a maintainer](#becoming-a-maintainer)
+ 
+ ## Pull Request Guidelines
+ 
+ - The `main` branch is basically a snapshot of the latest stable version. All development must be done in dedicated branches.
++- Make sure that Github Actions are green
+ - It is good to have multiple small commits while working on the PR. We'll let GitHub squash it automatically before the merge.
+ - If you add a new feature:
+   - Add the test case that accompanies it.
+@@ -20,6 +26,62 @@ Hello!, I am very excited that you are interested in contributing with Next UI.
+ 
+ ## Development Setup
+ 
+-After cloning the repository, execute:
++After cloning the repository, execute the following commands in the root folder:
+ 
+-TODO:
++1. Install dependencies
++
++```bash
++yarn
++
++#or
++
++yarn install
++```
++
++We use [Yarn](https://yarnpkg.com/) for dependency management and for the project workspaces.
++
++2. Up the development environment
++
++```bash
++yarn dev
++```
++
++## Tests
++
++All commits that fix bugs or add features need a test. You can run `yarn test -- src/button ` for component specific tests.
++
++## Visual Changes
++
++When making a visual change, please provide screenshots
++and/or screencasts of the proposed change. This will help us to understand the
++desired change easier.
++
++Until NextUI has a stable release new components will be created only for the core team.
++
++## Documentation
++
++Please update the docs with any API changes, the code and docs should always be in sync.
++
++The main documentation lives in the `packages/docs/content` folder, the project uses MDX and all `NextUI` are already imported.
++
++## Breaking changes
++
++Breaking changes should be accompanied with deprecations of removed functionality. The deprecated APIs themselves should not be removed until the minor release after that.
++
++## Becoming a maintainer
++
++If you are interested in becoming a NextUI maintainer, start by
++reviewing issues and pull requests. Answer questions for those in need of
++troubleshooting. Join us in the
++[Discord Community](https://discord.gg/9b6yyZKmH4) chat room.
++Once we see you helping, either we will reach out and ask you if you want to
++join or you can ask one of the current maintainers to add you. We will try our
++best to be proactive in reaching out to those that are already helping out.
++
++GitHub by default does not publicly state that you are a member of the
++organization. Please feel free to change that setting for yourself so others
++will know who's helping out. That can be configured on the [organization
++list](https://github.com/orgs/nextui-org/people) page.
++
++Being a maintainer is not an obligation. You can help when you have time and be
++less active when you don't. If you get a new job and get busy, that's alright.\n- packages/docs/package.json (modified, 2 changes)\n  Patch: @@ -14,7 +14,7 @@
+   "dependencies": {
+     "@mapbox/rehype-prism": "^0.6.0",
+     "@mdx-js/react": "^1.6.22",
+-    "@nextui-org/react": "^1.0.1-alpha.35",
++    "@nextui-org/react": "^1.0.1-alpha.46",
+     "@types/lodash": "^4.14.170",
+     "algoliasearch": "^4.10.3",
+     "classnames": "^2.3.1",\n- packages/nextui/package.json (modified, 13 changes)\n  Patch: @@ -1,6 +1,6 @@
+ {
+   "name": "@nextui-org/react",
+-  "version": "1.0.1-alpha.45",
++  "version": "1.0.1-alpha.46",
+   "license": "MIT",
+   "description": "🚀 Beautiful and modern React UI library.",
+   "homepage": "https://nextui.org",
+@@ -42,10 +42,7 @@
+     "build:types": "yarn tsc -p ./buildconfig -d --emitDeclarationOnly --outDir types",
+     "build:dev-types": "tsc -p ./buildconfig -d --emitDeclarationOnly --outDir lib/esm",
+     "build:webpack": "webpack --config ./buildconfig/webpack.common.js",
+-    "build:rollup": "yarn clear && yarn rollup -c && yarn build:types",
+     "build:watch": "webpack ---config ./buildconfig/webpack.dev.js",
+-    "build:microbundle": "microbundle build --jsx React.createElement --jsxFragment React.Fragment --tsconfig tsconfig.build.json --strict --globals styled-jsx/style=_JSXStyle,styled-jsx/server=flush",
+-    "build:microbundle-watch": "microbundle watch --jsx React.createElement --jsxFragment React.Fragment --no-compress --format modern,cjs",
+     "watch": "yarn clear && yarn build:dev-types && yarn build:watch",
+     "storybook": "start-storybook -p 6006 --no-manager-cache",
+     "lint": "eslint \"src/**/*.{js,ts,tsx}\"",
+@@ -77,8 +74,6 @@
+     "@babel/preset-typescript": "^7.14.5",
+     "@babel/runtime": "^7.9.6",
+     "@react-bootstrap/babel-preset": "^2.1.0",
+-    "@rollup/plugin-commonjs": "^19.0.0",
+-    "@rollup/plugin-node-resolve": "^13.0.0",
+     "@storybook/addon-a11y": "^6.3.9",
+     "@storybook/addon-actions": "^6.3.9",
+     "@storybook/addon-essentials": "^6.3.9",
+@@ -106,14 +101,8 @@
+     "execa": "^5.1.1",
+     "fs-extra": "^10.0.0",
+     "jest": "^26.6.3",
+-    "microbundle": "^0.13.0",
+     "prettier": "^2.3.1",
+     "rimraf": "^3.0.2",
+-    "rollup": "^2.57.0",
+-    "rollup-plugin-babel": "^4.4.0",
+-    "rollup-plugin-local-resolve": "^1.0.7",
+-    "rollup-plugin-peer-deps-external": "^2.2.4",
+-    "rollup-plugin-terser": "^7.0.2",
+     "storybook": "^6.3.9",
+     "ts-jest": "^26.5.5",
+     "typescript": "^4.3.4",\n- packages/nextui/rollup.config.js (removed, 128 changes)\n  Patch: @@ -1,128 +0,0 @@
+-import commonjs from '@rollup/plugin-commonjs';
+-import nodeResolve from '@rollup/plugin-node-resolve';
+-import localResolve from 'rollup-plugin-local-resolve';
+-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+-import babel from 'rollup-plugin-babel';
+-import fs from 'fs-extra';
+-import { terser } from 'rollup-plugin-terser';
+-import path from 'path';
+-const componentsPath = path.join(__dirname, 'src');
+-const distPath = path.join(__dirname, 'dist');
+-import pkg from './package.json';
+-
+-const extensions = ['.js', '.jsx', '.ts', '.tsx'];
+-
+-// Excluded dependencies - dev dependencies
+-const external = Object.keys(pkg.devDependencies);
+-
+-const plugins = [
+-  babel({
+-    exclude: 'node_modules/**',
+-    extensions,
+-    runtimeHelpers: true,
+-    presets: [
+-      ['@babel/preset-env'],
+-      [
+-        '@babel/preset-react',
+-        {
+-          runtime: 'automatic',
+-        },
+-      ],
+-      '@babel/preset-typescript',
+-    ],
+-    plugins: [
+-      'babel-plugin-optimize-clsx',
+-      ['styled-jsx/babel', { optimizeForSpeed: true }],
+-      ['@babel/plugin-proposal-object-rest-spread', { loose: true }],
+-      ['@babel/plugin-transform-runtime', { useESModules: true }],
+-    ],
+-    ignore: [
+-      /@babel[\\|/]runtime/,
+-      /__tests__\.(js|ts|tsx)$/,
+-      /\.stories\.(js|ts|tsx)$/,
+-    ],
+-  }),
+-  //   terser(),
+-  peerDepsExternal(),
+-  localResolve(),
+-  nodeResolve({
+-    browser: true,
+-    extensions,
+-  }),
+-  commonjs(),
+-];
+-
+-const globals = {
+-  react: 'React',
+-  'styled-jsx': '_JSXStyle',
+-  'react-dom': 'ReactDOM',
+-};
+-
+-// const external = (id) => /^react|react-dom|styled-jsx|next\/link/.test(id);
+-
+-export default (async () => {
+-  await fs.remove(distPath);
+-  const files = await fs.readdir(componentsPath);
+-
+-  const components = await Promise.all(
+-    files.map(async (name) => {
+-      const comPath = path.join(componentsPath, name);
+-      const entry = path.join(comPath, 'index.ts');
+-
+-      const stat = await fs.stat(comPath);
+-      if (!stat.isDirectory()) return null;
+-
+-      const hasFile = await fs.pathExists(entry);
+-      if (!hasFile) return null;
+-
+-      return { name, url: entry };
+-    })
+-  );
+-  const componentsEntries = components
+-    .filter((r) => r)
+-    .reduce((pre, current) => {
+-      return Object.assign({}, pre, { [current.name]: current.url });
+-    }, {});
+-
+-  return [
+-    {
+-      external,
+-      plugins,
+-      input: {
+-        index: 'src/index.ts',
+-        ...componentsEntries,
+-      },
+-      output: [
+-        {
+-          format: 'esm',
+-          exports: 'named',
+-          dir: 'esm',
+-          entryFileNames: '[name]/index.js',
+-          globals,
+-        },
+-        {
+-          format: 'es',
+-          exports: 'named',
+-          dir: 'dist',
+-          entryFileNames: '[name]/index.js',
+-          globals,
+-        },
+-      ],
+-      experimentalOptimizeChunks: true,
+-      optimizeChunks: true,
+-    },
+-    {
+-      external,
+-      plugins,
+-      input: 'src/index.ts',
+-      output: {
+-        globals,
+-        file: pkg.browser,
+-        format: 'umd',
+-        exports: 'named',
+-        name: 'NextUI',
+-        esModule: false,
+-      },
+-    },
+-  ];
+-})();\n- packages/nextui/src/input/__tests__/__snapshots__/index.test.tsx.snap (modified, 28 changes)\n  Patch: @@ -17,7 +17,7 @@ exports[`Input should be work with content 1`] = `
+           cursor: default;
+           pointer-events: none;
+         }
+-      </style></span><input type=\\"text\\" class=\\"left-content\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-jtbqtdl0\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
++      </style></span><input type=\\"text\\" class=\\"left-content\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-7c696eun\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
+           .with-label {
+             width: initial;
+             display: inline-flex;
+@@ -153,7 +153,7 @@ exports[`Input should be work with content 1`] = `
+             -webkit-box-shadow: 0 0 0 30px #fff inset !important;
+             -webkit-text-fill-color: #2c3e50 !important;
+           }
+-        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"right-content\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-fdnobg3q\\" value=\\"\\"><span class=\\"input-content\\"><span>test-icon</span><style>
++        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"right-content\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-l35flquv\\" value=\\"\\"><span class=\\"input-content\\"><span>test-icon</span><style>
+         .input-content {
+           box-sizing: content-box;
+           display: flex;
+@@ -309,7 +309,7 @@ exports[`Input should be work with content 1`] = `
+ `;
+ 
+ exports[`Input should be work with label 1`] = `
+-"<div><div class=\\"with-label\\"><label class=\\"input-label-block\\" for=\\"next-ui-pr2bvea5\\">label<style>
++"<div><div class=\\"with-label\\"><label class=\\"input-label-block\\" for=\\"next-ui-l19cja9t\\">label<style>
+         .input-label-block {
+           display: block;
+           font-weight: normal;
+@@ -353,7 +353,7 @@ exports[`Input should be work with label 1`] = `
+           left: 4px;
+           cursor: inherit;
+         }
+-      </style></label><div class=\\"input-container shadow\\"><div class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-pr2bvea5\\" value=\\"\\"></div></div><div class=\\"input-helper-text-container\\"></div><style>
++      </style></label><div class=\\"input-container shadow\\"><div class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-l19cja9t\\" value=\\"\\"></div></div><div class=\\"input-helper-text-container\\"></div><style>
+           .with-label {
+             width: initial;
+             display: inline-flex;
+@@ -489,7 +489,7 @@ exports[`Input should be work with label 1`] = `
+             -webkit-box-shadow: 0 0 0 30px #fff inset !important;
+             -webkit-text-fill-color: #2c3e50 !important;
+           }
+-        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-o01ac0ua\\" value=\\"\\"><span class=\\"input-label right\\">label<style>
++        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-837d17r4\\" value=\\"\\"><span class=\\"input-label right\\">label<style>
+         .input-label {
+           position: relative;
+           display: inline-flex;
+@@ -670,7 +670,7 @@ exports[`Input should be work with label 1`] = `
+             -webkit-box-shadow: 0 0 0 30px #fff inset !important;
+             -webkit-text-fill-color: #2c3e50 !important;
+           }
+-        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-0g2io5c6\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
++        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-sokoc7bb\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
+           .with-label {
+             width: initial;
+             display: inline-flex;
+@@ -810,7 +810,7 @@ exports[`Input should be work with label 1`] = `
+ `;
+ 
+ exports[`Input should work with different sizes 1`] = `
+-"<div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-nk53srfd\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
++"<div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-4382clr5\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
+           .with-label {
+             width: initial;
+             display: inline-flex;
+@@ -946,7 +946,7 @@ exports[`Input should work with different sizes 1`] = `
+             -webkit-box-shadow: 0 0 0 30px #fff inset !important;
+             -webkit-text-fill-color: #2c3e50 !important;
+           }
+-        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-p5qd547h\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
++        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-vbenf3vd\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
+           .with-label {
+             width: initial;
+             display: inline-flex;
+@@ -1082,7 +1082,7 @@ exports[`Input should work with different sizes 1`] = `
+             -webkit-box-shadow: 0 0 0 30px #fff inset !important;
+             -webkit-text-fill-color: #2c3e50 !important;
+           }
+-        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-u4eui2m6\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
++        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-16to39rd\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
+           .with-label {
+             width: initial;
+             display: inline-flex;
+@@ -1218,7 +1218,7 @@ exports[`Input should work with different sizes 1`] = `
+             -webkit-box-shadow: 0 0 0 30px #fff inset !important;
+             -webkit-text-fill-color: #2c3e50 !important;
+           }
+-        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-6o2cc76r\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
++        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-e7oqu19e\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
+           .with-label {
+             width: initial;
+             display: inline-flex;
+@@ -1354,7 +1354,7 @@ exports[`Input should work with different sizes 1`] = `
+             -webkit-box-shadow: 0 0 0 30px #fff inset !important;
+             -webkit-text-fill-color: #2c3e50 !important;
+           }
+-        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-61tivrm4\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
++        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-9riporav\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
+           .with-label {
+             width: 50%;
+             display: inline-flex;
+@@ -1494,7 +1494,7 @@ exports[`Input should work with different sizes 1`] = `
+ `;
+ 
+ exports[`Input should work with different status 1`] = `
+-"<div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-rkfnrdm1\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
++"<div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-hu8sqo8b\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
+           .with-label {
+             width: initial;
+             display: inline-flex;
+@@ -1630,7 +1630,7 @@ exports[`Input should work with different status 1`] = `
+             -webkit-box-shadow: 0 0 0 30px #fff inset !important;
+             -webkit-text-fill-color: #2c3e50 !important;
+           }
+-        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-3l2h7bpn\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
++        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-rfh04d9c\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
+           .with-label {
+             width: initial;
+             display: inline-flex;
+@@ -1766,7 +1766,7 @@ exports[`Input should work with different status 1`] = `
+             -webkit-box-shadow: 0 0 0 30px #fff inset !important;
+             -webkit-text-fill-color: #2c3e50 !important;
+           }
+-        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-1shir20b\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
++        </style></div><div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"text\\" class=\\"\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-ksn23plr\\" value=\\"\\"></label></div><div class=\\"input-helper-text-container\\"></div><style>
+           .with-label {
+             width: initial;
+             display: inline-flex;\n- packages/nextui/src/input/__tests__/__snapshots__/password.test.tsx.snap (modified, 2 changes)\n  Patch: @@ -1,7 +1,7 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+ exports[`InputPassword should render correctly 1`] = `
+-"<div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"password\\" class=\\"right-content\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-5fvk6gb3\\" value=\\"\\"><span class=\\"input-content\\"><svg viewBox=\\"0 0 24 24\\" width=\\"16\\" height=\\"16\\" stroke=\\"currentColor\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" fill=\\"none\\" shape-rendering=\\"geometricPrecision\\" style=\\"color: currentColor;\\"><path d=\\"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\\"></path><circle cx=\\"12\\" cy=\\"12\\" r=\\"3\\"></circle></svg><style>
++"<div class=\\"with-label\\"><div class=\\"input-container shadow\\"><label class=\\"input-wrapper\\"><input type=\\"password\\" class=\\"right-content\\" placeholder=\\"\\" autocomplete=\\"off\\" aria-readonly=\\"false\\" aria-required=\\"false\\" id=\\"next-ui-uldlbgoe\\" value=\\"\\"><span class=\\"input-content\\"><svg viewBox=\\"0 0 24 24\\" width=\\"16\\" height=\\"16\\" stroke=\\"currentColor\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" fill=\\"none\\" shape-rendering=\\"geometricPrecision\\" style=\\"color: currentColor;\\"><path d=\\"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\\"></path><circle cx=\\"12\\" cy=\\"12\\" r=\\"3\\"></circle></svg><style>
+         .input-content {
+           box-sizing: content-box;
+           display: flex;\n

@@ -1,0 +1,677 @@
+Pull Request Number: 3694
+Title: fix(date-input): modifying validation error containing date
+Base Branch: canary
+Head Branch: macci001/modifying-validation-error-containing-date
+Author: macci001
+URL: https://github.com/nextui-org/nextui/pull/3694
+State: CLOSED
+Created At: 2024-08-29T18:35:35Z
+Merged At: None
+Participants: macci001, wingkwong, devongovett, ryo-manba
+
+Description:
+Closes #3693
+📝 Description
+The PR fixes the date mentioned in the validation error messages of date-picker.
+⛳️ Current behavior (updates)
+Currently the date in the validation message of date-picker in based on the browser and not on the locale mentioned.
+The reason behind this is from react-aria as it uses the browser for the validation.
+Below shows the current behaviour:
+
+MinValue Validation failed
+
+MinValue Validation failed(with hideTimeZone as true)
+
+MaxValue Validation failed
+
+MaxValue Validation failed(with hideTimeZone as true)
+
+
+🚀 New behavior
+Below shows the new behaviour:
+
+MinValue Validation failed
+
+MinValue Validation failed(with hideTimeZone as true)
+
+MaxValue Validation failed
+
+MaxValue Validation failed(with hideTimeZone as true)
+
+
+💣 Is this a breaking change (Yes/No): No
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced date-picker component with improved error message formatting based on locale settings.
+Added specific error messages for date input constraints related to minimum and maximum values.
+
+
+
+Bug Fixes
+
+Resolved issues with validation error handling for date inputs, ensuring accurate feedback for users.
+
+
+
+Tests
+
+Added new test cases to verify locale-based error messaging for minimum and maximum date values in the DateInput component.
+
+Commits:
+- fix(date-picker): fixing validation error messages to contain date according to the locale\n- fix(date-picker): adding the changeset + nits\n- fix(date-picker): using Date instead of Intl\n- feat(date-picker): added tests\n- feat(date-input): add intl support\n- chore(date-input): code improvement wingkwong's suggestions\n- fix(date-input): fixing the message order according to RA validation array population\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 7838f48cbab983cc2c9b0c91356af5165e72f237
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                    | Type  |
+| ----------------------- | ----- |
+| @nextui-org/date-input  | Patch |
+| @nextui-org/date-picker | Patch |
+| @nextui-org/react       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/macci001/nextui/new/macci001/modifying-validation-error-containing-date?filename=.changeset/fluffy-pandas-drive.md&value=---%0A%22%40nextui-org%2Fdate-input%22%3A%20patch%0A---%0A%0Afix(date-input)%3A%20modifying%20validation%20error%20containing%20date%0A)
+
+\n- vercel: @macci001 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%229ff2e809924f6fd40b115591800a2bd5e9d670fb%22%7D%2C%22id%22%3A%22QmXD9ATWWZj2R2oGrc1Qk46ad5ZkUZmxFwsjpcoV2jnCV1%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3694%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update introduces a patch for the `@nextui-org/date-input` package, enhancing date formatting in error messages for the date-picker component. It ensures that error messages align with the specified locale settings and improves validation logic by enforcing minimum and maximum value constraints, providing users with clearer feedback on date input errors.
+
+## Changes
+
+| Files                                                                 | Change Summary                                                                                          |
+|-----------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| `.changeset/calm-kids-visit.md`                                     | Introduced patch for date formatting in error messages and enhanced validation logic for date inputs.  |
+| `packages/components/date-input/intl/messages.ts`                   | Added localization resource for date input validation messages across multiple languages.               |
+| `packages/components/date-input/src/use-date-input.ts`              | Enhanced `useDateInput` function with localized string formatting for validation messages.              |
+| `packages/components/date-input/__tests__/date-input.test.tsx`      | Added tests for locale-based error messaging for minimum and maximum date values.                     |
+
+## Assessment against linked issues
+
+| Objective                                                             | Addressed | Explanation                          |
+|----------------------------------------------------------------------|-----------|--------------------------------------|
+| DateRangePicker error message not using NextUIProvider Locale (#3693) | ✅         |                                      |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```
+.changeset/calm-kids-visit.md: ## AI-generated summary of changes
+
+This update introduces a patch for the `@nextui-org/date-input` package, specifically addressing issues with error messages displayed by the date-picker component. The modification enhances the validation error handling by ensuring that the date formatting in error messages aligns with the specified locale. This change improves user experience by providing clearer and more contextually appropriate feedback when date input errors occur, thereby ensuring that the date format is consistent with user expectations based on their locale settings. Additionally, the validation logic for date inputs in the `useDateInput` function has been enhanced by incorporating checks for minimum and maximum value constraints. The function now verifies if the `minValue` and `maxValue` properties are defined and generates localized error messages when range underflow or overflow occurs. Enhancements to the testing suite for the `DateInput` component have been made, specifically focusing on locale-based error messaging for minimum and maximum date values. Two new test cases have been added to verify that the component correctly displays error messages when the provided date values exceed the specified minimum and maximum constraints, respectively. Each test case utilizes the `I18nProvider` to set the locale context, ensuring that the error messages are formatted according to the specified locale. Overall, these changes enhance the functionality of the `DateInput` component by ensuring it provides appropriate feedback to users based on locale-specific date formats.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useDateInput<T extends DateValue>(originalProps: UseDateInputProps)` in `src/use-date-input.ts` → No changes to the function signature.
+- `import {parseDate} from "@internationalized/date";` in `packages/components/date-input/__tests__/date-input.test.tsx` → Added import for `parseDate` from `@internationalized/date`.
+- `import {I18nProvider} from "@react-aria/i18n";` in `packages/components/date-input/__tests__/date-input.test.tsx` → Added import for `I18nProvider`.
+- `import {useLocalizedStringFormatter} from "@react-aria/i18n";` in `packages/components/date-input/src/use-date-input.ts` → Added import for `useLocalizedStringFormatter`.
+- `import {intlMessages} from "../intl/messages";` in `packages/components/date-input/src/use-date-input.ts` → Added import for `intlMessages`.
+
+---
+
+packages/components/date-input/intl/messages.ts: ## AI-generated summary of changes
+
+The newly introduced file `messages.ts` serves as a localization resource for date input validation messages across multiple languages. It provides a structured object that contains validation messages for minimum and maximum date values, formatted to include a placeholder `{date}`. Each language is represented by its locale code (e.g., "en-US" for English, "fr-FR" for French), and for each locale, there are three key messages: `minValidationMessage`, `maxValidationMessage`, and `badInputMessage`. These messages inform users about the acceptable date range and indicate when an invalid date is selected, ensuring that the input meets specified criteria. The implementation allows for easy integration into a date input component, enhancing user experience by providing localized feedback based on the user's language preference.
+
+The control flow is straightforward; when a date input is validated, the corresponding messages can be retrieved based on the user's locale, allowing for dynamic and context-sensitive user feedback. This structure supports internationalization efforts by making it easy to add or modify messages for additional languages in the future.
+
+## Alterations to the declarations of exported or public entities
+
+- Added: `export default { ... }` in `messages.ts`
+
+---
+
+packages/components/date-input/src/use-date-input.ts: ## AI-generated summary of changes
+
+The diff introduces significant enhancements to the `useDateInput` function in the `use-date-input.ts` file. The primary change is the addition of localized string formatting capabilities through the `useLocalizedStringFormatter` function, which utilizes `intlMessages`. This allows for dynamic generation of validation messages based on the minimum and maximum date values provided in the props.
+
+The logic for handling validation errors has been expanded. Specifically, when the `minValue` prop is defined and a range underflow occurs, the code now constructs a localized error message that includes the minimum date and its corresponding time zone. This message replaces the existing error at the calculated index in the `validationErrors` array. Similarly, for the `maxValue` prop, if a range overflow is detected, a localized message is generated and inserted into the validation errors, reflecting the maximum date and time zone. Additionally, if the `badInput` validation detail is triggered, a corresponding localized message is generated and replaces the last entry in the `validationErrors` array. These changes enhance the user experience by providing clearer, context-sensitive feedback regarding date input validation, making the component more robust and user-friendly.
+
+## Alterations to the declarations of exported or public entities
+
+- Added: `useLocalizedStringFormatter` import from `@react-aria/i18n` in `packages/components/date-input/src/use-date-input.ts`
+- Added: `intlMessages` import from `../intl/messages` in `packages/components/date-input/src/use-date-input.ts`
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(date-input): modifying validation error containing date" (PR #3694) addresses an issue with the date format in validation error messages for the date-picker component. Currently, the validation messages are based on the browser's date format rather than the locale specified in the `NextUIProvider`. This behavior stems from the `react-aria` library, which uses the browser for validation. The PR aims to correct this by ensuring that the validation messages reflect the locale set in the `NextUIProvider`.
+
+The description includes examples of the current behavior, showcasing validation messages for minimum and maximum value errors, both with and without the `hideTimeZone` option. Screenshots illustrate the discrepancies in date formatting. The new behavior, as demonstrated in additional screenshots, shows the validation messages correctly formatted according to the specified locale. The author confirms that this change is not a breaking change.
+
+## Objectives from Linked Issues
+
+The linked issue, titled "[BUG] - DateRangePicker error message not using NextUIProvider Locale" (Issue #3693), outlines a bug where the error messages for the `DateRangePicker` component do not adhere to the locale set in the `NextUIProvider`. The issue can be reproduced by setting a locale, such as 'en-GB', in the `NextUIProvider` and then using the `DateRangePicker` component. The expected behavior is that the error messages should reflect the provided locale format. For instance, instead of displaying "Value must be 8/29/2024 or later," the message should read "Value must be 29/08/2024 or later" when the locale is set to 'en-GB'. The issue highlights the need for the component to respect the locale settings to enhance user experience and consistency.
+
+## Comments Summary
+
+In the comments section of the pull request, the author, macci001, requested a review from the user `coderabbitai`. The response from `coderabbitai` was an automated message generated by CodeRabbit, indicating that a review was triggered. The message also noted that CodeRabbit is an incremental review system and does not re-review already reviewed commits, suggesting that the review process is ongoing and that the system is designed to streamline feedback on changes.
+
+Following this, macci001 mentioned to another user, wingkwong, that they had added tests to the PR and encouraged wingkwong to review it again. This indicates an ongoing collaborative effort to ensure the changes are thoroughly vetted and tested before being merged.
+
+In a subsequent comment, wingkwong asked macci001 to explain the necessity of including `packages/components/date-input/intl/messages.ts`, questioning whether this should be handled by the `react-aria` library instead of hardcoding it. macci001 clarified that the browser is responsible for the content of the validation messages and that `react-aria` does not play a role in this aspect. To customize the error messages based on the provided locale, they need to handle it themselves, referencing a related GitHub issue for further context.
+
+The comments reflect a focused and efficient review process, with contributors actively seeking feedback and validation from peers. The succinct nature of the comments emphasizes the importance of addressing the specific bug related to date formatting in validation messages. Overall, the comments highlight the collaborative nature of the development process, where contributors work together to ensure that changes meet the project's standards and requirements.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 9ff2e809924f6fd40b115591800a2bd5e9d670fb -->
+<!-- fbd95e75949e3d40341c6ca0357334073d987968 -->
+<!-- 49868a8cf368f18e8b8124f553f6bfbf486d233f -->
+<!-- dd7aa1d113c03b92b3dd0c8ab2956ca29720ea6a -->
+<!-- fadddd6d9c17defe23f1e285c20e7a7a0ddd9154 -->
+<!-- 8ac47e44db7e56e6465f408b88a8351012ce0cd5 -->
+<!-- 33ae2854c5aed083a3d1eebbbfbfdc6b533bafa9 -->
+<!-- 7838f48cbab983cc2c9b0c91356af5165e72f237 -->
+
+<!-- commit_ids_reviewed_end -->
+
+---
+
+<details>
+<summary>Recent review details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>Commits</summary>
+
+Files that changed from the base of the PR and between 33ae2854c5aed083a3d1eebbbfbfdc6b533bafa9 and 7838f48cbab983cc2c9b0c91356af5165e72f237.
+
+</details>
+
+
+<details>
+<summary>Files selected for processing (2)</summary>
+
+* packages/components/date-input/intl/messages.ts (1 hunks)
+* packages/components/date-input/src/use-date-input.ts (3 hunks)
+
+</details>
+
+
+
+
+
+
+
+
+<details>
+<summary>Files skipped from review as they are similar to previous changes (1)</summary>
+
+* packages/components/date-input/intl/messages.ts
+
+</details>
+
+
+<details>
+<summary>Additional comments not posted (4)</summary><blockquote>
+
+<details>
+<summary>packages/components/date-input/src/use-date-input.ts (4)</summary><blockquote>
+
+`189-190`: **LGTM!**
+
+The code changes are approved. The usage of `useLocalizedStringFormatter` with `intlMessages` is a good approach for generating localized validation messages.
+
+---
+
+`191-204`: **LGTM!**
+
+The code changes are approved. The handling of the `rangeUnderflow` validation error by generating a localized error message using the minimum date and time zone is implemented correctly. The error message is also replaced at the correct index in the `validationErrors` array.
+
+---
+
+`206-220`: **LGTM!**
+
+The code changes are approved. The handling of the `rangeOverflow` validation error by generating a localized error message using the maximum date and time zone is implemented correctly. The error message is also replaced at the correct index in the `validationErrors` array.
+
+---
+
+`222-227`: **LGTM!**
+
+The code changes are approved. The handling of the `badInput` validation error by retrieving the localized error message using the string formatter is implemented correctly. The error message is also replaced at the correct index (last index) in the `validationErrors` array.
+
+</blockquote></details>
+
+</blockquote></details>
+
+</details><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+
+
+<!-- tips_end -->\n- macci001: @coderabbitai review\n- coderabbitai: <!-- This is an auto-generated reply by CodeRabbit -->
+
+
+<details>
+<summary>Actions performed</summary>
+
+Review triggered.
+
+> Note: CodeRabbit is an incremental review system and does not re-review already reviewed commits. This command is applicable only when automatic reviews are paused.
+
+</details>\n- macci001: Hello @wingkwong ,
+I have added the test here, maybe you can have a look at this again?\n- wingkwong: will do\n- vercel: [vc]: #VIc9dJFJMtUdLAYDlTyn1fSCi6/evpBMPybMUOerkWA=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvTXU3VllxU2ZCQTYydmQ3cVNVamFBdzhCTnFKWCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAtYTE3YmUzLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAtYTE3YmUzLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi8zVjRDU2RGTGkyWEFXcTZCNHVVQWNpcnFQQ1RMIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAxLW1vZC0yYzM1MDQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAxLW1vZC0yYzM1MDQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/3V4CSdFLi2XAWq6B4uUAcirqPCTL)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-macci001-macci001-mod-2c3504-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-macci001-macci001-mod-2c3504-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 10, 2024 1:00pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/Mu7VYqSfBA62vd7qSUjaAw8BNqJX)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-macci001-macci00-a17be3-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-macci001-macci00-a17be3-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 10, 2024 1:00pm |
+
+
+\n- macci001: Applied the suggestions in: fadddd6d9c17defe23f1e285c20e7a7a0ddd9154
+<img width="345" alt="Screenshot 2024-09-09 at 4 43 23 PM" src="https://github.com/user-attachments/assets/2e203700-942a-4a69-90c1-e958bf18550a">
+// cc @wingkwong \n- wingkwong: @macci001 can you explain a bit why we need to include `packages/components/date-input/intl/messages.ts`? supposedly this should be handled in RA side instead of us hardcoding it (?)\n- macci001: Browser is responsible for the content of the validation messages and RA has no role to play in it. So in-order to cutomize error message based on the locale provided, we need to handle it by our self.
+For ref: https://github.com/adobe/react-spectrum/issues/6227#issuecomment-2066892432
+// cc @wingkwong \n- wingkwong: Got it. Lemme take a look later\n- devongovett: Hi, we consulted our globalization team, and decided not to change anything in React Aria. These validation error messages come from the browser, so they will be in the user's browser language setting (e.g. `navigator.langauge`). Unfortunately we don't have any control over that, so it cannot respect the `IntlProvider` setting. We decided that it was not worth the bundle size cost of including our own localized strings for every possible form error message (there are a lot). In most cases for real users, the browser locale and app-level language setting will match so we don't think this will be a common enough issue to justify the cost. If it is a real problem in your specific application then you can provide your own custom validation messages.\n- ryo-manba: Thanks @devongovett , for the clarification and your team's work on this.
+I’ll go ahead and close this PR now.\n
+
+Files Changed:
+- .changeset/calm-kids-visit.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/date-input": patch
++---
++
++The Date mentioned in the Error message of the date-picker is not according to the Locale. This PR adds an layer to the validationError to ensure correct formatting date in error messages.\n- packages/components/date-input/__tests__/date-input.test.tsx (modified, 55 changes)\n  Patch: @@ -1,9 +1,16 @@
+ /* eslint-disable jsx-a11y/no-autofocus */
+ import * as React from "react";
+ import {act, fireEvent, render} from "@testing-library/react";
+-import {CalendarDate, CalendarDateTime, DateValue, ZonedDateTime} from "@internationalized/date";
++import {
++  CalendarDate,
++  CalendarDateTime,
++  DateValue,
++  ZonedDateTime,
++  parseDate,
++} from "@internationalized/date";
+ import {pointerMap, triggerPress} from "@nextui-org/test-utils";
+ import userEvent from "@testing-library/user-event";
++import {I18nProvider} from "@react-aria/i18n";
+ 
+ import {DateInput as DateInputBase, DateInputProps} from "../src";
+ 
+@@ -174,6 +181,52 @@ describe("DateInput", () => {
+         }
+       }
+     });
++
++    it("should support error message with MinDateValue according to locale", function () {
++      const minValue = "2024-04-04";
++      const locale = "hi-IN-u-ca-indian";
++      let {getByRole} = render(
++        <I18nProvider locale={locale}>
++          <DateInput
++            defaultValue={parseDate("2024-04-03")}
++            label="Date"
++            minValue={parseDate(minValue)}
++          />
++        </I18nProvider>,
++      );
++
++      let group = getByRole("group");
++
++      expect(group).toHaveAttribute("aria-describedby");
++
++      const errorComponent = document.querySelector("[data-slot=error-message]");
++      const localeBasedDate = new Date(minValue).toLocaleDateString(locale);
++
++      expect(errorComponent).toHaveTextContent(localeBasedDate);
++    });
++
++    it("should support error message with MaxDateValue according to locale", function () {
++      const maxValue = "2024-04-04";
++      const locale = "hi-IN-u-ca-indian";
++      let {getByRole} = render(
++        <I18nProvider locale={locale}>
++          <DateInput
++            defaultValue={parseDate("2024-04-05")}
++            label="Date"
++            maxValue={parseDate(maxValue)}
++          />
++        </I18nProvider>,
++      );
++
++      let group = getByRole("group");
++
++      expect(group).toHaveAttribute("aria-describedby");
++
++      const errorComponent = document.querySelector("[data-slot=error-message]");
++      const localeBasedDate = new Date(maxValue).toLocaleDateString(locale);
++
++      expect(errorComponent).toHaveTextContent(localeBasedDate);
++    });
+   });
+ 
+   describe("Events", function () {\n- packages/components/date-input/intl/messages.ts (added, 172 changes)\n  Patch: @@ -0,0 +1,172 @@
++export default {
++  "ar-AE": {
++    minValidationMessage: "يجب أن تكون القيمة {date} أو بعد ذلك.",
++    maxValidationMessage: "يجب أن تكون القيمة {date} أو قبل ذلك.",
++    badInputMessage: "التاريخ المحدد غير متوفر.",
++  },
++  "bg-BG": {
++    minValidationMessage: "Стойността трябва да бъде {date} или по-късно.",
++    maxValidationMessage: "Стойността трябва да бъде {date} или по-рано.",
++    badInputMessage: "Избраното дата не е налична.",
++  },
++  "cs-CZ": {
++    minValidationMessage: "Hodnota musí být {date} nebo později.",
++    maxValidationMessage: "Hodnota musí být {date} nebo dříve.",
++    badInputMessage: "Vybraný datum není k dispozici.",
++  },
++  "da-DK": {
++    minValidationMessage: "Værdien skal være {date} eller senere.",
++    maxValidationMessage: "Værdien skal være {date} eller tidligere.",
++    badInputMessage: "Valgt dato er ikke tilgængelig.",
++  },
++  "de-DE": {
++    minValidationMessage: "Der Wert muss {date} oder später sein.",
++    maxValidationMessage: "Der Wert muss {date} oder früher sein.",
++    badInputMessage: "Ausgewähltes Datum nicht verfügbar.",
++  },
++  "el-GR": {
++    minValidationMessage: "Η τιμή πρέπει να είναι {date} ή αργότερα.",
++    maxValidationMessage: "Η τιμή πρέπει να είναι {date} ή νωρίτερα.",
++    badInputMessage: "Επιλεγμένη ημερομηνία μη διαθέσιμη.",
++  },
++  "en-US": {
++    minValidationMessage: "Value must be {date} or later.",
++    maxValidationMessage: "Value must be {date} or earlier.",
++    badInputMessage: "Selected date unavailable.",
++  },
++  "es-ES": {
++    minValidationMessage: "El valor debe ser {date} o posterior.",
++    maxValidationMessage: "El valor debe ser {date} o anterior.",
++    badInputMessage: "Fecha seleccionada no disponible.",
++  },
++  "et-EE": {
++    minValidationMessage: "Väärtus peab olema {date} või hiljem.",
++    maxValidationMessage: "Väärtus peab olema {date} või varem.",
++    badInputMessage: "Valitud kuupäev ei ole saadaval.",
++  },
++  "fi-FI": {
++    minValidationMessage: "Arvon on oltava {date} tai myöhemmin.",
++    maxValidationMessage: "Arvon on oltava {date} tai aikaisemmin.",
++    badInputMessage: "Valittu päivämäärä ei ole saatavilla.",
++  },
++  "fr-FR": {
++    minValidationMessage: "La valeur doit être {date} ou ultérieure.",
++    maxValidationMessage: "La valeur doit être {date} ou antérieure.",
++    badInputMessage: "Date sélectionnée non disponible.",
++  },
++  "he-IL": {
++    minValidationMessage: "הערך חייב להיות {date} או מאוחר יותר.",
++    maxValidationMessage: "הערך חייב להיות {date} או קודם.",
++    badInputMessage: "התאריך שנבחר אינו זמין.",
++  },
++  "hr-HR": {
++    minValidationMessage: "Vrijednost mora biti {date} ili kasnije.",
++    maxValidationMessage: "Vrijednost mora biti {date} ili ranije.",
++    badInputMessage: "Odabrani datum nije dostupan.",
++  },
++  "hu-HU": {
++    minValidationMessage: "Az értéknek {date} vagy későbbi kell lennie.",
++    maxValidationMessage: "Az értéknek {date} vagy korábbi kell lennie.",
++    badInputMessage: "Kiválasztott dátum nem elérhető.",
++  },
++  "it-IT": {
++    minValidationMessage: "Il valore deve essere {date} o successivo.",
++    maxValidationMessage: "Il valore deve essere {date} o precedente.",
++    badInputMessage: "Data selezionata non disponibile.",
++  },
++  "ja-JP": {
++    minValidationMessage: "値は{date}以降でなければなりません。",
++    maxValidationMessage: "{date}以前でなければなりません。",
++    badInputMessage: "選択された日付は利用できません。",
++  },
++  "ko-KR": {
++    minValidationMessage: "{date} 이후여야 합니다.",
++    maxValidationMessage: "{date} 이전이어야 합니다.",
++    badInputMessage: "선택한 날짜는 사용 불가능합니다.",
++  },
++  "lt-LT": {
++    minValidationMessage: "Vertė turi būti {date} arba vėliau.",
++    maxValidationMessage: "Vertė turi būti {date} arba ankstesnė.",
++    badInputMessage: "Pasirinkta data nėra prieinama.",
++  },
++  "lv-LV": {
++    minValidationMessage: "Vērtībai jābūt {date} vai vēlāk.",
++    maxValidationMessage: "Vērtībai jābūt {date} vai agrāk.",
++    badInputMessage: "Izvēlētā datums nav pieejams.",
++  },
++  "nb-NO": {
++    minValidationMessage: "Verdien må være {date} eller senere.",
++    maxValidationMessage: "Verdien må være {date} eller tidligere.",
++    badInputMessage: "Valgt dato er ikke tilgjengelig.",
++  },
++  "nl-NL": {
++    minValidationMessage: "De waarde moet {date} of later zijn.",
++    maxValidationMessage: "De waarde moet {date} of eerder zijn.",
++    badInputMessage: "Geselecteerde datum niet beschikbaar.",
++  },
++  "pl-PL": {
++    minValidationMessage: "Wartość musi być {date} lub późniejsza.",
++    maxValidationMessage: "Wartość musi być {date} lub wcześniejsza.",
++    badInputMessage: "Wybrana data jest niedostępna.",
++  },
++  "pt-BR": {
++    minValidationMessage: "O valor deve ser {date} ou posterior.",
++    maxValidationMessage: "O valor deve ser {date} ou anterior.",
++    badInputMessage: "Data selecionada não disponível.",
++  },
++  "pt-PT": {
++    minValidationMessage: "O valor deve ser {date} ou mais tarde.",
++    maxValidationMessage: "O valor deve ser {date} ou antes.",
++    badInputMessage: "Data selecionada não disponível.",
++  },
++  "ro-RO": {
++    minValidationMessage: "Valoarea trebuie să fie {date} sau mai târziu.",
++    maxValidationMessage: "Valoarea trebuie să fie {date} sau mai devreme.",
++    badInputMessage: "Data selectată nu este disponibilă.",
++  },
++  "ru-RU": {
++    minValidationMessage: "Значение должно быть {date} или позже.",
++    maxValidationMessage: "Значение должно быть {date} или раньше.",
++    badInputMessage: "Выбранная дата недоступна.",
++  },
++  "sk-SK": {
++    minValidationMessage: "Hodnota musí byť {date} alebo neskôr.",
++    maxValidationMessage: "Hodnota musí byť {date} alebo skôr.",
++    badInputMessage: "Vybraný dátum nie je k dispozícii.",
++  },
++  "sl-SI": {
++    minValidationMessage: "Vrednost mora biti {date} ali kasneje.",
++    maxValidationMessage: "Vrednost mora biti {date} ali prej.",
++    badInputMessage: "Izbrani datum ni na voljo.",
++  },
++  "sr-SP": {
++    minValidationMessage: "Vrednost mora biti {date} ili kasnije.",
++    maxValidationMessage: "Vrednost mora biti {date} ili ranije.",
++    badInputMessage: "Izabrani datum nije dostupan.",
++  },
++  "sv-SE": {
++    minValidationMessage: "Värdet måste vara {date} eller senare.",
++    maxValidationMessage: "Värdet måste vara {date} eller tidigare.",
++    badInputMessage: "Vald datum är inte tillgänglig.",
++  },
++  "tr-TR": {
++    minValidationMessage: "Değer {date} veya sonrasında olmalıdır.",
++    maxValidationMessage: "Değer {date} veya daha önce olmalıdır.",
++    badInputMessage: "Seçilen tarih kullanılamıyor.",
++  },
++  "uk-UA": {
++    minValidationMessage: "Значення повинно бути {date} або пізніше.",
++    maxValidationMessage: "Значення повинно бути {date} або раніше.",
++    badInputMessage: "Вибрана дата недоступна.",
++  },
++  "zh-CN": {
++    minValidationMessage: "值必须为 {date} 或更晚。",
++    maxValidationMessage: "值必须为 {date} 或更早。",
++    badInputMessage: "选择的日期不可用。",
++  },
++  "zh-TW": {
++    minValidationMessage: "值必須為 {date} 或更晚。",
++    maxValidationMessage: "值必須為 {date} 或更早。",
++    badInputMessage: "選擇的日期不可用。",
++  },
++};\n- packages/components/date-input/src/use-date-input.ts (modified, 44 changes)\n  Patch: @@ -6,7 +6,7 @@ import type {ReactRef} from "@nextui-org/react-utils";
+ import type {DOMAttributes, GroupDOMAttributes} from "@react-types/shared";
+ import type {DateInputGroupProps} from "./date-input-group";
+ 
+-import {useLocale} from "@react-aria/i18n";
++import {useLocale, useLocalizedStringFormatter} from "@react-aria/i18n";
+ import {createCalendar, CalendarDate, DateFormatter} from "@internationalized/date";
+ import {mergeProps} from "@react-aria/utils";
+ import {PropGetter, useProviderContext} from "@nextui-org/system";
+@@ -18,6 +18,8 @@ import {objectToDeps, clsx, dataAttr, getGregorianYearOffset} from "@nextui-org/
+ import {dateInput, cn} from "@nextui-org/theme";
+ import {useMemo} from "react";
+ 
++import intlMessages from "../intl/messages";
++
+ type NextUIBaseProps<T extends DateValue> = Omit<
+   HTMLNextUIProps<"div">,
+   keyof AriaDateFieldProps<T> | "onChange"
+@@ -184,6 +186,46 @@ export function useDateInput<T extends DateValue>(originalProps: UseDateInputPro
+     isInvalid: ariaIsInvalid,
+   } = useAriaDateField({...originalProps, label, validationBehavior, inputRef}, state, domRef);
+ 
++  const stringFormatter = useLocalizedStringFormatter(intlMessages);
++
++  if (props.minValue != undefined && validationDetails.rangeUnderflow) {
++    const minValueDate = new Date(
++      minValue.year,
++      minValue.month - 1,
++      minValue.day,
++    ).toLocaleDateString(locale);
++    const timeZone =
++      state.segments.filter((segment) => segment.type === "timeZoneName")[0]?.text ?? "";
++    const rangeUnderflow = stringFormatter
++      .format("minValidationMessage")
++      .replace("{date}", `${minValueDate} ${timeZone}`);
++
++    validationErrors.splice(0, 1, rangeUnderflow);
++  }
++
++  if (props.maxValue != undefined && validationDetails.rangeOverflow) {
++    const maxValueDate = new Date(
++      maxValue.year,
++      maxValue.month - 1,
++      maxValue.day,
++    ).toLocaleDateString(locale);
++    const timeZone =
++      state.segments.filter((segment) => segment.type === "timeZoneName")[0]?.text ?? "";
++
++    const rangeOverflow = stringFormatter
++      .format("maxValidationMessage")
++      .replace("{date}", `${maxValueDate} ${timeZone}`);
++
++    validationErrors.splice(0, 1, rangeOverflow);
++  }
++
++  if (validationDetails.badInput) {
++    const badInputMessage = stringFormatter.format("badInputMessage");
++    const indexInValidationErrors = validationErrors.length - 1;
++
++    validationErrors.splice(indexInValidationErrors, 1, badInputMessage);
++  }
++
+   const baseStyles = clsx(classNames?.base, className);
+ 
+   const isInvalid = isInvalidProp || ariaIsInvalid;\n

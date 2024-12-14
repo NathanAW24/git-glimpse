@@ -1,0 +1,203 @@
+Pull Request Number: 460
+Title: Fix 456/unblurred menu bar firefox
+Base Branch: next
+Head Branch: fix_456/unblurred-menu-bar-firefox
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/460
+State: MERGED
+Created At: 2022-05-08T12:52:46Z
+Merged At: 2022-05-08T12:59:27Z
+Participants: jrgarciadev
+
+Description:
+Closes #456
+📝 Description
+Due to the backdrop-filter property doesn't work on firefox, a workaround was implemented
+⛳️ Current behavior (updates)
+Blurred parts are displayed with transparency only on Firefox
+🚀 New behavior
+
+docs: Navbar, Search box, Cards and other elements were modified to display a solid color instead of a blurred background on Firefox
+modal: The backdrop component was modified to display a background with transparency instead of a blurred background, only on Firefox (or browsers where the backdrop-filter property is not supported)
+
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(docs): blurred parts were replaced by solid colors on firefox\n- fix(react-modal): blurred modal background has been replaced by solid color on firefox\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/src/components/hero/index.tsx (modified, 8 changes)\n  Patch: @@ -123,8 +123,12 @@ const Hero: React.FC = () => {
+                   transition: 'opacity 0.3s ease-in-out',
+                   dflex: 'center',
+                   boxShadow: '$sm',
+-                  bf: 'saturate(180%) blur(10px)',
+-                  bg: '$backgroundBlur',
++                  bg: '$backgroundContrast',
++                  '@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none))':
++                    {
++                      bf: 'saturate(180%) blur(10px)',
++                      bg: '$backgroundBlur'
++                    },
+                   '@xsMax': {
+                     width: '100%'
+                   }\n- apps/docs/src/components/mobile-navigation/index.tsx (modified, 13 changes)\n  Patch: @@ -76,9 +76,16 @@ const MobileNavigation: React.FC<Props> = ({
+               display: none;
+               width: 100%;
+               min-height: 100%;
+-              background: var(--nextui-colors-menuBackground);
+-              backdrop-filter: saturate(180%) blur(10px);
+-              --webkit-backdrop-filter: saturate(180%) blur(10px);
++              background: var(--nextui-colors-background);
++            }
++            @supports (
++              (-webkit-backdrop-filter: none) or (backdrop-filter: none)
++            ) {
++              .mobile-navigation__wrapper {
++                background: var(--nextui-colors-menuBackground);
++                backdrop-filter: saturate(180%) blur(10px);
++                --webkit-backdrop-filter: saturate(180%) blur(10px);
++              }
+             }
+             .mobile-navigation__list {
+               margin: 0;\n- apps/docs/src/components/primitives/index.ts (modified, 7 changes)\n  Patch: @@ -128,8 +128,11 @@ export const StyledCardBlur = styled('div', {
+   display: 'flex',
+   flexDirection: 'column',
+   p: '$8',
+-  bf: 'saturate(180%) blur(14px)',
+-  bg: 'rgba(255, 255, 255, 0.05)'
++  bg: '$backgroundContrast',
++  '@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none))': {
++    bf: 'saturate(180%) blur(14px)',
++    bg: 'rgba(255, 255, 255, 0.05)'
++  }
+ });
+ 
+ export const StyledImg = styled('img', {});\n- apps/docs/src/components/search/autocomplete.tsx (modified, 13 changes)\n  Patch: @@ -357,8 +357,17 @@ const Autocomplete: React.FC<Props> = ({ hits, refine, offsetTop }) => {
+           .search__input-container,
+           .react-autosuggest__suggestions-container,
+           .no-results {
+-            backdrop-filter: saturate(180%) blur(10px) !important;
+-            background: ${addColorAlpha(theme?.colors?.accents1?.value, 0.7)};
++            background: var(--nextui-colors-accents0);
++          }
++          @supports (
++            (-webkit-backdrop-filter: none) or (backdrop-filter: none)
++          ) {
++            .search__input-container,
++            .react-autosuggest__suggestions-container,
++            .no-results {
++              backdrop-filter: saturate(180%) blur(10px) !important;
++              background: ${addColorAlpha(theme?.colors?.accents1?.value, 0.7)};
++            }
+           }
+           .search__input-container {
+             z-index: 9999;\n- apps/docs/src/layouts/styles.ts (modified, 6 changes)\n  Patch: @@ -18,7 +18,11 @@ export const StyledNavContainer = styled('div', {
+   variants: {
+     showBlur: {
+       true: {
+-        background: '$headerBackground'
++        background: '$background',
++        '@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none))':
++          {
++            background: '$headerBackground'
++          }
+       }
+     },
+     detached: {\n- packages/react/src/backdrop/backdrop.styles.ts (modified, 14 changes)\n  Patch: @@ -56,10 +56,16 @@ export const StyledBackdropLayer = styled('div', {
+   variants: {
+     blur: {
+       true: {
+-        opacity: 1,
+-        transition: 'background 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+-        backdropFilter: 'saturate(180%) blur(20px)',
+-        bg: 'rgba(0, 0, 0, 0.1)'
++        bg: '$black',
++        opacity: '$$backdropOpacity',
++        transition: 'opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
++        '@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none))':
++          {
++            opacity: 1,
++            transition: 'background 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
++            backdropFilter: 'saturate(180%) blur(20px)',
++            bg: 'rgba(0, 0, 0, 0.1)'
++          }
+       },
+       false: {
+         bg: '$black',\n- packages/react/src/modal/modal.stories.tsx (modified, 66 changes)\n  Patch: @@ -741,3 +741,69 @@ export const FullScreen = () => {
+     </div>
+   );
+ };
++
++export const Blur = () => {
++  const [visible, setVisible] = React.useState(false);
++  const handler = () => setVisible(true);
++  const closeHandler = () => {
++    setVisible(false);
++    console.log('closed');
++  };
++  return (
++    <div>
++      <Button auto color="warning" shadow onClick={handler}>
++        Open modal
++      </Button>
++      <Modal
++        closeButton
++        blur
++        aria-labelledby="modal-title"
++        open={visible}
++        onClose={closeHandler}
++      >
++        <Modal.Header>
++          <Text id="modal-title" size={18}>
++            Welcome to
++            <Text b size={18}>
++              NextUI
++            </Text>
++          </Text>
++        </Modal.Header>
++        <Modal.Body>
++          <Input
++            clearable
++            bordered
++            fullWidth
++            color="primary"
++            size="lg"
++            placeholder="Email"
++            contentLeft={<Mail fill="currentColor" />}
++          />
++          <Input
++            clearable
++            bordered
++            fullWidth
++            color="primary"
++            size="lg"
++            placeholder="Password"
++            contentLeft={<Password fill="currentColor" />}
++          />
++          <Row justify="space-between">
++            <Checkbox>
++              <Text size={14}>Remember me</Text>
++            </Checkbox>
++            <Text size={14}>Forgot password?</Text>
++          </Row>
++        </Modal.Body>
++        <Modal.Footer>
++          <Button auto flat color="error" onClick={closeHandler}>
++            Close
++          </Button>
++          <Button auto onClick={closeHandler}>
++            Sign in
++          </Button>
++        </Modal.Footer>
++      </Modal>
++    </div>
++  );
++};\n

@@ -1,0 +1,655 @@
+Pull Request Number: 3748
+Title: feat(input-otp): Adding Input OTP component
+Base Branch: macci001/eng-1537
+Head Branch: macci001/add-input-otp-component
+Author: macci001
+URL: https://github.com/nextui-org/nextui/pull/3748
+State: MERGED
+Created At: 2024-09-13T14:29:17Z
+Merged At: 2024-11-14T19:26:24Z
+Participants: macci001, wingkwong, jrgarciadev
+
+Description:
+Closes #2678
+📝 Description
+
+PR adds the input-otp componenet
+
+⛳️ Current behavior (updates)
+
+Currently NextUI do not have input-otp component.
+
+🚀 New behavior
+
+
+Default Color- Dark
+
+
+
+Primary Color- Dark
+
+
+
+Secondary Color- Dark
+
+
+
+Warning Color- Dark
+
+
+
+Danger Color- Dark
+
+
+
+Default Color- Light
+
+
+
+Primary Color- Light
+
+
+
+Secondary Color- Light
+
+
+
+Warning Color- Light
+
+
+
+Danger Color- Light
+
+
+
+
+input-otp gets added.
+
+💣 Is this a breaking change (Yes/No): no
+📝 Additional Information
+
+Summary by CodeRabbit
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced a new input-otp component for easier one-time password entry.
+Automatic focus on the next input field and input length validation enhance usability.
+Integrated with existing themes for a consistent design.
+Customizable properties for appearance, including variants and sizes.
+
+
+
+Tests
+
+Added unit tests to validate the functionality of the input-otp component.
+
+
+
+Documentation
+
+Created a README for the input-otp component to assist users.
+Added comprehensive documentation detailing functionality and customization options.
+
+Commits:
+- feat(input-otp): adding the functionality\n- fix(input-otp): making the use of input-otp library\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 0eab6a129edb1c0d325e1a9a931c355727827d7b
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                  | Type  |
+| --------------------- | ----- |
+| @nextui-org/input-otp | Minor |
+| @nextui-org/theme     | Minor |
+| @nextui-org/react     | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/macci001/nextui/new/macci001/add-input-otp-component?filename=.changeset/cool-rice-tie.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Afeat(input-otp)%3A%20Adding%20Input%20OTP%20component%0A)
+
+\n- vercel: Someone is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22385166e5894e4128681a4b1aa0a532f57d218d38%22%7D%2C%22id%22%3A%22QmPtEjwnnEmeH85y4DqBkDFDwaMV7rH8gWPUTZQczT5TXH%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3748%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: review paused by coderabbit.ai -->
+
+> [!NOTE]
+> ## Reviews paused
+> 
+> Use the following commands to manage reviews:
+> - `@coderabbitai resume` to resume automatic reviews.
+> - `@coderabbitai review` to trigger a single review.
+
+<!-- end of auto-generated comment: review paused by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This update introduces a new `input-otp` component to the project, designed for user-friendly entry of one-time passwords (OTPs). It features automatic focus management, input validation, and visual feedback, ensuring a consistent design with existing themes. A suite of unit tests is included to validate the component's functionality and integration with React Hook Form. Additionally, documentation and package configuration are provided for the new component.
+
+## Changes
+
+| File(s)                                                                                          | Change Summary                                                                                          |
+|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| .changeset/spotty-flies-jump.md                                                                  | Added AI-generated summary of changes.                                                                 |
+| packages/components/input-otp/src/input-otp.tsx                                                  | Added `InputOtp` component with focus management and input handling.                                   |
+| packages/components/input-otp/src/use-input-otp.ts                                               | Added `useInputOtp` hook for managing OTP input logic.                                                |
+| packages/components/input-otp/stories/input-otp.stories.tsx                                     | Added Storybook configuration for `InputOtp` component.                                               |
+| packages/components/input-otp/package.json                                                        | Added package configuration for `@nextui-org/input-otp`.                                              |
+| packages/components/input-otp/README.md                                                           | Added documentation for `input-otp` component.                                                         |
+| packages/core/theme/src/components/input-otp.ts                                                  | Added theming support for `input-otp`.                                                                 |
+| index.ts                                                                                          | Updated exports for `InputOtp` and related types.                                                     |
+| packages/core/theme/src/components/input-otp.ts                                                  | Added types and configurations for theming the `input-otp` component.                                 |
+| apps/docs/content/docs/components/input-otp.mdx                                                  | Added detailed documentation for the `InputOtp` component.                                            |
+| routes.json                                                                                       | Added new entry for `input-otp` documentation.                                                        |
+| New files in `packages/components/input-otp`: `allowedKeys.ts`, `colors.ts`, `controlled.ts`, etc. | Introduced various utility files for the `InputOtp` component configurations and usage.              |
+
+## Sequence Diagram(s)
+```mermaid
+sequenceDiagram
+    participant User
+    participant InputOtp
+    participant Form
+
+    User->>InputOtp: Enter OTP digit
+    InputOtp->>InputOtp: Validate input
+    InputOtp->>InputOtp: Focus next input field
+    InputOtp->>Form: Submit OTP
+    Form->>Form: Process OTP
+```
+
+## Assessment against linked issues
+
+| Objective                                      | Addressed | Explanation                                      |
+|------------------------------------------------|-----------|--------------------------------------------------|
+| Introduce `input-otp` component (#[2678])     | ✅        |                                                  |
+| Facilitate OTP input for user-friendly access (#[2678]) | ✅        |                                                  |
+
+## Possibly related PRs
+- #2038: This PR improves RTL support for input components, which may relate to the `input-otp` component's usability in different text directions.
+- #3106: This PR supplements validation behavior, which could be relevant to the validation features introduced in the `input-otp` component.
+- #3533: This PR addresses synchronization issues between ref values and internal state in input components, which is directly related to the functionality of the `input-otp` component.
+- #3643: This PR ensures that the clear button is not focusable when the input is disabled, which is relevant to the user experience of the `input-otp` component.
+- #3768: This PR fixes the `fullWidth` functionality in input components, which may impact how the `input-otp` component behaves in terms of layout.
+
+## Suggested labels
+`📋 Scope : Docs`, `👀 Status: In Review`
+
+## Suggested reviewers
+- wingkwong
+- jrgarciadev
+
+<!-- walkthrough_end -->
+
+<!-- internal state start -->
+
+
+<!-- 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= -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- macci001: @coderabbitai full review\n- coderabbitai: <!-- This is an auto-generated reply by CodeRabbit -->
+
+
+<details>
+<summary>Actions performed</summary>
+
+Full review triggered.
+
+</details>\n- vercel: [vc]: #BN199iFEG/gMH9RYpqugUyblCbC5E8nOn35AXVuiIGE=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvOTNRQ3FTRWJoUlRCd0VnUWVvRVZNTjVaS0M1TCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAtYmJhOWRmLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1hY2NpMDAxLW1hY2NpMDAtYmJhOWRmLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9HVHdlMlM0NktKdFlYbmg1VUUxN3dpSjdTWWREIiwicHJldmlld1VybCI6IiIsIm5leHRDb21taXRTdGF0dXMiOiJGQUlMRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoiIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/GTwe2S46KJtYXnh5UE17wiJ7SYdD)) |  |  | Oct 4, 2024 11:40am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/93QCqSEbhRTBwEgQeoEVMN5ZKC5L)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-macci001-macci00-bba9df-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-macci001-macci00-bba9df-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 4, 2024 11:40am |
+
+
+\n- macci001: Applied the comments in [a168061](https://github.com/nextui-org/nextui/commit/a1680612a43420a2597ee92f3c627fa2aac052f1).
+
+Will add the documentation as well.
+
+Also talking about keyboard left/right navigation, I thought it would be nice UX that whenever a user selects the input-otp component, the segment which needs to be filled will be in focus automatically and they can either add or remove the OTP restricting them not to navigate, given the length of the OTP is usually small. Also most of the UI libraries follows this pattern and the current implementation was done keeping this in mind.
+
+// @wingkwong \n- macci001: Comments are addressed(a1680612a43420a2597ee92f3c627fa2aac052f1) and docs are added(bc5286c076e6088f7a5e4a86136c177651ea10d3)
+The PR is ready for the next round of review.
+
+@wingkwong, can you please have look at the PR again? 
+\n- macci001: Added the suggestions mentioned in [comment](https://github.com/nextui-org/nextui/pull/3748#pullrequestreview-2334880072) in https://github.com/nextui-org/nextui/commit/cab6a940e04a8e4d75fd89529b1dafb6bbc33a5c
+Just one concern regarding following suggestion:
+- in Required, the error message the field is required only shows when there is no input. I think it should also show when the input is not completed (e.g. enter 3 characters in inputOtp with length of 4)
+For the above scenario, wouldn't it make sense that input-otp will have `required` error if nothing is passed. But if the input passed is lesser then the length of the OTP,  `tooShort` error is passed. Attaching the video-clip below:
+
+https://github.com/user-attachments/assets/4f2ba716-fb15-414a-be4c-4761f0d8213b
+\n- wingkwong: I second that. However, the message should be configurable. Also please refer to input component to see validationBehaviour.\n- macci001: The current input-otp component handles the validation behaviour similar to input component. We can configure the error-message by `errorMessage` prop, so did I miss anything as you mentioned  `should be configurable` in previous comment \n- wingkwong: if so, then it's all good. Just a reminder only. I haven't checked the code in detail yet. \n- wingkwong: just an update. we're finalising the design. can you DM me at discord with your email address?\n- macci001: @coderabbitai pause\n- coderabbitai: <!-- This is an auto-generated reply by CodeRabbit -->
+
+
+<details>
+<summary>:white_check_mark: Actions performed</summary>
+
+Reviews paused.
+
+</details>\n- wingkwong: UPD: the design is finalised. please refer to the figma I shared to you in discord and update accordingly. thanks.\n- jrgarciadev: Hey @macci001 please fix the conflicts\n
+
+Files Changed:
+- .changeset/spotty-flies-jump.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/input-otp": minor
++"@nextui-org/theme": minor
++---
++
++Adding new input-otp component.\n- apps/docs/config/routes.json (modified, 7 changes)\n  Patch: @@ -273,6 +273,13 @@
+           "keywords": "input, text box, form field, data entry",
+           "path": "/docs/components/input.mdx"
+         },
++        {
++          "key": "input-otp",
++          "title": "Input OTP",
++          "keywords": "input, otp, auth",
++          "path": "/docs/components/input-otp.mdx",
++          "newPost": true
++        },
+         {
+           "key": "kbd",
+           "title": "Kbd",\n- apps/docs/content/components/dropdown/variants.raw.jsx (added, 0 changes)\n  Patch: No patch available\n- apps/docs/content/components/index.ts (modified, 1 changes)\n  Patch: @@ -18,6 +18,7 @@ export * from "./user";
+ export * from "./skeleton";
+ export * from "./snippet";
+ export * from "./input";
++export * from "./input-otp";
+ export * from "./textarea";
+ export * from "./image";
+ export * from "./radio-group";\n- apps/docs/content/components/input-otp/allowed-keys.raw.jsx (added, 22 changes)\n  Patch: @@ -0,0 +1,22 @@
++import {InputOtp} from "@nextui-org/react";
++
++export default function App() {
++  const exps = [
++    {
++      name: "For below InputOtp, only lower-case alphabets (a to z) are allowed:",
++      value: "^[a-z]*$",
++    },
++    {name: "For below InputOtp, only upper-case alphabets(A to Z) are allowed:", value: "^[A-Z]*$"},
++  ];
++
++  return (
++    <div className="w-full flex flex-wrap gap-6">
++      {exps.map((exp, idx) => (
++        <div key={idx} className="flex w-full flex-col flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
++          <div className="text-foreground/60">{exp.name}</div>
++          <InputOtp allowedKeys={exp.value} length={4} />
++        </div>
++      ))}
++    </div>
++  );
++}\n- apps/docs/content/components/input-otp/allowed-keys.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./allowed-keys.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/input-otp/colors.raw.jsx (added, 19 changes)\n  Patch: @@ -0,0 +1,19 @@
++import {InputOtp} from "@nextui-org/react";
++
++export default function App() {
++  const colors = ["default", "primary", "secondary", "success", "warning", "danger"];
++
++  return (
++    <div className="w-full flex flex-wrap gap-6">
++      {colors.map((color) => (
++        <div
++          key={color}
++          className="inline-flex flex-col flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4"
++        >
++          <div className="text-foreground/60">color: {color}</div>
++          <InputOtp color={color} length={4} />
++        </div>
++      ))}
++    </div>
++  );
++}\n- apps/docs/content/components/input-otp/colors.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./colors.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/input-otp/controlled.raw.jsx (added, 13 changes)\n  Patch: @@ -0,0 +1,13 @@
++import {InputOtp} from "@nextui-org/react";
++import React from "react";
++
++export default function App() {
++  const [value, setValue] = React.useState("");
++
++  return (
++    <div className="w-full flex flex-col gap-2 max-w-[240px]">
++      <InputOtp length={4} value={value} onValueChange={setValue} />
++      <p className="text-default-500 text-small">InputOtp value: {value}</p>
++    </div>
++  );
++}\n- apps/docs/content/components/input-otp/controlled.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./controlled.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/input-otp/description.raw.jsx (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import {InputOtp} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <InputOtp description="This is description to the OTP component." length={4} />
++    </div>
++  );
++}\n- apps/docs/content/components/input-otp/description.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./description.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/input-otp/disabled.raw.jsx (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import {InputOtp} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <InputOtp isDisabled defaultValue="123" length={4} />
++    </div>
++  );
++}\n- apps/docs/content/components/input-otp/disabled.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./disabled.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/input-otp/error-message.raw.jsx (added, 13 changes)\n  Patch: @@ -0,0 +1,13 @@
++import {InputOtp} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <InputOtp
++        isInvalid
++        errorMessage="This is custom error message for the OTP component."
++        length={4}
++      />
++    </div>
++  );
++}\n- apps/docs/content/components/input-otp/error-message.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./error-message.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/input-otp/index.ts (added, 29 changes)\n  Patch: @@ -0,0 +1,29 @@
++import usage from "./usage";
++import disabled from "./disabled";
++import readonly from "./readonly";
++import required from "./required";
++import sizes from "./sizes";
++import colors from "./colors";
++import variants from "./variants";
++import radius from "./radius";
++import description from "./description";
++import errorMessage from "./error-message";
++import allowedKeys from "./allowed-keys";
++import controlled from "./controlled";
++import password from "./password";
++
++export const inputOtpContent = {
++  usage,
++  disabled,
++  readonly,
++  required,
++  sizes,
++  colors,
++  variants,
++  radius,
++  description,
++  errorMessage,
++  allowedKeys,
++  controlled,
++  password,
++};\n- apps/docs/content/components/input-otp/password.raw.jsx (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import {InputOtp} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <InputOtp length={4} type="password" />
++    </div>
++  );
++}\n- apps/docs/content/components/input-otp/password.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./password.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/input-otp/radius.raw.jsx (added, 19 changes)\n  Patch: @@ -0,0 +1,19 @@
++import {InputOtp} from "@nextui-org/react";
++
++export default function App() {
++  const radiusValues = ["none", "sm", "md", "lg", "full"];
++
++  return (
++    <div className="w-full flex flex-wrap gap-6">
++      {radiusValues.map((radius) => (
++        <div
++          key={radius}
++          className="inline-flex flex-col flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4"
++        >
++          <div className="text-foreground/60">radius: {radius}</div>
++          <InputOtp length={4} radius={radius} />
++        </div>
++      ))}
++    </div>
++  );
++}\n- apps/docs/content/components/input-otp/radius.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./radius.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/input-otp/readonly.raw.jsx (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import {InputOtp} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <InputOtp isReadOnly defaultValue={1234} length={4} />
++    </div>
++  );
++}\n- apps/docs/content/components/input-otp/readonly.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./readonly.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/input-otp/required.raw.jsx (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import {InputOtp} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <InputOtp isRequired length={4} />
++    </div>
++  );
++}\n- apps/docs/content/components/input-otp/required.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./required.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/input-otp/sizes.raw.jsx (added, 19 changes)\n  Patch: @@ -0,0 +1,19 @@
++import {InputOtp} from "@nextui-org/react";
++
++export default function App() {
++  const sizes = ["sm", "md", "lg"];
++
++  return (
++    <div className="w-full flex flex-col gap-4">
++      {sizes.map((size) => (
++        <div
++          key={size}
++          className="flex flex-col w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4"
++        >
++          <div className="text-foreground/60">size: {size}</div>
++          <InputOtp length={4} size={size} />
++        </div>
++      ))}
++    </div>
++  );
++}\n- apps/docs/content/components/input-otp/sizes.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./sizes.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/input-otp/usage.raw.jsx (added, 14 changes)\n  Patch: @@ -0,0 +1,14 @@
++import {InputOtp} from "@nextui-org/react";
++
++export default function App() {
++  const [value, setValue] = React.useState("");
++
++  return (
++    <div className="flex flex-col items-start gap-4">
++      <InputOtp color="primary" length={4} size="lg" value={value} onValueChange={setValue} />
++      <div className="text-sm">
++        OTP value: <span className="text-md font-medium">{value}</span>
++      </div>
++    </div>
++  );
++}\n- apps/docs/content/components/input-otp/usage.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./usage.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/input-otp/variants.raw.jsx (added, 19 changes)\n  Patch: @@ -0,0 +1,19 @@
++import {InputOtp} from "@nextui-org/react";
++
++export default function App() {
++  const variants = ["flat", "bordered", "underlined", "faded"];
++
++  return (
++    <div className="w-full flex flex-wrap gap-6">
++      {variants.map((variant) => (
++        <div
++          key={variant}
++          className="inline-flex flex-col flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4"
++        >
++          <div className="text-foreground/60">variant: {variant}</div>
++          <InputOtp length={4} variant={variant} />
++        </div>
++      ))}
++    </div>
++  );
++}\n

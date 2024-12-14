@@ -1,0 +1,440 @@
+Pull Request Number: 2598
+Title: fix(dropdown): respect closeOnSelect prop on DropdownItem
+Base Branch: canary
+Head Branch: fix/dropdown-close-on-select
+Author: gtoxlili
+URL: https://github.com/nextui-org/nextui/pull/2598
+State: MERGED
+Created At: 2024-03-27T10:38:42Z
+Merged At: 2024-08-16T08:47:25Z
+Participants: gtoxlili, KoJem9Ka, wingkwong, jrgarciadev
+
+Description:
+Closes #2290
+📝 Description
+This PR fixes an issue where the closeOnSelect prop on DropdownItem was being overridden by the DropdownMenu settings, causing the dropdown to close even when closeOnSelect was set to false on an individual DropdownItem.
+⛳️ Current behavior (updates)
+Currently, setting closeOnSelect to false on a DropdownItem does not prevent the dropdown from closing when that item is selected. This is because the onAction event handler on DropdownItem is deprecated and the closing behavior is controlled by the DropdownMenu settings.
+🚀 New behavior
+The logic has been updated to respect the closeOnSelect prop on DropdownItem. Now, if closeOnSelect is set to false on a DropdownItem, selecting that item will not close the dropdown menu.
+The relevant changes are:
++ const onAction = (key: Key) => {
++   if (closeOnSelect) {
++     onTopAction?.(key);
++   }
++ };
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+N/A
+
+Summary by CodeRabbit
+
+New Features
+
+Introduced nuanced handling of the closeOnSelect property for dropdown items, allowing them to remain open or close based on user selection.
+Added a new template to showcase dropdown behavior with the closeOnSelect property.
+
+
+Bug Fixes
+
+Addressed an issue related to the closeOnSelect prop in the dropdown component.
+
+
+Tests
+
+Added tests to verify the behavior of the closeOnSelect property in the DropdownItem component.
+
+Commits:
+- fix(dropdown): fix dropdown menu unexpected close when closeOnSelect is false (#2290)\n- feat(changeset): Updated DropdownMenu to respect closeOnSelect prop on DropdownItem\n- Merge branch 'main' into pr/2598\n- fix(dropdown): add Template\n- fix(dropdown): add tests\n- Merge branch 'nextui-org:main' into fix/dropdown-close-on-select\n- Merge remote-tracking branch 'origin/canary' into fix/dropdown-close-on-select\n- fix(dropdown): fixing logic gaps\n- fix(changeset): incorrect package name\n- Merge branch 'canary' into fix/dropdown-close-on-select\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: c33b918a4ebadf53c7732e6e60b4b8ad8d5dfd11
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                 | Type  |
+| -------------------- | ----- |
+| @nextui-org/dropdown | Patch |
+| @nextui-org/react    | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/gtoxlili/nextui/new/fix/dropdown-close-on-select?filename=.changeset/poor-guests-return.md&value=---%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A---%0A%0Afix(dropdown)%3A%20respect%20closeOnSelect%20prop%20on%20DropdownItem(%232290)%0A)
+
+\n- vercel: [vc]: #G8RHMju5VJm7o9moQ9s8vQCleEPIlxUY6mKfoV590aI=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvQVZ1czMzTUhhVm9adGNVTXVwOXZ6b2ZnekF0aiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWd0b3hsaWxpLWZpeC1kcm8tMTM4ODM4LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWd0b3hsaWxpLWZpeC1kcm8tMTM4ODM4LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/AVus33MHaVoZtcUMup9vzofgzAtj)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-gtoxlili-fix-dro-138838-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-gtoxlili-fix-dro-138838-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 16, 2024 9:02am |
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The update enhances the dropdown menu's functionality by ensuring that when the `closeOnSelect` property is set to false, the menu remains open after item selection. This is achieved by modifying the event handling in the `menu.tsx` file and introducing improved logic within the `useDropdown` hook, thereby providing a more predictable user experience.
+
+## Changes
+
+| File                                                        | Change Summary                                                                                          |
+|-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| `packages/components/menu/src/menu.tsx`                    | - Added `Key` type import from React<br> - Renamed `onAction` to `onTopAction`<br> - Introduced new `onAction` function for key actions |
+| `packages/components/dropdown/src/use-dropdown.ts`          | - Updated `onAction` logic to check `closeOnSelect` property for more nuanced behavior                |
+| `packages/components/dropdown/__tests__/dropdown.test.tsx`  | - Added test case for `closeOnSelect` functionality in `DropdownItem`                                  |
+| `packages/components/dropdown/stories/dropdown.stories.tsx` | - Introduced `ItemCloseOnSelectTemplate` for demonstrating `closeOnSelect` functionality in the story   |
+| `.changeset/warm-planets-smile.md`                          | - Added patch details for addressing the `closeOnSelect` issue in `@nextui-org/dropdown` package      |
+
+## Assessment against linked issues
+
+| Objective                                                                 | Addressed | Explanation                                              |
+|---------------------------------------------------------------------------|-----------|----------------------------------------------------------|
+| Dropdown closes on item selection despite `closeOnSelect` being false (#2290) | ✅        |                                                          |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```
+packages/components/menu/src/menu.tsx: The `import` statement now includes the `Key` type from React. The `onAction` function has been renamed to `onTopAction`, and a new `onAction` function has been added to handle key actions, ensuring `onTopAction` is called if `closeOnSelect` is true.
+
+---
+
+.changeset/warm-planets-smile.md: The new file introduces a patch for the `@nextui-org/dropdown` package, specifically addressing an issue related to the `closeOnSelect` prop on `DropdownItem`.
+
+---
+
+packages/components/dropdown/__tests__/dropdown.test.tsx: A new test case titled "should respect closeOnSelect setting of DropdownItem" has been added to assess the functionality of the `closeOnSelect` property in the `DropdownItem` component. The test verifies that when `closeOnSelect` is set to `false`, the dropdown remains open after selecting the item, while it closes after selecting another item. The test enhances coverage for the Dropdown component by validating the behavior of the `closeOnSelect` property.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made in this diff.
+
+---
+
+packages/components/dropdown/src/use-dropdown.ts: The `useDropdown` function has undergone a significant modification in its `onAction` handler. The updated implementation introduces logic that identifies the item corresponding to the provided `key` and checks its `closeOnSelect` property. If `closeOnSelect` is `false`, it overrides the default behavior; otherwise, it defaults to using `props?.closeOnSelect`. This change allows for more nuanced handling of menu actions.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useDropdown(props: UseDropdownProps)` → No changes to the function signature.
+
+---
+
+packages/components/dropdown/stories/dropdown.stories.tsx: A new template component, `ItemCloseOnSelectTemplate`, has been introduced, which renders a dropdown menu with two instances of dropdowns. The second dropdown includes the property `closeOnSelect={false}`, allowing it to remain open after item selection. A new export, `ItemCloseOnSelect`, is added, referencing the template and setting up default arguments for rendering.
+
+## Alterations to the declarations of exported or public entities
+
+- `export const ItemCloseOnSelect` → `export const ItemCloseOnSelect = { render: ItemCloseOnSelectTemplate, args: { ...defaultProps } };`
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+**Title:** fix(dropdown): respect closeOnSelect prop on DropdownItem(#2290)  
+**User:** gtoxlili  
+**Number:** 2598  
+
+**Description:**  
+This pull request addresses an issue where the `closeOnSelect` prop on `DropdownItem` was being overridden by the `DropdownMenu` settings, causing the dropdown to close even when `closeOnSelect` was set to `false` on an individual `DropdownItem`. The update ensures that if `closeOnSelect` is set to `false` on a `DropdownItem`, selecting that item will not close the dropdown menu. The relevant code changes include updating the `onAction` function to respect the `closeOnSelect` prop.
+
+## Objectives from Linked Issues
+
+**Issue #2290: Dropdown Unexpectedly Closes on Item Selection Despite closeOnSelect Being Set to False**
+
+**Description:**
+- **NextUI Version:** 2.2.9
+- **Bug:** The `DropdownItem` component closes the dropdown menu upon item selection even when `closeOnSelect` is set to `false`.
+- **Steps to Reproduce:**
+  1. Create a `DropdownItem` component with multiple selectable items.
+  2. Set the `closeOnSelect` property to `false` for a `DropdownItem`.
+  3. Observe that the dropdown menu closes upon selection, contrary to the expected behavior.
+- **Expected Behavior:** When `closeOnSelect` is set to `false`, selecting the item should not close the dropdown menu.
+- **Operating System:** macOS (13.6.3)
+- **Browser:** Edge
+
+## Comments Summary
+
+1. **gtoxlili:** Acknowledged the need for a changeset and provided before & after videos as requested.
+2. **KoJem9Ka:** Expressed eagerness for the fix to be included in the release.
+3. **gtoxlili:** Clarified the current behavior of the dropdown and added relevant templates for testing.
+4. **wingkwong:** Requested the addition of tests in `/packages/components/dropdown/__tests__/dropdown.test.tsx`.
+5. **gtoxlili:** Confirmed that the requested tests had been added.
+6. **wingkwong:** Noted that some tests were failing and suggested syncing the branch with `canary`.
+7. **gtoxlili:** After syncing with the `canary` branch and re-running tests, reported ongoing issues and requested further assistance.
+8. **gtoxlili:** Identified and resolved issues with previous changes, uploaded an updated version, and conducted additional testing.
+9. **gtoxlili:** Explained the root cause of the issue related to the coupling of `onAction` and `closeOnSelect` behaviors. The updated logic in the `onAction` function now checks if an item has `closeOnSelect` set to `false`, preventing the execution of the `onAction` from `DropdownMenu` in such cases.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 8e21dc27ac1bb66c1e1bf1df3a8347d0ad75d18d -->
+<!-- e65e9fa23a335619ebcb4cd9865a47b9bc1fa630 -->
+<!-- 0b82163ab5d2ef87be1e2dc23b2c4656651d579e -->
+<!-- c33b918a4ebadf53c7732e6e60b4b8ad8d5dfd11 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: @gtoxlili is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228e21dc27ac1bb66c1e1bf1df3a8347d0ad75d18d%22%7D%2C%22id%22%3A%22QmQ2RDZa5WsjaDDx9XutnLqy7SikiRojVQAReCQqUkuCpX%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2598%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- gtoxlili: > 1. please add a changeset
+> 2. please provide before & after videos to demonstrate if possible
+
+Thanks for the reminder, I've added the changeset.\n- KoJem9Ka: Really waiting for this fix in the release)\n- gtoxlili: Currently, if a `DropdownItem` has `closeOnSelect` explicitly set to `false`, the menu will remain open when that item is selected. Otherwise, it follows the `DropdownMenu`'s `closeOnSelect` setting.
+
+I have added the relevant templates. Please test the changes based on the provided templates.
+
+@wingkwong \n- wingkwong: @gtoxlili apart from storybook, I was asking for tests to be added in `/packages/components/dropdown/__tests__/dropdown.test.tsx`\n- gtoxlili: > @gtoxlili apart from storybook, I was asking for tests to be added in `/packages/components/dropdown/__tests__/dropdown.test.tsx`
+
+Added\n- gtoxlili: > Tests are not passing. Please check.
+
+It passes on my local machine, can you show me your test cases?\n- wingkwong: @gtoxlili just look at the [QA / Tests (pull_request)](https://github.com/nextui-org/nextui/actions/runs/8843938893/job/24548469839?pr=2598). Already tried rerunning few times. I think your branch is out of sync. Please sync once with `canary` and re-run the tests.
+
+![image](https://github.com/nextui-org/nextui/assets/35857179/d328e79d-6290-4f50-9147-934a5999bc43)
+\n- gtoxlili: > @gtoxlili just look at the [QA / Tests (pull_request)](https://github.com/nextui-org/nextui/actions/runs/8843938893/job/24548469839?pr=2598). Already tried rerunning few times. I think your branch is out of sync. Please sync once with `canary` and re-run the tests.
+> 
+> ![image](https://private-user-images.githubusercontent.com/35857179/327715931-d328e79d-6290-4f50-9147-934a5999bc43.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTQ5OTE5NzEsIm5iZiI6MTcxNDk5MTY3MSwicGF0aCI6Ii8zNTg1NzE3OS8zMjc3MTU5MzEtZDMyOGU3OWQtNjI5MC00ZjUwLTkxNDctOTM0YTU5OTliYzQzLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA1MDYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNTA2VDEwMzQzMVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTdmYjg4ZDMyMDU3MTczOGRmYzIwMjkzYmRjNzk3NzZiZWYxN2VlMzUyZGIzMTVhZjIxNTM0MDBhODZhODYwMGEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.Yt0Cz6El25Hu0Qu-RGzaGMfAzo45HJPFHC1yDO2aaqk)
+
+I have already merged the canary branch into my fix branch and re-executed all the tests for the dropdown. These are the results on my local machine, and I still haven't found any errors. I don't have any clue how to solve this problem. If possible, perhaps you could provide me with some more detailed information?
+
+![CleanShot 2024-05-06 at 18 34 49@2x](https://github.com/nextui-org/nextui/assets/39382699/262ca5f2-596c-4e3c-ba5a-d378a9d8701c)
+\n- gtoxlili: The previous changes I proposed indeed had some issues. I have fixed them, uploaded the updated version, and conducted further testing. @wingkwong 
+\n- gtoxlili: The main reason for the issue is that the component's previous design coupled the onAction and closeOnSelect behaviors.
+```
+const getMenuProps = <T>(
+  props?: Partial<MenuProps<T>>,
+  _ref: Ref<any> | null | undefined = null,
+) => {
+  return {
+    ref: mergeRefs(_ref, menuRef),
+    menuProps,
+    closeOnSelect,
+    ...mergeProps(props, {
+      onAction: () => onMenuAction(props?.closeOnSelect),
+      onClose: state.close,
+    }),
+  } as MenuProps;
+};
+```
+In the previous design, the user-provided onAction was merged with the close event based on DropdownMenu's closeOnSelect using mergeProps. The merged onAction was then passed to the item. When the event was triggered, the item directly executed the onAction method passed from the menu. (This is also the reason why the closeOnSelect of the item component was ineffective.)
+
+My previous modification did not consider the possibility of the user passing their own onAction. So, I chose to directly skip executing the onAction passed from DropdownMenu if the item had closeOnSelect. (I assumed mergeProps was an override-like setting, but it turned out to execute all events with the same name in sequence.)
+
+Now, I have changed the close event to:
+```
+onAction: (key: any) => {
+  // @ts-ignore
+  const item = props?.children?.find((item) => item.key === key);
+
+  if (item?.props?.closeOnSelect === false) {
+    onMenuAction(false);
+
+    return;
+  }
+  onMenuAction(props?.closeOnSelect);
+}
+```
+Since the item passes its key when triggering onAction, I try to find whether it has closeOnSelect based on the key. I think this logic should be correct now (although the logic is still messy, mainly because this coupled design is not a good design).\n- jrgarciadev: Hey @gtoxlili please fix the conflicts\n- jrgarciadev: @gtoxlili sorry for the delay, please fix the conflicts\n
+
+Files Changed:
+- .changeset/warm-planets-smile.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/dropdown": patch
++---
++
++fix(dropdown): respect closeOnSelect prop on DropdownItem (#2290)\n- packages/components/dropdown/__tests__/dropdown.test.tsx (modified, 36 changes)\n  Patch: @@ -795,4 +795,40 @@ describe("Keyboard interactions", () => {
+ 
+     logSpy.mockRestore();
+   });
++
++  it("should respect closeOnSelect setting of DropdownItem", async () => {
++    const onOpenChange = jest.fn();
++    const wrapper = render(
++      <Dropdown onOpenChange={onOpenChange}>
++        <DropdownTrigger>
++          <Button data-testid="trigger-test">Trigger</Button>
++        </DropdownTrigger>
++        <DropdownMenu aria-label="Actions">
++          <DropdownItem key="new" closeOnSelect={false}>
++            New file
++          </DropdownItem>
++          <DropdownItem key="copy">Copy link</DropdownItem>
++        </DropdownMenu>
++      </Dropdown>,
++    );
++
++    let triggerButton = wrapper.getByTestId("trigger-test");
++
++    act(() => {
++      triggerButton.click();
++    });
++    expect(onOpenChange).toBeCalledTimes(1);
++
++    let menuItems = wrapper.getAllByRole("menuitem");
++
++    await act(async () => {
++      await userEvent.click(menuItems[0]);
++      expect(onOpenChange).toBeCalledTimes(1);
++    });
++
++    await act(async () => {
++      await userEvent.click(menuItems[1]);
++      expect(onOpenChange).toBeCalledTimes(2);
++    });
++  });
+ });\n- packages/components/dropdown/src/use-dropdown.ts (modified, 12 changes)\n  Patch: @@ -152,7 +152,17 @@ export function useDropdown(props: UseDropdownProps) {
+       menuProps,
+       closeOnSelect,
+       ...mergeProps(props, {
+-        onAction: () => onMenuAction(props?.closeOnSelect),
++        onAction: (key: any) => {
++          // @ts-ignore
++          const item = props?.children?.find((item) => item.key === key);
++
++          if (item?.props?.closeOnSelect === false) {
++            onMenuAction(false);
++
++            return;
++          }
++          onMenuAction(props?.closeOnSelect);
++        },
+         onClose: state.close,
+       }),
+     } as MenuProps;\n- packages/components/dropdown/stories/dropdown.stories.tsx (modified, 43 changes)\n  Patch: @@ -153,6 +153,41 @@ const Template = ({color, variant, ...args}: DropdownProps & DropdownMenuProps)
+   </Dropdown>
+ );
+ 
++const ItemCloseOnSelectTemplate = ({
++  color,
++  variant,
++  ...args
++}: DropdownProps & DropdownMenuProps) => (
++  <>
++    <Dropdown {...args}>
++      <DropdownTrigger>
++        <Button>Trigger</Button>
++      </DropdownTrigger>
++      <DropdownMenu aria-label="Actions" color={color} variant={variant}>
++        <DropdownItem key="new">New file</DropdownItem>
++        <DropdownItem key="copy">Copy link</DropdownItem>
++        <DropdownItem key="edit">Edit file</DropdownItem>
++        <DropdownItem key="delete" className="text-danger" closeOnSelect={false} color="danger">
++          Delete file
++        </DropdownItem>
++      </DropdownMenu>
++    </Dropdown>
++    <Dropdown {...args}>
++      <DropdownTrigger>
++        <Button>Trigger</Button>
++      </DropdownTrigger>
++      <DropdownMenu aria-label="Actions" closeOnSelect={false} color={color} variant={variant}>
++        <DropdownItem key="new">New file</DropdownItem>
++        <DropdownItem key="copy">Copy link</DropdownItem>
++        <DropdownItem key="edit">Edit file</DropdownItem>
++        <DropdownItem key="delete" className="text-danger" color="danger">
++          Delete file
++        </DropdownItem>
++      </DropdownMenu>
++    </Dropdown>
++  </>
++);
++
+ const DynamicTemplate = ({color, variant, ...args}: DropdownProps & DropdownMenuProps) => (
+   <Dropdown {...args}>
+     <DropdownTrigger>
+@@ -739,3 +774,11 @@ export const DisableAnimation = {
+     disableAnimation: true,
+   },
+ };
++
++export const ItemCloseOnSelect = {
++  render: ItemCloseOnSelectTemplate,
++
++  args: {
++    ...defaultProps,
++  },
++};\n

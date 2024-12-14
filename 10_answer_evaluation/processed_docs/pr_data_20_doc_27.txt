@@ -1,0 +1,138 @@
+Pull Request Number: 1583
+Title: fix:resolved cursor issues in pagination
+Base Branch: main
+Head Branch: fix/resolved-cursor-issues-in-pagination
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1583
+State: CLOSED
+Created At: 2023-09-08T14:54:11Z
+Merged At: None
+Participants: jguddas
+
+Description:
+
+
+Commits:
+- fix: resolved cursor issues in pagination\n- chore: added comment\n- kick: trigger ci\n- Create eighty-knives-heal.md\n- fix: fixed pagination scale animation\n- Create mean-fishes-retire.md\n- Merge branch 'fix/resolved-cursor-issues-in-pagination' into fix/fixed-pagination-scale-animation\n- Merge pull request #1 from jguddas/fix/fixed-pagination-scale-animation
+
+Fix/fixed pagination scale animation\n- Merge branch 'main' into fix/resolved-cursor-issues-in-pagination\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #Sygsfd4gRpv4jSM2kiOctlHUF3SCDG7a3Sdb8d3562s=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvQTRNZXlXaWNjd2gyVXpCZkxIeW5jeE1CREV2ZyIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWpndWRkYXMtZml4LXJlc28tYWNkMGVhLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWpndWRkYXMtZml4LXJlc28tYWNkMGVhLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/A4MeyWiccwh2UzBfLHyncxMBDEvg)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jguddas-fix-reso-acd0ea-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jguddas-fix-reso-acd0ea-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 8, 2023 2:59pm |
+
+\n- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22d5cd7f7b5d889ece1bfb606aa2ede860f78720f0%22%7D%2C%22id%22%3A%222urMq44IPyAlmypW6s3A%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1583%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 32a04fbddcce2c645b1078eb44161cc9e8f4503d
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                   | Type  |
+| ---------------------- | ----- |
+| @nextui-org/pagination | Patch |
+| @nextui-org/react      | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/jguddas/nextui/new/fix/resolved-cursor-issues-in-pagination?filename=.changeset/thin-rabbits-serve.md&value=---%0A%22%40nextui-org%2Fpagination%22%3A%20patch%0A---%0A%0Afix%3Aresolved%20cursor%20issues%20in%20pagination%0A)
+
+\n
+
+Files Changed:
+- .changeset/mean-fishes-retire.md (added, 8 changes)\n  Patch: @@ -0,0 +1,8 @@
++---
++"@nextui-org/pagination": patch
++---
++
++fix: fixed pagination scale animation
++
++For animations of the pagination cursor to be enabled data-moving needs to be set to true.
++We are now setting the data-moving to false 300ms after setting the cursor scale to 1.\n- packages/components/pagination/src/use-pagination.ts (modified, 55 changes)\n  Patch: @@ -183,34 +183,41 @@ export function usePagination(originalProps: UsePaginationProps) {
+     // clean up the previous cursor timer (if any)
+     cursorTimer.current && clearTimeout(cursorTimer.current);
+ 
+-    if (node) {
+-      // scroll parent to the item
+-      scrollIntoView(node, {
+-        scrollMode: "always",
+-        behavior: "smooth",
+-        block: "start",
+-        inline: "start",
+-        boundary: domRef.current,
+-      });
+-
+-      // get position of the item
+-      const {offsetLeft} = node;
+-
+-      // move the cursor to the item
++    // scroll parent to the item
++    scrollIntoView(node, {
++      scrollMode: "always",
++      behavior: "smooth",
++      block: "start",
++      inline: "start",
++      boundary: domRef.current,
++    });
++
++    // get position of the item
++    const {offsetLeft} = node;
++
++    // only shows the animation when the page changes, not on intial render or layout shift
++    if (skipAnimation) {
++      cursorRef.current.setAttribute("data-moving", "false");
++      cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1)`;
++
++      return;
++    }
++
++    // move the cursor to the item
++    cursorRef.current.setAttribute("data-moving", "true");
++    cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1.1)`;
++
++    cursorTimer.current = setTimeout(() => {
++      // reset the scale of the cursor
+       if (cursorRef.current) {
+-        cursorRef.current.setAttribute("data-moving", "true");
+-        cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1.1)`;
++        cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1)`;
+       }
+-
+       cursorTimer.current = setTimeout(() => {
+-        // reset the scale of the cursor
+-        if (cursorRef.current) {
+-          cursorRef.current.setAttribute("data-moving", "false");
+-          cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1)`;
+-        }
++        // remove the data-moving attribute
++        cursorRef.current?.setAttribute("data-moving", "false");
+         cursorTimer.current && clearTimeout(cursorTimer.current);
+       }, CURSOR_TRANSITION_TIMEOUT);
+-    }
++    }, CURSOR_TRANSITION_TIMEOUT);
+   }
+ 
+   const {range, activePage, setPage, previous, next, first, last} = useBasePagination({
+@@ -223,6 +230,8 @@ export function usePagination(originalProps: UsePaginationProps) {
+     onChange,
+   });
+ 
++  const activePageRef = useRef(activePage);
++
+   useEffect(() => {
+     if (activePage && !originalProps.disableAnimation) {
+       scrollTo(activePage);\n

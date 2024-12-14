@@ -1,0 +1,533 @@
+Pull Request Number: 2601
+Title: fix: pnpm-lock & typing issues
+Base Branch: v.2.3.0
+Head Branch: fix/eng-569
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2601
+State: CLOSED
+Created At: 2024-03-28T04:35:13Z
+Merged At: None
+Participants: wingkwong, ryo-manba, jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+Current Problem:
+if we remove pnpm-lock.yaml and run pnpm install again, we can see the changes introduced.
+previously we couldn't reproduce some issues reported by users locally but in the build package (e.g. isRequired prop not working in radio group). Tests didn't catch the failed case as well. With the updated pnpm-lock.yaml, the issue can be reproducible & the test fails expectedly.
+After updating pnpm-lock.yaml, some typings would fail causing the build to fail. This ticket is to resolve all the build issues. Failing test cases will be handled separately.
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+There are two test cases failing
+
+input ref value test case: handled in #2613
+isRequired test case issue: handled in #2597
+
+Commits:
+- fix(hooks): add missing type argument\n- fix(input): fix required types in use-input.ts\n- fix(components): render errorMessage as React.ReactNode\n- fix(navbar): isMenuDefaultOpen cannot be null or undefined\n- fix(hook): typing issue in use-aria-press\n- chore(deps): update pnpm-lock.yaml\n- feat(changeset): fixed typing issues\n- Merge branch 'main' into fix/eng-569\n- chore(deps): update pnpm-lock.yaml\n- chore(hooks): add deprecated message\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: f72b3a60469d7e56c169b53eab3dae6633333d95
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 27 packages</summary>
+
+  | Name                               | Type  |
+| ---------------------------------- | ----- |
+| @nextui-org/checkbox               | Patch |
+| @nextui-org/input                  | Patch |
+| @nextui-org/navbar                 | Patch |
+| @nextui-org/radio                  | Patch |
+| @nextui-org/select                 | Patch |
+| @nextui-org/use-aria-multiselect   | Patch |
+| @nextui-org/use-aria-press         | Patch |
+| @nextui-org/modal                  | Patch |
+| @nextui-org/table                  | Patch |
+| @nextui-org/react                  | Patch |
+| @nextui-org/accordion              | Patch |
+| @nextui-org/autocomplete           | Patch |
+| @nextui-org/popover                | Patch |
+| @nextui-org/chip                   | Patch |
+| @nextui-org/listbox                | Patch |
+| @nextui-org/menu                   | Patch |
+| @nextui-org/pagination             | Patch |
+| @nextui-org/slider                 | Patch |
+| @nextui-org/switch                 | Patch |
+| @nextui-org/use-aria-button        | Patch |
+| @nextui-org/use-aria-link          | Patch |
+| @nextui-org/dropdown               | Patch |
+| @nextui-org/button                 | Patch |
+| @nextui-org/card                   | Patch |
+| @nextui-org/use-aria-toggle-button | Patch |
+| @nextui-org/link                   | Patch |
+| @nextui-org/snippet                | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/wingkwong/nextui/new/fix/eng-569?filename=.changeset/flat-lamps-notice.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fcheckbox%22%3A%20patch%0A%22%40nextui-org%2Finput%22%3A%20patch%0A%22%40nextui-org%2Fnavbar%22%3A%20patch%0A%22%40nextui-org%2Fradio%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Fuse-aria-multiselect%22%3A%20patch%0A%22%40nextui-org%2Fuse-aria-press%22%3A%20patch%0A---%0A%0Afix%3A%20pnpm-lock%20%26%20typing%20issues%0A)
+
+\n- vercel: [vc]: #0m1dia4cHdLkvhu05qFebvDm5Lf4VugCbfvcWP1kjrs=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNFhzNjVxMm5WV0ZnQ1pWYnRUeFhtSlJFM2lkVCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtZW5nLTU2OS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay13aW5na3dvbmctZml4LWVuZy01NjktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/4Xs65q2nVWFgCZVbtTxXmJRE3idT)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-569-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-569-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 1, 2024 3:18am |
+
+\n- vercel: @wingkwong is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22d65576fd253f1a230e6c6bb47c013b48baed0396%22%7D%2C%22id%22%3A%22QmZabHpH47qZcpxgVzoziLNGfCRSM7BqHF6kCkWmHYcaLM%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2601%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: skip review by coderabbit.ai -->
+
+> [!IMPORTANT]
+> ## Auto Review Skipped
+> 
+> Auto reviews are disabled on base/target branches other than the default branch. Please add the base/target branch pattern to the list of additional branches to be reviewed in the settings.
+> 
+> Please check the settings in the CodeRabbit UI or the `.coderabbit.yaml` file in this repository.
+> 
+> To trigger a single review, invoke the `@coderabbitai review` command.
+> 
+
+<!-- end of auto-generated comment: skip review by coderabbit.ai --><!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent updates focus on enhancing type safety and user experience across various components in a UI library. Key changes include casting `errorMessage` as `React.ReactNode` in multiple components to resolve typing issues, setting sensible defaults for component properties, and refining event handling logic in the `usePress` function. These improvements aim to streamline development workflows and ensure a more robust and accessible UI component library.
+
+## Changes
+
+| File(s)                                                                 | Summary                                                                                   |
+|-------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| `.changeset/wise-kangaroos-wonder.md`                                   | Introduces patches for NextUI components to address typing issues.                        |
+| `apps/docs/.../custom-impl.ts`, `packages/.../input.stories.tsx`        | Casts `errorMessage` as `React.ReactNode` in custom input implementations.               |
+| `packages/components/checkbox/.../checkbox-group.tsx`, `packages/components/input/.../input.tsx`, `packages/components/input/.../textarea.tsx`, `packages/components/radio/.../radio-group.tsx`, `packages/components/select/.../select.tsx` | Casts `errorMessage` as `React.ReactNode` in various components.                          |
+| `packages/components/input/src/use-input.ts`                            | Sets default `props.defaultValue` to an empty string and adds `autoCapitalize: undefined`. |
+| `packages/components/navbar/.../use-navbar.ts`                          | Sets default `isMenuOpen` to `false` using `??`.                                           |
+| `packages/hooks/use-aria-multiselect/.../use-multiselect-state.ts`      | Updates `MultiSelectProps` to include a generic type `T` in `Validation`.                  |
+| `packages/hooks/use-aria-press/.../index.ts`                            | Refines logic for press events, handling `pointerType` and event propagation.              |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/wise-kangaroos-wonder.md: The new file introduces patches for various NextUI components to address typing issues.
+
+---
+
+apps/docs/content/components/input/custom-impl.ts: 
+- In the `MyInput` component implementation, cast `errorMessage` as `React.ReactNode` when rendering it within a `<div>` element.
+
+---
+
+packages/components/checkbox/src/checkbox-group.tsx: 
+- In the `CheckboxGroup` component, cast `errorMessage` as `React.ReactNode` within a JSX element.
+
+---
+
+packages/components/input/src/input.tsx: 
+- In the `Input` component, cast `errorMessage` as `React.ReactNode` within a JSX expression.
+
+---
+
+packages/components/input/src/textarea.tsx: 
+- In the `Textarea` component, cast `errorMessage` as `React.ReactNode` within a conditional rendering block.
+
+---
+
+packages/components/input/src/use-input.ts: 
+- In `use-input.ts`, set a default value for `props.defaultValue` to an empty string if it is `undefined`, and add `autoCapitalize: undefined` to the input element configuration.
+
+---
+
+packages/components/input/stories/input.stories.tsx: 
+- In the `CustomWithHooksTemplate` function within `input.stories.tsx`, cast `errorMessage` as `React.ReactNode` when rendering it within a `<div>` element.
+
+---
+
+packages/components/navbar/src/use-navbar.ts: 
+- In the `useNavbar` function within `use-navbar.ts`, explicitly set the default value for `isMenuOpen` to `false` using the nullish coalescing operator `??`.
+
+---
+
+packages/components/radio/src/radio-group.tsx: 
+- In the `RadioGroup` component, cast `errorMessage` as `React.ReactNode` within a JSX element.
+
+---
+
+packages/components/select/src/select.tsx: 
+- In the `Select` component, cast `errorMessage` as `React.ReactNode` within a JSX element.
+
+---
+
+packages/hooks/use-aria-multiselect/src/use-multiselect-state.ts: 
+- In the `use-multiselect-state.ts` file, update the `MultiSelectProps` interface to include a generic type `T` in the `Validation` property, changing it to `Validation<T>`.
+
+---
+
+packages/hooks/use-aria-press/src/index.ts: 
+- In the `usePress` function within `packages/hooks/use-aria-press/src/index.ts`, significant changes were made to the logic related to triggering press events based on pointer interactions. The modifications involve handling `pointerType` as nullable, introducing checks for `isDisabled`, `didFirePressStart`, and `pointerType` validity, and adjusting event handling for `onPressStart`, `onPressChange`, and `onPressUp`. These changes impact the flow of press events and propagation control.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+The pull request titled "fix: pnpm-lock & typing issues" with the number 2601 aims to address and rectify typing issues across various components within a project, presumably NextUI, given the context provided. Although the description lacks detailed information about the specific changes, it outlines the general intention to fix typing issues and possibly update the `pnpm-lock` file, which is not explicitly detailed in the provided summaries of changes.
+
+The PR adheres to the guidelines of keeping changes focused, as it concentrates on fixing typing issues and potentially updating dependencies in a manner that does not introduce new external dependencies or significantly alter the project's structure. The changes are spread across multiple components and hooks, indicating a broad but focused effort to enhance type safety and possibly improve the developer experience by ensuring more accurate type definitions and default values.
+
+There is no direct mention of a linked issue that this PR closes, suggesting that the fixes might be proactive or based on internal discussions rather than responding to an externally reported issue. The lack of a breaking change declaration implies that these modifications are expected to be backward compatible, ensuring that existing users of the NextUI library (or the specific project in question) will not have to undertake migration efforts.
+
+### AI-generated Summary of Generated Summaries
+
+This pull request introduces a series of patches aimed at addressing typing issues across various components and hooks within the NextUI library. The changes are primarily focused on casting `errorMessage` as `React.ReactNode` in several components (Input, Textarea, CheckboxGroup, RadioGroup, and Select) to ensure type correctness when rendering error messages. This adjustment appears in both component implementations and story files, indicating a comprehensive approach to enhancing type safety.
+
+Additionally, the `use-input.ts` hook sees a refinement in handling default values, explicitly setting `props.defaultValue` to an empty string if undefined and adding an `autoCapitalize: undefined` configuration to the input element. This change suggests an effort to ensure predictable behavior of input components and enhance their configurability.
+
+The `useNavbar` function within `use-navbar.ts` now explicitly sets the default value for `isMenuOpen` to `false`, showcasing an initiative to clarify state management within the Navbar component.
+
+Significant modifications were made to the `usePress` function within the `use-aria-press` hook, involving nuanced handling of press events based on pointer interactions. These changes include adjustments to event handling logic and propagation control, reflecting a deep dive into improving the user interaction experience.
+
+Lastly, the `use-multiselect-state.ts` file updates the `MultiSelectProps` interface to include a generic type `T` in the `Validation` property, indicating a move towards more flexible and type-safe validation mechanisms within multiselect components.
+
+Overall, the pull request demonstrates a focused effort to enhance type safety, improve default value handling, and refine user interaction across various components and hooks in the NextUI library, without introducing breaking changes.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- d65576fd253f1a230e6c6bb47c013b48baed0396 -->
+
+<!-- commit_ids_reviewed_end --><!-- tweet_start -->
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<!-- tweet_end --><!-- tips_start -->
+
+---
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with CodeRabbit:
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- The JSON schema for the configuration file is available [here](https://coderabbit.ai/integrations/coderabbit-overrides.v2.json).
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/coderabbit-overrides.v2.json`
+
+### CodeRabbit Discord Community
+
+Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+
+</details>
+
+<!-- tips_end -->\n- ryo-manba: @wingkwong @jrgarciadev
+
+Due to our use of the caret (`^`) version specifier in package.json, re-installing packages after deleting pnpm-lock.yaml can unexpectedly update to the latest minor versions. This has caused issues, especially with [react-aria updates that brought breaking changes in validation](https://react-spectrum.adobe.com/releases/2023-11-8.html), which we're addressing in https://github.com/nextui-org/nextui/pull/2561.
+
+Therefore, it would be helpful if we could close this PR. Thank you!\n- wingkwong: As discussed with @ryo-manba, PR2561 would address the issues. It's better to have those changes from his PR due to some dependencies with latest react-aria changes. Therefore, I'm closing this PR.\n
+
+Files Changed:
+- .changeset/wise-kangaroos-wonder.md (added, 11 changes)\n  Patch: @@ -0,0 +1,11 @@
++---
++"@nextui-org/checkbox": patch
++"@nextui-org/input": patch
++"@nextui-org/navbar": patch
++"@nextui-org/radio": patch
++"@nextui-org/select": patch
++"@nextui-org/use-aria-multiselect": patch
++"@nextui-org/use-aria-press": patch
++---
++
++Fixed typing issues\n- apps/docs/content/components/input/custom-impl.ts (modified, 2 changes)\n  Patch: @@ -145,7 +145,7 @@ const MyInput = forwardRef((props, ref) => {
+           {innerWrapper}
+         </div>
+         {description && <div {...getDescriptionProps()}>{description}</div>}
+-        {errorMessage && <div {...getErrorMessageProps()}>{errorMessage}</div>}
++        {errorMessage && <div {...getErrorMessageProps()}>{errorMessage as React.ReactNode}</div>}
+       </Component>
+     </div>
+   );\n- packages/components/checkbox/src/checkbox-group.tsx (modified, 2 changes)\n  Patch: @@ -26,7 +26,7 @@ const CheckboxGroup = forwardRef<"div", CheckboxGroupProps>((props, ref) => {
+         <CheckboxGroupProvider value={context}>{children}</CheckboxGroupProvider>
+       </div>
+       {errorMessage ? (
+-        <div {...getErrorMessageProps()}>{errorMessage}</div>
++        <div {...getErrorMessageProps()}>{errorMessage as React.ReactNode}</div>
+       ) : description ? (
+         <div {...getDescriptionProps()}>{description}</div>
+       ) : null}\n- packages/components/input/src/input.tsx (modified, 2 changes)\n  Patch: @@ -47,7 +47,7 @@ const Input = forwardRef<"input", InputProps>((props, ref) => {
+     return (
+       <div {...getHelperWrapperProps()}>
+         {errorMessage ? (
+-          <div {...getErrorMessageProps()}>{errorMessage}</div>
++          <div {...getErrorMessageProps()}>{errorMessage as React.ReactNode}</div>
+         ) : description ? (
+           <div {...getDescriptionProps()}>{description}</div>
+         ) : null}\n- packages/components/input/src/textarea.tsx (modified, 2 changes)\n  Patch: @@ -145,7 +145,7 @@ const Textarea = forwardRef<"textarea", TextAreaProps>(
+         {hasHelper ? (
+           <div {...getHelperWrapperProps()}>
+             {errorMessage ? (
+-              <div {...getErrorMessageProps()}>{errorMessage}</div>
++              <div {...getErrorMessageProps()}>{errorMessage as React.ReactNode}</div>
+             ) : description ? (
+               <div {...getDescriptionProps()}>{description}</div>
+             ) : null}\n- packages/components/input/src/use-input.ts (modified, 3 changes)\n  Patch: @@ -115,7 +115,7 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+ 
+   const [inputValue, setInputValue] = useControlledState<string | undefined>(
+     props.value,
+-    props.defaultValue,
++    props.defaultValue ?? "",
+     handleValueChange,
+   );
+ 
+@@ -152,6 +152,7 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+       ),
+       inputElementType: isMultiline ? "textarea" : "input",
+       onChange: setInputValue,
++      autoCapitalize: undefined,
+     },
+     domRef,
+   );\n- packages/components/input/stories/input.stories.tsx (modified, 2 changes)\n  Patch: @@ -450,7 +450,7 @@ const CustomWithHooksTemplate = (args: InputProps) => {
+           {innerWrapper}
+         </div>
+         {description && <div {...getDescriptionProps()}>{description}</div>}
+-        {errorMessage && <div {...getErrorMessageProps()}>{errorMessage}</div>}
++        {errorMessage && <div {...getErrorMessageProps()}>{errorMessage as React.ReactNode}</div>}
+       </Component>
+     </div>
+   );\n- packages/components/navbar/src/use-navbar.ts (modified, 2 changes)\n  Patch: @@ -123,7 +123,7 @@ export function useNavbar(originalProps: UseNavbarProps) {
+ 
+   const [isMenuOpen, setIsMenuOpen] = useControlledState<boolean | undefined>(
+     isMenuOpenProp,
+-    isMenuDefaultOpen,
++    isMenuDefaultOpen ?? false,
+     handleMenuOpenChange,
+   );
+ \n- packages/components/radio/src/radio-group.tsx (modified, 2 changes)\n  Patch: @@ -27,7 +27,7 @@ const RadioGroup = forwardRef<"div", RadioGroupProps>((props, ref) => {
+         <RadioGroupProvider value={context}>{children}</RadioGroupProvider>
+       </div>
+       {errorMessage ? (
+-        <div {...getErrorMessageProps()}>{errorMessage}</div>
++        <div {...getErrorMessageProps()}>{errorMessage as React.ReactNode}</div>
+       ) : description ? (
+         <div {...getDescriptionProps()}>{description}</div>
+       ) : null}\n- packages/components/select/src/select.tsx (modified, 2 changes)\n  Patch: @@ -57,7 +57,7 @@ function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectE
+     return (
+       <div {...getHelperWrapperProps()}>
+         {errorMessage ? (
+-          <div {...getErrorMessageProps()}>{errorMessage}</div>
++          <div {...getErrorMessageProps()}>{errorMessage as React.ReactNode}</div>
+         ) : description ? (
+           <div {...getDescriptionProps()}>{description}</div>
+         ) : null}\n- packages/hooks/use-aria-multiselect/src/use-multiselect-state.ts (modified, 2 changes)\n  Patch: @@ -23,7 +23,7 @@ export interface MultiSelectProps<T>
+     Omit<InputBase, "isReadOnly">,
+     DOMProps,
+     HelpTextProps,
+-    Validation,
++    Validation<T>,
+     LabelableProps,
+     TextInputBase,
+     Omit<MultipleSelection, "none">,\n- packages/hooks/use-aria-press/src/index.ts (modified, 86 changes)\n  Patch: @@ -49,6 +49,8 @@ const LINK_CLICKED = Symbol("linkClicked");
+  * Handles press interactions across mouse, touch, keyboard, and screen readers.
+  * It normalizes behavior across browsers and platforms, and handles many nuances
+  * of dealing with pointer and keyboard events.
++ *
++ * @deprecated use `usePress` instead from `react-aria`
+  */
+ export function usePress(props: PressHookProps): PressResult {
+   let {
+@@ -82,40 +84,42 @@ export function usePress(props: PressHookProps): PressResult {
+ 
+   let {addGlobalListener, removeAllGlobalListeners} = useGlobalListeners();
+ 
+-  let triggerPressStart = useEffectEvent((originalEvent: EventBase, pointerType: PointerType) => {
+-    let state = ref.current;
++  let triggerPressStart = useEffectEvent(
++    (originalEvent: EventBase, pointerType: PointerType | null) => {
++      let state = ref.current;
+ 
+-    if (isDisabled || state.didFirePressStart) {
+-      return;
+-    }
++      if (isDisabled || state.didFirePressStart || !pointerType) {
++        return false;
++      }
+ 
+-    let shouldStopPropagation = true;
++      let shouldStopPropagation = true;
+ 
+-    state.isTriggeringEvent = true;
+-    if (onPressStart) {
+-      let event = new PressEvent("pressstart", pointerType, originalEvent);
++      state.isTriggeringEvent = true;
++      if (onPressStart) {
++        let event = new PressEvent("pressstart", pointerType, originalEvent);
+ 
+-      onPressStart(event);
+-      shouldStopPropagation = event.shouldStopPropagation;
+-    }
++        onPressStart(event);
++        shouldStopPropagation = event.shouldStopPropagation;
++      }
+ 
+-    if (onPressChange) {
+-      onPressChange(true);
+-    }
++      if (onPressChange) {
++        onPressChange(true);
++      }
+ 
+-    state.isTriggeringEvent = false;
+-    state.didFirePressStart = true;
+-    setPressed(true);
++      state.isTriggeringEvent = false;
++      state.didFirePressStart = true;
++      setPressed(true);
+ 
+-    return shouldStopPropagation;
+-  });
++      return shouldStopPropagation;
++    },
++  );
+ 
+   let triggerPressEnd = useEffectEvent(
+-    (originalEvent: EventBase, pointerType: PointerType, wasPressed = true) => {
++    (originalEvent: EventBase, pointerType: PointerType | null, wasPressed = true) => {
+       let state = ref.current;
+ 
+-      if (!state.didFirePressStart) {
+-        return;
++      if (!state.didFirePressStart || !pointerType) {
++        return false;
+       }
+ 
+       state.ignoreClickAfterPress = true;
+@@ -150,25 +154,27 @@ export function usePress(props: PressHookProps): PressResult {
+     },
+   );
+ 
+-  let triggerPressUp = useEffectEvent((originalEvent: EventBase, pointerType: PointerType) => {
+-    let state = ref.current;
++  let triggerPressUp = useEffectEvent(
++    (originalEvent: EventBase, pointerType: PointerType | null) => {
++      let state = ref.current;
+ 
+-    if (isDisabled) {
+-      return;
+-    }
++      if (isDisabled || !pointerType) {
++        return false;
++      }
+ 
+-    if (onPressUp) {
+-      state.isTriggeringEvent = true;
+-      let event = new PressEvent("pressup", pointerType, originalEvent);
++      if (onPressUp) {
++        state.isTriggeringEvent = true;
++        let event = new PressEvent("pressup", pointerType, originalEvent);
+ 
+-      onPressUp(event);
+-      state.isTriggeringEvent = false;
++        onPressUp(event);
++        state.isTriggeringEvent = false;
+ 
+-      return event.shouldStopPropagation;
+-    }
++        return event.shouldStopPropagation;
++      }
+ 
+-    return true;
+-  });
++      return true;
++    },
++  );
+ 
+   let cancel = useEffectEvent((e: EventBase) => {
+     let state = ref.current;
+@@ -446,7 +452,7 @@ export function usePress(props: PressHookProps): PressResult {
+         } else if (state.isOverTarget) {
+           state.isOverTarget = false;
+           triggerPressEnd(createEvent(state.target, e as EventBase), state.pointerType, false);
+-          cancelOnPointerExit(e);
++          cancelOnPointerExit(e as EventBase);
+         }
+       };
+ 
+@@ -475,7 +481,7 @@ export function usePress(props: PressHookProps): PressResult {
+       };
+ 
+       let onPointerCancel = (e: PointerEvent) => {
+-        cancel(e);
++        cancel(e as EventBase);
+       };
+ 
+       pressProps.onDragStart = (e) => {
+@@ -709,7 +715,7 @@ export function usePress(props: PressHookProps): PressResult {
+       };
+ 
+       let onScroll = (e: Event) => {
+-        if (state.isPressed && (e.target as Element).contains(state.target)) {
++        if (state.isPressed && state.target && (e.target as Element).contains(state.target)) {
+           cancel({
+             currentTarget: state.target,
+             shiftKey: false,\n- pnpm-lock.yaml (modified, 9028 changes)\n  Patch: No patch available\n

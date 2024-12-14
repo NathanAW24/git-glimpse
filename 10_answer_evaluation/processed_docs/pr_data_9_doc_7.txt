@@ -1,0 +1,314 @@
+Pull Request Number: 3299
+Title: fix(system-rsc): extendVariants with defaultVariants
+Base Branch: canary
+Head Branch: fix/eng-842
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/3299
+State: MERGED
+Created At: 2024-06-21T13:15:51Z
+Merged At: 2024-06-22T13:36:22Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes #3009
+Closes #1959
+
+📝 Description
+The following code was added in this PR last year.
+if (defaultVariants && typeof defaultVariants === "object") {
+  for (const key in defaultVariants) {
+    const value = defaultVariants[key];
+    const propValue = props?.[key];
+
+    if (propValue && propValue !== value) {
+      delete defaultVariants[key];
+    }
+  }
+}
+However, it will fail in the below case.
+export const Bar = extendVariants(Button, {
+  variants: {
+    color: {
+      default: "default-shadow bg-red-500",
+    },
+  },
+  defaultVariants: {
+    color: "default",
+  },
+});
+<Bar>Button (red)</Bar>
+<Bar color="primary">Button (blue)</Bar>
+<Bar>Button (red)</Bar>
+
+This is because the default color is deleted in above logic when rendering the second <Bar/> so the third one would lose the styles. This is also the reason causing the problem reported in above-linked issue.
+Therefore, this PR is to convert the same logic without mutation.
+⛳️ Current behavior (updates)
+Clicking Plus 4 times
+
+🚀 New behavior
+Clicking Plus 4 times
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Resolved an issue with the extendVariants behavior to correctly handle defaultVariants when present.
+
+Commits:
+- fix(system-rsc): extendVariants with defaultVariants\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-842/[bug]-default-variants-with-extendvariants-get-unset-on-re-render">ENG-842 [BUG] - Default variants with ``extendVariants`` get unset on re-render.</a></p>\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 25cd4c4fb396d7a18034138a174578144ed2f846
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 27 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/system-rsc   | Patch |
+| @nextui-org/code         | Patch |
+| @nextui-org/divider      | Patch |
+| @nextui-org/kbd          | Patch |
+| @nextui-org/spacer       | Patch |
+| @nextui-org/spinner      | Patch |
+| @nextui-org/system       | Patch |
+| @nextui-org/react        | Patch |
+| @nextui-org/accordion    | Patch |
+| @nextui-org/listbox      | Patch |
+| @nextui-org/menu         | Patch |
+| @nextui-org/table        | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/button       | Patch |
+| @nextui-org/select       | Patch |
+| @nextui-org/calendar     | Patch |
+| @nextui-org/date-picker  | Patch |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/modal        | Patch |
+| @nextui-org/navbar       | Patch |
+| @nextui-org/popover      | Patch |
+| @nextui-org/slider       | Patch |
+| @nextui-org/snippet      | Patch |
+| @nextui-org/tabs         | Patch |
+| @nextui-org/tooltip      | Patch |
+| @nextui-org/aria-utils   | Patch |
+| @nextui-org/framer-utils | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/eng-842?filename=.changeset/great-chefs-hear.md&value=---%0A%22%40nextui-org%2Fsystem-rsc%22%3A%20patch%0A%22%40nextui-org%2Fsystem%22%3A%20patch%0A---%0A%0Afix(system-rsc)%3A%20extendVariants%20with%20defaultVariants%0A)
+
+\n- vercel: [vc]: #JRwaxFAw6R0eSgVGVycl5Af0dEFoyV33wyKLEpX2eiE=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZpeC1lbmctODQyLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi85cFJaMUVFOFNzMkt5MUo2RVB6TWpQVXhGYWJXIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTg0Mi1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQifSx7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1maXgtZW5nLTg0Mi1uZXh0dWktb3JnLnZlcmNlbC5hcHAifSwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi9GR3JpcVFTWWdRUWVzVUVtd3V4NXVHVnZnWGtOIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC1lbmctODQyLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCJ9XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/9pRZ1EE8Ss2Ky1J6EPzMjPUxFabW)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-842-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-842-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jun 21, 2024 1:15pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/FGriqQSYgQQesUEmwux5uGVvgXkN)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-842-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-842-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jun 21, 2024 1:15pm |
+
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+A patch for `@nextui-org/system-rsc` has been introduced to fix the behavior of `extendVariants` when `defaultVariants` are present. The adjustment ensures that default variants are correctly maintained and not overridden on subsequent re-renders. The changes specifically impact the logic within the `customTv` function in `extend-variants.js`.
+
+## Changes
+
+| Files                                           | Change Summary                                                                                      |
+|-------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `.changeset/clever-cherries-watch.md`           | Added a summary of changes introduced in the patch.                                                 |
+| `packages/core/system-rsc/src/extend-variants.js`| Updated `extend-variants.js` to modify the handling of default variants, ensuring they are not unset on re-render. |
+
+## Assessment against linked issues
+
+| Objective                                                                                                   | Addressed | Explanation                              |
+|-------------------------------------------------------------------------------------------------------------|-----------|------------------------------------------|
+| Default variants with `extendVariants` get unset on re-render. (Issue #3009)                                | ✅        |                                          |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+.changeset/clever-cherries-watch.md: ## Short summary
+
+The new file introduces a patch for `@nextui-org/system-rsc` that fixes the `extendVariants` behavior when `defaultVariants` are present.
+
+## Alterations to the declarations of exported or public entities
+
+No alterations to the declarations of exported or public entities.
+
+---
+
+packages/core/system-rsc/src/extend-variants.js: ### Summary
+
+In `extend-variants.js`, the functionality related to handling default variants based on props has been adjusted. The logic for applying default variants has been modified to exclude keys that differ from props variants.
+
+### Alterations to the declarations of exported or public entities
+
+- `function getClassNamesWithProps({...})` in `extend-variants.js`:
+  - Updated the logic within the `customTv` function to filter out keys that differ from props variants before applying default variants.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+### PR summary
+
+**Title**: fix(system-rsc): extendVariants with defaultVariants
+
+**Description**: This PR addresses an issue related to the `extendVariants` functionality in the `@nextui-org/react` library. The previous logic for handling `defaultVariants` was flawed when components with different variants were used. Specifically, the default variant would be deleted if a different variant was rendered, causing subsequent components to lose their styles. The PR fixes this issue, ensuring that default variants are not unset on re-render. This resolves the problem reported in issue #3009, where the default variant was unset for all other components on the same page upon re-render.
+
+### Objectives from linked issues
+
+**Issue #3009**: The issue reports a bug in the `extendVariants` functionality of the `@nextui-org/react` library. When using `extendVariants` on any component with `defaultVariants` set, the default variant is unset for all other components on the same page upon re-render. The expected behavior is that the default variant should not be unset. The issue includes a code example demonstrating the bug, where a component using `extendVariants` loses its default variant on re-render if another component with an explicit variant is rendered on the same page. The PR aims to fix this bug to ensure that default variants remain set correctly.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated summary of generated summaries
+
+The update introduces a patch for the `@nextui-org/system-rsc` package, specifically addressing the `extendVariants` behavior when `defaultVariants` are present. The primary change is in the `extend-variants.js` file, where the logic for handling default variants based on props has been refined. The modification ensures that default variants are only applied to keys that match the props variants, thereby excluding any keys that differ. This adjustment enhances the accuracy of variant application by filtering out mismatched keys.
+
+### Alterations to the declarations of exported or public entities
+
+#### `packages/core/system-rsc/src/extend-variants.js`
+
+- **`function getClassNamesWithProps({...})`**
+  - **Before:** The `customTv` function applied default variants without filtering out keys that differed from props variants.
+  - **After:** The `customTv` function now includes logic to filter out keys that differ from props variants before applying default variants.
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 25cd4c4fb396d7a18034138a174578144ed2f846 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/clever-cherries-watch.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/system-rsc": patch
++---
++
++fixed `extendVariants` when having `defaultVariants` (#3009)\n- packages/core/system-rsc/src/extend-variants.js (modified, 14 changes)\n  Patch: @@ -31,22 +31,30 @@ function getClassNamesWithProps({
+   hasSlots,
+   opts,
+ }) {
+-  // Do not apply default variants when the props variant is different
++  const keys = [];
++
+   if (defaultVariants && typeof defaultVariants === "object") {
+     for (const key in defaultVariants) {
+       const value = defaultVariants[key];
+       const propValue = props?.[key];
+ 
+       if (propValue && propValue !== value) {
+-        delete defaultVariants[key];
++        keys.push(key);
+       }
+     }
+   }
+ 
+   const customTv = tv(
+     {
+       variants,
+-      defaultVariants,
++      // Do not apply default variants when the props variant is different
++      defaultVariants: Object.keys(defaultVariants)
++        .filter((k) => !keys.includes(k))
++        .reduce((o, k) => {
++          o[k] = defaultVariants[k];
++
++          return o;
++        }, []),
+       compoundVariants,
+       ...(hasSlots && {slots}),
+     },\n

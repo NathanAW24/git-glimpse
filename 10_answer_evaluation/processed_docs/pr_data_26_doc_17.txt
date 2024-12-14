@@ -1,0 +1,66 @@
+Pull Request Number: 746
+Title: docs: make `invalid` radio code example more realistic
+Base Branch: main
+Head Branch: docs/radio-invalid-example
+Author: benmneb
+URL: https://github.com/nextui-org/nextui/pull/746
+State: MERGED
+Created At: 2022-09-07T12:51:17Z
+Merged At: 2023-03-06T01:10:21Z
+Participants: benmneb, jrgarciadev, crypt096, mel-habip
+
+Description:
+📝 Description
+adds a more realistic example of "invalid" checkbox use
+⛳️ Current behavior (updates)
+every option is invalid
+🚀 New behavior
+has both valid and invalid options
+💣 Is this a breaking change (Yes/No):
+no
+📝 Additional Information
+thanks for the epic library
+
+Commits:
+- docs(components/radio): make `invalid` code example controlled and have both valid and invalid options (a more realistic example of its use)\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/content/components/radio/invalid.ts (modified, 20 changes)\n  Patch: @@ -1,18 +1,26 @@
+-const App = `import { Radio } from "@nextui-org/react";
++const App = `import React from "react";
++import { Radio } from "@nextui-org/react";
+ 
+ export default function App() {
++  const [selected, setSelected] = React.useState('A');
++
+   return (
+-    <Radio.Group label="Options" defaultValue="A" validationState="invalid">
+-      <Radio value="A" description="Description for Option A">
++    <Radio.Group
++      label="Options"
++      value={selected}
++      onChange={setSelected}
++      validationState={["A", "C"].includes(selected) ? 'valid' : 'invalid'}
++      >
++      <Radio value="A" description="A perfectly valid option">
+         Option A
+       </Radio>
+-      <Radio value="B" description="Description for Option B">
++      <Radio value="B" description="Definitely not valid">
+         Option B
+       </Radio>
+-      <Radio value="C" description="Description for Option C">
++      <Radio value="C" description="Another valid option">
+         Option C
+       </Radio>
+-      <Radio value="D" description="Description for Option D">
++      <Radio value="D" description="Uh oh, invalid!">
+         Option D
+       </Radio>
+     </Radio.Group>\n
