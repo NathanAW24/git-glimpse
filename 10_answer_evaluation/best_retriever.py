@@ -25,9 +25,12 @@ from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.schema import Document
 from langchain_core.prompts import PromptTemplate
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import evaluate
+
 
 # Uncomment if necessary
-# nltk.download('wordnet', quiet=True)  # Ensure wordnet is downloaded for METEOR
+nltk.download('wordnet', quiet=True)  # Ensure wordnet is downloaded for METEOR
 
 ###################################
 # Metrics and Model Initialization
@@ -61,13 +64,26 @@ def compute_bertscore(pred: str, ref: str) -> float:
     return float(F1.mean().item())
 
 
-def compute_perplexity(text: str) -> float:
-    tokens = gpt2_tokenizer.encode(text, return_tensors='pt').to(device)
-    with torch.no_grad():
-        outputs = gpt2_model(tokens, labels=tokens)
-        loss = outputs.loss.item()
-        ppl = torch.exp(torch.tensor(loss)).item()
-    return ppl
+def compute_perplexity(text: str, model_id: str = 'gpt2') -> float:
+    """
+    Compute the perplexity of a given text using a specified pre-trained language model.
+
+    Args:
+        text (str): The input text for which to compute perplexity.
+        model_id (str): The name of the pre-trained model to use (default is 'gpt2').
+
+    Returns:
+        float: The computed perplexity score.
+    """
+    # Load the perplexity metric
+    perplexity = evaluate.load("perplexity", module_type="measurement")
+
+    # Compute perplexity
+    results = perplexity.compute(
+        model_id=model_id, add_start_token=True, data=[text])
+
+    # Return the mean perplexity
+    return results['mean_perplexity']
 
 ########################
 # LLM Accuracy via Relevance Score
@@ -171,9 +187,10 @@ class EvaluationResults:
             "perplexity": ppl
         })
 
-    def to_json(self):
+    def to_dict(self):
+        # Return results as a dict
         if not self.results:
-            return json.dumps({"results": [], "averages": {}}, indent=2)
+            return {"results": [], "averages": {}}
 
         avg_accuracy = mean(r["accuracy"] for r in self.results)
         avg_bleu = mean(r["bleu"] for r in self.results)
@@ -191,6 +208,10 @@ class EvaluationResults:
                 "perplexity": avg_ppl
             }
         }
+        return data
+
+    def to_json(self):
+        data = self.to_dict()
         return json.dumps(data, indent=2)
 
 
@@ -302,9 +323,70 @@ Purpose: Ensure that all changes are clearly communicated and easy to understand
 * Update Documentation: "Add usage examples and prop definitions for the new virtualization feature in docs/components/table.mdx."
 * Add Release Notes: "In the project’s CHANGELOG, mention the new virtualization support and the fixed interaction bug."
 """
+PROMPT_TEMPLATES = {
+    "query_refinement": {
+        "system": """You are a senior developer at a large company. Your job is to refine and expand any given user query related to a software codebase or feature. The user is a newcomer developer who needs more specific, detailed, and actionable queries to find the right documents. Your refined query should:
+- Add relevant keywords or technologies that might be involved.
+- Ensure the query is well-targeted so that the retrieval system can find the most pertinent PRs or code references. (there is no need to mention "check for PR" as everything in the database is PR already. You should focus on the component name, concepts, tech, or terms)
+Your query will be passed to search engine or vector retrieval. 
+Priortize on querying the component name.
+Your response must immediately begin with the query - Do not put "Relevant Query:" at the beginning.
+""",
+        "user": """Original user query: {query}\nPlease refine and expand this query to improve document retrieval."""
+    },
+    "summarization": {
+        "system": """You are a senior developer summarizing a document (e.g., a PR). The summary should:
+- Focus on the context relevant to the given query.
+- Highlight code changes that might be helpful or good to know for the developers.
+- Highlight which files or modules are touched.
+- Mention coding conventions, library usage, or patterns observed.
+- Note any pitfalls, best practices, or insights from PR discussions.
+- Identify if there are utilities or frameworks already used, so a new developer doesn't have to re-invent solutions.
+If the context does not provide relevant topics, skip them.
+Your answer must be concise.
+""",
+        "user": """Query: {query}\nDocument Content:\n{content}\nSummarize the above document with these objectives in mind."""
+    },
+    "final_answer": {
+        "system": """You are a senior developer synthesizing the final answer for a newcomer developer. You have several summarized documents (PRs) that relate to the user's question. Your final answer should:
+- Directly answer the user's question.
+- Suggest files or directories to look at.
+- Highlight relevant coding patterns, naming conventions, or established best practices found in the PRs.
+- Explain your findings in the previous PRs that you have explored.
+- Suggest libraries or existing utilities that can be leveraged.
+- Point out common pitfalls and how previous developers addressed them.
+- Include why certain decisions were made and how to align with the project's standards.
+If the context does not provide you with a relevant topics - skip explaining about that topics.
+Your answer must be detailed but using easy to understand and concise language.
+This is about empowering the new developer to ramp up quickly and make informed decisions based on relevant previous PRs.
+Remember to make sure your response answer the user question as well.
+""",
+        "user": """User question: {query}\nContext from Summarized Pull Request Documents:\n{context}\nProvide the best possible answer, incorporating all the mentioned developer onboarding guidance."""
+    }
+}
+
+
+def summarize_document(query, content):
+    system_prompt = PROMPT_TEMPLATES["summarization"]["system"]
+    user_prompt = PROMPT_TEMPLATES["summarization"]["user"].format(
+        query=query, content=content)
+    return call_llm(system_prompt, user_prompt, model="gpt-4o-mini", temperature=0)
+
+
+def summarize_all_documents(query, documents):
+    summaries = []
+    for doc in documents:
+        fname, content = doc
+        summary = summarize_document(query, content)
+        summaries.append((fname, summary))
+    return summaries
+
 
 if __name__ == "__main__":
     evaluator = EvaluationResults()
+
+    # We'll store logs for each question in a separate data structure
+    logs = []
 
     # Load Q/A pairs
     for i, (q_file, a_file) in enumerate(zip(question_files, answer_files), start=1):
@@ -314,6 +396,8 @@ if __name__ == "__main__":
 
         # Retrieval and Reranking Workflow
         expanded_query_str = expand_query(question)
+
+        print("expanded query", expanded_query_str)
 
         # BM25 retrieval
         bm25_results = bm25_retriever.retrieve(expanded_query_str, top_n=10)
@@ -347,19 +431,46 @@ if __name__ == "__main__":
         # Choose top 3 PR to use as context
         top_3_docs = final_docs[:3]
 
+        # Summarize
+        summaries = summarize_all_documents(expanded_query_str, top_3_docs)
+
         # Create context from top 3 docs
         context_str = "\n\n".join(
-            [f"---\n{fname}\n{content}\n" for ((fname, content), _) in top_3_docs])
+            [f"---\n{fname}\n{content}\n" for ((fname, content), _) in summaries])
 
         # Generate answer using LLM with context
-        # The user prompt: includes question, template, and context
         user_prompt = f"{question}\n\nContext from Top PRs:\n{context_str}\n\n{template}"
-
         predicted_answer = call_llm(
             system_prompt, user_prompt, model="gpt-4o-mini", temperature=0.7)
 
         # Evaluate result
         evaluator.add_result(i, predicted_answer, reference_answer)
 
+        # Get the last result from evaluator to store in logs
+        last_result = evaluator.results[-1]
+
+        # Store logs
+        logs.append({
+            "q_id": i,
+            "question": question,
+            "expanded_query": expanded_query_str,
+            "context_docs": [fname for ((fname, _), _) in top_3_docs],
+            "context": context_str,
+            "predicted_answer": predicted_answer,
+            "reference_answer": reference_answer,
+            "metrics": last_result
+        })
+
     # Print out results as JSON
-    print(evaluator.to_json())
+    evaluation_data = evaluator.to_dict()
+
+    # Store evaluation results
+    with open("evaluation_results.json", "w") as f:
+        json.dump(evaluation_data, f, indent=2)
+
+    # Store logs
+    with open("logs.json", "w") as f:
+        json.dump(logs, f, indent=2)
+
+    print("Evaluation results stored in evaluation_results.json")
+    print("Logs stored in logs.json")

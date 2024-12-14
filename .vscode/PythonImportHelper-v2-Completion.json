@@ -518,6 +518,22 @@
         "documentation": {}
     },
     {
+        "label": "AutoModelForCausalLM",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
+        "documentation": {}
+    },
+    {
+        "label": "AutoTokenizer",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
+        "documentation": {}
+    },
+    {
         "label": "GPT2LMHeadModel",
         "importPath": "transformers",
         "description": "transformers",
@@ -1167,6 +1183,15 @@
         "documentation": {}
     },
     {
+        "label": "evaluate",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "evaluate",
+        "description": "evaluate",
+        "detail": "evaluate",
+        "documentation": {}
+    },
+    {
         "label": "BM25Okapi",
         "importPath": "rank_bm25",
         "description": "rank_bm25",
@@ -1357,15 +1382,6 @@
         "documentation": {}
     },
     {
-        "label": "evaluate",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "evaluate",
-        "description": "evaluate",
-        "detail": "evaluate",
-        "documentation": {}
-    },
-    {
         "label": "pprint",
         "importPath": "pprint",
         "description": "pprint",
@@ -1479,7 +1495,7 @@
         "kind": 2,
         "importPath": "10_answer_evaluation.best_retriever",
         "description": "10_answer_evaluation.best_retriever",
-        "peekOfCode": "def compute_meteor(pred: str, ref: str) -> float:\n    pred_tokens = pred.strip().split()\n    ref_tokens = ref.strip().split()\n    meteor = meteor_score([ref_tokens], pred_tokens)\n    return float(meteor)\ndef compute_bertscore(pred: str, ref: str) -> float:\n    P, R, F1 = bert_score([pred], [ref], lang=\"en\", verbose=False)\n    return float(F1.mean().item())\ndef compute_perplexity(text: str) -> float:\n    tokens = gpt2_tokenizer.encode(text, return_tensors='pt').to(device)",
+        "peekOfCode": "def compute_meteor(pred: str, ref: str) -> float:\n    pred_tokens = pred.strip().split()\n    ref_tokens = ref.strip().split()\n    meteor = meteor_score([ref_tokens], pred_tokens)\n    return float(meteor)\ndef compute_bertscore(pred: str, ref: str) -> float:\n    P, R, F1 = bert_score([pred], [ref], lang=\"en\", verbose=False)\n    return float(F1.mean().item())\ndef compute_perplexity(text: str, model_id: str = 'gpt2') -> float:\n    \"\"\"",
         "detail": "10_answer_evaluation.best_retriever",
         "documentation": {}
     },
@@ -1488,7 +1504,7 @@
         "kind": 2,
         "importPath": "10_answer_evaluation.best_retriever",
         "description": "10_answer_evaluation.best_retriever",
-        "peekOfCode": "def compute_bertscore(pred: str, ref: str) -> float:\n    P, R, F1 = bert_score([pred], [ref], lang=\"en\", verbose=False)\n    return float(F1.mean().item())\ndef compute_perplexity(text: str) -> float:\n    tokens = gpt2_tokenizer.encode(text, return_tensors='pt').to(device)\n    with torch.no_grad():\n        outputs = gpt2_model(tokens, labels=tokens)\n        loss = outputs.loss.item()\n        ppl = torch.exp(torch.tensor(loss)).item()\n    return ppl",
+        "peekOfCode": "def compute_bertscore(pred: str, ref: str) -> float:\n    P, R, F1 = bert_score([pred], [ref], lang=\"en\", verbose=False)\n    return float(F1.mean().item())\ndef compute_perplexity(text: str, model_id: str = 'gpt2') -> float:\n    \"\"\"\n    Compute the perplexity of a given text using a specified pre-trained language model.\n    Args:\n        text (str): The input text for which to compute perplexity.\n        model_id (str): The name of the pre-trained model to use (default is 'gpt2').\n    Returns:",
         "detail": "10_answer_evaluation.best_retriever",
         "documentation": {}
     },
@@ -1497,7 +1513,7 @@
         "kind": 2,
         "importPath": "10_answer_evaluation.best_retriever",
         "description": "10_answer_evaluation.best_retriever",
-        "peekOfCode": "def compute_perplexity(text: str) -> float:\n    tokens = gpt2_tokenizer.encode(text, return_tensors='pt').to(device)\n    with torch.no_grad():\n        outputs = gpt2_model(tokens, labels=tokens)\n        loss = outputs.loss.item()\n        ppl = torch.exp(torch.tensor(loss)).item()\n    return ppl\n########################\n# LLM Accuracy via Relevance Score\n########################",
+        "peekOfCode": "def compute_perplexity(text: str, model_id: str = 'gpt2') -> float:\n    \"\"\"\n    Compute the perplexity of a given text using a specified pre-trained language model.\n    Args:\n        text (str): The input text for which to compute perplexity.\n        model_id (str): The name of the pre-trained model to use (default is 'gpt2').\n    Returns:\n        float: The computed perplexity score.\n    \"\"\"\n    # Load the perplexity metric",
         "detail": "10_answer_evaluation.best_retriever",
         "documentation": {}
     },
@@ -1525,6 +1541,24 @@
         "importPath": "10_answer_evaluation.best_retriever",
         "description": "10_answer_evaluation.best_retriever",
         "peekOfCode": "def expand_query(query: str) -> str:\n    PROMPT_TEMPLATES = {\n        \"query_refinement\": {\n            \"system\": \"\"\"Your job is to refine and expand any given user query related to a software codebase or feature. \n- Add relevant keywords or technologies that might be involved.\n- Ensure the query is well-targeted. \n- The query will be used to retrieve PR documents.\n- Your response must be exactly 10-15 words. Choose words that are unique and will likely retrieve relevant PRs.\n\"\"\",\n            \"user\": \"\"\"Original user query: {query}\\nPlease refine and expand this query to improve document retrieval.\"\"\"",
+        "detail": "10_answer_evaluation.best_retriever",
+        "documentation": {}
+    },
+    {
+        "label": "summarize_document",
+        "kind": 2,
+        "importPath": "10_answer_evaluation.best_retriever",
+        "description": "10_answer_evaluation.best_retriever",
+        "peekOfCode": "def summarize_document(query, content):\n    system_prompt = PROMPT_TEMPLATES[\"summarization\"][\"system\"]\n    user_prompt = PROMPT_TEMPLATES[\"summarization\"][\"user\"].format(\n        query=query, content=content)\n    return call_llm(system_prompt, user_prompt, model=\"gpt-4o-mini\", temperature=0)\ndef summarize_all_documents(query, documents):\n    summaries = []\n    for doc in documents:\n        fname, content = doc\n        summary = summarize_document(query, content)",
+        "detail": "10_answer_evaluation.best_retriever",
+        "documentation": {}
+    },
+    {
+        "label": "summarize_all_documents",
+        "kind": 2,
+        "importPath": "10_answer_evaluation.best_retriever",
+        "description": "10_answer_evaluation.best_retriever",
+        "peekOfCode": "def summarize_all_documents(query, documents):\n    summaries = []\n    for doc in documents:\n        fname, content = doc\n        summary = summarize_document(query, content)\n        summaries.append((fname, summary))\n    return summaries\nif __name__ == \"__main__\":\n    evaluator = EvaluationResults()\n    # We'll store logs for each question in a separate data structure",
         "detail": "10_answer_evaluation.best_retriever",
         "documentation": {}
     },
@@ -1763,6 +1797,15 @@
         "documentation": {}
     },
     {
+        "label": "PROMPT_TEMPLATES",
+        "kind": 5,
+        "importPath": "10_answer_evaluation.best_retriever",
+        "description": "10_answer_evaluation.best_retriever",
+        "peekOfCode": "PROMPT_TEMPLATES = {\n    \"query_refinement\": {\n        \"system\": \"\"\"You are a senior developer at a large company. Your job is to refine and expand any given user query related to a software codebase or feature. The user is a newcomer developer who needs more specific, detailed, and actionable queries to find the right documents. Your refined query should:\n- Add relevant keywords or technologies that might be involved.\n- Ensure the query is well-targeted so that the retrieval system can find the most pertinent PRs or code references. (there is no need to mention \"check for PR\" as everything in the database is PR already. You should focus on the component name, concepts, tech, or terms)\nYour query will be passed to search engine or vector retrieval. \nPriortize on querying the component name.\nYour response must immediately begin with the query - Do not put \"Relevant Query:\" at the beginning.\n\"\"\",\n        \"user\": \"\"\"Original user query: {query}\\nPlease refine and expand this query to improve document retrieval.\"\"\"",
+        "detail": "10_answer_evaluation.best_retriever",
+        "documentation": {}
+    },
+    {
         "label": "BM25Retriever",
         "kind": 6,
         "importPath": "10_answer_evaluation.bm25",
@@ -1812,7 +1855,7 @@
         "kind": 2,
         "importPath": "10_answer_evaluation.vanilla",
         "description": "10_answer_evaluation.vanilla",
-        "peekOfCode": "def compute_meteor(pred: str, ref: str) -> float:\n    # Tokenize inputs before passing to meteor_score\n    pred_tokens = pred.strip().split()\n    ref_tokens = ref.strip().split()\n    meteor = meteor_score([ref_tokens], pred_tokens)\n    return float(meteor)\ndef compute_bertscore(pred: str, ref: str) -> float:\n    P, R, F1 = bert_score([pred], [ref], lang=\"en\", verbose=False)\n    return float(F1.mean().item())\ndef compute_perplexity(text: str) -> float:",
+        "peekOfCode": "def compute_meteor(pred: str, ref: str) -> float:\n    # Tokenize inputs before passing to meteor_score\n    pred_tokens = pred.strip().split()\n    ref_tokens = ref.strip().split()\n    meteor = meteor_score([ref_tokens], pred_tokens)\n    return float(meteor)\ndef compute_bertscore(pred: str, ref: str) -> float:\n    P, R, F1 = bert_score([pred], [ref], lang=\"en\", verbose=False)\n    return float(F1.mean().item())\ndef compute_perplexity(text: str, model_id: str = 'gpt2') -> float:",
         "detail": "10_answer_evaluation.vanilla",
         "documentation": {}
     },
@@ -1821,7 +1864,7 @@
         "kind": 2,
         "importPath": "10_answer_evaluation.vanilla",
         "description": "10_answer_evaluation.vanilla",
-        "peekOfCode": "def compute_bertscore(pred: str, ref: str) -> float:\n    P, R, F1 = bert_score([pred], [ref], lang=\"en\", verbose=False)\n    return float(F1.mean().item())\ndef compute_perplexity(text: str) -> float:\n    tokens = gpt2_tokenizer.encode(text, return_tensors='pt').to(device)\n    with torch.no_grad():\n        outputs = gpt2_model(tokens, labels=tokens)\n        loss = outputs.loss.item()\n        ppl = torch.exp(torch.tensor(loss)).item()\n    return ppl",
+        "peekOfCode": "def compute_bertscore(pred: str, ref: str) -> float:\n    P, R, F1 = bert_score([pred], [ref], lang=\"en\", verbose=False)\n    return float(F1.mean().item())\ndef compute_perplexity(text: str, model_id: str = 'gpt2') -> float:\n    \"\"\"\n    Compute the perplexity of a given text using a specified pre-trained language model.\n    Args:\n        text (str): The input text for which to compute perplexity.\n        model_id (str): The name of the pre-trained model to use (default is 'gpt2').\n    Returns:",
         "detail": "10_answer_evaluation.vanilla",
         "documentation": {}
     },
@@ -1830,7 +1873,7 @@
         "kind": 2,
         "importPath": "10_answer_evaluation.vanilla",
         "description": "10_answer_evaluation.vanilla",
-        "peekOfCode": "def compute_perplexity(text: str) -> float:\n    tokens = gpt2_tokenizer.encode(text, return_tensors='pt').to(device)\n    with torch.no_grad():\n        outputs = gpt2_model(tokens, labels=tokens)\n        loss = outputs.loss.item()\n        ppl = torch.exp(torch.tensor(loss)).item()\n    return ppl\n########################\n# LLM Accuracy via Relevance Score\n########################",
+        "peekOfCode": "def compute_perplexity(text: str, model_id: str = 'gpt2') -> float:\n    \"\"\"\n    Compute the perplexity of a given text using a specified pre-trained language model.\n    Args:\n        text (str): The input text for which to compute perplexity.\n        model_id (str): The name of the pre-trained model to use (default is 'gpt2').\n    Returns:\n        float: The computed perplexity score.\n    \"\"\"\n    # Load the perplexity metric",
         "detail": "10_answer_evaluation.vanilla",
         "documentation": {}
     },

@@ -15,6 +15,7 @@ import torch
 from transformers import GPT2LMHeadModel, GPT2TokenizerFast
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
+import evaluate
 
 # nltk.download('wordnet', quiet=True)  # Ensure wordnet is downloaded for METEOR
 
@@ -56,13 +57,26 @@ def compute_bertscore(pred: str, ref: str) -> float:
     return float(F1.mean().item())
 
 
-def compute_perplexity(text: str) -> float:
-    tokens = gpt2_tokenizer.encode(text, return_tensors='pt').to(device)
-    with torch.no_grad():
-        outputs = gpt2_model(tokens, labels=tokens)
-        loss = outputs.loss.item()
-        ppl = torch.exp(torch.tensor(loss)).item()
-    return ppl
+def compute_perplexity(text: str, model_id: str = 'gpt2') -> float:
+    """
+    Compute the perplexity of a given text using a specified pre-trained language model.
+
+    Args:
+        text (str): The input text for which to compute perplexity.
+        model_id (str): The name of the pre-trained model to use (default is 'gpt2').
+
+    Returns:
+        float: The computed perplexity score.
+    """
+    # Load the perplexity metric
+    perplexity = evaluate.load("perplexity", module_type="measurement")
+
+    # Compute perplexity
+    results = perplexity.compute(
+        model_id=model_id, add_start_token=True, data=[text])
+
+    # Return the mean perplexity
+    return results['mean_perplexity']
 
 ########################
 # LLM Accuracy via Relevance Score
