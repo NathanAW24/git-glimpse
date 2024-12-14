@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import openai
 import json
 from statistics import mean
-from typing import List, Dict, Any
+from pydantic import BaseModel, Field
 import glob
 
 # Additional imports for metrics
@@ -14,9 +14,9 @@ from bert_score import score as bert_score
 import torch
 from transformers import GPT2LMHeadModel, GPT2TokenizerFast
 from langchain_openai import ChatOpenAI
-from langchain.schema import BaseModel, Field
+from pydantic import BaseModel, Field
 
-nltk.download('wordnet', quiet=True)  # Ensure wordnet is downloaded for METEOR
+# nltk.download('wordnet', quiet=True)  # Ensure wordnet is downloaded for METEOR
 
 # Load a pre-trained language model for perplexity calculation
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -44,7 +44,10 @@ def compute_bleu(pred: str, ref: str) -> float:
 
 
 def compute_meteor(pred: str, ref: str) -> float:
-    meteor = meteor_score([ref], pred)
+    # Tokenize inputs before passing to meteor_score
+    pred_tokens = pred.strip().split()
+    ref_tokens = ref.strip().split()
+    meteor = meteor_score([ref_tokens], pred_tokens)
     return float(meteor)
 
 
@@ -82,31 +85,38 @@ def compute_accuracy_llm(pred: str, ref: str) -> float:
     prompt = f"""
 You are tasked with evaluating the accuracy of a predicted answer compared to a reference answer. 
 Provide a relevance score from 0 to 10 based on the following criteria:
+Matching/Accurate = the information is correct (investigation + code to be examined + proposed solutions)
 
-1. **Scoring Scale**:
-    - **10**: The predicted answer perfectly matches the reference answer in meaning and detail.
-    - **9**: The predicted answer is highly relevant but missing minor details.
-    - **8**: The predicted answer is very relevant, addressing the query but with noticeable gaps.
-    - **7**: The predicted answer is relevant but lacks some significant details.
-    - **6**: The predicted answer is moderately relevant but includes tangential or limited information.
-    - **5**: The predicted answer is partially relevant but contains significant gaps.
-    - **4**: The predicted answer is slightly relevant but minimally aligns with the reference.
-    - **3**: The predicted answer is poorly relevant, with only a marginal connection to the reference.
-    - **2**: The predicted answer is barely relevant, with negligible connection to the reference.
-    - **1**: The predicted answer is irrelevant, with almost no connection to the reference.
-    - **0**: The predicted answer is completely off-topic, providing no useful information.
+### Evaluation Context:
+You are assessing whether the predicted answer matches the reference answer in terms of correctness and completeness. The evaluation focuses on:
+- Identifying the **correct files** to look at (based on the described investigation and implementation).
+- Proposing the **correct implementation steps** aligned with the reference structure.
+- Following best practices such as documentation, clear instructions, and identifying possible pitfalls.
 
-2. **Response Format**:
-    - Provide a single integer from 0 to 10 as the relevance score.
-    - Do not include any explanation, text, or additional characters.
+### Scoring Criteria:
+Provide a score from 0 to 10 based on the following:
+- **10**: The predicted answer is completely accurate, matching the reference answer in all aspects (files, implementation, and structure).
+- **9**: The predicted answer is nearly accurate but misses minor details or contains slight inaccuracies.
+- **8**: The predicted answer is mostly accurate but has noticeable gaps or deviations from the reference.
+- **7**: The predicted answer is moderately accurate but lacks some significant details or introduces minor inaccuracies.
+- **6**: The predicted answer is partially accurate but with limited alignment to the reference.
+- **5**: The predicted answer is minimally accurate and omits critical details or introduces significant inaccuracies.
+- **4**: The predicted answer is very inaccurate, with minimal alignment to the reference.
+- **3**: The predicted answer is poorly accurate and has only a marginal connection to the reference.
+- **2**: The predicted answer is barely accurate, with negligible connection to the reference.
+- **1**: The predicted answer is almost entirely inaccurate, with no meaningful alignment to the reference.
+- **0**: The predicted answer is completely inaccurate or off-topic, providing no useful information.
 
-Reference Answer:
+### Response Format:
+Provide a single integer from 0 to 10 as the accuracy score. Do not include any explanation, text, or additional characters.
+
+### Reference Answer:
 {ref}
 
-Predicted Answer:
+### Predicted Answer:
 {pred}
 
-Provide your relevance score (0-10):
+Provide your accuracy score (0-10):
 """
     response = structured_llm.invoke(prompt)
     return response.score / 10.0  # Normalize to a 0-1 scale
@@ -123,7 +133,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def call_llm(system_prompt, user_prompt, model="gpt-4o-mini", temperature=0.7):
     """Generic LLM call."""
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model=model,
         messages=[
             {"role": "system", "content": system_prompt},
