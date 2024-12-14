@@ -373,15 +373,6 @@ def summarize_document(query, content):
     return call_llm(system_prompt, user_prompt, model="gpt-4o-mini", temperature=0)
 
 
-def summarize_all_documents(query, documents):
-    summaries = []
-    for doc in documents:
-        fname, content = doc
-        summary = summarize_document(query, content)
-        summaries.append((fname, summary))
-    return summaries
-
-
 if __name__ == "__main__":
     evaluator = EvaluationResults()
 
@@ -432,11 +423,15 @@ if __name__ == "__main__":
         top_3_docs = final_docs[:3]
 
         # Summarize
-        summaries = summarize_all_documents(expanded_query_str, top_3_docs)
+
+        list_of_summary_string = []
+        for ((fname, content), _) in top_3_docs:
+            summary = summarize_document(question, content)
+            list_of_summary_string.append((fname, summary))
 
         # Create context from top 3 docs
         context_str = "\n\n".join(
-            [f"---\n{fname}\n{content}\n" for ((fname, content), _) in summaries])
+            [f"---\n{fname}\n{content}\n" for (fname, content) in list_of_summary_string])
 
         # Generate answer using LLM with context
         user_prompt = f"{question}\n\nContext from Top PRs:\n{context_str}\n\n{template}"
