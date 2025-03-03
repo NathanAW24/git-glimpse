@@ -1,0 +1,332 @@
+Pull Request Number: 3735
+Title: fix(table): Add an isKeyboardNavigationDisabled prop to disable the navigation
+Base Branch: beta/release-next
+Head Branch: macci001/add-isKeyboardNavigationDisabled-prop-to-table
+Author: macci001
+URL: https://github.com/nextui-org/nextui/pull/3735
+State: MERGED
+Created At: 2024-09-10T11:07:59Z
+Merged At: 2024-11-27T19:15:58Z
+Participants: macci001, AnYiEE, soyeon9211, ryo-manba, jrgarciadev, wingkwong
+
+Description:
+Closes #3681
+📝 Description
+
+PR adds isKeyboardNavigationDisabled prop to disable navigation on keypress
+
+⛳️ Current behavior (updates)
+
+Currently, whenever any arrow-key keypress is triggered it navigates the focus to other cell/row.
+This maybe an issue when the table cell contains a component which requires this keys for specific purpose.
+Example for above scenario could be: table cell contains input component, it might need arrow keys for editing. But it is not possible because whenever the keypress triggers navigation
+
+
+  
+    
+    
+
+    Screen.Recording.2024-09-10.at.4.11.24.PM.mov
+    
+  
+
+  
+
+  
+
+
+🚀 New behavior
+
+The PR adds an isKeyboardNavigationDisabled prop to disable the navigation through keyboard.
+
+
+  
+    
+    
+
+    Screen.Recording.2024-09-10.at.4.26.36.PM.mov
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No): No
+Additional info
+
+updated the docs
+
+
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced isKeyboardNavigationDisabled prop for the Table component, allowing users to disable keyboard navigation when interacting with components that require arrow key inputs.
+
+
+
+Documentation
+
+Enhanced Table component documentation with details about the new isKeyboardNavigationDisabled prop, updated props and events tables, and added usage examples for improved clarity and usability.
+
+Commits:
+- feat(table): add isKeyboardNavigationDisabled prop to the table\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 40a6706964d26ad56051cb4428ced832ad8a817f
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/table | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/macci001/nextui/new/macci001/add-isKeyboardNavigationDisabled-prop-to-table?filename=.changeset/silent-rice-love.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Ftable%22%3A%20patch%0A---%0A%0Afix(table)%3A%20Add%20an%20isKeyboardNavigationDisabled%20prop%20to%20disable%20the%20navigation%0A)
+
+\n- vercel: Someone is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2287335e4ebbc41a4051f98879f4a0e22e5ea993ea%22%7D%2C%22id%22%3A%22QmdkX7ReN4agbn9CnfHi1waXQb3nrJnpB4cjwwtroExbxW%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3735%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update introduces a new prop, `isKeyboardNavigationDisabled`, to the `Table` component in the `@nextui-org/table` package. This prop allows developers to disable keyboard navigation within table cells, particularly beneficial for inputs or text areas that require arrow key usage. The change includes updates to the documentation, ensuring that developers are informed about the new functionality.
+
+## Changes
+
+| Files                                                                 | Change Summary                                                                                      |
+|-----------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| .changeset/fluffy-icons-refuse.md, apps/docs/content/docs/components/table.mdx | Added `isKeyboardNavigationDisabled` prop to the `Table` component and updated documentation.      |
+
+## Assessment against linked issues
+
+| Objective                                                                 | Addressed | Explanation                               |
+|---------------------------------------------------------------------------|-----------|-------------------------------------------|
+| Allow inline editing without navigation to the next cell (Issue #3681)   | ✅        |                                           |
+
+## Possibly related PRs
+
+- **#3020**: This PR addresses keyboard behavior in input/textarea elements within a table, which is directly related to the new `isKeyboardNavigationDisabled` property introduced in the main PR, as both involve keyboard navigation handling in table components.
+- **#2097**: This PR improves RTL support for the table component, which may relate to the keyboard navigation changes in the main PR, as keyboard navigation behavior can be affected by layout direction.
+- **#3419**: This PR allows cursor navigation within text in an Input component inside an Accordion, which is relevant as it also deals with keyboard navigation and user input behavior in components similar to the changes made in the main PR.
+
+## Suggested labels
+
+`👀 Status: In Review`
+
+## Suggested reviewers
+
+- wingkwong
+- ryo-manba
+
+<!-- walkthrough_end -->
+
+
+
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- AnYiEE: I think a better solution is to automatically disable keyboard navigation temporarily when the focus is on the input, so that can move the cursor with the keyboard and use the Tab key to navigate to other elements of the table after leaving the input.\n- macci001: Thanks for the suggestion @AnYiEE. But I do not think it would be a great idea to write in a logic that checks if component is input component then stop the keyboard navigation.
+One work-around which I thought could be helpful is rather than adding a prop `isKeyboardNavigationDisabled` to the table, we can add this prop to any of the cell. If any cell with `isKeyboardNavigationDisabled` as `true`, keyboard navigation will be stopped when then cell is in focus.
+
+any thoughts here @wingkwong, should we go forward with adding the prop to the `Table` or it would be helpful to add the functionality to the `TableCell` instead.\n- soyeon9211: @macci001 Is it not merge yet? I need this option :(\n- macci001: @wingkwong can I please get in some review here?\n- macci001: Reflecting on your [comment](https://github.com/nextui-org/nextui/pull/3735#pullrequestreview-2354564738) @ryo-manba
+I can think of following design for the edit mode: 
+
+* In any of the cases, one when the cell has focusable children and other when cell do not have focusable children, always entire cell is focused. That is, focusMode set to `cell` instead of `child`.
+* Whenever there is `Enter` keypress on a focused cell:
+   *  If cell does have some focusable children:
+      * Set the focus on the first/last focusable children (based on RTL)
+      * Add the keyboard navigation on `shift + leftarrowkey` and `shift + rightarrowkey` for navigating to prev/next focusable children of the cell.
+   * If cell does not have any focusable children -> do nothing i.e. edit mode is not relevant in this case. 
+*  `Esc/Tab` keypress to exit the edit mode.
+
+
+Note 1: For navigation between focusable children of the cell, `getFocusableTreeWalker` will be used.
+
+Note 2: For now, the `useTableCell` internally uses `useGridCell`'s default value for focusMode i.e.  `child`. This means, that  whenever the cell will be in focus, the focus will shift to the focusableChild if it exist, else entire cell would be in focus. In order  to implement the edit mode, we would need the react-aria team to add a prop by which we can set the focusMode to `cell`. \n- ryo-manba: @macci001 
+Thank you for your detailed insights. I'll discuss it with the team and see how we can proceed.\n- jrgarciadev: Hey @macci001 please fix the conflicts\n
+
+Files Changed:
+- .changeset/fluffy-icons-refuse.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/table": patch
++---
++
++Currently, whenever any arrow-key keypress is triggered it navigates the focus to other cell/row. This creates an issue when the table cell contains a component which requires this keys for specific purpose (eg. if a table cell contains input component, it might need arrow keys for editing. But it is not possible because whenever the keypress triggers navigation). The PR adds an `isKeyboardNavigationDisabled` prop to disable the navigation.\n- apps/docs/content/docs/components/table.mdx (modified, 2 changes)\n  Patch: @@ -457,7 +457,7 @@ You can customize the `Table` component by passing custom Tailwind CSS classes t
+ | disableAnimation              | `boolean`                                                                                                                                                     | Whether to disable the table and checkbox animations.                                                        | `false`     |
+ | checkboxesProps               | [CheckboxProps](/docs/components/checkbox/#checkbox-props)                                                                                                    | Props to be passed to the checkboxes.                                                                        | -           |
+ | classNames                    | `Record<"base" ｜ "table" ｜ "thead" ｜ "tbody" ｜ "tfoot" ｜ "emptyWrapper" ｜ "loadingWrapper" ｜ "wrapper" ｜ "tr" ｜ "th" ｜ "td" ｜ "sortIcon", string>` | Allows to set custom class names for the dropdown item slots.                                                | -           |
+-
++| isKeyboardNavigationDisabled  | `boolean`                                                                                                                                                     | Whether to disable keyboard navigations or not.                                                              | `false`     |
+ ### Table Events
+ 
+ | Attribute         | Type                                  | Description                                                         |\n- packages/components/table/__tests__/table.test.tsx (modified, 40 changes)\n  Patch: @@ -1,8 +1,10 @@
+ import * as React from "react";
+-import {act, render} from "@testing-library/react";
++import {act, render, fireEvent} from "@testing-library/react";
+ import userEvent, {UserEvent} from "@testing-library/user-event";
+ 
++
+ import {Table, TableHeader, TableCell, TableColumn, TableBody, TableRow} from "../src";
++import {keyCodes} from "../../../utilities/test-utils/src";
+ 
+ const columns = [
+   {name: "Foo", key: "foo"},
+@@ -101,6 +103,42 @@ describe("Table", () => {
+     expect(wrapper.getAllByRole("gridcell")).toHaveLength(2);
+   });
+ 
++  it("should disable key navigations when isKeyboardNavigationDisabled is enabled", async () => {
++    const wrapper = render(
++      <Table isKeyboardNavigationDisabled={true} selectionMode="single">
++        <TableHeader>
++          <TableColumn>Foo</TableColumn>
++          <TableColumn>Bar</TableColumn>
++          <TableColumn>Baz</TableColumn>
++        </TableHeader>
++        <TableBody>
++          <TableRow>
++            <TableCell>Foo 1</TableCell>
++            <TableCell>Bar 1</TableCell>
++            <TableCell>Baz 1</TableCell>
++          </TableRow>
++          <TableRow>
++            <TableCell>Foo 2</TableCell>
++            <TableCell>Bar 2</TableCell>
++            <TableCell>Baz 2</TableCell>
++          </TableRow>
++        </TableBody>
++      </Table>,
++    );
++
++    const row1 = wrapper.getAllByRole("row")[1];
++
++    // selecting the row1
++    await act(async () => {
++      await userEvent.click(row1);
++    });
++    expect(row1).toHaveFocus();
++
++    // triggering the arrow down on row1 should not shift the focus to row2
++    fireEvent.keyDown(row1, {key: "ArrowDown", keyCode: keyCodes.ArrowDown});
++    expect(row1).toHaveFocus();
++  });
++
+   it("should render dynamic table", () => {
+     const wrapper = render(
+       <Table aria-label="Dynamic Table">\n- packages/components/table/src/use-table.ts (modified, 10 changes)\n  Patch: @@ -90,6 +90,11 @@ interface Props<T> extends HTMLNextUIProps<"table"> {
+    * @default false
+    */
+   disableAnimation?: boolean;
++  /**
++   * Whether to disable the keyboard navigation functionality.
++   * @default false
++   */
++  isKeyboardNavigationDisabled?: boolean;
+   /**
+    * Props to be passed to the checkboxes.
+    */
+@@ -158,6 +163,7 @@ export function useTable<T extends object>(originalProps: UseTableProps<T>) {
+     classNames,
+     removeWrapper = false,
+     disableAnimation = globalContext?.disableAnimation ?? false,
++    isKeyboardNavigationDisabled = false,
+     selectionMode = "none",
+     topContentPlacement = "inside",
+     bottomContentPlacement = "inside",
+@@ -185,6 +191,10 @@ export function useTable<T extends object>(originalProps: UseTableProps<T>) {
+     showSelectionCheckboxes,
+   });
+ 
++  if (isKeyboardNavigationDisabled && !state.isKeyboardNavigationDisabled) {
++    state.setKeyboardNavigationDisabled(true);
++  }
++
+   const {collection} = state;
+ 
+   // Exclude the layout prop because it has a name conflict and is deprecated in useTable.\n

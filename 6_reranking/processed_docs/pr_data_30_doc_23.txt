@@ -1,0 +1,321 @@
+Pull Request Number: 248
+Title: Fix/tree shaking
+Base Branch: staging
+Head Branch: fix/tree-shaking
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/248
+State: MERGED
+Created At: 2022-02-07T23:03:03Z
+Merged At: 2022-02-08T01:35:14Z
+Participants: jrgarciadev
+
+Description:
+[react]/[build]
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+ESM tree shaking fixed
+Bundled size reduced 42.3%
+ESM and CJS are now being minified by terser
+package.json types structure changed
+turbo config moved to a dedicated file
+
+
+
+
+Screenshots - Animations
+
+Commits:
+- fix: babel tree shaking fixed\n- feat(core): terser minify added\n- feat(root): turbo config moved to a single file\n- fix: avoid duplicating types, bundle size decreased 50%\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- package.json (modified, 45 changes)\n  Patch: @@ -88,46 +88,5 @@
+   "dependencies": {
+     "gray-matter": "^4.0.3"
+   },
+-  "turbo": {
+-    "baseBranch": "origin/main",
+-    "pipeline": {
+-      "build": {
+-        "dependsOn": [
+-          "^build"
+-        ],
+-        "outputs": [
+-          ".next/**",
+-          "dist/**",
+-          "lib/**"
+-        ]
+-      },
+-      "start": {
+-        "dependsOn": [
+-          "^build"
+-        ],
+-        "outputs": []
+-      },
+-      "test": {
+-        "dependsOn": [
+-          "^build"
+-        ],
+-        "outputs": []
+-      },
+-      "test-update": {
+-        "dependsOn": [
+-          "^build"
+-        ],
+-        "outputs": []
+-      },
+-      "lint": {
+-        "outputs": []
+-      },
+-      "dev": {
+-        "cache": false
+-      },
+-      "sb": {
+-        "cache": false
+-      }
+-    }
+-  }
+-}
+\ No newline at end of file
++  "packageManager": "yarn@1.22.17"
++}\n- packages/react/.babelrc.js (modified, 2 changes)\n  Patch: @@ -36,7 +36,7 @@ module.exports = (api) => {
+         ]
+       : ['@babel/preset-env', '@babel/react', '@babel/preset-typescript'];
+ 
+-  const plugins = env !== 'test' ? ['@babel/plugin-transform-runtime'] : [];
++  const plugins = [];
+ 
+   return {
+     presets,\n- packages/react/package.json (modified, 7 changes)\n  Patch: @@ -32,14 +32,15 @@
+   "main": "lib/cjs/index.js",
+   "module": "lib/esm/index.js",
+   "unpkg": "lib/umd/nextui.min.js",
+-  "types": "lib/esm/index.d.ts",
++  "types": "lib/types/index.d.ts",
+   "sideEffects": false,
+   "scripts": {
+     "clear": "rimraf ./lib ./dist ./esm",
+-    "clear-types": "rimraf ./lib/esm/**/*.d.ts && rimraf ./lib/cjs/**/*.d.ts",  
++    "clear-types": "rimraf ./lib/types",
+     "pre-publish": "node ./scripts/pre-publish.js",
+     "publish:dry-run": "npm publish ./lib --dry-run",
+     "build": "node ./scripts/build.js",
++    "build:minify": "node ./scripts/minify.js",
+     "build:types": "yarn tsc -p ./buildconfig -d --emitDeclarationOnly --outDir types",
+     "build:dev-types": "tsc -p ./buildconfig -d --emitDeclarationOnly --outDir lib/esm",
+     "build:webpack": "webpack --config ./buildconfig/webpack.common.js",
+@@ -99,8 +100,10 @@
+     "execa": "^5.1.1",
+     "fs-extra": "^10.0.0",
+     "jest": "^26.6.3",
++    "p-iteration": "^1.1.8",
+     "prettier": "^2.3.1",
+     "rimraf": "^3.0.2",
++    "terser": "5.10.0",
+     "ts-jest": "^26.5.5",
+     "typescript": "^4.3.4",
+     "webpack": "^5.53.0",\n- packages/react/scripts/build.js (modified, 13 changes)\n  Patch: @@ -10,12 +10,13 @@ const getConfig = require('../buildconfig/webpack.config');
+ const targets = process.argv.slice(2);
+ 
+ const srcRoot = path.join(__dirname, '../src');
+-const typesRoot = path.join(__dirname, '../types');
++const typesRootInit = path.join(__dirname, '../types');
+ 
+ const libRoot = path.join(__dirname, '../lib');
+ const umdRoot = path.join(libRoot, 'umd');
+ const cjsRoot = path.join(libRoot, 'cjs');
+ const esRoot = path.join(libRoot, 'esm');
++const typesRoot = path.join(libRoot, 'types');
+ 
+ const step = require('./utils').step;
+ const shell = require('./utils').shell;
+@@ -27,11 +28,12 @@ const has = (t) => !targets.length || targets.includes(t);
+ 
+ const buildTypes = step('generating .d.ts', () => shell(`yarn build:types`));
+ 
+-const copyTypes = (dest) => fse.copySync(typesRoot, dest, { overwrite: true });
++const copyTypes = (dest) =>
++  fse.copySync(typesRootInit, dest, { overwrite: true });
+ 
+ const babel = (outDir, envName) => {
+   shell(
+-    `yarn babel ${srcRoot} -x .js,.jsx,.ts,.tsx --out-dir ${outDir} --env-name "${envName} --no-comments"`
++    `yarn babel ${srcRoot} -x .js,.jsx,.ts,.tsx --out-dir ${outDir} --env-name "${envName}"`
+   );
+ };
+ 
+@@ -41,7 +43,6 @@ const babel = (outDir, envName) => {
+  */
+ const buildLib = step('commonjs modules', async () => {
+   await babel(cjsRoot, 'cjs');
+-  await copyTypes(cjsRoot);
+ });
+ 
+ /**
+@@ -50,7 +51,6 @@ const buildLib = step('commonjs modules', async () => {
+  */
+ const buildEsm = step('es modules', async () => {
+   await babel(esRoot, 'esm');
+-  await copyTypes(esRoot);
+ });
+ 
+ /**
+@@ -96,7 +96,8 @@ Promise.resolve(true)
+     Promise.all([
+       has('lib') && buildLib(),
+       has('es') && buildEsm(),
+-      has('umd') && buildUmd()
++      has('umd') && buildUmd(),
++      copyTypes(typesRoot)
+     ])
+   )
+   .then(buildDirectories)\n- packages/react/scripts/cherry-pick.js (modified, 6 changes)\n  Patch: @@ -21,7 +21,7 @@ const withDefaults = (
+   inputDir: 'src',
+   cwd: path.resolve(process.cwd(), cwd),
+   ...additionalDefaults,
+-  ...options
++  ...options,
+ });
+ 
+ const noop = () => {};
+@@ -84,7 +84,7 @@ const fileProxy = async (options, file) => {
+     sideEffects: false,
+     main: path.join('..', cjsDir, `${file}/index.js`),
+     module: path.join('..', esmDir, `${file}/index.js`),
+-    types: path.join('..', esmDir, `${file}/index.d.ts`)
++    types: path.join('..', esmDir, `${file}/index.d.ts`),
+   };
+ 
+   if (typeof typesDir === 'string') {
+@@ -102,7 +102,7 @@ const fileProxy = async (options, file) => {
+ const cherryPick = async (inputOptions) => {
+   const options = withDefaults(inputOptions, {
+     cjsDir: 'lib',
+-    esmDir: 'es'
++    esmDir: 'es',
+   });
+ 
+   const files = await findFiles(options);\n- packages/react/scripts/minify.js (added, 51 changes)\n  Patch: @@ -0,0 +1,51 @@
++var minify = require('terser').minify;
++var fs = require('fs');
++var path = require('path');
++const { forEach } = require('p-iteration');
++const { cyan } = require('chalk');
++
++const error = require('./utils').error;
++
++const libRoot = path.join(__dirname, '../lib');
++const esRoot = path.join(libRoot, 'esm');
++const cjsRoot = path.join(libRoot, 'cjs');
++
++function getAllFiles(dirPath, arrayOfFiles) {
++  let files = fs.readdirSync(dirPath);
++
++  arrayOfFiles = arrayOfFiles || [];
++
++  files.forEach(function (file) {
++    if (fs.statSync(dirPath + '/' + file).isDirectory()) {
++      arrayOfFiles = getAllFiles(dirPath + '/' + file, arrayOfFiles);
++    } else {
++      arrayOfFiles.push(path.join(dirPath, '/', file));
++    }
++  });
++
++  return arrayOfFiles.filter((path) => path.match(/\.js$/));
++}
++
++async function minifyFiles(filePaths) {
++  await forEach(filePaths, async (filePath) => {
++    const file = fs.readFileSync(filePath, 'utf8');
++    const { code } = await minify(file, {
++      compress: true,
++      module: true,
++      mangle: true,
++      toplevel: true
++    });
++    fs.writeFileSync(filePath, code);
++  });
++}
++
++const minifyLib = (dir) => {
++  console.log(cyan('minifying files...'));
++  const files = getAllFiles(dir);
++  minifyFiles(files);
++  console.log(cyan('✅ files minified'));
++};
++
++Promise.resolve(true)
++  .then(() => Promise.all[(minifyLib(esRoot), minifyLib(cjsRoot))])
++  .catch(error);\n- packages/react/scripts/pre-publish.js (modified, 3 changes)\n  Patch: @@ -9,6 +9,8 @@ const rootDir = path.join(__dirname, '../');
+ 
+ const buildPkg = step('build pkg...', () => shell(`yarn build`));
+ 
++const minifyPkg = step('minify pkg...', () => shell(`yarn build:minify`));
++
+ const printPkg = step('print pkg...', () => {
+   const genPkgJson = fse
+     .readFileSync(`${libRoot}/package.json`)
+@@ -21,6 +23,7 @@ const copyFromRoot = (file) =>
+ 
+ Promise.resolve(true)
+   .then(buildPkg)
++  .then(minifyPkg)
+   .then(() => {
+     setupPackage();
+     printPkg();\n- turbo.json (added, 42 changes)\n  Patch: @@ -0,0 +1,42 @@
++{
++  "baseBranch": "origin/main",
++  "pipeline": {
++    "build": {
++      "dependsOn": [
++        "^build"
++      ],
++      "outputs": [
++        ".next/**",
++        "dist/**",
++        "lib/**"
++      ]
++    },
++    "start": {
++      "dependsOn": [
++        "^build"
++      ],
++      "outputs": []
++    },
++    "test": {
++      "dependsOn": [
++        "^build"
++      ],
++      "outputs": []
++    },
++    "test-update": {
++      "dependsOn": [
++        "^build"
++      ],
++      "outputs": []
++    },
++    "lint": {
++      "outputs": []
++    },
++    "dev": {
++      "cache": false
++    },
++    "sb": {
++      "cache": false
++    }
++  }
++}\n- yarn.lock (modified, 2296 changes)\n  Patch: No patch available\n

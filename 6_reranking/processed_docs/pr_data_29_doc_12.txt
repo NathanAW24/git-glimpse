@@ -1,0 +1,161 @@
+Pull Request Number: 376
+Title: Fix#369/modal css error
+Base Branch: next
+Head Branch: fix#369/modal-css-error
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/376
+State: MERGED
+Created At: 2022-03-27T20:43:43Z
+Merged At: 2022-03-27T20:48:00Z
+Participants: jrgarciadev
+
+Description:
+[react]/[modal]
+TASK:  #369
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+ModalComponent has now the correct props
+
+
+
+Screenshots - Animations
+
+Commits:
+- Merge pull request #374 from nextui-org/next
+
+v1.0.5-beta.5\n- fix[react](modal): Modal css prop\n
+
+Labels:
+⏳ Status: Waiting for Next Release
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/react/src/modal/modal.stories.tsx (modified, 16 changes)\n  Patch: @@ -1,6 +1,5 @@
+ import React, { useState } from 'react';
+ import { Meta } from '@storybook/react';
+-import useTheme from '../use-theme';
+ import Modal from './index';
+ import Button from '../button';
+ import Text from '../text';
+@@ -101,7 +100,6 @@ export const Default = () => {
+ 
+ export const WithCloseButton = () => {
+   const [visible, setVisible] = useState(false);
+-  const theme = useTheme();
+   const handler = () => setVisible(true);
+ 
+   const closeHandler = () => {
+@@ -136,7 +134,7 @@ export const WithCloseButton = () => {
+             color="primary"
+             size="lg"
+             placeholder="Email"
+-            contentLeft={<Mail theme={theme} />}
++            contentLeft={<Mail fill="currentColor" />}
+           />
+           <Input
+             clearable
+@@ -145,7 +143,7 @@ export const WithCloseButton = () => {
+             color="primary"
+             size="lg"
+             placeholder="Password"
+-            contentLeft={<Password theme={theme} />}
++            contentLeft={<Password fill="currentColor" />}
+           />
+           <Row justify="space-between">
+             <Checkbox>
+@@ -174,7 +172,6 @@ export const WithCloseButton = () => {
+ 
+ export const WithUseModal = () => {
+   const { setVisible, bindings } = useModal();
+-  const theme = useTheme();
+ 
+   return (
+     <div>
+@@ -199,7 +196,7 @@ export const WithUseModal = () => {
+             color="primary"
+             size="lg"
+             placeholder="Email"
+-            contentLeft={<Mail theme={theme} />}
++            contentLeft={<Mail fill="currentColor" />}
+           />
+           <Input
+             clearable
+@@ -208,7 +205,7 @@ export const WithUseModal = () => {
+             color="primary"
+             size="lg"
+             placeholder="Password"
+-            contentLeft={<Password theme={theme} />}
++            contentLeft={<Password fill="currentColor" />}
+           />
+           <Row justify="space-between">
+             <Checkbox>
+@@ -237,7 +234,6 @@ export const WithUseModal = () => {
+ 
+ export const NoAnimated = () => {
+   const { setVisible, bindings } = useModal();
+-  const theme = useTheme();
+ 
+   return (
+     <div>
+@@ -262,7 +258,7 @@ export const NoAnimated = () => {
+             color="primary"
+             size="lg"
+             placeholder="Email"
+-            contentLeft={<Mail theme={theme} />}
++            contentLeft={<Mail fill="currentColor" />}
+           />
+           <Input
+             clearable
+@@ -271,7 +267,7 @@ export const NoAnimated = () => {
+             color="primary"
+             size="lg"
+             placeholder="Password"
+-            contentLeft={<Password theme={theme} />}
++            contentLeft={<Password fill="currentColor" />}
+           />
+           <Row justify="space-between">
+             <Checkbox>\n- packages/react/src/modal/modal.tsx (modified, 9 changes)\n  Patch: @@ -27,7 +27,6 @@ interface Props {
+   onOpen?: () => void;
+   onClose?: () => void;
+   className?: string;
+-  as?: keyof JSX.IntrinsicElements;
+ }
+ 
+ const defaultProps = {
+@@ -45,8 +44,8 @@ const defaultProps = {
+ type NativeAttrs = Omit<React.DialogHTMLAttributes<unknown>, keyof Props>;
+ 
+ export type ModalProps = Props &
+-  typeof defaultProps &
+   NativeAttrs &
++  Partial<typeof defaultProps> &
+   ModalWrapperProps;
+ 
+ const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
+@@ -162,10 +161,6 @@ type ModalComponent<P = {}> = React.FC<P> & {
+   Footer: typeof ModalFooter;
+ };
+ 
+-type ComponentProps = Partial<typeof defaultProps> &
+-  Omit<Props, keyof typeof defaultProps> &
+-  NativeAttrs;
+-
+ if (__DEV__) {
+   Backdrop.displayName = 'NextUI - Modal';
+ }
+@@ -174,4 +169,4 @@ Modal.toString = () => '.nextui-modal';
+ 
+ Modal.defaultProps = defaultProps;
+ 
+-export default Modal as ModalComponent<ComponentProps>;
++export default Modal as ModalComponent<ModalProps>;\n

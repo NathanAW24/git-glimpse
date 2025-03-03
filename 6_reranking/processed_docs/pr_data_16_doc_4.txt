@@ -1,0 +1,89 @@
+Pull Request Number: 2387
+Title: fix(theme): chip with dot variant is not properly padded when having …
+Base Branch: main
+Head Branch: fix/theme/chip-with-dot-variant-is-not-properly-padded-when-having
+Author: kuri-sun
+URL: https://github.com/nextui-org/nextui/pull/2387
+State: MERGED
+Created At: 2024-02-20T04:19:54Z
+Merged At: 2024-03-03T20:45:55Z
+Participants: kuri-sun, jrgarciadev
+
+Description:
+…a 1-char text
+
+Closes #2383
+📝 Description
+Chip is not properly padded when using the "dot" variant and using a 1-char string as children.
+⛳️ Current behavior (updates)
+Here is the previous style for the Chip component.
+
+🚀 New behavior
+Here is the updated style for the Chip component.
+
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Commits:
+- fix(theme): chip with dot variant is not properly padded when having a 1-char text\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 436fa9727b85f6b1d91dfcacfecb618b4ffafd66
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/theme | Major |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/kuri-sun/nextui/new/fix/theme/chip-with-dot-variant-is-not-properly-padded-when-having?filename=.changeset/dirty-worms-study.md&value=---%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(theme)%3A%20chip%20with%20dot%20variant%20is%20not%20properly%20padded%20when%20having%20%E2%80%A6%0A)
+
+\n- vercel: [vc]: #Z+yC/XLCdpI4eBnPMOScKld4Ym/oAMCcOaGSKWbQgNA=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvOXdyRFg5RkhhMzM2ODhSd29IdmhubW9wVHY5bSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWt1cmktc3VuLWZpeC10aGUtNWVjNmZkLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWt1cmktc3VuLWZpeC10aGUtNWVjNmZkLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/9wrDX9FHa33688RwoHvhnmopTv9m)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-kuri-sun-fix-the-5ec6fd-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-kuri-sun-fix-the-5ec6fd-nextui-org.vercel.app?via=pr-comment-feedback-link) | Feb 20, 2024 4:22am |
+
+\n- vercel: @kuri-sun is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22436fa9727b85f6b1d91dfcacfecb618b4ffafd66%22%7D%2C%22id%22%3A%22QmZPhURWshPDRFXiGxMUYkg9LC1FE98Ekg3KKCf7keoo5V%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2387%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/fast-phones-fail.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/theme": major
++---
++
++Chip with dot variant is not properly styled\n- packages/core/theme/src/components/chip.ts (modified, 9 changes)\n  Patch: @@ -449,6 +449,15 @@ const chip = tv({
+         base: "w-auto",
+       },
+     },
++    // isOneChar / dot
++    {
++      isOneChar: true,
++      variant: "dot",
++      class: {
++        base: "w-auto h-7 px-1 items-center",
++        content: "px-2",
++      },
++    },
+     // hasStartContent / size
+     {
+       hasStartContent: true,\n

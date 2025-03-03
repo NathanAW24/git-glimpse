@@ -1,0 +1,321 @@
+Pull Request Number: 1651
+Title: fix: add peer dependencies
+Base Branch: main
+Head Branch: fix/peer-dependency
+Author: syi0808
+URL: https://github.com/nextui-org/nextui/pull/1651
+State: MERGED
+Created At: 2023-09-18T06:10:15Z
+Merged At: 2023-09-23T13:02:06Z
+Participants: syi0808, jrgarciadev
+
+Description:
+📝 Description
+
+I encountered an error starting a new Next 13 project. This was a problem with yarn PnP and there was no similar case. As a result of analyzing the error, it was an error that the react-dom package could not be found in the react-aria/overlay package. 
+Looking for a little more, the peer dependency of the package used by next-ui was not declared as the peer dependency of next-ui.
+The following solutions are being used temporarily.
+Change peer dependency forced injection or pnpFallbackMode: "all" using packageExtensions option in yarnrc.yml
+It is enough for me already, but I made a PR because I thought it would be nice if a more fundamental solution could be prepared in next-ui.
+⛳️ Current behavior (updates)
+Module not found because peer dependency does not have react-dom and framer-motion in nextui packages. (only yarn PnP , not node_modules)
+🚀 New behavior
+Add as peer dependency to packages requiring react-dom or framer-motion.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Commits:
+- fix: add peer dependencies\n- fix: update pnpm lock\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 01873b604a927b639cfb3212781a3b3ddfb5c824
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/syi0808/nextui/new/fix/peer-dependency?filename=.changeset/nasty-weeks-learn.md&value=---%0A%22%40nextui-org%2Faccordion%22%3A%20patch%0A%22%40nextui-org%2Favatar%22%3A%20patch%0A%22%40nextui-org%2Fbadge%22%3A%20patch%0A%22%40nextui-org%2Fbutton%22%3A%20patch%0A%22%40nextui-org%2Fcard%22%3A%20patch%0A%22%40nextui-org%2Fcheckbox%22%3A%20patch%0A%22%40nextui-org%2Fchip%22%3A%20patch%0A%22%40nextui-org%2Fcode%22%3A%20patch%0A%22%40nextui-org%2Fdivider%22%3A%20patch%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A%22%40nextui-org%2Fimage%22%3A%20patch%0A%22%40nextui-org%2Finput%22%3A%20patch%0A%22%40nextui-org%2Fkbd%22%3A%20patch%0A%22%40nextui-org%2Flink%22%3A%20patch%0A%22%40nextui-org%2Flistbox%22%3A%20patch%0A%22%40nextui-org%2Fmenu%22%3A%20patch%0A%22%40nextui-org%2Fmodal%22%3A%20patch%0A%22%40nextui-org%2Fnavbar%22%3A%20patch%0A%22%40nextui-org%2Fpagination%22%3A%20patch%0A%22%40nextui-org%2Fpopover%22%3A%20patch%0A%22%40nextui-org%2Fprogress%22%3A%20patch%0A%22%40nextui-org%2Fradio%22%3A%20patch%0A%22%40nextui-org%2Fripple%22%3A%20patch%0A%22%40nextui-org%2Fscroll-shadow%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Fskeleton%22%3A%20patch%0A%22%40nextui-org%2Fsnippet%22%3A%20patch%0A%22%40nextui-org%2Fspacer%22%3A%20patch%0A%22%40nextui-org%2Fspinner%22%3A%20patch%0A%22%40nextui-org%2Fswitch%22%3A%20patch%0A---%0A%0Afix%3A%20add%20peer%20dependencies%0A)
+
+\n- vercel: [vc]: #QG2Qsu0ZzIKxKwFl/BEbRNl3IeUj8X+/9KZRMexIy2M=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvQVk0OUdHU3NFd243UmNtbWlrbXRDTjI0SkRnNyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXN5aTA4MDgtZml4LXBlZXItYTA2Y2M5LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXN5aTA4MDgtZml4LXBlZXItYTA2Y2M5LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/AY49GGSsEwn7RcmmikmtCN24JDg7)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-syi0808-fix-peer-a06cc9-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-syi0808-fix-peer-a06cc9-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 22, 2023 2:43pm |
+
+\n- vercel: @syi0808 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f4bed028ebfbae99a166b19421717cc9701d4237%22%7D%2C%22id%22%3A%22QmNncbYt8e1CRniwqU4QHKdKfbBcZhdakQFx3Nbb7B3H7U%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1651%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- syi0808: I didn't update pnpm lock. Sorry. Update within 30 minutes\n
+
+Files Changed:
+- packages/components/accordion/package.json (modified, 1 changes)\n  Patch: @@ -41,6 +41,7 @@
+   },
+   "peerDependencies": {
+     "react": ">=18",
++    "react-dom": ">=18",
+     "framer-motion": ">=4.0.0"
+   },
+   "dependencies": {\n- packages/components/avatar/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/system": "workspace:*",\n- packages/components/badge/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/system-rsc": "workspace:*",\n- packages/components/button/package.json (modified, 4 changes)\n  Patch: @@ -34,7 +34,9 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18",
++    "framer-motion": ">=4.0.0"
+   },
+   "dependencies": {
+     "@nextui-org/system": "workspace:*",\n- packages/components/card/package.json (modified, 4 changes)\n  Patch: @@ -34,7 +34,9 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18",
++    "framer-motion": ">=4.0.0"
+   },
+   "dependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/checkbox/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/system": "workspace:*",\n- packages/components/chip/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/shared-icons": "workspace:*",\n- packages/components/code/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/system-rsc": "workspace:*",\n- packages/components/divider/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/shared-utils": "workspace:*",\n- packages/components/dropdown/package.json (modified, 1 changes)\n  Patch: @@ -35,6 +35,7 @@
+   },
+   "peerDependencies": {
+     "react": ">=18",
++    "react-dom": ">=18",
+     "framer-motion": ">=4.0.0"
+   },
+   "dependencies": {\n- packages/components/image/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/system": "workspace:*",\n- packages/components/input/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/react-utils": "workspace:*",\n- packages/components/kbd/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/system-rsc": "workspace:*",\n- packages/components/link/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/shared-utils": "workspace:*",\n- packages/components/listbox/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/react-utils": "workspace:*",\n- packages/components/menu/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/system": "workspace:*",\n- packages/components/modal/package.json (modified, 1 changes)\n  Patch: @@ -35,6 +35,7 @@
+   },
+   "peerDependencies": {
+     "react": ">=18",
++    "react-dom": ">=18",
+     "framer-motion": ">=4.0.0"
+   },
+   "dependencies": {\n- packages/components/navbar/package.json (modified, 1 changes)\n  Patch: @@ -35,6 +35,7 @@
+   },
+   "peerDependencies": {
+     "react": ">=18",
++    "react-dom": ">=18",
+     "framer-motion": ">=4.0.0"
+   },
+   "dependencies": {\n- packages/components/pagination/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/system": "workspace:*",\n- packages/components/popover/package.json (modified, 1 changes)\n  Patch: @@ -35,6 +35,7 @@
+   },
+   "peerDependencies": {
+     "react": ">=18",
++    "react-dom": ">=18",
+     "framer-motion": ">=4.0.0"
+   },
+   "dependencies": {\n- packages/components/progress/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/shared-utils": "workspace:*",\n- packages/components/radio/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/ripple/package.json (modified, 1 changes)\n  Patch: @@ -35,6 +35,7 @@
+   },
+   "peerDependencies": {
+     "react": ">=18",
++    "react-dom": ">=18",
+     "framer-motion": ">=4.0.0"
+   },
+   "dependencies": {\n- packages/components/scroll-shadow/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/system": "workspace:*",\n- packages/components/select/package.json (modified, 1 changes)\n  Patch: @@ -35,6 +35,7 @@
+   },
+   "peerDependencies": {
+     "react": ">=18",
++    "react-dom": ">=18",
+     "framer-motion": ">=4.0.0"
+   },
+   "dependencies": {\n- packages/components/skeleton/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/system-rsc": "workspace:*",\n- packages/components/snippet/package.json (modified, 1 changes)\n  Patch: @@ -35,6 +35,7 @@
+   },
+   "peerDependencies": {
+     "react": ">=18",
++    "react-dom": ">=18",
+     "framer-motion": ">=4.0.0"
+   },
+   "dependencies": {\n- packages/components/spacer/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/system-rsc": "workspace:*",\n- packages/components/spinner/package.json (modified, 3 changes)\n  Patch: @@ -36,7 +36,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/system-rsc": "workspace:*",\n- packages/components/switch/package.json (modified, 3 changes)\n  Patch: @@ -34,7 +34,8 @@
+     "postpack": "clean-package restore"
+   },
+   "peerDependencies": {
+-    "react": ">=18"
++    "react": ">=18",
++    "react-dom": ">=18"
+   },
+   "dependencies": {
+     "@nextui-org/shared-utils": "workspace:*",\n

@@ -1,0 +1,97 @@
+Pull Request Number: 1404
+Title: fix(input): add type number for InputProps
+Base Branch: main
+Head Branch: fix/input-only-string
+Author: AabhasDhaubanja
+URL: https://github.com/nextui-org/nextui/pull/1404
+State: CLOSED
+Created At: 2023-08-15T09:06:32Z
+Merged At: None
+Participants: AabhasDhaubanja, jrgarciadev, jguddas
+
+Description:
+Add type number in InputProps. Also cast number to string incase of number value
+
+Closes #1400
+📝 Description
+
+I could have updated or replaced AriaTextFieldProps in UseInputProps but since I don't know how it would effect other files I have opted to hardcode the type value. I have also casted the value to string incase of it being number.
+
+⛳️ Current behavior (updates)
+
+Doing <Input value={12} /> throw type error.
+
+🚀 New behavior
+
+Doing <Input value={12} /> does not throw type error.
+
+💣 Is this a breaking change (Yes/No):
+
+No
+
+
+📝 Additional Information
+
+Commits:
+- fix(input): add type number for InputProps
+
+also cast number to string incase of number value\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 8a66aad64908f3166ad0e66a60d681d6eff65398
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/AabhasDhaubanja/nextui/new/fix/input-only-string?filename=.changeset/fair-mangos-itch.md&value=---%0A%22%40nextui-org%2Finput%22%3A%20patch%0A---%0A%0Afix(input)%3A%20add%20type%20number%20for%20InputProps%0A)
+
+\n- vercel: Someone is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228a66aad64908f3166ad0e66a60d681d6eff65398%22%7D%2C%22id%22%3A%22Qmcix3NwYbvtSDN9nLvVikMVhp6XDvZwo5xCVRBkL1ShFw%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1404%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #N7nBv68imUbnq8gin78TCHSTrenF+yAwXvZ2SNAmXXY=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvSHFGTFRySHJua3Zmcng3a1dXcVQ0ejZFYjZuRSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFhYmhhc2RoYXViYW5qYS03OGJiZTEtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstYWFiaGFzZGhhdWJhbmphLTc4YmJlMS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/HqFLTrHrnkvfrx7kWWqT4z6Eb6nE)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-aabhasdhaubanja-78bbe1-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-aabhasdhaubanja-78bbe1-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 15, 2023 9:08am |
+
+\n- jrgarciadev: Hey @AabhasDhaubanja I appreciate your effort in sending this PR, however, we will create a number field in near future input based on https://react-spectrum.adobe.com/react-aria/useNumberField.html#usenumberfield\n
+
+Files Changed:
+- packages/components/input/src/use-input.ts (modified, 10 changes)\n  Patch: @@ -62,7 +62,11 @@ export interface Props<T extends HTMLInputElement | HTMLTextAreaElement = HTMLIn
+ }
+ 
+ export type UseInputProps<T extends HTMLInputElement | HTMLTextAreaElement = HTMLInputElement> =
+-  Props<T> & Omit<AriaTextFieldProps, "onChange"> & InputVariantProps;
++  Props<T> &
++    Omit<AriaTextFieldProps, "value" | "onChange"> &
++    InputVariantProps & {
++      value?: string | number | (readonly string[] & string);
++    };
+ 
+ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTMLInputElement>(
+   originalProps: UseInputProps<T>,
+@@ -94,8 +98,8 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+   );
+ 
+   const [inputValue, setInputValue] = useControlledState<string | undefined>(
+-    props.value,
+-    props.defaultValue,
++    typeof props.value === "number" ? String(props.value) : props.value,
++    typeof props.defaultValue === "number" ? String(props.defaultValue) : props.defaultValue,
+     handleValueChange,
+   );
+ \n

@@ -1,0 +1,220 @@
+Pull Request Number: 3029
+Title: Update dependency array on setPage useCallback hook
+Base Branch: canary
+Head Branch: patch-2
+Author: jesuzon
+URL: https://github.com/nextui-org/nextui/pull/3029
+State: MERGED
+Created At: 2024-05-20T16:09:44Z
+Merged At: 2024-05-24T19:24:43Z
+Participants: jesuzon, jrgarciadev, wingkwong
+
+Description:
+Changes:
+Impact:
+This fix ensures that the pagination component accurately reflects the current state when triggering onChangeActivePage.
+
+Closes # 
+📝 Description
+Add the onChangeActivePage function to the dependency array of the setPage useCallback hook to ensure it always reflects the latest state.
+⛳️ Current behavior (updates)
+Currently, state is memoized during onChangeActivePage after page changes, meaning that writing onChangeActivePage handlers do not always contain current state. This was causing issues with hooks such as useSearchParams, where the search params would not be fully up-to-date
+🚀 New behavior
+Adding onChangeActivePage to the callback dependencies ensures state is refreshed.
+💣 Is this a breaking change (Yes/No):
+Should not break anything.
+📝 Additional Information
+
+Summary by CodeRabbit
+
+New Features
+
+Improved pagination functionality to trigger page change events when the active page or total count changes.
+
+Commits:
+- Update dependency array on setPage useCallback hook
+
+Changes:
+Add the onChangeActivePage function to the dependency array of the setPage useCallback hook to ensure it always reflects the latest state.
+
+Impact:
+This fix ensures that the pagination component accurately reflects the current state when triggering onChangeActivePage.\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: a8b70fbddf22d95b94b715fe98277c354095f793
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/jesuzon/nextui/new/patch-2?filename=.changeset/metal-flies-sleep.md&value=---%0A%22%40nextui-org%2Fuse-pagination%22%3A%20patch%0A---%0A%0AUpdate%20dependency%20array%20on%20setPage%20useCallback%20hook%0A)
+
+\n- vercel: [vc]: #tPFJ/kw/lcXyX5baGf2s4iZ0ToCmcX5Br1LBoHXgdUc=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRDlSd3ZRQkFVYUp4UVVwRXczTDhpZm1kdW5KOCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWplc3V6b24tcGF0Y2gtMi1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay1qZXN1em9uLXBhdGNoLTItbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/D9RwvQBAUaJxQUpEw3L8ifmdunJ8)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jesuzon-patch-2-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jesuzon-patch-2-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 20, 2024 4:12pm |
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent update to the `usePagination` hook in the `use-pagination` package involves adding the `onChangeActivePage` function as a dependency in the `useEffect` hook. This adjustment ensures that the page change event is triggered not only when the active page or total count changes but also when the `onChangeActivePage` function itself changes, enhancing the hook's reactivity and reliability.
+
+## Changes
+
+| File Path                                  | Change Summary                                                                                          |
+|--------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| `packages/hooks/use-pagination/src/index.ts` | Added `onChangeActivePage` as a dependency in the `useEffect` hook within the `usePagination` function.  |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+packages/hooks/use-pagination/src/index.ts: ## Short Summary
+
+The change in functionality involves adding `onChangeActivePage` as a dependency in the `useEffect` hook within the `usePagination` function in `packages/hooks/use-pagination/src/index.ts`. This change likely reflects a need to trigger a page change event when the active page or total count changes.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function usePagination(props: UsePaginationProps)` in `packages/hooks/use-pagination/src/index.ts`
+  - Before: Dependencies `[total, activePage]`
+  - After: Dependencies `[total, activePage, onChangeActivePage]`
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+### PR Summary
+
+**Title**: Update dependency array on setPage useCallback hook
+
+**Description**: 
+This pull request updates the dependency array of the `setPage` useCallback hook by adding the `onChangeActivePage` function. This change ensures that the pagination component accurately reflects the current state when triggering `onChangeActivePage`. The current behavior memoizes state during `onChangeActivePage` after page changes, which causes issues with hooks like `useSearchParams`, where the search parameters are not fully up-to-date. By adding `onChangeActivePage` to the callback dependencies, the state is refreshed, ensuring it always reflects the latest state. This update should not introduce any breaking changes.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated summary of generated summaries
+
+The `usePagination` function in `packages/hooks/use-pagination/src/index.ts` has been updated to include `onChangeActivePage` as a dependency in its `useEffect` hook. Previously, the dependencies were `[total, activePage]`, but now they are `[total, activePage, onChangeActivePage]`. This modification ensures that the page change event is triggered not only when the active page or total count changes but also when the `onChangeActivePage` function changes.
+
+### Alterations to the declarations of exported or public entities
+
+- **`usePagination` function in `packages/hooks/use-pagination/src/index.ts`**:
+  - **Before**: 
+    ```typescript
+    useEffect(() => {
+      // Effect logic
+    }, [total, activePage]);
+    ```
+  - **After**: 
+    ```typescript
+    useEffect(() => {
+      // Effect logic
+    }, [total, activePage, onChangeActivePage]);
+    ```
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- a8b70fbddf22d95b94b715fe98277c354095f793 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: @jesuzon is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22a8b70fbddf22d95b94b715fe98277c354095f793%22%7D%2C%22id%22%3A%22QmdmoRPno9oH7EpjpQzSkpEyVE7AwdKH3ScpR339xAhwVB%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3029%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/hooks/use-pagination/src/index.ts (modified, 2 changes)\n  Patch: @@ -82,7 +82,7 @@ export function usePagination(props: UsePaginationProps) {
+         onChangeActivePage(pageNumber);
+       }
+     },
+-    [total, activePage],
++    [total, activePage, onChangeActivePage],
+   );
+ 
+   const next = () => (isRTL ? setPage(activePage - 1) : setPage(activePage + 1));\n

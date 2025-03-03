@@ -1,0 +1,757 @@
+Pull Request Number: 3331
+Title: fix: incorrect year in showMonthAndYearPickers with locale
+Base Branch: canary
+Head Branch: fix/eng-1019
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/3331
+State: MERGED
+Created At: 2024-06-26T09:39:50Z
+Merged At: 2024-07-06T07:39:41Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes #3272
+Closes #3063
+Closes #3254
+Closes #2842
+Closes #2960
+
+📝 Description
+Currently we are using gregorian calendar with possible years in $[1900, 2099]$. However, some locales such as th-TH-u-ca-buddhist using different calendar making the years out of bound. Hence, add the corresponding offset to make sure the year is within the bound.
+⛳️ Current behavior (updates)
+locale: th-TH-u-ca-buddhist
+
+🚀 New behavior
+locale: th-TH-u-ca-buddhist
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced CalendarWithLocale and DatePickerWithLocale components for enhanced localization.
+
+
+
+Enhancements
+
+Improved date handling with createCalendar, DateFormatter, and getGregorianYearOffset for better calendar management.
+Updated minValue and maxValue calculations based on calendar identifiers.
+
+
+
+Refactor
+
+Adjusted NextUIProvider with new initialization for default dates.
+
+
+
+Chores
+
+Enhanced utility functions in shared utilities for better date management.
+
+Commits:
+- fix(date-input): add gregorian year offset to minValue & maxValue\n- feat(shared-utils): add getGregorianYearOffset\n- fix(calendar): add gregorian year offset to minValue & maxValue\n- feat(changeset): add changeset\n- fix(system): remove defaultDates.minDate and defaultDates.maxDate\n- fix(calendar): add missing import\n- feat(date-picker): add test\n- feat(calendar): add test\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-1019/[bug]-wrong-display-buddhist-year-when-select-year-in">ENG-1019 [BUG] - Wrong Display Buddhist Year when select year in showMonthAndYearPickers at DatePicker</a></p>\n- vercel: [vc]: #+iPMYeKvJnymnoStOU48GGn2zI5ibJldQjQxBye11lw=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi81WEExWk1vQmplRDhXam9zUlhaVUJHM2FKOEtxIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTEwMTktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTEwMTktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC1lbmctMTAxOS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifSwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi9DR1dpdEpobWF5NTl4dU1qTjFKOWN1djdqRkFqIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC1lbmctMTAxOS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/5XA1ZMoBjeD8WjosRXZUBG3aJ8Kq)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-1019-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-1019-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jun 26, 2024 1:56pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/CGWitJhmay59xuMjN1J9cuv7jFAj)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-1019-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-1019-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jun 26, 2024 1:56pm |
+
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 5c111b959f7595d7e2a4008acda2ade082e65f49
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 49 packages</summary>
+
+  | Name                                 | Type  |
+| ------------------------------------ | ----- |
+| @nextui-org/calendar                 | Patch |
+| @nextui-org/date-input               | Patch |
+| @nextui-org/system                   | Patch |
+| @nextui-org/shared-utils             | Patch |
+| @nextui-org/date-picker              | Patch |
+| @nextui-org/react                    | Patch |
+| @nextui-org/accordion                | Patch |
+| @nextui-org/autocomplete             | Patch |
+| @nextui-org/avatar                   | Patch |
+| @nextui-org/badge                    | Patch |
+| @nextui-org/breadcrumbs              | Patch |
+| @nextui-org/button                   | Patch |
+| @nextui-org/card                     | Patch |
+| @nextui-org/checkbox                 | Patch |
+| @nextui-org/chip                     | Patch |
+| @nextui-org/dropdown                 | Patch |
+| @nextui-org/image                    | Patch |
+| @nextui-org/input                    | Patch |
+| @nextui-org/link                     | Patch |
+| @nextui-org/listbox                  | Patch |
+| @nextui-org/menu                     | Patch |
+| @nextui-org/modal                    | Patch |
+| @nextui-org/navbar                   | Patch |
+| @nextui-org/pagination               | Patch |
+| @nextui-org/popover                  | Patch |
+| @nextui-org/progress                 | Patch |
+| @nextui-org/radio                    | Patch |
+| @nextui-org/ripple                   | Patch |
+| @nextui-org/scroll-shadow            | Patch |
+| @nextui-org/select                   | Patch |
+| @nextui-org/skeleton                 | Patch |
+| @nextui-org/slider                   | Patch |
+| @nextui-org/snippet                  | Patch |
+| @nextui-org/switch                   | Patch |
+| @nextui-org/table                    | Patch |
+| @nextui-org/tabs                     | Patch |
+| @nextui-org/tooltip                  | Patch |
+| @nextui-org/user                     | Patch |
+| @nextui-org/aria-utils               | Patch |
+| @nextui-org/framer-utils             | Patch |
+| @nextui-org/code                     | Patch |
+| @nextui-org/divider                  | Patch |
+| @nextui-org/kbd                      | Patch |
+| @nextui-org/spacer                   | Patch |
+| @nextui-org/spinner                  | Patch |
+| @nextui-org/use-data-scroll-overflow | Patch |
+| @nextui-org/use-pagination           | Patch |
+| @nextui-org/react-utils              | Patch |
+| @nextui-org/use-real-shape           | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/eng-1019?filename=.changeset/healthy-squids-flow.md&value=---%0A%22%40nextui-org%2Fcalendar%22%3A%20patch%0A%22%40nextui-org%2Fdate-input%22%3A%20patch%0A%22%40nextui-org%2Fdate-picker%22%3A%20patch%0A%22%40nextui-org%2Fsystem%22%3A%20patch%0A%22%40nextui-org%2Fshared-utils%22%3A%20patch%0A---%0A%0Afix%3A%20incorrect%20year%20in%20showMonthAndYearPickers%20with%20locale%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes introduced localization enhancements across various components (`Calendar`, `DateInput`, `DatePicker`) by integrating internationalization utilities and adapting component behaviors based on locale data. The primary focus was to solve issues related to incorrect calendar displays and year handling, ensuring the components respect locale-specific settings consistently.
+
+## Changes
+
+| Files | Change Summary |
+| ----------- | -----------------  |
+| `.../calendar/__tests__/calendar.test.tsx`, `.../date-picker/__tests__/date-picker.test.tsx` | Added `WithLocale` components that handle localization by wrapping base components in `NextUIProvider`. |
+| `.../use-calendar-base.ts`, `.../use-date-input.ts`  | Enhanced with imports from `@internationalized/date` and `@nextui-org/shared-utils`, adjusted `minValue` and `maxValue` based on calendar type and year offsets, and updated `createCalendar` function calls. |
+| `.../provider.tsx` | Removed unused `CalendarDate` import and adjusted `defaultDates` initialization to streamline the `NextUIProvider`. |
+| `.../shared-utils/src/dates.ts`, `.../shared-utils/src/index.ts` | Enhanced `getGregorianYearOffset` for mapping calendar identifiers to year offsets and exported from the index file. |
+
+## Sequence Diagram(s)
+
+N/A
+
+## Assessment against linked issues
+
+| Objective | Addressed | Explanation |
+|-----------|-----------|-------------|
+| Accurate display of Buddhist Year when selecting year in Date Picker (`#3272`). | ✅ |  |
+| Persistent Hijri calendar system in Calendar component (`#3063`). | ✅ |  |
+| Correct localization for Persian calendar in Date Picker (`#3254`, `#2842`). | ✅ |  |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```markdown
+packages/components/calendar/__tests__/calendar.test.tsx: ### Summary
+
+Introduce `CalendarWithLocale` component to handle localization by wrapping `CalendarBase` in `NextUIProvider`.
+
+### Alterations to the declarations of exported or public entities
+
+- **Added:**
+  - `const CalendarWithLocale` in `calendar.test.tsx`:
+    - Modified signature: `(props: CalendarProps & {locale: string}, ref: React.Ref<HTMLDivElement>)`
+    - Added logic to wrap `CalendarBase` in `NextUIProvider` with locale handling.
+
+---
+
+packages/components/calendar/src/use-calendar-base.ts: ### Short Summary:
+
+Enhanced functionality with `createCalendar`, `DateFormatter`, and `getGregorianYearOffset` from `@internationalized/date` and `@nextui-org/shared-utils`.
+
+### Alterations to the declarations of exported or public entities:
+
+- Added `createCalendar`, `DateFormatter`, and `getGregorianYearOffset`.
+- Modified `minValue` and `maxValue` initialization considering calendar type and year offset adjustments.
+
+---
+
+packages/components/date-input/src/use-date-input.ts: ## Short Summary
+
+Enhanced `use-date-input.ts` with imports from `@internationalized/date` and `@nextui-org/shared-utils`, adjustments to `createCalendar` function call, and `minValue` and `maxValue` calculations based on calendar identifier.
+
+## Alterations to the declarations of exported or public entities
+
+- `import {createCalendar, CalendarDate, DateFormatter} from "@internationalized/date"`
+- `import {objectToDeps, clsx, dataAttr, getGregorianYearOffset} from "@nextui-org/shared-utils"`
+- Adjusted `createCalendar` and `getGregorianYearOffset` usage for calendar properties.
+- Modified `minValue` and `maxValue` calculations based on calendar identifier.
+
+---
+
+packages/components/date-picker/__tests__/date-picker.test.tsx: ### Short Summary:
+
+Introduce `DatePickerWithLocale` component to handle localization by wrapping `DatePickerBase` in `NextUIProvider`.
+
+### Alterations to the declarations of exported or public entities:
+
+- Added `DatePickerWithLocale` component that wraps `DatePickerBase` within `NextUIProvider` for localization.
+- Added `DatePickerWithLocale.displayName = "DatePickerWithLocale"`.
+
+---
+
+packages/core/system/src/provider.tsx: ### Short Summary
+
+Remove `CalendarDate` import from "@internationalized/date" and adjust `defaultDates` initialization in `NextUIProvider`.
+
+### Alterations to the Declarations of Exported or Public Entities
+
+- Remove: `import {CalendarDate} from "@internationalized/date"`
+- Modify `NextUIProvider` component:
+  - Update `defaultDates` initialization
+
+---
+
+packages/utilities/shared-utils/src/dates.ts: ## Summary
+
+Enhance `getGregorianYearOffset` function to provide a mapping of calendar identifiers to their year offsets.
+
+---
+
+packages/utilities/shared-utils/src/index.ts: ## Short Summary
+
+Add export for "./dates" in `shared-utils` package.
+
+## Alterations to the declarations of exported or public entities
+
+- `export * from "./dates"` in `index.ts` in the `shared-utils` package
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+### PR Summary
+
+**Title**: fix: incorrect year in showMonthAndYearPickers with locale  
+**User**: wingkwong  
+**Number**: 3331  
+
+The pull request addresses a bug related to the display of incorrect years in the `showMonthAndYearPickers` component when using certain locales. The current implementation uses the Gregorian calendar with years ranging from 1900 to 2099. However, some locales, such as `th-TH-u-ca-buddhist`, use different calendars, causing the years to be out of bounds. This PR adds the necessary offsets to ensure the year is correctly displayed within the specified range for these locales.
+
+### Objectives from Linked Issues
+
+1. **Issue #3272**: This bug involves the incorrect display of the Buddhist Era year when selecting a year in the `showMonthAndYearPickers` component of the DatePicker. The expected behavior is to show the Buddhist Era, but it currently shows the Common Era.
+
+2. **Issue #3063**: This bug describes the issue where the calendar switches from the Hijri (Islamic-umalqura) system to the Gregorian calendar when selecting a month and year in the `showMonthAndYearPickers` component. The expected behavior is for the calendar to remain in the Hijri system.
+
+3. **Issue #3254**: This bug involves the locale `fa-IR-u-ca-persian`, where the month name and year do not change to the Persian calendar as expected.
+
+4. **Issue #2842**: This bug describes the issue where the DatePicker shows the Persian language correctly initially, but when scrolling through the years, the months revert to the default locale instead of staying in Persian. The expected behavior is for the months to remain in the desired locale.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated summary of generated summaries
+
+The changes across multiple packages primarily focus on enhancing calendar and date input functionalities with improved localization support and refined date handling. Key updates include:
+
+1. **Localization Enhancements**:
+   - Introduced `CalendarWithLocale` and `DatePickerWithLocale` components in their respective test files. These components wrap `CalendarBase` and `DatePickerBase` within `NextUIProvider` to manage localization.
+
+2. **Date Handling Improvements**:
+   - Enhanced `use-calendar-base.ts` and `use-date-input.ts` with imports from `@internationalized/date` and `@nextui-org/shared-utils`. These imports include `createCalendar`, `DateFormatter`, and `getGregorianYearOffset`, which are utilized for more accurate date calculations and calendar type adjustments. 
+   - Adjusted the initialization of `minValue` and `maxValue` in both files to consider calendar types and year offsets.
+
+3. **Provider Adjustments**:
+   - Removed the `CalendarDate` import from `@internationalized/date` in `provider.tsx` and updated the `defaultDates` initialization within the `NextUIProvider`.
+
+4. **Utility Enhancements**:
+   - Enhanced the `getGregorianYearOffset` function in `dates.ts` to map calendar identifiers to their respective year offsets.
+   - Added an export for `./dates` in `index.ts` of the `shared-utils` package.
+
+### Alterations to the declarations of exported or public entities
+
+#### packages/components/calendar/__tests__/calendar.test.tsx
+
+- **Added**:
+  ```typescript
+  const CalendarWithLocale = React.forwardRef<HTMLDivElement, CalendarProps & {locale: string}>((props, ref) => {
+    return (
+      <NextUIProvider locale={props.locale}>
+        <CalendarBase {...props} ref={ref} />
+      </NextUIProvider>
+    );
+  });
+  ```
+
+#### packages/components/calendar/src/use-calendar-base.ts
+
+- **Added**:
+  ```typescript
+  import { createCalendar, DateFormatter, getGregorianYearOffset } from "@internationalized/date";
+  ```
+
+- **Modified**:
+  ```typescript
+  const minValue = createCalendar(calendar).getMinimumValue().add({ years: getGregorianYearOffset(calendar) });
+  const maxValue = createCalendar(calendar).getMaximumValue().add({ years: getGregorianYearOffset(calendar) });
+  ```
+
+#### packages/components/date-input/src/use-date-input.ts
+
+- **Added**:
+  ```typescript
+  import { createCalendar, CalendarDate, DateFormatter } from "@internationalized/date";
+  import { objectToDeps, clsx, dataAttr, getGregorianYearOffset } from "@nextui-org/shared-utils";
+  ```
+
+- **Modified**:
+  ```typescript
+  const minValue = createCalendar(calendar).getMinimumValue().add({ years: getGregorianYearOffset(calendar) });
+  const maxValue = createCalendar(calendar).getMaximumValue().add({ years: getGregorianYearOffset(calendar) });
+  ```
+
+#### packages/components/date-picker/__tests__/date-picker.test.tsx
+
+- **Added**:
+  ```typescript
+  const DatePickerWithLocale = React.forwardRef<HTMLDivElement, DatePickerProps & {locale: string}>((props, ref) => {
+    return (
+      <NextUIProvider locale={props.locale}>
+        <DatePickerBase {...props} ref={ref} />
+      </NextUIProvider>
+    );
+  });
+
+  DatePickerWithLocale.displayName = "DatePickerWithLocale";
+  ```
+
+#### packages/core/system/src/provider.tsx
+
+- **Removed**:
+  ```typescript
+  import { CalendarDate } from "@internationalized/date";
+  ```
+
+- **Modified**:
+  ```typescript
+  const defaultDates = {
+    // Updated initialization logic without CalendarDate dependency
+  };
+  ```
+
+#### packages/utilities/shared-utils/src/dates.ts
+
+- **Enhanced**:
+  ```typescript
+  export function getGregorianYearOffset(calendarIdentifier: string): number {
+    const calendarYearOffsets = {
+      gregorian: 0,
+      buddhist: 543,
+      japanese: 660,
+      // Additional calendar mappings
+    };
+    return calendarYearOffsets[calendarIdentifier] || 0;
+  }
+  ```
+
+#### packages/utilities/shared-utils/src/index.ts
+
+- **Added**:
+  ```typescript
+  export * from "./dates";
+  ```
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 5c111b959f7595d7e2a4008acda2ade082e65f49 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/purple-singers-knock.md (added, 8 changes)\n  Patch: @@ -0,0 +1,8 @@
++---
++"@nextui-org/calendar": patch
++"@nextui-org/date-input": patch
++"@nextui-org/system": patch
++"@nextui-org/shared-utils": patch
++---
++
++Fixed incorrect year in `showMonthAndYearPickers` with different locales\n- packages/components/calendar/__tests__/calendar.test.tsx (modified, 35 changes)\n  Patch: @@ -4,6 +4,7 @@ import {render, act, fireEvent} from "@testing-library/react";
+ import {CalendarDate, isWeekend} from "@internationalized/date";
+ import {triggerPress, keyCodes} from "@nextui-org/test-utils";
+ import {useLocale} from "@react-aria/i18n";
++import {NextUIProvider} from "@nextui-org/system";
+ 
+ import {Calendar as CalendarBase, CalendarProps} from "../src";
+ 
+@@ -16,6 +17,20 @@ const Calendar = React.forwardRef((props: CalendarProps, ref: React.Ref<HTMLDivE
+ 
+ Calendar.displayName = "Calendar";
+ 
++const CalendarWithLocale = React.forwardRef(
++  (props: CalendarProps & {locale: string}, ref: React.Ref<HTMLDivElement>) => {
++    const {locale, ...otherProps} = props;
++
++    return (
++      <NextUIProvider locale={locale}>
++        <CalendarBase {...otherProps} ref={ref} disableAnimation />
++      </NextUIProvider>
++    );
++  },
++);
++
++CalendarWithLocale.displayName = "CalendarWithLocale";
++
+ describe("Calendar", () => {
+   beforeAll(() => {
+     jest.useFakeTimers();
+@@ -418,5 +433,25 @@ describe("Calendar", () => {
+ 
+       expect(description).toBe("Selected date unavailable.");
+     });
++
++    it("should display the correct year and month in showMonthAndYearPickers with locale", () => {
++      const {getByRole} = render(
++        <CalendarWithLocale
++          showMonthAndYearPickers
++          defaultValue={new CalendarDate(2024, 6, 26)}
++          locale="th-TH-u-ca-buddhist"
++        />,
++      );
++
++      const header = document.querySelector<HTMLButtonElement>(`button[data-slot="header"]`)!;
++
++      triggerPress(header);
++
++      const month = getByRole("button", {name: "มิถุนายน"});
++      const year = getByRole("button", {name: "พ.ศ. 2567"});
++
++      expect(month).toHaveAttribute("data-value", "6");
++      expect(year).toHaveAttribute("data-value", "2567");
++    });
+   });
+ });\n- packages/components/calendar/src/use-calendar-base.ts (modified, 21 changes)\n  Patch: @@ -9,14 +9,14 @@ import type {SupportedCalendars} from "@nextui-org/system";
+ import type {CalendarState, RangeCalendarState} from "@react-stately/calendar";
+ import type {RefObject, ReactNode} from "react";
+ 
+-import {Calendar, CalendarDate} from "@internationalized/date";
++import {createCalendar, Calendar, CalendarDate, DateFormatter} from "@internationalized/date";
+ import {mapPropsVariants, useProviderContext} from "@nextui-org/system";
+ import {useCallback, useMemo} from "react";
+ import {calendar} from "@nextui-org/theme";
+ import {useControlledState} from "@react-stately/utils";
+ import {ReactRef, useDOMRef} from "@nextui-org/react-utils";
+ import {useLocale} from "@react-aria/i18n";
+-import {clamp, dataAttr, objectToDeps} from "@nextui-org/shared-utils";
++import {clamp, dataAttr, objectToDeps, getGregorianYearOffset} from "@nextui-org/shared-utils";
+ import {mergeProps} from "@react-aria/utils";
+ 
+ type NextUIBaseProps = Omit<HTMLNextUIProps<"div">, keyof AriaCalendarPropsBase | "onChange">;
+@@ -183,6 +183,15 @@ export function useCalendarBase(originalProps: UseCalendarBasePropsComplete) {
+ 
+   const globalContext = useProviderContext();
+ 
++  const {locale} = useLocale();
++
++  const calendarProp = createCalendar(new DateFormatter(locale).resolvedOptions().calendar);
++
++  // by default, we are using gregorian calendar with possible years in [1900, 2099]
++  // however, some locales such as `th-TH-u-ca-buddhist` using different calendar making the years out of bound
++  // hence, add the corresponding offset to make sure the year is within the bound
++  const gregorianYearOffset = getGregorianYearOffset(calendarProp.identifier);
++
+   const {
+     ref,
+     as,
+@@ -198,9 +207,11 @@ export function useCalendarBase(originalProps: UseCalendarBasePropsComplete) {
+     isHeaderExpanded: isHeaderExpandedProp,
+     isHeaderDefaultExpanded,
+     onHeaderExpandedChange = () => {},
+-    minValue = globalContext?.defaultDates?.minDate ?? new CalendarDate(1900, 1, 1),
+-    maxValue = globalContext?.defaultDates?.maxDate ?? new CalendarDate(2099, 12, 31),
+     createCalendar: createCalendarProp = globalContext?.createCalendar ?? null,
++    minValue = globalContext?.defaultDates?.minDate ??
++      new CalendarDate(calendarProp, 1900 + gregorianYearOffset, 1, 1),
++    maxValue = globalContext?.defaultDates?.maxDate ??
++      new CalendarDate(calendarProp, 2099 + gregorianYearOffset, 12, 31),
+     prevButtonProps: prevButtonPropsProp,
+     nextButtonProps: nextButtonPropsProp,
+     errorMessage,
+@@ -239,8 +250,6 @@ export function useCalendarBase(originalProps: UseCalendarBasePropsComplete) {
+   const hasMultipleMonths = visibleMonths > 1;
+   const shouldFilterDOMProps = typeof Component === "string";
+ 
+-  const {locale} = useLocale();
+-
+   const slots = useMemo(
+     () =>
+       calendar({\n- packages/components/date-input/src/use-date-input.ts (modified, 22 changes)\n  Patch: @@ -7,15 +7,14 @@ import type {DOMAttributes, GroupDOMAttributes} from "@react-types/shared";
+ import type {DateInputGroupProps} from "./date-input-group";
+ 
+ import {useLocale} from "@react-aria/i18n";
+-import {CalendarDate} from "@internationalized/date";
++import {createCalendar, CalendarDate, DateFormatter} from "@internationalized/date";
+ import {mergeProps} from "@react-aria/utils";
+ import {PropGetter, useProviderContext} from "@nextui-org/system";
+ import {HTMLNextUIProps, mapPropsVariants} from "@nextui-org/system";
+ import {useDOMRef} from "@nextui-org/react-utils";
+ import {useDateField as useAriaDateField} from "@react-aria/datepicker";
+ import {useDateFieldState} from "@react-stately/datepicker";
+-import {createCalendar} from "@internationalized/date";
+-import {objectToDeps, clsx, dataAttr} from "@nextui-org/shared-utils";
++import {objectToDeps, clsx, dataAttr, getGregorianYearOffset} from "@nextui-org/shared-utils";
+ import {dateInput} from "@nextui-org/theme";
+ import {useMemo} from "react";
+ 
+@@ -116,6 +115,15 @@ export function useDateInput<T extends DateValue>(originalProps: UseDateInputPro
+ 
+   const [props, variantProps] = mapPropsVariants(originalProps, dateInput.variantKeys);
+ 
++  const {locale} = useLocale();
++
++  const calendarProp = createCalendar(new DateFormatter(locale).resolvedOptions().calendar);
++
++  // by default, we are using gregorian calendar with possible years in [1900, 2099]
++  // however, some locales such as `th-TH-u-ca-buddhist` using different calendar making the years out of bound
++  // hence, add the corresponding offset to make sure the year is within the bound
++  const gregorianYearOffset = getGregorianYearOffset(calendarProp.identifier);
++
+   const {
+     ref,
+     as,
+@@ -134,8 +142,10 @@ export function useDateInput<T extends DateValue>(originalProps: UseDateInputPro
+     descriptionProps: descriptionPropsProp,
+     validationBehavior = globalContext?.validationBehavior ?? "aria",
+     shouldForceLeadingZeros = true,
+-    minValue = globalContext?.defaultDates?.minDate ?? new CalendarDate(1900, 1, 1),
+-    maxValue = globalContext?.defaultDates?.maxDate ?? new CalendarDate(2099, 12, 31),
++    minValue = globalContext?.defaultDates?.minDate ??
++      new CalendarDate(calendarProp, 1900 + gregorianYearOffset, 1, 1),
++    maxValue = globalContext?.defaultDates?.maxDate ??
++      new CalendarDate(calendarProp, 2099 + gregorianYearOffset, 12, 31),
+     createCalendar: createCalendarProp = globalContext?.createCalendar ?? null,
+     isInvalid: isInvalidProp = validationState ? validationState === "invalid" : false,
+     errorMessage,
+@@ -146,8 +156,6 @@ export function useDateInput<T extends DateValue>(originalProps: UseDateInputPro
+ 
+   const disableAnimation = originalProps.disableAnimation ?? globalContext?.disableAnimation;
+ 
+-  const {locale} = useLocale();
+-
+   const state = useDateFieldState({
+     ...originalProps,
+     label,\n- packages/components/date-picker/__tests__/date-picker.test.tsx (modified, 49 changes)\n  Patch: @@ -4,6 +4,7 @@ import {render, act, fireEvent, waitFor} from "@testing-library/react";
+ import {pointerMap, triggerPress} from "@nextui-org/test-utils";
+ import userEvent from "@testing-library/user-event";
+ import {CalendarDate, CalendarDateTime} from "@internationalized/date";
++import {NextUIProvider} from "@nextui-org/system";
+ 
+ import {DatePicker as DatePickerBase, DatePickerProps} from "../src";
+ 
+@@ -24,6 +25,26 @@ const DatePicker = React.forwardRef((props: DatePickerProps, ref: React.Ref<HTML
+ 
+ DatePicker.displayName = "DatePicker";
+ 
++const DatePickerWithLocale = React.forwardRef(
++  (props: DatePickerProps & {locale: string}, ref: React.Ref<HTMLDivElement>) => {
++    const {locale, ...otherProps} = props;
++
++    return (
++      <NextUIProvider locale={locale}>
++        <DatePickerBase
++          {...otherProps}
++          ref={ref}
++          disableAnimation
++          labelPlacement="outside"
++          shouldForceLeadingZeros={false}
++        />
++      </NextUIProvider>
++    );
++  },
++);
++
++DatePickerWithLocale.displayName = "DatePickerWithLocale";
++
+ function getTextValue(el: any) {
+   if (
+     el.className?.includes?.("DatePicker-placeholder") &&
+@@ -626,5 +647,33 @@ describe("DatePicker", () => {
+       // assert that the second datepicker dialog is open
+       expect(dialog).toBeVisible();
+     });
++
++    it("should display the correct year and month in showMonthAndYearPickers with locale", () => {
++      const {getByRole} = render(
++        <DatePickerWithLocale
++          showMonthAndYearPickers
++          defaultValue={new CalendarDate(2024, 6, 26)}
++          label="Date"
++          locale="th-TH-u-ca-buddhist"
++        />,
++      );
++
++      const button = getByRole("button");
++
++      triggerPress(button);
++
++      const dialog = getByRole("dialog");
++      const header = document.querySelector<HTMLButtonElement>(`button[data-slot="header"]`)!;
++
++      expect(dialog).toBeVisible();
++
++      triggerPress(header);
++
++      const month = getByRole("button", {name: "มิถุนายน"});
++      const year = getByRole("button", {name: "พ.ศ. 2567"});
++
++      expect(month).toHaveAttribute("data-value", "6");
++      expect(year).toHaveAttribute("data-value", "2567");
++    });
+   });
+ });\n- packages/core/system/src/provider.tsx (modified, 8 changes)\n  Patch: @@ -5,7 +5,6 @@ import {I18nProvider, I18nProviderProps} from "@react-aria/i18n";
+ import {RouterProvider} from "@react-aria/utils";
+ import {OverlayProvider} from "@react-aria/overlays";
+ import {useMemo} from "react";
+-import {CalendarDate} from "@internationalized/date";
+ import {MotionGlobalConfig} from "framer-motion";
+ 
+ import {ProviderContext} from "./provider-context";
+@@ -42,10 +41,9 @@ export const NextUIProvider: React.FC<NextUIProviderProps> = ({
+   skipFramerMotionAnimations = disableAnimation,
+   validationBehavior = "aria",
+   locale = "en-US",
+-  defaultDates = {
+-    minDate: new CalendarDate(1900, 1, 1),
+-    maxDate: new CalendarDate(2099, 12, 31),
+-  },
++  // if minDate / maxDate are not specified in `defaultDates`
++  // then they will be set in `use-date-input.ts` or `use-calendar-base.ts`
++  defaultDates,
+   createCalendar,
+   ...otherProps
+ }) => {\n- packages/utilities/shared-utils/src/dates.ts (added, 26 changes)\n  Patch: @@ -0,0 +1,26 @@
++export function getGregorianYearOffset(identifier: string): number {
++  switch (identifier) {
++    case "buddhist":
++      return 543;
++    case "ethiopic":
++    case "ethioaa":
++      return -8;
++    case "coptic":
++      return -284;
++    case "hebrew":
++      return 3760;
++    case "indian":
++      return -78;
++    case "islamic-civil":
++    case "islamic-tbla":
++    case "islamic-umalqura":
++      return -579;
++    case "persian":
++      return 622;
++    case "roc":
++    case "japanese":
++    case "gregory":
++    default:
++      return 0;
++  }
++}\n- packages/utilities/shared-utils/src/index.ts (modified, 1 changes)\n  Patch: @@ -7,3 +7,4 @@ export * from "./functions";
+ export * from "./numbers";
+ export * from "./console";
+ export * from "./types";
++export * from "./dates";\n

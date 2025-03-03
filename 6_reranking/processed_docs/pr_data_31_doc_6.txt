@@ -1,0 +1,183 @@
+Pull Request Number: 153
+Title: Fix #149
+Base Branch: main
+Head Branch: nav-overflow
+Author: mariusflorescu
+URL: https://github.com/nextui-org/nextui/pull/153
+State: MERGED
+Created At: 2022-01-23T00:54:31Z
+Merged At: 2022-01-23T13:15:44Z
+Participants: mariusflorescu, jrgarciadev, codecov-commenter
+
+Description:
+[LEVEL]/[COMPONENT]
+TASK: New docs UI sidebar glitches (overlays the navbar) when scrolling down
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+Changed from position: sticky to position:fixed.  The issue was happening because the sticky positioning is treated as relative in normal context and as fixed when scrolling. Once the parent container would reach its end of height, it would just push all the content upwards.
+Corrected offset to match the previous position.
+Renamed Sticky to Fixed.
+Screenshots - Animations
+The before can be seen in Issue #149 .
+After:
+
+  
+    
+    
+
+    nav-overflow4.mp4
+    
+  
+
+  
+
+  
+
+
+Please let me know if there is anything that needs to be corrected/adjusted.
+PS: The video is cropped because of the file size limit.
+
+Commits:
+- change position\n- rename component, adjust offset\n- change name of the component\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Thank you! @mariusflorescu 🚀 \n- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/153?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#153](https://codecov.io/gh/nextui-org/nextui/pull/153?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (a446514) into [main](https://codecov.io/gh/nextui-org/nextui/commit/3b941f103f47df4742a7365f47dca6f0c16fbe07?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (3b941f1) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/153/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/153?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main     #153   +/-   ##
+=======================================
+  Coverage   76.01%   76.01%           
+=======================================
+  Files         140      140           
+  Lines        2264     2264           
+  Branches      680      680           
+=======================================
+  Hits         1721     1721           
+  Misses        538      538           
+  Partials        5        5           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/153?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/153?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [3b941f1...a446514](https://codecov.io/gh/nextui-org/nextui/pull/153?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- apps/docs/src/components/fixed/index.tsx (renamed)\n  Previous Filename: apps/docs/src/components/sticky/index.tsx\n- apps/docs/src/components/index.ts (modified, 2 changes)\n  Patch: @@ -14,7 +14,7 @@ export { default as Playground } from './playground';
+ export { default as Anchor } from './anchor';
+ export { default as MDXComponents } from './mdx';
+ export { default as TableOfContent } from './table-of-content';
+-export { default as Sticky } from './sticky';
++export { default as Fixed } from './fixed';
+ export { default as PageNav } from './page-nav';
+ export { default as DotsContainer } from './dots-container';
+ export { default as Palette } from './palette';\n- apps/docs/src/layouts/docs.tsx (modified, 67 changes)\n  Patch: @@ -9,7 +9,7 @@ import { Link } from '@nextui-org/react';
+ import { Heading, getHeadings } from '@utils/get-headings';
+ import { MetaProps } from '@lib/docs/meta';
+ import Header from '@layouts/header';
+-import { Sticky, PageNav } from '@components';
++import { Fixed, PageNav } from '@components';
+ import { REPO_NAME, GITHUB_URL } from '@lib/github/constants';
+ import { TAG, CONTENT_PATH } from '@lib/docs/config';
+ import { StyledImg } from '@primitives';
+@@ -64,24 +64,25 @@ const DocsLayout: React.FC<React.PropsWithChildren<Props>> = ({
+             }
+           }}
+         >
+-          <Sticky
+-            offset={84}
+-            className="docs__left-sidebar"
+-            css={{
+-              width: '28%',
+-              maxHeight: 'calc(100vh - 4rem)',
+-              overflow: 'auto',
+-              display: 'none',
+-              '::-webkit-scrollbar': {
+-                width: '0px'
+-              },
+-              '@md': {
+-                display: 'block'
+-              }
+-            }}
+-          >
+-            <Sidebar routes={routes} tag={tag} slug={slug} />
+-          </Sticky>
++          <Col css={{ width: '28%' }}>
++            <Fixed
++              offset={92}
++              className="docs__left-sidebar"
++              css={{
++                maxHeight: 'calc(100vh - 4rem)',
++                overflow: 'auto',
++                display: 'none',
++                '::-webkit-scrollbar': {
++                  width: '0px'
++                },
++                '@md': {
++                  display: 'block'
++                }
++              }}
++            >
++              <Sidebar routes={routes} tag={tag} slug={slug} />
++            </Fixed>
++          </Col>
+           <Col
+             className="docs__center"
+             css={{
+@@ -107,19 +108,21 @@ const DocsLayout: React.FC<React.PropsWithChildren<Props>> = ({
+               )}
+             </footer>
+           </Col>
+-          <Sticky
+-            offset={84}
+-            className="docs__right-sidebar"
+-            css={{
+-              width: '28%',
+-              display: 'none',
+-              '@lg': {
+-                display: 'block'
+-              }
+-            }}
+-          >
+-            <TableOfContent headings={headings} />
+-          </Sticky>
++          <Col css={{ width: '28%' }}>
++            <Fixed
++              offset={92}
++              className="docs__right-sidebar"
++              css={{
++                width: '28%',
++                display: 'none',
++                '@lg': {
++                  display: 'block'
++                }
++              }}
++            >
++              <TableOfContent headings={headings} />
++            </Fixed>
++          </Col>
+           <StyledImg
+             className="docs__gradient-blue"
+             src="/gradient-left-dark.svg"\n

@@ -1,0 +1,75 @@
+Pull Request Number: 2092
+Title: fix: Resolve TextInput sizing issue with labelPlacement "outside-left"
+Base Branch: canary
+Head Branch: fixes/fix-labelPlacement
+Author: abdulbasithqb
+URL: https://github.com/nextui-org/nextui/pull/2092
+State: CLOSED
+Created At: 2023-12-04T12:14:13Z
+Merged At: None
+Participants: abdulbasithqb, wingkwong
+
+Description:
+Closes #2064
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+This pull request addresses an issue related to the input size in the TextInput component. When labelPlacement is set to "outside-left," the input was not taking the full width, and this PR aims to fix that.
+🚀 New behavior
+With this change, the styling issue causing the input not to take full width with labelPlacement set to "outside-left" is resolved, ensuring a consistent and expected layout.
+💣 Is this a breaking change (Yes/No):
+No
+
+📝 Additional Information(Screenshot)
+
+Commits:
+- fix: set flexGrow to 1 when labelPlacement is outside-left and unset otherwise\n- Merge pull request #1 from abdulbasithqb/fixes/fix-labelPlacement
+
+fix: set flexGrow to 1 when labelPlacement is outside-left and unset …\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: ded45b618f25f9904088e9bdd891f8997593923b
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/qburst/nextui-1/new/fixes/fix-labelPlacement?filename=.changeset/five-glasses-laugh.md&value=---%0A%22%40nextui-org%2Finput%22%3A%20patch%0A---%0A%0Afix%3A%20Resolve%20TextInput%20sizing%20issue%20with%20labelPlacement%20%22outside-left%22%0A)
+
+\n- vercel: [vc]: #MiDXdUiwnqSSXFVf+W5VycXAMjTsmqBFb3QxvUkYrIg=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRGV2NnZ4c041V1dzVEtrcjJwVENVSEhieWZVZyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXFidXJzdC1maXhlcy1maXgtYWFjZjg3LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXFidXJzdC1maXhlcy1maXgtYWFjZjg3LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/Dev6vxsN5WWsTKkr2pTCUHHbyfUg)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-qburst-fixes-fix-aacf87-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-qburst-fixes-fix-aacf87-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 4, 2023 0:16am |
+
+\n- vercel: @abdulbasithqb is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22ded45b618f25f9904088e9bdd891f8997593923b%22%7D%2C%22id%22%3A%22Qmcdu1xHpzoKs49dTYUyKWNaqSi24yB5HXaFrjuvFLkHRi%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2092%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- abdulbasithqb: Hey @jrgarciadev could you please review this PR ?\n- wingkwong: Closing - No longer applicable\n
+
+Files Changed:
+- packages/components/input/src/use-input.ts (modified, 3 changes)\n  Patch: @@ -374,6 +374,9 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+         className: slots.mainWrapper({
+           class: clsx(classNames?.mainWrapper, props?.className),
+         }),
++        style: {
++          flexGrow: labelPlacement === "outside-left" ? 1 : "unset",
++        },
+       };
+     },
+     [slots, classNames?.mainWrapper],\n

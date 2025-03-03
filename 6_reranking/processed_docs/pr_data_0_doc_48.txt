@@ -1,0 +1,1624 @@
+Pull Request Number: 4203
+Title: feat(select): virtualization
+Base Branch: canary
+Head Branch: feat/eng-1618-2-virtualization-for-select
+Author: vinroger
+URL: https://github.com/nextui-org/nextui/pull/4203
+State: MERGED
+Created At: 2024-12-01T11:59:23Z
+Merged At: 2024-12-01T20:51:21Z
+Participants: vinroger, jrgarciadev, wingkwong, winchesHe
+
+Description:
+Closes #3047
+Closes #3189
+
+📝 Description
+This PR introduces virtualization support for the Select component in NextUI, enabling efficient rendering of large datasets. The updates focus on performance optimization and enhancing the user experience for dropdowns with extensive data.
+
+closes: #3047
+
+⛳️ Current behavior (updates)
+The current Select component renders all items in the DOM, leading to performance bottlenecks when handling large datasets.
+🚀 New behavior
+
+Virtualization Support:
+
+Efficiently renders only visible items in the viewport.
+Automatically enabled for datasets exceeding 50 items.
+
+
+Customizable Props:
+
+maxListboxHeight: Allows users to set the maximum height of the dropdown.
+itemHeight: Enables customization of item heights for optimized performance.
+isVirtualized: Toggles virtualization on or off.
+
+
+Improved Dropdown Performance:
+
+Demonstrates handling datasets with up to 10,000 items in examples.
+Offers configurable listbox properties to meet various use cases.
+
+
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+This update leverages the @tanstack/react-virtual library for efficient rendering, ensuring smooth and responsive dropdown performance. Documentation includes updated examples with detailed explanations for developers.
+
+Summary by CodeRabbit
+Release Notes
+
+
+New Features
+
+Introduced virtualization support in the Select component for efficient rendering of large datasets.
+Added new properties: maxListboxHeight, itemHeight, and isVirtualized to enhance select functionality.
+New examples demonstrating the handling of extensive datasets (up to 10,000 items) in the Select component.
+Added a ListboxWrapper component for improved styling and layout of the Listbox.
+Introduced new Autocomplete components with virtualization for handling large datasets efficiently.
+
+
+
+Documentation
+
+Updated documentation for the Select component to include virtualization features and usage examples.
+
+
+
+Bug Fixes
+
+Enhanced test coverage for the Select component, ensuring proper functionality with virtualization scenarios.
+
+
+
+Chores
+
+Updated dependencies in package files to support new features.
+
+Commits:
+- fix: should not export list item internal variables type\n- feat: changeset\n- feat: integrate virtualized listbox to select component, add more props\n- feat: update docs for select component\n- feat: update docs to include API for virtualization\n- fix: update docs to follow the newest format\n- fix: update test for disable virtualization, add test for virtualized version\n- fix: fix typo\n- fix: type error\n- fix: code block type error\n- chore: update docs to use raw jsx instead of template literal\n- fix: fix code-demo for typecheck\n- Merge branch 'fix/intertype-should-not-expoort' into feat/eng-1618-2-virtualization-for-select\n- chore: rollback for files\n- Merge branch 'canary' of github.com:nextui-org/nextui into feat/eng-1618-2-virtualization-for-select\n- fix: types\n- chore: remove caret version on tanstack virtual pkg\n- fix: pnpm lock file\n- fix: virtualization examples\n- fix: number of items\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-1618/implement-virtualization-on-listbox-based-components">ENG-1618 Implement Virtualization on Listbox based components</a></p>\n- vercel: [vc]: #sVOO2MPoIHG6TNYNuk5N6cpot9df5nr7elCt5i76k6I=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9CZWFScU1HMk1QZ0x0V1BIUW1pQ3Y3QUtYSnFmIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mZWF0LWVuZy0xNjE4LTItdmlydHVhbGl6YS01Yjk4MmQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mZWF0LWVuZy0xNjE4LTItdmlydHVhbGl6YS01Yjk4MmQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi9FOGpFUUxnZUFUdDNrWUMzVmUyWVdvakUyNnRnIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZlYXQtZW5nLTE2MTgtMi12aXJ0dS1jMGNhNjctbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZlYXQtZW5nLTE2MTgtMi12aXJ0dS1jMGNhNjctbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/BeaRqMG2MPgLtWPHQmiCv7AKXJqf)) | [Visit Preview](https://nextui-docs-v2-git-feat-eng-1618-2-virtualiza-5b982d-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-feat-eng-1618-2-virtualiza-5b982d-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 1, 2024 8:46pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/E8jEQLgeATt3kYC3Ve2YWojE26tg)) | [Visit Preview](https://nextui-storybook-v2-git-feat-eng-1618-2-virtu-c0ca67-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-feat-eng-1618-2-virtu-c0ca67-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 1, 2024 8:46pm |
+
+
+\n- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: c9c29d724ae5fd13f36eb2f99c4d2173bf55cb68
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/feat/eng-1618-2-virtualization-for-select?filename=.changeset/poor-apples-relax.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Flistbox%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afeat(select)%3A%20virtualization%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The pull request introduces several enhancements to the `Select` and `Autocomplete` components, focusing on virtualization to improve performance with large datasets. New properties related to virtualization, such as `itemHeight`, `maxListboxHeight`, and `isVirtualized`, are added to the component's API. Additionally, new React components are created to demonstrate these features, and the documentation is updated to reflect these changes. The test suite for the `Select` component is enhanced to cover scenarios involving virtualization.
+
+## Changes
+
+| File | Change Summary |
+|------|----------------|
+| `apps/docs/content/components/select/index.ts` | Added imports for virtualization properties and included them in the `selectContent` export object. |
+| `apps/docs/content/components/select/virtualization-custom-item-height.ts` | Added import for `App` from a raw JSX file and updated default export. |
+| `apps/docs/content/components/select/virtualization-max-listbox-height.ts` | Added import for `App` from a raw JSX file and updated default export. |
+| `apps/docs/content/components/select/virtualization-ten-thousand.ts` | Added import for `App` from a raw JSX file and updated default export. |
+| `apps/docs/content/components/select/virtualization.ts` | Added import for `App` from a raw JSX file and updated default export. |
+| `apps/docs/content/docs/components/select.mdx` | Added a new section on virtualization with details on new properties and examples. |
+| `packages/components/select/package.json` | Added dependency for `@tanstack/react-virtual`. |
+| `packages/components/select/src/use-select.ts` | Enhanced `UseSelectProps` type with new virtualization properties. |
+| `packages/components/select/stories/select.stories.tsx` | Introduced templates for large datasets and added dataset generation functionality. |
+| `packages/core/theme/src/components/select.ts` | Modified styling by removing the `max-h-64` class from `listboxWrapper`. |
+| `packages/components/select/__tests__/select.test.tsx` | Enhanced tests to include virtualization scenarios and improved coverage. |
+| `apps/docs/content/components/autocomplete/virtualization-custom-item-height.raw.jsx` | Added a new React component for Autocomplete with virtualization. |
+| `apps/docs/content/components/autocomplete/virtualization-max-listbox-height.raw.jsx` | Added a new React component for Autocomplete with virtualization. |
+| `apps/docs/content/components/autocomplete/virtualization-ten-thousand.raw.jsx` | Added a new React component for Autocomplete with virtualization. |
+| `apps/docs/content/components/autocomplete/virtualization.raw.jsx` | Added a new React component for Autocomplete with virtualization. |
+| `packages/components/listbox/package.json` | Updated dependency version for `@tanstack/react-virtual`. |
+| `apps/docs/content/components/listbox/virtualization-ten-thousand.raw.jsx` | Added a wrapper component for Listbox with consistent styling. |
+| `apps/docs/content/components/listbox/virtualization.raw.jsx` | Added a wrapper component for Listbox with consistent styling. |
+
+## Assessment against linked issues
+
+| Objective | Addressed | Explanation |
+|-----------|-----------|-------------|
+| Optimize AutoComplete and Select components for large options (#3047) | ❓ | The PR introduces virtualization but does not explicitly address performance with 270,000+ options. |
+| Virtualization on Select and Autocomplete (#3189) | ✅ | The PR successfully implements virtualization features for the Select and Autocomplete components. |
+
+## Possibly related PRs
+- **#4206**: Introduces virtualization support for the `Listbox` component, related to the virtualization features in this PR.
+- **#3881**: Focuses on consistent styling for the `select` component, relevant to the overall UI enhancements.
+- **#4082**: Addresses the controlled `isInvalid` prop in the `Select` component, which complements the changes in this PR.
+- **#3598**: Fixes the `onChange` event handling in the `Select` component, related to the enhanced functionality.
+
+## Suggested labels
+`👀 Status: In Review`, `👀 Status: To Review`
+
+## Suggested reviewers
+- wingkwong
+
+<!-- walkthrough_end -->
+<!-- This is an auto-generated comment: rate limited by coderabbit.ai -->
+
+> [!WARNING]
+> ## Rate limit exceeded
+> 
+> @jrgarciadev has exceeded the limit for the number of commits or files that can be reviewed per hour. Please wait **19 minutes and 56 seconds** before requesting another review.
+> 
+> <details>
+> <summary>⌛ How to resolve this issue?</summary>
+> 
+> After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR.
+> 
+> We recommend that you space out your commits to avoid hitting the rate limit.
+> 
+> </details>
+> 
+> 
+> <details>
+> <summary>🚦 How do rate limits work?</summary>
+> 
+> CodeRabbit enforces hourly rate limits for each developer per organization.
+> 
+> Our paid plans have higher rate limits than the trial, open-source and free plans. In all cases, we re-allow further reviews after a brief timeout.
+> 
+> Please see our [FAQ](https://docs.coderabbit.ai/faq) for further information.
+> 
+> </details>
+> 
+> <details>
+> <summary>📥 Commits</summary>
+> 
+> Reviewing files that changed from the base of the PR and between 2b2b91f904f07b78ccd0598e0cc8e49e972a6ff6 and c9c29d724ae5fd13f36eb2f99c4d2173bf55cb68.
+> 
+> </details>
+
+<!-- end of auto-generated comment: rate limited by coderabbit.ai -->
+
+
+
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- apps/docs/content/components/autocomplete/virtualization-custom-item-height.raw.jsx (added, 53 changes)\n  Patch: @@ -0,0 +1,53 @@
++import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(1000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Autocomplete
++        isVirtualized
++        className="max-w-xs"
++        defaultItems={items}
++        itemHeight={40}
++        label="Search from 1000 items"
++        maxListboxHeight={400}
++        placeholder="Search..."
++      >
++        {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
++      </Autocomplete>
++    </div>
++  );
++}\n- apps/docs/content/components/autocomplete/virtualization-custom-item-height.ts (modified, 58 changes)\n  Patch: @@ -1,60 +1,4 @@
+-const App = `import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
+-
+-const generateItems = (n) => {
+-  const items = [
+-    "Cat",
+-    "Dog",
+-    "Elephant",
+-    "Lion",
+-    "Tiger",
+-    "Giraffe",
+-    "Dolphin",
+-    "Penguin",
+-    "Zebra",
+-    "Shark",
+-    "Whale",
+-    "Otter",
+-    "Crocodile",
+-  ];
+-
+-  const dataset = [];
+-
+-  for (let i = 0; i < n; i++) {
+-    const item = items[i % items.length];
+-
+-    dataset.push({
+-      label: \`\${item}\${i}\`,
+-      value: \`\${item.toLowerCase()}\${i}\`,
+-      description: "Sample description",
+-    });
+-  }
+-
+-  return dataset;
+-};
+-
+-export default function App() {
+-  const items = generateItems(1000);
+-
+-  return (
+-    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+-      <Autocomplete 
+-        isVirtualized
+-        label="Search from 1000 items" 
+-        className="max-w-xs"
+-        defaultItems={items}
+-        placeholder="Search..."
+-        maxListboxHeight={400}
+-        itemHeight={40}
+-      >
+-        {(item) => (
+-          <AutocompleteItem key={item.value}>
+-            {item.label}
+-          </AutocompleteItem>
+-        )}
+-      </Autocomplete>
+-    </div>
+-  );
+-}`;
++import App from "./virtualization-custom-item-height.raw.jsx?raw";
+ 
+ const react = {
+   "/App.jsx": App,\n- apps/docs/content/components/autocomplete/virtualization-max-listbox-height.raw.jsx (added, 52 changes)\n  Patch: @@ -0,0 +1,52 @@
++import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(1000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Autocomplete
++        isVirtualized
++        className="max-w-xs"
++        defaultItems={items}
++        label="Search from 1000 items"
++        maxListboxHeight={400}
++        placeholder="Search..."
++      >
++        {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
++      </Autocomplete>
++    </div>
++  );
++}\n- apps/docs/content/components/autocomplete/virtualization-max-listbox-height.ts (modified, 57 changes)\n  Patch: @@ -1,59 +1,4 @@
+-const App = `import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
+-
+-const generateItems = (n) => {
+-  const items = [
+-    "Cat",
+-    "Dog",
+-    "Elephant",
+-    "Lion",
+-    "Tiger",
+-    "Giraffe",
+-    "Dolphin",
+-    "Penguin",
+-    "Zebra",
+-    "Shark",
+-    "Whale",
+-    "Otter",
+-    "Crocodile",
+-  ];
+-
+-  const dataset = [];
+-
+-  for (let i = 0; i < n; i++) {
+-    const item = items[i % items.length];
+-
+-    dataset.push({
+-      label: \`\${item}\${i}\`,
+-      value: \`\${item.toLowerCase()}\${i}\`,
+-      description: "Sample description",
+-    });
+-  }
+-
+-  return dataset;
+-};
+-
+-export default function App() {
+-  const items = generateItems(1000);
+-
+-  return (
+-    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+-      <Autocomplete 
+-        isVirtualized
+-        label="Search from 1000 items" 
+-        className="max-w-xs"
+-        defaultItems={items}
+-        placeholder="Search..."
+-        maxListboxHeight={400}
+-      >
+-        {(item) => (
+-          <AutocompleteItem key={item.value}>
+-            {item.label}
+-          </AutocompleteItem>
+-        )}
+-      </Autocomplete>
+-    </div>
+-  );
+-}`;
++import App from "./virtualization-max-listbox-height.raw.jsx?raw";
+ 
+ const react = {
+   "/App.jsx": App,\n- apps/docs/content/components/autocomplete/virtualization-ten-thousand.raw.jsx (added, 51 changes)\n  Patch: @@ -0,0 +1,51 @@
++import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(10000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Autocomplete
++        isVirtualized
++        className="max-w-xs"
++        defaultItems={items}
++        label="Search from 10000 items"
++        placeholder="Search..."
++      >
++        {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
++      </Autocomplete>
++    </div>
++  );
++}\n- apps/docs/content/components/autocomplete/virtualization-ten-thousand.ts (modified, 56 changes)\n  Patch: @@ -1,58 +1,4 @@
+-const App = `import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
+-
+-const generateItems = (n) => {
+-  const items = [
+-    "Cat",
+-    "Dog",
+-    "Elephant",
+-    "Lion",
+-    "Tiger",
+-    "Giraffe",
+-    "Dolphin",
+-    "Penguin",
+-    "Zebra",
+-    "Shark",
+-    "Whale",
+-    "Otter",
+-    "Crocodile",
+-  ];
+-
+-  const dataset = [];
+-
+-  for (let i = 0; i < n; i++) {
+-    const item = items[i % items.length];
+-
+-    dataset.push({
+-      label: \`\${item}\${i}\`,
+-      value: \`\${item.toLowerCase()}\${i}\`,
+-      description: "Sample description",
+-    });
+-  }
+-
+-  return dataset;
+-};
+-
+-export default function App() {
+-  const items = generateItems(10000);
+-
+-  return (
+-    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+-      <Autocomplete 
+-        isVirtualized
+-        label="Search from 10000 items" 
+-        className="max-w-xs"
+-        defaultItems={items}
+-        placeholder="Search..."
+-      >
+-        {(item) => (
+-          <AutocompleteItem key={item.value}>
+-            {item.label}
+-          </AutocompleteItem>
+-        )}
+-      </Autocomplete>
+-    </div>
+-  );
+-}`;
++import App from "./virtualization-ten-thousand.raw.jsx?raw";
+ 
+ const react = {
+   "/App.jsx": App,\n- apps/docs/content/components/autocomplete/virtualization.raw.jsx (added, 51 changes)\n  Patch: @@ -0,0 +1,51 @@
++import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(1000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Autocomplete
++        isVirtualized
++        className="max-w-xs"
++        defaultItems={items}
++        label="Search from 1000 items"
++        placeholder="Search..."
++      >
++        {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
++      </Autocomplete>
++    </div>
++  );
++}\n- apps/docs/content/components/autocomplete/virtualization.ts (modified, 56 changes)\n  Patch: @@ -1,58 +1,4 @@
+-const App = `import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
+-
+-const generateItems = (n) => {
+-  const items = [
+-    "Cat",
+-    "Dog",
+-    "Elephant",
+-    "Lion",
+-    "Tiger",
+-    "Giraffe",
+-    "Dolphin",
+-    "Penguin",
+-    "Zebra",
+-    "Shark",
+-    "Whale",
+-    "Otter",
+-    "Crocodile",
+-  ];
+-
+-  const dataset = [];
+-
+-  for (let i = 0; i < n; i++) {
+-    const item = items[i % items.length];
+-
+-    dataset.push({
+-      label: \`\${item}\${i}\`,
+-      value: \`\${item.toLowerCase()}\${i}\`,
+-      description: "Sample description",
+-    });
+-  }
+-
+-  return dataset;
+-};
+-
+-export default function App() {
+-  const items = generateItems(1000);
+-
+-  return (
+-    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+-      <Autocomplete 
+-        isVirtualized
+-        label="Search from 1000 items" 
+-        className="max-w-xs"
+-        defaultItems={items}
+-        placeholder="Search..."
+-      >
+-        {(item) => (
+-          <AutocompleteItem key={item.value}>
+-            {item.label}
+-          </AutocompleteItem>
+-        )}
+-      </Autocomplete>
+-    </div>
+-  );
+-}`;
++import App from "./virtualization.raw.jsx?raw";
+ 
+ const react = {
+   "/App.jsx": App,\n- apps/docs/content/components/listbox/virtualization-ten-thousand.raw.jsx (modified, 41 changes)\n  Patch: @@ -32,26 +32,35 @@ const generateItems = (n) => {
+   return dataset;
+ };
+ 
++const ListboxWrapper = ({children}) => (
++  <div className="w-full max-w-[260px] border-small px-1 py-2 rounded-small border-default-200 dark:border-default-100">
++    {children}
++  </div>
++);
++
+ export default function App() {
+-  const items = generateItems(1000);
++  const items = generateItems(10000);
+ 
+   return (
+     <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+-      <Listbox
+-        isVirtualized
+-        label={"Select from 10000 items"}
+-        placeholder="Select..."
+-        virtualization={{
+-          maxListboxHeight: 400,
+-          itemHeight: 40,
+-        }}
+-      >
+-        {items.map((item, index) => (
+-          <ListboxItem key={index} value={item.value}>
+-            {item.label}
+-          </ListboxItem>
+-        ))}
+-      </Listbox>
++      <ListboxWrapper>
++        <Listbox
++          isVirtualized
++          className="max-w-xs"
++          label={"Select from 10000 items"}
++          placeholder="Select..."
++          virtualization={{
++            maxListboxHeight: 400,
++            itemHeight: 40,
++          }}
++        >
++          {items.map((item, index) => (
++            <ListboxItem key={index} value={item.value}>
++              {item.label}
++            </ListboxItem>
++          ))}
++        </Listbox>
++      </ListboxWrapper>
+     </div>
+   );
+ }\n- apps/docs/content/components/listbox/virtualization.raw.jsx (modified, 39 changes)\n  Patch: @@ -31,26 +31,35 @@ const generateItems = (n) => {
+   return dataset;
+ };
+ 
++const ListboxWrapper = ({children}) => (
++  <div className="w-full max-w-[260px] border-small px-1 py-2 rounded-small border-default-200 dark:border-default-100">
++    {children}
++  </div>
++);
++
+ export default function App() {
+   const items = generateItems(1000);
+ 
+   return (
+     <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+-      <Listbox
+-        isVirtualized
+-        label={"Select from 1000 items"}
+-        placeholder="Select..."
+-        virtualization={{
+-          maxListboxHeight: 400,
+-          itemHeight: 40,
+-        }}
+-      >
+-        {items.map((item, index) => (
+-          <ListboxItem key={index} value={item.value}>
+-            {item.label}
+-          </ListboxItem>
+-        ))}
+-      </Listbox>
++      <ListboxWrapper>
++        <Listbox
++          isVirtualized
++          className="max-w-xs"
++          label={"Select from 1000 items"}
++          placeholder="Select..."
++          virtualization={{
++            maxListboxHeight: 400,
++            itemHeight: 40,
++          }}
++        >
++          {items.map((item, index) => (
++            <ListboxItem key={index} value={item.value}>
++              {item.label}
++            </ListboxItem>
++          ))}
++        </Listbox>
++      </ListboxWrapper>
+     </div>
+   );
+ }\n- apps/docs/content/components/select/index.ts (modified, 8 changes)\n  Patch: @@ -27,6 +27,10 @@ import multipleControlledOnChange from "./multiple-controlled-onchange";
+ import multipleWithChips from "./multiple-chips";
+ import customSelectorIcon from "./custom-selector-icon";
+ import customStyles from "./custom-styles";
++import virtualization from "./virtualization";
++import virtualizationTenThousand from "./virtualization-ten-thousand";
++import virtualizationCustomItemHeight from "./virtualization-custom-item-height";
++import virtualizationMaxListboxHeight from "./virtualization-max-listbox-height";
+ 
+ export const selectContent = {
+   usage,
+@@ -58,4 +62,8 @@ export const selectContent = {
+   multipleWithChips,
+   customSelectorIcon,
+   customStyles,
++  virtualization,
++  virtualizationTenThousand,
++  virtualizationCustomItemHeight,
++  virtualizationMaxListboxHeight,
+ };\n- apps/docs/content/components/select/virtualization-custom-item-height.raw.jsx (added, 56 changes)\n  Patch: @@ -0,0 +1,56 @@
++import {Select, SelectItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(1000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Select
++        isVirtualized
++        className="max-w-xs"
++        itemHeight={40}
++        label={"Select from 1000 items"}
++        maxListboxHeight={400}
++        placeholder="Select..."
++      >
++        {items.map((item, index) => (
++          <SelectItem key={index} value={item.value}>
++            {item.label}
++          </SelectItem>
++        ))}
++      </Select>
++    </div>
++  );
++}\n- apps/docs/content/components/select/virtualization-custom-item-height.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./virtualization-custom-item-height.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/select/virtualization-max-listbox-height.raw.jsx (added, 55 changes)\n  Patch: @@ -0,0 +1,55 @@
++import {Select, SelectItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(1000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Select
++        isVirtualized
++        className="max-w-xs"
++        label={"Select from 1000 items"}
++        maxListboxHeight={400}
++        placeholder="Select..."
++      >
++        {items.map((item, index) => (
++          <SelectItem key={index} value={item.value}>
++            {item.label}
++          </SelectItem>
++        ))}
++      </Select>
++    </div>
++  );
++}\n- apps/docs/content/components/select/virtualization-max-listbox-height.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./virtualization-max-listbox-height.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/select/virtualization-ten-thousand.raw.jsx (added, 54 changes)\n  Patch: @@ -0,0 +1,54 @@
++import {Select, SelectItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(10000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Select
++        isVirtualized
++        className="max-w-xs"
++        label={"Select from 10000 items"}
++        placeholder="Select..."
++      >
++        {items.map((item, index) => (
++          <SelectItem key={index} value={item.value}>
++            {item.label}
++          </SelectItem>
++        ))}
++      </Select>
++    </div>
++  );
++}\n- apps/docs/content/components/select/virtualization-ten-thousand.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./virtualization-ten-thousand.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/select/virtualization.raw.jsx (added, 54 changes)\n  Patch: @@ -0,0 +1,54 @@
++import {Select, SelectItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(1000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Select
++        isVirtualized
++        className="max-w-xs"
++        label={"Select from 1000 items"}
++        placeholder="Select..."
++      >
++        {items.map((item, index) => (
++          <SelectItem key={index} value={item.value}>
++            {item.label}
++          </SelectItem>
++        ))}
++      </Select>
++    </div>
++  );
++}\n- apps/docs/content/components/select/virtualization.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./virtualization.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/docs/components/select.mdx (modified, 49 changes)\n  Patch: @@ -213,6 +213,37 @@ import {useInfiniteScroll} from "@nextui-org/use-infinite-scroll";
+   iframeSrc="/examples/select/async-items-loading"
+ />
+ 
++
++### Virtualization
++
++Select supports virtualization, which allows efficient rendering of large lists by only rendering items that are visible in the viewport. You can enable virtualization by setting the `isVirtualized` prop to `true`.
++
++<CodeDemo
++  title="Virtualization"
++  files={selectContent.virtualization}
++/>
++
++> **Note**: The virtualization strategy is based on the [@tanstack/react-virtual](https://tanstack.com/virtual/latest) package, which provides efficient rendering of large lists by only rendering items that are visible in the viewport.
++
++#### Ten Thousand Items
++
++Here's an example of using virtualization with 10,000 items.
++
++<CodeDemo title="Ten Thousand Items" files={selectContent.virtualizationTenThousand} />
++
++#### Max Listbox Height
++
++The `maxListboxHeight` prop is used to set the maximum height of the listbox. This is required when using virtualization. By default, it's set to `256`.
++
++<CodeDemo title="Max Listbox Height" files={selectContent.virtualizationMaxListboxHeight} />
++
++#### Custom Item Height
++
++The `itemHeight` prop is used to set the height of each item in the listbox. This is required when using virtualization. By default, it's set to `32`.
++
++<CodeDemo title="Custom Item Height" files={selectContent.virtualizationCustomItemHeight} />
++
++
+ ### With Sections
+ 
+ You can use the `SelectSection` component to group select items.
+@@ -476,6 +507,24 @@ the popover and listbox components.
+       description: "A ref to the spinner element.",
+       default: "-"
+     },
++    {
++      attribute: "maxListboxHeight",
++      type: "number",
++      description: "The maximum height of the listbox in pixels. Required when using virtualization.",
++      default: "256"
++    },
++    {
++      attribute: "itemHeight",
++      type: "number", 
++      description: "The fixed height of each item in pixels. Required when using virtualization.",
++      default: "32"
++    },
++    {
++      attribute: "isVirtualized",
++      type: "boolean",
++      description: "Whether to enable virtualization. By default, it's enabled when the number of items exceeds 50.",
++      default: "undefined"
++    },
+     {
+       attribute: "fullWidth",
+       type: "boolean",\n- packages/components/listbox/package.json (modified, 2 changes)\n  Patch: @@ -45,7 +45,7 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/use-is-mobile": "workspace:*",
+-    "@tanstack/react-virtual": "^3.10.9",
++    "@tanstack/react-virtual": "3.10.9",
+     "@react-aria/utils": "3.25.3",
+     "@react-aria/listbox": "3.13.5",
+     "@react-stately/list": "3.11.0",\n- packages/components/select/__tests__/select.test.tsx (modified, 208 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import type {SelectProps} from "../src";
+ 
+ import * as React from "react";
+-import {render, renderHook} from "@testing-library/react";
++import {act, render, renderHook, waitFor} from "@testing-library/react";
+ import userEvent, {UserEvent} from "@testing-library/user-event";
+ import {useForm} from "react-hook-form";
+ 
+@@ -669,7 +669,13 @@ describe("Select", () => {
+     });
+ 
+     const wrapper = render(
+-      <Select isOpen aria-label="Favorite Animal" label="Favorite Animal" onChange={onChange}>
++      <Select
++        isOpen
++        aria-label="Favorite Animal"
++        isVirtualized={false}
++        label="Favorite Animal"
++        onChange={onChange}
++      >
+         {options.map((o) => (
+           <SelectItem key={o} value={o}>
+             {o}
+@@ -701,7 +707,13 @@ describe("Select", () => {
+     });
+ 
+     const wrapper = render(
+-      <Select isOpen aria-label="Favorite Animal" label="Favorite Animal" onChange={onChange}>
++      <Select
++        isOpen
++        aria-label="Favorite Animal"
++        isVirtualized={false}
++        label="Favorite Animal"
++        onChange={onChange}
++      >
+         {options.map((o) => (
+           <SelectItem key={o} value={o}>
+             {o}
+@@ -812,12 +824,200 @@ describe("Select", () => {
+ 
+     await user.click(getByTestId("button"));
+     expect(select).toHaveAttribute("aria-describedby");
+-    expect(document.getElementById(select.getAttribute("aria-describedby"))).toHaveTextContent(
++    expect(document.getElementById(select.getAttribute("aria-describedby")!)).toHaveTextContent(
+       "Invalid value",
+     );
+   });
+ });
+ 
++describe("Select virtualization tests", () => {
++  const user = userEvent.setup();
++
++  beforeAll(() => {
++    Object.defineProperty(HTMLElement.prototype, "scrollTo", {
++      configurable: true,
++      value: jest.fn(),
++    });
++  });
++
++  it("should work with onChange (< virtualization threshold items)", async () => {
++    const onChange = jest.fn();
++
++    let options = Array.from({length: 10}, (_, i) => `option ${i}`);
++
++    const wrapper = render(
++      <div style={{height: "200px", overflow: "auto"}}>
++        <Select isOpen aria-label="Favorite Animal" label="Favorite Animal" onChange={onChange}>
++          {options.map((o) => (
++            <SelectItem key={o} value={o}>
++              {o}
++            </SelectItem>
++          ))}
++        </Select>
++      </div>,
++    );
++
++    const listbox = wrapper.getByRole("listbox");
++
++    expect(listbox).toBeTruthy();
++
++    const listboxItems = wrapper.getAllByRole("option");
++
++    expect(listboxItems.length).toBe(10);
++
++    await user.click(listboxItems[1]);
++    expect(onChange).toHaveBeenCalledTimes(1);
++  });
++
++  it("should work with onChange (at virtualization threshold items)", async () => {
++    const onChange = jest.fn();
++
++    let options = Array.from({length: 50}, (_, i) => `option ${i}`);
++
++    const wrapper = render(
++      <div style={{height: "200px", overflow: "auto"}}>
++        <Select isOpen aria-label="Favorite Animal" label="Favorite Animal" onChange={onChange}>
++          {options.map((o) => (
++            <SelectItem key={o} value={o}>
++              {o}
++            </SelectItem>
++          ))}
++        </Select>
++      </div>,
++    );
++
++    const listbox = wrapper.getByRole("listbox");
++
++    expect(listbox).toBeTruthy();
++
++    const listboxItems = wrapper.getAllByRole("option");
++
++    expect(listboxItems.length).toBe(50);
++
++    await user.click(listboxItems[1]);
++    expect(onChange).toHaveBeenCalledTimes(1);
++  });
++
++  it("should work with onChange (> virtualization threshold items)", async () => {
++    const onChange = jest.fn();
++
++    let options = Array.from({length: 100}, (_, i) => `option ${i}`);
++
++    /* Mock dimensions */
++    Object.defineProperty(HTMLElement.prototype, "offsetHeight", {configurable: true, value: 200});
++    Object.defineProperty(HTMLElement.prototype, "scrollHeight", {configurable: true, value: 2000});
++    Object.defineProperty(HTMLElement.prototype, "getBoundingClientRect", {
++      configurable: true,
++      value: () => ({
++        top: 0,
++        bottom: 200,
++        height: 200,
++        left: 0,
++        right: 100,
++        width: 100,
++      }),
++    });
++
++    const wrapper = render(
++      <div style={{height: "200px", overflow: "auto"}}>
++        <Select
++          isOpen
++          isVirtualized
++          aria-label="Favorite Animal"
++          itemHeight={20}
++          label="Favorite Animal"
++          maxListboxHeight={200}
++          onChange={onChange}
++        >
++          {options.map((o) => (
++            <SelectItem key={o} value={o}>
++              {o}
++            </SelectItem>
++          ))}
++        </Select>
++      </div>,
++    );
++
++    const listbox = wrapper.getByRole("listbox");
++
++    expect(listbox).toBeTruthy();
++
++    /* Scroll to ensure visibility of the target item */
++    const scrollableContainer = wrapper.container.querySelector("div");
++
++    act(() => {
++      scrollableContainer?.scrollTo({top: 60});
++    });
++
++    await waitFor(() => {
++      const visibleItems = wrapper.getAllByRole("option");
++
++      expect(visibleItems.length).toBeGreaterThan(0);
++      /* Virtualized list will have listitems less than 100 */
++      expect(visibleItems.length).toBeLessThan(100);
++    });
++
++    const visibleItems = wrapper.getAllByRole("option");
++
++    await user.click(visibleItems[3]);
++    expect(onChange).toHaveBeenCalledTimes(1);
++  });
++
++  it("should work with onChange (large number of items)", async () => {
++    const onChange = jest.fn();
++
++    let options = Array.from({length: 300}, (_, i) => `option ${i}`);
++
++    /* Mock dimensions */
++    Object.defineProperty(HTMLElement.prototype, "offsetHeight", {configurable: true, value: 200});
++    Object.defineProperty(HTMLElement.prototype, "scrollHeight", {configurable: true, value: 6000});
++
++    const wrapper = render(
++      <div style={{height: "200px", overflow: "auto"}}>
++        <Select
++          isOpen
++          isVirtualized
++          aria-label="Favorite Animal"
++          itemHeight={20}
++          label="Favorite Animal"
++          maxListboxHeight={200}
++          onChange={onChange}
++        >
++          {options.map((o) => (
++            <SelectItem key={o} value={o}>
++              {o}
++            </SelectItem>
++          ))}
++        </Select>
++      </div>,
++    );
++
++    const listbox = wrapper.getByRole("listbox");
++
++    expect(listbox).toBeTruthy();
++
++    /* Simulate scrolling to make the target item visible */
++    const scrollableContainer = wrapper.container.querySelector("div");
++
++    act(() => {
++      scrollableContainer?.scrollTo({top: 1200});
++    });
++
++    await waitFor(() => {
++      const visibleItems = wrapper.getAllByRole("option");
++
++      expect(visibleItems.length).toBeGreaterThan(0);
++      /* Virtualized list will have listitems less than 300 */
++      expect(visibleItems.length).toBeLessThan(300);
++    });
++
++    const visibleItems = wrapper.getAllByRole("option");
++
++    await user.click(visibleItems[3]);
++    expect(onChange).toHaveBeenCalledTimes(1);
++  });
++});
++
+ describe("Select with React Hook Form", () => {
+   let select1: HTMLElement;
+   let select2: HTMLElement;\n- packages/components/select/package.json (modified, 3 changes)\n  Patch: @@ -57,7 +57,8 @@
+     "@react-aria/interactions": "3.22.4",
+     "@react-aria/utils": "3.25.3",
+     "@react-aria/visually-hidden": "3.8.17",
+-    "@react-types/shared": "3.25.0"
++    "@react-types/shared": "3.25.0",
++    "@tanstack/react-virtual": "3.10.9"
+   },
+   "devDependencies": {
+     "@nextui-org/avatar": "workspace:*",\n- packages/components/select/src/use-select.ts (modified, 42 changes)\n  Patch: @@ -149,7 +149,24 @@ export type UseSelectProps<T> = Omit<
+   keyof Omit<MultiSelectProps<T>, "onSelectionChange">
+ > &
+   Omit<MultiSelectProps<T>, "onSelectionChange"> &
+-  SelectVariantProps;
++  SelectVariantProps & {
++    /**
++     * The height of each item in the listbox.
++     * This is required for virtualized listboxes to calculate the height of each item.
++     */
++    itemHeight?: number;
++    /**
++     * The max height of the listbox (which will be rendered in a popover).
++     * This is required for virtualized listboxes to set the maximum height of the listbox.
++     */
++    maxListboxHeight?: number;
++    /**
++     * Whether to enable virtualization of the listbox items.
++     * By default, virtualization is automatically enabled when the number of items is greater than 50.
++     * @default undefined
++     */
++    isVirtualized?: boolean;
++  };
+ 
+ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+   const globalContext = useProviderContext();
+@@ -175,6 +192,9 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+     renderValue,
+     onSelectionChange,
+     placeholder,
++    isVirtualized,
++    itemHeight = 32,
++    maxListboxHeight = 256,
+     children,
+     disallowEmptySelection = false,
+     selectionMode = "single",
+@@ -493,15 +513,33 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+       className: slots.listboxWrapper({
+         class: clsx(classNames?.listboxWrapper, props?.className),
+       }),
++      style: {
++        maxHeight: maxListboxHeight ?? 256,
++        ...props.style,
++      },
+       ...mergeProps(slotsProps.scrollShadowProps, props),
+     }),
+-    [slots.listboxWrapper, classNames?.listboxWrapper, slotsProps.scrollShadowProps],
++    [
++      slots.listboxWrapper,
++      classNames?.listboxWrapper,
++      slotsProps.scrollShadowProps,
++      maxListboxHeight,
++    ],
+   );
+ 
+   const getListboxProps = (props: any = {}) => {
++    const shouldVirtualize = isVirtualized ?? state.collection.size > 50;
++
+     return {
+       state,
+       ref: listBoxRef,
++      isVirtualized: shouldVirtualize,
++      virtualization: shouldVirtualize
++        ? {
++            maxListboxHeight,
++            itemHeight,
++          }
++        : undefined,
+       "data-slot": "listbox",
+       className: slots.listbox({
+         class: clsx(classNames?.listbox, props?.className),\n- packages/components/select/stories/select.stories.tsx (modified, 96 changes)\n  Patch: @@ -729,6 +729,59 @@ const ScrollableContainerTemplate = (args: SelectProps) => {
+   );
+ };
+ 
++interface LargeDatasetSchema {
++  label: string;
++  value: string;
++  description: string;
++}
++
++function generateLargeDataset(n: number): LargeDatasetSchema[] {
++  const dataset: LargeDatasetSchema[] = [];
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++}
++
++const LargeDatasetTemplate = (args: SelectProps & {numItems: number}) => {
++  const largeDataset = generateLargeDataset(args.numItems);
++
++  return (
++    <div className="flex w-full max-w-full py-20 xl:px-32 lg:px-20 px-20">
++      <Select label={`Select from ${args.numItems} items`} {...args}>
++        {largeDataset.map((item, index) => (
++          <SelectItem key={index} value={item.value}>
++            {item.label}
++          </SelectItem>
++        ))}
++      </Select>
++    </div>
++  );
++};
++
+ export const Default = {
+   render: MirrorTemplate,
+ 
+@@ -1043,3 +1096,46 @@ export const CustomStyles = {
+     },
+   },
+ };
++
++export const OneThousandList = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    placeholder: "Select an item...",
++    numItems: 1000,
++    isVirtualized: true,
++  },
++};
++
++export const TenThousandList = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    placeholder: "Select an item...",
++    numItems: 10000,
++    isVirtualized: true,
++  },
++};
++
++export const CustomMaxListboxHeight = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    placeholder: "Select an item...",
++    numItems: 1000,
++    isVirtualized: true,
++    maxListboxHeight: 400,
++  },
++};
++
++export const CustomItemHeight = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    placeholder: "Select an item...",
++    numItems: 1000,
++    isVirtualized: true,
++    maxListboxHeight: 400,
++    itemHeight: 40,
++  },
++};\n- packages/core/theme/src/components/select.ts (modified, 2 changes)\n  Patch: @@ -26,7 +26,7 @@ const select = tv({
+     selectorIcon: "absolute end-3 w-4 h-4",
+     spinner: "absolute end-3",
+     value: ["text-foreground-500", "font-normal", "w-full", "text-start"],
+-    listboxWrapper: "scroll-py-6 max-h-64 w-full",
++    listboxWrapper: "scroll-py-6 w-full",
+     listbox: "",
+     popoverContent: "w-full p-1 overflow-hidden",
+     helperWrapper: "p-1 flex relative flex-col gap-1.5",\n- pnpm-lock.yaml (modified, 7 changes)\n  Patch: @@ -1910,7 +1910,7 @@ importers:
+         specifier: 3.25.0
+         version: 3.25.0(react@18.3.1)
+       '@tanstack/react-virtual':
+-        specifier: ^3.10.9
++        specifier: 3.10.9
+         version: 3.10.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+     devDependencies:
+       '@nextui-org/avatar':
+@@ -2522,6 +2522,9 @@ importers:
+       '@react-types/shared':
+         specifier: 3.25.0
+         version: 3.25.0(react@18.3.1)
++      '@tanstack/react-virtual':
++        specifier: 3.10.9
++        version: 3.10.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+     devDependencies:
+       '@nextui-org/avatar':
+         specifier: workspace:*
+@@ -22124,7 +22127,7 @@ snapshots:
+       doctrine: 2.1.0
+       eslint: 7.32.0
+       eslint-import-resolver-node: 0.3.9
+-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@7.32.0))(eslint@7.32.0)
++      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0)(eslint@7.32.0))(eslint@7.32.0)
+       hasown: 2.0.2
+       is-core-module: 2.15.1
+       is-glob: 4.0.3\n

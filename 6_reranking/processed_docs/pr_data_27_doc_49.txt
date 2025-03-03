@@ -1,0 +1,47 @@
+Pull Request Number: 510
+Title: fix(react-table): safari row jitters on hover
+Base Branch: next
+Head Branch: fix_509/safari-table-row-jitters
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/510
+State: MERGED
+Created At: 2022-06-06T13:56:55Z
+Merged At: 2022-06-06T14:05:43Z
+Participants: jrgarciadev
+
+Description:
+Closes #509
+📝 Description
+Table row jitters when mouse enters it on Safari
+⛳️ Current behavior (updates)
+Looks like safari has a slight flicker on transforms animations https://stackoverflow.com/questions/3461441/prevent-flicker-on-webkit-transition-of-webkit-transform
+🚀 New behavior
+The issue has been fixed by adding:
+  transform: 'translateZ(0)',
+  backfaceVisibility: 'hidden'
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+https://stackoverflow.com/questions/3461441/prevent-flicker-on-webkit-transition-of-webkit-transform
+
+Commits:
+- fix(react-table): safari row jitters on hover\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/react/src/table/table.styles.ts (modified, 4 changes)\n  Patch: @@ -127,7 +127,9 @@ export const StyledTableCell = styled(
+       size: '100%',
+       top: 0,
+       left: 0,
+-      opacity: 0
++      opacity: 0,
++      transform: 'translateZ(0)',
++      backfaceVisibility: 'hidden'
+     },
+     variants: {
+       align: {\n

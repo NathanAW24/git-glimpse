@@ -1,0 +1,237 @@
+Pull Request Number: 1778
+Title: fix(slider): Place last dragged slider handle over the other handle
+Base Branch: v2.2.0
+Head Branch: patch-1
+Author: mauriciabad
+URL: https://github.com/nextui-org/nextui/pull/1778
+State: MERGED
+Created At: 2023-10-16T21:50:51Z
+Merged At: 2023-10-22T12:40:58Z
+Participants: mauriciabad, jrgarciadev
+
+Description:
+📝 Description
+Fixes #1686 (comment)
+⛳️ Current behavior (updates)
+There is a bug in the slider that if both handles are placed on the right side, then they can't be draged on to another position, leaving the user stuck. There's still a way to move the handles, using the kayboard or clicking on the track, but the user may not know that those inputs work.
+🚀 New behavior
+Now, the last grabbed handle has the data attribute data-focused. Now, the user can't get stuch at an end.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+With this fix, it's still not possible to "swap" the handles by draging one over the other, wich would be a nice feature, but not important.
+
+I came up with the solution looking at the implementation of the react-spectrum's slider, that uses React Aria too.
+
+Commits:
+- Set `data-focused` in handle\n- Style focused handle on top\n- Add tests\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 55ece038d1848d615951aaab974dce3aeadb9678
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/mauriciabad/nextui/new/patch-1?filename=.changeset/hip-planes-float.md&value=---%0A%22%40nextui-org%2Fslider%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(slider)%3A%20Place%20last%20dragged%20slider%20handle%20over%20the%20other%20handle%0A)
+
+\n- vercel: [vc]: #bqSrjSS6NkLJGqHxK3wtrQYPCDNijp97J18kpv4vzqI=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvQmpad2J0UUhEVDRUakVVNG84eVJ2aEtxdUJxRyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1hdXJpY2lhYmFkLXBhdGNoLTEtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstbWF1cmljaWFiYWQtcGF0Y2gtMS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/BjZwbtQHDT4TjEU4o8yRvhKquBqG)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-mauriciabad-patch-1-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-mauriciabad-patch-1-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 16, 2023 10:54pm |
+
+\n- vercel: @mauriciabad is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22cf6ce34b3564a0a81b86168cda1e4d50af5d871c%22%7D%2C%22id%22%3A%22QmdTNdrJBFeopuaZBtoARt3xUZndDtvJocjxg5iVU64pX1%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1778%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/slider/__tests__/drag.ts (added, 109 changes)\n  Patch: @@ -0,0 +1,109 @@
++// ####################################################
++// ##                COPYED FROM HERE                ##
++// ##                WITH TYPES ADDED                ##
++// ## https://testing-library.com/docs/example-drag/ ##
++// ####################################################
++
++import { fireEvent } from '@testing-library/dom'
++
++// https://stackoverflow.com/a/53946549/1179377
++function isElement(
++  obj: HTMLElement | Record<string, unknown>
++): obj is HTMLElement {
++  if (typeof obj !== 'object') {
++    return false
++  }
++  let prototypeStr, prototype
++
++  do {
++    prototype = Object.getPrototypeOf(obj)
++    // to work in iframe
++    prototypeStr = Object.prototype.toString.call(prototype)
++    // '[object Document]' is used to detect document
++    if (
++      prototypeStr === '[object Element]' ||
++      prototypeStr === '[object Document]'
++    ) {
++      return true
++    }
++    obj = prototype
++    // null is the terminal of object
++  } while (prototype !== null)
++
++  return false
++}
++
++function getElementClientCenter(element: HTMLElement) {
++  const { left, top, width, height } = element.getBoundingClientRect()
++
++  return {
++    x: left + width / 2,
++    y: top + height / 2,
++  }
++}
++
++const getCoords = (
++  charlie:
++    | HTMLElement
++    | {
++        x: number
++        y: number
++      }
++) => (isElement(charlie) ? getElementClientCenter(charlie) : charlie)
++
++const sleep = (ms: number) =>
++  new Promise((resolve) => {
++    setTimeout(resolve, ms)
++  })
++
++export default async function drag(
++  element: HTMLElement,
++  {
++    to: inTo,
++    delta,
++    steps = 20,
++    duration = 500,
++  }: {
++    to?: HTMLElement | { x: number; y: number }
++    delta?: {
++      x: number
++      y: number
++    }
++    steps?: number
++    duration?: number
++  }
++) {
++  const from = getElementClientCenter(element)
++  const to = delta
++    ? {
++        x: from.x + delta.x,
++        y: from.y + delta.y,
++      }
++    : inTo
++    ? getCoords(inTo)
++    : null
++
++  if (to === null) throw new Error('You must provide either `delta` or `to`')
++
++  const step = {
++    x: (to.x - from.x) / steps,
++    y: (to.y - from.y) / steps,
++  }
++
++  const current = {
++    clientX: from.x,
++    clientY: from.y,
++  }
++
++  fireEvent.mouseEnter(element, current)
++  fireEvent.mouseOver(element, current)
++  fireEvent.mouseMove(element, current)
++  fireEvent.mouseDown(element, current)
++  for (let i = 0; i < steps; i++) {
++    current.clientX += step.x
++    current.clientY += step.y
++    await sleep(duration / steps)
++    fireEvent.mouseMove(element, current)
++  }
++  fireEvent.mouseUp(element, current)
++}\n- packages/components/slider/__tests__/slider.test.tsx (modified, 31 changes)\n  Patch: @@ -3,6 +3,9 @@ import {render, act} from "@testing-library/react";
+ import userEvent from "@testing-library/user-event";
+ 
+ import {Slider, SliderValue} from "../src";
++
++import drag from "./drag";
++
+ describe("Slider", () => {
+   it("should render correctly", () => {
+     const wrapper = render(<Slider />);
+@@ -137,4 +140,32 @@ describe("Slider", () => {
+ 
+     expect(setValues).toStrictEqual([55]);
+   });
++
++  it("should not get stuck at the end when dragging", async function () {
++    const {getByRole, getAllByRole} = render(<Slider hasSingleThumb={false} />);
++
++    const [leftHandle, rightHandle] = getAllByRole("slider");
++    const output = getByRole("status");
++
++    const MORE_THAN_SLIDER_WIDTH = 600;
++
++    await drag(rightHandle, {
++      delta: {x: MORE_THAN_SLIDER_WIDTH, y: 0},
++    });
++    await drag(leftHandle, {
++      delta: {x: MORE_THAN_SLIDER_WIDTH, y: 0},
++    });
++    // It actually drags the leftHandle, because it's on top
++    await drag(rightHandle, {
++      delta: {x: -1 * MORE_THAN_SLIDER_WIDTH, y: 0},
++    });
++
++    expect(leftHandle).toHaveProperty("value", "0");
++    expect(leftHandle).toHaveAttribute("aria-valuetext", "0");
++    expect(output).toHaveTextContent("0");
++
++    expect(rightHandle).toHaveProperty("value", "100");
++    expect(rightHandle).toHaveAttribute("aria-valuetext", "100");
++    expect(output).toHaveTextContent("100");
++  });
+ });\n- packages/components/slider/src/use-slider-thumb.ts (modified, 3 changes)\n  Patch: @@ -76,7 +76,7 @@ export function useSliderThumb(props: UseSliderThumbProps) {
+ 
+   const numberFormatter = useNumberFormatter(formatOptions);
+ 
+-  const {thumbProps, inputProps, isDragging} = useAriaSliderThumb(
++  const {thumbProps, inputProps, isDragging, isFocused} = useAriaSliderThumb(
+     {
+       index,
+       trackRef,
+@@ -102,6 +102,7 @@ export function useSliderThumb(props: UseSliderThumbProps) {
+       "data-hover": dataAttr(isHovered),
+       "data-pressed": dataAttr(isPressed),
+       "data-dragging": dataAttr(isDragging),
++      "data-focused": dataAttr(isFocused),
+       "data-focus-visible": dataAttr(isFocusVisible),
+       ...mergeProps(thumbProps, pressProps, hoverProps, otherProps),
+       className,\n- packages/core/theme/src/components/slider.ts (modified, 1 changes)\n  Patch: @@ -62,6 +62,7 @@ const slider = tv({
+       "after:shadow-small",
+       "after:shadow-small",
+       "after:bg-background",
++      "data-[focused=true]:z-10",
+       dataFocusVisibleClasses,
+     ],
+     startContent: [],\n

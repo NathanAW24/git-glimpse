@@ -1,0 +1,189 @@
+Pull Request Number: 3978
+Title: fix(tabs): corrected inert value for true condition
+Base Branch: canary
+Head Branch: fix/tabs
+Author: ShrinidhiUpadhyaya
+URL: https://github.com/nextui-org/nextui/pull/3978
+State: MERGED
+Created At: 2024-11-03T10:09:06Z
+Merged At: 2024-11-03T16:22:21Z
+Participants: ShrinidhiUpadhyaya, wingkwong
+
+Description:
+Closes #3972
+📝 Description
+
+The value of inert is set to true when inert="" and to false when inert=undefined. A similar fix was done in Calendar #3054 .
+inert was added to tabs in this pr #2973
+
+⛳️ Current behavior (updates)
+inert={!isSelected ? "true" : undefined}
+🚀 New behavior
+inert={!isSelected ? "" : undefined}
+💣 Is this a breaking change (Yes/No):
+📝 Additional Information
+
+Summary by CodeRabbit
+
+New Features
+
+Improved accessibility of the TabPanel component by modifying the handling of the inert attribute, enhancing user experience during tab navigation.
+
+
+Bug Fixes
+
+Addressed issues related to the visibility and focus management of tab panel content.
+
+Commits:
+- fix(tabs): corrected inert value for true condition #3972\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: d2af1be70158d02965b1280e661a647b9e8b13f0
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/tabs  | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/ShrinidhiUpadhyaya/nextui/new/fix/tabs?filename=.changeset/nasty-cameras-draw.md&value=---%0A%22%40nextui-org%2Ftabs%22%3A%20patch%0A---%0A%0Afix(tabs)%3A%20corrected%20inert%20value%20for%20true%20condition%0A)
+
+\n- vercel: @ShrinidhiUpadhyaya is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22d2af1be70158d02965b1280e661a647b9e8b13f0%22%7D%2C%22id%22%3A%22QmTtZjTejPk9MrMpHWkfJYoMBBZ9mGphghSAj8q5cTCsad%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3978%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This pull request introduces changes to the `TabPanel` component within the `@nextui-org/tabs` package, specifically modifying the handling of the `inert` attribute. The update changes the value assigned to `inert` from a string representation of `"true"` to an empty string when the tab is not selected. This adjustment aims to enhance accessibility by ensuring that the tab panel and its children are ignored during navigation. A TypeScript ignore directive has also been added to suppress potential type errors.
+
+## Changes
+
+| File Path                                   | Change Summary                                                                                   |
+|---------------------------------------------|-------------------------------------------------------------------------------------------------|
+| packages/components/tabs/src/tab-panel.tsx | Modified the handling of the `inert` attribute in the `TabPanel` component; added a TypeScript ignore directive. |
+
+## Assessment against linked issues
+
+| Objective                                             | Addressed | Explanation                               |
+|------------------------------------------------------|-----------|-------------------------------------------|
+| Fix the error related to the `inert` attribute (3972) | ✅         |                                           |
+
+## Possibly related PRs
+- **#2973**: Introduces the `destroyInactiveTabPanel` prop for the Tabs component, affecting the `TabPanel` behavior.
+- **#3164**: Addresses issues with the `destroyInactiveTabPanel` property causing inactive tabs' content to unmount, related to the `inert` attribute changes.
+- **#3130**: Documents the `destroyInactiveTabPanel` prop, clarifying its role in the Tabs component, relevant to the `TabPanel` functionality.
+- **#3054**: Modifies the `inert` attribute in `CalendarMonth` and `CalendarPicker`, similar to the changes in the `TabPanel`.
+
+## Suggested labels
+`👀 Status: In Review`, `📋 Scope : Docs`
+
+## Suggested reviewers
+- wingkwong
+- jrgarciadev
+
+<!-- walkthrough_end -->
+
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/twelve-papayas-clean.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/tabs": patch
++---
++
++revise the inert attribute in `TabPanel` (#3972)\n- packages/components/tabs/src/tab-panel.tsx (modified, 5 changes)\n  Patch: @@ -69,7 +69,10 @@ const TabPanel = forwardRef<"div", TabPanelProps>((props, ref) => {
+       data-focus={isFocused}
+       data-focus-visible={isFocusVisible}
+       data-inert={!isSelected ? "true" : undefined}
+-      inert={!isSelected ? "true" : undefined}
++      // makes the browser ignore the element and its children when tabbing
++      // TODO: invert inert when switching to React 19 (ref: https://github.com/facebook/react/issues/17157)
++      // @ts-ignore
++      inert={!isSelected ? "" : undefined}
+       {...(isSelected && mergeProps(tabPanelProps, focusProps, otherProps))}
+       className={slots.panel?.({class: tabPanelStyles})}
+       data-slot="panel"\n

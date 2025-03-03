@@ -1,0 +1,89 @@
+Pull Request Number: 965
+Title: fix(react-popover): popover trigger on mobile device
+Base Branch: next
+Head Branch: fix/popover-trigger-mobile-device
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/965
+State: MERGED
+Created At: 2022-12-23T11:54:09Z
+Merged At: 2023-01-02T02:04:33Z
+Participants: tianenpang, jrgarciadev
+
+Description:
+Closes #649
+Closes #969
+📝 Description
+Popover triggers are not triggered on mobile devices, also affected by this issue is Dropdown.
+⛳️ Current behavior (updates)
+The issue is the wrong behavior of onPress in nextUIButtonProps 🤔 solved by passing onPress directly instead of handling OverlayTriggerState in onPress.
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+Related to #953.
+
+Note Based on next branch.
+
+Commits:
+- fix(react-popover): popover trigger on mobile device\n
+
+Labels:
+
+
+Comments:
+- vercel: @tianenpang is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%229df839c4a22de774b4ec6348e822ea8d23870dbc%22%7D%2C%22id%22%3A%22QmVxnJs2mwhfm9E8kpYdJfLWLCMksSXtUbkErHN9PKZJJB%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A965%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/GATGfqzxbGCJNaQReBDDLSzyjYL2)) | [Visit Preview](https://nextui-docs-git-fork-tianenpang-fix-popover-t-303534-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-docs-git-fork-tianenpang-fix-popover-t-303534-nextui-org.vercel.app) | Jan 2, 2023 at 2:01AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/3kgvdsV6NhqQAyiA89yTLfeSDasW)) | [Visit Preview](https://nextui-storybook-git-fork-tianenpang-fix-popo-e2b4be-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-tianenpang-fix-popo-e2b4be-nextui-org.vercel.app) | Jan 2, 2023 at 2:01AM (UTC) |
+
+
+\n
+
+Files Changed:
+- packages/react/src/popover/popover-trigger.tsx (modified, 12 changes)\n  Patch: @@ -19,7 +19,7 @@ interface Props {
+  * such as `button` or `a`.
+  */
+ const PopoverTrigger = React.forwardRef((props: Props, _: ReactRef<HTMLElement>) => {
+-  const {state, triggerRef, getTriggerProps} = usePopoverContext();
++  const {triggerRef, getTriggerProps} = usePopoverContext();
+ 
+   const {children, ...otherProps} = props;
+ 
+@@ -30,11 +30,11 @@ const PopoverTrigger = React.forwardRef((props: Props, _: ReactRef<HTMLElement>)
+     return Children.only(children);
+   }, [children]);
+ 
+-  const {onPress, onPressStart, ...rest} = useMemo(() => {
++  const {onPress, onKeyDown, onPressStart, ...rest} = useMemo(() => {
+     return getTriggerProps(mergeProps(child.props, otherProps), child.ref);
+   }, [getTriggerProps, child.props, otherProps, child.ref]);
+ 
+-  const {buttonProps} = useButton({onPress, onPressStart, ...rest}, triggerRef);
++  const {buttonProps} = useButton({onPress, onKeyDown, onPressStart, ...rest}, triggerRef);
+ 
+   // validates if contains a NextUI Button as a child
+   const [, triggerChildren] = pickChild(props.children, Button);
+@@ -43,13 +43,15 @@ const PopoverTrigger = React.forwardRef((props: Props, _: ReactRef<HTMLElement>)
+     return triggerChildren?.[0] !== undefined;
+   }, [triggerChildren]);
+ 
++  // avoid the error that cannot read properties of undefined (reading 'contains')
+   const nextUIButtonProps = useMemo(() => {
+     return {
+       ...rest,
++      onPress,
++      onKeyDown,
+       onPressStart,
+-      onPress: () => state.open(),
+     };
+-  }, [rest, onPressStart, state.open]);
++  }, [rest, onPress, onKeyDown, onPressStart]);
+ 
+   return cloneElement(child, mergeProps(rest, hasNextUIButton ? nextUIButtonProps : buttonProps));
+ });\n

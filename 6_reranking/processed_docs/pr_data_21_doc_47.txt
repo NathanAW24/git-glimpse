@@ -1,0 +1,138 @@
+Pull Request Number: 1418
+Title: fix(navbar): fixed menu open when passing disabledAnimation
+Base Branch: main
+Head Branch: main-1
+Author: camcam2605
+URL: https://github.com/nextui-org/nextui/pull/1418
+State: CLOSED
+Created At: 2023-08-17T01:21:19Z
+Merged At: None
+Participants: camcam2605, jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- fix(navbar): fixed menu open when passing disabledAnimation\n- Update navbar-menu.tsx\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #YMxS3aUVJ7v73odtmIFPzozbwwe1TsIEAq7rE/7mUDE=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNllFRUhvWVlyQVhBS1B6YTJiNk03MnljSjczQiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWNhbWNhbTI2MDUtbWFpbi0xLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWNhbWNhbTI2MDUtbWFpbi0xLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/6YEEHoYYrAXAKPza2b6M72ycJ73B)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-camcam2605-main-1-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-camcam2605-main-1-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 17, 2023 3:29am |
+
+\n- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: b3ebb232f5371e4e469a10041ac107af29fceaa5
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/camcam2605/nextui/new/main-1?filename=.changeset/wicked-bugs-applaud.md&value=---%0A%22%40nextui-org%2Fnavbar%22%3A%20patch%0A---%0A%0Afix(navbar)%3A%20fixed%20menu%20open%20when%20passing%20disabledAnimation%0A)
+
+\n- vercel: @camcam2605 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%225c36ab002ac42283e36ebfb580563d28361021f1%22%7D%2C%22id%22%3A%22QmbaETcL1tXRen3MH1msR2RmQV8mF2TyP6gYQTveGpiqYV%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1418%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Hey @camcam2605 could you describe the issue? when the animation is disabled the open/close styles are handled by tailwind classes, so this logic is not needed (unless I'm missing something):
+```ts
+disableAnimation ? (
+  isMenuOpen && (
+      <MenuWrapper>
+      ...
+ ```     
+
+
+TailwindCSS Styles:
+
+![CleanShot 2023-08-16 at 22 27 13@2x](https://github.com/nextui-org/nextui/assets/30373425/a0d6da92-e5ae-4443-9742-f19309d92c63)
+\n- camcam2605: @jrgarciadev  because the navbar menu using `RemoveScroll` package to disable scrolling. so even if styles are handled by tailwind, we still can't scroll the page. There are 3 ways to solve this bug: 
+
+1. convert `isMenuOpen` to an boolean:
+
+```
+                <RemoveScroll forwardProps enabled={!!isMenuOpen} removeScrollBar={false}>
+                    {children}
+                </RemoveScroll>
+```
+
+2. set default value of `isMenuOpen` to `false` in `use-navbar` hook.
+3. the way I am applying in the PR, I think it would be better to remove the navbar menu from the dom if it not visible.
+
+\n- jrgarciadev: Could you upload a reproduction video, please?
+
+The `isMenuOpen` is already a `boolean` value, in case is it undefined the `RemoveScroll` library handles it 🤔 \n- camcam2605: @jrgarciadev  yes.
+
+this issue won't happen if I passing `isMenuOpen` as boolean value instead of undefined.
+
+Example:
+ ```
+               <RemoveScroll forwardProps enabled={!!isMenuOpen} removeScrollBar={false}>
+                    {children}
+                </RemoveScroll>
+```
+
+https://github.com/nextui-org/nextui/assets/67684008/bd5743eb-c0ad-4afa-b9aa-e38703a2ee47
+
+
+\n- camcam2605: @jrgarciadev This PR can fix issue https://github.com/nextui-org/nextui/issues/1506 ?\n
+
+Files Changed:
+- packages/components/navbar/src/navbar-menu.tsx (modified, 8 changes)\n  Patch: @@ -34,7 +34,7 @@ const NavbarMenu = forwardRef<"ul", NavbarMenuProps>((props, ref) => {
+   const MenuWrapper = useCallback(
+     ({children}: {children: ReactElement}) => {
+       return (
+-        <RemoveScroll forwardProps enabled={isMenuOpen} removeScrollBar={false}>
++        <RemoveScroll forwardProps enabled={!!isMenuOpen} removeScrollBar={false}>
+           {children}
+         </RemoveScroll>
+       );
+@@ -56,10 +56,10 @@ const NavbarMenu = forwardRef<"ul", NavbarMenuProps>((props, ref) => {
+       >
+         {children}
+       </ul>
+-    </MenuWrapper>
++    </MenuWrapper>    
+   ) : (
+     <AnimatePresence>
+-      {isMenuOpen ? (
++      {isMenuOpen && (
+         <MenuWrapper>
+           <motion.ul
+             ref={domRef}
+@@ -80,7 +80,7 @@ const NavbarMenu = forwardRef<"ul", NavbarMenuProps>((props, ref) => {
+             {children}
+           </motion.ul>
+         </MenuWrapper>
+-      ) : null}
++      )}
+     </AnimatePresence>
+   );
+ \n

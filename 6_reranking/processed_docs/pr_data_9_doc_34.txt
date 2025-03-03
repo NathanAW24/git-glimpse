@@ -1,0 +1,302 @@
+Pull Request Number: 3220
+Title: fix: use StringMap type for better type safety in utility functions
+Base Branch: canary
+Head Branch: themeObject1
+Author: Gaic4o
+URL: https://github.com/nextui-org/nextui/pull/3220
+State: CLOSED
+Created At: 2024-06-09T04:11:51Z
+Merged At: None
+Participants: Gaic4o, wingkwong
+
+Description:
+📝 Description
+Refactored utility functions to use UnknownMap type (Record<string, unknown>) for better type safety and flexibility.
+⛳️ Current behavior (updates)
+
+Functions used Record<string, string> or Object, causing potential type issues and limited flexibility.
+Used @ts-ignore to bypass type checking.
+
+🚀 New behavior
+
+Functions now use UnknownMap type for better type safety and flexibility.
+Removed @ts-ignore comments by addressing type issues directly.
+Updated function signatures to handle unknown values more robustly.
+
+💣 Is this a breaking change (Yes/No):
+No
+
+Summary by CodeRabbit
+
+Refactor
+
+Enhanced type safety and clarity by updating internal functions to utilize more specific type definitions.
+
+Commits:
+- fix: use UnknownMap type for better type safety in utility functions\n- fix(theme): updates the existing string to ColorMap type including boolean value\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: af990aef0d7df1a5b2cbb68ec0a9edaad0eced9a
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/theme | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/Gaic4o/nextui/new/themeObject1?filename=.changeset/warm-melons-punch.md&value=---%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix%3A%20use%20StringMap%20type%20for%20better%20type%20safety%20in%20utility%20functions%0A)
+
+\n- vercel: [vc]: #AwJnR0wIQskicw/hXsfOvSp9MGRR0WTFXcb/kySnoPg=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNE5qUW9BTUhjRmVpb1doQlJnZGQ5VmF5a005NyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWdhaWM0by10aGVtZW9iamVjdDEtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstZ2FpYzRvLXRoZW1lb2JqZWN0MS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/4NjQoAMHcFeioWhBRgdd9VaykM97)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-gaic4o-themeobject1-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-gaic4o-themeobject1-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jun 9, 2024 1:03pm |
+
+\n- vercel: @Gaic4o is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%227ce3a5b7c166c5309bb98ceb7e389fbc0d0ec0ad%22%7D%2C%22id%22%3A%22QmeVhYGSRxLtNbTKe9FSMKdxTn6NoaFM22H5o5je1qiWTD%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3220%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The update focuses on enhancing type safety and flexibility within the codebase by replacing the usage of `Object` with the `ColorMap` type in functions such as `swapColorValues` and `removeDefaultKeys`. This change applies to the `packages/core/theme/src/utils/object.ts` file, ensuring more robust type checking and reducing potential runtime errors while maintaining the existing logic.
+
+## Changes
+
+| Files                               | Change Summary                                                                                   |
+|-------------------------------------|--------------------------------------------------------------------------------------------------|
+| `.../theme/src/utils/object.ts`     | Updated `swapColorValues` and `removeDefaultKeys` to use `ColorMap` type for parameters and return values. |  
+
+## Possibly related PRs
+
+- **#2041**: Focuses on improving RTL support for the select component.
+- **#2990**: Addresses a specific styling issue with buttons.
+- **#3000**: Enhances the autocomplete component's interaction logic.
+- **#3174**: Addresses the display behavior of input components.
+- **#3175**: Fixes an issue with the autocomplete component.
+- **#3336**: Addresses type issues in the dropdown component, aligning with type safety improvements.
+- **#3362**: Aims to fix TypeScript errors across the project, aligning with type safety improvements.
+- **#3643**: Addresses the functionality of the clear button in input components.
+- **#3663**: Focuses on color discrepancies in the select component.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+.changeset/late-buttons-fail.md: ## Short summary
+
+The file `late-buttons-fail.md` introduces changes to improve type safety and flexibility by updating functions to use the `StringMap` type for better type safety and flexibility, replacing the previous usage of `Object` and `@ts-ignore` to bypass type checking.
+
+## Alterations to the declarations of exported or public entities
+
+No alterations to the declarations of exported or public entities.
+
+---
+
+packages/core/theme/src/utils/object.ts: ### Summary
+
+In `packages/core/theme/src/utils/object.ts`:
+- Changed the type constraint for `colors` parameter in `swapColorValues` and `removeDefaultKeys` functions to `StringMap`.
+- Updated the return type and variable types accordingly in `swapColorValues` and `removeDefaultKeys`.
+- Updated the return type in `flattenThemeObject` function to `StringMap`.
+
+
+# New changesets
+
+packages/core/theme/src/utils/object.ts: ## AI-generated summary of changes
+
+The diff introduces significant modifications to the `swapColorValues` and `removeDefaultKeys` functions in the `object.ts` file. Both functions now utilize a more specific type definition for their input parameters, transitioning from a generic `Object` type to a constrained `ColorMap` type, which is defined as a record mapping strings to either strings or booleans. This change enhances type safety and clarity regarding the expected structure of the input objects.
+
+In the `swapColorValues` function, the declaration of `swappedColors` has been updated to explicitly use the `ColorMap` type, ensuring that the object adheres to the defined structure. The logic within the function remains unchanged, but the type annotations improve the understanding of the data being manipulated.
+
+Similarly, the `removeDefaultKeys` function's return type has been specified as `ColorMap`, and the internal declaration of `newObj` has been updated to match this type. This reinforces the function's purpose of returning a filtered object that conforms to the `ColorMap` structure.
+
+Overall, these changes enhance the type definitions and improve the clarity of the code without altering the underlying logic or control flow of the functions.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- Modified: `export function swapColorValues<T extends Object>(colors: T)` in `packages/core/theme/src/utils/object.ts` → `export function swapColorValues<T extends ColorMap>(colors: T)` in `packages/core/theme/src/utils/object.ts`
+- Modified: `const swappedColors = {}` in `packages/core/theme/src/utils/object.ts` → `const swappedColors: ColorMap = {}` in `packages/core/theme/src/utils/object.ts`
+- Modified: `export function removeDefaultKeys<T extends Object>(obj: T)` in `packages/core/theme/src/utils/object.ts` → `export function removeDefaultKeys<T extends ColorMap>(obj: T): ColorMap` in `packages/core/theme/src/utils/object.ts`
+- Modified: `const newObj = {}` in `packages/core/theme/src/utils/object.ts` → `const newObj: ColorMap = {}` in `packages/core/theme/src/utils/object.ts`
+- Modified: `}) as Object` in `packages/core/theme/src/utils/object.ts` → `}) as ColorMap` in `packages/core/theme/src/utils/object.ts`
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+### PR Summary
+
+**Title:** fix: use UnknownMap type for better type safety in utility functions  
+**User:** Gaic4o  
+**Number:** 3220  
+
+**Description:**
+
+- Refactored utility functions to use `UnknownMap` type (`Record<string, unknown>`) for better type safety and flexibility.
+- Current behavior:
+  - Functions used `Record<string, string>` or `Object`, causing potential type issues and limited flexibility.
+  - Used `@ts-ignore` to bypass type checking.
+- New behavior:
+  - Functions now use `UnknownMap` type for better type safety and flexibility.
+  - Removed `@ts-ignore` comments by addressing type issues directly.
+  - Updated function signatures to handle unknown values more robustly.
+- Breaking change: No
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 7ce3a5b7c166c5309bb98ceb7e389fbc0d0ec0ad -->
+<!-- 83ae7f32a2a34d40706200fe36915a79db265252 -->
+<!-- af990aef0d7df1a5b2cbb68ec0a9edaad0eced9a -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+
+
+<!-- tips_end -->\n- Gaic4o: @wingkwong Hello, I've modified the types based on the feedback you provided earlier. The pull request is still open, so please review it when you have a chance. If further changes aren't needed, I'll plan to close it. thank you\n- wingkwong: Closing - let's keep it as it is first.\n
+
+Files Changed:
+- .changeset/late-buttons-fail.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/theme": patch
++---
++
++Used `@ts-ignore` to bypass type checking, and used `Object`, leading to potential type problems and limited flexibility. The function now uses the `StringMap` type for better type safety and flexibility.\n- packages/core/theme/src/utils/object.ts (modified, 18 changes)\n  Patch: @@ -1,39 +1,37 @@
+ import flatten from "flat";
+ 
+-export function swapColorValues<T extends Object>(colors: T) {
+-  const swappedColors = {};
++type ColorValue = string | boolean;
++type ColorMap = Record<string, ColorValue>;
++
++export function swapColorValues<T extends ColorMap>(colors: T) {
++  const swappedColors: ColorMap = {};
+   const keys = Object.keys(colors);
+   const length = keys.length;
+ 
+   for (let i = 0; i < length / 2; i++) {
+     const key1 = keys[i];
+     const key2 = keys[length - 1 - i];
+ 
+-    // @ts-ignore
+     swappedColors[key1] = colors[key2];
+-    // @ts-ignore
+     swappedColors[key2] = colors[key1];
+   }
+   if (length % 2 !== 0) {
+     const middleKey = keys[Math.floor(length / 2)];
+ 
+-    // @ts-ignore
+     swappedColors[middleKey] = colors[middleKey];
+   }
+ 
+   return swappedColors;
+ }
+ 
+-export function removeDefaultKeys<T extends Object>(obj: T) {
+-  const newObj = {};
++export function removeDefaultKeys<T extends ColorMap>(obj: T): ColorMap {
++  const newObj: ColorMap = {};
+ 
+   for (const key in obj) {
+     if (key.endsWith("-DEFAULT")) {
+-      // @ts-ignore
+       newObj[key.replace("-DEFAULT", "")] = obj[key];
+       continue;
+     }
+-    // @ts-ignore
+     newObj[key] = obj[key];
+   }
+ 
+@@ -52,5 +50,5 @@ export const flattenThemeObject = <TTarget>(obj: TTarget) =>
+     flatten(obj, {
+       safe: true,
+       delimiter: "-",
+-    }) as Object,
++    }) as ColorMap,
+   );\n

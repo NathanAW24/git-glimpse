@@ -1,0 +1,103 @@
+Pull Request Number: 901
+Title: fix: resolve circle depents in docs
+Base Branch: next
+Head Branch: fix/docsCicularDepents
+Author: sun0day
+URL: https://github.com/nextui-org/nextui/pull/901
+State: CLOSED
+Created At: 2022-11-21T06:36:21Z
+Merged At: None
+Participants: sun0day, jrgarciadev, tianenpang
+
+Description:
+📝 Description
+
+Add a brief description
+
+yarn dev:docs failed due to circle depents.
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+error above disappeared.
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- fix: resolve circle depents in docs\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/FwCaJuqLt49L7TzEATUesr2j4T8V)) | [Visit Preview](https://nextui-storybook-git-fork-sun0day-fix-docscic-962346-nextui-org.vercel.app) | Nov 21, 2022 at 6:36AM (UTC) |
+
+\n- vercel: @sun0day is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%222730e453a052428625da5f67a2e2de8aff74feed%22%7D%2C%22id%22%3A%22QmVsePiqCoxkXi9zRDPehUNgYL6oxvc6VoHdfEsARasT6D%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A901%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: @tianenpang this issue happen to you? I couldn't replicate it 🤔 \n- sun0day: > I can't reproduce it either 🤔 hey @sun0day please remove `node_modules` and cache then try again.
+> 
+> ```shell
+> # Remove all node_modules and cache include sub-dirs
+> find . '(' -name "node_modules" -o -name ".next" -o -name ".turbo" ')' -type d -prune -exec rm -rf '{}' +
+> 
+> # Install deps and build nextui
+> yarn && yarn build:nextui
+> 
+> # Restart docs dev server
+> yarn dev:docs
+> ```
+
+This error disappeared after cleaning cache and reinstalling dependencies.  But still, I think using circle depents is bad practice. We should avoid circle depents in case of some weird exceptions.
+
+
+
+\n- tianenpang: I agree with you, but I think this error may be caused by other issues 🤔 and for the circular dependency, it's possible to use the webpack plugin to detect it automatically.\n- sun0day: I am pretty sure this origin reason is circular depents due to the exception description and my debug process. But the circular depents exception not always occurs, it depends the node_modules' physical topology,  `yarn` can't guarantee node_modules' topology always be the same every time you install or add new dependencies, especially when you host has node_modules cache.
+
+And maybe we can  use eslint rule [import/no-cycle](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-cycle.md) to discover the circular depends problems in dev stage.\n- jrgarciadev: Hey @sun0day I'll close this PR until we can reproduce it in a better way \n
+
+Files Changed:
+- apps/docs/content/landing/index.tsx (modified, 2 changes)\n  Patch: @@ -10,7 +10,7 @@ import {
+   Maximize,
+   CodeDocument,
+   HtmlLogo,
+-} from "@components";
++} from "@icons";
+ 
+ export default {
+   topFeatures: [\n- apps/docs/src/components/install-banner/install-banner.tsx (modified, 3 changes)\n  Patch: @@ -1,6 +1,7 @@
+ import React from "react";
+ import {useRouter} from "next/router";
+-import {FeaturesGrid, Note, NextJsLogo} from "@components";
++import {Note, NextJsLogo} from "@icons";
++import FeaturesGrid from '@components/features-grid'
+ import {Button, Container, Grid, Snippet} from "@nextui-org/react";
+ import {StyledCardBlur, Title, Subtitle} from "@primitives";
+ \n- apps/docs/tsconfig.json (modified, 8 changes)\n  Patch: @@ -8,9 +8,15 @@
+       "@primitives": [
+         "./src/components/primitives/index.ts"
+       ],
+-      "@components/": [
++      "@components/*": [
+         "./src/components/*"
+       ],
++      "@icons": [
++        "./src/components/icons/index.ts"
++      ],
++      "@templates": [
++        "./src/components/templates/index.ts"
++      ],
+       "@content/*": [
+         "./content/*"
+       ],\n

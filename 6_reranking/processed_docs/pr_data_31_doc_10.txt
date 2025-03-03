@@ -1,0 +1,67 @@
+Pull Request Number: 146
+Title: refactor(checkbox): remove default space
+Base Branch: main
+Head Branch: refactor/checkbox-not-display-default-label
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/146
+State: MERGED
+Created At: 2022-01-22T03:37:33Z
+Merged At: 2022-01-22T03:37:43Z
+Participants: jrgarciadev
+
+Description:
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Default space removed from checkbox
+
+
+
+Screenshots - Animations
+
+Commits:
+- refactor(checkbox): remove default space\n
+
+Labels:
+🧱 Type: Refactoring
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/react/src/checkbox/checkbox.tsx (modified, 22 changes)\n  Patch: @@ -224,16 +224,18 @@ const Checkbox: React.FC<CheckboxProps> = ({
+           </StyledIconCheck>
+         </StyledCheckboxMask>
+       </StyledCheckboxContainer>
+-      <StyledCheckboxText
+-        className="nextui-checkbox-text"
+-        color={textColor}
+-        line={line}
+-        checked={selfChecked}
+-        disabled={isDisabled}
+-        animated={animated}
+-      >
+-        {children || label}
+-      </StyledCheckboxText>
++      {(children || label) && (
++          <StyledCheckboxText
++            className="nextui-checkbox-text"
++            color={textColor}
++            line={line}
++            checked={selfChecked}
++            disabled={isDisabled}
++            animated={animated}
++          >
++            {children || label}
++          </StyledCheckboxText>
++        )}
+     </StyledCheckboxLabel>
+   );
+ };\n

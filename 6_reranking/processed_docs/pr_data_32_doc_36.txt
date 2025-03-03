@@ -1,0 +1,104 @@
+Pull Request Number: 15
+Title: feat: spacer story
+Base Branch: main
+Head Branch: feat/spacer
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/15
+State: MERGED
+Created At: 2021-05-08T15:02:43Z
+Merged At: 2021-05-08T15:02:51Z
+Participants: jrgarciadev
+
+Description:
+
+
+Commits:
+- feat: spacer story\n
+
+Labels:
+
+
+Comments:
+- vercel: This pull request is being automatically deployed with Vercel ([learn more](https://vercel.link/github-learn-more)).  
+To see the status of your deployment, click below or on the icon next to each commit.
+
+🔍 Inspect: [https://vercel.com/jrgarciadev/nextui-storybook/ABDbGcno5CMif7HmnFYUfPuE3JEE](https://vercel.com/jrgarciadev/nextui-storybook/ABDbGcno5CMif7HmnFYUfPuE3JEE)  
+✅ Preview: [https://nextui-storybook-git-feat-spacer-jrgarciadev.vercel.app](https://nextui-storybook-git-feat-spacer-jrgarciadev.vercel.app)
+
+\n
+
+Files Changed:
+- packages/nextui/src/components/spacer/spacer.stories.tsx (added, 73 changes)\n  Patch: @@ -0,0 +1,73 @@
++import React from 'react';
++import { Meta } from '@storybook/react';
++import Spacer from './index';
++import useTheme from '@hooks/use-theme';
++
++export default {
++  title: 'Layout/Spacer',
++  component: Spacer,
++} as Meta;
++
++// eslint-disable-next-line @typescript-eslint/no-explicit-any
++const Container = ({ children, vertical }: any) => (
++  <div
++    style={{
++      display: 'flex',
++      flexDirection: vertical ? 'column' : 'row',
++      justifyContent: 'space-between',
++      width: '100%',
++      maxWidth: '50%',
++      minWidth: '50%',
++    }}
++  >
++    {children}
++  </div>
++);
++
++// eslint-disable-next-line @typescript-eslint/no-explicit-any
++const SpacerContainer = ({ children }: any) => {
++  const theme = useTheme();
++  return (
++    <div
++      style={{
++        width: '100%',
++        background: theme.palette.primary,
++        borderRadius: '8px',
++      }}
++    >
++      {children}
++    </div>
++  );
++};
++
++export const Vertical = () => (
++  <Container vertical>
++    <SpacerContainer>
++      <Spacer y={1} />
++    </SpacerContainer>
++    <Spacer y={1} />
++    <SpacerContainer>
++      <Spacer y={2} />
++    </SpacerContainer>
++    <Spacer y={1} />
++    <SpacerContainer>
++      <Spacer y={3} />
++    </SpacerContainer>
++  </Container>
++);
++
++export const Horizontal = () => (
++  <Container>
++    <SpacerContainer>
++      <Spacer x={5} />
++    </SpacerContainer>
++    <Spacer x={2} />
++    <SpacerContainer>
++      <Spacer x={5} />
++    </SpacerContainer>
++    <Spacer x={2} />
++    <SpacerContainer>
++      <Spacer x={5} />
++    </SpacerContainer>
++  </Container>
++);\n

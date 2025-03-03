@@ -1,0 +1,179 @@
+Pull Request Number: 2253
+Title: docs: improve router docs to have Tanstack Router instructions
+Base Branch: canary
+Head Branch: docs/add-tanstack-router-instructions
+Author: FelipeEmos
+URL: https://github.com/nextui-org/nextui/pull/2253
+State: CLOSED
+Created At: 2024-01-16T00:55:49Z
+Merged At: None
+Participants: FelipeEmos, KoJem9Ka, wingkwong, jrgarciadev
+
+Description:
+📝 Description
+Adds documentation on how to setup NextUI with Tanstack Router, the awesome router lib that got stable recently.
+It's from Tanstack ( same creators of React Query ) and it has typesafety, good serialization, good integration with React Query and other cool stuff, so a lot of people are wanting to make the switch and it would be great to have a section for it in the NextUI lib 🚀
+I have created a repo to test the setup myself in case anyone wants to check it out
+https://github.com/FelipeEmos/nextui-tanstack-router
+⛳️ Current behavior (updates)
+No docs for setting up Tanstack Router
+🚀 New behavior
+Add documentation instructions to setup Tanstack Router
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- docs: improve router docs to have Tanstack Router instructions\n
+
+Labels:
+👀 Status: In Review
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: ba5ca6445a182513fe6a4047b0b47e9399ae41a2
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/FelipeEmos/nextui/new/docs/add-tanstack-router-instructions?filename=.changeset/purple-olives-burn.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Adocs%3A%20improve%20router%20docs%20to%20have%20Tanstack%20Router%20instructions%0A)
+
+\n- vercel: [vc]: #ANQEW23suep+dNXVuHtg3tT6CB/rIzS3Lw8wc3DvH18=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNTFBNmRxOXRIaG5kOGFaWE1RUGJGQ1I5bmc4RSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWZlbGlwZWVtb3MtZG9jcy05OGIzNzQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstZmVsaXBlZW1vcy1kb2NzLTk4YjM3NC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/51A6dq9tHhnd8aZXMQPbFCR9ng8E)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-felipeemos-docs-98b374-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-felipeemos-docs-98b374-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jan 16, 2024 0:58am |
+
+\n- vercel: @FelipeEmos is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22ba5ca6445a182513fe6a4047b0b47e9399ae41a2%22%7D%2C%22id%22%3A%22QmV8AckHmBA4nvQ6vK8NgLGUCVaDUTh4HWpxiosQwT3wks%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2253%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- KoJem9Ka: The unsolved part of the puzzle remains [preloading](https://tanstack.com/router/latest/docs/framework/react/guide/navigation#link-preloading). I couldn't find a better solution and tried to achieve it by creating an original link via closure:
+```typescript
+import { type AnyRoute, Link, type LinkProps, type RegisteredRouter, type RoutePaths } from '@tanstack/react-router';
+import { forwardRef } from 'react';
+
+/**
+ * A function for passing TanstackRouter Link together with type-safe props to the "as" prop of another component.
+ * @example Problem:
+ * <Button as={Link} to="/123">Home</Button>
+ *                       ^ type is "any" and without checking
+ * @example Solution:
+ * <Button as={link({ to: '/home' })}>Home</Button>
+ *                         ^ strict type for TanstackRouter path and other params
+ */
+export const link = <
+  TRouteTree extends AnyRoute = RegisteredRouter['routeTree'],
+  TFrom extends RoutePaths<TRouteTree> | string = string,
+  TTo extends string = string,
+  TMaskFrom extends RoutePaths<TRouteTree> | string = TFrom,
+  TMaskTo extends string = '',
+>(props0: LinkProps<TRouteTree, TFrom, TTo, TMaskFrom, TMaskTo>) => {
+  return forwardRef<typeof Link, typeof props0>((props1, ref) => {
+    return <Link ref={ref} {...props1} {...props0 as any} />;
+  });
+};
+```
+This worked at some point, but after updates to NextUI and Tanstack Router versions, problems appeared when using this trick, for example inside Dropdown, i.e. in DropdownItem.
+```tsx
+<DropdownItem as={link({ to: '/page' })}>Page</DropdownItem>
+```
+Although preload is triggered, clicking on such link completely reloads the page to navigate to the next route as if it were a regular "a" with "href". Also there are strange visual troubles if you move the mouse on such DropdownItem.
+
+Initially the problem was that outputting the component's prop type in the "as" was not enough, due to the complex generics of the Link component, so I tried to solve this by creating a wrapper-closure by piping the original generic.
+
+Now, in latest versions: NextUI 2.3.6 & Tanstack Router 1.29.2, I can't even see the Link props hints after specifying it in the "as" prop of NextUI components.
+
+It looks like the only solution is [Preloading Manually](https://tanstack.com/router/latest/docs/framework/react/guide/preloading#preloading-manually), although that's not exactly fun because of the duplicate route link.\n- wingkwong: Closing - no longer applicable since it has been added (in canary branch). You may supplement the content in a new PR if necessary.\n
+
+Files Changed:
+- apps/docs/content/docs/guide/routing.mdx (modified, 75 changes)\n  Patch: @@ -164,6 +164,81 @@ component (e.g. `BrowserRouter`) so that it has access to React Router's interna
+ element should also be defined inside `NextUIProvider` so that links inside the rendered routes have access
+ to the router.
+ 
++### Tanstack Router
++
++First setup your `router` using one of the many possible configurations described in the [Tanstack Router docs](https://tanstack.com/router/v1/docs/overview).
++
++
++Now let's use the router you've created to setup the NextUIProvider
++
++```jsx {14}
++// main.tsx or main.jsx
++import {NextUIProvider} from '@nextui-org/react';
++import { RouterProvider } from '@tanstack/react-router'
++
++// Import the router you've already configured
++import { router } from "./{your router path}"
++
++function navigate(path: string) {
++  void router.navigate({ to: path });
++}
++
++ReactDOM.createRoot(document.getElementById('root')).render(
++  <React.StrictMode>
++    <NextUIProvider navigate={navigate}>
++      <RouterProvider router={router}>
++    </NextUIProvider>
++  </React.StrictMode>,
++)
++```
++
++There are many good reasons for using Tanstack Router, and one of them is the `typesafety` it provides at the `route tree` level of your application.
++
++> Trying to `navigate` to a route that *doesn't exist* will result in a type error. Even route `params` have typesafety guarantees!
++
++Unfortunatelly, it's not possible to get such typesafety directly in NextUI components because the `href` prop
++is just a `string` and it doesn't know about the context of your specific navigation configuration.
++
++To circumvent that, there's a simple work around. Whenever you'd like to pass an `href` to a NextUI component,
++first call the `useHrefBuilder` hook (described bellow) and it will generate a *Typesafe* valid `href` for you.
++
++This hook properly serializes the combination of `paths` and `params` you pass to it into a valid and typesafe href!
++
++```tsx
++export function useHrefBuilder() {
++  const { buildLocation } = useRouter();
++
++  return useCallback(
++    (...args: Parameters<(typeof router)["buildLocation"]>) => {
++      return buildLocation(...args).href;
++    },
++    [buildLocation]
++  );
++}
++
++// Usage Example
++export function ExampleComponent() {
++  const href = useHrefBuilder();
++
++  return (
++    <div>
++      <Link href={href({ to: "/specificRoute" })}>Specific Route</Link>
++      <Button
++        as={Link}
++        href={href({
++          to: "/shop/item/$id",
++          params: {
++            id: "123",
++          },
++        })}
++      >
++        Blue Shirt
++      </Button>
++    </div>
++  );
++}
++```
++
+ 
+ ### Remix
+ \n

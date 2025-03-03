@@ -1,0 +1,160 @@
+Pull Request Number: 330
+Title: Theme toggle of storybook
+Base Branch: main
+Head Branch: main
+Author: TIMMLOPK
+URL: https://github.com/nextui-org/nextui/pull/330
+State: MERGED
+Created At: 2022-03-05T13:42:29Z
+Merged At: 2022-03-05T13:55:11Z
+Participants: TIMMLOPK, codecov-commenter, jrgarciadev
+
+Description:
+[LEVEL]/[STORYBOOK]
+Types of changes
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+I add theme toggle in storybook,it will help nextUI to develop or fix issue.
+Developer can switch theme to test component between dark and light.It is amazing!
+Screenshots - Animations
+
+Commits:
+- Update preview.js\n- Update main.js\n- Update manager.js\n- Update package.json\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/330?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#330](https://codecov.io/gh/nextui-org/nextui/pull/330?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (afbab12) into [main](https://codecov.io/gh/nextui-org/nextui/commit/99f695f475c487aac936227066f3abc1acb139c7?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (99f695f) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/330/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/330?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main     #330   +/-   ##
+=======================================
+  Coverage   75.66%   75.66%           
+=======================================
+  Files         140      140           
+  Lines        2272     2272           
+  Branches      679      679           
+=======================================
+  Hits         1719     1719           
+  Misses        549      549           
+  Partials        4        4           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/330?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/330?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [99f695f...afbab12](https://codecov.io/gh/nextui-org/nextui/pull/330?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n- jrgarciadev: Thanks a lot @TIMMLOPK just amazing 🔥 \n
+
+Files Changed:
+- packages/storybook/.storybook/main.js (modified, 2 changes)\n  Patch: @@ -3,7 +3,7 @@ module.exports = {
+     '../../react/src/**/*.stories.mdx',
+     '../../react/src/**/*.stories.@(js|jsx|ts|tsx)'
+   ],
+-  addons: ['@storybook/addon-a11y'],
++  addons: ['@storybook/addon-a11y','storybook-dark-mode'],
+   babel: async (options) => ({
+     ...options,
+     plugins: [\n- packages/storybook/.storybook/manager.js (modified, 2 changes)\n  Patch: @@ -2,5 +2,5 @@ import { addons } from '@storybook/addons';
+ import theme from './theme';
+ 
+ addons.setConfig({
+-  theme,
++  theme: theme
+ });\n- packages/storybook/.storybook/preview.js (modified, 57 changes)\n  Patch: @@ -1,39 +1,46 @@
+ import React from 'react';
+ const { CssBaseline } = require('@nextui-org/react');
++import { themes } from '@storybook/theming';
++import { useDarkMode } from 'storybook-dark-mode';
++import { createTheme, NextUIProvider } from "@nextui-org/react"
+ 
++const lightTheme = createTheme({
++  type: 'light'
++})
++
++const darkTheme = createTheme({
++  type: 'dark'
++})
+ export const decorators = [
+   (Story) => (
+-    <div
+-      style={{
+-        display: 'flex',
+-        flexDirection: 'row',
+-        justifyContent: 'flex-start',
+-        alignItems: 'center',
+-        flexWrap: 'wrap',
+-        width: '100%',
+-        height: '100%'
+-      }}
+-    >
+-      <CssBaseline />
+-      <Story />
+-    </div>
++    <NextUIProvider theme={useDarkMode() ? darkTheme : lightTheme}>
++      <div
++        style={{
++          display: 'flex',
++          flexDirection: 'row',
++          justifyContent: 'flex-start',
++          alignItems: 'center',
++          flexWrap: 'wrap',
++          width: '100%',
++          height: '100%'
++        }}
++      >
++        <CssBaseline />
++        <Story />
++      </div>
++    </NextUIProvider>
+   )
+ ];
+ 
+ export const parameters = {
+   actions: { argTypesRegex: '^on[A-Z].*' },
++  darkMode: {
++    stylePreview: true,
++    dark: { ...themes.dark, appBg: 'black' },
++    light: { ...themes.normal, appBg: 'white' }
++  },
+   backgrounds: {
+-    default: 'light',
+-    values: [
+-      {
+-        name: 'light',
+-        value: '#FFFFFF'
+-      },
+-      {
+-        name: 'dark',
+-        value: '#000000'
+-      }
+-    ]
++    default: 'light'
+   },
+   controls: {
+     matchers: {\n- packages/storybook/package.json (modified, 3 changes)\n  Patch: @@ -14,7 +14,8 @@
+     "@storybook/addon-links": "^6.4.9",
+     "@storybook/react": "^6.4.9",
+     "@storybook/addon-a11y": "^6.3.9",
+-    "@storybook/addon-storysource": "^6.3.9"
++    "@storybook/addon-storysource": "^6.3.9",
++    "storybook-dark-mode": "^1.0.9"
+   },
+   "scripts": {
+     "storybook": "start-storybook -p 6006 --no-manager-cache",\n
