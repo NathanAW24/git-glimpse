@@ -1,0 +1,94 @@
+Pull Request Number: 1552
+Title: fix: fixed pagination scale animation
+Base Branch: main
+Head Branch: fix/fixed-pagination-scale-animation
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1552
+State: MERGED
+Created At: 2023-09-02T18:32:56Z
+Merged At: 2023-09-02T18:45:27Z
+Participants: jguddas, jrgarciadev
+
+Description:
+For animations of the pagination cursor to be enabled data-moving needs to be set to true.
+
+Commits:
+- fix: fixed pagination scale animation\n- Create mean-fishes-retire.md\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: db9dc84d2801f900b1fe5010ac6388cf4eca34f6
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                   | Type  |
+| ---------------------- | ----- |
+| @nextui-org/pagination | Patch |
+| @nextui-org/react      | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/jguddas/nextui/new/fix/fixed-pagination-scale-animation?filename=.changeset/two-mirrors-live.md&value=---%0A%22%40nextui-org%2Fpagination%22%3A%20patch%0A---%0A%0Afix%3A%20fixed%20pagination%20scale%20animation%0A)
+
+\n- vercel: [vc]: #VXsPx+D6rDCZFwQzKiaEu3KxJSDeIvue01Om0iKpkrY=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvOEdtZ2pQYkdGWFVDNDhnR25kTnBaY0FuSEdzaSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWpndWRkYXMtZml4LWZpeGUtMTkxYjY0LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWpndWRkYXMtZml4LWZpeGUtMTkxYjY0LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/8GmgjPbGFXUC48gGndNpZcAnHGsi)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jguddas-fix-fixe-191b64-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jguddas-fix-fixe-191b64-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 2, 2023 6:37pm |
+
+\n- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%225d83eaf59028e8e3a76931b61f05ba482ac21261%22%7D%2C%22id%22%3A%22QmVtjPDG6jFmw6teGCwkczDmMvD1i9XQXevDEa3Dbn3q9L%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1552%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/mean-fishes-retire.md (added, 8 changes)\n  Patch: @@ -0,0 +1,8 @@
++---
++"@nextui-org/pagination": patch
++---
++
++fix: fixed pagination scale animation
++
++For animations of the pagination cursor to be enabled data-moving needs to be set to true.
++We are now setting the data-moving to false 300ms after setting the cursor scale to 1.\n- packages/components/pagination/src/use-pagination.ts (modified, 9 changes)\n  Patch: @@ -201,6 +201,7 @@ export function usePagination(originalProps: UsePaginationProps) {
+     if (skipAnimation) {
+       cursorRef.current.setAttribute("data-moving", "false");
+       cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1)`;
++
+       return;
+     }
+ 
+@@ -211,10 +212,13 @@ export function usePagination(originalProps: UsePaginationProps) {
+     cursorTimer.current = setTimeout(() => {
+       // reset the scale of the cursor
+       if (cursorRef.current) {
+-        cursorRef.current.setAttribute("data-moving", "false");
+         cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1)`;
+       }
+-      cursorTimer.current && clearTimeout(cursorTimer.current);
++      cursorTimer.current = setTimeout(() => {
++        // remove the data-moving attribute
++        cursorRef.current?.setAttribute("data-moving", "false");
++        cursorTimer.current && clearTimeout(cursorTimer.current);
++      }, CURSOR_TRANSITION_TIMEOUT);
+     }, CURSOR_TRANSITION_TIMEOUT);
+   }
+ 
+@@ -229,6 +233,7 @@ export function usePagination(originalProps: UsePaginationProps) {
+   });
+ 
+   const activePageRef = useRef(activePage);
++
+   useEffect(() => {
+     if (activePage && !originalProps.disableAnimation) {
+       scrollTo(activePage, activePage === activePageRef.current);\n

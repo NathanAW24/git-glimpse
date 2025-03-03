@@ -1,0 +1,79 @@
+Pull Request Number: 1740
+Title: fix(docs): sandpack hook react addition validation fixed
+Base Branch: main
+Head Branch: fix/1717
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/1740
+State: MERGED
+Created At: 2023-10-05T15:17:14Z
+Merged At: 2023-10-05T15:17:28Z
+Participants: jrgarciadev
+
+Description:
+Closes #1717
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(docs): sandpack hook react addition validation fixed\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 867523c9f578547558cb032f61a9bbd6f9ea49fd
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/fix/1717?filename=.changeset/shy-windows-remember.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Afix(docs)%3A%20sandpack%20hook%20react%20addition%20validation%20fixed%0A)
+
+\n- vercel: [vc]: #L7y7hI6op0ntBgXhBJC3nMdKYvW4us2fd7yzP4beCQM=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9CWVdoNzFQU3Rla0pGcFR2TGdpeFZreUJZa1lpIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtMTcxNy1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiUEVORElORyJ9LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi9HaFZLaFFlaHJmeW9IdmpxbWdZbUcyRld3V3J2IiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC0xNzE3LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJQRU5ESU5HIn1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated (UTC) |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/BYWh71PStekJFpTvLgixVkyBYkYi)) | [Visit Preview](https://nextui-docs-v2-git-fix-1717-nextui-org.vercel.app) | Oct 5, 2023 3:17pm |
+| **nextui-storybook-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/GhVKhQehrfyoHvjqmgYmG2FWwWrv)) | [Visit Preview](https://nextui-storybook-v2-git-fix-1717-nextui-org.vercel.app) | Oct 5, 2023 3:17pm |
+
+
+\n
+
+Files Changed:
+- apps/docs/components/sandpack/use-sandpack.ts (modified, 5 changes)\n  Patch: @@ -16,7 +16,6 @@ export interface UseSandpackProps {
+ }
+ 
+ const importReact = 'import React from "react";';
+-const importAllReact = 'import * as React from "react";';
+ 
+ export const useSandpack = ({
+   files = {},
+@@ -102,8 +101,8 @@ export const useSandpack = ({
+       let fileContent = files[key] as string;
+ 
+       // Check if the file content includes 'React' import statements, if not, add it
+-      if (!fileContent.includes(importReact) && !fileContent.includes(importAllReact)) {
+-        fileContent = `${importReact}\n\n${fileContent}\n`;
++      if (!fileContent.includes("from 'react'") && !fileContent.includes('from "react"')) {
++        fileContent = `${importReact}\n${fileContent}\n`;
+       }
+ 
+       // Check if file content includes any other dependencies, if yes, add it to dependencies\n- apps/docs/content/components/input/custom-impl.ts (modified, 2 changes)\n  Patch: @@ -45,8 +45,6 @@ const CloseFilledIcon = `export const CloseFilledIcon = (props) => (
+ 
+ const App = `import React, {forwardRef} from "react";
+ import {useInput} from "@nextui-org/react";
+-
+-
+ import {SearchIcon} from "./SearchIcon";
+ import {CloseFilledIcon} from "./CloseFilledIcon";
+ \n

@@ -1,0 +1,862 @@
+Pull Request Number: 2868
+Title: feat(docs): docs changes
+Base Branch: canary
+Head Branch: docs/for-next-release
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2868
+State: MERGED
+Created At: 2024-04-25T05:18:25Z
+Merged At: 2024-05-04T16:09:57Z
+Participants: wingkwong, jrgarciadev, Nozomi-Hijikata, kuri-sun, carnoxen
+
+Description:
+Closes # 
+📝 Description
+to be merged to canary once the new gitflow is applied
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced search result sorting based on item type.
+Expanded locale support in the NextUIProvider, including a detailed list of supported locales and an example for setting a specific locale.
+Updated the DateRangePicker to allow displaying up to three visible months without affecting other properties.
+Added comprehensive customization options for the Range Calendar, including styling, behavior, and content management.
+Improved CLI commands for initializing and setting up a NextUI project with detailed installation and server start-up instructions.
+
+
+
+Bug Fixes
+
+Standardized error message display across various input components to enhance user experience and consistency.
+
+
+
+Documentation
+
+Updated API references and guides with clearer instructions and examples for setting locales, managing date ranges, and initializing projects.
+
+Commits:
+- feat(docs): add example how to set locale (#2867)\n- docs(guide): add an explanation for the installation guide (#2769)
+
+* docs(guide): add an explanation for the installation guide
+
+* docs(guide): add an explanation for the cli guide
+
+* docs(guide): add support for cli output\n- fix: change sort priority - cmdk (#2873)\n- docs: remove unsupported props in range calendar and date range picker (#2881)
+
+* chore(calendar): remove showMonthAndYearPickers from range calendar story
+
+* docs(date-range-picker): remove showMonthAndYearPickers info
+
+* docs(range-calendar): remove unsupported props\n- docs: refactor typing in form.ts (#2882)\n- chore(docs): supplement errorMessage behaviour in input (#2892)\n- refactor(docs): revise NextUI Provider structure\n- chore(docs): add updated tag\n
+
+Labels:
+📋 Scope : Docs
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: b155c7c2262711e58818b888e89a60680ded51a9
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/docs/for-next-release?filename=.changeset/healthy-radios-reflect.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fcalendar%22%3A%20patch%0A---%0A%0Afeat(docs)%3A%20docs%20changes%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: rate limited by coderabbit.ai -->
+
+> [!WARNING]
+> ## Rate Limit Exceeded
+> 
+> @wingkwong has exceeded the limit for the number of commits or files that can be reviewed per hour. Please wait **0 minutes and 31 seconds** before requesting another review.
+> 
+> <details>
+> 
+> <summary>How to resolve this issue?</summary>
+> 
+> After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR.
+> 
+> We recommend that you space out your commits to avoid hitting the rate limit.
+> 
+> </details>
+> 
+> <details>
+> 
+> <summary>How do rate limits work?</summary>
+> 
+> CodeRabbit enforces hourly rate limits for each developer per organization.
+> Our paid plans have higher rate limits than the trial, open-source and free plans. In all cases, we re-allow further reviews after a brief timeout.
+> Please see our [FAQ](https://coderabbit.ai/docs/faq) for further information.
+> 
+> </details>
+> 
+> <details>
+> <summary>Commits</summary>
+> Files that changed from the base of the PR and between 9ee9f6e99a101f66d0ae6f7b5fd1b9611e21505e and b155c7c2262711e58818b888e89a60680ded51a9.
+> </details>
+
+<!-- end of auto-generated comment: rate limited by coderabbit.ai --><!-- walkthrough_start -->
+
+## Walkthrough
+
+The update focuses on enhancing UI components and documentation in a software project. Changes include sorting functions in search components, consistent error messaging in input validations, and state type updates in form components. Documentation improvements cover API references, component guides, and project setup instructions, aiming for better usability and developer guidance.
+
+## Changes
+
+| File Path | Change Summary |
+|-----------|----------------|
+| `.../cmdk.tsx`, `.../input/regex-validation.ts`, `.../tabs/form.ts` | Updated sorting functions, error messages, and state type handling in UI components. |
+| `.../nextui-provider.mdx`, `.../date-range-picker.mdx`, `.../input.mdx`, `.../range-calendar.mdx`, `.../cli.mdx`, `.../installation.mdx` | Enhanced documentation for API references, component guidelines, and project setup instructions. |
+| `.../range-calendar.stories.tsx` | Adjusted storybook properties for calendar components. |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+```plaintext
+apps/docs/components/cmdk.tsx: ## Short Summary
+Added a `prioritizeFirstLevelItems` function to sort search results based on item type in `Cmdk.tsx`.
+
+## Alterations to the declarations of exported or public entities
+- Added `const prioritizeFirstLevelItems = (a: SearchResultItem, b: SearchResultItem) => {...}` in `Cmdk.tsx`.
+
+---
+
+apps/docs/content/components/input/regex-validation.ts: ## Short Summary
+The change in functionality involves updating the `errorMessage` property in a component to always display the message "Please enter a valid email" instead of conditionally showing it based on validity.
+
+## Alterations to the declarations of exported or public entities
+- `errorMessage={isInvalid && "Please enter a valid email"}` in `App` function in `regex-validation.ts` => `errorMessage="Please enter a valid email"` in `App` function in `regex-validation.ts`
+
+---
+
+apps/docs/content/components/tabs/form.ts: ## Short Summary
+The change in functionality involves updating the type of the `selected` state variable in the `App` component from `string | number` to `React.Key`.
+
+## Alterations to the declarations of exported or public entities
+- `const [selected, setSelected] = React.useState<string | number>("login")` in function `App` in `form.ts` => `const [selected, setSelected] = React.useState<React.Key>("login")` in function `App` in `form.ts`
+
+---
+
+apps/docs/content/docs/api-references/nextui-provider.mdx: ## Summary
+The diff for `nextui-provider.mdx` involves changes related to the `locale` property in the `NextUIProvider` API reference. The update includes clarifications on the supported locales and an example demonstrating how to set a specific locale. Additionally, the `defaultDates` section remains unchanged.
+
+## Alterations to the declarations of exported or public entities
+- `locale`
+  - Updated description: `The locale to apply to the children.`
+  - Type: `string | undefined`
+
+- Added supported locales list:
+  ```tsx
+  const localeValues = [
+    'fr-FR', 'fr-CA', 'de-DE', 'en-US', 'en-GB', 'ja-JP',
+    'da-DK', 'nl-NL', 'fi-FI', 'it-IT', 'nb-NO', 'es-ES', 
+    'sv-SE', 'pt-BR', 'zh-CN', 'zh-TW', 'ko-KR', 'bg-BG', 
+    'hr-HR', 'cs-CZ', 'et-EE', 'hu-HU', 'lv-LV', 'lt-LT', 
+    'pl-PL', 'ro-RO', 'ru-RU', 'sr-SP', 'sk-SK', 'sl-SI', 
+    'tr-TR', 'uk-UA', 'ar-AE', 'ar-DZ', 'AR-EG', 'ar-SA', 
+    'el-GR', 'he-IL', 'fa-AF', 'am-ET', 'hi-IN', 'th-TH'
+  ];
+  ```
+
+- Added example for setting a Spanish locale:
+  ```tsx
+  "use client";
+  
+  import {type ReactNode} from "react";
+  import {NextUIProvider} from "@nextui-org/react";
+  
+  export function AppProvider(props: AppProviderProps) {
+    const {children, className} = props;
+  
+    return (
+      <NextUIProvider locale="es-ES" className={className}>
+        {children}
+      </NextUIProvider>
+    );
+  }
+  
+  interface AppProviderProps {
+    children: ReactNode;
+    className?: string;
+  }
+  ```
+
+- Added new props:
+  - `disableAnimation`
+    - Description: Disables animations globally.
+    - Type: `boolean`
+    - Default: `false`
+
+  - `disableRipple`
+    - Description: Disables ripple effect globally.
+    - Type: `boolean`
+    - Default: `false`
+
+  - `skipFramerMotionAnimations`
+    - Description: Controls whether `framer-motion` animations are skipped within the application.
+    - Type: `boolean`
+    - Default: Same as `disableAnimation`
+
+---
+
+apps/docs/content/docs/components/date-range-picker.mdx: ## Short Summary
+The diff in `date-range-picker.mdx` involves changes to the `visibleMonths` prop in the `DateRangePicker` component, specifically removing the side effect of disabling another prop when a number greater than 1 is passed.
+
+## Alterations to the declarations of exported or public entities
+- `visibleMonths: number` in `DateRangePicker` component in `date-range-picker.mdx` => `visibleMonths: number` in `DateRangePicker` component in `date-range-picker.mdx`
+
+---
+
+apps/docs/content/docs/components/input.mdx: ## Short Summary
+The change in functionality involves updating the `errorMessage` property in the input component to be shown only when `isInvalid` is set to `true`.
+
+## Alterations to the declarations of exported or public entities
+- `errorMessage` property in the input component:
+  - Before: `errorMessage: ReactNode | ((v: ValidationResult) => ReactNode)`
+  - After: `errorMessage: ReactNode | ((v: ValidationResult) => ReactNode)`. It is only shown when `isInvalid` is set to `true`.
+
+---
+
+apps/docs/content/docs/components/range-calendar.mdx: ## Alterations to the declarations of exported or public entities
+- `visibleMonths` prop now supports displaying up to 3 months.
+- `pageBehavior` prop controls paging behavior.
+- `weekdayStyle` prop allows setting the style of weekday names.
+- `allowsNonContiguousRanges` prop for selecting non-contiguous ranges.
+- `isDisabled` prop to disable the calendar.
+- `isReadOnly` prop to make the calendar value immutable.
+- `autoFocus` prop for automatic calendar focus.
+- `showHelper` prop to show description or error message.
+- `showShadow` prop to display shadow in selected dates.
+- `topContent` prop for custom content at the top of the calendar.
+- `bottomContent` prop for custom content at the bottom of the calendar.
+- `isDateUnavailable` callback for unavailable dates.
+- `createCalendar` function for custom calendar system.
+- `errorMessage` prop for field error message.
+- `validate` function for validating time input values.
+- `hideDisabledDates` prop to hide disabled or invalid dates.
+- `disableAnimation` prop to disable calendar animation.
+- `classNames` prop for setting custom class names for calendar slots.
+
+---
+
+apps/docs/content/docs/guide/cli.mdx: ## Short Summary
+The changes in the `cli.mdx` file involve updating the command syntax for initializing a NextUI project and adding instructions for installing dependencies and starting the local server.
+
+## Alterations to the declarations of exported or public entities
+- `nextui init [my-nextui-app-name]` => `nextui init my-nextui-app`
+- Added instructions for installing dependencies and starting the local server.
+
+---
+
+apps/docs/content/docs/guide/installation.mdx: ## Short Summary
+The functionality change involves adding instructions to install dependencies, start the local server, and develop components in a NextUI project.
+
+## Alterations to the declarations of exported or public entities
+- None
+
+---
+
+packages/components/calendar/stories/range-calendar.stories.tsx: ## Short Summary
+Removed the `showMonthAndYearPickers` property from the `args` object in the `InternationalCalendars` export in `range-calendar.stories.tsx`.
+
+## Alterations to the declarations of exported or public entities
+- `showMonthAndYearPickers: true` removed from the `args` object in the `InternationalCalendars` export in `range-calendar.stories.tsx`
+```
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives (User Provided Facts)
+
+The pull request titled "feat(docs): docs changes" with number 2868 aims to introduce documentation changes to be merged into the `canary` branch once the new gitflow is applied. The PR focuses on enhancing documentation clarity and examples across various components and documentation files within the project. It does not introduce new external dependencies and follows the guideline of keeping the PR as small as possible while concentrating on a single type of change—documentation updates.
+
+### AI-Generated Summary of Generated Summaries
+
+This pull request encompasses a range of updates aimed at improving documentation and functionality across different components within the project:
+
+1. **Component Functionality Enhancements:**
+   - In `Cmdk.tsx`, a new function `prioritizeFirstLevelItems` has been added to sort search results based on item type.
+   - The `errorMessage` property in the `Input` component has been updated in files like `regex-validation.ts` and `input.mdx` to ensure consistent error messaging and display only when the input is invalid.
+   - The `selected` state variable type in the `App` component in `tabs/form.ts` has been refined to use `React.Key` for improved type safety.
+   - Changes in the `DateRangePicker` and `RangeCalendar` components include enhancements to properties like `visibleMonths` and the removal of side effects related to certain prop values.
+
+2. **Documentation Enhancements and Clarifications:**
+   - Updates to the `NextUIProvider` API reference in `nextui-provider.mdx` include a detailed list of supported locales and an example illustrating how to set a specific locale for improved internationalization.
+   - The documentation for the `RangeCalendar` component has been expanded to cover a comprehensive list of new and modified properties, enhancing customization options.
+   - `cli.mdx` and `installation.mdx` files now provide clearer instructions on initializing a NextUI project, installing dependencies, and starting the local server, enhancing the onboarding experience for new users.
+
+3. **Storybook and Example Updates:**
+   - In `range-calendar.stories.tsx`, the removal of the `showMonthAndYearPickers` property from the `args` object simplifies the story configuration.
+
+These updates collectively aim to enhance the developer experience by improving component functionality, expanding and clarifying documentation, and refining example configurations and setups.
+
+### Alterations to the Declarations of Exported or Public Entities
+
+- **Cmdk.tsx:**
+  - Added: `const prioritizeFirstLevelItems = (a: SearchResultItem, b: SearchResultItem) => {...}`
+
+- **regex-validation.ts:**
+  - Changed: `errorMessage={isInvalid && "Please enter a valid email"}` to `errorMessage="Please enter a valid email"`
+
+- **tabs/form.ts:**
+  - Changed: `const [selected, setSelected] = React.useState<string | number>("login")` to `const [selected, setSelected] = React.useState<React.Key>("login")`
+
+- **nextui-provider.mdx:**
+  - Changed: Updated description and added supported locales list and example for setting a Spanish locale.
+
+- **date-range-picker.mdx:**
+  - Unchanged: `visibleMonths: number`
+
+- **input.mdx:**
+  - Changed: Updated `errorMessage` property to be shown only when `isInvalid` is set to `true`
+
+- **range-calendar.mdx:**
+  - Added multiple new properties and functions enhancing functionality and customization
+
+- **cli.mdx:**
+  - Changed: Updated command syntax and added instructions for installing dependencies and starting the local server
+
+- **installation.mdx:**
+  - Added: Instructions for installing dependencies, starting the local server, and developing components
+
+- **range-calendar.stories.tsx:**
+  - Removed: `showMonthAndYearPickers: true` from the `args` object in the `InternationalCalendars` export
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 64ca1b6068d46bd5c87dfcdacedf25a635240545 -->
+<!-- 9ee9f6e99a101f66d0ae6f7b5fd1b9611e21505e -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #BooqRtpYBym2YRdTvqbDce+1bYCTl8IYZs2gPM4XhOQ=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9BMk1HY2NQWWFobXVlYTlSMzJjQ1B4cXBkZFE0IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1kb2NzLWZvci1uZXh0LXJlbGVhc2UtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1kb2NzLWZvci1uZXh0LXJlbGVhc2UtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi8yTnVtdmQ2ek01V05BcW04YzJaRHdSNG9weFFvIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWRvY3MtZm9yLW5leHQtcmVsZWFzZS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZG9jcy1mb3ItbmV4dC1yZWxlYXNlLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/A2MGccPYahmuea9R32cCPxqpddQ4)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-docs-for-next-release-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-docs-for-next-release-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 4, 2024 3:56pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/2Numvd6zM5WNAqm8c2ZDwR4opxQo)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-docs-for-next-release-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-docs-for-next-release-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 4, 2024 3:56pm |
+
+
+\n
+
+Files Changed:
+- apps/docs/components/cmdk.tsx (modified, 20 changes)\n  Patch: @@ -154,6 +154,16 @@ export const Cmdk: FC<{}> = () => {
+     }
+   };
+ 
++  const prioritizeFirstLevelItems = (a: SearchResultItem, b: SearchResultItem) => {
++    if (a.type === "lvl1") {
++      return -1;
++    } else if (b.type === "lvl1") {
++      return 1;
++    }
++
++    return 0;
++  };
++
+   const results = useMemo<SearchResultItem[]>(
+     function getResults() {
+       if (query.length < 2) return [];
+@@ -165,12 +175,22 @@ export const Cmdk: FC<{}> = () => {
+       if (words.length === 1) {
+         return matchSorter(data, query, {
+           keys: MATCH_KEYS,
++          sorter: (matches) => {
++            matches.sort((a, b) => prioritizeFirstLevelItems(a.item, b.item));
++
++            return matches;
++          },
+         }).slice(0, MAX_RESULTS);
+       }
+ 
+       const matchesForEachWord = words.map((word) =>
+         matchSorter(data, word, {
+           keys: MATCH_KEYS,
++          sorter: (matches) => {
++            matches.sort((a, b) => prioritizeFirstLevelItems(a.item, b.item));
++
++            return matches;
++          },
+         }),
+       );
+ \n- apps/docs/config/routes.json (modified, 3 changes)\n  Patch: @@ -421,7 +421,8 @@
+           "key": "nextui-provider",
+           "title": "NextUI Provider",
+           "keywords": "api references, nextui, api, nextui provider",
+-          "path": "/docs/api-references/nextui-provider.mdx"
++          "path": "/docs/api-references/nextui-provider.mdx",
++          "updated": true
+         }
+       ]
+     }\n- apps/docs/content/components/input/regex-validation.ts (modified, 2 changes)\n  Patch: @@ -19,7 +19,7 @@ export default function App() {
+       variant="bordered"
+       isInvalid={isInvalid}
+       color={isInvalid ? "danger" : "success"}
+-      errorMessage={isInvalid && "Please enter a valid email"}
++      errorMessage="Please enter a valid email"
+       onValueChange={setValue}
+       className="max-w-xs"
+     />\n- apps/docs/content/components/tabs/form.ts (modified, 2 changes)\n  Patch: @@ -69,7 +69,7 @@ export default function App() {
+ const AppTs = `import {Tabs, Tab, Input, Link, Button, Card, CardBody, CardHeader} from "@nextui-org/react";
+ 
+ export default function App() {
+-  const [selected, setSelected] = React.useState<string | number>("login");
++  const [selected, setSelected] = React.useState<React.Key>("login");
+ 
+   return (
+     <div className="flex flex-col w-full">\n- apps/docs/content/docs/api-references/nextui-provider.mdx (modified, 171 changes)\n  Patch: @@ -5,80 +5,167 @@ description: API References for NextUI Provider
+ 
+ # NextUI Provider
+ 
++API reference for the `NextUIProvider`. 
++
+ ------
+ 
+-Here's the API reference for the `NextUIProvider`.
++## Import
++
++<ImportTabs
++  commands={{
++    main: 'import {NextUIProvider} from "@nextui-org/react";',
++    individual: 'import {NextUIProvider} from "@nextui-org/system";',
++  }}
++/>
++
++## Usage
++
++```jsx
++import * as React from "react";
++import {NextUIProvider} from "@nextui-org/react";
++
++function App() {
++  return (
++    <NextUIProvider>
++      <YourApplication />
++    </NextUIProvider>
++  );
++}
++```
+ 
+ ## Props
+ 
+-### navigate
++<Spacer y={6}/>
+ 
+-`navigate` provides a client side router to all nested components such as Link, Menu, Tabs, Table, etc.
++`navigate`
+ 
+-**type**: `((path: string) => void) | undefined`
++- **Description**: Provides a client side router to all nested components such as Link, Menu, Tabs, Table, etc.
++- **Type**: `((path: string) => void) | undefined`
+ 
+-### locale
++<Spacer y={2}/>
+ 
+-The locale to apply to the children. The [BCP47](https://www.ietf.org/rfc/bcp/bcp47.txt) language code for the locale. By default, It is `en-US`. 
++`locale`
+ 
+-**type**: `string | undefined`
++- **Description**: The locale to apply to the children.
++- **Type**: `string | undefined`
++- **Default**: `en-US`
+ 
+-### defaultDates
+ 
+-The default dates range that can be selected in the calendar.
++Here's the supported locales. By default, It is `en-US`.
+ 
+-**type**: `{ minDate?: CalendarDate | undefined; maxDate?: CalendarDate | undefined; }`
++```tsx
++const localeValues = [
++  'fr-FR', 'fr-CA', 'de-DE', 'en-US', 'en-GB', 'ja-JP',
++  'da-DK', 'nl-NL', 'fi-FI', 'it-IT', 'nb-NO', 'es-ES', 
++  'sv-SE', 'pt-BR', 'zh-CN', 'zh-TW', 'ko-KR', 'bg-BG', 
++  'hr-HR', 'cs-CZ', 'et-EE', 'hu-HU', 'lv-LV', 'lt-LT', 
++  'pl-PL', 'ro-RO', 'ru-RU', 'sr-SP', 'sk-SK', 'sl-SI', 
++  'tr-TR', 'uk-UA', 'ar-AE', 'ar-DZ', 'AR-EG', 'ar-SA', 
++  'el-GR', 'he-IL', 'fa-AF', 'am-ET', 'hi-IN', 'th-TH'
++];
++```
+ 
+-- minDate
++Here's an example to set a Spanish locale.
+ 
+-    The minimum date that can be selected in the calendar.
++```tsx
++"use client";
+ 
+-    **type**: `CalendarDate | undefined`
++import {type ReactNode} from "react";
++import {NextUIProvider} from "@nextui-org/react";
+ 
+-    **default**: `new CalendarDate(1900, 1, 1)`
++export function AppProvider(props: AppProviderProps) {
++  const {children, className} = props;
+ 
+-- maxDate
++  return (
++    <NextUIProvider locale="es-ES" className={className}>
++      {children}
++    </NextUIProvider>
++  );
++}
+ 
+-    The maximum date that can be selected in the calendar.
++interface AppProviderProps {
++  children: ReactNode;
++  className?: string;
++}
++```
+ 
+-    **type**: `CalendarDate | undefined`
++<Spacer y={2}/>
+ 
+-    **default**: `new CalendarDate(2099, 12, 31)`
++`defaultDates`
+ 
+-### createCalendar
++- **Description**: The default dates range that can be selected in the calendar.
++- **Type**: `{ minDate?: CalendarDate | undefined; maxDate?: CalendarDate | undefined; }`
++- **Default**: `{ minDate: new CalendarDate(1900, 1, 1), maxDate: new CalendarDate(2099, 12, 31) }`
+ 
+-This function helps to reduce the bundle size by providing a custom calendar system.
++<Spacer y={2}/>
+ 
+-By default, this includes all calendar systems supported by `@internationalized/date`. However,
+-if your application supports a more limited set of regions, or you know you will only be picking dates
+-in a certain calendar system, you can reduce your bundle size by providing your own implementation
+-of `createCalendar` that includes a subset of these Calendar implementations.
++`createCalendar`
+ 
+-For example, if your application only supports Gregorian dates, you could implement a `createCalendar`
+-function like this:
++- **Description**: 
++    This function helps to reduce the bundle size by providing a custom calendar system.
+ 
+-```tsx
+-import {GregorianCalendar} from '@internationalized/date';
+-
+-function createCalendar(identifier) {
+- switch (identifier) {
+-   case 'gregory':
+-     return new GregorianCalendar();
+-   default:
+-     throw new Error(`Unsupported calendar ${identifier}`);
+- }
+-}
+-```
++    By default, this includes all calendar systems supported by `@internationalized/date`. However,
++    if your application supports a more limited set of regions, or you know you will only be picking dates
++    in a certain calendar system, you can reduce your bundle size by providing your own implementation
++    of `createCalendar` that includes a subset of these Calendar implementations.
++
++    For example, if your application only supports Gregorian dates, you could implement a `createCalendar`
++    function like this:
++
++    ```tsx
++    import {GregorianCalendar} from '@internationalized/date';
++
++    function createCalendar(identifier) {
++    switch (identifier) {
++      case 'gregory':
++        return new GregorianCalendar();
++      default:
++        throw new Error(`Unsupported calendar ${identifier}`);
++    }
++    }
++    ```
++
++    This way, only GregorianCalendar is imported, and the other calendar implementations can be tree-shaken.
++
++- **Type**: `((calendar: SupportedCalendars) => Calendar | null) | undefined`
++
++<Spacer y={2}/>
++
++`disableAnimation`
+ 
+-This way, only GregorianCalendar is imported, and the other calendar implementations can be tree-shaken.
++- **Description**: Disables animations globally. This will also avoid `framer-motion` features to be loaded in the bundle which can potentially reduce the bundle size.
++- **Type**: `boolean`
++- **Default**: `false`
+ 
+-**type**: `((calendar: SupportedCalendars) => Calendar | null) | undefined`
++<Spacer y={2}/>
++
++`disableRipple`
++
++- **Description**: Disables ripple effect globally.
++- **Type**: `boolean`
++- **Default**: `false`
++
++<Spacer y={2}/>
++
++`skipFramerMotionAnimations`
++
++- **Description**:
++  Controls whether `framer-motion` animations are skipped within the application.
++  This property is automatically enabled (`true`) when the `disableAnimation` prop is set to `true`,
++  effectively skipping all `framer-motion` animations. To retain `framer-motion` animations while
++  using the `disableAnimation` prop for other purposes, set this to `false`. However, note that
++  animations in NextUI Components are still omitted if the `disableAnimation` prop is `true`.
++- **Type**: `boolean`
++- **Default**: Same as `disableAnimation`
++
++---
+ 
+ ## Types
+ 
+-### CalendarDate
++`CalendarDate`
+ 
+-A [CalendarDate](https://react-spectrum.adobe.com/internationalized/date/CalendarDate.html) represents a date without any time components in a specific calendar system from `@internationalized/date`. 
++- **Description**: A [CalendarDate](https://react-spectrum.adobe.com/internationalized/date/CalendarDate.html) represents a date without any time components in a specific calendar system from `@internationalized/date`.
++- **Type**: `import {CalendarDate} from '@internationalized/date';`
+ 
+ ### SupportedCalendars
+ \n- apps/docs/content/docs/components/date-range-picker.mdx (modified, 4 changes)\n  Patch: @@ -340,7 +340,7 @@ import {I18nProvider} from "@react-aria/i18n";
+ ### DateRangePicker Props
+ 
+ | Attribute                 | Type                                                                                                                                                     | Description                                                                                                                                                             | Default                                                              |
+-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
++|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
+ | label                     | `ReactNode`                                                                                                                                              | The content to display as the label.                                                                                                                                    | -                                                                    |
+ | value                     | `RangeValue<CalendarDate \| CalendarDateTime \| ZonedDateTime>` \| `undefined` \| `null`                                                                 | The current value of the date-range-picker (controlled).                                                                                                                | -                                                                    |
+ | variant                   | `flat` \| `bordered` \| `faded` \| `underlined`                                                                                                          | The variant of the date input.                                                                                                                                          | `flat`                                                               |
+@@ -367,7 +367,7 @@ import {I18nProvider} from "@react-aria/i18n";
+ | selectorIcon              | `ReactNode`                                                                                                                                              | The icon to toggle the date picker popover. Usually a calendar icon.                                                                                                    |                                                                      |
+ | pageBehavior              | `single` \| `visible`                                                                                                                                    | Controls the behavior of paging. Pagination either works by advancing the visible page by visibleDuration (default) or one unit of visibleDuration.                     | `visible`                                                            |
+ | validate                  | `(value: { inputValue: string, selectedKey: React.Key }) => ValidationError ｜ true ｜ null ｜ undefined`                                                | Validate input values when committing (e.g., on blur), and return error messages for invalid values.                                                                    | -                                                                    |
+-| visibleMonths             | `number`                                                                                                                                                 | The number of months to display at once. Up to 3 months are supported. Passing a number greater than 1 will disable the `showMonthAndYearPickers` prop.                 | `1`                                                                  |
++| visibleMonths             | `number`                                                                                                                                                 | The number of months to display at once. Up to 3 months are supported.                                                                                                  | `1`                                                                  |
+ | autoFocus                 | `boolean`                                                                                                                                                | Whether the element should receive focus on render.                                                                                                                     | `false`                                                              |
+ | hourCycle                 | `12` \| `24`                                                                                                                                             | Whether to display the time in 12 or 24 hour format. This is determined by the user's locale.                                                                           | -                                                                    |
+ | granularity               | `day` \| `hour` \| `minute` \| `second`                                                                                                                  | Determines the smallest unit that is displayed in the date picker. Typically "day" for dates.                                                                           | -                                                                    |\n- apps/docs/content/docs/components/input.mdx (modified, 4 changes)\n  Patch: @@ -107,7 +107,7 @@ You can add a description to the input by passing the `description` property.
+ 
+ ### With Error Message
+ 
+-You can combine the `isInvalid` and `errorMessage` properties to show an invalid input.
++You can combine the `isInvalid` and `errorMessage` properties to show an invalid input. `errorMessage` is only shown when `isInvalid` is set to `true`.
+ 
+ <CodeDemo title="With Error Message" files={inputContent.errorMessage} />
+ 
+@@ -205,7 +205,7 @@ In case you need to customize the input even further, you can use the `useInput`
+ | defaultValue     | `string`                                                                                                                                                               | The default value of the input (uncontrolled).                                                                        | -         |
+ | placeholder      | `string`                                                                                                                                                               | The placeholder of the input.                                                                                         | -         |
+ | description      | `ReactNode`                                                                                                                                                            | A description for the input. Provides a hint such as specific requirements for what to choose.                        | -         |
+-| errorMessage     | `ReactNode` \| `((v: ValidationResult) => ReactNode)`                                                                                                                  | An error message for the input.                                                                                       | -         |
++| errorMessage     | `ReactNode` \| `((v: ValidationResult) => ReactNode)`                                                                                                                  | An error message for the input. It is only shown when `isInvalid` is set to `true`                                                                                      | -         |
+ | validate         | `(value: string) => ValidationError ｜ true ｜ null ｜ undefined`                                                                                                       | Validate input values when committing (e.g. on blur), and return error messages for invalid values.                   | -         |
+ | startContent     | `ReactNode`                                                                                                                                                            | Element to be rendered in the left side of the input.                                                                 | -         |
+ | endContent       | `ReactNode`                                                                                                                                                            | Element to be rendered in the right side of the input.                                                                | -         |\n- apps/docs/content/docs/components/range-calendar.mdx (modified, 62 changes)\n  Patch: @@ -200,46 +200,42 @@ Here's the example to customize `topContent` and `bottomContent` to have some pr
+ 
+ ### RangeCalendar Props
+ 
+-| Attribute                 | Type                                                                                                                                                                                                                                                                                                                                                                                          | Description                                                                                                                                                                               | Default                           |     |
+-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | --- |
+-| value                     | `RangeValue                                                                                                                                                                                                                                                                                                                                                                                   | null`                                                                                                                                                                                     | The current value (controlled).   | -   |
+-| defaultValue              | `RangeValue                                                                                                                                                                                                                                                                                                                                                                                   | null`                                                                                                                                                                                     | The default value (uncontrolled). | -   |
+-| minValue                  | `DateValue`                                                                                                                                                                                                                                                                                                                                                                                   | The minimum allowed date that a user may select.                                                                                                                                          | -                                 |     |
+-| maxValue                  | `DateValue`                                                                                                                                                                                                                                                                                                                                                                                   | The maximum allowed date that a user may select.                                                                                                                                          | -                                 |     |
+-| color                     | `default` \| `primary` \| `secondary` \| `success` \| `warning` \| `danger`                                                                                                                                                                                                                                                                                                                   | The color of the time input.                                                                                                                                                              | `default`                         |
+-| visibleMonths             | `number`                                                                                                                                                                                                                                                                                                                                                                                      | The number of months to display at once. Up to 3 months are supported. Passing a number greater than 1 will disable the `showMonthAndYearPickers` prop                                    | `1`                               |     |
+-| focusedValue              | `DateValue`                                                                                                                                                                                                                                                                                                                                                                                   | Controls the currently focused date within the calendar.                                                                                                                                  | -                                 |     |
+-| defaultFocusedValue       | `DateValue`                                                                                                                                                                                                                                                                                                                                                                                   | The date that is focused when the calendar first mounts (uncountrolled).                                                                                                                  | -                                 |     |
+-| calendarWidth             | `number` \| `string`                                                                                                                                                                                                                                                                                                                                                                          | The width to be applied to the calendar component. This value is multiplied by the `visibleMonths` number to determine the total width of the calendar.                                   | `256`                             |
+-| pageBehavior              | `PageBehavior`                                                                                                                                                                                                                                                                                                                                                                                | Controls the behavior of paging. Pagination either works by advancing the visible page by visibleDuration (default) or one unit of visibleDuration.                                       | `visible`                         |     |
+-| weekdayStyle              | `"narrow" \|"short" \| "long" \| undefined`                                                                                                                                                                                                                                                                                                                                                   | The style of weekday names to display in the calendar grid header, e.g. single letter, abbreviation, or full day name.                                                                    | `narrow`                          |     |
+-| allowsNonContiguousRanges | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | When combined with `isDateUnavailable`, determines whether non-contiguous ranges, i.e. ranges containing unavailable dates, may be selected.                                              | `false`                           |     |
+-| showMonthAndYearPickers   | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether the label should be crossed out.                                                                                                                                                  | `false`                           |     |
+-| isDisabled                | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether the calendar is disabled.                                                                                                                                                         | `false`                           |     |
+-| isReadOnly                | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether the calendar value is immutable.                                                                                                                                                  | `false`                           |     |
+-| isInvalid                 | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether the current selection is invalid according to application logic.                                                                                                                  | -                                 |     |
+-| autoFocus                 | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether to automatically focus the calendar when it mounts.                                                                                                                               | `false`                           |     |
+-| showHelper                | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether to show the description or error message.                                                                                                                                         | `false`                           |     |
+-| showShadow                | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether to show the shadow in the selected dates.                                                                                                                                         | `false`                           |
+-| isHeaderExpanded          | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether the calendar header is expanded. This is only available if the `showMonthAndYearPickers` prop is set to `true`.                                                                   | `false`                           |     |
+-| isHeaderDefaultExpanded   | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether the calendar header should be expanded by default.This is only available if the `showMonthAndYearPickers` prop is set to `true`.                                                  | `false`                           |     |
+-| topContent                | `ReactNode`                                                                                                                                                                                                                                                                                                                                                                                   | Custom content to be included in the top of the calendar.                                                                                                                                 | -                                 |     |
+-| bottomContent             | `ReactNode`                                                                                                                                                                                                                                                                                                                                                                                   | Custom content to be included in the bottom of the calendar.                                                                                                                              | -                                 |     |
+-| isDateUnavailable         | `(date: DateValue) => boolean`                                                                                                                                                                                                                                                                                                                                                                | Callback that is called for each date of the calendar. If it returns true, then the date is unavailable.                                                                                  | -                                 |     |
+-| createCalendar            | `(calendar: SupportedCalendars) => Calendar \| null`                                                                                                                                                                                                                                                                                                                                          | This function helps to reduce the bundle size by providing a custom calendar system. You can also use the NextUIProvider to provide the createCalendar function to all nested components. | `all<br> calendars`               |     |
+-| errorMessage              | `ReactNode \| (v: ValidationResult) => ReactNode`                                                                                                                                                                                                                                                                                                                                             | An error message for the field.                                                                                                                                                           | -                                 |
+-| validate                  | `(value: { inputValue: string, selectedKey: React.Key }) => ValidationError ｜ true ｜ null ｜ undefined`                                                                                                                                                                                                                                                                                     | Validate time input values when committing (e.g. on blur), and return error messages for invalid values.                                                                                  | -                                 |
+-| hideDisabledDates         | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether to hide the disabled or invalid dates.                                                                                                                                            | `false`                           |
+-| disableAnimation          | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether to disable the animation of the calendar.                                                                                                                                         | `false`                           |
+-| classNames                | `Record<"base"｜ "prevButton"｜ "nextButton"｜ "headerWrapper" \| "header" \| "title" \| "content" \| "gridWrapper" \| "grid" \| "gridHeader" \| "gridHeaderRow" \| "gridHeaderCell" \| "gridBody" \| "gridBodyRow" \| "cell" \| "cellButton" \| "pickerWrapper" \| "pickerMonthList" \| "pickerYearList" \| "pickerHighlight" \| "pickerItem" \| "helperWrapper" \| "errorMessage", string>` | Allows to set custom class names for the calendar slots.                                                                                                                                  | -                                 |     |
++| Attribute                 | Type                                                                                                                                                                                                                                                                                                                                                                                          | Description                                                                                                                                                                               | Default                           |   |
++|---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|---|
++| value                     | `RangeValue                                                                                                                                                                                                                                                                                                                                                                                   | null`                                                                                                                                                                                     | The current value (controlled).   | - |
++| defaultValue              | `RangeValue                                                                                                                                                                                                                                                                                                                                                                                   | null`                                                                                                                                                                                     | The default value (uncontrolled). | - |
++| minValue                  | `DateValue`                                                                                                                                                                                                                                                                                                                                                                                   | The minimum allowed date that a user may select.                                                                                                                                          | -                                 |   |
++| maxValue                  | `DateValue`                                                                                                                                                                                                                                                                                                                                                                                   | The maximum allowed date that a user may select.                                                                                                                                          | -                                 |   |
++| color                     | `default` \| `primary` \| `secondary` \| `success` \| `warning` \| `danger`                                                                                                                                                                                                                                                                                                                   | The color of the time input.                                                                                                                                                              | `default`                         |   |
++| visibleMonths             | `number`                                                                                                                                                                                                                                                                                                                                                                                      | The number of months to display at once. Up to 3 months are supported.                                                                                                                    | `1`                               |   |
++| focusedValue              | `DateValue`                                                                                                                                                                                                                                                                                                                                                                                   | Controls the currently focused date within the calendar.                                                                                                                                  | -                                 |   |
++| defaultFocusedValue       | `DateValue`                                                                                                                                                                                                                                                                                                                                                                                   | The date that is focused when the calendar first mounts (uncountrolled).                                                                                                                  | -                                 |   |
++| calendarWidth             | `number` \| `string`                                                                                                                                                                                                                                                                                                                                                                          | The width to be applied to the calendar component. This value is multiplied by the `visibleMonths` number to determine the total width of the calendar.                                   | `256`                             |   |
++| pageBehavior              | `PageBehavior`                                                                                                                                                                                                                                                                                                                                                                                | Controls the behavior of paging. Pagination either works by advancing the visible page by visibleDuration (default) or one unit of visibleDuration.                                       | `visible`                         |   |
++| weekdayStyle              | `"narrow" \|"short" \| "long" \| undefined`                                                                                                                                                                                                                                                                                                                                                   | The style of weekday names to display in the calendar grid header, e.g. single letter, abbreviation, or full day name.                                                                    | `narrow`                          |   |
++| allowsNonContiguousRanges | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | When combined with `isDateUnavailable`, determines whether non-contiguous ranges, i.e. ranges containing unavailable dates, may be selected.                                              | `false`                           |   |
++| isDisabled                | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether the calendar is disabled.                                                                                                                                                         | `false`                           |   |
++| isReadOnly                | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether the calendar value is immutable.                                                                                                                                                  | `false`                           |   |
++| isInvalid                 | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether the current selection is invalid according to application logic.                                                                                                                  | -                                 |   |
++| autoFocus                 | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether to automatically focus the calendar when it mounts.                                                                                                                               | `false`                           |   |
++| showHelper                | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether to show the description or error message.                                                                                                                                         | `false`                           |   |
++| showShadow                | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether to show the shadow in the selected dates.                                                                                                                                         | `false`                           |   |
++| topContent                | `ReactNode`                                                                                                                                                                                                                                                                                                                                                                                   | Custom content to be included in the top of the calendar.                                                                                                                                 | -                                 |   |
++| bottomContent             | `ReactNode`                                                                                                                                                                                                                                                                                                                                                                                   | Custom content to be included in the bottom of the calendar.                                                                                                                              | -                                 |   |
++| isDateUnavailable         | `(date: DateValue) => boolean`                                                                                                                                                                                                                                                                                                                                                                | Callback that is called for each date of the calendar. If it returns true, then the date is unavailable.                                                                                  | -                                 |   |
++| createCalendar            | `(calendar: SupportedCalendars) => Calendar \| null`                                                                                                                                                                                                                                                                                                                                          | This function helps to reduce the bundle size by providing a custom calendar system. You can also use the NextUIProvider to provide the createCalendar function to all nested components. | `all<br> calendars`               |   |
++| errorMessage              | `ReactNode \| (v: ValidationResult) => ReactNode`                                                                                                                                                                                                                                                                                                                                             | An error message for the field.                                                                                                                                                           | -                                 |   |
++| validate                  | `(value: { inputValue: string, selectedKey: React.Key }) => ValidationError ｜ true ｜ null ｜ undefined`                                                                                                                                                                                                                                                                                     | Validate time input values when committing (e.g. on blur), and return error messages for invalid values.                                                                                  | -                                 |   |
++| hideDisabledDates         | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether to hide the disabled or invalid dates.                                                                                                                                            | `false`                           |   |
++| disableAnimation          | `boolean`                                                                                                                                                                                                                                                                                                                                                                                     | Whether to disable the animation of the calendar.                                                                                                                                         | `false`                           |   |
++| classNames                | `Record<"base"｜ "prevButton"｜ "nextButton"｜ "headerWrapper" \| "header" \| "title" \| "content" \| "gridWrapper" \| "grid" \| "gridHeader" \| "gridHeaderRow" \| "gridHeaderCell" \| "gridBody" \| "gridBodyRow" \| "cell" \| "cellButton" \| "pickerWrapper" \| "pickerMonthList" \| "pickerYearList" \| "pickerHighlight" \| "pickerItem" \| "helperWrapper" \| "errorMessage", string>` | Allows to set custom class names for the calendar slots.                                                                                                                                  | -                                 |   |
+ 
+ ### RangeCalendar Events
+ 
+ | Attribute              | Type                            | Description                                                                                                                              |
+ | ---------------------- | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+ | onFocusChange          | `(date: CalendarDate) => void`  | Handler that is called when the focused date changes.                                                                                    |
+ | onChange               | `(value: RangeValue>) => void`  | Handler that is called when the value changes.                                                                                           |
+-| onHeaderExpandedChange | `(isExpanded: boolean) => void` | The event handler for the calendar header expanded state. This is only available if the `showMonthAndYearPickers` prop is set to `true`. |
+ 
+ #### Supported Calendars
+ \n- apps/docs/content/docs/guide/cli.mdx (modified, 12 changes)\n  Patch: @@ -75,7 +75,7 @@ Commands:
+ Initialize a new NextUI project using the `init` command. This sets up your project with the necessary configurations.
+ 
+ ```codeBlock bash
+-nextui init [my-nextui-app-name]
++nextui init my-nextui-app
+ ```
+ 
+ <Spacer y={4} />
+@@ -90,6 +90,16 @@ You will be prompted to configure your project:
+     A Next.js 13 with pages directory template pre-configured with NextUI (v2) and Tailwind CSS.
+ ```
+ 
++Install the dependencies to start the local server:
++```codeBlock bash
++cd my-nextui-app && npm install
++```
++
++Start the local server:
++```codeBlock bash
++npm run dev
++```
++
+ ## add
+ 
+ Add components to your NextUI project with the add command. This command manages component dependencies and updates your project configurations.\n- apps/docs/content/docs/guide/installation.mdx (modified, 12 changes)\n  Patch: @@ -39,7 +39,17 @@ You will be prompted to configure your project:
+     A Next.js 13 with pages directory template pre-configured with NextUI (v2) and Tailwind CSS.
+ ```
+ 
+-Once your NextUI project is initialized, you can add individual components using the CLI. For example, to add a button component:
++Install the dependencies to start the local server:
++```codeBlock bash
++cd my-nextui-app && npm install
++```
++
++Start the local server:
++```codeBlock bash
++npm run dev
++```
++
++Once your NextUI project is ready to develop, you can add individual components using the CLI. For example, to add a button component:
+ 
+ ```codeBlock bash
+ nextui add button\n- packages/components/calendar/stories/range-calendar.stories.tsx (modified, 1 changes)\n  Patch: @@ -382,7 +382,6 @@ export const InternationalCalendars = {
+   render: InternationalCalendarsTemplate,
+   args: {
+     ...defaultProps,
+-    showMonthAndYearPickers: true,
+   },
+ };
+ \n

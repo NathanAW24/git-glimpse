@@ -1,0 +1,1921 @@
+Pull Request Number: 2618
+Title: v2.3.0
+Base Branch: main
+Head Branch: v.2.3.0
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/2618
+State: MERGED
+Created At: 2024-03-31T18:25:05Z
+Merged At: 2024-04-16T12:25:51Z
+Participants: jrgarciadev, mihainiculai, wingkwong, kuri-sun, ShrinidhiUpadhyaya, novsource, ryo-manba, winchesHe, alphaxek
+
+Description:
+📝 Description
+v2.3.0
+Summary:
+
+ fix(radio): isRequired & missing warning message in Form (#2597)
+
+Closes #2585
+avoid overriding required prop
+merge with domRef to keep validationMessage
+
+
+ feat(avatar): support slots in AvatarGroup
+
+Closes #2662 2662
+
+
+ fix: only two keyframes currently supported with spring and inertia animations (#2596)
+
+Closes #2519
+Closes #2515
+Closes: #2690
+Framer Motion previously introduced a bug in v11 and NextUI was stuck using v10. Framer motion team fixed that and released 13 hours ago. This PR is to bump to frame motion version to include that fix.
+
+
+ fix: react hook form issue (#2603)
+
+Closes #1969
+handle RHF on NextUI Form component(input, checkbox, select, autocomplete)
+
+
+ Upgrade to new react aria version #2561
+
+Closes: #2360
+
+
+ Calendar component
+
+Closes #555
+Closes #1662
+Closes #1664
+Closes #2511
+Closes #2249
+ Core (#2456)
+  Docs (#2686)
+
+
+ Range Calendar component
+
+ Core (#2634)
+ Docs (#2686)
+
+
+ Date Input component
+
+ Core (#2641)
+ Docs (#2711)
+
+
+ TimeInput component
+
+ Core (#2672)
+ Docs (#2698)
+
+
+ Date Picker component
+
+Closes: #1995
+ref: #2571
+ Core (#2652)
+ Docs (#2700)
+
+
+ Date Range Picker component
+
+ Core (#2682) [in progress]
+ Docs (#2712)
+
+
+
+New Tools
+CLI (#2714)
+Breaking changes
+Units variables were removed in favour of TailwindCSS' min-h max-h new units (#2713)
+https://tailwindcss.com/blog/tailwindcss-v3-4
+https://tailwindcss.com/docs/min-width
+https://tailwindcss.com/docs/min-height
+⛳️ Current behavior (updates)
+import {Button} from "@nextui-org/react";
+
+export const MyButton = () => {
+  return (
+    <Button className="px-unit-2 py-unit-1 min-w-unit-3xl">
+      My Button
+    </Button>
+  );
+}
+🚀 New behavior
+import {Button} from "@nextui-org/react";
+
+export const MyButton = () => {
+  return (
+    <Button className="px-2 py-1 min-w-3xl">
+      My Button
+    </Button>
+  );
+}
+💣 Is this a breaking change (Yes/No): Yes
+
+
+Upgrade tailwindcss to v3.4
+
+
+Replace -unit- by -
+
+
+- <Button className="px-unit-2 py-unit-1 min-w-unit-3xl">
++ <Button className="px-2 py-1 min-w-3xl">
+
+Commits:
+- refactor(input): input ref test (#2613)
+
+* refactor(input): remove duplicate test
+
+* refactor(input): remove unncessary waitFor\n- fix(radio): isRequired & missing warning message in Form (#2597)
+
+* fix(radio): avoid overriding required props
+
+* fix(radio): merge with domRef
+
+* feat(changeset): fixed missing required props and validationMessage
+
+* fix(radio): unnecessary mergeRefs\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- Calendar component  📅 (#2456)
+
+* feat(calendar): initial structure
+
+* feat(calendar): calendar structure completed, styles in progress
+
+* chore(calendar): dark colors adjusted
+
+* feat(calendar): styles improved, variants added, animations added with framer motion
+
+* chore(calendar): animation changed, shadow improved
+
+* chore(calendar): disableAnimation support added as well as weekDays format
+
+* feat(calendar): more stories added
+
+* chore(calendar): refactor calendar cell styling
+
+* feat(calendar): create calendar function added to the root provider
+
+* feat(calendar): invalid state and error message added
+
+* feat(calendar): calendar picker added, provider modified
+
+* feat(root): object.values deps replaced by new func, intersection hoook added, types version unified
+
+* feat(calendar): calendar pickers in progress
+
+* feat(calendar): calendar pickers added
+
+* fix(calendar): year label formatting
+
+* chore(calendar): add layout parameter to Calendar stories
+
+* feat(calendar): pickers completed, context added
+
+* feat(calendar): visibleMonths supported, warnings fixed, tests added\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- chore(root): changeset\n- chore(calendar): add topContent and bottomContent props to calendar\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- chore(root): merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- feat(calendar): add @nextui-org/radio package and update calendar component\n- refactor: assigned type(DateValue) to focusedDate(ControlledFocusedVaue) (#2637)
+
+Co-authored-by: shrinidhi.upadhyaya <shrinidhi.upadhyaya@stud.uni-bamberg.de>\n- Range Calendar 📆 (#2634)
+
+* feat(calendar): range calendar added, calendar and context adapted
+
+* feat(calendar): range calendar stories added
+
+* chore(calendar): range calendar tests added
+
+* fix(calendar): update calendar styles to adjust to dynamic width\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- Date Input 🗓️ (#2641)
+
+* feat(date-picker): date field component initialized
+
+* chore(date-picker): date field renamed to date-input
+
+* feat(date-picker): date input completed
+
+* chore(date-input): commented code removed\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- feat(avatar): support slots in AvatarGroup (#2669)
+
+* feat: rename newPost to new (#2665)
+
+* fix(avatar): spread getAvatarGroupCountProps in avatar count
+
+* feat(avatar): support slots in avatarGroup
+
+* feat(avatar): support classNames and add getAvatarGroupCountProps
+
+* feat(docs): add classNames to avatar group
+
+* feat(avatar): add CustomSlots in avatar group
+
+* feat(changeset): support slots in avatar group
+
+---------
+
+Co-authored-by: winches <96854855+winchesHe@users.noreply.github.com>\n- Date Picker Component 🗓️ (#2652)
+
+* feat(date-picker): first iteration
+
+* chore(date-picker): update date-picker README.md with improved description
+
+* feat(date-picker): code organized, integration done
+
+* fix(date-picker): min and max value + styles
+
+* fix(date-picker): popover offset adn calendar styles
+
+* feat(date-picker): stories added
+
+* fix(date-picker): calendar width properly handled
+
+* feat(date-picker): styles simplified
+
+* chore(date-picker): almost all test passing
+
+* fix(date-picker): test and styles
+
+* chore(date-picker): calendar popover tests added
+
+* fix(date-picker): props to be passed to the date-input\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- TimeInput Component 🕒 (#2672)
+
+* feat(time-input): time input added with some stories, tests and date-picker integration missing
+
+* feat(time-input): tests added, date-picker integration added, missing stories added\n- chore(react): missing packages added\n- chore(time-input): fix stories names\n- fix(time-input): time value type\n- fix: date-picker visibleMonth width does not get widen enough (#2703)\n- DateRangePicker Component 🗓️ (#2682)
+
+* chore(date-range-picker): in progress
+
+* chore(date-range-picker): in progress
+
+* feat(date-input): components separated into multiple pieces to be able to implement the date range picker
+
+* feat(date-range-picker): first version of it working
+
+* chore(date-picker): hyphen symbol changed
+
+* feat(date-range-picker): stories done\n- fix(range-calendar): styles\n- docs: Calendar & RangeCalendar (#2686)
+
+* feat(docs): add calendar in routes.json
+
+* feat(docs): refresh search-meta.json
+
+* feat(docs): add calendar examples
+
+* feat(docs): calendar content
+
+* feat(deps): add @internationalized/date
+
+* refactor(docs): remove div wrapper
+
+* feat(docs): add calendar doc
+
+* fix(docs): calendar presets
+
+* fix(docs): preset styles
+
+* chore(docs): remove calendar iframe examples
+
+* refactor(docs): discard iframe in calendar doc
+
+* fix(docs): incorrect DateValue import
+
+* feat(docs): include @internationalized/date in live demo scope
+
+* feat(docs): add presets description
+
+* chore(docs): update search-meta.json
+
+* fix(docs): remove DateValue
+
+* feat(docs): include reactAriaI18n in react live demo scope
+
+* fix(docs): presets import issue
+
+* chore(docs): update search-meta.json
+
+* feat(docs): add api reference for nextui provider
+
+* fix(calendar): ixExpanded  typo
+
+* feat(docs): add missing props & event
+
+* chore(docs): update search-meta.json
+
+* chore(docs): update route keywords
+
+* chore(docs): revise value style add defaultFocusedValue
+
+* chore(docs): remove padding and revise gap
+
+* feat(docs): range calendar
+
+* chore(docs): update search-meta.json
+
+* feat(docs): add reactAriaHook
+
+* fix(docs): incorrect component and add storybook and reactAriaHook
+
+* fix(docs): incorrect import path
+
+* chore(docs): reorder range calendar position in sidebar
+
+* chore(Docs): remove custom styles & implementation
+
+* chore(docs): remove last item from accessibility
+
+* chore(docs): onValueChange -> onChange
+
+* feat(docs): add ts example for range calendar
+
+* chore(docs): remove unwanted content in range calendar
+
+* feat(docs): add ts examples for calendar
+
+* chore(docs): update import path
+
+* chore(docs): update import path
+
+* chore(docs): styles adjusted, routes updated
+
+---------
+
+Co-authored-by: Junior Garcia <jrgarciadev@gmail.com>\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- docs: TimeInput (#2698)
+
+* feat(docs): add time input to routes.json
+
+* feat(deps): add @internationalized/date
+
+* feat(docs): add @internationalized/date and @react-aria/i18n to code demo scopes
+
+* feat(docs): time input contetnt
+
+* chore(docs): revise time input examples
+
+* feat(docs): time input content
+
+* chore(time-input): update description
+
+* feat(docs): add ts examples in time-input
+
+* chore(docs): revise TimeValue import
+
+---------
+
+Co-authored-by: Junior Garcia <jrgarciadev@gmail.com>\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- Merge branch 'v.2.3.0' of github.com:nextui-org/nextui into v.2.3.0\n- chore(date-picker): exports updated\n- docs: DatePicker (#2700)
+
+* docs: created the doc for datepicker and its examples
+
+* docs: regenerate search-meta.json
+
+* fix: reverted the unncessary change to Input component
+
+* fix: fixed the component-link for date-picker
+
+* fix: fixed the component-link for date-picker
+
+* fix: added variants section to the doc
+
+* fix: made adjustment to the explanations for the props of DatePicker comp
+
+---------
+
+Co-authored-by: Junior Garcia <jrgarciadev@gmail.com>\n- doc: DateInput (#2711)
+
+* docs: created base examples and the document
+
+* chore: created search-meta and follow-up fix for each date-input example cases
+
+* fix: fixed some example components styles
+
+* fix(docs): updated routes.json
+
+* fix(docs): fixed typo in the docs
+
+* fix: fixed the component-link for date-input
+
+* fix: fixed the component-link for date-input
+
+* fix: label-placements example flex style adjustment
+
+* fix: added variants section to the doc
+
+---------
+
+Co-authored-by: HaRuki Kuriwada <haruki.kuriwada@hennge.com>
+Co-authored-by: Junior Garcia <jrgarciadev@gmail.com>\n- refactor(theme): units removed, tailwind-variants upgraded (#2713)\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- fix(theme): units replaced by spacing\n- fix(select): positioning the label if a description is used (#2553)
+
+Co-authored-by: Poli Sour <polisour.work@gmail.com>\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- Merge branch 'v.2.3.0' of github.com:nextui-org/nextui into v.2.3.0\n- Merge branch 'main' of github.com:nextui-org/nextui into v.2.3.0\n- Upgrade to new react aria version (#2561)
+
+* chore(root): pkg upgraded
+
+* fix: type error
+
+* fix: build error
+
+* chore: update packages from a~d
+
+* chore: update packages from i~r
+
+* chore: update packages from s~u
+
+* chore: update core, hooks, and utilities packages
+
+* feat: add support radio group validationBehavior props
+
+* fix: validationBehavior default to native
+
+* chore: add validationBehavior props in RadioGroup Stories
+
+* fix: handling of errorMessage
+
+* chore: add support validationBehavior autocomplete
+
+* chore: partial support for validation of select
+
+* chore: add support validationBehavior checkbox
+
+* chore: change validationBehavior default to native
+
+* Merge branch 'v.2.3.0' into feat/upgrade-react-aria
+
+* fix: validation logic
+
+* fix: add default value for autocomplete
+
+* chore: add example using error message function
+
+* chore: fixed error displayed in storybook
+
+* chore: omit validationBehavior from component props
+
+* chore: update docs and storybook on validate
+
+* fix: pnpm-lock version
+
+---------
+
+Co-authored-by: Junior Garcia <jrgarciadev@gmail.com>\n- fix(core): build and date input / time input apis\n- chore(date-picker): omit validation behavior\n- chore(docs): add missing props to calendar and range calendar\n-  docs: add nextui-cli page (#2714)
+
+* docs: add nextui-cli page
+
+* docs: update search meta
+
+* docs: typo
+
+* docs: typo
+
+* docs: typo
+
+* feat(docs): cli docs done
+
+---------
+
+Co-authored-by: Junior Garcia <jrgarciadev@gmail.com>\n- chore(docs): add cli commands to installation docs\n- fix(checkbox): prettier\n- fix(docs): incorrect cli api references link\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 5107fc3425c29699ca3aad2331d4240738bbd0b1
+
+**The changes in this PR will be included in the next version bump.**
+
+
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/v.2.3.0?filename=.changeset/heavy-buttons-film.md&value=---%0A%22%40fake-scope%2Ffake-pkg%22%3A%20patch%0A---%0A%0Av2.3.0%20%5BWIP%5D%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: skip review by coderabbit.ai -->
+
+> [!IMPORTANT]
+> ## Auto Review Skipped
+> 
+> Ignore keyword(s) in the title.
+> 
+> Please check the settings in the CodeRabbit UI or the `.coderabbit.yaml` file in this repository. To trigger a single review, invoke the `@coderabbitai review` command.
+> 
+> You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file.
+
+<!-- end of auto-generated comment: skip review by coderabbit.ai --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #PCbHuR2PZmSAJBme3NsOiWZS9GPq3Hvlgsk04kv72WI=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9ITWpCemJzWGc1RlR2SnlBTU1uVHNLY0dVOTVkIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC12MjMwLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktZG9jcy12Mi1naXQtdjIzMC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX0seyJuYW1lIjoibmV4dHVpLXN0b3J5Ym9vay12MiIsInJvb3REaXJlY3RvcnkiOiJwYWNrYWdlcy9zdG9yeWJvb2siLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLXYyL0c2WUtyaTNpQjlrUUU0dnZCYk5RTTZDdjlRWVgiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtdjIzMC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtdjIzMC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/HMjBzbsXg5FTvJyAMMnTsKcGU95d)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-v230-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-v230-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 16, 2024 0:29am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/G6YKri3iB9kQE4vvBbNQM6Cv9QYX)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-v230-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-v230-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 16, 2024 0:29am |
+
+
+\n- jrgarciadev: @wingkwong please add the `Closes #` issues and added changes\n- mihainiculai: Is it normal for calendar to have that scroll slidebars?
+
+<img width="1104" alt="Screenshot 1" src="https://github.com/nextui-org/nextui/assets/104020546/8b22dac1-babd-4402-b17d-013aebae5532">
+<img width="1104" alt="Screenshot 2" src="https://github.com/nextui-org/nextui/assets/104020546/bf2686f5-4ea3-4881-9148-13057ed6a802">
+\n- wingkwong: @mihainiculai are you using Windows?
+
+<img width="1122" alt="image" src="https://github.com/nextui-org/nextui/assets/35857179/0a6a16dd-4df4-475a-a2b2-6ee1a90723a7">
+\n- mihainiculai: @wingkwong yap, Google Chrome on Windows 11 show scrollbars \n- kuri-sun: 🥳 \n
+
+Files Changed:
+- .changeset/clean-poems-divide.md (added, 67 changes)\n  Patch: @@ -0,0 +1,67 @@
++---
++"@nextui-org/react": minor
++"@nextui-org/system": minor
++"@nextui-org/system-rsc": minor
++"@nextui-org/theme": minor
++"@nextui-org/accordion": patch
++"@nextui-org/autocomplete": patch
++"@nextui-org/avatar": patch
++"@nextui-org/badge": patch
++"@nextui-org/breadcrumbs": patch
++"@nextui-org/button": patch
++"@nextui-org/calendar": patch
++"@nextui-org/card": patch
++"@nextui-org/checkbox": patch
++"@nextui-org/chip": patch
++"@nextui-org/code": patch
++"@nextui-org/date-input": patch
++"@nextui-org/date-picker": patch
++"@nextui-org/divider": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/image": patch
++"@nextui-org/input": patch
++"@nextui-org/kbd": patch
++"@nextui-org/link": patch
++"@nextui-org/listbox": patch
++"@nextui-org/menu": patch
++"@nextui-org/modal": patch
++"@nextui-org/navbar": patch
++"@nextui-org/pagination": patch
++"@nextui-org/popover": patch
++"@nextui-org/progress": patch
++"@nextui-org/radio": patch
++"@nextui-org/ripple": patch
++"@nextui-org/scroll-shadow": patch
++"@nextui-org/select": patch
++"@nextui-org/skeleton": patch
++"@nextui-org/slider": patch
++"@nextui-org/snippet": patch
++"@nextui-org/spacer": patch
++"@nextui-org/spinner": patch
++"@nextui-org/switch": patch
++"@nextui-org/table": patch
++"@nextui-org/tabs": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/user": patch
++"@nextui-org/use-aria-accordion": patch
++"@nextui-org/use-aria-accordion-item": patch
++"@nextui-org/use-aria-button": patch
++"@nextui-org/use-aria-link": patch
++"@nextui-org/use-aria-modal-overlay": patch
++"@nextui-org/use-aria-multiselect": patch
++"@nextui-org/use-aria-toggle-button": patch
++"@nextui-org/use-disclosure": patch
++"@nextui-org/use-intersection-observer": patch
++"@nextui-org/use-is-mobile": patch
++"@nextui-org/use-measure": patch
++"@nextui-org/use-pagination": patch
++"@nextui-org/aria-utils": patch
++"@nextui-org/framer-utils": patch
++"@nextui-org/react-rsc-utils": patch
++"@nextui-org/react-utils": patch
++"@nextui-org/shared-icons": patch
++"@nextui-org/shared-utils": patch
++"@nextui-org/test-utils": patch
++---
++
++v2.3.0\n- .changeset/famous-jobs-wonder.md (added, 14 changes)\n  Patch: @@ -0,0 +1,14 @@
++---
++"@nextui-org/accordion": patch
++"@nextui-org/autocomplete": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/modal": patch
++"@nextui-org/popover": patch
++"@nextui-org/ripple": patch
++"@nextui-org/select": patch
++"@nextui-org/tabs": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/framer-transitions": patch
++---
++
++Fixed the issue where only two keyframes were supported with spring and inertia animations.\n- .changeset/famous-panthers-know.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/tabs": patch
++---
++
++Add placement and isVertical prop\n- .changeset/fifty-cups-shout.md (added, 86 changes)\n  Patch: @@ -0,0 +1,86 @@
++---
++"@nextui-org/react": minor
++"@nextui-org/accordion": patch
++"@nextui-org/autocomplete": patch
++"@nextui-org/avatar": patch
++"@nextui-org/badge": patch
++"@nextui-org/breadcrumbs": patch
++"@nextui-org/button": patch
++"@nextui-org/calendar": patch
++"@nextui-org/card": patch
++"@nextui-org/checkbox": patch
++"@nextui-org/chip": patch
++"@nextui-org/code": patch
++"@nextui-org/divider": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/image": patch
++"@nextui-org/input": patch
++"@nextui-org/kbd": patch
++"@nextui-org/link": patch
++"@nextui-org/listbox": patch
++"@nextui-org/menu": patch
++"@nextui-org/modal": patch
++"@nextui-org/navbar": patch
++"@nextui-org/pagination": patch
++"@nextui-org/popover": patch
++"@nextui-org/progress": patch
++"@nextui-org/radio": patch
++"@nextui-org/ripple": patch
++"@nextui-org/scroll-shadow": patch
++"@nextui-org/select": patch
++"@nextui-org/skeleton": patch
++"@nextui-org/slider": patch
++"@nextui-org/snippet": patch
++"@nextui-org/spacer": patch
++"@nextui-org/spinner": patch
++"@nextui-org/switch": patch
++"@nextui-org/table": patch
++"@nextui-org/tabs": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/user": patch
++"@nextui-org/system": patch
++"@nextui-org/system-rsc": patch
++"@nextui-org/theme": patch
++"@nextui-org/use-aria-accordion": patch
++"@nextui-org/use-aria-accordion-item": patch
++"@nextui-org/use-aria-button": patch
++"@nextui-org/use-aria-link": patch
++"@nextui-org/use-aria-modal-overlay": patch
++"@nextui-org/use-aria-multiselect": patch
++"@nextui-org/use-aria-press": patch
++"@nextui-org/use-aria-toggle-button": patch
++"@nextui-org/use-callback-ref": patch
++"@nextui-org/use-clipboard": patch
++"@nextui-org/use-data-scroll-overflow": patch
++"@nextui-org/use-disclosure": patch
++"@nextui-org/use-image": patch
++"@nextui-org/use-infinite-scroll": patch
++"@nextui-org/use-intersection-observer": patch
++"@nextui-org/use-is-mobile": patch
++"@nextui-org/use-is-mounted": patch
++"@nextui-org/use-measure": patch
++"@nextui-org/use-pagination": patch
++"@nextui-org/use-real-shape": patch
++"@nextui-org/use-ref-state": patch
++"@nextui-org/use-resize": patch
++"@nextui-org/use-safe-layout-effect": patch
++"@nextui-org/use-scroll-position": patch
++"@nextui-org/use-ssr": patch
++"@nextui-org/use-update-effect": patch
++"@nextui-org/aria-utils": patch
++"@nextui-org/framer-utils": patch
++"@nextui-org/react-rsc-utils": patch
++"@nextui-org/react-utils": patch
++"@nextui-org/shared-icons": patch
++"@nextui-org/shared-utils": patch
++"@nextui-org/stories-utils": patch
++"@nextui-org/test-utils": patch
++---
++
++- Calendar component added
++- objectToDeps function applied all across components
++- `useMeasure` hook added
++- `useIntersectionObserver` hook added
++- `framer-transitions` renamed to `framer-utils`
++- `ResizablePanel` component added to `framer-utils`
++- `test-utils` updated\n- .changeset/forty-ants-promise.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/avatar": patch
++"@nextui-org/theme": patch
++---
++
++Support slots in AvatarGroup\n- .changeset/giant-carrots-reply.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/select": patch
++---
++
++Fixed the bug of positioning the label in the `Select` component if the description field was used\n- .changeset/many-ways-laugh.md (added, 8 changes)\n  Patch: @@ -0,0 +1,8 @@
++---
++"@nextui-org/autocomplete": patch
++"@nextui-org/checkbox": patch
++"@nextui-org/input": patch
++"@nextui-org/select": patch
++---
++
++Fixed react-hook-form uncontrolled components (#1969)\n- .changeset/sour-actors-juggle.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/autocomplete": patch
++---
++
++Fixed autocomplete listbox keyboard navigation (#2680)\n- .changeset/thirty-islands-trade.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/radio": patch
++---
++
++Fixed missing required props and validationMessage\n- apps/docs/app/blog/[slug]/page.tsx (modified, 7 changes)\n  Patch: @@ -7,6 +7,7 @@ import {format, parseISO} from "date-fns";
+ import NextLink from "next/link";
+ import {Balancer} from "react-wrap-balancer";
+ 
++import {__DEV__, __PREVIEW__} from "@/utils";
+ import {MDXContent} from "@/components/mdx-content";
+ import {siteConfig} from "@/config/site";
+ import {Route} from "@/libs/docs/page";
+@@ -18,6 +19,8 @@ interface BlogPostProps {
+   };
+ }
+ 
++const isDraftVisible = __DEV__ || __PREVIEW__;
++
+ async function getBlogPostFromParams({params}: BlogPostProps) {
+   const slug = params.slug || "";
+   const post = allBlogPosts.find((post) => post.slugAsParams === slug);
+@@ -78,7 +81,7 @@ export async function generateStaticParams(): Promise<BlogPostProps["params"][]>
+ export default async function DocPage({params}: BlogPostProps) {
+   const {post} = await getBlogPostFromParams({params});
+ 
+-  if (!post) {
++  if (!post || (post.draft && !isDraftVisible)) {
+     notFound();
+   }
+ 
+@@ -96,6 +99,7 @@ export default async function DocPage({params}: BlogPostProps) {
+           <ChevronRightLinearIcon className="rotate-180 inline-block mr-1" size={15} />
+           Back to blog
+         </Link>
++
+         <time className="block text-small mb-2 text-default-500" dateTime={post.date}>
+           {format(parseISO(post.date), "LLLL d, yyyy")}
+         </time>
+@@ -119,6 +123,7 @@ export default async function DocPage({params}: BlogPostProps) {
+         </div>
+         <h1 className="mb-2 font-bold text-4xl">
+           <Balancer>{post.title}</Balancer>
++          <strong className="text-default-300">{post?.draft && " (Draft)"}</strong>
+         </h1>
+         <MDXContent code={post.body.code} />
+       </div>\n- apps/docs/app/blog/page.tsx (modified, 13 changes)\n  Patch: @@ -2,9 +2,20 @@ import {allBlogPosts} from "contentlayer/generated";
+ import {compareDesc} from "date-fns";
+ 
+ import {BlogPostList} from "@/components/blog-post";
++import {__DEV__, __PREVIEW__} from "@/utils";
++
++const isDraftVisible = __DEV__ || __PREVIEW__;
+ 
+ export default function Blog() {
+-  const posts = allBlogPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
++  const posts = allBlogPosts
++    .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
++    ?.filter((post) => {
++      if (post.draft && !isDraftVisible) {
++        return false;
++      }
++
++      return true;
++    });
+ 
+   return (
+     <div className="w-full lg:px-16 mt-12">\n- apps/docs/app/examples/perf/page.tsx (modified, 6 changes)\n  Patch: @@ -124,15 +124,15 @@ const MyInput = extendVariants(Input, {
+     },
+     size: {
+       xs: {
+-        inputWrapper: "h-unit-6 min-h-unit-6 px-1",
++        inputWrapper: "h-6 min-h-6 px-1",
+         input: "text-tiny",
+       },
+       md: {
+-        inputWrapper: "h-unit-10 min-h-unit-10",
++        inputWrapper: "h-10 min-h-10",
+         input: "text-small",
+       },
+       xl: {
+-        inputWrapper: "h-unit-14 min-h-unit-14",
++        inputWrapper: "h-14 min-h-14",
+         input: "text-medium",
+       },
+     },\n- apps/docs/components/blog-post.tsx (modified, 2 changes)\n  Patch: @@ -57,7 +57,7 @@ const BlogPostCard = (post: BlogPost) => {
+             </CardBody>
+             <CardFooter className="flex justify-between items-center">
+               <time className="block text-small text-default-500" dateTime={post.date}>
+-                {format(parseISO(post.date), "LLLL d, yyyy")}
++                {format(parseISO(post.date), "LLLL d, yyyy")} {post?.draft && " (Draft)"}
+               </time>
+               <Avatar size="sm" src={post.author?.avatar} />
+             </CardFooter>\n- apps/docs/components/docs/components/code-demo/react-live-demo.tsx (modified, 4 changes)\n  Patch: @@ -2,6 +2,8 @@ import React from "react";
+ import {LivePreview, LiveProvider, LiveError} from "react-live";
+ import {clsx} from "@nextui-org/shared-utils";
+ import * as Components from "@nextui-org/react";
++import * as intlDateUtils from "@internationalized/date";
++import * as reactAriaI18n from "@react-aria/i18n";
+ 
+ import {BgGridContainer} from "@/components/bg-grid-container";
+ import {GradientBox, GradientBoxProps} from "@/components/gradient-box";
+@@ -19,6 +21,8 @@ export interface ReactLiveDemoProps {
+ 
+ export const scope = {
+   ...Components,
++  ...intlDateUtils,
++  ...reactAriaI18n,
+ } as Record<string, unknown>;
+ 
+ export const ReactLiveDemo: React.FC<ReactLiveDemoProps> = ({\n- apps/docs/components/docs/components/codeblock.tsx (modified, 44 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import React, {forwardRef, useEffect} from "react";
+ import {clsx, dataAttr, getUniqueID} from "@nextui-org/shared-utils";
+ import BaseHighlight, {Language, PrismTheme, defaultProps} from "prism-react-renderer";
+-import {debounce} from "lodash";
++import {debounce, omit} from "lodash";
+ 
+ import defaultTheme from "@/libs/prism-theme";
+ 
+@@ -19,6 +19,17 @@ interface CodeblockProps {
+ 
+ type HighlightStyle = "inserted" | "deleted" | undefined;
+ 
++const nextuiCliCommand = [
++  /^init$/,
++  /^add$/,
++  /^upgrade$/,
++  /^remove$/,
++  /^list$/,
++  /^env$/,
++  /^doctor$/,
++];
++
++const highlightStyleToken = ["bun", /nextui\s\w+(?=\s?)/, /^nextui$/, "Usage", ...nextuiCliCommand];
+ const RE = /{([\d,-]+)}/;
+ 
+ const calculateLinesToHighlight = (meta?: string) => {
+@@ -145,8 +156,8 @@ const Codeblock = forwardRef<HTMLPreElement, CodeblockProps>(
+ 
+                 return (
+                   <div
++                    {...omit(lineProps, ["key"])}
+                     key={`${i}-${getUniqueID("line-wrapper")}`}
+-                    {...lineProps}
+                     className={clsx(
+                       lineProps.className,
+                       removeIndent ? "pr-4" : "px-4",
+@@ -165,13 +176,28 @@ const Codeblock = forwardRef<HTMLPreElement, CodeblockProps>(
+                     {showLines && (
+                       <span className="select-none text-xs mr-6 opacity-30">{i + 1}</span>
+                     )}
+-                    {line.map((token, key) => (
+-                      <span
+-                        key={`${key}-${getUniqueID("line")}`}
+-                        {...getTokenProps({token, key})}
+-                        className={className}
+-                      />
+-                    ))}
++                    {line.map((token, key) => {
++                      // Bun has no color style by default in the code block, so hack add in here
++                      const props = getTokenProps({token, key}) || {};
++
++                      return (
++                        <span
++                          {...omit(props, ["key"])}
++                          key={`${key}-${getUniqueID("line")}`}
++                          className={className}
++                          style={{
++                            ...props.style,
++                            ...(highlightStyleToken.some((t) => {
++                              const regex = t instanceof RegExp ? t : new RegExp(t);
++
++                              return regex.test(token.content.trim());
++                            })
++                              ? {color: "rgb(var(--code-function))"}
++                              : {}),
++                          }}
++                        />
++                      );
++                    })}
+                   </div>
+                 );
+               })}\n- apps/docs/components/docs/components/package-managers.tsx (modified, 24 changes)\n  Patch: @@ -1,19 +1,24 @@
+ import {Tabs, Tab, Snippet} from "@nextui-org/react";
+-import {Key} from "react";
+-import {useLocalStorage} from "usehooks-ts";
++import {Key, useState} from "react";
+ 
+ import Codeblock from "./codeblock";
+ 
+-import {YarnIcon, NpmSmallIcon, PnpmIcon, BunIcon} from "@/components/icons";
++import {YarnIcon, NpmSmallIcon, PnpmIcon, BunIcon, CLIBoldIcon} from "@/components/icons";
+ 
+-type PackageManagerName = "npm" | "yarn" | "pnpm" | "bun";
++type PackageManagerName = "cli" | "npm" | "yarn" | "pnpm" | "bun";
+ 
+ type PackageManager = {
+   icon: JSX.Element;
++  label?: string;
+   name: PackageManagerName;
+ };
+ 
+ const packageManagers: PackageManager[] = [
++  {
++    name: "cli",
++    label: "CLI",
++    icon: <CLIBoldIcon className="text-lg text-default-600 dark:text-default-400" />,
++  },
+   {
+     name: "npm",
+     icon: <NpmSmallIcon className="text-[#E53E3E]" />,
+@@ -28,7 +33,7 @@ const packageManagers: PackageManager[] = [
+   },
+   {
+     name: "bun",
+-    icon: <BunIcon className="text-[#FBF0DF]" />,
++    icon: <BunIcon className="text-lg text-[#FBF0DF]" />,
+   },
+ ];
+ 
+@@ -37,9 +42,8 @@ export interface PackageManagersProps {
+ }
+ 
+ export const PackageManagers = ({commands}: PackageManagersProps) => {
+-  const [selectedManager, setSelectedManager] = useLocalStorage<PackageManagerName>(
+-    "selectedPackageManager",
+-    "npm",
++  const [selectedManager, setSelectedManager] = useState<PackageManagerName>(
++    commands.cli ? "cli" : "npm",
+   );
+ 
+   const handleSelectionChange = (tabKey: Key) => {
+@@ -57,7 +61,7 @@ export const PackageManagers = ({commands}: PackageManagersProps) => {
+       variant="underlined"
+       onSelectionChange={handleSelectionChange}
+     >
+-      {packageManagers.map(({name, icon}) => {
++      {packageManagers.map(({name, label, icon}) => {
+         if (!commands[name]) return null;
+ 
+         return (
+@@ -66,7 +70,7 @@ export const PackageManagers = ({commands}: PackageManagersProps) => {
+             title={
+               <div className="flex items-center space-x-2">
+                 {icon}
+-                <span>{name}</span>
++                <span>{label || name}</span>
+               </div>
+             }
+           >\n- apps/docs/components/icons/bold/cli.tsx (added, 22 changes)\n  Patch: @@ -0,0 +1,22 @@
++import {IconSvgProps} from "@/types";
++
++export const CLIBoldIcon = ({...props}: IconSvgProps) => (
++  <svg
++    aria-hidden="true"
++    fill="none"
++    focusable="false"
++    height="1em"
++    role="presentation"
++    viewBox="0 0 24 24"
++    width="1em"
++    xmlns="http://www.w3.org/2000/svg"
++    {...props}
++  >
++    <path
++      clipRule="evenodd"
++      d="M3.464 3.464C2 4.93 2 7.286 2 12c0 4.714 0 7.071 1.464 8.535C4.93 22 7.286 22 12 22c4.714 0 7.071 0 8.535-1.465C22 19.072 22 16.714 22 12s0-7.071-1.465-8.536C19.072 2 16.714 2 12 2S4.929 2 3.464 3.464m2.96 6.056a.75.75 0 0 1 1.056-.096l.277.23c.605.504 1.12.933 1.476 1.328c.379.42.674.901.674 1.518s-.295 1.099-.674 1.518c-.356.395-.871.824-1.476 1.328l-.277.23a.75.75 0 1 1-.96-1.152l.234-.195c.659-.55 1.09-.91 1.366-1.216c.262-.29.287-.427.287-.513c0-.086-.025-.222-.287-.513c-.277-.306-.707-.667-1.366-1.216l-.234-.195a.75.75 0 0 1-.096-1.056M17.75 15a.75.75 0 0 1-.75.75h-5a.75.75 0 0 1 0-1.5h5a.75.75 0 0 1 .75.75"
++      fill="currentColor"
++      fillRule="evenodd"
++    />
++  </svg>
++);\n- apps/docs/components/icons/bold/index.ts (modified, 1 changes)\n  Patch: @@ -16,3 +16,4 @@ export * from "./hash";
+ export * from "./more-square";
+ export * from "./play";
+ export * from "./pause";
++export * from "./cli";\n- apps/docs/components/icons/linear/cli.tsx (added, 23 changes)\n  Patch: @@ -0,0 +1,23 @@
++import {IconSvgProps} from "@/types";
++
++export const CLILinearIcon = ({...props}: IconSvgProps) => (
++  <svg
++    aria-hidden="true"
++    fill="none"
++    focusable="false"
++    height="1em"
++    role="presentation"
++    viewBox="0 0 24 24"
++    width="1em"
++    xmlns="http://www.w3.org/2000/svg"
++    {...props}
++  >
++    <g fill="none" stroke="currentColor" strokeWidth="1.5">
++      <path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z" />
++      <path
++        d="M17 15h-5m-5-5l.234.195c1.282 1.068 1.923 1.602 1.923 2.305c0 .703-.64 1.237-1.923 2.305L7 15"
++        strokeLinecap="round"
++      />
++    </g>
++  </svg>
++);\n- apps/docs/components/icons/linear/index.ts (modified, 1 changes)\n  Patch: @@ -20,3 +20,4 @@ export * from "./chevron-right";
+ export * from "./search";
+ export * from "./simple-grid";
+ export * from "./rotate-left";
++export * from "./cli";\n- apps/docs/components/marketing/hero/hero.tsx (modified, 36 changes)\n  Patch: @@ -1,7 +1,7 @@
+ "use client";
+ 
+ import NextLink from "next/link";
+-import {Button, Link} from "@nextui-org/react";
++import {Button, Link, Chip} from "@nextui-org/react";
+ import {ArrowRightIcon} from "@nextui-org/shared-icons";
+ import dynamic from "next/dynamic";
+ 
+@@ -16,32 +16,32 @@ const BgLooper = dynamic(() => import("./bg-looper").then((mod) => mod.BgLooper)
+ });
+ 
+ export const Hero = () => {
+-  // const handlePressAnnouncement = (name: string, url: string) => {
+-  //   trackEvent("NavbarItem", {
+-  //     name,
+-  //     action: "press",
+-  //     category: "home - gero",
+-  //     data: url,
+-  //   });
+-  // };
++  const handlePressAnnouncement = (name: string, url: string) => {
++    trackEvent("NavbarItem", {
++      name,
++      action: "press",
++      category: "home - gero",
++      data: url,
++    });
++  };
+ 
+   return (
+     <section className="flex relative overflow-hidden lg:overflow-visible w-full flex-nowrap justify-between items-center h-[calc(100vh_-_64px)] 2xl:h-[calc(84vh_-_64px)]">
+       <div className="flex relative z-20 flex-col gap-6 w-full lg:w-1/2 xl:mt-10">
+         <div className="w-full flex justify-center md:hidden">
+-          {/* <Chip
++          <Chip
+             as={NextLink}
+-            className="w-full hover:bg-default-100 border-default-200/80 dark:border-default-100/80 transition-colors cursor-pointer"
+-            color="secondary"
+-            href="/blog/v2.2.0"
++            className="bg-default-100/50 hover:bg-default-100 border-default-200/80 dark:border-default-100/80 transition-colors cursor-pointer"
++            color="default"
++            href="/blog/v2.3.0"
+             variant="dot"
+-            onClick={() => handlePressAnnouncement("Introducing v2.2.0", "/blog/v2.2.0")}
++            onClick={() => handlePressAnnouncement("Introducing v2.3.0", "/blog/v2.3.0")}
+           >
+-            Introducing v2.2.0&nbsp;
+-            <span aria-label="rocket emoji" role="img">
+-              🚀
++            Introducing v2.3.0&nbsp;
++            <span aria-label="tada emoji" role="img">
++              🎉
+             </span>
+-          </Chip> */}
++          </Chip>
+         </div>
+         <div className="text-center leading-8 md:leading-10 md:text-left">
+           <div className="inline-block">\n- apps/docs/components/mdx-components.tsx (modified, 2 changes)\n  Patch: @@ -105,7 +105,7 @@ const List: React.FC<{children?: React.ReactNode}> = ({children}) => {
+ 
+ const InlineCode = ({children}: {children?: React.ReactNode}) => {
+   return (
+-    <Components.Code className="font-normal bg-transparent px-0 py-0 text-code-mdx">
++    <Components.Code className="font-normal text-default-700 bg-default-200/50 dark:bg-default-100/60 px-2 py-0.5">
+       {children}
+     </Components.Code>
+   );\n- apps/docs/components/navbar.tsx (modified, 28 changes)\n  Patch: @@ -16,6 +16,7 @@ import {
+   DropdownMenu,
+   DropdownItem,
+   DropdownTrigger,
++  Chip,
+ } from "@nextui-org/react";
+ import {dataFocusVisibleClasses} from "@nextui-org/theme";
+ import {ChevronDownIcon, LinkIcon} from "@nextui-org/shared-icons";
+@@ -33,13 +34,7 @@ import {currentVersion} from "@/utils/version";
+ import {siteConfig} from "@/config/site";
+ import {Route} from "@/libs/docs/page";
+ import {LargeLogo, SmallLogo, ThemeSwitch} from "@/components";
+-import {
+-  TwitterIcon,
+-  GithubIcon,
+-  DiscordIcon,
+-  HeartFilledIcon,
+-  SearchLinearIcon,
+-} from "@/components/icons";
++import {TwitterIcon, GithubIcon, DiscordIcon, SearchLinearIcon} from "@/components/icons";
+ import {useIsMounted} from "@/hooks/use-is-mounted";
+ import {DocsSidebar} from "@/components/docs/sidebar";
+ import {useCmdkStore} from "@/components/cmdk";
+@@ -312,6 +307,21 @@ export const Navbar: FC<NavbarProps> = ({children, routes, mobileRoutes = [], sl
+       </NavbarContent>
+ 
+       <NavbarContent className="hidden sm:flex basis-1/5 sm:basis-full" justify="end">
++        <NavbarItem className="hidden sm:flex">
++          <Chip
++            as={NextLink}
++            className="bg-default-100/50 hover:bg-default-100 border-default-200/80 dark:border-default-100/80 transition-colors cursor-pointer"
++            color="default"
++            href="/blog/v2.3.0"
++            variant="dot"
++            onClick={() => handlePressNavbarItem("Introducing v2.3.0", "/blog/v2.3.0")}
++          >
++            Introducing v2.3.0&nbsp;
++            <span aria-label="tada emoji" role="img">
++              🎉
++            </span>
++          </Chip>
++        </NavbarItem>
+         <NavbarItem className="hidden sm:flex">
+           <Link
+             isExternal
+@@ -343,7 +353,7 @@ export const Navbar: FC<NavbarProps> = ({children, routes, mobileRoutes = [], sl
+           <ThemeSwitch />
+         </NavbarItem>
+         <NavbarItem className="hidden lg:flex">{searchButton}</NavbarItem>
+-        <NavbarItem className="hidden md:flex">
++        {/* <NavbarItem className="hidden md:flex">
+           <Button
+             isExternal
+             as={Link}
+@@ -357,7 +367,7 @@ export const Navbar: FC<NavbarProps> = ({children, routes, mobileRoutes = [], sl
+           >
+             Sponsor
+           </Button>
+-        </NavbarItem>
++        </NavbarItem> */}
+         <NavbarMenuToggle
+           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+           className="hidden sm:flex lg:hidden ml-4"\n- apps/docs/components/sandpack/use-sandpack.ts (modified, 4 changes)\n  Patch: @@ -70,7 +70,7 @@ export const useSandpack = ({
+   }, {});
+ 
+   let dependencies = {
+-    "framer-motion": "10.12.16",
++    "framer-motion": "11.0.22",
+     "@nextui-org/react": "latest",
+   };
+ 
+@@ -139,7 +139,7 @@ export const useSandpack = ({
+ 
+   // const dependencies = useMemo(() => {
+   //   let deps = {
+-  //     "framer-motion": "10.12.16",
++  //     "framer-motion": "11.0.22",
+   //   };
+ 
+   //   if (hasComponents) {\n- apps/docs/config/routes.json (modified, 116 changes)\n  Patch: @@ -18,6 +18,13 @@
+           "keywords": "getting started, installation, start, nextui",
+           "path": "/docs/guide/installation.mdx"
+         },
++        {
++          "key": "cli",
++          "title": "CLI",
++          "keywords": "cli, command line interface",
++          "path": "/docs/guide/cli.mdx",
++          "newPost": true
++        },
+         {
+           "key": "design-principles",
+           "title": "Design Principles",
+@@ -28,8 +35,7 @@
+           "key": "routing",
+           "title": "Routing",
+           "keywords": "client side routing, routing, browser routing, nextui, next.js router, react router, remix router",
+-          "path": "/docs/guide/routing.mdx",
+-          "newPost": true
++          "path": "/docs/guide/routing.mdx"
+         },
+         {
+           "key": "upgrade-to-v2",
+@@ -85,7 +91,8 @@
+         {
+           "key": "layout",
+           "title": "Layout",
+-          "path": "/docs/customization/layout.mdx"
++          "path": "/docs/customization/layout.mdx",
++          "updated": true
+         },
+         {
+           "key": "colors",
+@@ -141,8 +148,7 @@
+           "key": "autocomplete",
+           "title": "Autocomplete",
+           "keywords": "autocomplete, auto suggest, search, typeahead",
+-          "path": "/docs/components/autocomplete.mdx",
+-          "newPost": true
++          "path": "/docs/components/autocomplete.mdx"
+         },
+         {
+           "key": "badge",
+@@ -160,8 +166,7 @@
+           "key": "breadcrumbs",
+           "title": "Breadcrumbs",
+           "keywords": "breadcrumbs, navigation, path, trail, location",
+-          "path": "/docs/components/breadcrumbs.mdx",
+-          "newPost": true
++          "path": "/docs/components/breadcrumbs.mdx"
+         },
+         {
+           "key": "card",
+@@ -187,17 +192,65 @@
+           "keywords": "chip, tag, label, small actionable entity",
+           "path": "/docs/components/chip.mdx"
+         },
++        {
++          "key": "code",
++          "title": "Code",
++          "keywords": "code, code snippet, inline code, coding",
++          "path": "/docs/components/code.mdx"
++        },
++        {
++          "key": "input",
++          "title": "Input",
++          "keywords": "input, text box, form field, data entry",
++          "path": "/docs/components/input.mdx"
++        },
++        {
++          "key": "date-input",
++          "title": "Date Input",
++          "keywords": "date-input, time, input, timezone",
++          "path": "/docs/components/date-input.mdx",
++          "newPost": true
++        },
++        {
++          "key": "time-input",
++          "title": "Time Input",
++          "keywords": "timeinput, time, input, timezone",
++          "path": "/docs/components/time-input.mdx",
++          "newPost": true
++        },
+         {
+           "key": "circular-progress",
+           "title": "Circular Progress",
+           "keywords": "circular progress, loading indicator, activity sign, process display",
+           "path": "/docs/components/circular-progress.mdx"
+         },
+         {
+-          "key": "code",
+-          "title": "Code",
+-          "keywords": "code, code snippet, inline code, coding",
+-          "path": "/docs/components/code.mdx"
++          "key": "calendar",
++          "title": "Calendar",
++          "keywords": "calendar, date picker, month picker, year picker",
++          "path": "/docs/components/calendar.mdx",
++          "newPost": true
++        },
++        {
++          "key": "range-calendar",
++          "title": "Range Calendar",
++          "keywords": "range calendar, date picker, month picker, year picker",
++          "path": "/docs/components/range-calendar.mdx",
++          "newPost": true
++        },
++        {
++          "key": "date-picker",
++          "title": "Date Picker",
++          "keywords": "date-picker, time, input, timezone",
++          "path": "/docs/components/date-picker.mdx",
++          "newPost": true
++        },
++        {
++          "key": "date-range-picker",
++          "title": "Date Range Picker",
++          "keywords": "date-range-picker, date-picker, time, input, timezone",
++          "path": "/docs/components/date-range-picker.mdx",
++          "newPost": true
+         },
+         {
+           "key": "divider",
+@@ -209,21 +262,14 @@
+           "key": "dropdown",
+           "title": "Dropdown",
+           "keywords": "dropdown, menu, selection, option list",
+-          "path": "/docs/components/dropdown.mdx",
+-          "updated": true
++          "path": "/docs/components/dropdown.mdx"
+         },
+         {
+           "key": "image",
+           "title": "Image",
+           "keywords": "image, media, picture, photo, graphic display",
+           "path": "/docs/components/image.mdx"
+         },
+-        {
+-          "key": "input",
+-          "title": "Input",
+-          "keywords": "input, text box, form field, data entry",
+-          "path": "/docs/components/input.mdx"
+-        },
+         {
+           "key": "kbd",
+           "title": "Kbd",
+@@ -234,15 +280,13 @@
+           "key": "link",
+           "title": "Link",
+           "keywords": "link, navigation, href, web page connection",
+-          "path": "/docs/components/link.mdx",
+-          "updated": true
++          "path": "/docs/components/link.mdx"
+         },
+         {
+           "key": "listbox",
+           "title": "Listbox",
+           "keywords": "listbox, selection, option list, multiple choice",
+-          "path": "/docs/components/listbox.mdx",
+-          "updated": true
++          "path": "/docs/components/listbox.mdx"
+         },
+         {
+           "key": "modal",
+@@ -326,8 +370,7 @@
+           "key": "slider",
+           "title": "Slider",
+           "keywords": "slider, range input, value selector, sliding control",
+-          "path": "/docs/components/slider.mdx",
+-          "newPost": true
++          "path": "/docs/components/slider.mdx"
+         },
+         {
+           "key": "table",
+@@ -346,8 +389,7 @@
+           "key": "textarea",
+           "title": "Textarea",
+           "keywords": "textarea, multi-line text input, large text field, form control",
+-          "path": "/docs/components/textarea.mdx",
+-          "updated": true
++          "path": "/docs/components/textarea.mdx"
+         },
+         {
+           "key": "tooltip",
+@@ -362,6 +404,26 @@
+           "path": "/docs/components/user.mdx"
+         }
+       ]
++    },
++    {
++      "key": "api-references",
++      "title": "API References",
++      "defaultOpen": true,
++      "keywords": "api references, nextui, api",
++      "routes": [
++        {
++          "key": "cli-api",
++          "title": "NextUI CLI",
++          "keywords": "api references, nextui, api, cli",
++          "path": "/docs/api-references/cli-api.mdx"
++        },
++        {
++          "key": "nextui-provider",
++          "title": "NextUI Provider",
++          "keywords": "api references, nextui, api, nextui provider",
++          "path": "/docs/api-references/nextui-provider.mdx"
++        }
++      ]
+     }
+   ],
+   "mobileRoutes": [\n- apps/docs/config/search-meta.json (modified, 4395 changes)\n  Patch: No patch available\n- apps/docs/content/blog/v2.3.0.mdx (added, 407 changes)\n  Patch: @@ -0,0 +1,407 @@
++---
++title: "Introducing v2.3.0 🎉"
++description: "NextUI v2.3.0 is here! includes six new components, NextUI CLI, bug fixes, React Aria, and a TailwindCSS upgrade, among other enhancements."
++date: "2024-04-16"
++draft: true
++image: "/blog/v2.3.0.jpg"
++tags: ["nextui", "cli", "date picker", "time input", "date input", "calendar"]
++author:
++  name: "Junior Garcia"
++  username: "@jrgarciadev"
++  link: "https://twitter.com/jrgarciadev"
++  avatar: "/avatars/junior-garcia.jpeg"
++---
++
++import {dateInputContent} from "@/content/components/date-input";
++import {timeInputContent} from "@/content/components/time-input";
++import {calendarContent} from "@/content/components/calendar";
++import {rangeCalendarContent} from "@/content/components/range-calendar";
++import {datePickerContent} from "@/content/components/date-picker";
++import {dateRangePickerContent} from "@/content/components/date-range-picker";
++
++<img
++  src="/blog/v2.3.0_2x.jpg"
++  width={700}
++  height={350}
++  alt="NextUI v2.3.0"
++  className="w-full border border-transparent dark:border-default-200/50 object-fit rounded-xl shadow-lg"
++/>
++
++We are excited to announce the latest update to NextUI, version **2.3.0**! This release introduces 6 new components,
++our new CLI, and several enhancements and bug fixes.
++
++## What's New in v2.3.0?
++
++- [NextUI CLI](/docs/guide/cli) - A command-line interface for creating and managing NextUI projects.
++- [DateInput](/docs/components/date-input) - Allows users to enter and edit date and time values using a keyboard.
++- [TimeInput](/docs/components/time-input) - Allows users to enter and edit time values using a keyboard.
++- [Calendar](/docs/components/calendar) - Displays a calendar for selecting dates and times.
++- [RangeCalendar](/docs/components/range-calendar) - Displays a calendar for selecting date ranges.
++- [DatePicker](/docs/components/date-picker) - Allows users to select a date from a calendar.
++- [DateRangePicker](/docs/components/date-range-picker) - Allows users to select a date range from a calendar.
++- [Other Changes](#other-changes) - Includes styling improvements, accessibility and usability enhancements.
++
++<Spacer y={4} />
++
++Requirements:
++
++- [Tailwind CSS 3.4](https://tailwindcss.com/) or later
++
++Upgrade today by running one of the following commands:
++
++<Spacer y={4} />
++
++<PackageManagers
++  commands={{
++    cli: "nextui upgrade",
++    npm: "npx nextui-cli@latest upgrade",
++  }}
++/>
++
++<Spacer y={4} />
++
++## NextUI CLI
++
++We are thrilled to introduce the [NextUI CLI](https://github.com/nextui-org/nextui-cli), a command-line interface, It offers a comprehensive suite
++of commands to initialize, manage, and improve your NextUI projects. It enables you to `add`, `remove`, or
++`upgrade` individual components, assess the health of your project, and more.
++
++### Installation
++
++To install the CLI globally, execute one of the following commands in your terminal:
++
++<PackageManagers
++  commands={{
++    npm: "npm install nextui-cli -g",
++    yarn: "yarn add nextui-cli -g",
++    pnpm: "pnpm add nextui-cli -g",
++    bun: "bun add nextui-cli -g",
++  }}
++/>
++
++Alternatively, you can use the CLI without a global installation by employing `npx`:
++
++```bash
++npx nextui-cli@latest
++```
++
++### Usage
++
++Once the CLI is installed, run the following command to display available commands:
++
++```bash
++nextui
++```
++
++NextUI CLI can help you create new projects, add components, upgrade components, remove components, detect issues in
++you setup, know your environment, and more.
++
++<Spacer y={4} />
++
++To initialize a new project, you can simply run:
++
++```bash
++nextui init my-nextui-app
++```
++
++<Spacer y={4} />
++
++You will be prompted to configure your project:
++
++```codeBlock bash
++? Select a template › - Use arrow-keys. Return to submit.
++❯   App
++    A Next.js 13 with app directory template pre-configured with NextUI (v2) and Tailwind CSS.
++    Pages
++    A Next.js 13 with pages directory template pre-configured with NextUI (v2) and Tailwind CSS.
++```
++
++Select the template you want to use and the CLI will create a new project for you.
++
++> We're working on adding more templates to the CLI, so stay tuned for updates!
++
++<Spacer y={4} />
++
++If you already have a NextUI project, you can add components to it using the `add` command:
++
++```bash
++nextui add date-input
++```
++
++It will automatically detect the required dependencies, modify your `tailwind.config.(js|ts)` file,
++detect whether using `pnpm` if so, add the required configuration to your `.npmrc` file and add the component to your project.
++
++If instead of installing a single component you want to install multiple components, you can do so by separating them with a space:
++
++```bash
++nextui add date-input time-input calendar
++```
++
++You can alternatively install the `main` package which includes all the components by passing the `--all` flag:
++
++```bash
++nextui add --all
++```
++
++<Spacer y={4} />
++
++> The CLI is currentl in `Alpha` stage, we're working on adding more features and improvements. If you find any issues or have any suggestions, please let us know by [opening an issue](https://github.com/nextui-org/nextui-cli/issues/new).
++
++To learn more about the CLI and its commands, please refer to the [CLI documentation](/docs/guide/cli) and the [CLI API reference](/docs/api-references/cli-api).
++
++## New Components
++
++Since the beginning of NextUI, devs have been asking for date and time input components. After
++months of iteration and development, we are excited to introduce the following new components:
++
++### DateInput
++
++DateInput is a component that allows users to enter and edit date and time values using a keyboard.
++Each part of a date value is displayed in an individually editable segment.
++
++<CodeDemo title="Usage" files={dateInputContent.usage} />
++
++Go to the [DateInput documentation](/docs/components/date-input) to learn more about the component.
++
++### TimeInput
++
++The `TimeInput` component consists of a label, and a group of segments representing each unit of a time (e.g. hours, minutes, and seconds). Each segment is individually focusable and editable by the user, by typing or using the arrow keys to increment and decrement the value. This approach allows values to be formatted and parsed correctly regardless of the locale or time format, and offers an easy and error-free way to edit times using the keyboard.
++
++<CodeDemo title="Usage" files={timeInputContent.usage} />
++
++Go to the [TimeInput documentation](/docs/components/time-input) to learn more about the component.
++
++### Calendar
++
++A Calendar consists of a grouping element containing one or more date grids (e.g. months), and a previous and next button for navigating between date ranges. Each calendar grid consists of cells containing button elements that can be pressed and navigated to using the arrow keys to select a date.
++
++<CodeDemo title="Usage" files={calendarContent.usage} />
++
++The calendar also supports selecting years and months for rapid selection.
++
++<CodeDemo title="With Month And Year Picker" files={calendarContent.withMonthAndYearPicker} />
++
++Go to the [Calendar documentation](/docs/components/calendar) to learn more about the component.
++
++### RangeCalendar
++
++A Range calendar consists of a grouping element containing one or more date grids (e.g. months), and a previous and next button for navigating through time. Each calendar grid consists of cells containing button elements that can be pressed and navigated to using the arrow keys to select a date range. Once a start date is selected, the user can navigate to another date using the keyboard or by hovering over it, and clicking it or pressing the Enter key commits the selected date range.
++
++<CodeDemo title="Usage" files={rangeCalendarContent.usage} />
++
++Go to the [RangeCalendar documentation](/docs/components/range-calendar) to learn more about the component.
++
++### DatePicker
++
++A Date Picker combines a DateInput and a Calendar popover to allow users to enter or select a date and time value.
++
++<CodeDemo title="Usage" files={datePickerContent.usage} />
++
++Go to the [DatePicker documentation](/docs/components/date-picker) to learn more about the component.
++
++### DateRangePicker
++
++Date Range Picker combines two DateInputs and a RangeCalendar popover to allow users to enter or select a date and time range.
++
++<CodeDemo title="Usage" files={dateRangePickerContent.usage} />
++
++Go to the [DateRangePicker documentation](/docs/components/date-range-picker) to learn more about the component.
++
++
++### Calendar Presets
++
++`Calendar` and `RangeCalendar` components support adding custom content at the top and bottom of the calendar, this is useful for adding presets or 
++custom actions to the calendar.
++
++Here's an example of how to add presets to the `Calendar` component:
++
++<CodeDemo title="Calendar Presets" files={calendarContent.presets} />
++
++### Internationalization
++
++These new components have built-in internationalization, time zones and granularity support, they supports selecting dates
++in many calendar systems used around the world, including `Gregorian`, `Hebrew`, `Indian`, `Islamic`, `Buddhist`, and more.
++
++Dates are automatically displayed in the appropriate calendar system for the user's locale this is possible thanks to [@internationalized/date](https://react-spectrum.adobe.com/internationalized/date/) package, which
++includes functions for parsing strings in multiple formats into `ZonedDateTime` objects.
++
++Here's and example using the `Indian` calendar system:
++
++<CodeDemo title="International Calendar" files={datePickerContent.internationalCalendar} />
++
++Alternatively you can set the `locale` globally by using the `NextUIProvider` component:
++
++```jsx
++// Next.js App Router example
++"use client";
++
++import {NextUIProvider} from "@nextui-org/react";
++
++export interface ProvidersProps {
++  children: React.ReactNode;
++}
++
++export function Providers({children}: ProvidersProps) {
++  const router = useRouter();
++
++  return <NextUIProvider locale="hi-IN-u-ca-indian">{children}</NextUIProvider>;
++}
++```
++
++If no `locale` is provided, it will extract the locale from the browser.
++
++### NextUI Provider
++
++The `NextUIProvider` component was updated to include the `createCalendar` function, which allows you to create a calendar instance with the specified locale and time zone,
++and the `defaultDates` object which allows you to set global minimum and maximum dates for the components.
++
++```jsx
++// Next.js App Router example
++"use client";
++
++import {NextUIProvider, SupportedCalendars} from "@nextui-org/react";
++import {CalendarDate, GregorianCalendar} from "@internationalized/date";
++
++export interface ProvidersProps {
++  children: React.ReactNode;
++}
++
++function createCalendar(identifier: SupportedCalendars) {
++  switch (identifier) {
++    case "gregory":
++      return new GregorianCalendar();
++    default:
++      throw new Error(`Unsupported calendar ${identifier}`);
++  }
++}
++
++export function Providers({children}: ProvidersProps) {
++  const router = useRouter();
++
++  return (
++    <NextUIProvider
++      locale="hi-IN-u-ca-indian"
++      defaultDates={{
++        minDate: new CalendarDate(1900, 1, 1),
++        maxDate: new CalendarDate(2099, 12, 31),
++      }}
++      createCalendar={createCalendar}
++    >
++      {children}
++    </NextUIProvider>
++  );
++}
++```
++
++<Spacer y={4} />
++
++
++## Breaking Changes
++
++In order to improve the performance and reduce the bundle size, we have removed the `units` creation from the 
++`nextui` plugin. [TailwindCSS v3.4](https://tailwindcss.com/blog/tailwindcss-v3-4) added support for `min-h-*` and `min-w-*` classes, so it is no longer needed.
++
++How to upgrade:
++
++1. Upgrade TailwindCSS to version 3.4 or later (if you haven't already). You can do this by running:
++
++```bash
++npm install tailwindcss@latest
++```
++
++2. Remove the `spacingUnit` configuration from your `tailwind.config.(js|ts)` file (if you have it):
++
++```diff-js
++ plugins: [
++    nextui({
++      layout: {
++-       spacingUnit: 4,
++      },
++    }),
++  ],
++```
++
++3. Find all `-unit` classes in your project and replace them with a `-` separator. For example, replace `p-unit-4` with `p-4`.
++
++```diff-jsx
++import {Button} from "@nextui-org/react";
++
++export const MyButton = () => {
++  return (
++-    <Button className="px-unit-2 py-unit-1 min-w-unit-48">
+++    <Button className="px-2 py-1 min-w-48">
++      My Button
++    </Button>
++  );
++};
++```
++
++That's it! Your project should now be using the latest version of TailwindCSS and NextUI.
++
++
++<Spacer y={4} />
++
++
++## Other Changes
++
++**Bug Fixes**:
++
++- Fixed an HSL color rounding issue in the theme settings to ensure accurate color representation. [PR](https://github.com/nextui-org/nextui/pull/2702) - [@wingkwong](https://github.com/wingkwong)
++- Removed conflicting transition definitions affecting CSS classes. [PR](https://github.com/nextui-org/nextui/pull/2677) - [@u3u](https://github.com/u3u)
++- Patched the "@nextui-org/autocomplete" package to fix an issue where empty items with `allowCustomValue` would not render properly due to a null node problem. [PR](https://github.com/nextui-org/nextui/pull/2674) - [@wingkwong](https://github.com/wingkwong)
++- Implemented a fix in modal components to prevent carryover of IME (Input Method Editor) input when switching fields using the Tab key. [PR](https://github.com/nextui-org/nextui/pull/2709) - [@ryo-manba](https://github.com/ryo-manba)
++- Enhanced accessibility by handling Tab key press event in the `ModalContent` component. [PR](https://github.com/nextui-org/nextui/pull/2709) - [@ryo-manba](https://github.com/ryo-manba)
++- Fixed an issue where disabled select components could still be changed using blur and keyboard shortcuts. [PR](https://github.com/nextui-org/nextui/pull/2649) - [@wingkwong](https://github.com/wingkwong)
++- Patched issues in "@nextui-org/use-aria-multiselect" and "@nextui-org/stories-utils" packages to fix a warning about `SELECT defaultSelectedKeys`. [PR](https://github.com/nextui-org/nextui/pull/2648) - [@wingkwong](https://github.com/wingkwong)
++- Fixed an issue with incorrect `onChange` typing in Checkbox Group, ensuring it now correctly handles an array of strings as values. [PR](https://github.com/nextui-org/nextui/pull/2595) - [@wingkwong](https://github.com/wingkwong)
++- Fixed the `label` placement issue in `Select` component if a `description` prop is used [PR](https://github.com/nextui-org/nextui/pull/2553) - [@novsource](https://github.com/novsource)
++- Fixed the `originalProps` spread issue in the `Dropdown` component. [PR](https://github.com/nextui-org/nextui/pull/2450) - [@wingkwong](https://github.com/wingkwong)
++
++**Improvements**
++- Framer Motion was updated to the latest version, improving performance and reducing bundle size. [Docs](https://www.framer.com/motion/guide-reduce-bundle-size/) [PR](https://github.com/nextui-org/nextui/pull/2464) - [@mezotv](https://github.com/mezotv)
++- `LazyMotion` was added to all components that use Framer Motion, improving performance by only loading the required motion components.
++- We removed the custom `units` creation from the `nextui` plugin, it is no longer needed with TailwindCSS v3.4 and above. [PR](https://github.com/nextui-org/nextui/pull/2713) - [@jrgarciadev](https://github.com/jrgarciadev) 
++- Updated `framer-motion` package across various components and utilities to version `11.0.22` for enhanced performance and consistency. [PR](https://github.com/nextui-org/nextui/pull/2596) - [@wingkwong](https://github.com/wingkwong)
++- Ensured compatibility with `react@18.2.0` and `react-dom@18.2.0` across the board. [PR](https://github.com/nextui-org/nextui/pull/2596) - [@wingkwong](https://github.com/wingkwong)
++- Introduced patches for NextUI components to improve animations, including support for keyframes with spring and inertia animations. [PR](https://github.com/nextui-org/nextui/pull/2596) - [@wingkwong](https://github.com/wingkwong)
++- Improved handling of numeric keys in the multi-select component to ensure consistent behavior. [PR](https://github.com/nextui-org/nextui/pull/2589) - [@wingkwong](https://github.com/wingkwong)
++- Updated the version of react-aria to include the latest changes as detailed in the [2024-02-13 release](https://react-spectrum.adobe.com/releases/2024-02-13.html). [PR](https://github.com/nextui-org/nextui/pull/2561) - [@ryo-manba](https://github.com/ryo-manba)
++- Added support for custom class names in the `AvatarGroup` component, enhancing flexibility in styling. [PR](https://github.com/nextui-org/nextui/pull/2669) - [@wingkwong](https://github.com/wingkwong)
++- Introduced a `count` slot to the `AvatarGroup` for more customized rendering. [PR](https://github.com/nextui-org/nextui/pull/2669) - [@wingkwong](https://github.com/wingkwong)
++- Improved the `AvatarGroup` component's count rendering logic for better performance and flexibility. [PR](https://github.com/nextui-org/nextui/pull/2669) - [@wingkwong](https://github.com/wingkwong)
++- Add RTL support to the kbd component. [PR](https://github.com/nextui-org/nextui/pull/2482) - [@mrbadri](https://github.com/mrbadri)
++- Add RTL support to the Select component. [PR](https://github.com/nextui-org/nextui/pull/2485) - [@mrbadri](https://github.com/mrbadri)
++- Add RTL support to the avatar group componen. [PR](https://github.com/nextui-org/nextui/pull/2498) - [@mrbadri](https://github.com/mrbadri)
++- Add RTL support to the Table component. [PR](https://github.com/nextui-org/nextui/pull/2472) - [@mrbadri](https://github.com/mrbadri)
++
++**Documentation**:
++- Updated documentation to reflect the new features and changes in the `AvatarGroup` component.
++- Added support for the "bun" package manager across documentation and components. [PR](https://github.com/nextui-org/nextui/pull/2625) - [@sudongyuer](https://github.com/sudongyuer)
++- [Kapa.ai](https://www.kapa.ai/) widget was added to the documentation to provide AI support for users. [PR](https://github.com/nextui-org/nextui/pull/2428) - [@wingkwong](https://github.com/sudongyuer)
++- Layout docs updated to remove the `units` configuration from the `tailwind.config.(js|ts)` file.
++
++
++Special thanks to NextUI Team members [@kuri-sun](https://github.com/kuri-sun), [@ryo-manba](https://github.com/ryo-manba), 
++[@sudongyuer](https://github.com/sudongyuer), [@winchesHe](https://github.com/winchesHe), [@wingkwong](https://github.com/wingkwong), 
++[@tianenpang](https://github.com/tianenpang), [@smultar](https://github.com/smultar) and contributors for their contributions to this release.
++
++For a full list of changes, please refer to the [release notes](https://github.com/nextui-org/nextui/releases/tag/%40nextui-org%2Freact%402.3.0).
++
++<Spacer y={6} />
++
++We hope you enjoy these new components and the new features. We're excited to see what you build with them!
++
++Thanks for reading and happy coding! 🚀
++
++---
++
++## Community
++
++We're excited to see the community adopt NextUI, raise issues, and provide feedback.
++Whether it's a feature request, bug report, or a project to showcase, please get involved!
++
++<Community />
++
++## Contributing
++
++PR's on NextUI are always welcome, please see our [contribution guidelines](https://github.com/nextui-org/nextui/blob/main/CONTRIBUTING.md) to learn how you can contribute to this project.\n- apps/docs/content/components/autocomplete/index.ts (modified, 2 changes)\n  Patch: @@ -24,6 +24,7 @@ import asyncLoadingItems from "./async-loading-items";
+ import sections from "./sections";
+ import customSectionsStyle from "./custom-sections-style";
+ import customStyles from "./custom-styles";
++import readOnly from "./read-only";
+ 
+ export const autocompleteContent = {
+   usage,
+@@ -52,4 +53,5 @@ export const autocompleteContent = {
+   sections,
+   customSectionsStyle,
+   customStyles,
++  readOnly,
+ };\n- apps/docs/content/components/autocomplete/read-only.ts (added, 54 changes)\n  Patch: @@ -0,0 +1,54 @@
++const data = `export const animals = [
++  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
++  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
++  {label: "Elephant", value: "elephant", description: "The largest land animal"},
++  {label: "Lion", value: "lion", description: "The king of the jungle"},
++  {label: "Tiger", value: "tiger", description: "The largest cat species"},
++  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
++  {
++    label: "Dolphin",
++    value: "dolphin",
++    description: "A widely distributed and diverse group of aquatic mammals",
++  },
++  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
++  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
++  {
++    label: "Shark",
++    value: "shark",
++    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
++  },
++  {
++    label: "Whale",
++    value: "whale",
++    description: "Diverse group of fully aquatic placental marine mammals",
++  },
++  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
++  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++];`;
++
++const App = `import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
++import {animals} from "./data";
++
++export default function App() {
++  return (
++    <Autocomplete
++      isReadOnly
++      label="Favorite Animal"
++      defaultItems={animals}
++      placeholder="Search an animal"
++      defaultSelectedKey="cat"
++      className="max-w-xs"
++    >
++      {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
++    </Autocomplete>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++  "/data.js": data,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/breadcrumbs/customizing-ellipsis.ts (modified, 2 changes)\n  Patch: @@ -12,7 +12,7 @@ export default function App() {
+             <DropdownTrigger>
+               <Button
+                 isIconOnly
+-                className="min-w-unit-6 w-unit-6 h-unit-6"
++                className="min-w-6 w-6 h-6"
+                 size="sm"
+                 variant="flat"
+               >\n

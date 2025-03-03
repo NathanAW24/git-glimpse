@@ -1,0 +1,1506 @@
+Pull Request Number: 2854
+Title: fix: popover-based focus behaviour
+Base Branch: canary
+Head Branch: fix/eng-668
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2854
+State: MERGED
+Created At: 2024-04-24T05:22:50Z
+Merged At: 2024-05-24T19:19:46Z
+Participants: wingkwong, iqingting, Aryan-mor, ewertonce, jrgarciadev
+
+Description:
+Closes #2849
+Closes #2834
+Closes #2779
+Closes #2962
+Closes #2872
+Closes #2974
+Closes: #1920
+Closes: #1287
+Closes: #3060
+
+📝 Description
+In react aria, popover can be closed by clicking or interacting outside or by escape key (handled by useOverlay). When the popover is closed, focus is back to the trigger, i.e. the input. Since we have different focus behaviours in autocomplete, this PR is to handle them on our side instead of doing them internally on react aria side for better flexibilty.
+here's the updated focus behaviour for autocomplete.
+
+click selector button -> open listbox -> click selector button -> close listbox -> input stay focused
+click selector button -> open listbox -> click outside autocomplete-> close listbox -> input stay blurred
+click selector button -> open listbox -> input stay focused
+click autocomplete input -> open listbox -> input stay focused
+open listbox -> select an item -> close listbox -> input stay focused
+with selected item -> click clear button -> input stay focused and listbox is open
+whenever it is focus -> click outside -> input stay blurred
+
+the behaviours are consistent even the autocomplete is in the modal.
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+  
+    
+    
+
+    pr2854-demo-1.webm
+    
+  
+
+  
+
+  
+
+
+
+  
+    
+    
+
+    pr2854-demo-2.webm
+    
+  
+
+  
+
+  
+
+
+
+  
+    
+    
+
+    pr2854-demo-3.webm
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Improved focus management and interaction handling in autocomplete, date-picker, date-range-picker, dropdown, and select components for a better user experience.
+
+
+
+Bug Fixes
+
+Fixed issues with focus behavior across various components to ensure consistent and expected functionality.
+
+
+
+Refactor
+
+Simplified the popover rendering logic in the Select component for cleaner and more maintainable code.
+
+
+
+These updates aim to provide a more intuitive and seamless interaction with our components.
+
+Commits:
+- fix(autocomplete): autocomplete focus behaviour\n- feat(autocomplete): add test case for catching blur cases\n- refactor(autocomplete): use isOpen instead\n- feat(autocomplete): add "should focus when clicking autocomplete" test case\n- feat(autocomplete): add should set the input after selection\n- Merge branch 'main' into fix/eng-668\n- fix(autocomplete): remove shouldUseVirtualFocus\n- fix(autocomplete): uncomment blur logic\n- Merge branch 'canary' into fix/eng-668\n- refactor(autocomplete): remove state as it is in getPopoverProps\n- refactor(autocomplete): remove unnecessary blur\n- refactor(select): remove unncessary props\n- fix(popover): use domRef instead\n- fix(popover): revise isNonModal and isDismissable\n- fix(popover): use dialogRef back\n- fix(popover): rollback\n- fix(autocomplete): onFocus logic\n- feat(popover): set disableFocusManagement to overlay\n- feat(modal): set disableFocusManagement to overlay\n- fix(autocomplete): set disableFocusManagement for autocomplete\n- feat(popover): include disableFocusManagement prop\n- refactor(autocomplete): revise type in selectorButton\n- fix(autocomplete): revise focus logic\n- feat(autocomplete): add internal focus state and add shouldCloseOnInteractOutside\n- feat(autocomplete): handle selectedItem change\n- feat(autocomplete): add clear button test\n- feat(changeset): add changeset\n- refactor(components): use the original order\n- refactor(autocomplete): add more comments\n- fix(autocomplete): revise focus behaviours\n- refactor(autocomplete): rename to listbox\n- chore(popover): remove disableFocusManagement from popover\n- chore(autocomplete): remove disableFocusManagement from autocomplete\n- chore(changeset): add issue number\n- fix(popover): don't set default value to transformOrigin\n- fix(autocomplete): revise shouldCloseOnInteractOutside logic\n- feat(autocomplete): should close listbox by clicking another autocomplete\n- fix(popover): add disableFocusManagement to overlay\n- refactor(autocomplete): revise comments and refactor shouldCloseOnInteractOutside\n- feat(changeset): add issue number\n- Merge branch 'canary' into fix/eng-668\n- fix(autocomplete): merge with selectorButtonProps.onClick\n- refactor(autocomplete): remove extra line\n- refactor(autocomplete): revise comment\n- feat(select): add shouldCloseOnInteractOutside\n- feat(dropdown): add shouldCloseOnInteractOutside\n- feat(date-picker): add shouldCloseOnInteractOutside\n- feat(changeset): add dropdown and date-picker\n- fix(popover): revise shouldCloseOnInteractOutside\n- feat(date-picker): integrate with ariaShouldCloseOnInteractOutside\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-668/[bug]-autocomplete-dropdown-dont-close-inside-of-a-modal">ENG-668 [BUG] - Autocomplete dropdown don't close inside of a modal</a></p>\n- vercel: [vc]: #/AO69I9aIhfIaATEuN6mJtP4qGqRkeX1WRzbGd4eDQQ=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZpeC1lbmctNjY4LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9GeUdRUTZUZlFxY1pmYkNIdzJtQjJvZ2Y0c2g5IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTY2OC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQifSx7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvOHNTM0hnU2hnNXVmREM3OUJic21wMXBkaUF2SyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1maXgtZW5nLTY2OC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZml4LWVuZy02NjgtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/FyGQQ6TfQqcZfbCHw2mB2ogf4sh9)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-668-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-668-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 23, 2024 1:23pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/8sS3HgShg5ufDC79Bbsmp1pdiAvK)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-668-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-668-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 23, 2024 1:23pm |
+
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: c28bf2e5b82e95f23acfaa759104e47a749c5cee
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 15 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/modal        | Patch |
+| @nextui-org/popover      | Patch |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/select       | Patch |
+| @nextui-org/date-picker  | Patch |
+| @nextui-org/aria-utils   | Patch |
+| @nextui-org/react        | Patch |
+| @nextui-org/accordion    | Patch |
+| @nextui-org/listbox      | Patch |
+| @nextui-org/menu         | Patch |
+| @nextui-org/tabs         | Patch |
+| @nextui-org/tooltip      | Patch |
+| @nextui-org/slider       | Patch |
+| @nextui-org/snippet      | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/eng-668?filename=.changeset/fair-meals-exist.md&value=---%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A%22%40nextui-org%2Fdate-picker%22%3A%20patch%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A%22%40nextui-org%2Fmodal%22%3A%20patch%0A%22%40nextui-org%2Fpopover%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Faria-utils%22%3A%20patch%0A---%0A%0Afix%3A%20popover-based%20focus%20behaviour%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent changes enhance focus management and interaction handling across various components like Autocomplete, DatePicker, DateRangePicker, Dropdown, and Select. These updates address issues related to focus loss, interaction outside components, and the behavior of dropdowns and popovers, ensuring a smoother user experience.
+
+## Changes
+
+| File/Path                                          | Change Summary                                                                                                                                                                        |
+|----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `.../autocomplete/src/use-autocomplete.ts`         | Added `useState` for `shouldFocus`, improved focus and interaction handling for selector button, clear button, and interactions outside the component.                                |
+| `.../date-picker/src/use-date-picker.ts`           | Integrated `ariaShouldCloseOnInteractOutside` import and `shouldCloseOnInteractOutside` property in `useDatePicker` function.                                                        |
+| `.../date-picker/src/use-date-range-picker.ts`     | Integrated `ariaShouldCloseOnInteractOutside` import and `shouldCloseOnInteractOutside` property in `useDateRangePicker` function.                                                  |
+| `.../dropdown/src/use-dropdown.ts`                 | Integrated `ariaShouldCloseOnInteractOutside` import and `shouldCloseOnInteractOutside` property in `useDropdown` function.                                                          |
+| `.../select/src/select.tsx`                        | Refactored `Select` component to streamline popover rendering logic by removing unnecessary props and restructuring JSX elements.                                                    |
+| `.../select/src/use-select.ts`                      | Integrated `ariaShouldCloseOnInteractOutside` import and `shouldCloseOnInteractOutside` property in `PopoverProps` object in `useSelect` function.                                    |
+
+## Assessment against linked issues
+
+| Objective                                                                                       | Addressed | Explanation |
+|-------------------------------------------------------------------------------------------------|-----------|-------------|
+| Ensure Autocomplete input retains focus when interacting with the modal (Issues #2849, #2962)  | ✅        |             |
+| Fix Autocomplete behavior when clearing values and selecting new ones (Issues #2834, #2872)     | ✅        |             |
+| Ensure Autocomplete dropdown closes properly inside a modal (Issue #2779)                      | ✅        |             |
+| Improve general focus and interaction handling for components using popovers (Issues #1920, #1287, #3060) | ✅ |             |
+
+The changes successfully address the primary objectives and requirements outlined in the linked issues, leading to enhanced focus management and interaction handling across the affected components.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```markdown
+packages/components/autocomplete/src/use-autocomplete.ts: ### Summary
+In the `use-autocomplete.ts` file within the `packages/components/autocomplete/src/` directory, the following changes have been made:
+1. Added `useState` import from "react".
+2. Added a new state variable `shouldFocus` and its management in various parts of the code.
+3. Updated the behavior of the selector button to close the listbox and focus on the input when clicked.
+4. Adjusted focus handling logic for better flexibility and compatibility with React Aria's focus strategies.
+5. Modified the behavior of the clear button press event to handle custom values and focus management.
+6. Disabled focus management and implemented custom focus logic for better control over focus behavior.
+7. Enhanced the `shouldCloseOnInteractOutside` function to manage focus and blur logic based on interactions outside the autocomplete component.
+
+---
+
+packages/components/date-picker/src/use-date-picker.ts: ## Update existing summary
+
+## Short Summary
+The change introduces a new import statement for `ariaShouldCloseOnInteractOutside` from `@nextui-org/aria-utils` and adds a new property `shouldCloseOnInteractOutside` to the object returned by the `useDatePicker` function in `use-date-picker.ts`.
+
+## Alterations to the declarations of exported or public entities
+- Added import: 
+  - `import {ariaShouldCloseOnInteractOutside} from "@nextui-org/aria-utils";`
+- Modified function:
+  - `useDatePicker` function in `use-date-picker.ts` now includes a new property:
+    - `shouldCloseOnInteractOutside: (element: Element) => ariaShouldCloseOnInteractOutside(element, domRef, state),`
+
+---
+
+packages/components/date-picker/src/use-date-range-picker.ts: ## Update existing summary
+
+## Short Summary
+The change introduces the import of `ariaShouldCloseOnInteractOutside` from `@nextui-org/aria-utils` and utilizes it in the `useDateRangePicker` function to handle the `shouldCloseOnInteractOutside` behavior.
+
+## Alterations to the declarations of exported or public entities
+- Added import: `import {ariaShouldCloseOnInteractOutside} from "@nextui-org/aria-utils"` in `packages/components/date-picker/src/use-date-range-picker.ts`
+- Modified function `useDateRangePicker` to include `shouldCloseOnInteractOutside` behavior using `ariaShouldCloseOnInteractOutside`
+
+---
+
+packages/components/dropdown/src/use-dropdown.ts: ### Short Summary
+
+The change introduces the import of `ariaShouldCloseOnInteractOutside` from `@nextui-org/aria-utils` and adds a new function `shouldCloseOnInteractOutside` to the `useDropdown` function in `packages/components/dropdown/src/use-dropdown.ts`. This function determines whether the dropdown should close when interacting outside of it.
+
+### Alterations to the Declarations of Exported or Public Entities
+
+- Added import: 
+  - `import {ariaShouldCloseOnInteractOutside} from "@nextui-org/aria-utils"` in `packages/components/dropdown/src/use-dropdown.ts`
+
+- Modified function:
+  - Added `shouldCloseOnInteractOutside: (element: Element) => ariaShouldCloseOnInteractOutside(element, triggerRef, state)` in the `useDropdown` function in `packages/components/dropdown/src/use-dropdown.ts`
+
+---
+
+packages/components/select/src/select.tsx: ## Update existing summary
+
+## Short Summary
+The change in functionality involves refactoring the `Select` component in `select.tsx` to simplify the popover rendering logic by removing unnecessary props and restructuring the JSX elements.
+
+## Alterations to the declarations of exported or public entities
+- `function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectElement>)` in `packages/components/select/src/select.tsx` has been modified to streamline the popover rendering logic by removing specific props related to popover behavior.
+
+---
+
+packages/components/select/src/use-select.ts: ## Update existing summary
+
+## Short Summary
+The change introduces a new import for `ariaShouldCloseOnInteractOutside` from `@nextui-org/aria-utils` and adds a new property `shouldCloseOnInteractOutside` to the `PopoverProps` object in the `useSelect` function in `use-select.ts.
+
+## Alterations to the declarations of exported or public entities
+- Added import: 
+  - `ariaShouldCloseOnInteractOutside` from `@nextui-org/aria-utils`
+- Modified function:
+  - `useSelect` in `use-select.ts`
+    - Added new property `shouldCloseOnInteractOutside` to `PopoverProps`
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+### PR Summary
+
+**Title:** fix: popover-based focus behaviour  
+**User:** wingkwong  
+**Number:** 2854  
+
+**Description:**  
+This pull request addresses the focus behavior of popovers in the context of autocomplete components. The current implementation in React Aria allows popovers to be closed by clicking outside or pressing the escape key, with focus returning to the trigger input. This PR modifies the focus behavior to handle it internally for better flexibility. The updated focus behavior for autocomplete includes:
+
+- Clicking the selector button to open/close the listbox keeps the input focused.
+- Clicking outside the autocomplete closes the listbox and blurs the input.
+- Clicking the autocomplete input keeps it focused.
+- Selecting an item from the listbox keeps the input focused.
+- Clicking the clear button with a selected item keeps the input focused and the listbox open.
+- Clicking outside when the input is focused blurs the input.
+
+These behaviors are consistent even when the autocomplete is within a modal.
+
+### Objectives from Linked Issues
+
+1. **Issue #2849:** Autocomplete input loses focus when its modal opens, disrupting user interaction.
+2. **Issue #2834:** After clearing a value and selecting a new one, the autocomplete listbox reopens unexpectedly.
+3. **Issue #2779:** Autocomplete dropdown does not close inside a modal when clicking the close button.
+4. **Issue #2962:** Autocomplete input is not focused on the first click and requires a second click to type.
+5. **Issue #2872:** After clearing a selected item in autocomplete, the field stops working and does not show the listbox.
+6. **Issue #2974:** Autocomplete inside a popover is buggy, with the list appearing briefly and then hiding.
+7. **Issue #1920:** Clicking outside a popover does not focus on the clicked element, disrupting workflow.
+8. **Issue #1287:** Request for functionality to ensure only one dropdown or popup is visible at a time to avoid confusion and visual clutter.
+9. **Issue #3060:** Popover requires a double click to open when another popover is active, leading to poor user experience.
+
+### Comments Summary
+
+1. **iqingting:** Expressed concern about the size of the interaction changes and inquired if the PR could be merged and released soon.
+2. **Aryan-mor:** Showed eagerness for the integration and requested the PR to be merged and released promptly.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated Summary of Generated Summaries
+
+The recent updates across various components in the codebase primarily focus on enhancing focus management and interaction handling, particularly in relation to closing behaviors when interacting outside of components. Key changes include:
+
+1. **Autocomplete Component**:
+   - Introduced `useState` from React.
+   - Added a new state variable `shouldFocus` to manage focus behavior.
+   - Updated the selector button to close the listbox and focus on the input upon clicking.
+   - Improved focus handling logic for compatibility with React Aria.
+   - Modified the clear button press event to handle custom values and focus management.
+   - Disabled default focus management, implementing custom focus logic.
+   - Enhanced the `shouldCloseOnInteractOutside` function to manage focus and blur based on external interactions.
+
+2. **Date Picker and Date Range Picker Components**:
+   - Imported `ariaShouldCloseOnInteractOutside` from `@nextui-org/aria-utils`.
+   - Added `shouldCloseOnInteractOutside` property to the `useDatePicker` and `useDateRangePicker` functions, utilizing the imported utility to handle interactions outside the components.
+
+3. **Dropdown Component**:
+   - Imported `ariaShouldCloseOnInteractOutside` from `@nextui-org/aria-utils`.
+   - Added `shouldCloseOnInteractOutside` function to the `useDropdown` function to determine if the dropdown should close when interacting outside of it.
+
+4. **Select Component**:
+   - Refactored the `Select` component to simplify popover rendering logic by removing unnecessary props and restructuring JSX elements.
+   - Imported `ariaShouldCloseOnInteractOutside` from `@nextui-org/aria-utils`.
+   - Added `shouldCloseOnInteractOutside` property to `PopoverProps` in the `useSelect` function.
+
+These changes collectively aim to improve the user experience by providing more robust and flexible focus management and interaction handling across the components.
+
+### Alterations to the Declarations of Exported or Public Entities
+
+#### `packages/components/autocomplete/src/use-autocomplete.ts`
+
+**Before:**
+```typescript
+// No `useState` import
+// No `shouldFocus` state variable
+// No custom focus management logic
+```
+
+**After:**
+```typescript
+import { useState } from "react";
+// Added `shouldFocus` state variable and custom focus management logic
+```
+
+#### `packages/components/date-picker/src/use-date-picker.ts`
+
+**Before:**
+```typescript
+// No import of `ariaShouldCloseOnInteractOutside`
+// No `shouldCloseOnInteractOutside` property in `useDatePicker`
+```
+
+**After:**
+```typescript
+import { ariaShouldCloseOnInteractOutside } from "@nextui-org/aria-utils";
+
+function useDatePicker() {
+  return {
+    // Other properties
+    shouldCloseOnInteractOutside: (element: Element) => ariaShouldCloseOnInteractOutside(element, domRef, state),
+  };
+}
+```
+
+#### `packages/components/date-picker/src/use-date-range-picker.ts`
+
+**Before:**
+```typescript
+// No import of `ariaShouldCloseOnInteractOutside`
+// No `shouldCloseOnInteractOutside` property in `useDateRangePicker`
+```
+
+**After:**
+```typescript
+import { ariaShouldCloseOnInteractOutside } from "@nextui-org/aria-utils";
+
+function useDateRangePicker() {
+  return {
+    // Other properties
+    shouldCloseOnInteractOutside: (element: Element) => ariaShouldCloseOnInteractOutside(element, domRef, state),
+  };
+}
+```
+
+#### `packages/components/dropdown/src/use-dropdown.ts`
+
+**Before:**
+```typescript
+// No import of `ariaShouldCloseOnInteractOutside`
+// No `shouldCloseOnInteractOutside` property in `useDropdown`
+```
+
+**After:**
+```typescript
+import { ariaShouldCloseOnInteractOutside } from "@nextui-org/aria-utils";
+
+function useDropdown() {
+  return {
+    // Other properties
+    shouldCloseOnInteractOutside: (element: Element) => ariaShouldCloseOnInteractOutside(element, triggerRef, state),
+  };
+}
+```
+
+#### `packages/components/select/src/select.tsx`
+
+**Before:**
+```typescript
+function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectElement>) {
+  // Original popover rendering logic with specific props
+}
+```
+
+**After:**
+```typescript
+function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectElement>) {
+  // Simplified popover rendering logic by removing specific props
+}
+```
+
+#### `packages/components/select/src/use-select.ts`
+
+**Before:**
+```typescript
+// No import of `ariaShouldCloseOnInteractOutside`
+// No `shouldCloseOnInteractOutside` property in `PopoverProps`
+```
+
+**After:**
+```typescript
+import { ariaShouldCloseOnInteractOutside } from "@nextui-org/aria-utils";
+
+function useSelect() {
+  return {
+    // Other properties
+    PopoverProps: {
+      shouldCloseOnInteractOutside: (element: Element) => ariaShouldCloseOnInteractOutside(element, domRef, state),
+    },
+  };
+}
+```
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 55ee11ebee8d61797c27ad74b22fe9928ed58d2c -->
+<!-- 2272b7174321156cd0cd16259d84d32cd09555c7 -->
+<!-- 3bc9b6cb3a1791a3dda876d938097cd6d152a14a -->
+<!-- d40e792fbf9f40672eca026e04f27bfb9e8e18fa -->
+<!-- 92f4fb1ab53fb57c6b5e735521779084c0b41fe3 -->
+<!-- e256971d691b10bf83aaec41033cb823ce85845b -->
+<!-- 4d760444b4b3b00730fa894803a1a91ca5b48138 -->
+<!-- 3105163be2c6a6e0a0105bfa57a171fba2bdaa19 -->
+<!-- 01d24760a035646359fd249399b0dbf2b67ab33f -->
+<!-- 624488d40da6e203480f48754c5699355db9b888 -->
+<!-- c28bf2e5b82e95f23acfaa759104e47a749c5cee -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- iqingting: This is a relatively large interaction, can this pr be merged and release? Thanks @jrgarciadev   \n- Aryan-mor: I'm really looking forward to this integration
+Please merge and release\n- ewertonce: thanks guys! gonna test the new version!\n
+
+Files Changed:
+- .changeset/good-crabs-clap.md (added, 11 changes)\n  Patch: @@ -0,0 +1,11 @@
++---
++"@nextui-org/autocomplete": patch
++"@nextui-org/modal": patch
++"@nextui-org/popover": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/select": patch
++"@nextui-org/date-picker": patch
++"@nextui-org/aria-utils": patch
++---
++
++Revise popover-based focus behaviours (#2849, #2834, #2779, #2962, #2872, #2974, #1920, #1287, #3060)\n- packages/components/autocomplete/__tests__/autocomplete.test.tsx (modified, 271 changes)\n  Patch: @@ -140,7 +140,136 @@ describe("Autocomplete", () => {
+     expect(() => wrapper.unmount()).not.toThrow();
+   });
+ 
+-  it("should close dropdown when clicking outside autocomplete", async () => {
++  it("should focus when clicking autocomplete", async () => {
++    const wrapper = render(
++      <Autocomplete aria-label="Favorite Animal" data-testid="autocomplete" label="Favorite Animal">
++        <AutocompleteItem key="penguin" value="penguin">
++          Penguin
++        </AutocompleteItem>
++        <AutocompleteItem key="zebra" value="zebra">
++          Zebra
++        </AutocompleteItem>
++        <AutocompleteItem key="shark" value="shark">
++          Shark
++        </AutocompleteItem>
++      </Autocomplete>,
++    );
++
++    const autocomplete = wrapper.getByTestId("autocomplete");
++
++    // open the select listbox
++    await act(async () => {
++      await userEvent.click(autocomplete);
++    });
++
++    // assert that the autocomplete listbox is open
++    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++
++    // assert that input is focused
++    expect(autocomplete).toHaveFocus();
++  });
++
++  it("should clear value after clicking clear button", async () => {
++    const wrapper = render(
++      <Autocomplete aria-label="Favorite Animal" data-testid="autocomplete" label="Favorite Animal">
++        <AutocompleteItem key="penguin" value="penguin">
++          Penguin
++        </AutocompleteItem>
++        <AutocompleteItem key="zebra" value="zebra">
++          Zebra
++        </AutocompleteItem>
++        <AutocompleteItem key="shark" value="shark">
++          Shark
++        </AutocompleteItem>
++      </Autocomplete>,
++    );
++
++    const autocomplete = wrapper.getByTestId("autocomplete");
++
++    // open the select listbox
++    await act(async () => {
++      await userEvent.click(autocomplete);
++    });
++
++    // assert that the autocomplete listbox is open
++    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++
++    let options = wrapper.getAllByRole("option");
++
++    // select the target item
++    await act(async () => {
++      await userEvent.click(options[0]);
++    });
++
++    const {container} = wrapper;
++
++    const clearButton = container.querySelector(
++      "[data-slot='inner-wrapper'] button:nth-of-type(1)",
++    )!;
++
++    expect(clearButton).not.toBeNull();
++
++    // select the target item
++    await act(async () => {
++      await userEvent.click(clearButton);
++    });
++
++    // assert that the input has empty value
++    expect(autocomplete).toHaveValue("");
++
++    // assert that input is focused
++    expect(autocomplete).toHaveFocus();
++  });
++
++  it("should open and close listbox by clicking selector button", async () => {
++    const wrapper = render(
++      <Autocomplete aria-label="Favorite Animal" data-testid="autocomplete" label="Favorite Animal">
++        <AutocompleteItem key="penguin" value="penguin">
++          Penguin
++        </AutocompleteItem>
++        <AutocompleteItem key="zebra" value="zebra">
++          Zebra
++        </AutocompleteItem>
++        <AutocompleteItem key="shark" value="shark">
++          Shark
++        </AutocompleteItem>
++      </Autocomplete>,
++    );
++
++    const {container} = wrapper;
++
++    const selectorButton = container.querySelector(
++      "[data-slot='inner-wrapper'] button:nth-of-type(2)",
++    )!;
++
++    expect(selectorButton).not.toBeNull();
++
++    const autocomplete = wrapper.getByTestId("autocomplete");
++
++    // open the select listbox by clicking selector button
++    await act(async () => {
++      await userEvent.click(selectorButton);
++    });
++
++    // assert that the autocomplete listbox is open
++    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++
++    // assert that input is focused
++    expect(autocomplete).toHaveFocus();
++
++    // close the select listbox by clicking selector button again
++    await act(async () => {
++      await userEvent.click(selectorButton);
++    });
++
++    // assert that the autocomplete listbox is closed
++    expect(autocomplete).toHaveAttribute("aria-expanded", "false");
++
++    // assert that input is still focused
++    expect(autocomplete).toHaveFocus();
++  });
++
++  it("should close listbox when clicking outside autocomplete", async () => {
+     const wrapper = render(
+       <Autocomplete
+         aria-label="Favorite Animal"
+@@ -161,12 +290,12 @@ describe("Autocomplete", () => {
+ 
+     const autocomplete = wrapper.getByTestId("close-when-clicking-outside-test");
+ 
+-    // open the select dropdown
++    // open the select listbox
+     await act(async () => {
+       await userEvent.click(autocomplete);
+     });
+ 
+-    // assert that the autocomplete dropdown is open
++    // assert that the autocomplete listbox is open
+     expect(autocomplete).toHaveAttribute("aria-expanded", "true");
+ 
+     // click outside the autocomplete component
+@@ -176,9 +305,12 @@ describe("Autocomplete", () => {
+ 
+     // assert that the autocomplete is closed
+     expect(autocomplete).toHaveAttribute("aria-expanded", "false");
++
++    // assert that input is not focused
++    expect(autocomplete).not.toHaveFocus();
+   });
+ 
+-  it("should close dropdown when clicking outside autocomplete with modal open", async () => {
++  it("should close listbox when clicking outside autocomplete with modal open", async () => {
+     const wrapper = render(
+       <Modal isOpen>
+         <ModalContent>
+@@ -207,21 +339,146 @@ describe("Autocomplete", () => {
+ 
+     const autocomplete = wrapper.getByTestId("close-when-clicking-outside-test");
+ 
+-    // open the autocomplete dropdown
++    // open the autocomplete listbox
+     await act(async () => {
+       await userEvent.click(autocomplete);
+     });
+ 
+-    // assert that the autocomplete dropdown is open
++    // assert that the autocomplete listbox is open
+     expect(autocomplete).toHaveAttribute("aria-expanded", "true");
+ 
+     // click outside the autocomplete component
+     await act(async () => {
+       await userEvent.click(document.body);
+     });
+ 
+-    // assert that the autocomplete dropdown is closed
++    // assert that the autocomplete listbox is closed
++    expect(autocomplete).toHaveAttribute("aria-expanded", "false");
++
++    // assert that input is not focused
++    expect(autocomplete).not.toHaveFocus();
++  });
++
++  it("should set the input after selection", async () => {
++    const wrapper = render(
++      <Autocomplete aria-label="Favorite Animal" data-testid="autocomplete" label="Favorite Animal">
++        <AutocompleteItem key="penguin" value="penguin">
++          Penguin
++        </AutocompleteItem>
++        <AutocompleteItem key="zebra" value="zebra">
++          Zebra
++        </AutocompleteItem>
++        <AutocompleteItem key="shark" value="shark">
++          Shark
++        </AutocompleteItem>
++      </Autocomplete>,
++    );
++
++    const autocomplete = wrapper.getByTestId("autocomplete");
++
++    // open the listbox
++    await act(async () => {
++      await userEvent.click(autocomplete);
++    });
++
++    // assert that the autocomplete listbox is open
++    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++
++    // assert that input is focused
++    expect(autocomplete).toHaveFocus();
++
++    let options = wrapper.getAllByRole("option");
++
++    expect(options.length).toBe(3);
++
++    // select the target item
++    await act(async () => {
++      await userEvent.click(options[0]);
++    });
++
++    // assert that the input has target selection
++    expect(autocomplete).toHaveValue("Penguin");
++  });
++
++  it("should close listbox by clicking another autocomplete", async () => {
++    const wrapper = render(
++      <>
++        <Autocomplete
++          aria-label="Favorite Animal"
++          data-testid="autocomplete"
++          label="Favorite Animal"
++        >
++          <AutocompleteItem key="penguin" value="penguin">
++            Penguin
++          </AutocompleteItem>
++          <AutocompleteItem key="zebra" value="zebra">
++            Zebra
++          </AutocompleteItem>
++          <AutocompleteItem key="shark" value="shark">
++            Shark
++          </AutocompleteItem>
++        </Autocomplete>
++        <Autocomplete
++          aria-label="Favorite Animal"
++          data-testid="autocomplete2"
++          label="Favorite Animal"
++        >
++          <AutocompleteItem key="penguin" value="penguin">
++            Penguin
++          </AutocompleteItem>
++          <AutocompleteItem key="zebra" value="zebra">
++            Zebra
++          </AutocompleteItem>
++          <AutocompleteItem key="shark" value="shark">
++            Shark
++          </AutocompleteItem>
++        </Autocomplete>
++      </>,
++    );
++
++    const {container} = wrapper;
++
++    const autocomplete = wrapper.getByTestId("autocomplete");
++
++    const autocomplete2 = wrapper.getByTestId("autocomplete2");
++
++    const innerWrappers = container.querySelectorAll("[data-slot='inner-wrapper']");
++
++    const selectorButton = innerWrappers[0].querySelector("button:nth-of-type(2)")!;
++
++    const selectorButton2 = innerWrappers[1].querySelector("button:nth-of-type(2)")!;
++
++    expect(selectorButton).not.toBeNull();
++
++    expect(selectorButton2).not.toBeNull();
++
++    // open the select listbox by clicking selector button in the first autocomplete
++    await act(async () => {
++      await userEvent.click(selectorButton);
++    });
++
++    // assert that the first autocomplete listbox is open
++    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++
++    // assert that input is focused
++    expect(autocomplete).toHaveFocus();
++
++    // close the select listbox by clicking the second autocomplete
++    await act(async () => {
++      await userEvent.click(selectorButton2);
++    });
++
++    // assert that the first autocomplete listbox is closed
+     expect(autocomplete).toHaveAttribute("aria-expanded", "false");
++
++    // assert that the second autocomplete listbox is open
++    expect(autocomplete2).toHaveAttribute("aria-expanded", "true");
++
++    // assert that the first autocomplete is not focused
++    expect(autocomplete).not.toHaveFocus();
++
++    // assert that the second autocomplete is focused
++    expect(autocomplete2).toHaveFocus();
+   });
+ 
+   describe("validation", () => {\n- packages/components/autocomplete/src/autocomplete.tsx (modified, 3 changes)\n  Patch: @@ -15,7 +15,6 @@ interface Props<T> extends UseAutocompleteProps<T> {}
+ function Autocomplete<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLInputElement>) {
+   const {
+     Component,
+-    state,
+     isOpen,
+     disableAnimation,
+     selectorIcon = <ChevronDownIcon />,
+@@ -33,7 +32,7 @@ function Autocomplete<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLI
+   } = useAutocomplete<T>({...props, ref});
+ 
+   const popoverContent = isOpen ? (
+-    <FreeSoloPopover {...getPopoverProps()} state={state}>
++    <FreeSoloPopover {...getPopoverProps()}>
+       <ScrollShadow {...getListBoxWrapperProps()}>
+         <Listbox {...getListBoxProps()} />
+       </ScrollShadow>\n- packages/components/autocomplete/src/use-autocomplete.ts (modified, 37 changes)\n  Patch: @@ -18,6 +18,7 @@ import {chain, mergeProps} from "@react-aria/utils";
+ import {ButtonProps} from "@nextui-org/button";
+ import {AsyncLoadable, PressEvent} from "@react-types/shared";
+ import {useComboBox} from "@react-aria/combobox";
++import {ariaShouldCloseOnInteractOutside} from "@nextui-org/aria-utils";
+ 
+ interface Props<T> extends Omit<HTMLNextUIProps<"input">, keyof ComboBoxProps<T>> {
+   /**
+@@ -201,6 +202,9 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+   const inputRef = useDOMRef<HTMLInputElement>(ref);
+   const scrollShadowRef = useDOMRef<HTMLElement>(scrollRefProp);
+ 
++  // control the input focus behaviours internally
++  const shouldFocus = useRef(false);
++
+   const {
+     buttonProps,
+     inputProps,
+@@ -327,12 +331,14 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     }
+   }, [isOpen]);
+ 
+-  // unfocus the input when the popover closes & there's no selected item & no allows custom value
++  // react aria has different focus strategies internally
++  // hence, handle focus behaviours on our side for better flexibilty
+   useEffect(() => {
+-    if (!isOpen && !state.selectedItem && inputRef.current && !allowsCustomValue) {
+-      inputRef.current.blur();
+-    }
+-  }, [isOpen, allowsCustomValue]);
++    const action = shouldFocus.current || isOpen ? "focus" : "blur";
++
++    inputRef?.current?.[action]();
++    if (action === "blur") shouldFocus.current = false;
++  }, [shouldFocus.current, isOpen]);
+ 
+   // to prevent the error message:
+   // stopPropagation is now the default behavior for events in React Spectrum.
+@@ -365,6 +371,7 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+   const onClear = useCallback(() => {
+     state.setInputValue("");
+     state.setSelectedKey(null);
++    state.close();
+   }, [state]);
+ 
+   const onFocus = useCallback(
+@@ -394,17 +401,20 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+   const getClearButtonProps = () =>
+     ({
+       ...mergeProps(buttonProps, slotsProps.clearButtonProps),
++      // disable original focus and state toggle from react aria
++      onPressStart: () => {},
+       onPress: (e: PressEvent) => {
+         slotsProps.clearButtonProps?.onPress?.(e);
+ 
+         if (state.selectedItem) {
+           onClear();
+         } else {
+-          const inputFocused = inputRef.current === document.activeElement;
+-
+-          allowsCustomValue && state.setInputValue("");
+-          !inputFocused && onFocus(true);
++          if (allowsCustomValue) {
++            state.setInputValue("");
++            state.close();
++          }
+         }
++        inputRef?.current?.focus();
+       },
+       "data-visible": !!state.selectedItem || state.inputValue?.length > 0,
+       className: slots.clearButton({
+@@ -432,18 +442,19 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+       ref: listBoxRef,
+       ...mergeProps(slotsProps.listboxProps, listBoxProps, {
+         shouldHighlightOnFocus: true,
+-        shouldUseVirtualFocus: false,
+       }),
+     } as ListboxProps);
+ 
+   const getPopoverProps = (props: DOMAttributes = {}) => {
++    const popoverProps = mergeProps(slotsProps.popoverProps, props);
++
+     return {
+       state,
+       ref: popoverRef,
+       triggerRef: inputWrapperRef,
+       scrollRef: listBoxRef,
+       triggerType: "listbox",
+-      ...mergeProps(slotsProps.popoverProps, props),
++      ...popoverProps,
+       classNames: {
+         content: slots.popoverContent({
+           class: clsx(
+@@ -453,6 +464,10 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+           ),
+         }),
+       },
++      shouldCloseOnInteractOutside: popoverProps?.shouldCloseOnInteractOutside
++        ? popoverProps.shouldCloseOnInteractOutside
++        : (element: Element) =>
++            ariaShouldCloseOnInteractOutside(element, inputWrapperRef, state, shouldFocus),
+     } as unknown as PopoverProps;
+   };
+ \n- packages/components/date-picker/__tests__/date-picker.test.tsx (modified, 31 changes)\n  Patch: @@ -458,4 +458,35 @@ describe("DatePicker", () => {
+       expect(getTextValue(combobox)).toBe("2/4/2019"); // uncontrolled
+     });
+   });
++
++  it("should close listbox by clicking another datepicker", async () => {
++    const {getByRole, getAllByRole} = render(
++      <>
++        <DatePicker data-testid="datepicker" label="Date" />
++        <DatePicker data-testid="datepicker2" label="Date" />
++      </>,
++    );
++
++    const dateButtons = getAllByRole("button");
++
++    expect(dateButtons[0]).not.toBeNull();
++
++    expect(dateButtons[1]).not.toBeNull();
++
++    // open the datepicker dialog by clicking datepicker button in the first datepicker
++    triggerPress(dateButtons[0]);
++
++    let dialog = getByRole("dialog");
++
++    // assert that the first datepicker dialog is open
++    expect(dialog).toBeVisible();
++
++    // close the datepicker dialog by clicking the second datepicker
++    triggerPress(dateButtons[1]);
++
++    dialog = getByRole("dialog");
++
++    // assert that the second datepicker dialog is open
++    expect(dialog).toBeVisible();
++  });
+ });\n- packages/components/date-picker/package.json (modified, 1 changes)\n  Patch: @@ -47,6 +47,7 @@
+     "@nextui-org/button": "workspace:*",
+     "@nextui-org/date-input": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
++    "@nextui-org/aria-utils": "workspace:*",
+     "@react-stately/overlays": "3.6.5",
+     "@react-stately/utils": "3.9.1",
+     "@internationalized/date": "^3.5.2",\n- packages/components/date-picker/src/use-date-picker.ts (modified, 4 changes)\n  Patch: @@ -15,6 +15,7 @@ import {useDatePickerState} from "@react-stately/datepicker";
+ import {AriaDatePickerProps, useDatePicker as useAriaDatePicker} from "@react-aria/datepicker";
+ import {clsx, dataAttr, objectToDeps} from "@nextui-org/shared-utils";
+ import {mergeProps} from "@react-aria/utils";
++import {ariaShouldCloseOnInteractOutside} from "@nextui-org/aria-utils";
+ 
+ import {useDatePickerBase} from "./use-date-picker-base";
+ 
+@@ -173,6 +174,9 @@ export function useDatePicker<T extends DateValue>({
+           ),
+         }),
+       },
++      shouldCloseOnInteractOutside: popoverProps?.shouldCloseOnInteractOutside
++        ? popoverProps.shouldCloseOnInteractOutside
++        : (element: Element) => ariaShouldCloseOnInteractOutside(element, domRef, state),
+     };
+   };
+ \n- packages/components/date-picker/src/use-date-range-picker.ts (modified, 4 changes)\n  Patch: @@ -21,6 +21,7 @@ import {useDateRangePicker as useAriaDateRangePicker} from "@react-aria/datepick
+ import {clsx, dataAttr, objectToDeps} from "@nextui-org/shared-utils";
+ import {mergeProps} from "@react-aria/utils";
+ import {dateRangePicker, dateInput} from "@nextui-org/theme";
++import {ariaShouldCloseOnInteractOutside} from "@nextui-org/aria-utils";
+ 
+ import {useDatePickerBase} from "./use-date-picker-base";
+ interface Props<T extends DateValue>
+@@ -215,6 +216,9 @@ export function useDateRangePicker<T extends DateValue>({
+           ),
+         }),
+       },
++      shouldCloseOnInteractOutside: popoverProps?.shouldCloseOnInteractOutside
++        ? popoverProps.shouldCloseOnInteractOutside
++        : (element: Element) => ariaShouldCloseOnInteractOutside(element, domRef, state),
+     } as PopoverProps;
+   };
+ \n- packages/components/dropdown/__tests__/dropdown.test.tsx (modified, 63 changes)\n  Patch: @@ -538,6 +538,69 @@ describe("Dropdown", () => {
+ 
+     spy.mockRestore();
+   });
++
++  it("should close listbox by clicking another dropdown", async () => {
++    const wrapper = render(
++      <>
++        <Dropdown>
++          <DropdownTrigger>
++            <Button data-testid="dropdown">Trigger</Button>
++          </DropdownTrigger>
++          <DropdownMenu aria-label="Actions">
++            <DropdownItem key="new">New file</DropdownItem>
++            <DropdownItem key="copy">Copy link</DropdownItem>
++            <DropdownItem key="edit">Edit file</DropdownItem>
++            <DropdownItem key="delete" color="danger">
++              Delete file
++            </DropdownItem>
++          </DropdownMenu>
++        </Dropdown>
++        <Dropdown>
++          <DropdownTrigger>
++            <Button data-testid="dropdown2">Trigger</Button>
++          </DropdownTrigger>
++          <DropdownMenu aria-label="Actions">
++            <DropdownItem key="new">New file</DropdownItem>
++            <DropdownItem key="copy">Copy link</DropdownItem>
++            <DropdownItem key="edit">Edit file</DropdownItem>
++            <DropdownItem key="delete" color="danger">
++              Delete file
++            </DropdownItem>
++          </DropdownMenu>
++        </Dropdown>
++      </>,
++    );
++
++    const dropdown = wrapper.getByTestId("dropdown");
++
++    const dropdown2 = wrapper.getByTestId("dropdown2");
++
++    expect(dropdown).not.toBeNull();
++
++    expect(dropdown2).not.toBeNull();
++
++    // open the dropdown listbox by clicking dropdownor button in the first dropdown
++    await act(async () => {
++      await userEvent.click(dropdown);
++    });
++
++    // assert that the first dropdown listbox is open
++    expect(dropdown).toHaveAttribute("aria-expanded", "true");
++
++    // assert that the second dropdown listbox is close
++    expect(dropdown2).toHaveAttribute("aria-expanded", "false");
++
++    // close the dropdown listbox by clicking the second dropdown
++    await act(async () => {
++      await userEvent.click(dropdown2);
++    });
++
++    // assert that the first dropdown listbox is closed
++    expect(dropdown).toHaveAttribute("aria-expanded", "false");
++
++    // assert that the second dropdown listbox is open
++    expect(dropdown2).toHaveAttribute("aria-expanded", "true");
++  });
+ });
+ 
+ describe("Keyboard interactions", () => {\n- packages/components/dropdown/package.json (modified, 1 changes)\n  Patch: @@ -45,6 +45,7 @@
+     "@nextui-org/popover": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
++    "@nextui-org/aria-utils": "workspace:*",
+     "@react-aria/menu": "3.13.1",
+     "@react-aria/utils": "3.23.2",
+     "@react-stately/menu": "3.6.1",\n- packages/components/dropdown/src/use-dropdown.ts (modified, 38 changes)\n  Patch: @@ -8,6 +8,7 @@ import {useMenuTrigger} from "@react-aria/menu";
+ import {dropdown} from "@nextui-org/theme";
+ import {clsx} from "@nextui-org/shared-utils";
+ import {ReactRef, mergeRefs} from "@nextui-org/react-utils";
++import {ariaShouldCloseOnInteractOutside} from "@nextui-org/aria-utils";
+ import {useMemo, useRef} from "react";
+ import {mergeProps} from "@react-aria/utils";
+ import {MenuProps} from "@nextui-org/menu";
+@@ -104,21 +105,28 @@ export function useDropdown(props: UseDropdownProps) {
+     }
+   };
+ 
+-  const getPopoverProps: PropGetter = (props = {}) => ({
+-    state,
+-    placement,
+-    ref: popoverRef,
+-    disableAnimation,
+-    shouldBlockScroll,
+-    scrollRef: menuRef,
+-    triggerRef: menuTriggerRef,
+-    ...mergeProps(otherProps, props),
+-    classNames: {
+-      ...classNamesProp,
+-      ...props.classNames,
+-      content: clsx(classNames, classNamesProp?.content, props.className),
+-    },
+-  });
++  const getPopoverProps: PropGetter = (props = {}) => {
++    const popoverProps = mergeProps(otherProps, props);
++
++    return {
++      state,
++      placement,
++      ref: popoverRef,
++      disableAnimation,
++      shouldBlockScroll,
++      scrollRef: menuRef,
++      triggerRef: menuTriggerRef,
++      ...popoverProps,
++      classNames: {
++        ...classNamesProp,
++        ...props.classNames,
++        content: clsx(classNames, classNamesProp?.content, props.className),
++      },
++      shouldCloseOnInteractOutside: popoverProps?.shouldCloseOnInteractOutside
++        ? popoverProps.shouldCloseOnInteractOutside
++        : (element: Element) => ariaShouldCloseOnInteractOutside(element, triggerRef, state),
++    };
++  };
+ 
+   const getMenuTriggerProps: PropGetter = (
+     originalProps = {},\n- packages/components/modal/src/modal.tsx (modified, 6 changes)\n  Patch: @@ -17,7 +17,11 @@ const Modal = forwardRef<"div", ModalProps>((props, ref) => {
+   const {children, ...otherProps} = props;
+   const context = useModal({...otherProps, ref});
+ 
+-  const overlay = <Overlay portalContainer={context.portalContainer}>{children}</Overlay>;
++  const overlay = (
++    <Overlay disableFocusManagement portalContainer={context.portalContainer}>
++      {children}
++    </Overlay>
++  );
+ 
+   return (
+     <ModalProvider value={context}>\n- packages/components/popover/__tests__/popover.test.tsx (modified, 54 changes)\n  Patch: @@ -1,5 +1,6 @@
+ import * as React from "react";
+ import {render, fireEvent, act} from "@testing-library/react";
++import userEvent from "@testing-library/user-event";
+ import {Button} from "@nextui-org/button";
+ 
+ import {Popover, PopoverContent, PopoverTrigger} from "../src";
+@@ -159,4 +160,57 @@ describe("Popover", () => {
+ 
+     expect(onClose).toHaveBeenCalledTimes(1);
+   });
++
++  it("should close listbox by clicking another popover", async () => {
++    const wrapper = render(
++      <>
++        <Popover>
++          <PopoverTrigger>
++            <button data-testid="popover">Open popover</button>
++          </PopoverTrigger>
++          <PopoverContent>
++            <p>This is the content of the popover.</p>
++          </PopoverContent>
++        </Popover>
++        <Popover>
++          <PopoverTrigger>
++            <button data-testid="popover2">Open popover</button>
++          </PopoverTrigger>
++          <PopoverContent>
++            <p>This is the content of the popover.</p>
++          </PopoverContent>
++        </Popover>
++      </>,
++    );
++
++    const popover = wrapper.getByTestId("popover");
++
++    const popover2 = wrapper.getByTestId("popover2");
++
++    expect(popover).not.toBeNull();
++
++    expect(popover2).not.toBeNull();
++
++    // open the popover by clicking popover in the first popover
++    await act(async () => {
++      await userEvent.click(popover);
++    });
++
++    // assert that the first popover is open
++    expect(popover).toHaveAttribute("aria-expanded", "true");
++
++    // assert that the second popover is close
++    expect(popover2).toHaveAttribute("aria-expanded", "false");
++
++    // close the popover by clicking the second popover
++    await act(async () => {
++      await userEvent.click(popover2);
++    });
++
++    // assert that the first popover is closed
++    expect(popover).toHaveAttribute("aria-expanded", "false");
++
++    // assert that the second popover is open
++    expect(popover2).toHaveAttribute("aria-expanded", "true");
++  });
+ });\n- packages/components/popover/src/popover.tsx (modified, 6 changes)\n  Patch: @@ -20,7 +20,11 @@ const Popover = forwardRef<"div", PopoverProps>((props, ref) => {
+ 
+   const [trigger, content] = Children.toArray(children);
+ 
+-  const overlay = <Overlay portalContainer={context.portalContainer}>{content}</Overlay>;
++  const overlay = (
++    <Overlay disableFocusManagement portalContainer={context.portalContainer}>
++      {content}
++    </Overlay>
++  );
+ 
+   return (
+     <PopoverProvider value={context}>\n- packages/components/popover/src/use-aria-popover.ts (modified, 10 changes)\n  Patch: @@ -10,6 +10,7 @@ import {OverlayPlacement, ariaHideOutside, toReactAriaPlacement} from "@nextui-o
+ import {OverlayTriggerState} from "@react-stately/overlays";
+ import {mergeProps} from "@react-aria/utils";
+ import {useSafeLayoutEffect} from "@nextui-org/use-safe-layout-effect";
++import {ariaShouldCloseOnInteractOutside} from "@nextui-org/aria-utils";
+ 
+ export interface Props {
+   /**
+@@ -64,7 +65,7 @@ export function useReactAriaPopover(
+     ...otherProps
+   } = props;
+ 
+-  const isNonModal = isNonModalProp || true;
++  const isNonModal = isNonModalProp ?? true;
+ 
+   const {overlayProps, underlayProps} = useOverlay(
+     {
+@@ -75,12 +76,7 @@ export function useReactAriaPopover(
+       isKeyboardDismissDisabled,
+       shouldCloseOnInteractOutside: shouldCloseOnInteractOutside
+         ? shouldCloseOnInteractOutside
+-        : (element) => {
+-            // Don't close if the click is within the trigger or the popover itself
+-            let trigger = triggerRef?.current;
+-
+-            return !trigger || !trigger.contains(element);
+-          },
++        : (element: Element) => ariaShouldCloseOnInteractOutside(element, triggerRef, state),
+     },
+     popoverRef,
+   );\n- packages/components/select/__tests__/select.test.tsx (modified, 59 changes)\n  Patch: @@ -447,6 +447,65 @@ describe("Select", () => {
+ 
+     expect(displayedText).toBe("Penguin, Zebra");
+   });
++
++  it("should close listbox by clicking another select", async () => {
++    const wrapper = render(
++      <>
++        <Select aria-label="Favorite Animal" data-testid="select" label="Favorite Animal">
++          <SelectItem key="penguin" value="penguin">
++            Penguin
++          </SelectItem>
++          <SelectItem key="zebra" value="zebra">
++            Zebra
++          </SelectItem>
++          <SelectItem key="shark" value="shark">
++            Shark
++          </SelectItem>
++        </Select>
++        <Select aria-label="Favorite Animal" data-testid="select2" label="Favorite Animal">
++          <SelectItem key="penguin" value="penguin">
++            Penguin
++          </SelectItem>
++          <SelectItem key="zebra" value="zebra">
++            Zebra
++          </SelectItem>
++          <SelectItem key="shark" value="shark">
++            Shark
++          </SelectItem>
++        </Select>
++      </>,
++    );
++
++    const select = wrapper.getByTestId("select");
++
++    const select2 = wrapper.getByTestId("select2");
++
++    expect(select).not.toBeNull();
++
++    expect(select2).not.toBeNull();
++
++    // open the select listbox by clicking selector button in the first select
++    await act(async () => {
++      await userEvent.click(select);
++    });
++
++    // assert that the first select listbox is open
++    expect(select).toHaveAttribute("aria-expanded", "true");
++
++    // assert that the second select listbox is close
++    expect(select2).toHaveAttribute("aria-expanded", "false");
++
++    // close the select listbox by clicking the second select
++    await act(async () => {
++      await userEvent.click(select2);
++    });
++
++    // assert that the first select listbox is closed
++    expect(select).toHaveAttribute("aria-expanded", "false");
++
++    // assert that the second select listbox is open
++    expect(select2).toHaveAttribute("aria-expanded", "true");
++  });
+ });
+ 
+ describe("Select with React Hook Form", () => {\n- packages/components/select/src/select.tsx (modified, 8 changes)\n  Patch: @@ -105,13 +105,7 @@ function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectE
+   const popoverContent = useMemo(
+     () =>
+       state.isOpen ? (
+-        <FreeSoloPopover
+-          {...getPopoverProps()}
+-          // avoid closing the popover when navigating with the keyboard
+-          shouldCloseOnInteractOutside={undefined}
+-          state={state}
+-          triggerRef={triggerRef}
+-        >
++        <FreeSoloPopover {...getPopoverProps()}>
+           <ScrollShadow {...getListboxWrapperProps()}>
+             <Listbox {...getListboxProps()} />
+           </ScrollShadow>\n- packages/components/select/src/use-select.ts (modified, 8 changes)\n  Patch: @@ -27,6 +27,7 @@ import {
+ } from "@nextui-org/use-aria-multiselect";
+ import {SpinnerProps} from "@nextui-org/spinner";
+ import {useSafeLayoutEffect} from "@nextui-org/use-safe-layout-effect";
++import {ariaShouldCloseOnInteractOutside} from "@nextui-org/aria-utils";
+ import {CollectionChildren} from "@react-types/shared";
+ 
+ export type SelectedItemProps<T = object> = {
+@@ -500,6 +501,8 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+ 
+   const getPopoverProps = useCallback(
+     (props: DOMAttributes = {}) => {
++      const popoverProps = mergeProps(slotsProps.popoverProps, props);
++
+       return {
+         state,
+         triggerRef,
+@@ -512,12 +515,15 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+             class: clsx(classNames?.popoverContent, props.className),
+           }),
+         },
+-        ...mergeProps(slotsProps.popoverProps, props),
++        ...popoverProps,
+         offset:
+           state.selectedItems && state.selectedItems.length > 0
+             ? // forces the popover to update its position when the selected items change
+               state.selectedItems.length * 0.00000001 + (slotsProps.popoverProps?.offset || 0)
+             : slotsProps.popoverProps?.offset,
++        shouldCloseOnInteractOutside: popoverProps?.shouldCloseOnInteractOutside
++          ? popoverProps.shouldCloseOnInteractOutside
++          : (element: Element) => ariaShouldCloseOnInteractOutside(element, triggerRef, state),
+       } as PopoverProps;
+     },
+     [\n- packages/utilities/aria-utils/package.json (modified, 1 changes)\n  Patch: @@ -43,6 +43,7 @@
+     "@nextui-org/react-rsc-utils": "workspace:*",
+     "@react-aria/utils": "3.23.2",
+     "@react-stately/collections": "3.10.5",
++    "@react-stately/overlays": "3.6.5",
+     "@react-types/overlays": "3.8.5",
+     "@react-types/shared": "3.22.1"
+   },\n- packages/utilities/aria-utils/src/index.ts (modified, 1 changes)\n  Patch: @@ -7,6 +7,7 @@ export {isNonContiguousSelectionModifier, isCtrlKeyPressed} from "./utils";
+ 
+ export {
+   ariaHideOutside,
++  ariaShouldCloseOnInteractOutside,
+   getTransformOrigins,
+   toReactAriaPlacement,
+   toOverlayPlacement,\n- packages/utilities/aria-utils/src/overlays/ariaShouldCloseOnInteractOutside.ts (added, 41 changes)\n  Patch: @@ -0,0 +1,41 @@
++import {MutableRefObject, RefObject} from "react";
++
++/**
++ * Used to handle the outside interaction for popover-based components
++ * e.g. dropdown, datepicker, date-range-picker, popover, select, autocomplete etc
++ * @param element - the element outside of the popover ref, originally from `shouldCloseOnInteractOutside`
++ * @param ref - The popover ref object that will interact outside with
++ * @param state - The popover state from the target component
++ * @param shouldFocus - a mutable ref boolean object to control the focus state
++ *                      (used in input-based component such as autocomplete)
++ * @returns - a boolean value which is same as shouldCloseOnInteractOutside
++ */
++export const ariaShouldCloseOnInteractOutside = (
++  element: Element,
++  ref: RefObject<Element>,
++  state: any,
++  shouldFocus?: MutableRefObject<boolean>,
++) => {
++  let trigger = ref?.current;
++
++  // check if the click is on the underlay
++  const clickOnUnderlay = element?.children?.[0]?.getAttribute("role") === "dialog" ?? false;
++
++  // if interacting outside the component
++  if (!trigger || !trigger.contains(element)) {
++    // blur the component (e.g. autocomplete)
++    if (shouldFocus) shouldFocus.current = false;
++    // if the click is not on the underlay,
++    // trigger the state close to prevent from opening multiple popovers at the same time
++    // e.g. open dropdown1 -> click dropdown2 (dropdown1 should be closed and dropdown2 should be open)
++    if (!clickOnUnderlay) state.close();
++  } else {
++    // otherwise the component (e.g. autocomplete) should keep focused
++    if (shouldFocus) shouldFocus.current = true;
++  }
++
++  // if the click is on the underlay,
++  // clicking the overlay should close the popover instead of closing the modal
++  // otherwise, allow interaction with other elements
++  return clickOnUnderlay;
++};\n- packages/utilities/aria-utils/src/overlays/index.ts (modified, 1 changes)\n  Patch: @@ -9,3 +9,4 @@ export {
+ } from "./utils";
+ 
+ export {ariaHideOutside} from "./ariaHideOutside";
++export {ariaShouldCloseOnInteractOutside} from "./ariaShouldCloseOnInteractOutside";\n- pnpm-lock.yaml (modified, 9 changes)\n  Patch: @@ -1327,6 +1327,9 @@ importers:
+       '@internationalized/date':
+         specifier: ^3.5.2
+         version: 3.5.2
++      '@nextui-org/aria-utils':
++        specifier: workspace:*
++        version: link:../../utilities/aria-utils
+       '@nextui-org/button':
+         specifier: workspace:*
+         version: link:../button
+@@ -1425,6 +1428,9 @@ importers:
+ 
+   packages/components/dropdown:
+     dependencies:
++      '@nextui-org/aria-utils':
++        specifier: workspace:*
++        version: link:../../utilities/aria-utils
+       '@nextui-org/menu':
+         specifier: workspace:*
+         version: link:../menu
+@@ -3651,6 +3657,9 @@ importers:
+       '@react-stately/collections':
+         specifier: 3.10.5
+         version: 3.10.5(react@18.2.0)
++      '@react-stately/overlays':
++        specifier: 3.6.5
++        version: 3.6.5(react@18.2.0)
+       '@react-types/overlays':
+         specifier: 3.8.5
+         version: 3.8.5(react@18.2.0)\n

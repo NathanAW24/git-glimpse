@@ -1,0 +1,325 @@
+Pull Request Number: 2494
+Title: fix(components): popover closing issue in autocomplete with open modal
+Base Branch: main
+Head Branch: fix/eng-479
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2494
+State: MERGED
+Created At: 2024-03-10T13:14:08Z
+Merged At: 2024-03-10T13:37:55Z
+Participants: wingkwong, Tosters, Hervinho, matteogilioli, jrgarciadev
+
+Description:
+closes: #2475
+closes: #2082
+closes: #1987
+closes: #2143
+closes: #2247
+closes: #2510
+
+📝 Description
+
+revised shouldCloseOnInteractOutside in FreeSoloPopover
+some people suggested to set allowsCustomValue to true. This could temporarily make the popover close because it makes the inputRef.current not to blur so that Autocomplete won't be re-rendered with isOpen = true. However, this won't blur the input if the selection is empty (i.e. it'll stay focused).
+
+
+  
+    
+      nextui/packages/components/autocomplete/src/use-autocomplete.ts
+    
+    
+        Lines 287 to 291
+      in
+      2894aec
+    
+  
+  
+    
+
+        
+          
+           useEffect(() => { 
+        
+
+        
+          
+             if (!isOpen && !state.selectedItem && inputRef.current && !allowsCustomValue) { 
+        
+
+        
+          
+               inputRef.current.blur(); 
+        
+
+        
+          
+             } 
+        
+
+        
+          
+           }, [isOpen, allowsCustomValue]); 
+        
+    
+  
+
+
+⛳️ Current behavior (updates)
+The popover can't be closed with open modal. See the above issue #2475 for the demo.
+🚀 New behavior
+
+  
+    
+    
+
+    nextui-pr2494-demo.webm
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No):
+
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Fixed an issue in the "@nextui-org/popover" package where the popover would incorrectly close when using autocomplete with an open modal.
+
+Commits:
+- fix(components): set shouldCloseOnInteractOutside to false for FreeSoloPopover\n- feat(changeset): fixed popover closing issue in autocomplete with open modal\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: aed650fa324cd38b12750f89aad9a3098dfbd6b4
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 5 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/popover      | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/select       | Patch |
+| @nextui-org/react        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/wingkwong/nextui/new/fix/eng-479?filename=.changeset/old-owls-decide.md&value=---%0A%22%40nextui-org%2Fpopover%22%3A%20patch%0A---%0A%0Afix(components)%3A%20popover%20closing%20issue%20in%20autocomplete%20with%20open%20modal%0A)
+
+\n- vercel: [vc]: #m9ap4GI5Fdm1b/UsDUvze+68ewixWP6zFEX0DV8s7ug=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvR3oyQUZIU0c0cFdTaWc0cmp1b3VpTFI2Wmp6eCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtZW5nLTQ3OS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay13aW5na3dvbmctZml4LWVuZy00NzktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/Gz2AFHSG4pWSig4rjuouiLR6Zjzx)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-479-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-479-nextui-org.vercel.app?via=pr-comment-feedback-link) | Mar 10, 2024 1:26pm |
+
+\n- vercel: @wingkwong is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22ac3b5fd6e007d1ba8b27304b73e8d343ef36c6d4%22%7D%2C%22id%22%3A%22QmRRMv7nx231E9nqJKd9BfvsoMKGEGmERxzeRyNAJjMLRz%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2494%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update addresses a persistent issue found in the "@nextui-org/popover" package, specifically affecting the behavior of the `FreeSoloPopover` component within modals. The patch ensures the popover now properly closes when a user interacts outside of it, even when no item has been selected in the autocomplete component. This change directly targets and resolves issues reported by users experiencing difficulties with popover functionality in modal contexts.
+
+## Changes
+
+| File                                                      | Change Summary                                                    |
+|-----------------------------------------------------------|-------------------------------------------------------------------|
+| `.changeset/four-turtles-move.md`                         | Introduces a patch fixing popover closing in autocomplete modals. |
+| `.../components/popover/src/free-solo-popover.tsx`        | Updated logic to always return `false` for outside interactions.  |
+
+## Assessment against linked issues
+
+| Objective                                                                                               | Addressed | Explanation |
+|---------------------------------------------------------------------------------------------------------|-----------|-------------|
+| Fix the issue where the Autocomplete popover does not close on click outside in a modal (#2475, #2082) | ✅         |             |
+| Ensure the popover can be closed by clicking outside, without selecting an item (#1987)                | ✅         |             |
+
+## Poem
+
+> In a field of code, under the moon's soft glow,  
+> A rabbit hopped, with fixes in tow.  
+> 🌙✨🐇💻  
+> "No more shall popovers stubbornly stay,  
+> In modals, they'll close, come what may."  
+> With a click outside, they now obey,  
+> A patch, a leap, a brighter day.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/four-turtles-move.md: The new file introduces a patch for the "@nextui-org/popover" package that fixes an issue related to popover closing in autocomplete with an open modal.
+
+---
+
+packages/components/popover/src/free-solo-popover.tsx: In the `FreeSoloPopover` component, the logic for closing the popover when interacting outside of it has been updated to always return `false` instead of being `undefined`.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+This Pull Request (PR) addresses a specific issue with the NextUI library, particularly focusing on a bug related to the `Autocomplete` component when used within a modal. The primary objective is to fix the problem where the popover of the `Autocomplete` component fails to close upon clicking outside of it when the component is placed inside an open modal. This issue has been a recurring problem, as evidenced by the linked issues (#2475, #2082, and #1987), indicating a significant impact on user experience across different versions of NextUI.
+
+The PR introduces a fix by revising the `shouldCloseOnInteractOutside` function within the `FreeSoloPopover` component. The proposed solution ensures that the popover can now be closed as expected when interacting outside of it, even when the `Autocomplete` component is used within a modal. This change addresses the core of the problem, which was previously attempted to be circumvented by setting `allowsCustomValue` to `true`. While this workaround prevented the `inputRef.current` from blurring and inadvertently kept the popover open, it introduced another issue where the input would remain focused even when the selection was empty.
+
+The PR includes a demonstration video hosted on the NextUI GitHub repository, showcasing the corrected behavior of the `Autocomplete` component within a modal, thus providing a visual confirmation of the fix.
+
+The linked issues provide additional context, describing the bug's manifestation across different operating systems and browsers, and highlighting the user's inability to close the `Autocomplete` popover by clicking outside or using the chevron icon. These issues have been persistent since at least version 2.2.9 of NextUI, affecting users on both Windows and macOS platforms.
+
+In summary, this PR aims to enhance the usability of the NextUI library by ensuring that the `Autocomplete` component functions correctly within modals, addressing a long-standing issue that has affected multiple users across various environments.
+
+### AI-generated Summary of Generated Summaries
+
+The Pull Request introduces a patch for the NextUI library, specifically targeting the `Autocomplete` component's popover functionality within modals. The core of the fix lies in the adjustment of the `shouldCloseOnInteractOutside` function within the `FreeSoloPopover` component. Previously, the inability to close the popover by interacting outside of it posed a significant usability issue when the `Autocomplete` component was used in a modal context. This problem was documented across multiple issues, indicating a recurring challenge for users.
+
+The solution implemented in this PR directly addresses the root cause by ensuring the `shouldCloseOnInteractOutside` function consistently returns `false`, thereby allowing the popover to close as expected upon external interactions. This change rectifies the previously suggested workaround, which involved setting `allowsCustomValue` to `true` but led to unintended focus behavior on the input element.
+
+By resolving this issue, the PR significantly improves the user experience for those utilizing the `Autocomplete` component within modals, ensuring consistent and expected behavior across various platforms and browsers. This enhancement is demonstrated through a video linked in the PR, visually confirming the effectiveness of the fix.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- aed650fa324cd38b12750f89aad9a3098dfbd6b4 -->
+
+<!-- commit_ids_reviewed_end --><!-- tweet_start -->
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<!-- tweet_end --><!-- tips_start -->
+
+---
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with CodeRabbit:
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit-tests for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit tests for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit tests.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- The JSON schema for the configuration file is available [here](https://coderabbit.ai/integrations/coderabbit-overrides.v2.json).
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/coderabbit-overrides.v2.json`
+
+### CodeRabbit Discord Community
+
+Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+
+</details>
+
+<!-- tips_end -->\n- Tosters: Still broken. Are there any workarounds?
+
+
+https://github.com/nextui-org/nextui/assets/8882611/607610a8-94cb-43ff-b150-57c7017c2e26
+
+browsers:
+Edge: Version 122.0.2365.113 (Official build) stable app, extended channel (64-bit)
+Chrome: Version 122.0.6261.156 (Official Build) extended (64-bit)
+
+package.json:
+```
+"dependencies": {
+    "@heroicons/react": "^2.1.3",
+    "@nextui-org/react": "^2.2.10",
+    "@reduxjs/toolkit": "^2.2.3",
+    "firebase": "^10.10.0",
+    "framer-motion": "^11.0.24",
+    "next-themes": "^0.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^9.1.0",
+    "react-router-dom": "^6.22.3",
+    "react-use-wizard": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.74",
+    "@types/react-dom": "^18.2.23",
+    "@typescript-eslint/eslint-plugin": "^7.5.0",
+    "@typescript-eslint/parser": "^7.5.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "openapi-typescript": "^6.7.5",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.7"
+  }
+```\n- wingkwong: @Tosters We haven't released that yet - it should be in the next release.\n- Hervinho: @wingkwong when is the next release?\n- wingkwong: @Hervinho target on April 15. See [here](https://github.com/nextui-org/nextui/milestone/20).\n- matteogilioli: I updated to the latest version and it still seems broken\n
+
+Files Changed:
+- .changeset/four-turtles-move.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/popover": patch
++---
++
++fixed popover closing issue in autocomplete with open modal (#2475, #2082, #1987)\n- packages/components/popover/src/free-solo-popover.tsx (modified, 2 changes)\n  Patch: @@ -75,7 +75,7 @@ const FreeSoloPopover = forwardRef<"div", FreeSoloPopoverProps>((props, ref) =>
+   } = usePopover({
+     ...props,
+     // avoid closing the popover when navigating with the keyboard
+-    shouldCloseOnInteractOutside: undefined,
++    shouldCloseOnInteractOutside: () => false,
+     ref,
+   });
+ \n

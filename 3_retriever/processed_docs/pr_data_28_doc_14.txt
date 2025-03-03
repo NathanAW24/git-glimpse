@@ -1,0 +1,176 @@
+Pull Request Number: 471
+Title: Feat/add support button
+Base Branch: main
+Head Branch: feat/add-support-button
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/471
+State: MERGED
+Created At: 2022-05-15T15:02:24Z
+Merged At: 2022-05-15T15:03:36Z
+Participants: jrgarciadev
+
+Description:
+📝 Description
+Patreon support button was added to the navbar, it allows to support the project by donating to it
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+  
+    
+    
+
+    Screen.Recording.2022-05-15.at.11.57.56.mov
+
+Commits:
+- fix(react-checkbox): disable label animation on true\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- feat(docs): support button added, autocomplete placeholder color changed\n- feat(docs): pulse animation added to support button\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/src/components/search/autocomplete.tsx (modified, 16 changes)\n  Patch: @@ -222,7 +222,12 @@ const Autocomplete: React.FC<Props> = ({ hits, refine, offsetTop }) => {
+         />
+         <style jsx global>{`
+           .search__placeholder-block {
+-            max-width: 228px;
++            max-width: 200px;
++          }
++          @media only screen and (max-width: ${theme?.breakpoints?.md.value}) {
++            .search__placeholder-block {
++              max-width: 228px;
++            }
+           }
+           @media only screen and (max-width: ${theme?.breakpoints?.xs.value}) {
+             .search__placeholder-block {
+@@ -325,14 +330,19 @@ const Autocomplete: React.FC<Props> = ({ hits, refine, offsetTop }) => {
+             text-align: left;
+             background: none;
+             color: ${theme?.colors?.text?.value};
+-            width: 228px;
++            width: 200px;
+             height: 28px;
+             padding: 16px;
+             padding-right: calc(5% + 18px);
+             font-size: 1rem;
+             outline: none;
+             border: none;
+           }
++          @media only screen and (max-width: ${theme?.breakpoints?.md.value}) {
++            .react-autosuggest__input {
++              width: 228px;
++            }
++          }
+           .react-autosuggest__suggestions-container {
+             display: none;
+             opacity: 0;
+@@ -425,7 +435,7 @@ const Autocomplete: React.FC<Props> = ({ hits, refine, offsetTop }) => {
+             transition: opacity 0.25s ease 0s;
+           }
+           .search__input-container input::placeholder {
+-            color: ${theme?.colors?.accents8?.value};
++            color: ${theme?.colors?.accents6?.value};
+             transition: opacity 0.25s ease 0s;
+             -moz-transition: opacity 0.25s ease 0s;
+             -ms-transition: opacity 0.25s ease 0s;\n- apps/docs/src/layouts/navbar.tsx (modified, 50 changes)\n  Patch: @@ -6,20 +6,30 @@ import {
+   Twitter,
+   Discord,
+   Github,
+-  ThemeToggle
++  ThemeToggle,
++  Heart
+ } from '@components';
+ import { Box } from '@primitives';
+ import cn from 'classnames';
+ import NextLink from 'next/link';
+ import dynamic from 'next/dynamic';
+-import { Row, Col, Spacer, Link, useBodyScroll } from '@nextui-org/react';
++import {
++  Row,
++  Col,
++  Spacer,
++  Link,
++  Button,
++  useBodyScroll
++} from '@nextui-org/react';
+ import { Route } from '@lib/docs/page';
+ import { Container } from '@nextui-org/react';
+ import { useRouter } from 'next/router';
+ import { useMediaQuery } from '@hooks/use-media-query';
+ import { isActive } from '@utils/links';
+ import { includes } from 'lodash';
+ import { StyledNavContainer, StyledNavMainContainer } from './styles';
++import { darkTheme } from '@theme/shared';
++import { pulse } from '@utils/animations';
+ 
+ export interface Props {
+   routes?: Route[];
+@@ -281,6 +291,42 @@ const Navbar: React.FC<Props> = ({ isHome, hasNotify, routes }) => {
+                 />
+               </Row>
+               <SearchInput offsetTop={detached ? 0 : 30} />
++              <Spacer x={0.5} />
++              <Button
++                auto
++                as="a"
++                href="https://patreon.com/jrgarciadev"
++                target="_blank"
++                rel="noreferrer"
++                icon={
++                  <Heart filled size={20} fill="var(--nextui-colors-red600)" />
++                }
++                css={{
++                  bg: '$gray50',
++                  color: '$text',
++                  maxH: '38px',
++                  px: '$8',
++                  '@mdMax': {
++                    d: 'none'
++                  },
++                  '& .nextui-button-icon': {
++                    mr: '$2'
++                  },
++                  '& .nextui-button-icon svg': {
++                    transition: '$default'
++                  },
++                  '&:hover': {
++                    '& .nextui-button-icon svg': {
++                      animation: `${pulse} 1s infinite`
++                    }
++                  },
++                  [`.${darkTheme} &`]: {
++                    bg: 'rgba(255, 255, 255, 0.1)'
++                  }
++                }}
++              >
++                Sponsor
++              </Button>
+             </Row>
+           </Col>
+           <Col\n- apps/docs/src/utils/animations.ts (modified, 12 changes)\n  Patch: @@ -26,3 +26,15 @@ export const appears = keyframes({
+     opacity: 1
+   }
+ });
++
++export const pulse = keyframes({
++  '0%': {
++    transform: 'scale(1)'
++  },
++  '50%': {
++    transform: 'scale(1.2)'
++  },
++  '100%': {
++    transform: 'scale(1)'
++  }
++});\n- packages/react/src/checkbox/checkbox.styles.ts (modified, 2 changes)\n  Patch: @@ -40,7 +40,7 @@ export const StyledCheckboxLabel = styled('label', {
+       }
+     },
+     disableAnimation: {
+-      false: {
++      true: {
+         transition: 'none'
+       }
+     }\n

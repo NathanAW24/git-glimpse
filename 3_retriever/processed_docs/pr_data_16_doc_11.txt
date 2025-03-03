@@ -1,0 +1,89 @@
+Pull Request Number: 2371
+Title: fix(components): input label overlapping issue
+Base Branch: main
+Head Branch: fix/ENG-77
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2371
+State: MERGED
+Created At: 2024-02-17T10:43:56Z
+Merged At: 2024-02-17T18:10:12Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes #2255
+📝 Description
+Set Date, Time, Month, Week and Range as isFilled as well.
+⛳️ Current behavior (updates)
+Currently the labels would overlap in Date, Time, Month, Week and Range. Screenshot retrieved from the original issue post.
+
+🚀 New behavior
+
+💣 Is this a breaking change (Yes/No):
+
+No
+📝 Additional Information
+
+Commits:
+- fix(components): input label overlapping issue\n- chore(root): add changeset for input overlapping issue\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 692bc8f900f7f7a99a3a493d82f0ee7c7345f269
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/input        | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/react        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/wingkwong/nextui/new/fix/ENG-77?filename=.changeset/friendly-dogs-divide.md&value=---%0A%22%40nextui-org%2Finput%22%3A%20patch%0A---%0A%0Afix(components)%3A%20input%20label%20overlapping%20issue%0A)
+
+\n- vercel: [vc]: #Ts0BpERsxrRweaCA6YqBbpefIlOXOTr5Oqg/yGrQF48=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRWFERzdVUzlXRlRMemdiVEEzWEpkcm1jWkJoaSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtZW5nLTc3LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtZW5nLTc3LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/EaDG7US9WFTLzgbTA3XJdrmcZBhi)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-77-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-77-nextui-org.vercel.app?via=pr-comment-feedback-link) | Feb 17, 2024 1:26pm |
+
+\n- vercel: @wingkwong is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22c1f6d28689c4fe6784e57c64c5da43d7d66639e4%22%7D%2C%22id%22%3A%22QmZ7jrfBJohesBSGhPdBytUh6T8NuW5wpQx3NHJSKPVB8D%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2371%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/itchy-shirts-build.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/input": patch
++---
++
++fixed input label overlapping issue (#2255)\n- packages/components/input/src/use-input.ts (modified, 4 changes)\n  Patch: @@ -87,6 +87,7 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+   const {
+     ref,
+     as,
++    type,
+     label,
+     baseRef,
+     wrapperRef,
+@@ -122,7 +123,8 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+ 
+   const Component = as || "div";
+ 
+-  const isFilled = !!inputValue;
++  const isFilledByDefault = ["date", "time", "month", "week", "range"].includes(type!);
++  const isFilled = !!inputValue || isFilledByDefault;
+   const isFilledWithin = isFilled || isFocusWithin;
+   const baseStyles = clsx(classNames?.base, className, isFilled ? "is-filled" : "");
+   const isMultiline = originalProps.isMultiline;\n

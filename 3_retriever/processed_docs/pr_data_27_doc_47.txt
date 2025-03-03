@@ -1,0 +1,2053 @@
+Pull Request Number: 512
+Title: v1.0.0-beta.8
+Base Branch: main
+Head Branch: next
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/512
+State: MERGED
+Created At: 2022-06-06T19:32:07Z
+Merged At: 2022-06-06T21:34:07Z
+Participants: jrgarciadev, codecov-commenter, tianenpang, DannyNemer, cyanxiao
+
+Description:
+Closes #474
+Closes #509
+Closes #174
+Closes #301
+📝 Description
+NextUI new version v1.0.0-beta.8 🚀
+🚀 New behaviour
+
+[NEW COMPONENT]: Dropdown component has been created, based on react-aria hooks: useMenu useMenuItem useMenuSection useTreeState #507
+New grey scale: in order to have better grey/dark contrast, a Slate one changed the grey palette #483
+Refactor Radio and integration with react-aria/radio. #491
+Card refactor and integration with usePress and useHover react-aria hooks. #511
+Theme shadows have been improved and are now more consistent, a new key for drop shadows was added. #511
+Theme font sizes have been improved and are now more consistent. #511
+Theme line heights have been improved and are now more consistent. #511
+Docs components and core components have been updated in order to fit the new font sizes and shadows #511
+
+Utilities added to the Stitches CSS library:
++ ds: (value) => ({
++   dropShadow: value
++ }),
++ shadow: (value) => ({
++   boxShadow: value
++ }),
++ dshadow: (value) => ({
++   dropShadow: value
++ }),
++ dropShadow: (value) => ({
++   filter: `$dropShadows${value}`
++ }),
+New theme key -> dropShadows (to use along with css dropShadow utility)
+Light Theme:
+  dropShadows: {
++    xs: 'drop-shadow(0 2px 4px rgb(104 112 118 / 0.07)) drop-shadow(0 1px 1px rgb(104 112 118 / 0.04))',
++    sm: 'drop-shadow(0 2px 8px rgb(104 112 118 / 0.07)) drop-shadow(0 2px 4px rgb(104 112 118 / 0.04))',
++    md: 'drop-shadow(0 4px 12px rgb(104 112 118 / 0.08)) drop-shadow(0 20px 8px rgb(104 112 118 / 0.04))',
++    lg: 'drop-shadow(0 12px 24px rgb(104 112 118 / 0.15)) drop-shadow(0 12px 14px rgb(104 112 118 / 0.1))',
++    xl: 'drop-shadow(0 25px 34px rgb(104 112 118 / 0.35))'
+  }
+Dark Theme:
+  dropShadows: {
++    xs: 'drop-shadow(0 2px 4px rgb(0 0 0 / 0.07)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.04))',
++    sm: 'drop-shadow(0 2px 8px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 4px rgb(0 0 0 / 0.04))',
++    md: 'drop-shadow(0 4px 12px rgb(0 0 0 / 0.08)) drop-shadow(0 20px 8px rgb(0 0 0 / 0.04))',
++    lg: 'drop-shadow(0 12px 24px rgb(0 0 0 / 0.15)) drop-shadow(0 12px 14px rgb(0 0 0 / 0.1))',
++    xl: 'drop-shadow(0 25px 34px rgb(0 0 0 / 0.35))'
+  }
+Usage example:
+<Button
+  css={{
+    dropShadow: "$lg",
+  }}
+/>
+💣 Is this a breaking change (Yes/No): Yes
+Card APIs breaking changes
+
+bordered prop has been removed, use variant="bordered" instead.
+shadow prop has been removed, use variant="shadow" instead.
+cover prop has been removed, use objectFit="cover" image prop instead.
+
+
+
+
+Old APIs
+New APIs
+
+
+
+
+clickable
+isPressable
+
+
+hoverable
+isHoverable
+
+
+animated
+disableAnimation
+
+
+
+Card.Footer APIs breaking changes
+
+
+
+Old APIs
+New APIs
+
+
+
+
+blur
+isBlurred
+
+
+
+Card Implementation difference:
+NextUI is no longer automatically wrapping the children in a Card.Body component (since it causes a lot of issues), it means that you have to do it yourself.
+    <Card css={{ mw: "400px" }}>
++     <Card.Body>
+        <Text>A basic card</Text>
++     </Card.Body>
+    </Card>
+
+Theme breaking changes
+Font sizes breaking changes
+  fontSizes: {
+-   tiny: '.75rem',
+-   xs: '0.875rem',
+-   base: '1rem',
+-   sm: '1.25rem',
+-   md: '1.5rem',
+-   lg: '2.25rem',
+-   xl: '3rem'
+
++   xs: '0.75rem', /* 12px */
++   sm: '0.875rem', /* 14px */
++   base: '1rem', /* 16px */
++   md: '1rem', /* 16px */
++   lg: '1.125rem', /* 18px */
++   xl: '1.25rem', /* 20px */
++   xl2: '1.5rem', /* 24px */
++   xl3: '1.875rem', /* 30px */
++   xl4: '2.25rem', /* 36px */
++   xl5: '3rem', /* 48px */
++   xl6: '3.75rem', /* 60px */
++   xl7: '4.5rem', /* 72px */
++   xl8: '6rem', /* 96px */
++   xl9: '8rem', /* 128px */
+  }
+Line heights breaking changes
+  lineHeights: {
+-   xs: 1,
+-   sm: 1.25,
+-   md: 1.5,
+-   lg: 1.625,
+-   xl: 1.75
+
++   xs: 1, /* 16px */
++   sm: 1.25, /* 20px */
++   base: 1.5, /* 24px */
++   md: 1.5, /* 24px */
++   lg: 1.75, /* 28px */
++   xl: 1.75, /* 28px */
++   xl2: 2, /* 32px */
++   xl3: 2.25, /* 36px */
++   xl4: 2.5, /* 40px */
++   xl5: 1,
++   xl6: 1,
++   xl7: 1,
++   xl8: 1,
++   xl9: 1
+  }
+Shadows breaking changes
+Light Theme:
+  shadows: {
+-   xs: '-4px 0 4px rgb(0 0 0 / 5%);',
+-   sm: '0 5px 20px -5px rgba(0, 0, 0, 0.1)',
+-   md: '0 8px 30px rgba(0, 0, 0, 0.15)',
+-   lg: '0 30px 60px rgba(0, 0, 0, 0.15)',
+-   xl: '0 40px 80px rgba(0, 0, 0, 0.25)'
+
++   xs: '0 2px 8px 1px rgb(104 112 118 / 0.07), 0 1px 1px -1px rgb(104 112 118 / 0.04)',
++   sm: '0 2px 8px 2px rgb(104 112 118 / 0.07), 0 2px 4px -1px rgb(104 112 118 / 0.04)',
++   md: '0 12px 20px 6px rgb(104 112 118 / 0.08)',
++   lg: '0 12px 34px 6px rgb(104 112 118 / 0.18)',
++   xl: '0 25px 65px 0px rgb(104 112 118 / 0.35)'
+  }
+Dark Theme:
+  shadows: {
+-   xs: '-4px 0 15px rgb(0 0 0 / 50%)',
+-   sm: '0 5px 20px -5px rgba(20, 20, 20, 0.1)',
+-   md: '0 8px 30px rgba(20, 20, 20, 0.15)',
+-   lg: '0 30px 60px rgba(20, 20, 20, 0.15)',
+-   xl: '0 40px 80px rgba(20, 20, 20, 0.25)'
+
++   xs: '0 2px 8px 1px rgb(0 0 0 / 0.07), 0 1px 1px -1px rgb(0 0 0 / 0.04)',
++   sm: '0 2px 8px 2px rgb(0 0 0 / 0.07), 0 2px 4px -1px rgb(0 0 0 / 0.04)',
++   md: '0 12px 20px 6px rgb(0 0 0 / 0.08)',
++   lg: '0 12px 34px 6px rgb(0 0 0 / 0.18)',
++   xl: '0 25px 65px 0px rgb(0 0 0 / 0.35)'
+  }
+Radio APIs breaking changes
+
+Radio needs to be wrapped in the Radio.Group.
+
+Radio Props
+
+
+
+OLD APIs
+NEW APIs
+
+
+
+
+textColor
+labelColor
+
+
+animated
+disableAnimation
+
+
+squared
+isSquared
+
+
+disabled
+isDisabled
+
+
+
+Radio Group Props
+
+
+
+OLD APIs
+NEW APIs
+
+
+
+
+textColor
+labelColor
+
+
+value: string, number
+value: string
+
+
+initialValue: string, number
+defaultValue: string
+
+
+disabled
+isDisabled
+
+
+onChange: (e:RadioEvent) => void
+onChange: (value: T) => void
+
+
+
+
+row prop has been removed, use orientation="horizontal" instead.
+Radio.Description and Radio.Desc sub-components have been removed, use description prop instead.
+
+-  <Radio.Group value="1" row>
++ <Radio.Group value="1" orientation="horizontal">
+-      <Radio value="1">
+-        Option 1<Radio.Description>Description for Option1</Radio.Description>
+-      </Radio>
++     <Radio value="1" description="Description for Option1">
++        Option 1
++      </Radio>
+  </Radio.Group>
+Checkbox APIs breaking changes
+
+row prop has been removed, use orientation="horizontal" instead.
+
+
+📝 Additional Information
+
+Commits:
+- feat(react-dropdown): initial structure\n- Merge branch 'next' of github.com:nextui-org/nextui into feat/dropdown-component\n- fix: user prop and user link warnings\n- feat(docs): new gray scale applied\n- Merge pull request #483 from nextui-org/refactor/theme-gray-scale
+
+Refactor/theme gray scale\n- Merge branch 'next' of github.com:nextui-org/nextui into feat/dropdown-component\n- feat(storybook): version upgraded to 6.5.3\n- feat(react-dropdown): dropdown menu is working, styles and API missing\n- chore(react-dropdown): documentation improved, trigger type is now beign passed\n- feat(react-dropdown): compound pattern implemented, shared css moved to a separated file called `shared-css`\n- feat(react-dropdown): dropdown-item styles improved, button icon css props added, some dropdown stories added\n- theme: Amend utility function `bgBlur` to not modulate background value
+
+Amends the Stitches utility function `bgBlur` to set the passed background-color value as-is instead of appending `66` (for alpha), which only works for hex color codes.
+
+This change enables passing other color code formats, like `hsla()` and `rgb()`, just like the rest of NextUI. The previous implementation confuses users for why their color value does not work.
+
+Second, the previous implementation of setting the passed color alpha to 66% is hidden from the user. If the user wants to pass a value with a particular alpha that is not 66%, she must think about the additional 66% modification happening to her color.
+
+For example, I would like to set the background color for this blur effect to exactly `hsla(0, 0%, 100%, 0.1)`, where I can easily tweak the alpha value. However, this color code format is incompatible with the current implementation for the reason explained above. Second, if I instead find the corresponding hex color code for this value, I can not tweak the alpha easily; and when I do, I must also account for the 66% happening in the background.\n- Merge pull request #485 from DannyNemer/danny/bgblur
+
+theme: Amend utility function `bgBlur` to not modulate background value\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- feat(react-dropdown): bordered & shadow variants implemented\n- feat(react-dropdown): variants apply to Dropdown.Menu\n- chore(react-dropdown): outline applied to shadow items\n- refactor(react-radio): integration with react-aria radio\n- feat(storybook): theme toggle with nextui\n- Merge pull request #492 from tianenpang/feat/storybook-theme-toggle
+
+feat(storybook): theme toggle with nextui\n- Merge branch 'next' of github.com:nextui-org/nextui into feat/dropdown-component\n- feat(react-dropdown): command added to the end of the list item\n- refactor(react-button): padding removed when there's no a child\n- fix: limit node version\n- feat(react-dropdown): icon and description variations added, new utils for truncating text added\n- feat(react-dropdown): truncate item description text\n- feat(react-dropdown): sections added\n- feat(react-dropdown): single selection started\n- refactor(react-radio): update docs, unit tests and radio desc types\n- feat(react-dropdown): single and multiple selection done\n- chore(react-dropdown): first test added\n- feat(react-dropdown): test added, checkmark icon added fo single and multiple selection\n- chore(react-dropdown): types and variants exported\n- chore(react-radio): pinned dependencies version\n- feat(docs-dropdown): docs writing in progress\n- feat(react-dropdown): avatar and user supported as a trigged\n- feat(docs-dropdown): dropdown documentation done\n- feat(docs-dropdown): keyboard interactions added\n- feat(docs-dropdown): keyboard interactions updated\n- Merge pull request #507 from nextui-org/feat/dropdown-component
+
+Feat/dropdown component\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- Merge branch 'next' into refactor/radio\n- Merge pull request #491 from tianenpang/refactor/radio
+
+refactor(react-radio): integration with react-aria radio\n- refactor(react-radio): description component have been moved to the prop "description", invalid state added and more\n- feat(react-radio): radio docs improved\n- chore(manifest): select coming soon\n- chore(react-input): label left/right now accept a react node\n- refactor(react-radio): isRow prop changed by orientation horizontal\n- refactor(docs-checkbox): no animated changed by disable animation title\n- refactor(react-card): card props and behaviour in progress\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/512?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#512](https://codecov.io/gh/nextui-org/nextui/pull/512?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (7115bb6) into [main](https://codecov.io/gh/nextui-org/nextui/commit/f51149341bd5159ccd41b262befc9f70d780b65b?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (f511493) will **decrease** coverage by `0.19%`.
+> The diff coverage is `78.21%`.
+
+```diff
+@@            Coverage Diff             @@
+##             main     #512      +/-   ##
+==========================================
+- Coverage   74.95%   74.75%   -0.20%     
+==========================================
+  Files         183      200      +17     
+  Lines        2831     3090     +259     
+  Branches      843      952     +109     
+==========================================
++ Hits         2122     2310     +188     
+- Misses        698      765      +67     
+- Partials       11       15       +4     
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/512?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/react/src/button/button-icon.tsx](https://codecov.io/gh/nextui-org/nextui/pull/512/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2J1dHRvbi9idXR0b24taWNvbi50c3g=) | `100.00% <ø> (ø)` | |
+| [packages/react/src/button/button.styles.ts](https://codecov.io/gh/nextui-org/nextui/pull/512/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2J1dHRvbi9idXR0b24uc3R5bGVzLnRz) | `100.00% <ø> (ø)` | |
+| [packages/react/src/checkbox/checkbox-group.tsx](https://codecov.io/gh/nextui-org/nextui/pull/512/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2NoZWNrYm94L2NoZWNrYm94LWdyb3VwLnRzeA==) | `100.00% <ø> (ø)` | |
+| [packages/react/src/checkbox/checkbox.styles.ts](https://codecov.io/gh/nextui-org/nextui/pull/512/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2NoZWNrYm94L2NoZWNrYm94LnN0eWxlcy50cw==) | `100.00% <ø> (ø)` | |
+| [packages/react/src/collapse/collapse.styles.ts](https://codecov.io/gh/nextui-org/nextui/pull/512/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2NvbGxhcHNlL2NvbGxhcHNlLnN0eWxlcy50cw==) | `100.00% <ø> (ø)` | |
+| [packages/react/src/css-baseline/css-baseline.tsx](https://codecov.io/gh/nextui-org/nextui/pull/512/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2Nzcy1iYXNlbGluZS9jc3MtYmFzZWxpbmUudHN4) | `62.50% <ø> (ø)` | |
+| [packages/react/src/image/image.styles.ts](https://codecov.io/gh/nextui-org/nextui/pull/512/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2ltYWdlL2ltYWdlLnN0eWxlcy50cw==) | `100.00% <ø> (ø)` | |
+| [packages/react/src/input/input-props.ts](https://codecov.io/gh/nextui-org/nextui/pull/512/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2lucHV0L2lucHV0LXByb3BzLnRz) | `100.00% <ø> (ø)` | |
+| [packages/react/src/input/input.styles.ts](https://codecov.io/gh/nextui-org/nextui/pull/512/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL2lucHV0L2lucHV0LnN0eWxlcy50cw==) | `100.00% <ø> (ø)` | |
+| [packages/react/src/modal/modal.styles.ts](https://codecov.io/gh/nextui-org/nextui/pull/512/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL21vZGFsL21vZGFsLnN0eWxlcy50cw==) | `100.00% <ø> (ø)` | |
+| ... and [54 more](https://codecov.io/gh/nextui-org/nextui/pull/512/diff?src=pr&el=tree-more&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/512?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/512?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [f511493...7115bb6](https://codecov.io/gh/nextui-org/nextui/pull/512?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- apps/docs/content/components/card/action.ts (modified, 10 changes)\n  Patch: @@ -48,20 +48,20 @@ export default function App() {
+     <Grid.Container gap={2} justify="flex-start">
+       {list.map((item, index) => (
+         <Grid xs={6} sm={3} key={index}>
+-          <Card hoverable clickable>
++          <Card isPressable>
+             <Card.Body css={{ p: 0 }}>
+               <Card.Image
++                src={"https://nextui.org" + item.img}
+                 objectFit="cover"
+-                src={'https://nextui.org' + item.img}
+                 width="100%"
+                 height={140}
+                 alt={item.title}
+               />
+             </Card.Body>
+-            <Card.Footer justify="flex-start">
+-              <Row wrap="wrap" justify="space-between">
++            <Card.Footer css={{ justifyItems: "flex-start" }}>
++              <Row wrap="wrap" justify="space-between" align="center">
+                 <Text b>{item.title}</Text>
+-                <Text css={{ color: "$accents4", fontWeight: "$semibold" }}>
++                <Text css={{ color: "$accents7", fontWeight: "$semibold", fontSize: "$sm" }}>
+                   {item.price}
+                 </Text>
+               </Row>\n- apps/docs/content/components/card/bordered.ts (removed, 17 changes)\n  Patch: @@ -1,17 +0,0 @@
+-const App = `import { Card } from "@nextui-org/react";
+-
+-export default function App() {
+-  return (
+-    <Card bordered shadow={false} css={{ mw: "400px" }}>
+-      <p>A bordered card.</p>
+-    </Card>
+-  );
+-}`;
+-
+-const react = {
+-  '/App.js': App
+-};
+-
+-export default {
+-  ...react
+-};\n- apps/docs/content/components/card/clickable.ts (removed, 17 changes)\n  Patch: @@ -1,17 +0,0 @@
+-const App = `import { Card } from "@nextui-org/react";
+-
+-export default function App() {
+-  return (
+-    <Card clickable bordered css={{ mw: "400px" }}>
+-      <p>A clickable card.</p>
+-    </Card>
+-  );
+-}`;
+-
+-const react = {
+-  '/App.js': App
+-};
+-
+-export default {
+-  ...react
+-};\n- apps/docs/content/components/card/color.ts (removed, 39 changes)\n  Patch: @@ -1,39 +0,0 @@
+-const App = `import { Card, Grid, Text } from "@nextui-org/react";
+-
+-export default function App() {
+-  const colors = [
+-    "primary",
+-    "secondary",
+-    "success",
+-    "warning",
+-    "error",
+-    "gradient",
+-  ];
+-  return (
+-    <Grid.Container gap={2}>
+-      {colors.map((color) => (
+-        <Grid xs={12} md={4} key={color}>
+-          <Card color={color}>
+-            <Text
+-              css={{ fontWeight: "$bold", color: "$white" }}
+-              transform="capitalize"
+-            >
+-              {color}
+-            </Text>
+-            <Text css={{ fontWeight: "$bold", color: "$white" }} span>
+-              {color}
+-            </Text>
+-          </Card>
+-        </Grid>
+-      ))}
+-    </Grid.Container>
+-  );
+-}`;
+-
+-const react = {
+-  '/App.js': App
+-};
+-
+-export default {
+-  ...react
+-};\n- apps/docs/content/components/card/cover.ts (modified, 43 changes)\n  Patch: @@ -1,7 +1,7 @@
+ const Card1 = `import { Card, Col, Text } from "@nextui-org/react";
+ 
+ export const Card1 = () => (
+-  <Card cover>
++  <Card>
+     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+       <Col>
+         <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
+@@ -14,8 +14,9 @@ export const Card1 = () => (
+     </Card.Header>
+     <Card.Image
+       src="https://nextui.org/images/card-example-4.jpeg"
+-      height={340}
++      objectFit="cover"
+       width="100%"
++      height={340}
+       alt="Card image background"
+     />
+   </Card>
+@@ -24,7 +25,7 @@ export const Card1 = () => (
+ const Card2 = `import { Card, Col, Text } from "@nextui-org/react";
+ 
+ export const Card2 = () => (
+-  <Card width="100%" cover>
++  <Card css={{ w: "100%" }}>
+     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+       <Col>
+         <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
+@@ -37,8 +38,9 @@ export const Card2 = () => (
+     </Card.Header>
+     <Card.Image
+       src="https://nextui.org/images/card-example-3.jpeg"
+-      height={340}
+       width="100%"
++      height={340}
++      objectFit="cover"
+       alt="Card image background"
+     />
+   </Card>
+@@ -47,7 +49,7 @@ export const Card2 = () => (
+ const Card3 = `import { Card, Col, Text } from "@nextui-org/react";
+ 
+ export const Card3 = () => (
+-  <Card cover css={{ bg: "$black", w: "100%" }}>
++  <Card css={{ bg: "$black", w: "100%" }}>
+     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+       <Col>
+         <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
+@@ -60,8 +62,9 @@ export const Card3 = () => (
+     </Card.Header>
+     <Card.Image
+       src="https://nextui.org/images/card-example-2.jpeg"
+-      height={340}
+       width="100%"
++      height={340}
++      objectFit="cover"
+       alt="Card image background"
+     />
+   </Card>
+@@ -70,7 +73,7 @@ export const Card3 = () => (
+ const Card4 = `import { Card, Col, Row, Button, Text } from "@nextui-org/react";
+ 
+ export const Card4 = () => (
+-  <Card cover css={{ w: "100%" }}>
++  <Card css={{ w: "100%", h: "400px" }}>
+     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+       <Col>
+         <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
+@@ -81,19 +84,20 @@ export const Card4 = () => (
+         </Text>
+       </Col>
+     </Card.Header>
+-    <Card.Body>
++    <Card.Body css={{ p: 0 }}>
+       <Card.Image
+         src="https://nextui.org/images/card-example-6.jpeg"
+-        height={400}
+         width="100%"
++        height="100%"
++        objectFit="cover"
+         alt="Card example background"
+       />
+     </Card.Body>
+     <Card.Footer
+-      blur
++      isBlurred
+       css={{
+         position: "absolute",
+-        bgBlur: "#ffffff",
++        bgBlur: "#ffffff66",
+         borderTop: "$borderWeights$light solid rgba(255, 255, 255, 0.2)",
+         bottom: 0,
+         zIndex: 1,
+@@ -130,7 +134,7 @@ export const Card4 = () => (
+ const Card5 = `import { Card, Col, Row, Button, Text } from "@nextui-org/react";
+ 
+ export const Card5 = () => (
+-  <Card cover css={{ w: "100%", p: 0 }}>
++  <Card css={{ w: "100%", h: "400px" }}>
+     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+       <Col>
+         <Text size={12} weight="bold" transform="uppercase" color="#9E9E9E">
+@@ -141,20 +145,21 @@ export const Card5 = () => (
+         </Text>
+       </Col>
+     </Card.Header>
+-    <Card.Body>
++    <Card.Body css={{ p: 0 }}>
+       <Card.Image
+         src="https://nextui.org/images/card-example-5.jpeg"
+-        height={400}
++        objectFit="cover"
+         width="100%"
++        height="100%"
+         alt="Relaxing app background"
+       />
+     </Card.Body>
+     <Card.Footer
+-      blur
++      isBlurred
+       css={{
+         position: "absolute",
+-        bgBlur: "#0f1114",
+-        borderTop: "$borderWeights$light solid $gray700",
++        bgBlur: "#0f111466",
++        borderTop: "$borderWeights$light solid $gray800",
+         bottom: 0,
+         zIndex: 1,
+       }}
+@@ -164,8 +169,8 @@ export const Card5 = () => (
+           <Row>
+             <Col span={3}>
+               <Card.Image
+-                src="/images/breathing-app-icon.jpeg"
+-                css={{ background: "black" }}
++                src="https://nextui.org/images/breathing-app-icon.jpeg"
++                css={{ bg: "black", br: "50%" }}
+                 height={40}
+                 width={40}
+                 alt="Breathing app icon"\n- apps/docs/content/components/card/default.ts (modified, 4 changes)\n  Patch: @@ -3,7 +3,9 @@ const App = `import { Card } from "@nextui-org/react";
+ export default function App() {
+   return (
+     <Card css={{ mw: "400px" }}>
+-      <p>A basic card.</p>
++      <Card.Body>
++        <Text>A basic card</Text>
++      </Card.Body>
+     </Card>
+   );
+ }`;\n- apps/docs/content/components/card/divider.ts (modified, 10 changes)\n  Patch: @@ -1,4 +1,4 @@
+-const App = `import { Card, Grid, Text, Divider, Button, Row } from "@nextui-org/react";
++const App = `import { Card, Grid, Text, Button, Row } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+@@ -8,14 +8,14 @@ export default function App() {
+           <Card.Header>
+             <Text b>Card Title</Text>
+           </Card.Header>
+-          <Divider />
++          <Card.Divider />
+           <Card.Body css={{ py: "$10" }}>
+             <Text>
+               Some quick example text to build on the card title and make up the
+               bulk of the card's content.
+             </Text>
+           </Card.Body>
+-          <Divider />
++          <Card.Divider />
+           <Card.Footer>
+             <Row justify="flex-end">
+               <Button size="sm" light>
+@@ -31,14 +31,14 @@ export default function App() {
+           <Card.Header>
+             <Text b>Card Title</Text>
+           </Card.Header>
+-          <Divider />
++          <Card.Divider />
+           <Card.Body css={{ py: "$10" }}>
+             <Text>
+               Some quick example text to build on the card title and make up the
+               bulk of the card's content.
+             </Text>
+           </Card.Body>
+-          <Divider />
++          <Card.Divider />
+           <Card.Footer>
+             <Row justify="flex-end">
+               <Button size="sm" light>\n- apps/docs/content/components/card/footer.ts (modified, 69 changes)\n  Patch: @@ -2,40 +2,41 @@ const App = `import { Card, Grid, Text, Link } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+-    <Grid.Container gap={2}>
+-      <Grid sm={12} md={5}>
+-        <Card css={{ mw: "330px" }}>
+-          <Text h4>Next UI</Text>
+-          <Text>🚀 Beautiful and modern React UI library.</Text>
+-          <Card.Footer>
+-            <Link
+-              color="primary"
+-              target="_blank"
+-              href="https://github.com/nextui-org/nextui"
+-            >
+-              Visit source code on GitHub.
+-            </Link>
+-          </Card.Footer>
+-        </Card>
+-      </Grid>
+-      <Grid sm={12} md={5}>
+-        <Card css={{ mw: "330px" }} color="primary">
+-          <Text h4 color="white">
+-            Next UI
+-          </Text>
+-          <Text color="white">🚀 Beautiful and modern React UI library.</Text>
+-          <Card.Footer>
+-            <Link
+-              target="_blank"
+-              css={{ color: "white" }}
+-              href="https://github.com/nextui-org/nextui"
+-            >
+-              Visit source code on GitHub.
+-            </Link>
+-          </Card.Footer>
+-        </Card>
+-      </Grid>
+-    </Grid.Container>
++    <Card css={{ p: "$6", mw: "400px" }}>
++      <Card.Header>
++        <img
++          alt="nextui logo"
++          src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
++          width="34px"
++          height="34px"
++        />
++        <Grid.Container css={{ pl: "$6" }}>
++          <Grid xs={12}>
++            <Text h4 css={{ lineHeight: "$xs" }}>
++              Next UI
++            </Text>
++          </Grid>
++          <Grid xs={12}>
++            <Text css={{ color: "$accents8" }}>nextui.org</Text>
++          </Grid>
++        </Grid.Container>
++      </Card.Header>
++      <Card.Body css={{ py: "$2" }}>
++        <Text>
++          Make beautiful websites regardless of your design experience.
++        </Text>
++      </Card.Body>
++      <Card.Footer>
++        <Link
++          icon
++          color="primary"
++          target="_blank"
++          href="https://github.com/nextui-org/nextui"
++        >
++          Visit source code on GitHub.
++        </Link>
++      </Card.Footer>
++    </Card>
+   );
+ }`;
+ \n- apps/docs/content/components/card/hover.ts (removed, 17 changes)\n  Patch: @@ -1,17 +0,0 @@
+-const App = `import { Card } from "@nextui-org/react";
+-
+-export default function App() {
+-  return (
+-    <Card bordered shadow={false} hoverable css={{ mw: "400px" }}>
+-      <p>A hoverable card.</p>
+-    </Card>
+-  );
+-}`;
+-
+-const react = {
+-  '/App.js': App
+-};
+-
+-export default {
+-  ...react
+-};\n- apps/docs/content/components/card/hoverable.ts (added, 19 changes)\n  Patch: @@ -0,0 +1,19 @@
++const App = `import { Card, Text } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Card isHoverable variant="bordered" css={{ mw: "400px" }}>
++      <Card.Body>
++        <Text>A hoverable card.</Text>
++      </Card.Body>
++    </Card>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/card/index.ts (modified, 14 changes)\n  Patch: @@ -1,19 +1,17 @@
+ import defaultCard from './default';
+-import bordered from './bordered';
+-import hover from './hover';
+-import clickable from './clickable';
+-import color from './color';
++import variants from './variants';
++import hoverable from './hoverable';
++import pressable from './pressable';
+ import divider from './divider';
+ import cover from './cover';
+ import action from './action';
+ import footer from './footer';
+ 
+ export default {
+   defaultCard,
+-  bordered,
+-  hover,
+-  clickable,
+-  color,
++  variants,
++  hoverable,
++  pressable,
+   divider,
+   cover,
+   action,\n- apps/docs/content/components/card/pressable.ts (added, 24 changes)\n  Patch: @@ -0,0 +1,24 @@
++const App = `import { Card, Text } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Card
++      isPressable
++      isHoverable
++      variant="bordered"
++      css={{ mw: "400px" }}
++    >
++      <Card.Body>
++        <Text>A pressable card.</Text>
++      </Card.Body>
++    </Card>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/card/variants.ts (added, 37 changes)\n  Patch: @@ -0,0 +1,37 @@
++const App = `import { Card } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid xs={4}>
++        <Card>
++          <Card.Body>
++            <Text>Default card. (shadow)</Text>
++          </Card.Body>
++        </Card>
++      </Grid>
++      <Grid xs={4}>
++        <Card variant="flat">
++          <Card.Body>
++            <Text>Flat card.</Text>
++          </Card.Body>
++        </Card>
++      </Grid>
++      <Grid xs={4}>
++        <Card variant="bordered">
++          <Card.Body>
++            <Text>Bordered card.</Text>
++          </Card.Body>
++        </Card>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/checkbox-group/row.ts (modified, 2 changes)\n  Patch: @@ -3,8 +3,8 @@ const App = `import { Checkbox } from "@nextui-org/react";
+ export default function App() {
+   return (
+     <Checkbox.Group
+-      isRow
+       label="Select cities"
++      orientation="horizontal"
+       color="secondary"
+       defaultValue={["buenos-aires"]}
+     >\n- apps/docs/content/components/dropdown/command.ts (added, 33 changes)\n  Patch: @@ -0,0 +1,33 @@
++const App = `import { Dropdown } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Dropdown>
++      <Dropdown.Button flat color="secondary">
++        Trigger
++      </Dropdown.Button>
++      <Dropdown.Menu color="secondary" aria-label="Actions">
++        <Dropdown.Item key="new" command="⌘N">
++          New file
++        </Dropdown.Item>
++        <Dropdown.Item key="copy" command="⌘C">
++          Copy link
++        </Dropdown.Item>
++        <Dropdown.Item key="edit" command="⌘⇧E">
++          Edit file
++        </Dropdown.Item>
++        <Dropdown.Item withDivider key="delete" color="error" command="⌘⇧D">
++          Delete file
++        </Dropdown.Item>
++      </Dropdown.Menu>
++    </Dropdown>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/dropdown/custom-trigger.ts (added, 94 changes)\n  Patch: @@ -0,0 +1,94 @@
++const App = `import { Dropdown, Avatar, Text, Grid, User } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container justify="flex-start" gap={2}>
++      <Grid>
++        <Dropdown placement="bottom-left">
++          <Dropdown.Trigger>
++            <Avatar
++              bordered
++              size="lg"
++              as="button"
++              color="secondary"
++              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
++            />
++          </Dropdown.Trigger>
++          <Dropdown.Menu color="secondary" aria-label="Avatar Actions">
++            <Dropdown.Item key="profile" css={{ height: "$18" }}>
++              <Text b color="inherit" css={{ d: "flex" }}>
++                Signed in as
++              </Text>
++              <Text b color="inherit" css={{ d: "flex" }}>
++                zoey@example.com
++              </Text>
++            </Dropdown.Item>
++            <Dropdown.Item key="settings" withDivider>
++              My Settings
++            </Dropdown.Item>
++            <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
++            <Dropdown.Item key="analytics" withDivider>
++              Analytics
++            </Dropdown.Item>
++            <Dropdown.Item key="system">System</Dropdown.Item>
++            <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
++            <Dropdown.Item key="help_and_feedback" withDivider>
++              Help & Feedback
++            </Dropdown.Item>
++            <Dropdown.Item key="logout" color="error" withDivider>
++              Log Out
++            </Dropdown.Item>
++          </Dropdown.Menu>
++        </Dropdown>
++      </Grid>
++      <Grid>
++        <Dropdown placement="bottom-left">
++          <Dropdown.Trigger>
++            <User
++              bordered
++              as="button"
++              size="lg"
++              color="primary"
++              name="Tony Reichert"
++              description="@tonyreichert"
++              src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
++            />
++          </Dropdown.Trigger>
++          <Dropdown.Menu color="primary" aria-label="User Actions">
++            <Dropdown.Item key="profile" css={{ height: "$18" }}>
++              <Text b color="inherit" css={{ d: "flex" }}>
++                Signed in as
++              </Text>
++              <Text b color="inherit" css={{ d: "flex" }}>
++                zoey@example.com
++              </Text>
++            </Dropdown.Item>
++            <Dropdown.Item key="settings" withDivider>
++              My Settings
++            </Dropdown.Item>
++            <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
++            <Dropdown.Item key="analytics" withDivider>
++              Analytics
++            </Dropdown.Item>
++            <Dropdown.Item key="system">System</Dropdown.Item>
++            <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
++            <Dropdown.Item key="help_and_feedback" withDivider>
++              Help & Feedback
++            </Dropdown.Item>
++            <Dropdown.Item key="logout" color="error" withDivider>
++              Log Out
++            </Dropdown.Item>
++          </Dropdown.Menu>
++        </Dropdown>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/dropdown/description.ts (added, 174 changes)\n  Patch: @@ -0,0 +1,174 @@
++const AddNoteIcon = `import { React } from "@nextui-org/react";
++
++export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        opacity={0.4}
++        d="M7.37 22h9.25a4.87 4.87 0 0 0 4.87-4.87V8.37a4.87 4.87 0 0 0-4.87-4.87H7.37A4.87 4.87 0 0 0 2.5 8.37v8.75c0 2.7 2.18 4.88 4.87 4.88Z"
++        fill={fill}
++      />
++      <path
++        d="M8.29 6.29c-.42 0-.75-.34-.75-.75V2.75a.749.749 0 1 1 1.5 0v2.78c0 .42-.33.76-.75.76ZM15.71 6.29c-.42 0-.75-.34-.75-.75V2.75a.749.749 0 1 1 1.5 0v2.78c0 .42-.33.76-.75.76ZM12 14.75h-1.69V13c0-.41-.34-.75-.75-.75s-.75.34-.75.75v1.75H7c-.41 0-.75.34-.75.75s.34.75.75.75h1.81V18c0 .41.34.75.75.75s.75-.34.75-.75v-1.75H12c.41 0 .75-.34.75-.75s-.34-.75-.75-.75Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const CopyDocumentIcon = `import { React } from "@nextui-org/react";
++
++export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        opacity={0.4}
++        d="M15.5 13.15h-2.17c-1.78 0-3.23-1.44-3.23-3.23V7.75c0-.41-.33-.75-.75-.75H6.18C3.87 7 2 8.5 2 11.18v6.64C2 20.5 3.87 22 6.18 22h5.89c2.31 0 4.18-1.5 4.18-4.18V13.9c0-.42-.34-.75-.75-.75Z"
++        fill={fill}
++      />
++      <path
++        d="M17.82 2H11.93C9.67 2 7.84 3.44 7.76 6.01c.06 0 .11-.01.17-.01h5.89C16.13 6 18 7.5 18 10.18V16.83c0 .06-.01.11-.01.16 2.23-.07 4.01-1.55 4.01-4.16V6.18C22 3.5 20.13 2 17.82 2Z"
++        fill={fill}
++      />
++      <path
++        d="M11.98 7.15c-.31-.31-.84-.1-.84.33v2.62c0 1.1.93 2 2.07 2 .71.01 1.7.01 2.55.01.43 0 .65-.5.35-.8-1.09-1.09-3.03-3.04-4.13-4.16Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const EditDocumentIcon = `import { React } from "@nextui-org/react";
++
++export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        opacity={0.4}
++        d="M15.48 3H7.52C4.07 3 2 5.06 2 8.52v7.95C2 19.94 4.07 22 7.52 22h7.95c3.46 0 5.52-2.06 5.52-5.52V8.52C21 5.06 18.93 3 15.48 3Z"
++        fill={fill}
++      />
++      <path
++        d="M21.02 2.98c-1.79-1.8-3.54-1.84-5.38 0L14.51 4.1c-.1.1-.13.24-.09.37.7 2.45 2.66 4.41 5.11 5.11.03.01.08.01.11.01.1 0 .2-.04.27-.11l1.11-1.12c.91-.91 1.36-1.78 1.36-2.67 0-.9-.45-1.79-1.36-2.71ZM17.86 10.42c-.27-.13-.53-.26-.77-.41-.2-.12-.4-.25-.59-.39-.16-.1-.34-.25-.52-.4-.02-.01-.08-.06-.16-.14-.31-.25-.64-.59-.95-.96-.02-.02-.08-.08-.13-.17-.1-.11-.25-.3-.38-.51-.11-.14-.24-.34-.36-.55-.15-.25-.28-.5-.4-.76-.13-.28-.23-.54-.32-.79L7.9 10.72c-.35.35-.69 1.01-.76 1.5l-.43 2.98c-.09.63.08 1.22.47 1.61.33.33.78.5 1.28.5.11 0 .22-.01.33-.02l2.97-.42c.49-.07 1.15-.4 1.5-.76l5.38-5.38c-.25-.08-.5-.19-.78-.31Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const DeleteDocumentIcon = `import { React } from "@nextui-org/react";
++
++export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        d="M21.07 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33 0-2.55 1.32-2.71 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82.04.41.4.71.82.67l2.04-.2c5.24-.52 10.52-.32 15.82.21h.08c.38 0 .71-.29.75-.68a.766.766 0 0 0-.69-.82Z"
++        fill={fill}
++      />
++      <path
++        opacity={0.399}
++        d="M19.23 8.14c-.24-.25-.57-.39-.91-.39H5.68c-.34 0-.68.14-.91.39-.23.25-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.42c3.49 0 3.63-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95Z"
++        fill={fill}
++      />
++      <path
++        fillRule="evenodd"
++        clipRule="evenodd"
++        d="M9.58 17a.75.75 0 0 1 .75-.75h3.33a.75.75 0 0 1 0 1.5h-3.33a.75.75 0 0 1-.75-.75ZM8.75 13a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5a.75.75 0 0 1-.75-.75Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};
++`;
++
++const App = `import { Dropdown } from "@nextui-org/react";
++import { AddNoteIcon } from "./AddNoteIcon.js"
++import { CopyDocumentIcon } from "./CopyDocumentIcon.js"
++import { EditDocumentIcon } from "./EditDocumentIcon.js"
++import { DeleteDocumentIcon } from "./DeleteDocumentIcon.js"
++
++export default function App() {
++  return (
++    <Dropdown>
++      <Dropdown.Button flat color="secondary">
++        Trigger
++      </Dropdown.Button>
++      <Dropdown.Menu color="secondary" aria-label="Actions" css={{ $$dropdownMenuWidth: "280px" }}>
++        <Dropdown.Item
++          key="new"
++          command="⌘N"
++          description="Create a new file"
++          icon={<AddNoteIcon size={22} fill="var(--nextui-colors-secondary)" />}
++        >
++          New file
++        </Dropdown.Item>
++        <Dropdown.Item
++          key="copy"
++          command="⌘C"
++          description="Copy the file link"
++          icon={
++            <CopyDocumentIcon size={22} fill="var(--nextui-colors-secondary)" />
++          }
++        >
++          Copy link
++        </Dropdown.Item>
++        <Dropdown.Item
++          key="edit"
++          command="⌘⇧E"
++          description="Allows you to edit the file" 
++          icon={
++            <EditDocumentIcon size={22} fill="var(--nextui-colors-secondary)" />
++          }
++        >
++          Edit file
++        </Dropdown.Item>
++        <Dropdown.Item
++          withDivider
++          key="delete"
++          color="error"
++          command="⌘⇧D"
++          description="Permanently delete the file"
++          icon={<DeleteDocumentIcon size={22} fill="currentColor" />}
++        >
++          Delete file
++        </Dropdown.Item>
++      </Dropdown.Menu>
++    </Dropdown>
++  );
++}`;
++
++const react = {
++  '/AddNoteIcon.js': AddNoteIcon,
++  '/CopyDocumentIcon.js': CopyDocumentIcon,
++  '/EditDocumentIcon.js': EditDocumentIcon,
++  '/DeleteDocumentIcon.js': DeleteDocumentIcon,
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/dropdown/disable-animation.ts (added, 189 changes)\n  Patch: @@ -0,0 +1,189 @@
++const AddNoteIcon = `import { React } from "@nextui-org/react";
++
++export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        opacity={0.4}
++        d="M7.37 22h9.25a4.87 4.87 0 0 0 4.87-4.87V8.37a4.87 4.87 0 0 0-4.87-4.87H7.37A4.87 4.87 0 0 0 2.5 8.37v8.75c0 2.7 2.18 4.88 4.87 4.88Z"
++        fill={fill}
++      />
++      <path
++        d="M8.29 6.29c-.42 0-.75-.34-.75-.75V2.75a.749.749 0 1 1 1.5 0v2.78c0 .42-.33.76-.75.76ZM15.71 6.29c-.42 0-.75-.34-.75-.75V2.75a.749.749 0 1 1 1.5 0v2.78c0 .42-.33.76-.75.76ZM12 14.75h-1.69V13c0-.41-.34-.75-.75-.75s-.75.34-.75.75v1.75H7c-.41 0-.75.34-.75.75s.34.75.75.75h1.81V18c0 .41.34.75.75.75s.75-.34.75-.75v-1.75H12c.41 0 .75-.34.75-.75s-.34-.75-.75-.75Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const CopyDocumentIcon = `import { React } from "@nextui-org/react";
++
++export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        opacity={0.4}
++        d="M15.5 13.15h-2.17c-1.78 0-3.23-1.44-3.23-3.23V7.75c0-.41-.33-.75-.75-.75H6.18C3.87 7 2 8.5 2 11.18v6.64C2 20.5 3.87 22 6.18 22h5.89c2.31 0 4.18-1.5 4.18-4.18V13.9c0-.42-.34-.75-.75-.75Z"
++        fill={fill}
++      />
++      <path
++        d="M17.82 2H11.93C9.67 2 7.84 3.44 7.76 6.01c.06 0 .11-.01.17-.01h5.89C16.13 6 18 7.5 18 10.18V16.83c0 .06-.01.11-.01.16 2.23-.07 4.01-1.55 4.01-4.16V6.18C22 3.5 20.13 2 17.82 2Z"
++        fill={fill}
++      />
++      <path
++        d="M11.98 7.15c-.31-.31-.84-.1-.84.33v2.62c0 1.1.93 2 2.07 2 .71.01 1.7.01 2.55.01.43 0 .65-.5.35-.8-1.09-1.09-3.03-3.04-4.13-4.16Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const EditDocumentIcon = `import { React } from "@nextui-org/react";
++
++export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        opacity={0.4}
++        d="M15.48 3H7.52C4.07 3 2 5.06 2 8.52v7.95C2 19.94 4.07 22 7.52 22h7.95c3.46 0 5.52-2.06 5.52-5.52V8.52C21 5.06 18.93 3 15.48 3Z"
++        fill={fill}
++      />
++      <path
++        d="M21.02 2.98c-1.79-1.8-3.54-1.84-5.38 0L14.51 4.1c-.1.1-.13.24-.09.37.7 2.45 2.66 4.41 5.11 5.11.03.01.08.01.11.01.1 0 .2-.04.27-.11l1.11-1.12c.91-.91 1.36-1.78 1.36-2.67 0-.9-.45-1.79-1.36-2.71ZM17.86 10.42c-.27-.13-.53-.26-.77-.41-.2-.12-.4-.25-.59-.39-.16-.1-.34-.25-.52-.4-.02-.01-.08-.06-.16-.14-.31-.25-.64-.59-.95-.96-.02-.02-.08-.08-.13-.17-.1-.11-.25-.3-.38-.51-.11-.14-.24-.34-.36-.55-.15-.25-.28-.5-.4-.76-.13-.28-.23-.54-.32-.79L7.9 10.72c-.35.35-.69 1.01-.76 1.5l-.43 2.98c-.09.63.08 1.22.47 1.61.33.33.78.5 1.28.5.11 0 .22-.01.33-.02l2.97-.42c.49-.07 1.15-.4 1.5-.76l5.38-5.38c-.25-.08-.5-.19-.78-.31Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const DeleteDocumentIcon = `import { React } from "@nextui-org/react";
++
++export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        d="M21.07 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33 0-2.55 1.32-2.71 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82.04.41.4.71.82.67l2.04-.2c5.24-.52 10.52-.32 15.82.21h.08c.38 0 .71-.29.75-.68a.766.766 0 0 0-.69-.82Z"
++        fill={fill}
++      />
++      <path
++        opacity={0.399}
++        d="M19.23 8.14c-.24-.25-.57-.39-.91-.39H5.68c-.34 0-.68.14-.91.39-.23.25-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.42c3.49 0 3.63-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95Z"
++        fill={fill}
++      />
++      <path
++        fillRule="evenodd"
++        clipRule="evenodd"
++        d="M9.58 17a.75.75 0 0 1 .75-.75h3.33a.75.75 0 0 1 0 1.5h-3.33a.75.75 0 0 1-.75-.75ZM8.75 13a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5a.75.75 0 0 1-.75-.75Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};
++`;
++
++const App = `import { Dropdown } from "@nextui-org/react";
++import { AddNoteIcon } from "./AddNoteIcon.js";
++import { CopyDocumentIcon } from "./CopyDocumentIcon.js";
++import { EditDocumentIcon } from "./EditDocumentIcon.js";
++import { DeleteDocumentIcon } from "./DeleteDocumentIcon.js";
++
++export default function App() {
++  return (
++    <Dropdown disableAnimation>
++      <Dropdown.Button flat color="secondary">
++        Trigger
++      </Dropdown.Button>
++      <Dropdown.Menu
++        color="secondary"
++        aria-label="Actions"
++        css={{ $$dropdownMenuWidth: "280px" }}
++      >
++        <Dropdown.Section title="Actions">
++          <Dropdown.Item
++            key="new"
++            command="⌘N"
++            description="Create a new file"
++            icon={
++              <AddNoteIcon size={22} fill="var(--nextui-colors-secondary)" />
++            }
++          >
++            New file
++          </Dropdown.Item>
++          <Dropdown.Item
++            key="copy"
++            command="⌘C"
++            description="Copy the file link"
++            icon={
++              <CopyDocumentIcon
++                size={22}
++                fill="var(--nextui-colors-secondary)"
++              />
++            }
++          >
++            Copy link
++          </Dropdown.Item>
++          <Dropdown.Item
++            key="edit"
++            command="⌘⇧E"
++            description="Allows you to edit the file"
++            icon={
++              <EditDocumentIcon
++                size={22}
++                fill="var(--nextui-colors-secondary)"
++              />
++            }
++          >
++            Edit file
++          </Dropdown.Item>
++        </Dropdown.Section>
++        <Dropdown.Section title="Danger zone">
++          <Dropdown.Item
++            key="delete"
++            color="error"
++            command="⌘⇧D"
++            description="Permanently delete the file"
++            icon={<DeleteDocumentIcon size={22} fill="currentColor" />}
++          >
++            Delete file
++          </Dropdown.Item>
++        </Dropdown.Section>
++      </Dropdown.Menu>
++    </Dropdown>
++  );
++}`;
++
++const react = {
++  '/AddNoteIcon.js': AddNoteIcon,
++  '/CopyDocumentIcon.js': CopyDocumentIcon,
++  '/EditDocumentIcon.js': EditDocumentIcon,
++  '/DeleteDocumentIcon.js': DeleteDocumentIcon,
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/dropdown/disabled-keys.ts (added, 28 changes)\n  Patch: @@ -0,0 +1,28 @@
++const App = `import { Dropdown } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Dropdown>
++      <Dropdown.Button flat>Trigger</Dropdown.Button>
++      <Dropdown.Menu
++        disabledKeys={["edit", "delete"]}
++        aria-label="Example with disabled actions"
++      >
++        <Dropdown.Item key="new">New file</Dropdown.Item>
++        <Dropdown.Item key="copy">Copy link</Dropdown.Item>
++        <Dropdown.Item key="edit">Edit file</Dropdown.Item>
++        <Dropdown.Item key="delete" withDivider color="error">
++          Delete file
++        </Dropdown.Item>
++      </Dropdown.Menu>
++    </Dropdown>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/dropdown/dynamic.ts (added, 34 changes)\n  Patch: @@ -0,0 +1,34 @@
++const App = `import { Dropdown } from "@nextui-org/react";
++
++export default function App() {
++  const menuItems = [
++    { key: "new", name: "New File" },
++    { key: "copy", name: "Copy Link" },
++    { key: "edit", name: "Edit File" },
++    { key: "delete", name: "Delete File" },
++  ];
++
++  return (
++    <Dropdown>
++      <Dropdown.Button flat>Trigger</Dropdown.Button>
++      <Dropdown.Menu aria-label="Dynamic Actions" items={menuItems}>
++        {(item) => (
++          <Dropdown.Item
++            key={item.key}
++            color={item.key === "delete" ? "error" : "default"}
++          >
++            {item.name}
++          </Dropdown.Item>
++        )}
++      </Dropdown.Menu>
++    </Dropdown>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/dropdown/icon.ts (added, 170 changes)\n  Patch: @@ -0,0 +1,170 @@
++const AddNoteIcon = `import { React } from "@nextui-org/react";
++
++export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        opacity={0.4}
++        d="M7.37 22h9.25a4.87 4.87 0 0 0 4.87-4.87V8.37a4.87 4.87 0 0 0-4.87-4.87H7.37A4.87 4.87 0 0 0 2.5 8.37v8.75c0 2.7 2.18 4.88 4.87 4.88Z"
++        fill={fill}
++      />
++      <path
++        d="M8.29 6.29c-.42 0-.75-.34-.75-.75V2.75a.749.749 0 1 1 1.5 0v2.78c0 .42-.33.76-.75.76ZM15.71 6.29c-.42 0-.75-.34-.75-.75V2.75a.749.749 0 1 1 1.5 0v2.78c0 .42-.33.76-.75.76ZM12 14.75h-1.69V13c0-.41-.34-.75-.75-.75s-.75.34-.75.75v1.75H7c-.41 0-.75.34-.75.75s.34.75.75.75h1.81V18c0 .41.34.75.75.75s.75-.34.75-.75v-1.75H12c.41 0 .75-.34.75-.75s-.34-.75-.75-.75Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const CopyDocumentIcon = `import { React } from "@nextui-org/react";
++
++export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        opacity={0.4}
++        d="M15.5 13.15h-2.17c-1.78 0-3.23-1.44-3.23-3.23V7.75c0-.41-.33-.75-.75-.75H6.18C3.87 7 2 8.5 2 11.18v6.64C2 20.5 3.87 22 6.18 22h5.89c2.31 0 4.18-1.5 4.18-4.18V13.9c0-.42-.34-.75-.75-.75Z"
++        fill={fill}
++      />
++      <path
++        d="M17.82 2H11.93C9.67 2 7.84 3.44 7.76 6.01c.06 0 .11-.01.17-.01h5.89C16.13 6 18 7.5 18 10.18V16.83c0 .06-.01.11-.01.16 2.23-.07 4.01-1.55 4.01-4.16V6.18C22 3.5 20.13 2 17.82 2Z"
++        fill={fill}
++      />
++      <path
++        d="M11.98 7.15c-.31-.31-.84-.1-.84.33v2.62c0 1.1.93 2 2.07 2 .71.01 1.7.01 2.55.01.43 0 .65-.5.35-.8-1.09-1.09-3.03-3.04-4.13-4.16Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const EditDocumentIcon = `import { React } from "@nextui-org/react";
++
++export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        opacity={0.4}
++        d="M15.48 3H7.52C4.07 3 2 5.06 2 8.52v7.95C2 19.94 4.07 22 7.52 22h7.95c3.46 0 5.52-2.06 5.52-5.52V8.52C21 5.06 18.93 3 15.48 3Z"
++        fill={fill}
++      />
++      <path
++        d="M21.02 2.98c-1.79-1.8-3.54-1.84-5.38 0L14.51 4.1c-.1.1-.13.24-.09.37.7 2.45 2.66 4.41 5.11 5.11.03.01.08.01.11.01.1 0 .2-.04.27-.11l1.11-1.12c.91-.91 1.36-1.78 1.36-2.67 0-.9-.45-1.79-1.36-2.71ZM17.86 10.42c-.27-.13-.53-.26-.77-.41-.2-.12-.4-.25-.59-.39-.16-.1-.34-.25-.52-.4-.02-.01-.08-.06-.16-.14-.31-.25-.64-.59-.95-.96-.02-.02-.08-.08-.13-.17-.1-.11-.25-.3-.38-.51-.11-.14-.24-.34-.36-.55-.15-.25-.28-.5-.4-.76-.13-.28-.23-.54-.32-.79L7.9 10.72c-.35.35-.69 1.01-.76 1.5l-.43 2.98c-.09.63.08 1.22.47 1.61.33.33.78.5 1.28.5.11 0 .22-.01.33-.02l2.97-.42c.49-.07 1.15-.4 1.5-.76l5.38-5.38c-.25-.08-.5-.19-.78-.31Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const DeleteDocumentIcon = `import { React } from "@nextui-org/react";
++
++export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        d="M21.07 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33 0-2.55 1.32-2.71 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82.04.41.4.71.82.67l2.04-.2c5.24-.52 10.52-.32 15.82.21h.08c.38 0 .71-.29.75-.68a.766.766 0 0 0-.69-.82Z"
++        fill={fill}
++      />
++      <path
++        opacity={0.399}
++        d="M19.23 8.14c-.24-.25-.57-.39-.91-.39H5.68c-.34 0-.68.14-.91.39-.23.25-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.42c3.49 0 3.63-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95Z"
++        fill={fill}
++      />
++      <path
++        fillRule="evenodd"
++        clipRule="evenodd"
++        d="M9.58 17a.75.75 0 0 1 .75-.75h3.33a.75.75 0 0 1 0 1.5h-3.33a.75.75 0 0 1-.75-.75ZM8.75 13a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5a.75.75 0 0 1-.75-.75Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};
++`;
++
++const App = `import { Dropdown } from "@nextui-org/react";
++import { AddNoteIcon } from "./AddNoteIcon.js"
++import { CopyDocumentIcon } from "./CopyDocumentIcon.js"
++import { EditDocumentIcon } from "./EditDocumentIcon.js"
++import { DeleteDocumentIcon } from "./DeleteDocumentIcon.js"
++
++export default function App() {
++  return (
++    <Dropdown>
++      <Dropdown.Button flat color="secondary">
++        Trigger
++      </Dropdown.Button>
++      <Dropdown.Menu color="secondary" aria-label="Actions">
++        <Dropdown.Item
++          key="new"
++          command="⌘N"
++          icon={<AddNoteIcon size={22} fill="var(--nextui-colors-secondary)" />}
++        >
++          New file
++        </Dropdown.Item>
++        <Dropdown.Item
++          key="copy"
++          command="⌘C"
++          icon={
++            <CopyDocumentIcon size={22} fill="var(--nextui-colors-secondary)" />
++          }
++        >
++          Copy link
++        </Dropdown.Item>
++        <Dropdown.Item
++          key="edit"
++          command="⌘⇧E"
++          icon={
++            <EditDocumentIcon size={22} fill="var(--nextui-colors-secondary)" />
++          }
++        >
++          Edit file
++        </Dropdown.Item>
++        <Dropdown.Item
++          withDivider
++          key="delete"
++          color="error"
++          command="⌘⇧D"
++          icon={<DeleteDocumentIcon size={22} fill="currentColor" />}
++        >
++          Delete file
++        </Dropdown.Item>
++      </Dropdown.Menu>
++    </Dropdown>
++  );
++}`;
++
++const react = {
++  '/AddNoteIcon.js': AddNoteIcon,
++  '/CopyDocumentIcon.js': CopyDocumentIcon,
++  '/EditDocumentIcon.js': EditDocumentIcon,
++  '/DeleteDocumentIcon.js': DeleteDocumentIcon,
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/dropdown/index.ts (added, 29 changes)\n  Patch: @@ -0,0 +1,29 @@
++import staticDropdown from './static';
++import dynamicDropdown from './dynamic';
++import withDivider from './with-divider';
++import disabledKeys from './disabled-keys';
++import variants from './variants';
++import singleSelection from './single-selection';
++import multipleSelection from './multiple-selection';
++import command from './command';
++import icon from './icon';
++import description from './description';
++import sections from './sections';
++import customTrigger from './custom-trigger';
++import disableAnimation from './disable-animation';
++
++export default {
++  staticDropdown,
++  dynamicDropdown,
++  withDivider,
++  disabledKeys,
++  variants,
++  singleSelection,
++  multipleSelection,
++  command,
++  icon,
++  description,
++  sections,
++  customTrigger,
++  disableAnimation
++};\n- apps/docs/content/components/dropdown/multiple-selection.ts (added, 41 changes)\n  Patch: @@ -0,0 +1,41 @@
++const App = `import React from "react";
++import { Dropdown } from "@nextui-org/react";
++
++export default function App() {
++  const [selected, setSelected] = React.useState(new Set(["text"]));
++
++  const selectedValue = React.useMemo(
++    () => Array.from(selected).join(", ").replaceAll("_", " "),
++    [selected]
++  );
++
++  return (
++    <Dropdown>
++      <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
++        {selectedValue}
++      </Dropdown.Button>
++      <Dropdown.Menu
++        aria-label="Multiple selection actions"
++        color="secondary"
++        disallowEmptySelection
++        selectionMode="multiple"
++        selectedKeys={selected}
++        onSelectionChange={setSelected}
++      >
++        <Dropdown.Item key="text">Text</Dropdown.Item>
++        <Dropdown.Item key="number">Number</Dropdown.Item>
++        <Dropdown.Item key="date">Date</Dropdown.Item>
++        <Dropdown.Item key="single_date">Single Date</Dropdown.Item>
++        <Dropdown.Item key="iteration">Iteration</Dropdown.Item>
++      </Dropdown.Menu>
++    </Dropdown>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/dropdown/sections.ts (added, 189 changes)\n  Patch: @@ -0,0 +1,189 @@
++const AddNoteIcon = `import { React } from "@nextui-org/react";
++
++export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        opacity={0.4}
++        d="M7.37 22h9.25a4.87 4.87 0 0 0 4.87-4.87V8.37a4.87 4.87 0 0 0-4.87-4.87H7.37A4.87 4.87 0 0 0 2.5 8.37v8.75c0 2.7 2.18 4.88 4.87 4.88Z"
++        fill={fill}
++      />
++      <path
++        d="M8.29 6.29c-.42 0-.75-.34-.75-.75V2.75a.749.749 0 1 1 1.5 0v2.78c0 .42-.33.76-.75.76ZM15.71 6.29c-.42 0-.75-.34-.75-.75V2.75a.749.749 0 1 1 1.5 0v2.78c0 .42-.33.76-.75.76ZM12 14.75h-1.69V13c0-.41-.34-.75-.75-.75s-.75.34-.75.75v1.75H7c-.41 0-.75.34-.75.75s.34.75.75.75h1.81V18c0 .41.34.75.75.75s.75-.34.75-.75v-1.75H12c.41 0 .75-.34.75-.75s-.34-.75-.75-.75Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const CopyDocumentIcon = `import { React } from "@nextui-org/react";
++
++export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        opacity={0.4}
++        d="M15.5 13.15h-2.17c-1.78 0-3.23-1.44-3.23-3.23V7.75c0-.41-.33-.75-.75-.75H6.18C3.87 7 2 8.5 2 11.18v6.64C2 20.5 3.87 22 6.18 22h5.89c2.31 0 4.18-1.5 4.18-4.18V13.9c0-.42-.34-.75-.75-.75Z"
++        fill={fill}
++      />
++      <path
++        d="M17.82 2H11.93C9.67 2 7.84 3.44 7.76 6.01c.06 0 .11-.01.17-.01h5.89C16.13 6 18 7.5 18 10.18V16.83c0 .06-.01.11-.01.16 2.23-.07 4.01-1.55 4.01-4.16V6.18C22 3.5 20.13 2 17.82 2Z"
++        fill={fill}
++      />
++      <path
++        d="M11.98 7.15c-.31-.31-.84-.1-.84.33v2.62c0 1.1.93 2 2.07 2 .71.01 1.7.01 2.55.01.43 0 .65-.5.35-.8-1.09-1.09-3.03-3.04-4.13-4.16Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const EditDocumentIcon = `import { React } from "@nextui-org/react";
++
++export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        opacity={0.4}
++        d="M15.48 3H7.52C4.07 3 2 5.06 2 8.52v7.95C2 19.94 4.07 22 7.52 22h7.95c3.46 0 5.52-2.06 5.52-5.52V8.52C21 5.06 18.93 3 15.48 3Z"
++        fill={fill}
++      />
++      <path
++        d="M21.02 2.98c-1.79-1.8-3.54-1.84-5.38 0L14.51 4.1c-.1.1-.13.24-.09.37.7 2.45 2.66 4.41 5.11 5.11.03.01.08.01.11.01.1 0 .2-.04.27-.11l1.11-1.12c.91-.91 1.36-1.78 1.36-2.67 0-.9-.45-1.79-1.36-2.71ZM17.86 10.42c-.27-.13-.53-.26-.77-.41-.2-.12-.4-.25-.59-.39-.16-.1-.34-.25-.52-.4-.02-.01-.08-.06-.16-.14-.31-.25-.64-.59-.95-.96-.02-.02-.08-.08-.13-.17-.1-.11-.25-.3-.38-.51-.11-.14-.24-.34-.36-.55-.15-.25-.28-.5-.4-.76-.13-.28-.23-.54-.32-.79L7.9 10.72c-.35.35-.69 1.01-.76 1.5l-.43 2.98c-.09.63.08 1.22.47 1.61.33.33.78.5 1.28.5.11 0 .22-.01.33-.02l2.97-.42c.49-.07 1.15-.4 1.5-.76l5.38-5.38c-.25-.08-.5-.19-.78-.31Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const DeleteDocumentIcon = `import { React } from "@nextui-org/react";
++
++export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
++  return (
++    <svg
++      xmlns="http://www.w3.org/2000/svg"
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      {...props}
++    >
++      <path
++        d="M21.07 5.23c-1.61-.16-3.22-.28-4.84-.37v-.01l-.22-1.3c-.15-.92-.37-2.3-2.71-2.3h-2.62c-2.33 0-2.55 1.32-2.71 2.29l-.21 1.28c-.93.06-1.86.12-2.79.21l-2.04.2c-.42.04-.72.41-.68.82.04.41.4.71.82.67l2.04-.2c5.24-.52 10.52-.32 15.82.21h.08c.38 0 .71-.29.75-.68a.766.766 0 0 0-.69-.82Z"
++        fill={fill}
++      />
++      <path
++        opacity={0.399}
++        d="M19.23 8.14c-.24-.25-.57-.39-.91-.39H5.68c-.34 0-.68.14-.91.39-.23.25-.36.59-.34.94l.62 10.26c.11 1.52.25 3.42 3.74 3.42h6.42c3.49 0 3.63-1.89 3.74-3.42l.62-10.25c.02-.36-.11-.7-.34-.95Z"
++        fill={fill}
++      />
++      <path
++        fillRule="evenodd"
++        clipRule="evenodd"
++        d="M9.58 17a.75.75 0 0 1 .75-.75h3.33a.75.75 0 0 1 0 1.5h-3.33a.75.75 0 0 1-.75-.75ZM8.75 13a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5a.75.75 0 0 1-.75-.75Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};
++`;
++
++const App = `import { Dropdown } from "@nextui-org/react";
++import { AddNoteIcon } from "./AddNoteIcon.js";
++import { CopyDocumentIcon } from "./CopyDocumentIcon.js";
++import { EditDocumentIcon } from "./EditDocumentIcon.js";
++import { DeleteDocumentIcon } from "./DeleteDocumentIcon.js";
++
++export default function App() {
++  return (
++    <Dropdown>
++      <Dropdown.Button flat color="secondary">
++        Trigger
++      </Dropdown.Button>
++      <Dropdown.Menu
++        color="secondary"
++        aria-label="Actions"
++        css={{ $$dropdownMenuWidth: "280px" }}
++      >
++        <Dropdown.Section title="Actions">
++          <Dropdown.Item
++            key="new"
++            command="⌘N"
++            description="Create a new file"
++            icon={
++              <AddNoteIcon size={22} fill="var(--nextui-colors-secondary)" />
++            }
++          >
++            New file
++          </Dropdown.Item>
++          <Dropdown.Item
++            key="copy"
++            command="⌘C"
++            description="Copy the file link"
++            icon={
++              <CopyDocumentIcon
++                size={22}
++                fill="var(--nextui-colors-secondary)"
++              />
++            }
++          >
++            Copy link
++          </Dropdown.Item>
++          <Dropdown.Item
++            key="edit"
++            command="⌘⇧E"
++            description="Allows you to edit the file"
++            icon={
++              <EditDocumentIcon
++                size={22}
++                fill="var(--nextui-colors-secondary)"
++              />
++            }
++          >
++            Edit file
++          </Dropdown.Item>
++        </Dropdown.Section>
++        <Dropdown.Section title="Danger zone">
++          <Dropdown.Item
++            key="delete"
++            color="error"
++            command="⌘⇧D"
++            description="Permanently delete the file"
++            icon={<DeleteDocumentIcon size={22} fill="currentColor" />}
++          >
++            Delete file
++          </Dropdown.Item>
++        </Dropdown.Section>
++      </Dropdown.Menu>
++    </Dropdown>
++  );
++}`;
++
++const react = {
++  '/AddNoteIcon.js': AddNoteIcon,
++  '/CopyDocumentIcon.js': CopyDocumentIcon,
++  '/EditDocumentIcon.js': EditDocumentIcon,
++  '/DeleteDocumentIcon.js': DeleteDocumentIcon,
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/dropdown/single-selection.ts (added, 41 changes)\n  Patch: @@ -0,0 +1,41 @@
++const App = `import React from "react";
++import { Dropdown } from "@nextui-org/react";
++
++export default function App() {
++  const [selected, setSelected] = React.useState(new Set(["text"]));
++
++  const selectedValue = React.useMemo(
++    () => Array.from(selected).join(", ").replaceAll("_", " "),
++    [selected]
++  );
++
++  return (
++    <Dropdown>
++      <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
++        {selectedValue}
++      </Dropdown.Button>
++      <Dropdown.Menu
++        aria-label="Single selection actions"
++        color="secondary"
++        disallowEmptySelection
++        selectionMode="single"
++        selectedKeys={selected}
++        onSelectionChange={setSelected}
++      >
++        <Dropdown.Item key="text">Text</Dropdown.Item>
++        <Dropdown.Item key="number">Number</Dropdown.Item>
++        <Dropdown.Item key="date">Date</Dropdown.Item>
++        <Dropdown.Item key="single_date">Single Date</Dropdown.Item>
++        <Dropdown.Item key="iteration">Iteration</Dropdown.Item>
++      </Dropdown.Menu>
++    </Dropdown>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/dropdown/static.ts (added, 25 changes)\n  Patch: @@ -0,0 +1,25 @@
++const App = `import { Dropdown } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Dropdown>
++      <Dropdown.Button flat>Trigger</Dropdown.Button>
++      <Dropdown.Menu aria-label="Static Actions">
++        <Dropdown.Item key="new">New file</Dropdown.Item>
++        <Dropdown.Item key="copy">Copy link</Dropdown.Item>
++        <Dropdown.Item key="edit">Edit file</Dropdown.Item>
++        <Dropdown.Item key="delete" color="error">
++          Delete file
++        </Dropdown.Item>
++      </Dropdown.Menu>
++    </Dropdown>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/dropdown/variants.ts (added, 118 changes)\n  Patch: @@ -0,0 +1,118 @@
++const App = `import React from "react";
++import { Grid, Dropdown, Radio } from "@nextui-org/react";
++
++export default function App() {
++  const [selectedColor, setSelectedColor] = React.useState("default");
++  const colors = [
++    "default",
++    "primary",
++    "secondary",
++    "success",
++    "warning",
++    "error",
++  ];
++
++  const capitalize = (str) => {
++    const lower = str.toLowerCase();
++    return str.charAt(0).toUpperCase() + lower.slice(1);
++  };
++
++  return (
++    <Grid.Container gap={1.5} justify="flex-start">
++      <Grid xs={12}>
++        <Grid>
++          <Dropdown>
++            <Dropdown.Button color={selectedColor} light>
++              Light
++            </Dropdown.Button>
++            <Dropdown.Menu
++              color={selectedColor}
++              variant="light"
++              aria-label="Actions"
++            >
++              <Dropdown.Item key="new">New file</Dropdown.Item>
++              <Dropdown.Item key="copy">Copy link</Dropdown.Item>
++              <Dropdown.Item key="edit">Edit file</Dropdown.Item>
++              <Dropdown.Item key="delete" color="error" withDivider>
++                Delete file
++              </Dropdown.Item>
++            </Dropdown.Menu>
++          </Dropdown>
++        </Grid>
++        <Grid>
++          <Dropdown>
++            <Dropdown.Button flat color={selectedColor}>
++              Flat
++            </Dropdown.Button>
++            <Dropdown.Menu color={selectedColor} aria-label="Actions">
++              <Dropdown.Item key="new">New file</Dropdown.Item>
++              <Dropdown.Item key="copy">Copy link</Dropdown.Item>
++              <Dropdown.Item key="edit">Edit file</Dropdown.Item>
++              <Dropdown.Item key="delete" color="error" withDivider>
++                Delete file
++              </Dropdown.Item>
++            </Dropdown.Menu>
++          </Dropdown>
++        </Grid>
++        <Grid>
++          <Dropdown>
++            <Dropdown.Button color={selectedColor}>Solid</Dropdown.Button>
++            <Dropdown.Menu
++              color={selectedColor}
++              variant="solid"
++              aria-label="Actions"
++            >
++              <Dropdown.Item key="new">New file</Dropdown.Item>
++              <Dropdown.Item key="copy">Copy link</Dropdown.Item>
++              <Dropdown.Item key="edit">Edit file</Dropdown.Item>
++              <Dropdown.Item key="delete" color="error" withDivider>
++                Delete file
++              </Dropdown.Item>
++            </Dropdown.Menu>
++          </Dropdown>
++        </Grid>
++        <Grid>
++          <Dropdown>
++            <Dropdown.Button color={selectedColor} shadow>
++              Shadow
++            </Dropdown.Button>
++            <Dropdown.Menu
++              color={selectedColor}
++              variant="shadow"
++              aria-label="Actions"
++            >
++              <Dropdown.Item key="new">New file</Dropdown.Item>
++              <Dropdown.Item key="copy">Copy link</Dropdown.Item>
++              <Dropdown.Item key="edit">Edit file</Dropdown.Item>
++              <Dropdown.Item key="delete" color="error" withDivider>
++                Delete file
++              </Dropdown.Item>
++            </Dropdown.Menu>
++          </Dropdown>
++        </Grid>
++      </Grid>
++      <Grid xs={12}>
++        <Radio.Group
++          size="sm"
++          orientation="horizontal"
++          value={selectedColor}
++          onChange={setSelectedColor}
++        >
++          {colors.map((color) => (
++            <Radio key={color} value={color} color={selectedColor}>
++              {capitalize(color)}
++            </Radio>
++          ))}
++        </Radio.Group>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/dropdown/with-divider.ts (added, 25 changes)\n  Patch: @@ -0,0 +1,25 @@
++const App = `import { Dropdown } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Dropdown>
++      <Dropdown.Button flat>Trigger</Dropdown.Button>
++      <Dropdown.Menu aria-label="Static Actions">
++        <Dropdown.Item key="new">New file</Dropdown.Item>
++        <Dropdown.Item key="copy">Copy link</Dropdown.Item>
++        <Dropdown.Item key="edit">Edit file</Dropdown.Item>
++        <Dropdown.Item key="delete" withDivider color="error">
++          Delete file
++        </Dropdown.Item>
++      </Dropdown.Menu>
++    </Dropdown>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/index.ts (modified, 4 changes)\n  Patch: @@ -23,6 +23,7 @@ import containerContent from './container';
+ import gridContent from './grid';
+ import spacerContent from './spacer';
+ import popoverContent from './popover';
++import dropdownContent from './dropdown';
+ 
+ export default {
+   tableContent,
+@@ -49,5 +50,6 @@ export default {
+   containerContent,
+   gridContent,
+   spacerContent,
+-  popoverContent
++  popoverContent,
++  dropdownContent
+ };\n- apps/docs/content/components/pagination/color.ts (modified, 2 changes)\n  Patch: @@ -22,8 +22,8 @@ export default function App() {
+       </Grid>
+       <Grid xs={12}>
+         <Radio.Group
+-          row
+           size="sm"
++          orientation="horizontal"
+           value={selectedColor}
+           onChange={setSelectedColor}
+         >\n

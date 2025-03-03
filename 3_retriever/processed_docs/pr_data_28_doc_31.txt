@@ -1,0 +1,140 @@
+Pull Request Number: 445
+Title: fix: ghost button fixed on mobile
+Base Branch: next
+Head Branch: fix/mobile-ghost-button
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/445
+State: MERGED
+Created At: 2022-05-01T21:21:44Z
+Merged At: 2022-05-01T21:21:58Z
+Participants: jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+Ghost button on "Hover" / "Focused" states on mobile fixed
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- fix: ghost button fixed on mobile\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/react/src/button/button.styles.ts (modified, 27 changes)\n  Patch: @@ -52,11 +52,7 @@ export const StyledButton = styled(
+         }
+       },
+       ghost: {
+-        true: {
+-          '&:hover': {
+-            color: '$white'
+-          }
+-        }
++        true: {}
+       },
+       color: {
+         default: {
+@@ -501,55 +497,62 @@ export const StyledButton = styled(
+         isHovered: true,
+         color: 'default',
+         css: {
+-          bg: '$primary'
++          bg: '$primary',
++          color: '$primarySolidContrast'
+         }
+       },
+       {
+         ghost: true,
+         isHovered: true,
+         color: 'primary',
+         css: {
+-          bg: '$primary'
++          bg: '$primary',
++          color: '$primarySolidContrast'
+         }
+       },
+       {
+         ghost: true,
+         isHovered: true,
+         color: 'secondary',
+         css: {
+-          bg: '$secondary'
++          bg: '$secondary',
++          color: '$secondarySolidContrast'
+         }
+       },
+       {
+         ghost: true,
+         isHovered: true,
+         color: 'success',
+         css: {
+-          bg: '$success'
++          bg: '$success',
++          color: '$successSolidContrast'
+         }
+       },
+       {
+         ghost: true,
+         isHovered: true,
+         color: 'warning',
+         css: {
+-          bg: '$warning'
++          bg: '$warning',
++          color: '$warningSolidContrast'
+         }
+       },
+       {
+         ghost: true,
+         isHovered: true,
+         color: 'error',
+         css: {
+-          bg: '$error'
++          bg: '$error',
++          color: '$errorSolidContrast'
+         }
+       },
+       {
+         ghost: true,
+         color: 'gradient',
+         isHovered: true,
+         css: {
+-          bg: '$gradient'
++          bg: '$gradient',
++          color: '$white'
+         }
+       },
+       // flat / color\n- packages/react/src/button/button.tsx (modified, 4 changes)\n  Patch: @@ -118,9 +118,11 @@ const Button = React.forwardRef(
+ 
+     const { hoverProps, isHovered } = useHover({ isDisabled: disabled });
+     const {
++      isFocused,
+       isFocusVisible,
+       focusProps
+     }: {
++      isFocused: boolean;
+       isFocusVisible: boolean;
+       focusProps: Omit<
+         React.HTMLAttributes<HTMLButtonElement>,
+@@ -164,7 +166,7 @@ const Button = React.forwardRef(
+         data-state={getState}
+         animated={animated}
+         isPressed={isPressed}
+-        isHovered={isHovered}
++        isHovered={isHovered || (ghost && isFocused)}
+         isFocusVisible={isFocusVisible && !disabled}
+         className={clsx(
+           'nextui-button',\n

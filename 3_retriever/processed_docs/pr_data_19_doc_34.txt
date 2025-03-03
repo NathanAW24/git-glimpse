@@ -1,0 +1,1541 @@
+Pull Request Number: 1686
+Title: feat: Slider Component
+Base Branch: v2.2.0
+Head Branch: feat/slider
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/1686
+State: MERGED
+Created At: 2023-09-24T14:06:50Z
+Merged At: 2023-10-16T18:32:01Z
+Participants: jrgarciadev, dcodesdev, mauriciabad, jguddas, THE-SIMPLE-MARK
+
+Description:
+Closes #172
+Closes #886
+Closes #888
+📝 Description
+New component added: Slider
+💣 Is this a breaking change (Yes/No): Yes
+
+📝 Additional Information
+Breaking Changes
+
+Popover API changed to improve the arrow implementation, arrow is now a pseudo-element, which allows the popover to also move the arrow altogether, this change impacts the Popover, Tooltip and Select implementations.
+
+Popover changes:
+  <Popover
+      showArrow
+      backdrop="opaque"
+      placement="right"
+      classNames={{
+-        base: "py-3 px-4 border border-default-200 bg-gradient-to-br from-white to-default-300 dark:from-default-100 dark:to-default-50",
+-        arrow: "bg-default-200",
++        base: [
++          // the "before" pseudo element is now the popover' arrow
++          "before:bg-default-200"
++        ],
++        content: [ // now we need to use the "content" slot to actually modify the popover' content styles
++          "py-3 px-4 border border-default-200",
++          "bg-gradient-to-br from-white to-default-300",
++          "dark:from-default-100 dark:to-default-50",
+        ],
+      }}
+    >
+      <PopoverTrigger>
+        <Button>Open Popover</Button>
+      </PopoverTrigger>
+      <PopoverContent>
+        {(titleProps) => (
+          <div className="px-1 py-2">
+            <h3 className="text-small font-bold" {...titleProps}>
+              Popover Content
+            </h3>
+            <div className="text-tiny">This is the popover content</div>
+          </div>
+        )}
+      </PopoverContent>
+  </Popover>
+Tooltip changes:
+ <Tooltip
+      showArrow
+      placement="right"
+      content="I am a tooltip"
+      classNames={{
+-        base: "py-2 px-4 shadow-xl text-black bg-gradient-to-br from-white to-neutral-400",
+-        arrow: "bg-neutral-400 dark:bg-white",
++        base: [
++          // the "before" pseudo element is now the popover' arrow
++          "before:bg-neutral-400 dark:before:bg-white",
++        ],
++        content: [ // now we need to use the "content" slot to actually modify the popover' content styles
++          "py-2 px-4 shadow-xl",
++          "text-black bg-gradient-to-br from-white to-neutral-400",
++        ],
+      }}
+    >
+      <Button variant="flat">Hover me</Button>
+</Tooltip>
+Select changes:
+ <Select
+      items={users}
+      label="Assigned to"
+      className="max-w-xs"
+      variant="bordered"
+      classNames={{
+        label: "group-data-[filled=true]:-translate-y-5",
+        trigger: "min-h-unit-16",
+        listboxWrapper: "max-h-[400px]",
+      }}
+      listboxProps={{
+        itemClasses: {
+          base: [
+            "rounded-md",
+            "text-default-500",
+            "transition-opacity",
+            "data-[hover=true]:text-foreground",
+            "data-[hover=true]:bg-default-100",
+            "dark:data-[hover=true]:bg-default-50",
+            "data-[selectable=true]:focus:bg-default-50",
+            "data-[pressed=true]:opacity-70",
+            "data-[focus-visible=true]:ring-default-500",
+          ],
+        },
+      }}
+      popoverProps={{
+        classNames: {
+-          base: "p-0 border-small border-divider bg-background",
+-          arrow: "bg-default-200",
++          base: "before:bg-default-200", // the before pseudo element controls the popover's arrow
++          content: "p-0 border-small border-divider bg-background", // now instead of the "base" slot we use the "content" slot
+        },
+      }}
+      renderValue={(items) => {
+        return items.map((item) => (
+          <div key={item.key} className="flex items-center gap-2">
+            <Avatar
+              alt={item.data.name}
+              className="flex-shrink-0"
+              size="sm"
+              src={item.data.avatar}
+            />
+            <div className="flex flex-col">
+              <span>{item.data.name}</span>
+              <span className="text-default-500 text-tiny">({item.data.email})</span>
+            </div>
+          </div>
+        ));
+      }}
+    >
+      {(user) => (
+        <SelectItem key={user.id} textValue={user.name}>
+          <div className="flex gap-2 items-center">
+            <Avatar alt={user.name} className="flex-shrink-0" size="sm" src={user.avatar} />
+            <div className="flex flex-col">
+              <span className="text-small">{user.name}</span>
+              <span className="text-tiny text-default-400">{user.email}</span>
+            </div>
+          </div>
+        </SelectItem>
+      )}
+    </Select>
+  );
+}`;
+Dropdown Changes
+    <Dropdown
+      showArrow
+      classNames={{
+-        base: "py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black",
+-        arrow: "bg-default-200",
++        content: "py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black",  // now instead of the "base" slot we use the "content" 
++        base: "before:bg-default-200",  // the before pseudo element controls the popover's arrow
+      }}
+    >
+📝 Additional Information
+
+Commits:
+- feat(slider): initial structure\n- chore(slider): readme improved\n- fix: fixed border color of slider track\n- docs: added range story\n- feat: added rtl support to slider\n- feat: improved value label formatting\n- feat: refactor styling and add colors support to slider\n- chore: improved thumb color\n- docs: improved slider stories\n- chore(slider): default color changed by foreground\n- Update packages/core/theme/src/components/slider.ts
+
+Co-authored-by: Jakob Guddas <github@jguddas.de>\n- feat: added fillOffset prop\n- Update packages/components/slider/src/use-slider.ts\n- fix(slider): animation\n- Update packages/components/slider/src/use-slider.ts\n- Update packages/core/theme/src/components/slider.ts\n- feat: slider steps\n- refactor: renamed variables\n- feat: improved slider step styling\n- fix: hide infinite steps\n- fix: fixed step transparency issue\n- fix: fixed thumb focus issue\n- Update packages/components/slider/src/use-slider.ts
+
+Co-authored-by: Junior Garcia <jrgarciadev@gmail.com>\n- Merge pull request #1693 from nextui-org/feat/slider-steps
+
+feat: slider steps\n- Merge branch 'main' of github.com:nextui-org/nextui into feat/slider\n- feat(slider): vertical orientation added, start & end content, bug fixes\n- chore(slider): tests added\n- fix(docs): scrollbar added to the sidebar (#1743)\n- Merge branch 'main' of github.com:nextui-org/nextui into feat/slider\n- feat(slider): marks added\n- chore(slider): example ts-doc changed\n- feat(slider): vertical marks support\n- feat(core): slider tooltip support added, popover modified (#1746)\n- Feat/slider custom styles (#1751)
+
+* feat(slider): custom styles story added
+
+* fix(slider): custom styles on different sizes\n- Fix/slider tooltip android position (#1753)
+
+* feat(slider): custom styles story added
+
+* fix(slider): tooltip update position dependecies added
+
+* fix(popover): arrow placements improved\n- feat(slider): docs started, custom thumb and custom output stories added\n- feat(slider): render function added to custom render the slider parts\n- feat(slider): docs in progress, new properties and examples added\n- fix(slider): some issues fixed, output renamed to value, documentation improved\n- feat(slider): docs done\n- chore: changeset\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 3433d404191e24b0a96905326c73e4be972bfa31
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 41 packages</summary>
+
+  | Name                        | Type  |
+| --------------------------- | ----- |
+| @nextui-org/shared-icons    | Patch |
+| @nextui-org/popover         | Patch |
+| @nextui-org/tooltip         | Patch |
+| @nextui-org/select          | Patch |
+| @nextui-org/slider          | Patch |
+| @nextui-org/badge           | Patch |
+| @nextui-org/theme           | Patch |
+| @nextui-org/react-rsc-utils | Patch |
+| @nextui-org/dropdown        | Patch |
+| @nextui-org/snippet         | Patch |
+| @nextui-org/react           | Patch |
+| @nextui-org/accordion       | Patch |
+| @nextui-org/avatar          | Patch |
+| @nextui-org/button          | Patch |
+| @nextui-org/checkbox        | Patch |
+| @nextui-org/chip            | Patch |
+| @nextui-org/input           | Patch |
+| @nextui-org/link            | Patch |
+| @nextui-org/listbox         | Patch |
+| @nextui-org/menu            | Patch |
+| @nextui-org/modal           | Patch |
+| @nextui-org/navbar          | Patch |
+| @nextui-org/pagination      | Patch |
+| @nextui-org/switch          | Patch |
+| @nextui-org/table           | Patch |
+| @nextui-org/tabs            | Patch |
+| @nextui-org/card            | Patch |
+| @nextui-org/code            | Patch |
+| @nextui-org/divider         | Patch |
+| @nextui-org/image           | Patch |
+| @nextui-org/kbd             | Patch |
+| @nextui-org/progress        | Patch |
+| @nextui-org/radio           | Patch |
+| @nextui-org/ripple          | Patch |
+| @nextui-org/scroll-shadow   | Patch |
+| @nextui-org/skeleton        | Patch |
+| @nextui-org/spacer          | Patch |
+| @nextui-org/spinner         | Patch |
+| @nextui-org/user            | Patch |
+| @nextui-org/react-utils     | Patch |
+| @nextui-org/use-real-shape  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/feat/slider?filename=.changeset/large-pans-smash.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Afeat%3A%20Slider%20Component%0A)
+
+\n- vercel: [vc]: #LqvGCPH9fhozHWVEBhq80HZRwGwacIQKanRA+dYV6Js=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9IR2Y5OUZvZ3VBN0NROHdTWnVpNVc4WXp3WUhaIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mZWF0LXNsaWRlci1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZlYXQtc2xpZGVyLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvSHBLdDIxRkZXbk5XcDNWUjJDVFd5M1g3Q3hvRCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mZWF0LXNsaWRlci1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZmVhdC1zbGlkZXItbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/HGf99FoguA7CQ8wSZui5W8YzwYHZ)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-feat-slider-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-feat-slider-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 13, 2023 11:43pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/HpKt21FFWnNWp3VR2CTWy3X7CxoD)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-feat-slider-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-feat-slider-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 13, 2023 11:43pm |
+
+
+\n- dcodesdev: When will this be merged?\n- jrgarciadev: > When will this be merged?
+
+@Dawsoncodes tests and small refinements are still missing
+\n- mauriciabad: I found a bug. If the slider is set to "range" and you move both handles to the maximum right, then you can't drag them anymore. (the only option is to click on the line, but that feature is not intuitive because there's no visual hint that the line is clickable, so many people would think clicking does nothing and get stuck).\n- jguddas: > I found a bug. If the slider is set to "range" and you move both handles to the maximum right, then you can't drag them anymore. (the only option is to click on the line, but that feature is not intuitive because there's no visual hint that the line is clickable, so many people would think clicking does nothing and get stuck).
+
+@mauriciabad do you have a proposal for how to fix this, I'm out of ideas?\n- mauriciabad: @jguddas Sure!
+
+I would do the same as Material UI does:
+https://mui.com/material-ui/react-slider/#range-slider
+
+Notice that if you drag a handle over the other one, they "flip", so the minimum becomes the maximum and the maximum becomes the minimum. 
+
+This also adds a nice feature, and makes more sense to me.
+
+Check out also the [Minimum distance](https://mui.com/material-ui/react-slider/#minimum-distance) feature, it's a nice have.\n- mauriciabad: Oh, and to code it, I'd handle the mouse events on the line and not on the handle.
+
+Notice, that in Material UI, the handles don't have any drag or click events. The click-and-drag event is on the background line, and the handles position is updated accordingly. Contrary to your implementation, if you put both handles very close, and you click over one of them, it's possible that you "grab" the other one if the point you clicked is closer to the other handle. (You can try it by zooming in a lot)\n- THE-SIMPLE-MARK: When will this be merged?\n- mauriciabad: The error I mentioned is still there. I'll try to contribute to fix it.\n
+
+Files Changed:
+- .changeset/hip-years-sip.md (added, 147 changes)\n  Patch: @@ -0,0 +1,147 @@
++---
++"@nextui-org/shared-icons": patch
++"@nextui-org/popover": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/select": patch
++"@nextui-org/slider": patch
++"@nextui-org/badge": patch
++"@nextui-org/theme": patch
++---
++
++Changes
++
++- Slider tooltip support added
++
++Breaking Changes
++
++- Popover API changed to improve the arrow implementation, arrow is now a pseudo element, this allows the popover to also move the arrow all-together, this change impacts the Popover, Tooltip and Select implementations.
++
++Popover changes:
++
++```diff
++  <Popover
++      showArrow
++      backdrop="opaque"
++      placement="right"
++      classNames={{
++-        base: "py-3 px-4 border border-default-200 bg-gradient-to-br from-white to-default-300 dark:from-default-100 dark:to-default-50",
+++        base: [
+++          // the "before" pseudo element is now the popover' arrow
+++          "before:bg-default-200"
+++        ],
++-        arrow: "bg-default-200",
+++        content: [ // now we need to use the "content" slot to actually modify the popover' content styles
+++          "py-3 px-4 border border-default-200",
+++          "bg-gradient-to-br from-white to-default-300",
+++          "dark:from-default-100 dark:to-default-50",
++        ],
++      }}
++    >
++      <PopoverTrigger>
++        <Button>Open Popover</Button>
++      </PopoverTrigger>
++      <PopoverContent>
++        {(titleProps) => (
++          <div className="px-1 py-2">
++            <h3 className="text-small font-bold" {...titleProps}>
++              Popover Content
++            </h3>
++            <div className="text-tiny">This is the popover content</div>
++          </div>
++        )}
++      </PopoverContent>
++  </Popover>
++```
++
++Tooltip changes:
++
++```diff
++ <Tooltip
++      showArrow
++      placement="right"
++      content="I am a tooltip"
++      classNames={{
++-        base: "py-2 px-4 shadow-xl text-black bg-gradient-to-br from-white to-neutral-400",
++-        arrow: "bg-neutral-400 dark:bg-white",
+++        base: [
+++          // the "before" pseudo element is now the popover' arrow
+++          "before:bg-neutral-400 dark:before:bg-white",
+++        ],
+++        content: [ // now we need to use the "content" slot to actually modify the popover' content styles
+++          "py-2 px-4 shadow-xl",
+++          "text-black bg-gradient-to-br from-white to-neutral-400",
+++        ],
++      }}
++    >
++      <Button variant="flat">Hover me</Button>
++</Tooltip>
++```
++
++Select changes:
++
++```diff
++ <Select
++      items={users}
++      label="Assigned to"
++      className="max-w-xs"
++      variant="bordered"
++      classNames={{
++        label: "group-data-[filled=true]:-translate-y-5",
++        trigger: "min-h-unit-16",
++        listboxWrapper: "max-h-[400px]",
++      }}
++      listboxProps={{
++        itemClasses: {
++          base: [
++            "rounded-md",
++            "text-default-500",
++            "transition-opacity",
++            "data-[hover=true]:text-foreground",
++            "data-[hover=true]:bg-default-100",
++            "dark:data-[hover=true]:bg-default-50",
++            "data-[selectable=true]:focus:bg-default-50",
++            "data-[pressed=true]:opacity-70",
++            "data-[focus-visible=true]:ring-default-500",
++          ],
++        },
++      }}
++      popoverProps={{
++        classNames: {
++-          base: "p-0 border-small border-divider bg-background",
++-          arrow: "bg-default-200",
+++          base: "before:bg-default-200", // the before pseudo element controls the popover's arrow
+++          content: "p-0 border-small border-divider bg-background", // now instead of the "base" slot we use the "content" slot
++        },
++      }}
++      renderValue={(items) => {
++        return items.map((item) => (
++          <div key={item.key} className="flex items-center gap-2">
++            <Avatar
++              alt={item.data.name}
++              className="flex-shrink-0"
++              size="sm"
++              src={item.data.avatar}
++            />
++            <div className="flex flex-col">
++              <span>{item.data.name}</span>
++              <span className="text-default-500 text-tiny">({item.data.email})</span>
++            </div>
++          </div>
++        ));
++      }}
++    >
++      {(user) => (
++        <SelectItem key={user.id} textValue={user.name}>
++          <div className="flex gap-2 items-center">
++            <Avatar alt={user.name} className="flex-shrink-0" size="sm" src={user.avatar} />
++            <div className="flex flex-col">
++              <span className="text-small">{user.name}</span>
++              <span className="text-tiny text-default-400">{user.email}</span>
++            </div>
++          </div>
++        </SelectItem>
++      )}
++    </Select>
++  );
++}`;
++```\n- .changeset/stupid-experts-jam.md (added, 16 changes)\n  Patch: @@ -0,0 +1,16 @@
++---
++"@nextui-org/react-rsc-utils": patch
++"@nextui-org/shared-icons": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/popover": patch
++"@nextui-org/snippet": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/select": patch
++"@nextui-org/slider": patch
++"@nextui-org/badge": patch
++"@nextui-org/react": patch
++"@nextui-org/theme": patch
++---
++
++- New component: Slider
++- Arrow removed from the popover styles and code as well as from related components such as Tooltip, Snippet and Select\n- apps/docs/app/docs/layout.tsx (modified, 2 changes)\n  Patch: @@ -12,7 +12,7 @@ export default function DocsLayout({children}: DocsLayoutProps) {
+     <>
+       <main className="relative container mx-auto max-w-7xl z-10 px-6 min-h-[calc(100vh_-_64px_-_108px)] mb-12 flex-grow">
+         <div className="grid grid-cols-12">
+-          <div className="hidden relative z-10 lg:block lg:col-span-2 mt-8 pr-4">
++          <div className="hidden overflow-visible relative z-10 lg:block lg:col-span-2 mt-8 pr-4">
+             <DocsSidebar routes={manifest.routes} />
+           </div>
+           {children}\n- apps/docs/components/docs/sidebar.tsx (modified, 36 changes)\n  Patch: @@ -21,11 +21,12 @@ import Link from "next/link";
+ import {isEmpty} from "lodash";
+ import {usePathname, useRouter} from "next/navigation";
+ 
++import {ScrollArea} from "../scroll-area";
++
+ import {getRoutePaths} from "./utils";
+ 
+ import {Route} from "@/libs/docs/page";
+ import {TreeKeyboardDelegate} from "@/utils/tree-keyboard-delegate";
+-import {useScrollPosition} from "@/hooks/use-scroll-position";
+ import {trackEvent} from "@/utils/va";
+ 
+ export interface Props<T> extends Omit<ItemProps<T>, "title">, Route {
+@@ -69,6 +70,7 @@ function TreeItem<T>(props: TreeItemProps<T>) {
+       };
+ 
+   const isNew = item.props?.newPost;
++  const isUpdated = item.props?.updated;
+ 
+   const isExpanded = state.expandedKeys.has(key);
+   const isSelected =
+@@ -108,7 +110,9 @@ function TreeItem<T>(props: TreeItemProps<T>) {
+       aria-expanded={dataAttr(hasChildNodes ? isExpanded : undefined)}
+       aria-selected={dataAttr(isSelected)}
+       className={clsx(
+-        "flex flex-col gap-3 outline-none w-full tap-highlight-transparent",
++        "flex flex-col gap-3outline-none w-full tap-highlight-transparent",
++
++        hasChildNodes ? "mb-4" : "first:mt-4",
+         // focus ring
+         ...dataFocusVisibleClasses,
+       )}
+@@ -156,18 +160,25 @@ function TreeItem<T>(props: TreeItemProps<T>) {
+             >
+               {rendered}
+             </span>
++            {isUpdated && (
++              <Chip className="ml-1 py-1 text-tiny" color="default" size="sm" variant="flat">
++                Updated
++              </Chip>
++            )}
+             {isNew && (
+-              <Chip className="ml-2" color="primary" size="sm" variant="flat">
++              <Chip className="ml-1 py-1 text-tiny" color="primary" size="sm" variant="flat">
+                 New
+               </Chip>
+             )}
+             {item.props?.comingSoon && (
+-              <Chip className="ml-2" color="default" size="sm" variant="flat">
++              <Chip className="ml-1 py-1 text-tiny" color="default" size="sm" variant="flat">
+                 Coming soon
+               </Chip>
+             )}
+           </NextUILink>
+         )}
++        {/* Workaround to avoid scrollbar overlapping */}
++        <Spacer x={4} />
+       </div>
+       {isExpanded && hasChildNodes && (
+         <div className="flex flex-col gap-3 items-start" role="group">
+@@ -196,9 +207,7 @@ function TreeHeading({item}: {item: any}) {
+ function Tree<T extends object>(props: CollectionBase<T> & Expandable & MultipleSelection) {
+   let state = useTreeState(props);
+ 
+-  let ref = useRef<HTMLUListElement>(null);
+-
+-  const scrollPosition = useScrollPosition(ref);
++  let ref = useRef<HTMLDivElement>(null);
+ 
+   let keyboardDelegate = useMemo(
+     // @ts-expect-error
+@@ -213,16 +222,11 @@ function Tree<T extends object>(props: CollectionBase<T> & Expandable & Multiple
+   });
+ 
+   return (
+-    <ul
+-      {...collectionProps}
++    <ScrollArea
+       ref={ref}
+-      className="flex flex-col gap-4 scrollbar-hide lg:overflow-y-scroll lg:max-h-[calc(100vh_-_64px)] pb-28"
++      className="h-full lg:max-h-[calc(100vh_-_64px)]"
+       role="tree"
+-      style={{
+-        WebkitMaskImage: `linear-gradient(to top, transparent 0%, #000 100px, #000 ${
+-          scrollPosition > 30 ? "90%" : "100%"
+-        }, transparent 100%)`,
+-      }}
++      {...collectionProps}
+     >
+       {[...state.collection].map((item) => {
+         if (item.type === "section") {
+@@ -231,7 +235,7 @@ function Tree<T extends object>(props: CollectionBase<T> & Expandable & Multiple
+ 
+         return <TreeItem key={item.key} item={item} state={state} />;
+       })}
+-    </ul>
++    </ScrollArea>
+   );
+ }
+ \n- apps/docs/components/scroll-area.tsx (added, 54 changes)\n  Patch: @@ -0,0 +1,54 @@
++"use client";
++
++import * as React from "react";
++import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
++import {cn} from "@nextui-org/react";
++
++const ScrollArea = React.forwardRef<
++  React.ElementRef<typeof ScrollAreaPrimitive.Root>,
++  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
++>(({className, children, ...props}, ref) => {
++  return (
++    <ScrollAreaPrimitive.Root
++      ref={ref}
++      className={cn("relative overflow-hidden", className)}
++      {...props}
++    >
++      <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit] pb-28">
++        {children}
++      </ScrollAreaPrimitive.Viewport>
++      <ScrollBar />
++      <ScrollAreaPrimitive.Corner />
++    </ScrollAreaPrimitive.Root>
++  );
++});
++
++ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName;
++
++const ScrollBar = React.forwardRef<
++  React.ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
++  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>
++>(({className, orientation = "vertical", ...props}, ref) => (
++  <ScrollAreaPrimitive.ScrollAreaScrollbar
++    ref={ref}
++    className={cn(
++      "flex touch-none select-none transition-colors",
++      orientation === "vertical" && "h-full w-2.5 border-l border-l-transparent p-[1px]",
++      orientation === "horizontal" && "h-2.5 border-t border-t-transparent p-[1px]",
++      className,
++    )}
++    orientation={orientation}
++    {...props}
++  >
++    <ScrollAreaPrimitive.ScrollAreaThumb
++      className={cn(
++        "relative rounded-full bg-default-400/50",
++        orientation === "vertical" && "flex-1",
++      )}
++    />
++  </ScrollAreaPrimitive.ScrollAreaScrollbar>
++));
++
++ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName;
++
++export {ScrollArea, ScrollBar};\n- apps/docs/config/routes.json (modified, 16 changes)\n  Patch: @@ -218,8 +218,7 @@
+           "key": "listbox",
+           "title": "Listbox",
+           "keywords": "listbox, selection, option list, multiple choice",
+-          "path": "/docs/components/listbox.mdx",
+-          "newPost": true
++          "path": "/docs/components/listbox.mdx"
+         },
+         {
+           "key": "modal",
+@@ -261,8 +260,7 @@
+           "key": "select",
+           "title": "Select",
+           "keywords": "select, selection, option list, multiple choice",
+-          "path": "/docs/components/select.mdx",
+-          "newPost": true
++          "path": "/docs/components/select.mdx"
+         },
+         {
+           "key": "skeleton",
+@@ -280,8 +278,7 @@
+           "key": "scroll-shadow",
+           "title": "Scroll Shadow",
+           "keywords": "scroll shadow, scroll indicator, scroll bar, scroll position",
+-          "path": "/docs/components/scroll-shadow.mdx",
+-          "newPost": true
++          "path": "/docs/components/scroll-shadow.mdx"
+         },
+         {
+           "key": "spacer",
+@@ -301,6 +298,13 @@
+           "keywords": "switch, toggle, binary input, on/off control",
+           "path": "/docs/components/switch.mdx"
+         },
++        {
++          "key": "slider",
++          "title": "Slider",
++          "keywords": "slider, range input, value selector, sliding control",
++          "path": "/docs/components/slider.mdx",
++          "newPost": true
++        },
+         {
+           "key": "table",
+           "title": "Table",\n- apps/docs/content/components/badge/index.ts (modified, 4 changes)\n  Patch: @@ -6,7 +6,7 @@ import placements from "./placements";
+ import shapes from "./shapes";
+ import visibility from "./visibility";
+ import contentExamples from "./content-examples";
+-import disableOutline from "./disable-outline";
++import showOutline from "./show-outline";
+ import a11y from "./a11y";
+ 
+ export const badgeContent = {
+@@ -18,6 +18,6 @@ export const badgeContent = {
+   shapes,
+   visibility,
+   contentExamples,
+-  disableOutline,
++  showOutline,
+   a11y,
+ };\n- apps/docs/content/components/badge/show-outline.ts (renamed)\n  Previous Filename: apps/docs/content/components/badge/disable-outline.ts\n- apps/docs/content/components/dropdown/custom-items-styles.ts (modified, 4 changes)\n  Patch: @@ -30,8 +30,8 @@ export default function App() {
+       showArrow
+       radius="sm"
+       classNames={{
+-        base: "p-0 border-small border-divider bg-background",
+-        arrow: "bg-default-200",
++        base: "before:bg-default-200", // change arrow background
++        content: "p-0 border-small border-divider bg-background",
+       }}
+     >
+       <DropdownTrigger>\n- apps/docs/content/components/dropdown/custom-popover-styles.ts (modified, 4 changes)\n  Patch: @@ -113,8 +113,8 @@ export default function App() {
+     <Dropdown
+       showArrow
+       classNames={{
+-        base: "py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black",
+-        arrow: "bg-default-200",
++        base: "before:bg-default-200", // change arrow background
++        content: "py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black",
+       }}
+     >
+       <DropdownTrigger>\n- apps/docs/content/components/popover/custom-styles.ts (modified, 11 changes)\n  Patch: @@ -7,8 +7,15 @@ export default function App() {
+       backdrop="opaque"
+       placement="right"
+       classNames={{
+-        base: "py-3 px-4 border border-default-200 bg-gradient-to-br from-white to-default-300 dark:from-default-100 dark:to-default-50",
+-        arrow: "bg-default-200",
++        base: [  
++          // arrow color
++          "before:bg-default-200"
++        ],
++        content: [
++          "py-3 px-4 border border-default-200",
++          "bg-gradient-to-br from-white to-default-300",
++          "dark:from-default-100 dark:to-default-50",
++        ],
+       }}
+     >
+       <PopoverTrigger>\n- apps/docs/content/components/select/custom-styles.ts (modified, 4 changes)\n  Patch: @@ -233,8 +233,8 @@ export default function App() {
+       }}
+       popoverProps={{
+         classNames: {
+-          base: "p-0 border-small border-divider bg-background",
+-          arrow: "bg-default-200",
++          base: "before:bg-default-200",
++          content: "p-0 border-small border-divider bg-background",
+         },
+       }}
+       renderValue={(items) => {\n- apps/docs/content/components/slider/colors.ts (added, 37 changes)\n  Patch: @@ -0,0 +1,37 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  const colors = [
++    "foreground",
++    "primary",
++    "secondary",
++    "success",
++    "warning",
++    "danger",
++  ];
++
++  return (
++    <div className="flex flex-col gap-6 w-full max-w-md">
++      {colors.map((color) => (
++        <Slider
++          key={color}
++          color={color}
++          step={0.01}
++          maxValue={1}
++          minValue={0}
++          defaultValue={0.7}
++          aria-label="Temperature"
++          className="max-w-md"
++        />
++      ))}
++    </div>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/controlled-change-end.ts (added, 51 changes)\n  Patch: @@ -0,0 +1,51 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  const [value, setValue] = React.useState(25);
++
++  return (
++    <div className="flex flex-col gap-2 w-full h-full max-w-md items-start justify-center">
++      <Slider
++        aria-label="Volume"
++        size="lg"
++        color="secondary"
++        onChangeEnd={setValue}
++        className="max-w-md"
++      />
++      <p className="text-default-500 font-medium text-small">Current volume: {value}</p>
++    </div>
++  );
++}`;
++
++const AppTs = `import {Slider, SliderValue} from "@nextui-org/react";
++
++export default function App() {
++  const [value, setValue] = React.useState<SliderValue>(25);
++
++  return (
++    <div className="flex flex-col gap-2 w-full h-full max-w-md items-start justify-center">
++      <Slider 
++        aria-label="Volume"
++        size="lg"
++        color="secondary"
++        defaultValue={70}
++        onChangeEnd={setValue}
++        className="max-w-md"
++      />
++      <p className="text-default-500 font-medium text-small">Current volume: {value}</p>
++    </div>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++const reactTs = {
++  "/App.tsx": AppTs,
++};
++
++export default {
++  ...react,
++  ...reactTs,
++};\n- apps/docs/content/components/slider/controlled-range.ts (added, 60 changes)\n  Patch: @@ -0,0 +1,60 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  const [value, setValue] = React.useState([100, 300]);
++
++  return (
++    <div className="flex flex-col gap-2 w-full h-full max-w-md items-start justify-center">
++      <Slider 
++        label="Select a budget"
++        formatOptions={{style: "currency", currency: "USD"}}
++        step={10}
++        maxValue={1000}
++        minValue={0}
++        value={value} 
++        onChange={setValue}
++        className="max-w-md"
++      />
++      <p className="text-default-500 font-medium text-small">
++        Selected budget: {Array.isArray(value) && value.map((b) => \`$\${b}\`).join(" – ")}
++      </p>
++    </div>
++  );
++}`;
++
++const AppTs = `import {Slider, SliderValue} from "@nextui-org/react";
++
++export default function App() {
++  const [value, setValue] = React.useState<SliderValue>([100, 300]);
++
++  return (
++    <div className="flex flex-col gap-2 w-full h-full max-w-md items-start justify-center">
++      <Slider 
++        label="Select a budget"
++        formatOptions={{style: "currency", currency: "USD"}}
++        step={10}
++        maxValue={1000}
++        minValue={0}
++        value={value} 
++        onChange={setValue}
++        className="max-w-md"
++      />
++      <p className="text-default-500 font-medium text-small">
++        Selected budget: {Array.isArray(value) && value.map((b) => \`$\${b}\`).join(" – ")}
++      </p>
++    </div>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++const reactTs = {
++  "/App.tsx": AppTs,
++};
++
++export default {
++  ...react,
++  ...reactTs,
++};\n- apps/docs/content/components/slider/controlled.ts (added, 146 changes)\n  Patch: @@ -0,0 +1,146 @@
++const VolumeHighIcon = `export const VolumeHighIcon = (props) => (
++  <svg
++    aria-hidden="true"
++    fill="none"
++    focusable="false"
++    height="1em"
++    role="presentation"
++    viewBox="0 0 24 24"
++    width="1em"
++    {...props}
++  >
++    <path
++      d="M18.0003 16.7503C17.8403 16.7503 17.6903 16.7003 17.5503 16.6003C17.2203 16.3503 17.1503 15.8803 17.4003 15.5503C18.9703 13.4603 18.9703 10.5403 17.4003 8.45027C17.1503 8.12027 17.2203 7.65027 17.5503 7.40027C17.8803 7.15027 18.3503 7.22027 18.6003 7.55027C20.5603 10.1703 20.5603 13.8303 18.6003 16.4503C18.4503 16.6503 18.2303 16.7503 18.0003 16.7503Z"
++      fill="currentColor"
++    />
++    <path
++      d="M19.8284 19.2503C19.6684 19.2503 19.5184 19.2003 19.3784 19.1003C19.0484 18.8503 18.9784 18.3803 19.2284 18.0503C21.8984 14.4903 21.8984 9.51027 19.2284 5.95027C18.9784 5.62027 19.0484 5.15027 19.3784 4.90027C19.7084 4.65027 20.1784 4.72027 20.4284 5.05027C23.4984 9.14027 23.4984 14.8603 20.4284 18.9503C20.2884 19.1503 20.0584 19.2503 19.8284 19.2503Z"
++      fill="currentColor"
++    />
++    <path
++      d="M14.02 3.78168C12.9 3.16168 11.47 3.32168 10.01 4.23168L7.09 6.06168C6.89 6.18168 6.66 6.25168 6.43 6.25168H5.5H5C2.58 6.25168 1.25 7.58168 1.25 10.0017V14.0017C1.25 16.4217 2.58 17.7517 5 17.7517H5.5H6.43C6.66 17.7517 6.89 17.8217 7.09 17.9417L10.01 19.7717C10.89 20.3217 11.75 20.5917 12.55 20.5917C13.07 20.5917 13.57 20.4717 14.02 20.2217C15.13 19.6017 15.75 18.3117 15.75 16.5917V7.41168C15.75 5.69168 15.13 4.40168 14.02 3.78168Z"
++      fill="currentColor"
++    />
++  </svg>
++);`;
++
++const VolumeLowIcon = `export const VolumeLowIcon = (props) => (
++  <svg
++    aria-hidden="true"
++    fill="none"
++    focusable="false"
++    height="1em"
++    role="presentation"
++    viewBox="0 0 24 24"
++    width="1em"
++    {...props}
++  >
++    <path
++      d="M19.3284 16.7503C19.1684 16.7503 19.0184 16.7003 18.8784 16.6003C18.5484 16.3503 18.4784 15.8803 18.7284 15.5503C20.2984 13.4603 20.2984 10.5403 18.7284 8.45027C18.4784 8.12027 18.5484 7.65027 18.8784 7.40027C19.2084 7.15027 19.6784 7.22027 19.9284 7.55027C21.8984 10.1703 21.8984 13.8303 19.9284 16.4503C19.7884 16.6503 19.5584 16.7503 19.3284 16.7503Z"
++      fill="currentColor"
++    />
++    <path
++      d="M15.3481 3.78168C14.2281 3.16168 12.7981 3.32168 11.3381 4.23168L8.41813 6.06168C8.21813 6.18168 7.98813 6.25168 7.75813 6.25168H6.82812H6.32812C3.90812 6.25168 2.57812 7.58168 2.57812 10.0017V14.0017C2.57812 16.4217 3.90812 17.7517 6.32812 17.7517H6.82812H7.75813C7.98813 17.7517 8.21813 17.8217 8.41813 17.9417L11.3381 19.7717C12.2181 20.3217 13.0781 20.5917 13.8781 20.5917C14.3981 20.5917 14.8981 20.4717 15.3481 20.2217C16.4581 19.6017 17.0781 18.3117 17.0781 16.5917V7.41168C17.0781 5.69168 16.4581 4.40168 15.3481 3.78168Z"
++      fill="currentColor"
++    />
++  </svg>
++);`;
++
++const App = `import {Slider, Button} from "@nextui-org/react";
++import {VolumeLowIcon} from "./VolumeLowIcon";
++import {VolumeHighIcon} from "./VolumeHighIcon";
++
++export default function App() {
++  const [value, setValue] = React.useState(25);
++
++  return (
++    <div className="flex flex-col gap-2 w-full h-full max-w-md items-start justify-center">
++      <Slider
++        aria-label="Volume"
++        size="lg"
++        color="success"
++        value={value}
++        onChange={setValue}
++        startContent={
++          <Button
++            isIconOnly
++            radius="full"
++            variant="light"
++            onPress={() => setValue((prev) => prev >= 10 ? prev - 10 : 0)}
++          >
++            <VolumeLowIcon className="text-2xl" />
++          </Button>
++        }
++        endContent={
++          <Button
++            isIconOnly
++            radius="full"
++            variant="light"
++            onPress={() => setValue((prev) => prev <= 90 ? prev + 10 : 100)}
++          >
++            <VolumeHighIcon className="text-2xl" />
++          </Button>
++        }
++        className="max-w-md"
++      />
++      <p className="text-default-500 font-medium text-small">Current volume: {value}</p>
++    </div>
++  );
++}`;
++
++const AppTs = `import {Slider, Button, SliderValue} from "@nextui-org/react";
++import {VolumeLowIcon} from "./VolumeLowIcon";
++import {VolumeHighIcon} from "./VolumeHighIcon";
++
++export default function App() {
++  const [value, setValue] = React.useState<SliderValue>(25);
++
++  return (
++    <div className="flex flex-col gap-2 w-full h-full max-w-md items-start justify-center">
++      <Slider 
++        aria-label="Volume"
++        size="lg"
++        color="success"
++        value={value} 
++        onChange={setValue}
++        startContent={
++          <Button
++            isIconOnly
++            variant="light"
++            radius="full"
++            onPress={() => setValue((prev) => prev >= 10 ? prev - 10 : 0)}
++          >
++            <VolumeLowIcon className="text-2xl" />
++          </Button>
++        }
++        endContent={
++          <Button
++            isIconOnly
++            variant="light"
++            radius="full"
++            onPress={() => setValue((prev) => prev <= 90 ? prev + 10 : 100)}
++          >
++            <VolumeHighIcon className="text-2xl" />
++          </Button>
++        }
++        className="max-w-md"
++      />
++      <p className="text-default-500 font-medium text-small">Current volume: {value}</p>
++    </div>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++  "/VolumeHighIcon.jsx": VolumeHighIcon,
++  "/VolumeLowIcon.jsx": VolumeLowIcon,
++};
++
++const reactTs = {
++  "/App.tsx": AppTs,
++};
++
++export default {
++  ...react,
++  ...reactTs,
++};\n- apps/docs/content/components/slider/custom-styles.ts (added, 55 changes)\n  Patch: @@ -0,0 +1,55 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Slider 
++      label="Price Range"
++      step={100} 
++      maxValue={1000} 
++      minValue={0} 
++      defaultValue={[100, 300]}
++      showSteps={true}
++      showTooltip={true}
++      showOutline={true}
++      disableThumbScale={true}
++      formatOptions={{style: "currency", currency: "USD"}}
++      tooltipValueFormatOptions={{style: "currency", currency: "USD", maximumFractionDigits: 0}}
++      classNames={{
++        base: "max-w-md",
++        filler: "bg-gradient-to-r from-primary-500 to-secondary-400",
++        labelWrapper: "mb-2",
++        label: "font-medium text-default-700 text-medium",
++        value: "font-medium text-default-500 text-small",
++        thumb: [
++          "transition-size",
++          "bg-gradient-to-r from-secondary-400 to-primary-500",
++          "data-[dragging=true]:shadow-lg data-[dragging=true]:shadow-black/20",
++          "data-[dragging=true]:w-7 data-[dragging=true]:h-7 data-[dragging=true]:after:h-6 data-[dragging=true]:after:w-6"
++        ],
++        step: "data-[in-range=true]:bg-black/30 dark:data-[in-range=true]:bg-white/50"
++      }}
++      tooltipProps={{
++        offset: 10,
++        placement: "bottom",
++        classNames: {
++          base: [
++            // arrow color
++            "before:bg-gradient-to-r before:from-secondary-400 before:to-primary-500",
++          ],
++          content: [
++            "py-2 shadow-xl",
++            "text-white bg-gradient-to-r from-secondary-400 to-primary-500",
++          ],
++        },
++      }}
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/disable-thumb-scale.ts (added, 49 changes)\n  Patch: @@ -0,0 +1,49 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <div className="flex flex-col gap-6 w-full max-w-md">
++      <Slider   
++        size="sm"
++        step={0.01} 
++        maxValue={1} 
++        minValue={0} 
++        color="secondary"
++        disableThumbScale={true}
++        aria-label="Temperature"
++        defaultValue={0.2}
++        className="max-w-md" 
++      />
++      <Slider   
++        size="md"
++        step={0.01} 
++        maxValue={1} 
++        minValue={0} 
++        color="secondary"
++        disableThumbScale={true}
++        aria-label="Temperature"
++        defaultValue={0.4}
++        className="max-w-md" 
++      />
++      <Slider   
++        size="lg"
++        step={0.01} 
++        maxValue={1} 
++        minValue={0} 
++        color="secondary"
++        disableThumbScale={true}
++        aria-label="Temperature"
++        defaultValue={0.6}
++        className="max-w-md" 
++      />
++    </div> 
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/disabled.ts (added, 23 changes)\n  Patch: @@ -0,0 +1,23 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Slider 
++      isDisabled 
++      label="Temperature" 
++      step={0.01} 
++      maxValue={1} 
++      minValue={0} 
++      defaultValue={0.6}
++      className="max-w-md"
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/fill-offset.ts (added, 26 changes)\n  Patch: @@ -0,0 +1,26 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Slider 
++      label="Exposure" 
++      size="sm"
++      color="warning"
++      step={0.01} 
++      maxValue={5} 
++      minValue={-5} 
++      fillOffset={0}
++      defaultValue={1.5}
++      className="max-w-md"
++      formatOptions={{signDisplay: 'always'}}
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/get-value.ts (added, 21 changes)\n  Patch: @@ -0,0 +1,21 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Slider 
++      label="Donuts to buy"
++      size="sm"
++      maxValue={60}
++      getValue={(donuts) => \`\${donuts} of 60 Donuts\`}
++      className="max-w-md"
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/hide-thumb.ts (added, 21 changes)\n  Patch: @@ -0,0 +1,21 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Slider 
++      aria-label="Player progress" 
++      color="foreground"
++      hideThumb={true}
++      defaultValue={20}
++      className="max-w-md"
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/hide-value.ts (added, 24 changes)\n  Patch: @@ -0,0 +1,24 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Slider 
++      label="Temperature" 
++      color="danger"
++      hideValue={true}
++      step={0.01} 
++      maxValue={1} 
++      minValue={0} 
++      defaultValue={0.4}
++      className="max-w-md"
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/index.ts (added, 55 changes)\n  Patch: @@ -0,0 +1,55 @@
++import usage from "./usage";
++import disabled from "./disabled";
++import sizes from "./sizes";
++import radius from "./radius";
++import colors from "./colors";
++import visibleSteps from "./visible-steps";
++import marks from "./marks";
++import vertical from "./vertical";
++import range from "./range";
++import fillOffset from "./fill-offset";
++import tooltip from "./tooltip";
++import outline from "./outline";
++import disableThumbScale from "./disable-thumb-scale";
++import valueFormatting from "./value-formatting";
++import getValue from "./get-value";
++import hideValue from "./hide-value";
++import hideThumb from "./hide-thumb";
++import startEndContent from "./start-end-content";
++import controlled from "./controlled";
++import controlledChangeEnd from "./controlled-change-end";
++import controlledRange from "./controlled-range";
++import renderThumb from "./render-thumb";
++import renderRangeThumb from "./render-range-thumb";
++import renderLabel from "./render-label";
++import renderValue from "./render-value";
++import customStyles from "./custom-styles";
++
++export const sliderContent = {
++  usage,
++  disabled,
++  sizes,
++  radius,
++  colors,
++  visibleSteps,
++  marks,
++  vertical,
++  range,
++  fillOffset,
++  tooltip,
++  outline,
++  disableThumbScale,
++  valueFormatting,
++  getValue,
++  hideValue,
++  hideThumb,
++  startEndContent,
++  controlled,
++  controlledChangeEnd,
++  controlledRange,
++  renderThumb,
++  renderRangeThumb,
++  renderLabel,
++  renderValue,
++  customStyles,
++};\n- apps/docs/content/components/slider/marks.ts (added, 36 changes)\n  Patch: @@ -0,0 +1,36 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Slider 
++      label="Select a value" 
++      color="foreground"
++      size="sm"
++      step={10} 
++      marks={[
++        {
++          value: 20,
++          label: "20%",
++        },
++        {
++          value: 50,
++          label: "50%",
++        },
++        {
++          value: 80,
++          label: "80%",
++        },
++      ]}
++      defaultValue={20}
++      className="max-w-md"
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/outline.ts (added, 49 changes)\n  Patch: @@ -0,0 +1,49 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <div className="flex flex-col gap-6 w-full max-w-md">
++      <Slider   
++        size="sm"
++        step={0.01} 
++        maxValue={1} 
++        minValue={0} 
++        color="foreground"
++        showOutline={true}
++        aria-label="Temperature"
++        defaultValue={0.2}
++        className="max-w-md" 
++      />
++      <Slider   
++        size="md"
++        step={0.01} 
++        maxValue={1} 
++        minValue={0} 
++        color="foreground"
++        showOutline={true}
++        aria-label="Temperature"
++        defaultValue={0.4}
++        className="max-w-md" 
++      />
++      <Slider   
++        size="lg"
++        step={0.01} 
++        maxValue={1} 
++        minValue={0} 
++        color="foreground"
++        showOutline={true}
++        aria-label="Temperature"
++        defaultValue={0.6}
++        className="max-w-md" 
++      />
++    </div> 
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/radius.ts (added, 36 changes)\n  Patch: @@ -0,0 +1,36 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  const radius = [
++    "full",
++    "lg",
++    "md",
++    "sm",
++    "none",
++  ];
++
++  return (
++    <div className="flex flex-col gap-6 w-full max-w-md">
++      {radius.map((r) => (
++        <Slider
++          key={r}
++          radius={r}
++          step={0.01}
++          maxValue={1}
++          minValue={0}
++          defaultValue={0.7}
++          aria-label="Temperature"
++          className="max-w-md"
++        />
++      ))}
++    </div>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/range.ts (added, 23 changes)\n  Patch: @@ -0,0 +1,23 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Slider 
++      label="Price Range"
++      step={50} 
++      minValue={0} 
++      maxValue={1000} 
++      defaultValue={[100, 500]} 
++      formatOptions={{style: "currency", currency: "USD"}}
++      className="max-w-md"
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/render-label.ts (added, 93 changes)\n  Patch: @@ -0,0 +1,93 @@
++const InfoIcon = `export const InfoIcon = (props) => (
++  <svg
++    aria-hidden="true"
++    fill="none"
++    focusable="false"
++    height="1em"
++    role="presentation"
++    viewBox="0 0 24 24"
++    width="1em"
++    {...props}
++  >
++    <path
++      d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
++      stroke="currentColor"
++      strokeLinecap="round"
++      strokeLinejoin="round"
++      strokeWidth="1.5"
++    />
++    <path
++      d="M12 8V13"
++      stroke="currentColor"
++      strokeLinecap="round"
++      strokeLinejoin="round"
++      strokeWidth="1.5"
++    />
++    <path
++      d="M11.9945 16H12.0035"
++      stroke="currentColor"
++      strokeLinecap="round"
++      strokeLinejoin="round"
++      strokeWidth="2"
++    />
++  </svg>
++);
++`;
++
++const App = `import {Slider, Tooltip} from "@nextui-org/react";
++import {InfoIcon} from "./InfoIcon";
++
++export default function App() {
++  return (
++    <Slider
++      size="lg"
++      label="Price Range"
++      maxValue={1000}
++      step={10}
++      defaultValue={[100, 300]}
++      formatOptions={{style: "currency", currency: "USD"}}
++      classNames={{
++        base: "max-w-md gap-3",
++        filler: "bg-gradient-to-r from-pink-300 to-cyan-300 dark:from-pink-600 dark:to-cyan-800",
++      }}
++      renderLabel={({children, ...props}) => (
++        <label {...props} className="text-medium flex gap-2 items-center">
++          {children}
++          <Tooltip
++            className="w-[200px] px-1.5 text-tiny text-default-600 rounded-small"
++            content="The price range you want to search for."
++            placement="right"
++          >
++            <span className="transition-opacity opacity-80 hover:opacity-100">
++              <InfoIcon />
++            </span>
++          </Tooltip>
++        </label>
++      )}
++      renderThumb={({index, ...props}) => (
++        <div
++          {...props}
++          className="group p-1 top-1/2 bg-background border-small border-default-200 dark:border-default-400/50 shadow-medium rounded-full cursor-grab data-[dragging=true]:cursor-grabbing"
++        >
++          <span
++            className={cn(
++              "transition-transform bg-gradient-to-br shadow-small rounded-full w-5 h-5 block group-data-[dragging=true]:scale-80",
++              index === 0
++                ? "from-pink-200 to-pink-500 dark:from-pink-400 dark:to-pink-600" // first thumb
++                : "from-cyan-200 to-cyan-600 dark:from-cyan-600 dark:to-cyan-800", // second thumb
++            )}
++          />
++        </div>
++      )}
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++  "/InfoIcon.jsx": InfoIcon,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/slider/render-range-thumb.ts (added, 41 changes)\n  Patch: @@ -0,0 +1,41 @@
++const App = `import {Slider} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Slider
++      size="lg"
++      label="Price Range"
++      maxValue={1000}
++      step={10}
++      defaultValue={[100, 300]}
++      formatOptions={{style: "currency", currency: "USD"}}
++      classNames={{
++        base: "max-w-md gap-3",
++        filler: "bg-gradient-to-r from-pink-300 to-cyan-300 dark:from-pink-600 dark:to-cyan-800",
++      }}
++      renderThumb={({index, ...props}) => (
++        <div
++          {...props}
++          className="group p-1 top-1/2 bg-background border-small border-default-200 dark:border-default-400/50 shadow-medium rounded-full cursor-grab data-[dragging=true]:cursor-grabbing"
++        >
++          <span
++            className={cn(
++              "transition-transform bg-gradient-to-br shadow-small rounded-full w-5 h-5 block group-data-[dragging=true]:scale-80",
++              index === 0
++                ? "from-pink-200 to-pink-500 dark:from-pink-400 dark:to-pink-600" // first thumb
++                : "from-cyan-200 to-cyan-600 dark:from-cyan-600 dark:to-cyan-800", // second thumb
++            )}
++          />
++        </div>
++      )}
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n

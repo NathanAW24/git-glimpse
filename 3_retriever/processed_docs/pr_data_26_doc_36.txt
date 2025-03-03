@@ -1,0 +1,131 @@
+Pull Request Number: 689
+Title: feat: Add isDisabled property to tooltip &  Fix abnormal props.content display #683
+Base Branch: next
+Head Branch: feat/tooltip_isDisabled
+Author: wangly19
+URL: https://github.com/nextui-org/nextui/pull/689
+State: MERGED
+Created At: 2022-08-25T16:06:01Z
+Merged At: 2022-11-05T20:54:40Z
+Participants: wangly19, jrgarciadev
+
+Description:
+Closes #683
+📝 Description
+
+feature: Add isDisabled property to tooltip. #683
+fix: props.content display errors
+
+⛳️ Current behavior (updates)
+
+Test Code:
+
+export const WithoutContent = () => {
+  return (
+    <Container>
+      <Tooltip color="primary" content={0}>
+        <Button auto flat>
+          Do hover here
+        </Button>
+      </Tooltip>
+    </Container>
+  );
+};
+
+Incorrect display
+
+
+
+Code
+
+{content && <TooltipContent {...contentProps}>{content}</TooltipContent>}
+🚀 New behavior
+Normal display and disable requirements.
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Commits:
+- feat: Add isDisabled property to tooltip\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/9sQG53hoeko3FZP8sftLkLycVG2N)) | [Visit Preview](https://nextui-storybook-git-fork-wangly19-feat-toolt-911fc1-nextui-org.vercel.app) | Aug 25, 2022 at 4:06PM (UTC) |
+
+\n- vercel: @wangly19 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%227b91c3ca07f019746474726fc94c401827722df0%22%7D%2C%22id%22%3A%22QmS9r4Mjo5E1mLmiFtkNiigpPHZPvTkRWbswCJAz9vMEhP%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A689%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Hey @wangly19 thanks a lot! could you add the isDisabled` property to the docs?
+
+1. Add the `isDisabled` property to the API
+https://raw.githubusercontent.com/nextui-org/nextui/main/apps/docs/content/docs/components/tooltip.mdx
+
+| **isDisabled**     | `boolean`                     | `true/false`                                         | Whether the tooltip content should be render or not | `false`   |
+
+
+\n
+
+Files Changed:
+- packages/react/src/tooltip/__test__/index.test.tsx (modified, 10 changes)\n  Patch: @@ -147,4 +147,14 @@ describe("Tooltip", () => {
+ 
+     expect(wrapper.find("#visible").length).toBe(0);
+   });
++
++  it("should not render when props.isDisabled present", async () => {
++    const wrapper = mount(
++      <div>
++        <Tooltip isDisabled content={<p id="visible">custom-content</p>}>some tips</Tooltip>
++      </div>,
++    );
++
++    expect(wrapper.find("#visible").length).toBe(0);
++  });
+ });\n- packages/react/src/tooltip/tooltip.stories.tsx (modified, 13 changes)\n  Patch: @@ -294,3 +294,16 @@ export const WithoutContent = () => {
+     </Container>
+   );
+ };
++
++export const Disabled = () => {
++  return (
++    <Container>
++      <Tooltip isDisabled color="primary" content="Developers love Next.js">
++        <Button auto flat color="error">
++          Disabled
++        </Button>
++      </Tooltip>
++    </Container>
++  );
++};
++\n- packages/react/src/tooltip/tooltip.tsx (modified, 4 changes)\n  Patch: @@ -32,6 +32,7 @@ interface Props {
+   onVisibleChange?: TooltipOnVisibleChange;
+   as?: keyof JSX.IntrinsicElements;
+   triggerCss?: CSS;
++  isDisabled?: boolean;
+ }
+ 
+ const defaultProps = {
+@@ -80,6 +81,7 @@ const Tooltip: React.FC<React.PropsWithChildren<TooltipProps>> = ({
+   onClick,
+   keepMounted,
+   visible: customVisible,
++  isDisabled,
+   ...props
+ }) => {
+   const timer = useRef<number>();
+@@ -155,7 +157,7 @@ const Tooltip: React.FC<React.PropsWithChildren<TooltipProps>> = ({
+       {...props}
+     >
+       {children}
+-      {content && <TooltipContent {...contentProps}>{content}</TooltipContent>}
++      {content && !isDisabled ? <TooltipContent {...contentProps}>{content}</TooltipContent> : null}
+     </StyledTooltipTrigger>
+   );
+ };\n

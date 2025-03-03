@@ -1,0 +1,88 @@
+Pull Request Number: 1425
+Title: fix: select aria label
+Base Branch: feat/select-component
+Head Branch: fix/select-aria-label
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1425
+State: MERGED
+Created At: 2023-08-17T19:35:41Z
+Merged At: 2023-08-17T19:43:58Z
+Participants: jguddas, jrgarciadev
+
+Description:
+Quick fix for feat/select-component.
+
+Commits:
+- fix: select aria label\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: f91aad5542ce4ea64a65e1ee7d948dfa19b30d60
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/jguddas/nextui/new/fix/select-aria-label?filename=.changeset/wise-rocks-burn.md&value=---%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Fuse-aria-multiselect%22%3A%20patch%0A---%0A%0Afix%3A%20select%20aria%20label%0A)
+
+\n- vercel: [vc]: #31j+z7Omhdf1lPn9liR3gEwS0jsQ6JncRzcI7VHAFGw=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvR29kaHNzR0JhejM4VUtGdDNhS0Z4M3VnQ2VRUyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWpndWRkYXMtZml4LXNlbGUtM2M5OWU2LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWpndWRkYXMtZml4LXNlbGUtM2M5OWU2LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/GodhssGBaz38UKFt3aKFx3ugCeQS)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jguddas-fix-sele-3c99e6-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jguddas-fix-sele-3c99e6-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 17, 2023 7:37pm |
+
+\n- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f91aad5542ce4ea64a65e1ee7d948dfa19b30d60%22%7D%2C%22id%22%3A%22QmZeyj6QUEzFNPeo1cV2frYSQA93pSaK6ipHMbS3m14B4W%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1425%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/select/stories/select.stories.tsx (modified, 16 changes)\n  Patch: @@ -936,3 +936,19 @@ export const WithCustomSectionsStyles = {
+     ...defaultProps,
+   },
+ };
++
++const WithAriaLabelTemplate = ({color, variant, ...args}: SelectProps) => (
++  <Select className="max-w-xs" color={color} label="Favorite Animal" variant={variant} {...args}>
++    {items}
++  </Select>
++);
++
++export const WithAriaLabel = {
++  render: WithAriaLabelTemplate,
++
++  args: {
++    ...defaultProps,
++    label: "Select an animal 🐹",
++    "aria-label": "Select an animal",
++  },
++};\n- packages/hooks/use-aria-multiselect/src/use-multiselect.ts (modified, 11 changes)\n  Patch: @@ -129,13 +129,10 @@ export function useMultiSelect<T>(
+       ...triggerProps,
+       onKeyDown: chain(triggerProps.onKeyDown, triggerOnKeyDown, props.onKeyDown),
+       onKeyUp: props.onKeyUp,
+-      "aria-labelledby": [
+-        triggerProps["aria-labelledby"],
+-        triggerProps["aria-label"] && !triggerProps["aria-labelledby"] ? triggerProps.id : null,
+-        valueId,
+-      ]
+-        .filter(Boolean)
+-        .join(" "),
++      "aria-labelledby":
++        domProps["aria-label"] !== undefined
++          ? domProps["aria-labelledby"]
++          : triggerProps["aria-labelledby"],
+       onFocus(e: FocusEvent) {
+         if (state.isFocused) {
+           return;\n

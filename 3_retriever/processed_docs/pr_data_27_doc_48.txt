@@ -1,0 +1,1297 @@
+Pull Request Number: 511
+Title: Refactor/card component
+Base Branch: next
+Head Branch: refactor/card-component
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/511
+State: MERGED
+Created At: 2022-06-06T14:49:21Z
+Merged At: 2022-06-06T18:58:04Z
+Participants: jrgarciadev
+
+Description:
+Closes #174 #301
+📝 Description
+
+Card refactor and integration with usePress and useHover hooks.
+Theme shadows have been improved and are now more consistent, a new key for drop shadows was added.
+Theme font sizes have been improved and are now more consistent.
+Theme line heights have been improved and are now more consistent.
+Docs components and core compoennts have been updated in order to fit the new font sizes and shadows
+
+🚀 New behavior
+Utilities added to the Stitches CSS library:
++ ds: (value) => ({
++   dropShadow: value
++ }),
++ shadow: (value) => ({
++   boxShadow: value
++ }),
++ dshadow: (value) => ({
++   dropShadow: value
++ }),
++ dropShadow: (value) => ({
++   filter: `$dropShadows${value}`
++ }),
+New theme key -> dropShadows (to use along with css dropShadow utility)
+Light Theme:
+  dropShadows: {
++    xs: 'drop-shadow(0 2px 4px rgb(104 112 118 / 0.07)) drop-shadow(0 1px 1px rgb(104 112 118 / 0.04))',
++    sm: 'drop-shadow(0 2px 8px rgb(104 112 118 / 0.07)) drop-shadow(0 2px 4px rgb(104 112 118 / 0.04))',
++    md: 'drop-shadow(0 4px 12px rgb(104 112 118 / 0.08)) drop-shadow(0 20px 8px rgb(104 112 118 / 0.04))',
++    lg: 'drop-shadow(0 12px 24px rgb(104 112 118 / 0.15)) drop-shadow(0 12px 14px rgb(104 112 118 / 0.1))',
++    xl: 'drop-shadow(0 25px 34px rgb(104 112 118 / 0.35))'
+  }
+Dark Theme:
+  dropShadows: {
++    xs: 'drop-shadow(0 2px 4px rgb(0 0 0 / 0.07)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.04))',
++    sm: 'drop-shadow(0 2px 8px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 4px rgb(0 0 0 / 0.04))',
++    md: 'drop-shadow(0 4px 12px rgb(0 0 0 / 0.08)) drop-shadow(0 20px 8px rgb(0 0 0 / 0.04))',
++    lg: 'drop-shadow(0 12px 24px rgb(0 0 0 / 0.15)) drop-shadow(0 12px 14px rgb(0 0 0 / 0.1))',
++    xl: 'drop-shadow(0 25px 34px rgb(0 0 0 / 0.35))'
+  }
+Usage example:
+<Button
+  css={{
+    dropShadow: "$lg",
+  }}
+/>
+💣 Is this a breaking change (Yes/No): Yes
+
+Card APIs breaking changes
+
+bordered prop has been removed, use variant="bordered" instead.
+shadow prop has been removed, use variant="shadow" instead.
+cover prop has been removed, use objectFit="cover" image prop instead.
+
+
+
+
+Old APIs
+New APIs
+
+
+
+
+clickable
+isPressable
+
+
+hoverable
+isHoverable
+
+
+animated
+disableAnimation
+
+
+
+Card.Footer APIs breaking changes
+
+
+
+Old APIs
+New APIs
+
+
+
+
+blur
+isBlurred
+
+
+
+Card Implementation difference:
+NextUI is no longer automatically wrapping the children in a Card.Body component (since it causes a lot of issues), it means that you have to do it yourself.
+    <Card css={{ mw: "400px" }}>
++     <Card.Body>
+        <Text>A basic card</Text>
++     </Card.Body>
+    </Card>
+
+Theme breaking changes
+Font sizes breaking changes
+  fontSizes: {
+-   tiny: '.75rem',
+-   xs: '0.875rem',
+-   base: '1rem',
+-   sm: '1.25rem',
+-   md: '1.5rem',
+-   lg: '2.25rem',
+-   xl: '3rem'
+
++   xs: '0.75rem', /* 12px */
++   sm: '0.875rem', /* 14px */
++   base: '1rem', /* 16px */
++   md: '1rem', /* 16px */
++   lg: '1.125rem', /* 18px */
++   xl: '1.25rem', /* 20px */
++   xl2: '1.5rem', /* 24px */
++   xl3: '1.875rem', /* 30px */
++   xl4: '2.25rem', /* 36px */
++   xl5: '3rem', /* 48px */
++   xl6: '3.75rem', /* 60px */
++   xl7: '4.5rem', /* 72px */
++   xl8: '6rem', /* 96px */
++   xl9: '8rem', /* 128px */
+  }
+Line heights breaking changes
+  lineHeights: {
+-   xs: 1,
+-   sm: 1.25,
+-   md: 1.5,
+-   lg: 1.625,
+-   xl: 1.75
+
++   xs: 1, /* 16px */
++   sm: 1.25, /* 20px */
++   base: 1.5, /* 24px */
++   md: 1.5, /* 24px */
++   lg: 1.75, /* 28px */
++   xl: 1.75, /* 28px */
++   xl2: 2, /* 32px */
++   xl3: 2.25, /* 36px */
++   xl4: 2.5, /* 40px */
++   xl5: 1,
++   xl6: 1,
++   xl7: 1,
++   xl8: 1,
++   xl9: 1
+  }
+Shadows breaking changes
+Light Theme:
+  shadows: {
+-   xs: '-4px 0 4px rgb(0 0 0 / 5%);',
+-   sm: '0 5px 20px -5px rgba(0, 0, 0, 0.1)',
+-   md: '0 8px 30px rgba(0, 0, 0, 0.15)',
+-   lg: '0 30px 60px rgba(0, 0, 0, 0.15)',
+-   xl: '0 40px 80px rgba(0, 0, 0, 0.25)'
+
++   xs: '0 2px 8px 1px rgb(104 112 118 / 0.07), 0 1px 1px -1px rgb(104 112 118 / 0.04)',
++   sm: '0 2px 8px 2px rgb(104 112 118 / 0.07), 0 2px 4px -1px rgb(104 112 118 / 0.04)',
++   md: '0 12px 20px 6px rgb(104 112 118 / 0.08)',
++   lg: '0 12px 34px 6px rgb(104 112 118 / 0.18)',
++   xl: '0 25px 65px 0px rgb(104 112 118 / 0.35)'
+  }
+Dark Theme:
+  shadows: {
+-   xs: '-4px 0 15px rgb(0 0 0 / 50%)',
+-   sm: '0 5px 20px -5px rgba(20, 20, 20, 0.1)',
+-   md: '0 8px 30px rgba(20, 20, 20, 0.15)',
+-   lg: '0 30px 60px rgba(20, 20, 20, 0.15)',
+-   xl: '0 40px 80px rgba(20, 20, 20, 0.25)'
+
++   xs: '0 2px 8px 1px rgb(0 0 0 / 0.07), 0 1px 1px -1px rgb(0 0 0 / 0.04)',
++   sm: '0 2px 8px 2px rgb(0 0 0 / 0.07), 0 2px 4px -1px rgb(0 0 0 / 0.04)',
++   md: '0 12px 20px 6px rgb(0 0 0 / 0.08)',
++   lg: '0 12px 34px 6px rgb(0 0 0 / 0.18)',
++   xl: '0 25px 65px 0px rgb(0 0 0 / 0.35)'
+  }
+📝 Additional Information
+
+Commits:
+- refactor(react-card): card props and behaviour in progress\n- feat(react): card refactor completed, dropShadows added, shadows improved\n- feat(react-baseline): text sizes and shadows improved\n- feat(react-docs): new font sizes implemented, shadows improved, card component docs updated\n- Merge branch 'next' of github.com:nextui-org/nextui into refactor/card-component\n
+
+Labels:
+💥 Type: Breaking Change
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/content/components/card/action.ts (modified, 10 changes)\n  Patch: @@ -48,20 +48,20 @@ export default function App() {
+     <Grid.Container gap={2} justify="flex-start">
+       {list.map((item, index) => (
+         <Grid xs={6} sm={3} key={index}>
+-          <Card hoverable clickable>
++          <Card isPressable>
+             <Card.Body css={{ p: 0 }}>
+               <Card.Image
++                src={"https://nextui.org" + item.img}
+                 objectFit="cover"
+-                src={'https://nextui.org' + item.img}
+                 width="100%"
+                 height={140}
+                 alt={item.title}
+               />
+             </Card.Body>
+-            <Card.Footer justify="flex-start">
+-              <Row wrap="wrap" justify="space-between">
++            <Card.Footer css={{ justifyItems: "flex-start" }}>
++              <Row wrap="wrap" justify="space-between" align="center">
+                 <Text b>{item.title}</Text>
+-                <Text css={{ color: "$accents4", fontWeight: "$semibold" }}>
++                <Text css={{ color: "$accents7", fontWeight: "$semibold", fontSize: "$sm" }}>
+                   {item.price}
+                 </Text>
+               </Row>\n- apps/docs/content/components/card/bordered.ts (removed, 17 changes)\n  Patch: @@ -1,17 +0,0 @@
+-const App = `import { Card } from "@nextui-org/react";
+-
+-export default function App() {
+-  return (
+-    <Card bordered shadow={false} css={{ mw: "400px" }}>
+-      <p>A bordered card.</p>
+-    </Card>
+-  );
+-}`;
+-
+-const react = {
+-  '/App.js': App
+-};
+-
+-export default {
+-  ...react
+-};\n- apps/docs/content/components/card/clickable.ts (removed, 17 changes)\n  Patch: @@ -1,17 +0,0 @@
+-const App = `import { Card } from "@nextui-org/react";
+-
+-export default function App() {
+-  return (
+-    <Card clickable bordered css={{ mw: "400px" }}>
+-      <p>A clickable card.</p>
+-    </Card>
+-  );
+-}`;
+-
+-const react = {
+-  '/App.js': App
+-};
+-
+-export default {
+-  ...react
+-};\n- apps/docs/content/components/card/color.ts (removed, 39 changes)\n  Patch: @@ -1,39 +0,0 @@
+-const App = `import { Card, Grid, Text } from "@nextui-org/react";
+-
+-export default function App() {
+-  const colors = [
+-    "primary",
+-    "secondary",
+-    "success",
+-    "warning",
+-    "error",
+-    "gradient",
+-  ];
+-  return (
+-    <Grid.Container gap={2}>
+-      {colors.map((color) => (
+-        <Grid xs={12} md={4} key={color}>
+-          <Card color={color}>
+-            <Text
+-              css={{ fontWeight: "$bold", color: "$white" }}
+-              transform="capitalize"
+-            >
+-              {color}
+-            </Text>
+-            <Text css={{ fontWeight: "$bold", color: "$white" }} span>
+-              {color}
+-            </Text>
+-          </Card>
+-        </Grid>
+-      ))}
+-    </Grid.Container>
+-  );
+-}`;
+-
+-const react = {
+-  '/App.js': App
+-};
+-
+-export default {
+-  ...react
+-};\n- apps/docs/content/components/card/cover.ts (modified, 39 changes)\n  Patch: @@ -1,7 +1,7 @@
+ const Card1 = `import { Card, Col, Text } from "@nextui-org/react";
+ 
+ export const Card1 = () => (
+-  <Card cover>
++  <Card>
+     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+       <Col>
+         <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
+@@ -14,8 +14,9 @@ export const Card1 = () => (
+     </Card.Header>
+     <Card.Image
+       src="https://nextui.org/images/card-example-4.jpeg"
+-      height={340}
++      objectFit="cover"
+       width="100%"
++      height={340}
+       alt="Card image background"
+     />
+   </Card>
+@@ -24,7 +25,7 @@ export const Card1 = () => (
+ const Card2 = `import { Card, Col, Text } from "@nextui-org/react";
+ 
+ export const Card2 = () => (
+-  <Card width="100%" cover>
++  <Card css={{ w: "100%" }}>
+     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+       <Col>
+         <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
+@@ -37,8 +38,9 @@ export const Card2 = () => (
+     </Card.Header>
+     <Card.Image
+       src="https://nextui.org/images/card-example-3.jpeg"
+-      height={340}
+       width="100%"
++      height={340}
++      objectFit="cover"
+       alt="Card image background"
+     />
+   </Card>
+@@ -47,7 +49,7 @@ export const Card2 = () => (
+ const Card3 = `import { Card, Col, Text } from "@nextui-org/react";
+ 
+ export const Card3 = () => (
+-  <Card cover css={{ bg: "$black", w: "100%" }}>
++  <Card css={{ bg: "$black", w: "100%" }}>
+     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+       <Col>
+         <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
+@@ -60,8 +62,9 @@ export const Card3 = () => (
+     </Card.Header>
+     <Card.Image
+       src="https://nextui.org/images/card-example-2.jpeg"
+-      height={340}
+       width="100%"
++      height={340}
++      objectFit="cover"
+       alt="Card image background"
+     />
+   </Card>
+@@ -70,7 +73,7 @@ export const Card3 = () => (
+ const Card4 = `import { Card, Col, Row, Button, Text } from "@nextui-org/react";
+ 
+ export const Card4 = () => (
+-  <Card cover css={{ w: "100%" }}>
++  <Card css={{ w: "100%", h: "400px" }}>
+     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+       <Col>
+         <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
+@@ -81,16 +84,17 @@ export const Card4 = () => (
+         </Text>
+       </Col>
+     </Card.Header>
+-    <Card.Body>
++    <Card.Body css={{ p: 0 }}>
+       <Card.Image
+         src="https://nextui.org/images/card-example-6.jpeg"
+-        height={400}
+         width="100%"
++        height="100%"
++        objectFit="cover"
+         alt="Card example background"
+       />
+     </Card.Body>
+     <Card.Footer
+-      blur
++      isBlurred
+       css={{
+         position: "absolute",
+         bgBlur: "#ffffff66",
+@@ -130,7 +134,7 @@ export const Card4 = () => (
+ const Card5 = `import { Card, Col, Row, Button, Text } from "@nextui-org/react";
+ 
+ export const Card5 = () => (
+-  <Card cover css={{ w: "100%", p: 0 }}>
++  <Card css={{ w: "100%", h: "400px" }}>
+     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+       <Col>
+         <Text size={12} weight="bold" transform="uppercase" color="#9E9E9E">
+@@ -141,20 +145,21 @@ export const Card5 = () => (
+         </Text>
+       </Col>
+     </Card.Header>
+-    <Card.Body>
++    <Card.Body css={{ p: 0 }}>
+       <Card.Image
+         src="https://nextui.org/images/card-example-5.jpeg"
+-        height={400}
++        objectFit="cover"
+         width="100%"
++        height="100%"
+         alt="Relaxing app background"
+       />
+     </Card.Body>
+     <Card.Footer
+-      blur
++      isBlurred
+       css={{
+         position: "absolute",
+         bgBlur: "#0f111466",
+-        borderTop: "$borderWeights$light solid $gray700",
++        borderTop: "$borderWeights$light solid $gray800",
+         bottom: 0,
+         zIndex: 1,
+       }}
+@@ -164,8 +169,8 @@ export const Card5 = () => (
+           <Row>
+             <Col span={3}>
+               <Card.Image
+-                src="/images/breathing-app-icon.jpeg"
+-                css={{ background: "black" }}
++                src="https://nextui.org/images/breathing-app-icon.jpeg"
++                css={{ bg: "black", br: "50%" }}
+                 height={40}
+                 width={40}
+                 alt="Breathing app icon"\n- apps/docs/content/components/card/default.ts (modified, 4 changes)\n  Patch: @@ -3,7 +3,9 @@ const App = `import { Card } from "@nextui-org/react";
+ export default function App() {
+   return (
+     <Card css={{ mw: "400px" }}>
+-      <p>A basic card.</p>
++      <Card.Body>
++        <Text>A basic card</Text>
++      </Card.Body>
+     </Card>
+   );
+ }`;\n- apps/docs/content/components/card/divider.ts (modified, 10 changes)\n  Patch: @@ -1,4 +1,4 @@
+-const App = `import { Card, Grid, Text, Divider, Button, Row } from "@nextui-org/react";
++const App = `import { Card, Grid, Text, Button, Row } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+@@ -8,14 +8,14 @@ export default function App() {
+           <Card.Header>
+             <Text b>Card Title</Text>
+           </Card.Header>
+-          <Divider />
++          <Card.Divider />
+           <Card.Body css={{ py: "$10" }}>
+             <Text>
+               Some quick example text to build on the card title and make up the
+               bulk of the card's content.
+             </Text>
+           </Card.Body>
+-          <Divider />
++          <Card.Divider />
+           <Card.Footer>
+             <Row justify="flex-end">
+               <Button size="sm" light>
+@@ -31,14 +31,14 @@ export default function App() {
+           <Card.Header>
+             <Text b>Card Title</Text>
+           </Card.Header>
+-          <Divider />
++          <Card.Divider />
+           <Card.Body css={{ py: "$10" }}>
+             <Text>
+               Some quick example text to build on the card title and make up the
+               bulk of the card's content.
+             </Text>
+           </Card.Body>
+-          <Divider />
++          <Card.Divider />
+           <Card.Footer>
+             <Row justify="flex-end">
+               <Button size="sm" light>\n- apps/docs/content/components/card/footer.ts (modified, 69 changes)\n  Patch: @@ -2,40 +2,41 @@ const App = `import { Card, Grid, Text, Link } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+-    <Grid.Container gap={2}>
+-      <Grid sm={12} md={5}>
+-        <Card css={{ mw: "330px" }}>
+-          <Text h4>Next UI</Text>
+-          <Text>🚀 Beautiful and modern React UI library.</Text>
+-          <Card.Footer>
+-            <Link
+-              color="primary"
+-              target="_blank"
+-              href="https://github.com/nextui-org/nextui"
+-            >
+-              Visit source code on GitHub.
+-            </Link>
+-          </Card.Footer>
+-        </Card>
+-      </Grid>
+-      <Grid sm={12} md={5}>
+-        <Card css={{ mw: "330px" }} color="primary">
+-          <Text h4 color="white">
+-            Next UI
+-          </Text>
+-          <Text color="white">🚀 Beautiful and modern React UI library.</Text>
+-          <Card.Footer>
+-            <Link
+-              target="_blank"
+-              css={{ color: "white" }}
+-              href="https://github.com/nextui-org/nextui"
+-            >
+-              Visit source code on GitHub.
+-            </Link>
+-          </Card.Footer>
+-        </Card>
+-      </Grid>
+-    </Grid.Container>
++    <Card css={{ p: "$6", mw: "400px" }}>
++      <Card.Header>
++        <img
++          alt="nextui logo"
++          src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
++          width="34px"
++          height="34px"
++        />
++        <Grid.Container css={{ pl: "$6" }}>
++          <Grid xs={12}>
++            <Text h4 css={{ lineHeight: "$xs" }}>
++              Next UI
++            </Text>
++          </Grid>
++          <Grid xs={12}>
++            <Text css={{ color: "$accents8" }}>nextui.org</Text>
++          </Grid>
++        </Grid.Container>
++      </Card.Header>
++      <Card.Body css={{ py: "$2" }}>
++        <Text>
++          Make beautiful websites regardless of your design experience.
++        </Text>
++      </Card.Body>
++      <Card.Footer>
++        <Link
++          icon
++          color="primary"
++          target="_blank"
++          href="https://github.com/nextui-org/nextui"
++        >
++          Visit source code on GitHub.
++        </Link>
++      </Card.Footer>
++    </Card>
+   );
+ }`;
+ \n- apps/docs/content/components/card/hover.ts (removed, 17 changes)\n  Patch: @@ -1,17 +0,0 @@
+-const App = `import { Card } from "@nextui-org/react";
+-
+-export default function App() {
+-  return (
+-    <Card bordered shadow={false} hoverable css={{ mw: "400px" }}>
+-      <p>A hoverable card.</p>
+-    </Card>
+-  );
+-}`;
+-
+-const react = {
+-  '/App.js': App
+-};
+-
+-export default {
+-  ...react
+-};\n- apps/docs/content/components/card/hoverable.ts (added, 19 changes)\n  Patch: @@ -0,0 +1,19 @@
++const App = `import { Card, Text } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Card isHoverable variant="bordered" css={{ mw: "400px" }}>
++      <Card.Body>
++        <Text>A hoverable card.</Text>
++      </Card.Body>
++    </Card>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/card/index.ts (modified, 14 changes)\n  Patch: @@ -1,19 +1,17 @@
+ import defaultCard from './default';
+-import bordered from './bordered';
+-import hover from './hover';
+-import clickable from './clickable';
+-import color from './color';
++import variants from './variants';
++import hoverable from './hoverable';
++import pressable from './pressable';
+ import divider from './divider';
+ import cover from './cover';
+ import action from './action';
+ import footer from './footer';
+ 
+ export default {
+   defaultCard,
+-  bordered,
+-  hover,
+-  clickable,
+-  color,
++  variants,
++  hoverable,
++  pressable,
+   divider,
+   cover,
+   action,\n- apps/docs/content/components/card/pressable.ts (added, 24 changes)\n  Patch: @@ -0,0 +1,24 @@
++const App = `import { Card, Text } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Card
++      isPressable
++      isHoverable
++      variant="bordered"
++      css={{ mw: "400px" }}
++    >
++      <Card.Body>
++        <Text>A pressable card.</Text>
++      </Card.Body>
++    </Card>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/card/variants.ts (added, 37 changes)\n  Patch: @@ -0,0 +1,37 @@
++const App = `import { Card } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid xs={4}>
++        <Card>
++          <Card.Body>
++            <Text>Default card. (shadow)</Text>
++          </Card.Body>
++        </Card>
++      </Grid>
++      <Grid xs={4}>
++        <Card variant="flat">
++          <Card.Body>
++            <Text>Flat card.</Text>
++          </Card.Body>
++        </Card>
++      </Grid>
++      <Grid xs={4}>
++        <Card variant="bordered">
++          <Card.Body>
++            <Text>Bordered card.</Text>
++          </Card.Body>
++        </Card>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/popover/custom-content.ts (modified, 2 changes)\n  Patch: @@ -63,7 +63,7 @@ export const UserTwitterCard = () => {
+               onClick={() => setFollowing(!following)}
+               css={{
+                 maxHeight: "$space$12",
+-                fs: "$tiny",
++                fs: "$xs",
+                 fontWeight: "$semibold",
+                 borderColor: following ? "$foreground" : "$primary",
+                 color: following ? "$foreground" : "$white"\n- apps/docs/content/components/tooltip/customContent.ts (modified, 2 changes)\n  Patch: @@ -87,7 +87,7 @@ export const UserTwitterCard = ({
+               onClick={() => setFollowing(!following)}
+               css={{
+                 maxHeight: "$space$12",
+-                fs: "$tiny",
++                fs: "$xs",
+                 fontWeight: "$semibold",
+                 borderColor: following ? "$foreground" : "$primary",
+                 color: following ? "$foreground" : "$white",\n- apps/docs/content/docs/components/card.mdx (modified, 173 changes)\n  Patch: @@ -16,40 +16,49 @@ import { Card } from '@nextui-org/react';
+ 
+ <Spacer y={2} />
+ 
++#### Anatomy
++
++- **Card**: The wrapper that provides state, context and focus management.
++- **Card.Header**: Commonly used for the title of a card.
++- **Card.Body**: The content of the card.
++- **Card.Footer**: Commonly used for actions.
++- **Card.Image**: The image of the card, based on the NextUI [Image](/docs/components/image).
++- **Card.Divider**: A divider between cards.
++
++<Spacer y={2} />
++
+ <Playground
+   title="Default"
+-  desc="NextUI will wrap your content in a `Card.Body` component."
++  desc="Cards have no fixed width to start, so they'll naturally fill the full width of its parent element."
+   files={cardContent.defaultCard}
+ />
+ 
+ <Playground
+-  title="Bordered"
+-  desc="You can change the full style to a bordered `Card` with the `bordered` property."
+-  files={cardContent.bordered}
++  title="Variants"
++  desc="Cards can be given a variety of visual styles. There are three variants: `shadow`, `flat`, and `bordered`."
++  files={cardContent.variants}
+ />
+ 
+ <Playground
+   title="Hoverable"
+-  desc="You can apply a fancy hover animation with the `hoverable` property."
+-  files={cardContent.hover}
++  desc="You can apply a fancy hover animation with the `isHoverable` prop."
++  files={cardContent.hoverable}
+ />
+ 
++> **Note**: NextUI uses the **react-aria** [useHover](https://react-spectrum.adobe.com/react-aria/useHover.html) hook under the hood in order to handle mouse and touch events, ignore emulated mouse events in mobile browsers, and other accessibility features.
++
+ <Playground
+-  title="Clickable"
+-  desc="You can use the `clickable` property to allow users to interact with the entirety of its surface
++  title="Pressable"
++  desc="You can use the `isPressable` property to allow users to interact with the entirety of its surface
+   to trigger its main action, be it an expansion, a link to another screen or some other behavior."
+-  files={cardContent.clickable}
++  files={cardContent.pressable}
+ />
+ 
+-<Playground
+-  title="Colors"
+-  desc="You can change the color of the `Card` with the property `color`."
+-  files={cardContent.color}
+-/>
++> **Note**: NextUI uses the **react-aria** [usePress](https://react-spectrum.adobe.com/react-aria/usePress.html) hook under the hood in order to handle mouse and touch events, <kbd>Enter</kbd> and <kbd>Space</kbd> keys, screen readers virtual clicks, and other accessibility features.
+ 
+ <Playground
+   title="With divider"
+-  desc="You can use the `Divider` component to split the `Card` sections."
++  desc="You can add a divider between cards with the `Card.Divider` component."
+   files={cardContent.divider}
+ />
+ 
+@@ -61,14 +70,13 @@ import { Card } from '@nextui-org/react';
+ 
+ <Playground
+   title="Cover Image"
+-  desc="You can use the `cover` prop and `Card.Image` component to add a coverred image to the `Card.Body`. NextUI automatically
+-  applies `object-fit: cover` to the inner image."
++  desc="You can use the `Card.Image` component to add an image to the `Card`."
+   files={cardContent.cover}
+ />
+ 
+ <Playground
+   title="Primary Action"
+-  desc="You can use the `clickable` property to allow users to interact with the `Card`."
++  desc="You can use the `isPressable` property to allow users to interact with the `Card`."
+   files={cardContent.action}
+ />
+ 
+@@ -80,107 +88,100 @@ import { Card } from '@nextui-org/react';
+ 
+ #### Card Props
+ 
+-| Attribute        | Type                                         | Accepted values                  | Description                                                                                                | Default   |
+-| ---------------- | -------------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------- | --------- |
+-| **color**        | `NormalColors`                               | [NormalColors](#normal-colors)   | Change card color                                                                                          | `default` |
+-| **shadow**       | `boolean`                                    | `true/false`                     | Display shadow effect                                                                                      | `true`    |
+-| **bordered**     | `boolean`                                    | `true/false`                     | Bordered card                                                                                              | `false`   |
+-| **animated**     | `boolean`                                    | `true/false`                     | Display drip, shadow, hover and scale animation                                                            | `true`    |
+-| **hoverable**    | `boolean`                                    | `true/false`                     | Display a translate and shadow animation on hover                                                          | `false`   |
+-| **clickable**    | `boolean`                                    | `true/false`                     | Allow users to interact with the card                                                                      | `false`   |
+-| **cover**        | `boolean`                                    | `true/false`                     | It removes the [Card.Body](#card.body-props) padding and set the property `object-fit: cover` to the image | `false`   |
+-| **borderWeight** | `NormalWeights`                              | [NormalWeights](#normal-weights) | Border weight for `bordered` card                                                                          | `normal`  |
+-| **onClick**      | `MouseEventHandler`                          | -                                | Clickable card click handler                                                                               | -         |
+-| **ref**          | <Code>Ref<HTMLDivElement &#124; null></Code> | -                                | forwardRef                                                                                                 | -         |
+-| **css**          | `Stitches.CSS`                               | -                                | Override Default CSS style                                                                                 | -         |
+-| **as**           | `keyof JSX.IntrinsicElements`                | -                                | Changes which tag component outputs                                                                        | `div`     |
+-| ...              | `HTMLAttributes`                             | `'id', 'className', ...`         | Native props                                                                                               | -         |
++| Attribute            | Type                             | Description                                                         | Default  |
++| -------------------- | -------------------------------- | ------------------------------------------------------------------- | -------- |
++| **children\***       | `ReactNode` `ReactNode[]`        | The content of the card. It's usually the header, body, and footer. | -        |
++| **variant**          | [CardVariants](#card-variants)   | The card variant style.                                             | `shadow` |
++| **borderWeight**     | [NormalWeights](#normal-weights) | The border weight of the bordered card.                             | `light`  |
++| **isHoverable**      | `boolean`                        | Whether the card can be hovered by the user.                        | `false`  |
++| **isPressable**      | `boolean`                        | Whether the card should allow users to interact with the card.      | `false`  |
++| **disableAnimation** | `boolean`                        | Whether the card is animated.                                       | `false`  |
++| **disableRipple**    | `boolean`                        | Whether the card should show a ripple animation on press            | `false`  |
++| **css**              | `Stitches.CSS`                   | Override Default CSS style.                                         | -        |
++| **as**               | `keyof JSX.IntrinsicElements`    | Changes which tag component outputs.                                | `div`    |
++
++<Spacer y={1} />
++
++#### Card Events
++
++| Attribute         | Type                                                                                                    | Description                                                                                                             | Default |
++| ----------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------- |
++| **onPress**       | <Code>(e: [PressEvent](https://react-spectrum.adobe.com/react-aria/usePress.html#usage)) => void</Code> | Handler that is called when the press is released over the target.                                                      | -       |
++| **onPressStart**  | <Code>(e: [PressEvent](https://react-spectrum.adobe.com/react-aria/usePress.html#usage)) => void</Code> | Handler that is called when a press interaction starts.                                                                 | -       |
++| **onPressEnd**    | <Code>(e: [PressEvent](https://react-spectrum.adobe.com/react-aria/usePress.html#usage)) => void</Code> | Handler that is called when a press interaction ends, either over the target or when the pointer leaves the target.     | -       |
++| **onPressChange** | <Code>(isPressed: boolean) => void</Code>                                                               | Handler that is called when the press state changes.                                                                    | -       |
++| **onPressUp**     | <Code>(e: [PressEvent](https://react-spectrum.adobe.com/react-aria/usePress.html#usage)) => void</Code> | Handler that is called when a press is released over the target, regardless of whether it started on the target or not. | -       |
++
++<Spacer y={2} />
++
++---
+ 
+ <Spacer y={2} />
+ 
+ #### Card.Header Props
+ 
+-| Attribute | Type                          | Accepted values          | Description                         | Default |
+-| --------- | ----------------------------- | ------------------------ | ----------------------------------- | ------- |
+-| **css**   | `Stitches.CSS`                | -                        | Override Default CSS style          | -       |
+-| **as**    | `keyof JSX.IntrinsicElements` | -                        | Changes which tag component outputs | `div`   |
+-| ...       | `HTMLAttributes`              | `'id', 'className', ...` | Native props                        | -       |
++| Attribute | Type                          | Description                         | Default |
++| --------- | ----------------------------- | ----------------------------------- | ------- |
++| **css**   | `Stitches.CSS`                | Override Default CSS style          | -       |
++| **as**    | `keyof JSX.IntrinsicElements` | Changes which tag component outputs | `div`   |
++
++<Spacer y={2} />
++
++---
+ 
+ <Spacer y={2} />
+ 
+ #### Card.Body Props
+ 
+-| Attribute | Type                          | Accepted values          | Description                         | Default |
+-| --------- | ----------------------------- | ------------------------ | ----------------------------------- | ------- |
+-| ...       | `HTMLAttributes`              | `'id', 'className', ...` | Native props                        | -       |
+-| **css**   | `Stitches.CSS`                | -                        | Override Default CSS style          | -       |
+-| **as**    | `keyof JSX.IntrinsicElements` | -                        | Changes which tag component outputs | `div`   |
++| Attribute | Type                          | Description                         | Default |
++| --------- | ----------------------------- | ----------------------------------- | ------- |
++| **css**   | `Stitches.CSS`                | Override Default CSS style          | -       |
++| **as**    | `keyof JSX.IntrinsicElements` | Changes which tag component outputs | `div`   |
++
++<Spacer y={2} />
++
++---
+ 
+ <Spacer y={2} />
+ 
+ #### Card.Footer Props
+ 
+-| Attribute | Type                          | Accepted values          | Description                          | Default |
+-| --------- | ----------------------------- | ------------------------ | ------------------------------------ | ------- |
+-| **blur**  | `boolean`                     | `true/false`             | Makes the card footer container blur | `false` |
+-| **css**   | `Stitches.CSS`                | -                        | Override Default CSS style           | -       |
+-| **as**    | `keyof JSX.IntrinsicElements` | -                        | Changes which tag component outputs  | `div`   |
+-| ...       | `HTMLAttributes`              | `'id', 'className', ...` | Native props                         | -       |
++| Attribute     | Type                          | Description                                          | Default |
++| ------------- | ----------------------------- | ---------------------------------------------------- | ------- |
++| **isBlurred** | `boolean`                     | Whether the card footer background should be blurry. | `false` |
++| **css**       | `Stitches.CSS`                | Override Default CSS style                           | -       |
++| **as**        | `keyof JSX.IntrinsicElements` | Changes which tag component outputs                  | `div`   |
++
++<Spacer y={2} />
++
++---
+ 
+ <Spacer y={2} />
+ 
+ #### Card.Image Props
+ 
+-| Attribute        | Type                          | Accepted values                | Description                                       | Default      |
+-| ---------------- | ----------------------------- | ------------------------------ | ------------------------------------------------- | ------------ |
+-| **src**          | `string`                      | -                              | Image source                                      | -            |
+-| **width**        | `string` `number`             | `%` `px` `rem` `em`            | Determine the width of the card image             | `100%`       |
+-| **height**       | `string` `number`             | `%` `px` `rem` `em`            | Determine the height of the card image            | `auto`       |
+-| **showSkeleton** | `boolean`                     | `true/false`                   | Show skeleton effect whereas the image is loading | `true`       |
+-| **objectFit**    | `ObjectFit`                   | [ObjectFit](#object-fit)       | CSS "object-fit" property                         | `scale-down` |
+-| **maxDelay(ms)** | `number`                      | -                              | Max duration of the skeleton animation            | `3000`       |
+-| **autoResize**   | `boolean`                     | `true/false`                   | Enables zooming when width is too small           | `true`       |
+-| **css**          | `Stitches.CSS`                | -                              | Override Default CSS style                        | -            |
+-| **as**           | `keyof JSX.IntrinsicElements` | -                              | Changes which tag component outputs               | `div`        |
+-| ...              | `ImgHTMLAttributes`           | `'id', 'className', 'alt' ...` | Native props                                      | -            |
++| Attribute      | Type                                             | Accepted values                                                                | Description | Default |
++| -------------- | ------------------------------------------------ | ------------------------------------------------------------------------------ | ----------- | ------- |
++| **ImageProps** | [ImageProps](/docs/components/image#image-props) | Since card image is based on the `Image` you can use any of the `Image` props. | -           |
++
++<Spacer y={2} />
++
++---
+ 
+ <Spacer y={2} />
+ 
+ ### Card types
+ 
+ <Spacer y={1} />
+ 
+-#### Normal Colors
++#### Card Variants
+ 
+ ```ts
+-type NormalColors =
+-  | 'default'
+-  | 'primary'
+-  | 'secondary'
+-  | 'success'
+-  | 'warning'
+-  | 'error'
+-  | 'gradient';
++type CardVariants = 'shadow' | 'flat' | 'bordered';
+ ```
+ 
+ #### Normal Weights
+ 
+ ```ts
+ type NormalWeights = 'light' | 'normal' | 'bold' | 'extrabold' | 'black';
+ ```
+-
+-### Object Fit
+-
+-```ts
+-type ObjectFit =
+-  | 'contain'
+-  | 'cover'
+-  | 'fill'
+-  | 'none'
+-  | 'scale-down'
+-  /* Global values */
+-  | 'inherit'
+-  | 'initial'
+-  | 'revert'
+-  | 'unset';
+-```\n- apps/docs/content/docs/manifest.json (modified, 3 changes)\n  Patch: @@ -110,7 +110,8 @@
+                         {
+                             "title": "Card",
+                             "keywords": "card, content, action, media",
+-                            "path": "/docs/components/card.mdx"
++                            "path": "/docs/components/card.mdx",
++                            "updated": "true"
+                         },
+                         {
+                             "title": "Pagination",\n- apps/docs/content/docs/theme/default-theme.mdx (modified, 80 changes)\n  Patch: @@ -30,7 +30,7 @@ const MyComponent = () => {
+       <Text
+         css={{
+           color: '$blue800',
+-          fontSize: '$tiny',
++          fontSize: '$sm',
+           padding: '$2 $4'
+         }}
+       >
+@@ -39,7 +39,7 @@ const MyComponent = () => {
+       <p
+         style={{
+           color: theme.colors.primary.value,
+-          fontSize: theme.fontSizes.tiny.value,
++          fontSize: theme.fontSizes.sm.value,
+           padding: `${theme.space[2].value} ${theme.space[4].value}`
+         }}
+       >
+@@ -315,13 +315,20 @@ export default {
+   colors: {...}, // color palette object
+   fonts: {...}, // font families object
+   fontSizes: {
+-    tiny: '.75rem',
+-    xs: '0.875rem',
+-    base: '1rem',
+-    sm: '1.25rem',
+-    md: '1.5rem',
+-    lg: '2.25rem',
+-    xl: '3rem'
++    xs: '0.75rem', /* 12px */
++    sm: '0.875rem', /* 14px */
++    base: '1rem', /* 16px */
++    md: '1rem', /* 16px */
++    lg: '1.125rem', /* 18px */
++    xl: '1.25rem', /* 20px */
++    xl2: '1.5rem', /* 24px */
++    xl3: '1.875rem', /* 30px */
++    xl4: '2.25rem', /* 36px */
++    xl5: '3rem', /* 48px */
++    xl6: '3.75rem', /* 60px */
++    xl7: '4.5rem', /* 72px */
++    xl8: '6rem', /* 96px */
++    xl9: '8rem', /* 128px */
+   }
+   ...
+ };
+@@ -360,11 +367,20 @@ export default {
+   fontSizes: {...}, // font sizes object
+   fontWeights: {...}, // font weights object
+   lineHeights: {
+-    xs: 1,
+-    sm: 1.25,
+-    md: 1.5,
+-    lg: 1.625,
+-    xl: 1.75
++    xs: 1, /* 16px */
++    sm: 1.25, /* 20px */
++    base: 1.5, /* 24px */
++    md: 1.5, /* 24px */
++    lg: 1.75, /* 28px */
++    xl: 1.75, /* 28px */
++    xl2: 2, /* 32px */
++    xl3: 2.25, /* 36px */
++    xl4: 2.5, /* 40px */
++    xl5: 1,
++    xl6: 1,
++    xl7: 1,
++    xl8: 1,
++    xl9: 1
+   }
+   ...
+ };
+@@ -601,11 +617,19 @@ export const lightTheme = {
+   // default theme object
+   // ... previous theme properties
+   shadows: {
+-    xs: '-4px 0 4px rgb(0 0 0 / 5%);',
+-    sm: '0 5px 20px -5px rgba(0, 0, 0, 0.1)',
+-    md: '0 8px 30px rgba(0, 0, 0, 0.15)',
+-    lg: '0 30px 60px rgba(0, 0, 0, 0.15)',
+-    xl: '0 40px 80px rgba(0, 0, 0, 0.25)'
++    xs: '0 2px 8px 1px rgb(104 112 118 / 0.07), 0 1px 1px -1px rgb(104 112 118 / 0.04)',
++    sm: '0 2px 8px 2px rgb(104 112 118 / 0.07), 0 2px 4px -1px rgb(104 112 118 / 0.04)',
++    md: '0 12px 20px 6px rgb(104 112 118 / 0.08)',
++    lg: '0 12px 34px 6px rgb(104 112 118 / 0.18)',
++    xl: '0 25px 65px 0px rgb(104 112 118 / 0.35)'
++  },
++   // to use along with css dropShadow utility
++  dropShadows: {
++    xs: 'drop-shadow(0 2px 4px rgb(104 112 118 / 0.07)) drop-shadow(0 1px 1px rgb(104 112 118 / 0.04))',
++    sm: 'drop-shadow(0 2px 8px rgb(104 112 118 / 0.07)) drop-shadow(0 2px 4px rgb(104 112 118 / 0.04))',
++    md: 'drop-shadow(0 4px 12px rgb(104 112 118 / 0.08)) drop-shadow(0 20px 8px rgb(104 112 118 / 0.04))',
++    lg: 'drop-shadow(0 12px 24px rgb(104 112 118 / 0.15)) drop-shadow(0 12px 14px rgb(104 112 118 / 0.1))',
++    xl: 'drop-shadow(0 25px 34px rgb(104 112 118 / 0.35))'
+   }
+   ...
+ };
+@@ -614,11 +638,19 @@ export const darkTheme = {
+   // default theme object
+   // ... previous theme properties
+   shadows: {
+-    xs: '-4px 0 15px rgb(0 0 0 / 50%)',
+-    sm: '0 5px 20px -5px rgba(20, 20, 20, 0.1)',
+-    md: '0 8px 30px rgba(20, 20, 20, 0.15)',
+-    lg: '0 30px 60px rgba(20, 20, 20, 0.15)',
+-    xl: '0 40px 80px rgba(20, 20, 20, 0.25)'
++    xs: '0 2px 8px 1px rgb(0 0 0 / 0.07), 0 1px 1px -1px rgb(0 0 0 / 0.04)',
++    sm: '0 2px 8px 2px rgb(0 0 0 / 0.07), 0 2px 4px -1px rgb(0 0 0 / 0.04)',
++    md: '0 12px 20px 6px rgb(0 0 0 / 0.08)',
++    lg: '0 12px 34px 6px rgb(0 0 0 / 0.18)',
++    xl: '0 25px 65px 0px rgb(0 0 0 / 0.35)'
++  },
++   // to use along with css dropShadow utility
++  dropShadows: {
++    xs: 'drop-shadow(0 2px 4px rgb(0 0 0 / 0.07)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.04))',
++    sm: 'drop-shadow(0 2px 8px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 4px rgb(0 0 0 / 0.04))',
++    md: 'drop-shadow(0 4px 12px rgb(0 0 0 / 0.08)) drop-shadow(0 20px 8px rgb(0 0 0 / 0.04))',
++    lg: 'drop-shadow(0 12px 24px rgb(0 0 0 / 0.15)) drop-shadow(0 12px 14px rgb(0 0 0 / 0.1))',
++    xl: 'drop-shadow(0 25px 34px rgb(0 0 0 / 0.35))'
+   }
+   ...
+ };\n- apps/docs/content/docs/theme/utilities.mdx (modified, 77 changes)\n  Patch: @@ -25,39 +25,38 @@ You can use any of the utilities through the `css` prop or using the `styled` fu
+ <Playground
+   initialEditorOpen
+   code={`
+-<Card css={{ px: '$4' }}>
+-  <Text
+-    h1
+-    size={60}
+-    css={{
+-      textGradient: '45deg, $blue500 -20%, $pink500 50%'
+-    }}
+-    weight="bold"
+-  >
+-    Let's
+-  </Text>
+-  <Text
+-    h1
+-    size={60}
+-    css={{
+-      textGradient: '45deg, $purple500 -20%, $pink500 100%'
+-    }}
+-    weight="bold"
+-  >
+-    Make the Web
+-  </Text>
+-  <Text
+-    h1
+-    size={60}
+-    css={{
+-      textGradient: '45deg, $yellow500 -20%, $red500 100%'
+-    }}
+-    weight="bold"
+-  >
+-    Prettier
+-  </Text>
+-</Card>
+-`}
++<>
++    <Text
++      h1
++      size={60}
++      css={{
++        textGradient: "45deg, $blue600 -20%, $pink600 50%",
++      }}
++      weight="bold"
++    >
++      Let's
++    </Text>
++    <Text
++      h1
++      size={60}
++      css={{
++        textGradient: "45deg, $purple600 -20%, $pink600 100%",
++      }}
++      weight="bold"
++    >
++      Make the Web
++    </Text>
++    <Text
++      h1
++      size={60}
++      css={{
++        textGradient: "45deg, $yellow600 -20%, $red600 100%",
++      }}
++      weight="bold"
++    >
++      Prettier
++    </Text>
++</>;`}
+ />
+ 
+ ### Utilities
+@@ -195,6 +194,18 @@ export const utils = {
+   bs: (value) => ({
+     boxShadow: value
+   }),
++  ds: (value) => ({
++    dropShadow: value
++  }),
++  shadow: (value) => ({
++    boxShadow: value
++  }),
++  dshadow: (value) => ({
++    dropShadow: value
++  }),
++  dropShadow: (value) => ({
++    filter: `$dropShadows${value}`
++  }),
+   normalShadow: (value) => ({
+     boxShadow: `0 4px 14px 0 $colors${value}`
+   }),\n- apps/docs/src/components/code-demo/pre.tsx (modified, 2 changes)\n  Patch: @@ -40,7 +40,7 @@ export const Pre = styled('pre', {
+   padding: '$8',
+   overflow: 'auto',
+   fontFamily: '$mono',
+-  fontSize: '$xs',
++  fontSize: '$sm',
+   lineHeight: '21px',
+   whiteSpace: 'pre',
+   position: 'relative',\n- apps/docs/src/components/hero/components.tsx (modified, 5 changes)\n  Patch: @@ -109,7 +109,8 @@ const HeroComponents = () => {
+           trigger="click"
+           css={{
+             animation: `${levitating} 14s ease infinite 0.1s`,
+-            marginLeft: '-90px',
++            marginLeft: '-80px',
++            marginTop: '$2',
+             transform: 'translate(0, 0)'
+           }}
+         >
+@@ -317,10 +318,10 @@ const HeroComponents = () => {
+                   auto
+                   rounded
+                   color="secondary"
++                  size="sm"
+                   css={{
+                     px: '$4',
+                     height: '$space$10',
+-                    fontSize: '$tiny',
+                     color: '$white',
+                     [`.${darkTheme} &`]: {
+                       bg: '$purple900',\n- apps/docs/src/components/hero/styles.ts (modified, 2 changes)\n  Patch: @@ -23,7 +23,7 @@ export const StyledGradientTitle = styled(StyledTitle, {
+ 
+ export const StyledSubtitle = styled('p', {
+   pl: '$1',
+-  fs: '$sm',
++  fs: '$xl',
+   width: '100%',
+   display: 'inline-flex',
+   fontWeight: '$medium',\n- apps/docs/src/components/home/comparation.tsx (modified, 4 changes)\n  Patch: @@ -57,7 +57,7 @@ const ComparationSection = () => {
+                   }}
+                 />
+               )}
+-              <Text css={{ color: '$text', fontSize: '$md' }}>NextUI</Text>
++              <Text css={{ color: '$text', fontSize: '$xl' }}>NextUI</Text>
+             </Col>
+           </Grid>
+           <Grid
+@@ -84,7 +84,7 @@ const ComparationSection = () => {
+                   value={landingContent.comparativeCode.others}
+                 />
+               )}
+-              <Text css={{ color: '$accents5', fontSize: '$md' }}>Others</Text>
++              <Text css={{ color: '$accents6', fontSize: '$xl' }}>Others</Text>
+             </Col>
+           </Grid>
+         </Grid.Container>\n- apps/docs/src/components/palette/item.tsx (modified, 2 changes)\n  Patch: @@ -94,7 +94,7 @@ const Item: React.FC<ItemProps> = ({
+               className="hex-text"
+               css={{
+                 m: 0,
+-                fontSize: '$tiny',
++                fontSize: '$xs',
+                 color: textColor,
+                 opacity: 0.8,
+                 tt: 'uppercase',\n- apps/docs/src/components/primitives/index.ts (modified, 2 changes)\n  Patch: @@ -48,7 +48,7 @@ export const Title = styled('h1', {
+ 
+ export const Subtitle = styled('p', {
+   pl: '$1',
+-  fs: '$sm',
++  fs: '$xl',
+   fontWeight: '$medium',
+   color: '$accents7',
+   display: 'block',\n- apps/docs/src/components/templates/custom-button/index.tsx (modified, 5 changes)\n  Patch: @@ -30,16 +30,17 @@ const CustomButton = () => {
+       auto
+       rounded
+       ripple={false}
+-      size="xl"
+       onClick={handleConfetti}
+       css={{
+         background: '$white',
+         fontWeight: '$semibold',
+-        boxShadow: '$md',
++        boxShadow: '$lg',
+         position: 'relative',
+         overflow: 'visible',
+         color: '#0F9549',
++        fontSize: '$lg',
+         px: '$18',
++        py: '$11',
+         '&:after': {
+           content: '""',
+           position: 'absolute',\n- apps/docs/src/components/templates/player/player.tsx (modified, 2 changes)\n  Patch: @@ -28,7 +28,7 @@ const Player: React.FC<Props> = ({ css, ...props }) => {
+   const [liked, setLiked] = React.useState(false);
+ 
+   return (
+-    <Card css={{ p: '$6', mt: '$8', boxShadow: '$lg', ...css }} {...props}>
++    <Card css={{ p: '$6', mt: '$8', boxShadow: '$md', ...css }} {...props}>
+       <Card.Header css={{ d: 'flex', ai: 'center', py: '$8' }}>
+         <Grid.Container>
+           <Grid css={{ mr: '$8' }}>\n- apps/docs/src/components/templates/shop-card/styles.ts (modified, 2 changes)\n  Patch: @@ -13,7 +13,7 @@ import { Star } from '../../icons';
+ export const StyledCard = styled(Card, {
+   py: '$2',
+   mt: '$8',
+-  boxShadow: '$lg',
++  boxShadow: '$md',
+   br: '35px',
+   ov: 'visible',
+   [`.${darkElegantTheme} &, .${lightElegantTheme} &`]: {\n- apps/docs/src/components/templates/user-twitter-card/index.tsx (modified, 2 changes)\n  Patch: @@ -79,7 +79,7 @@ const UserTwitterCard: React.FC<UserTwitterCardProps> = ({
+               onClick={() => setFollowing(!following)}
+               css={{
+                 maxHeight: '$space$12',
+-                fs: '$tiny',
++                fs: '$xs',
+                 fontWeight: '$semibold',
+                 borderColor: following ? '$foreground' : '$primary',
+                 color: following ? '$foreground' : '$white'\n- apps/docs/src/layouts/footer.tsx (modified, 4 changes)\n  Patch: @@ -31,7 +31,7 @@ const Footer: React.FC<Props> = ({ css, containerCss }) => {
+             fontSize: '$xs',
+             color: '$accents6',
+             '@mdMax': {
+-              fontSize: '$tiny'
++              fontSize: '$xs'
+             }
+           }}
+         >
+@@ -45,7 +45,7 @@ const Footer: React.FC<Props> = ({ css, containerCss }) => {
+             fontSize: '$xs',
+             color: '$accents7',
+             '@mdMax': {
+-              fontSize: '$tiny'
++              fontSize: '$xs'
+             }
+           }}
+         >\n

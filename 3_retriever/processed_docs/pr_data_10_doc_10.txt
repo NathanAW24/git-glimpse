@@ -1,0 +1,1156 @@
+Pull Request Number: 3119
+Title: fix(system): listbox href issue
+Base Branch: canary
+Head Branch: fix/eng-910
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/3119
+State: MERGED
+Created At: 2024-05-29T09:14:16Z
+Merged At: 2024-05-29T19:27:30Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes # 
+ref: #3105
+📝 Description
+@nextui-org/system@2.1.2 works but @nextui-org/system@2.2.0 fails. Code changes done between these two versions seems unrelated. navigate is not triggered in v.2.2.0 and it is from RouterProvider which belongs to @react-aria/utils. Suspect some dependencies messed up.
+Comparing the dependencies, seems the version may cause the difference.
+
+useLinkProps was introduced in openLink.tsx (See 2.1.2 and 2.2.0)
+@react-stately/utils may not be related. The changes are related to numeric changes. (See 3.9.1 and 3.10.1)
+
+/@nextui-org/system@2.2.0(@nextui-org/theme@2.2.4)(framer-motion@11.2.6)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-6wGnpZETePkit/dLZTqnA5TEohCloYv80NTvBqyIXqgSJGT29luZaPy3Jds7FZTayAQqczdsSKKb9dsd5rKS8A==}
+    peerDependencies:
+      framer-motion: '>=10.17.0'
+      react: '>=18'
+      react-dom: '>=18'
+    dependencies:
+      '@internationalized/date': 3.5.4
+      '@nextui-org/react-utils': 2.0.13(react@18.3.1)
+      '@nextui-org/system-rsc': 2.1.2(@nextui-org/theme@2.2.4)(react@18.3.1)
+      '@react-aria/i18n': 3.10.2(react@18.3.1)
+      '@react-aria/overlays': 3.21.1(react-dom@18.3.1)(react@18.3.1)
+      '@react-aria/utils': 3.23.2(react@18.3.1)
+      '@react-stately/utils': 3.9.1(react@18.3.1)
+      framer-motion: 11.2.6(react-dom@18.3.1)(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    transitivePeerDependencies:
+      - '@nextui-org/theme'
+    dev: false
+/@nextui-org/system@2.1.2(@nextui-org/theme@2.2.4)(react-dom@18.3.1)(react@18.3.1)(tailwind-variants@0.1.20):
+    resolution: {integrity: sha512-dkj2DAye6pjpVheoJKup+L8CyK774YORudkum+5zCuwyOe50IV2j6wbGqyWir9cI1fruFUsfzQ1NR4KljWNqFQ==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+    dependencies:
+      '@internationalized/date': 3.5.4
+      '@nextui-org/react-utils': 2.0.13(react@18.3.1)
+      '@nextui-org/system-rsc': 2.1.1(@nextui-org/theme@2.2.4)(react@18.3.1)(tailwind-variants@0.1.20)
+      '@react-aria/i18n': 3.11.1(react@18.3.1)
+      '@react-aria/overlays': 3.22.1(react-dom@18.3.1)(react@18.3.1)
+      '@react-aria/utils': 3.24.1(react@18.3.1)
+      '@react-stately/utils': 3.10.1(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    transitivePeerDependencies:
+      - '@nextui-org/theme'
+      - tailwind-variants
+    dev: false
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Added routerLinkProps to linkProps in useAriaLink for enhanced navigation support.
+
+
+
+Bug Fixes
+
+Fixed missing parameters for router.open to ensure proper client navigation.
+
+
+
+Dependency Updates
+
+Updated @react-aria/utils to version 3.24.1 across various components and hooks.
+Updated @react-aria/link to version 3.7.1.
+Updated @react-types/shared to version 3.23.1.
+
+
+
+These updates enhance navigation capabilities and ensure compatibility with the latest utility functions.
+
+Commits:
+- fix(system): @react-aria/utils\n- feat(hooks): include routerLinkProps\n- feat(changeset): add changeset\n- chore(deps): bump @react-aria/utils to 3.24.1\n- fix(hooks): missing arguments\n- chore(deps): bump @react-types/link\n- chore(link): bump @react-aria/link to 3.7.1\n- chore(link): use @react-aria/link instead\n- chore(changeset): revise changeset\n- chore(hooks): undo use-aria-link changes\n- chore(deps): undo use-aria-link changes\n- chore(deps): bump `@react-aria/utils` to `3.24.1`\n- chore(deps): bump `@react-types/shared`\n- feat: add missing router.open parameters due to router change\n- chore(changeset): add new line\n- chore(deps): bump `@react-types/shared` to `3.23.1`\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-910/[bug]-listbox-item-href-causes-full-reload">ENG-910 [BUG] - Listbox Item href causes full reload</a></p>\n- vercel: [vc]: #PR1ZY3fuTJi3U/Z/xpLTAZ32OFg42304kIFurLTVAb0=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZpeC1lbmctOTEwLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi83TmpYeWJXTW5jQTRvQndnVTZYd056dkhoV0s2IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTkxMC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQifSx7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1maXgtZW5nLTkxMC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifSwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi9BNHRNYW9XRWQ3WXlUSlBZVHl1NVYzRDZuNTFBIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC1lbmctOTEwLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCJ9XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/7NjXybWMncA4oBwgU6XwNzvHhWK6)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-910-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-910-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 29, 2024 4:15pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/A4tMaoWEd7YyTJPYTyu5V3D6n51A)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-910-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-910-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 29, 2024 4:15pm |
+
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 6bc1f657c55372216e0ce599fe277e3f0fa9f337
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 40 packages</summary>
+
+  | Name                                  | Type  |
+| ------------------------------------- | ----- |
+| @nextui-org/accordion                 | Patch |
+| @nextui-org/autocomplete              | Patch |
+| @nextui-org/breadcrumbs               | Patch |
+| @nextui-org/button                    | Patch |
+| @nextui-org/calendar                  | Patch |
+| @nextui-org/card                      | Patch |
+| @nextui-org/checkbox                  | Patch |
+| @nextui-org/chip                      | Patch |
+| @nextui-org/dropdown                  | Patch |
+| @nextui-org/input                     | Patch |
+| @nextui-org/link                      | Patch |
+| @nextui-org/listbox                   | Patch |
+| @nextui-org/menu                      | Patch |
+| @nextui-org/modal                     | Patch |
+| @nextui-org/navbar                    | Patch |
+| @nextui-org/pagination                | Patch |
+| @nextui-org/popover                   | Patch |
+| @nextui-org/progress                  | Patch |
+| @nextui-org/radio                     | Patch |
+| @nextui-org/select                    | Patch |
+| @nextui-org/slider                    | Patch |
+| @nextui-org/switch                    | Patch |
+| @nextui-org/table                     | Patch |
+| @nextui-org/tabs                      | Patch |
+| @nextui-org/tooltip                   | Patch |
+| @nextui-org/system                    | Patch |
+| @nextui-org/use-aria-accordion        | Patch |
+| @nextui-org/use-aria-button           | Patch |
+| @nextui-org/use-aria-link             | Patch |
+| @nextui-org/use-aria-menu             | Patch |
+| @nextui-org/use-aria-modal-overlay    | Patch |
+| @nextui-org/use-aria-multiselect      | Patch |
+| @nextui-org/use-aria-toggle-button    | Patch |
+| @nextui-org/use-disclosure            | Patch |
+| @nextui-org/use-intersection-observer | Patch |
+| @nextui-org/aria-utils                | Patch |
+| @nextui-org/react                     | Patch |
+| @nextui-org/date-picker               | Patch |
+| @nextui-org/snippet                   | Patch |
+| @nextui-org/framer-utils              | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/eng-910?filename=.changeset/dirty-dancers-visit.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Faccordion%22%3A%20patch%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A%22%40nextui-org%2Fbreadcrumbs%22%3A%20patch%0A%22%40nextui-org%2Fbutton%22%3A%20patch%0A%22%40nextui-org%2Fcalendar%22%3A%20patch%0A%22%40nextui-org%2Fcard%22%3A%20patch%0A%22%40nextui-org%2Fcheckbox%22%3A%20patch%0A%22%40nextui-org%2Fchip%22%3A%20patch%0A%22%40nextui-org%2Fdate-input%22%3A%20patch%0A%22%40nextui-org%2Fdate-picker%22%3A%20patch%0A%22%40nextui-org%2Fdivider%22%3A%20patch%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A%22%40nextui-org%2Finput%22%3A%20patch%0A%22%40nextui-org%2Flink%22%3A%20patch%0A%22%40nextui-org%2Flistbox%22%3A%20patch%0A%22%40nextui-org%2Fmenu%22%3A%20patch%0A%22%40nextui-org%2Fmodal%22%3A%20patch%0A%22%40nextui-org%2Fnavbar%22%3A%20patch%0A%22%40nextui-org%2Fpagination%22%3A%20patch%0A%22%40nextui-org%2Fpopover%22%3A%20patch%0A%22%40nextui-org%2Fprogress%22%3A%20patch%0A%22%40nextui-org%2Fradio%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A---%0A%0Afix(system)%3A%20listbox%20href%20issue%20(experimental)%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: rate limited by coderabbit.ai -->
+
+> [!WARNING]
+> ## Rate Limit Exceeded
+> 
+> @wingkwong has exceeded the limit for the number of commits or files that can be reviewed per hour. Please wait **32 minutes and 8 seconds** before requesting another review.
+> 
+> <details>
+> 
+> <summary>How to resolve this issue?</summary>
+> 
+> After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR.
+> 
+> We recommend that you space out your commits to avoid hitting the rate limit.
+> 
+> </details>
+> 
+> <details>
+> 
+> <summary>How do rate limits work?</summary>
+> 
+> CodeRabbit enforces hourly rate limits for each developer per organization.
+> Our paid plans have higher rate limits than the trial, open-source and free plans. In all cases, we re-allow further reviews after a brief timeout.
+> Please see our [FAQ](https://coderabbit.ai/docs/faq) for further information.
+> 
+> </details>
+> 
+> <details>
+> <summary>Commits</summary>
+> Files that changed from the base of the PR and between 7c8a33aa47d943710236ccbf8205cb41a4ab4b1f and 6bc1f657c55372216e0ce599fe277e3f0fa9f337.
+> </details>
+
+<!-- end of auto-generated comment: rate limited by coderabbit.ai --><!-- walkthrough_start -->
+
+## Walkthrough
+
+This update primarily involves version bumps for the `@react-aria/utils` package across various components and hooks in the Next UI library. Additionally, there are specific enhancements to the `use-aria-link` and `use-aria-menu` hooks, including new parameters for router navigation. These changes aim to integrate the latest utility functions and improve navigation handling within the library.
+
+## Changes
+
+| File/Path                                       | Change Summary                                                                                     |
+|-------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| `.changeset/fast-ladybugs-explode.md`           | Patch to `@nextui-org/system` and `@nextui-org/link` packages.                                     |
+| `packages/core/system/package.json`             | Updated `@react-aria/utils` version from `3.23.2` to `3.24.1`.                                      |
+| `packages/components/link/package.json`         | Updated `@react-aria/link` version from `3.6.5` to `3.7.1`.                                         |
+| `packages/hooks/use-aria-link/package.json`     | Updated `@react-aria/utils` to `3.24.1` and `@react-types/link` to `3.5.5`.                         |
+| `.changeset/wild-cougars-itch.md`               | Added `routerLinkProps` to `linkProps` in `useAriaLink`.                                            |
+| `.changeset/eighty-dolls-design.md`             | Updates to Next UI components and version bump for `@react-aria/utils`.                             |
+| `apps/docs/package.json`                        | Updated `@react-aria/utils` version from `^3.23.2` to `3.24.1`.                                     |
+| `packages/components/.../package.json`          | Updated `@react-aria/utils` version from `3.23.2` to `3.24.1` for multiple components (`accordion`, `autocomplete`, `breadcrumbs`, `button`, `calendar`, `card`, `checkbox`, `chip`, `dropdown`, `input`, `listbox`, `menu`, `modal`, `navbar`, `pagination`, `popover`, `progress`, `radio`, `select`, `slider`, `switch`, `table`, `tabs`, `tooltip`). |
+| `packages/hooks/.../package.json`               | Updated `@react-aria/utils` version from `3.23.2` to `3.24.1` for multiple hooks (`use-aria-accordion`, `use-aria-button`, `use-aria-link`, `use-aria-menu`, `use-aria-modal-overlay`, `use-aria-multiselect`, `use-aria-toggle-button`, `use-disclosure`, `use-intersection-observer`). |
+| `packages/utilities/aria-utils/package.json`    | Updated `@react-aria/utils` version from `3.23.2` to `3.24.1`.                                      |
+| `.changeset/friendly-months-tease.md.md`        | Added missing parameters for `router.open` and updated dependencies (`@nextui-org/pagination`, `@nextui-org/use-aria-link`, `@nextui-org/use-aria-menu`). |
+| `package.json`                                  | Updated `@react-types/shared` version from `^3.22.1` to `3.23.1`.                                    |
+| `packages/components/pagination/src/use-pagination-item.ts` | Enhanced `usePaginationItem` function to include `props.href` and `props.routerOptions` in `router.open`. |
+| `packages/hooks/use-aria-link/src/index.ts`     | Introduced `useLinkProps` and updated `useAriaLink` function to include `routerLinkProps`.           |
+| `packages/hooks/use-aria-menu/src/use-menu-item.ts` | Enhanced `use-menu-item` function to include `item?.props.href` and `item?.props.routerOptions` in `router.open`. |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+.changeset/fast-ladybugs-explode.md: ## Summary
+
+The file `fast-ladybugs-explode.md` includes a patch to the `@nextui-org/system` and `@nextui-org/link` packages.
+
+---
+
+packages/core/system/package.json: ## Summary
+The change in `package.json` for the `@react-aria/utils` package version has been updated from `"3.23.2"` to `"3.24.1"`. This modification indicates a potential update to the utility functions provided by `@react-aria/utils`.
+
+---
+
+packages/components/link/package.json: ## Summary
+
+The change in `packages/components/link/package.json` involves updating the version of `@react-aria/link` from `3.6.5` to `3.7.1`, while keeping other dependencies at their existing versions.
+
+---
+
+packages/hooks/use-aria-link/package.json: ## Short Summary
+The change in functionality involves updating the version of `@react-aria/utils` from "3.23.2" to "3.24.1" and `@react-types/link` from "3.5.3" to "3.5.5" in the `package.json` file for the `use-aria-link` package.
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from "3.23.2" to "3.24.1" in the `dependencies` section of `package.json` for the `use-aria-link` package.
+- `@react-types/link`: Updated version from "3.5.3" to "3.5.5" in the `dependencies` section of `package.json` for the `use-aria-link` package.
+
+---
+
+.changeset/wild-cougars-itch.md: ## Summary
+
+The new file introduces a patch to `@nextui-org/use-aria-link`, including the addition of `routerLinkProps` to `linkProps` in `useAriaLink`.
+
+---
+
+.changeset/eighty-dolls-design.md: ## Summary
+
+The file introduces updates to various Next UI components and related utilities, along with a version bump for `@react-aria/utils`.
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils` version bumped to `3.24.1`
+
+---
+
+apps/docs/package.json: ## Short Summary
+The change in `package.json` for the `@react-aria/utils` package involves updating the version from `^3.23.2` to `3.24.1`.
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from `^3.23.2` to `3.24.1` in `package.json`
+
+---
+
+packages/components/accordion/package.json: ## Summary
+The change in `packages/components/accordion/package.json` involves updating the version of `@react-aria/utils` from "3.23.2" to "3.24.1".
+
+---
+
+packages/components/autocomplete/package.json: ### Summary
+
+The change in functionality involves updating the version of `@react-aria/utils` from `3.23.2` to `3.24.1` in the `package.json` file for the `autocomplete` component.
+
+---
+
+packages/components/breadcrumbs/package.json: ## Short Summary
+In the `package.json` file for the breadcrumbs component, the version of `@react-aria/utils` has been updated from "3.23.2" to "3.24.1".
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from "3.23.2" to "3.24.1" in the dependencies section of the `package.json` file for the breadcrumbs component.
+
+---
+
+packages/components/button/package.json: ### Summary
+
+In the `package.json` file for the `button` component, the version of `@react-aria/utils` has been updated from "3.23.2" to "3.24.1".
+
+---
+
+packages/components/calendar/package.json: ## Short Summary
+The change in `packages/components/calendar/package.json` involves updating the version of `@react-aria/utils` from "3.23.2" to "3.24.1".
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from "3.23.2" to "3.24.1" in `packages/components/calendar/package.json`
+
+---
+
+packages/components/card/package.json: ## Short Summary
+The change in functionality involves updating the version of `@react-aria/utils` from "3.23.2" to "3.24.1" in the `package.json` file for the `card` component.
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from "3.23.2" to "3.24.1" in `package.json` for the `card` component.
+
+---
+
+packages/components/checkbox/package.json: ## Summary
+
+The change in `packages/components/checkbox/package.json` involves updating the version of `@react-aria/utils` from "3.23.2" to "3.24.1".
+
+---
+
+packages/components/chip/package.json: ## Summary
+
+In the `package.json` file for the `chip` component in the `packages/components` directory, the version of `@react-aria/utils` has been updated from `"3.23.2"` to `"3.24.1"`. This change likely introduces updates or fixes provided by the newer version of the `@react-aria/utils` package.
+
+---
+
+packages/components/dropdown/package.json: ## Short Summary
+The change in `packages/components/dropdown/package.json` involves updating the version of `@react-aria/utils` from "3.23.2" to "3.24.1".
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from "3.23.2" to "3.24.1" in `packages/components/dropdown/package.json`
+
+---
+
+packages/components/input/package.json: ## Short Summary
+
+In the `package.json` file for the `input` component, the version of `@react-aria/utils` has been updated from `3.23.2` to `3.24.1`.
+
+## Alterations to the declarations of exported or public entities
+
+- `@react-aria/utils`: Updated version from `"3.23.2"` to `"3.24.1"` in `package.json`
+
+---
+
+packages/components/link/package.json: ## Summary
+
+The change in `packages/components/link/package.json` involves updating the version of `@react-aria/link` from `3.6.5` to `3.7.1`, while keeping other dependencies at their existing versions.
+
+---
+
+packages/components/listbox/package.json: ### Summary
+
+In the `package.json` file for the `listbox` component, the version of `@react-aria/utils` has been updated from "3.23.2" to "3.24.1".
+
+---
+
+packages/components/menu/package.json: ## Short Summary
+
+In the `package.json` file for the `menu` component, the version of `@react-aria/utils` has been updated from `3.23.2` to `3.24.1`.
+
+---
+
+packages/components/modal/package.json: ## Short Summary
+In the `package.json` file for the `modal` component, the version of `@react-aria/utils` has been updated from `3.23.2` to `3.24.1`.
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from `"3.23.2"` to `"3.24.1"`
+
+---
+
+packages/components/navbar/package.json: ## Summary
+The change in `packages/components/navbar/package.json` involves updating the version of `@react-aria/utils` from "3.23.2" to "3.24.1".
+
+---
+
+packages/components/pagination/package.json: ## Summary
+
+In the `package.json` file for the `pagination` component, the version of `@react-aria/utils` has been updated from `3.23.2` to `3.24.1`.
+
+---
+
+packages/components/popover/package.json: ### Summary
+
+In the `package.json` file for the `popover` component, the version of `@react-aria/utils` has been updated from `"3.23.2"` to `"3.24.1"`. This change likely includes updates or fixes provided in the newer version of the `@react-aria/utils` package.
+
+---
+
+packages/components/progress/package.json: ## Summary
+In the `package.json` file located at `packages/components/progress/package.json`, the version of `@react-aria/utils` has been updated from `"3.23.2"` to `"3.24.1"`.
+
+---
+
+packages/components/radio/package.json: ### Summary
+
+In the `package.json` file for the `radio` component, the version of `@react-aria/utils` has been updated from `"3.23.2"` to `"3.24.1"`.
+
+---
+
+packages/components/select/package.json: ## Short Summary
+In the `package.json` file for the `select` component, the version of `@react-aria/utils` has been updated from "3.23.2" to "3.24.1".
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from "3.23.2" to "3.24.1" in `package.json`
+
+---
+
+packages/components/slider/package.json: ### Summary
+
+In the `package.json` file for the `@react-aria` slider component, the version of `@react-aria/utils` has been updated from `3.23.2` to `3.24.1`.
+
+---
+
+packages/components/switch/package.json: ## Short Summary
+
+In the `package.json` file for the `@react-aria` switch component, the version of `@react-aria/utils` has been updated from "3.23.2" to "3.24.1".
+
+## Alterations to the declarations of exported or public entities
+
+No alterations to the declarations of exported or public entities were identified in the provided diff.
+
+---
+
+packages/components/table/package.json: ## Short Summary
+In the `package.json` file for the `packages/components/table` module, the version of `@react-aria/utils` has been updated from `3.23.2` to `3.24.1`.
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from `"3.23.2"` to `"3.24.1"`
+
+---
+
+packages/components/tabs/package.json: ## Short Summary
+
+The change in `packages/components/tabs/package.json` involves updating the version of `@react-aria/utils` from "3.23.2" to "3.24.1".
+
+## Alterations to the declarations of exported or public entities
+
+No alterations to the declarations of exported or public entities were found in the provided diff.
+
+---
+
+packages/components/tooltip/package.json: ## Short Summary
+The change in functionality involves updating the version of `@react-aria/utils` from "3.23.2" to "3.24.1" in the `package.json` file for the `tooltip` component.
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from "3.23.2" to "3.24.1" in `package.json` for the `tooltip` component.
+
+---
+
+packages/hooks/use-aria-accordion/package.json: ### Summary
+
+In the `package.json` file for the `use-aria-accordion` package, the version of `@react-aria/utils` has been updated from `3.23.2` to `3.24.1`.
+
+---
+
+packages/hooks/use-aria-button/package.json: ## Summary
+The change in functionality involves updating the version of `@react-aria/utils` from `3.23.2` to `3.24.1` in the `package.json` file for the `use-aria-button` package.
+
+---
+
+packages/hooks/use-aria-link/package.json: ## Update existing summary
+
+## Short Summary
+The change in functionality involves updating the version of `@react-aria/utils` from "3.23.2" to "3.24.1" in the `package.json` file for the `use-aria-link` package.
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from "3.23.2" to "3.24.1" in the `dependencies` section of `package.json` for the `use-aria-link` package.
+
+---
+
+packages/hooks/use-aria-menu/package.json: ## Summary
+In the `package.json` file for the `use-aria-menu` package, the version of `@react-aria/utils` has been updated from `3.23.2` to `3.24.1`.
+
+---
+
+packages/hooks/use-aria-modal-overlay/package.json: ## Short Summary
+
+In the `package.json` file for the `use-aria-modal-overlay` package, the version of `@react-aria/utils` dependency has been updated from "3.23.2" to "3.24.1".
+
+## Alterations to the declarations of exported or public entities
+
+- `@react-aria/utils`: Updated version from "3.23.2" to "3.24.1" in the `dependencies` section of the `package.json` file for the `use-aria-modal-overlay` package.
+
+---
+
+packages/hooks/use-aria-multiselect/package.json: ## Summary
+
+In the `package.json` file for the `use-aria-multiselect` package, the version of `@react-aria/utils` has been updated from `3.23.2` to `3.24.1`.
+
+---
+
+packages/hooks/use-aria-toggle-button/package.json: ## Summary
+The change in `packages/hooks/use-aria-toggle-button/package.json` involves updating the version of `@react-aria/utils` from "3.23.2" to "3.24.1" in the dependencies.
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from "3.23.2" to "3.24.1"
+
+---
+
+packages/hooks/use-disclosure/package.json: ## Summary
+
+In the `package.json` file for the `use-disclosure` package, the version of `@react-aria/utils` dependency has been updated from `3.23.2` to `3.24.1`.
+
+---
+
+packages/hooks/use-intersection-observer/package.json: ## Short Summary
+The change in functionality involves updating the version of the `@react-aria/utils` dependency from `3.23.2` to `3.24.1` in the `package.json` file for the `use-intersection-observer` package.
+
+## Alterations to the declarations of exported or public entities
+- `@react-aria/utils`: Updated version from `"3.23.2"` to `"3.24.1"`
+
+---
+
+packages/utilities/aria-utils/package.json: ## Summary
+
+In the `package.json` file located at `packages/utilities/aria-utils`, the version of `@react-aria/utils` has been updated from `3.23.2` to `3.24.1`.
+
+---
+
+.changeset/friendly-months-tease.md.md: ## Summary
+
+The file `friendly-months-tease.md` introduces changes related to adding missing parameters for `router.open` due to a router change. Additionally, it includes updates to dependencies like `@nextui-org/pagination`, `@nextui-org/use-aria-link`, and `@nextui-org/use-aria-menu`.
+
+---
+
+package.json: ## Summary
+The change in `package.json` involves updating the version of `@react-types/shared` from `^3.22.1` to `3.23.1`.
+
+---
+
+packages/components/pagination/src/use-pagination-item.ts: ### Summary
+
+In the `usePaginationItem` function in `use-pagination-item.ts`, a change was made to include `props.href` and `props.routerOptions` as additional arguments when calling `router.open`. This change enhances the logic related to client navigation within the function.
+
+---
+
+packages/hooks/use-aria-link/src/index.ts: ### Summary
+
+The diff in `packages/hooks/use-aria-link/src/index.ts` introduces a new import `useLinkProps` from `@react-aria/utils` and adds the usage of `useLinkProps` to retrieve `routerLinkProps`. The `linkProps` object now includes `routerLinkProps` merged with existing `domProps`.
+
+### Alterations to the declarations of exported or public entities
+
+- Added `useLinkProps` in `@react-aria/utils`
+- Modified `useAriaLink` function in `packages/hooks/use-aria-link/src/index.ts`:
+  - Added `let routerLinkProps = useLinkProps(props)` declaration
+  - Updated `linkProps` merging to include `routerLinkProps`
+
+```diff
+import {
++  useLinkProps,
+} from "@react-aria/utils";
+
+export function useAriaLink(props: AriaLinkOptions, ref: RefObject<FocusableElement>) {
+  let routerLinkProps = useLinkProps(props);
+
+  return {
+    isPressed,
+    linkProps: mergeProps(domProps, routerLinkProps, {
+      ...interactionHandlers,
+      ...linkProps,
+      "aria-disabled": isDisabled || undefined,
+```
+
+---
+
+packages/hooks/use-aria-menu/src/use-menu-item.ts: ### Summary
+
+In the `use-menu-item.ts` file within the `packages/hooks/use-aria-menu/src/` directory, the changes include:
+
+1. Addition of `RouterOptions` import.
+2. Addition of `item = state.collection.getItem(key)` declaration.
+3. Modification in the `router.open` call to include `item?.props.href` and `item?.props.routerOptions as RouterOptions`.
+4. Removal of redundant `item = state.collection.getItem(key)` declaration.
+5. Adjustment in setting `ariaProps["aria-posinset"]` for virtualized items.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated Summary of Generated Summaries
+
+The recent updates across various packages primarily involve version bumps and enhancements to the `@react-aria/utils` package, which has been updated from version `3.23.2` to `3.24.1` across multiple components and hooks. This update likely includes improvements and bug fixes to the utility functions provided by `@react-aria/utils`.
+
+Key changes include:
+
+1. **Version Updates**:
+   - **@react-aria/utils**: Updated from `3.23.2` to `3.24.1` across numerous components such as `accordion`, `autocomplete`, `breadcrumbs`, `button`, `calendar`, `card`, `checkbox`, `chip`, `dropdown`, `input`, `listbox`, `menu`, `modal`, `navbar`, `pagination`, `popover`, `progress`, `radio`, `select`, `slider`, `switch`, `table`, `tabs`, `tooltip`, and various hooks like `use-aria-accordion`, `use-aria-button`, `use-aria-link`, `use-aria-menu`, `use-aria-modal-overlay`, `use-aria-multiselect`, `use-aria-toggle-button`, `use-disclosure`, and `use-intersection-observer`.
+   - **@react-aria/link**: Updated from `3.6.5` to `3.7.1` in the `link` component.
+   - **@react-types/link**: Updated from `3.5.3` to `3.5.5` in the `use-aria-link` package.
+   - **@react-types/shared**: Updated from `^3.22.1` to `3.23.1` in the root `package.json`.
+
+2. **Functional Enhancements**:
+   - **use-aria-link**: Introduced `routerLinkProps` to `linkProps` by utilizing `useLinkProps` from `@react-aria/utils`, enhancing the logic for client navigation.
+   - **use-menu-item**: Enhanced the `router.open` call to include `item?.props.href` and `item?.props.routerOptions`, improving the handling of menu items with routing capabilities.
+   - **use-pagination-item**: Updated to include `props.href` and `props.routerOptions` in the `router.open` call, refining the pagination logic.
+
+3. **New Features**:
+   - **routerLinkProps**: Added to `linkProps` in `useAriaLink` to support additional routing properties.
+   - **RouterOptions**: Incorporated into `use-menu-item` to handle routing options for menu items.
+
+4. **Documentation and Changesets**:
+   - Multiple changesets (`fast-ladybugs-explode.md`, `wild-cougars-itch.md`, `eighty-dolls-design.md`, `friendly-months-tease.md`) document the updates and enhancements, ensuring clear tracking of changes.
+
+Overall, these updates focus on improving the functionality and compatibility of various components and hooks with the latest version of `@react-aria/utils`, enhancing routing capabilities, and ensuring consistent dependency management across the project.
+
+### Alterations to the Declarations of Exported or Public Entities
+
+#### `packages/hooks/use-aria-link/src/index.ts`
+
+**Before:**
+```typescript
+export function useAriaLink(props: AriaLinkOptions, ref: RefObject<FocusableElement>) {
+  return {
+    isPressed,
+    linkProps: mergeProps(domProps, {
+      ...interactionHandlers,
+      ...linkProps,
+      "aria-disabled": isDisabled || undefined,
+    }),
+  };
+}
+```
+
+**After:**
+```typescript
+import { useLinkProps } from "@react-aria/utils";
+
+export function useAriaLink(props: AriaLinkOptions, ref: RefObject<FocusableElement>) {
+  let routerLinkProps = useLinkProps(props);
+
+  return {
+    isPressed,
+    linkProps: mergeProps(domProps, routerLinkProps, {
+      ...interactionHandlers,
+      ...linkProps,
+      "aria-disabled": isDisabled || undefined,
+    }),
+  };
+}
+```
+
+#### `packages/hooks/use-aria-menu/src/use-menu-item.ts`
+
+**Before:**
+```typescript
+import { RouterOptions } from "@react-aria/utils";
+
+export function useMenuItem(props: MenuItemProps, state: MenuState, ref: RefObject<FocusableElement>) {
+  let item = state.collection.getItem(key);
+
+  return {
+    ...menuItemProps,
+    onPress: () => {
+      router.open(item?.props.href);
+    },
+  };
+}
+```
+
+**After:**
+```typescript
+import { RouterOptions } from "@react-aria/utils";
+
+export function useMenuItem(props: MenuItemProps, state: MenuState, ref: RefObject<FocusableElement>) {
+  let item = state.collection.getItem(key);
+
+  return {
+    ...menuItemProps,
+    onPress: () => {
+      router.open(item?.props.href, item?.props.routerOptions as RouterOptions);
+    },
+  };
+}
+```
+
+#### `packages/components/pagination/src/use-pagination-item.ts`
+
+**Before:**
+```typescript
+export function usePaginationItem(props: PaginationItemProps) {
+  return {
+    ...paginationItemProps,
+    onPress: () => {
+      router.open();
+    },
+  };
+}
+```
+
+**After:**
+```typescript
+export function usePaginationItem(props: PaginationItemProps) {
+  return {
+    ...paginationItemProps,
+    onPress: () => {
+      router.open(props.href, props.routerOptions);
+    },
+  };
+}
+```
+
+These alterations illustrate the integration of routing properties into various components and hooks, enhancing their navigation capabilities and ensuring compatibility with the updated `@react-aria/utils` package.
+- **Feedback from the user on the previous review**: undefined
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+### PR Summary
+
+**Title**: fix(system): listbox href issue (experimental)
+
+**User**: wingkwong
+
+**Number**: 3119
+
+**Description**:
+
+This pull request addresses an issue where `navigate` is not triggered in version 2.2.0 of the `@nextui-org/system` package, while it works in version 2.1.2. The problem is suspected to be related to dependencies, particularly changes in the `useLinkProps` function in the `openLink.tsx` file of the `@react-aria/utils` package between versions 3.23.1 and 3.24.1. The PR references issue #3105 and includes a detailed comparison of dependencies between the two versions of the `@nextui-org/system` package. The changes aim to resolve the navigation issue without introducing new external dependencies.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 34308434194d226cdc83a1d6ef9ef7d46f52c5f3 -->
+<!-- 84d7392e54ee28f23b66c5c673c6cc78fcfc50d0 -->
+<!-- 5939af47902881f40b0c069a9c87911d973a0d6b -->
+<!-- d34012c785eb552da67fc626f721a26e07001483 -->
+<!-- b8c63be99bdeff809899f6cd52f40496e51c80a1 -->
+<!-- 7c8a33aa47d943710236ccbf8205cb41a4ab4b1f -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/eighty-dolls-design.md (added, 40 changes)\n  Patch: @@ -0,0 +1,40 @@
++---
++"@nextui-org/accordion": patch
++"@nextui-org/autocomplete": patch
++"@nextui-org/breadcrumbs": patch
++"@nextui-org/button": patch
++"@nextui-org/calendar": patch
++"@nextui-org/card": patch
++"@nextui-org/checkbox": patch
++"@nextui-org/chip": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/input": patch
++"@nextui-org/link": patch
++"@nextui-org/listbox": patch
++"@nextui-org/menu": patch
++"@nextui-org/modal": patch
++"@nextui-org/navbar": patch
++"@nextui-org/pagination": patch
++"@nextui-org/popover": patch
++"@nextui-org/progress": patch
++"@nextui-org/radio": patch
++"@nextui-org/select": patch
++"@nextui-org/slider": patch
++"@nextui-org/switch": patch
++"@nextui-org/table": patch
++"@nextui-org/tabs": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/system": patch
++"@nextui-org/use-aria-accordion": patch
++"@nextui-org/use-aria-button": patch
++"@nextui-org/use-aria-link": patch
++"@nextui-org/use-aria-menu": patch
++"@nextui-org/use-aria-modal-overlay": patch
++"@nextui-org/use-aria-multiselect": patch
++"@nextui-org/use-aria-toggle-button": patch
++"@nextui-org/use-disclosure": patch
++"@nextui-org/use-intersection-observer": patch
++"@nextui-org/aria-utils": patch
++---
++
++bump `@react-aria/utils` version to `3.24.1` and bump `@react-types/shared` to `3.23.1`\n- .changeset/fast-ladybugs-explode.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/system": patch
++"@nextui-org/link": patch
++---
++
++Fixed listbox href issue (#3105)
+\ No newline at end of file\n- .changeset/friendly-months-tease.md.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/pagination": patch
++"@nextui-org/use-aria-link": patch
++"@nextui-org/use-aria-menu": patch
++---
++
++Add missing router.open parameters due to router change\n- apps/docs/package.json (modified, 4 changes)\n  Patch: @@ -42,7 +42,7 @@
+     "@react-aria/interactions": "^3.21.1",
+     "@react-aria/selection": "^3.17.5",
+     "@react-aria/ssr": "^3.9.2",
+-    "@react-aria/utils": "^3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-aria/virtualizer": "^3.9.10",
+     "@react-aria/visually-hidden": "^3.8.10",
+     "@react-stately/data": "^3.11.2",
+@@ -101,7 +101,7 @@
+     "@docusaurus/utils": "2.0.0-beta.3",
+     "@next/bundle-analyzer": "^13.4.6",
+     "@next/env": "^13.4.12",
+-    "@react-types/shared": "^3.22.1",
++    "@react-types/shared": "3.23.1",
+     "@tailwindcss/typography": "^0.5.9",
+     "@types/canvas-confetti": "^1.4.2",
+     "@types/lodash": "^4.14.194",\n- package.json (modified, 2 changes)\n  Patch: @@ -68,7 +68,7 @@
+     "@commitlint/config-conventional": "^17.2.0",
+     "@react-bootstrap/babel-preset": "^2.1.0",
+     "@react-types/link": "^3.4.4",
+-    "@react-types/shared": "^3.22.1",
++    "@react-types/shared": "3.23.1",
+     "@swc-node/jest": "^1.5.2",
+     "@swc/core": "^1.3.35",
+     "@swc/jest": "^0.2.24",\n- packages/components/accordion/package.json (modified, 4 changes)\n  Patch: @@ -56,11 +56,11 @@
+     "@nextui-org/use-aria-accordion": "workspace:*",
+     "@react-aria/interactions": "3.21.1",
+     "@react-aria/focus": "3.16.2",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-stately/tree": "3.7.6",
+     "@react-aria/button": "3.9.3",
+     "@react-types/accordion": "3.0.0-alpha.19",
+-    "@react-types/shared": "3.22.1"
++    "@react-types/shared": "3.23.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/autocomplete/package.json (modified, 4 changes)\n  Patch: @@ -57,11 +57,11 @@
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/i18n": "3.10.2",
+     "@react-aria/interactions": "3.21.1",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-aria/visually-hidden": "3.8.10",
+     "@react-stately/combobox": "3.8.2",
+     "@react-types/combobox": "3.10.1",
+-    "@react-types/shared": "3.22.1"
++    "@react-types/shared": "3.23.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/breadcrumbs/package.json (modified, 4 changes)\n  Patch: @@ -45,9 +45,9 @@
+     "@nextui-org/shared-icons": "workspace:*",
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/breadcrumbs": "3.5.11",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-types/breadcrumbs": "3.7.3",
+-    "@react-types/shared": "3.22.1"
++    "@react-types/shared": "3.23.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/button/package.json (modified, 4 changes)\n  Patch: @@ -48,9 +48,9 @@
+     "@nextui-org/spinner": "workspace:*",
+     "@react-aria/button": "3.9.3",
+     "@react-aria/interactions": "3.21.1",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-aria/focus": "3.16.2",
+-    "@react-types/shared": "3.22.1",
++    "@react-types/shared": "3.23.1",
+     "@react-types/button": "3.9.2"
+   },
+   "devDependencies": {\n- packages/components/calendar/package.json (modified, 4 changes)\n  Patch: @@ -54,11 +54,11 @@
+     "@react-stately/calendar": "3.4.4",
+     "@react-types/button": "3.9.2",
+     "@react-aria/visually-hidden": "3.8.10",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-stately/utils": "3.9.1",
+     "@react-types/calendar": "3.4.4",
+     "@react-aria/interactions": "3.21.1",
+-    "@react-types/shared": "3.22.1",
++    "@react-types/shared": "3.23.1",
+     "scroll-into-view-if-needed": "3.0.10",
+     "@types/lodash.debounce": "^4.0.7"
+   },\n- packages/components/card/package.json (modified, 4 changes)\n  Patch: @@ -46,10 +46,10 @@
+     "@nextui-org/use-aria-button": "workspace:*",
+     "@nextui-org/ripple": "workspace:*",
+     "@react-aria/focus": "3.16.2",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-aria/interactions": "3.21.1",
+     "@react-aria/button": "3.9.3",
+-    "@react-types/shared": "3.22.1"
++    "@react-types/shared": "3.23.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/checkbox/package.json (modified, 4 changes)\n  Patch: @@ -47,12 +47,12 @@
+     "@react-aria/checkbox": "3.14.1",
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/interactions": "3.21.1",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-aria/visually-hidden": "3.8.10",
+     "@react-stately/checkbox": "3.6.3",
+     "@react-stately/toggle": "3.7.2",
+     "@react-types/checkbox": "3.7.1",
+-    "@react-types/shared": "3.22.1"
++    "@react-types/shared": "3.23.1"
+   },
+   "devDependencies": {
+     "@nextui-org/chip": "workspace:*",\n- packages/components/chip/package.json (modified, 2 changes)\n  Patch: @@ -45,7 +45,7 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/interactions": "3.21.1",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-types/checkbox": "3.7.1"
+   },
+   "devDependencies": {\n- packages/components/date-input/package.json (modified, 2 changes)\n  Patch: @@ -47,7 +47,7 @@
+     "@react-aria/i18n": "3.10.2",
+     "@react-stately/datepicker": "3.9.2",
+     "@react-types/datepicker": "3.7.2",
+-    "@react-types/shared": "3.22.1",
++    "@react-types/shared": "3.23.1",
+     "@react-aria/utils": "3.23.2"
+   },
+   "devDependencies": {\n- packages/components/date-picker/package.json (modified, 2 changes)\n  Patch: @@ -55,7 +55,7 @@
+     "@react-aria/i18n": "3.10.2",
+     "@react-stately/datepicker": "3.9.2",
+     "@react-types/datepicker": "3.7.2",
+-    "@react-types/shared": "3.22.1",
++    "@react-types/shared": "3.23.1",
+     "@react-aria/utils": "3.23.2"
+   },
+   "devDependencies": {\n- packages/components/divider/package.json (modified, 2 changes)\n  Patch: @@ -42,7 +42,7 @@
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-rsc-utils": "workspace:*",
+     "@nextui-org/system-rsc": "workspace:*",
+-    "@react-types/shared": "3.22.1"
++    "@react-types/shared": "3.23.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/dropdown/package.json (modified, 2 changes)\n  Patch: @@ -47,7 +47,7 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/aria-utils": "workspace:*",
+     "@react-aria/menu": "3.13.1",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-stately/menu": "3.6.1",
+     "@react-aria/focus": "3.16.2",
+     "@react-types/menu": "3.9.7"\n- packages/components/input/package.json (modified, 4 changes)\n  Patch: @@ -47,9 +47,9 @@
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/interactions": "3.21.1",
+     "@react-aria/textfield": "3.14.3",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-stately/utils": "3.9.1",
+-    "@react-types/shared": "3.22.1",
++    "@react-types/shared": "3.23.1",
+     "@react-types/textfield": "3.9.1",
+     "react-textarea-autosize": "^8.5.3"
+   },\n- packages/components/link/package.json (modified, 4 changes)\n  Patch: @@ -44,8 +44,8 @@
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/use-aria-link": "workspace:*",
+-    "@react-aria/link": "3.6.5",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/link": "3.7.1",
++    "@react-aria/utils": "3.24.1",
+     "@react-aria/focus": "3.16.2",
+     "@react-types/link": "3.5.3"
+   },\n- packages/components/link/src/use-link.ts (modified, 2 changes)\n  Patch: @@ -2,7 +2,7 @@ import type {AriaLinkProps} from "@react-types/link";
+ import type {LinkVariantProps} from "@nextui-org/theme";
+ 
+ import {link} from "@nextui-org/theme";
+-import {useAriaLink} from "@nextui-org/use-aria-link";
++import {useLink as useAriaLink} from "@react-aria/link";
+ import {
+   HTMLNextUIProps,
+   mapPropsVariants,\n- packages/components/listbox/package.json (modified, 4 changes)\n  Patch: @@ -45,13 +45,13 @@
+     "@nextui-org/divider": "workspace:*",
+     "@nextui-org/aria-utils": "workspace:*",
+     "@nextui-org/use-is-mobile": "workspace:*",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-aria/listbox": "3.11.5",
+     "@react-stately/list": "3.10.3",
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/interactions": "3.21.1",
+     "@react-types/menu": "3.9.7",
+-    "@react-types/shared": "3.22.1"
++    "@react-types/shared": "3.23.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/menu/package.json (modified, 4 changes)\n  Patch: @@ -49,11 +49,11 @@
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/interactions": "3.21.1",
+     "@react-aria/menu": "3.13.1",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-stately/menu": "3.6.1",
+     "@react-stately/tree": "3.7.6",
+     "@react-types/menu": "3.9.7",
+-    "@react-types/shared": "3.22.1"
++    "@react-types/shared": "3.23.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/modal/package.json (modified, 2 changes)\n  Patch: @@ -52,7 +52,7 @@
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/interactions": "3.21.1",
+     "@react-aria/overlays": "3.21.1",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-stately/overlays": "3.6.5",
+     "@react-types/overlays": "3.8.5"
+   },\n- packages/components/navbar/package.json (modified, 2 changes)\n  Patch: @@ -49,7 +49,7 @@
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/interactions": "3.21.1",
+     "@react-aria/overlays": "3.21.1",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-stately/toggle": "3.7.2",
+     "@react-stately/utils": "3.9.1",
+     "react-remove-scroll": "^2.5.6"\n- packages/components/pagination/package.json (modified, 2 changes)\n  Patch: @@ -47,7 +47,7 @@
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/i18n": "3.10.2",
+     "@react-aria/interactions": "3.21.1",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "scroll-into-view-if-needed": "3.0.10"
+   },
+   "devDependencies": {\n- packages/components/pagination/src/use-pagination-item.ts (modified, 5 changes)\n  Patch: @@ -117,10 +117,11 @@ export function usePaginationItem(props: UsePaginationItemProps) {
+           e.currentTarget.href &&
+           // If props are applied to a router Link component, it may have already prevented default.
+           !e.isDefaultPrevented() &&
+-          shouldClientNavigate(e.currentTarget, e)
++          shouldClientNavigate(e.currentTarget, e) &&
++          props.href
+         ) {
+           e.preventDefault();
+-          router.open(e.currentTarget, e);
++          router.open(e.currentTarget, e, props.href, props.routerOptions);
+         }
+       },
+     };\n- packages/components/popover/package.json (modified, 2 changes)\n  Patch: @@ -52,7 +52,7 @@
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/interactions": "3.21.1",
+     "@react-aria/overlays": "3.21.1",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-stately/overlays": "3.6.5",
+     "@react-types/button": "3.9.2",
+     "@react-types/overlays": "3.8.5",\n- packages/components/progress/package.json (modified, 2 changes)\n  Patch: @@ -45,7 +45,7 @@
+     "@nextui-org/use-is-mounted": "workspace:*",
+     "@react-aria/i18n": "3.10.2",
+     "@react-aria/progress": "3.4.11",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-types/progress": "3.5.2"
+   },
+   "devDependencies": {\n- packages/components/radio/package.json (modified, 4 changes)\n  Patch: @@ -45,11 +45,11 @@
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/interactions": "3.21.1",
+     "@react-aria/radio": "3.10.2",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-aria/visually-hidden": "3.8.10",
+     "@react-stately/radio": "3.10.2",
+     "@react-types/radio": "3.7.1",
+-    "@react-types/shared": "3.22.1"
++    "@react-types/shared": "3.23.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n- packages/components/select/package.json (modified, 4 changes)\n  Patch: @@ -55,9 +55,9 @@
+     "@react-aria/focus": "3.16.2",
+     "@react-aria/form": "3.0.3",
+     "@react-aria/interactions": "3.21.1",
+-    "@react-aria/utils": "3.23.2",
++    "@react-aria/utils": "3.24.1",
+     "@react-aria/visually-hidden": "3.8.10",
+-    "@react-types/shared": "3.22.1"
++    "@react-types/shared": "3.23.1"
+   },
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",\n

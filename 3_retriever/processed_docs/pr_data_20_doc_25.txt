@@ -1,0 +1,77 @@
+Pull Request Number: 1588
+Title: fix: added input error message and description screen reader support
+Base Branch: main
+Head Branch: patch-1
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1588
+State: CLOSED
+Created At: 2023-09-09T10:03:54Z
+Merged At: None
+Participants: jguddas
+
+Description:
+📝 Description
+useTextField uses useField which adds aria-describedby only when the errorMessage or `description is provided.
+⛳️ Current behavior (updates)
+aria-describedby does not include the error message or description and thus does not get read out by screen readers.
+🚀 New behavior
+It gets read out by screen readers.
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+https://github.com/adobe/react-spectrum/blob/main/packages/%40react-types/shared/src/inputs.d.ts#L77
+
+Commits:
+- fix: added input error message and description screen reader support\n- Create light-ads-smoke.md\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 8d5d8ec89e2ee5fa2fda8d54a231fbd19b38854d
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/input | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/jguddas/nextui/new/patch-1?filename=.changeset/fuzzy-windows-attack.md&value=---%0A%22%40nextui-org%2Finput%22%3A%20patch%0A---%0A%0Afix%3A%20added%20input%20error%20message%20and%20description%20screen%20reader%20support%0A)
+
+\n- vercel: [vc]: #tQeB5DvAxY9rcEGC59Sc2kAi0CG2ry2YtAF7AKA/NR8=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvOHJSQWR6TmYzNTQ4aHJTWmlmY0RUOGFLdmNNYSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWpndWRkYXMtcGF0Y2gtMS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay1qZ3VkZGFzLXBhdGNoLTEtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/8rRAdzNf3548hrSZifcDT8aKvcMa)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jguddas-patch-1-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jguddas-patch-1-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 9, 2023 10:07am |
+
+\n- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22486651e4d441769a26e8dcda53a1c24545e87a59%22%7D%2C%22id%22%3A%22Qmaqr5aUbQokozytBGjYbLJYi52dd2i9Ambk3qrnuB4W1U%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1588%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jguddas: Nvm, it actually works right now.\n
+
+Files Changed:
+- .changeset/light-ads-smoke.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/input": patch
++---
++
++fix: added input error message and description screen reader support\n- packages/components/input/src/use-input.ts (modified, 2 changes)\n  Patch: @@ -122,6 +122,8 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+   const {labelProps, inputProps, descriptionProps, errorMessageProps} = useTextField(
+     {
+       ...originalProps,
++      description,
++      errorMessage,
+       "aria-label": safeAriaLabel(
+         originalProps?.["aria-label"],
+         originalProps?.label,\n

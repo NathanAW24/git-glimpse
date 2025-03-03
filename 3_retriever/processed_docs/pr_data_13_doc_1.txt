@@ -1,0 +1,298 @@
+Pull Request Number: 2725
+Title: fix(components): Fix 'Tap to click' behavior on macOS with Edge/Chrome for Accordion and Tab
+Base Branch: canary
+Head Branch: fix/macos_tap
+Author: ericfabreu
+URL: https://github.com/nextui-org/nextui/pull/2725
+State: MERGED
+Created At: 2024-04-15T18:18:33Z
+Merged At: 2024-05-24T19:20:44Z
+Participants: ericfabreu, Ad-Mora, ha-sante, scarqin, jrgarciadev, wingkwong
+
+Description:
+Closes #1538
+Closes #2606
+
+📝 Description
+A few components (accordion, tabs, and dropdown menu) don't seem to register a click when the user taps on them with the trackpad on macOS with the "Tap to click" option enabled on Edge and Chrome. However, a full click on the trackpad will still trigger the correct event without any issues. Tapping on Safari also works as expected.
+Solution: moving the onClick definition to the mergeProps section instead of leaving it outside fixes this issue while preserving all existing functionality.
+⛳️ Current behavior (updates)
+Here's a quick video showing what happens when tapping on the tabs on the NextUI documentation page on Edge/Chrome. The tabs only update when I start fully clicking on the trackpad instead of tapping to click.
+
+  
+    
+    
+
+    Screen.Recording.2024-04-12.at.7.56.06.PM.mov
+    
+  
+
+  
+
+  
+
+
+🚀 New behavior
+Tapping on accordions, dropdown menu items, and tabs with the trackpad on macOS now works as expected. Here's a link to a Codesandbox with these changes: codesandbox.io.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Improved click event handling in accordion items and tabs for better functionality and performance.
+Fixed 'Tap to click' behavior on macOS by updating event handling in relevant components.
+
+Commits:
+- fix(components): fix 'Tap to click' behavior on macOS\n- Add change file for accordion, menu, and tabs\n- Remove 'fix(components)' from the .changeset file\n- Merge branch 'main' into fix/macos_tap\n- fix(components): undo dropdown change now that it's no longer applicable\n- fix(components): update changeset file now that we are no longer modifying the dropdown component\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 87d991ef3bbad3859624c5f379f4f05329560f35
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                  | Type  |
+| --------------------- | ----- |
+| @nextui-org/accordion | Patch |
+| @nextui-org/tabs      | Patch |
+| @nextui-org/react     | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/ericfabreu/nextui/new/fix/macos_tap?filename=.changeset/two-phones-leave.md&value=---%0A%22%40nextui-org%2Faccordion%22%3A%20patch%0A%22%40nextui-org%2Ftabs%22%3A%20patch%0A---%0A%0Afix(components)%3A%20Fix%20'Tap%20to%20click'%20behavior%20on%20macOS%20with%20Edge%2FChrome%20for%20Accordion%20and%20Tab%0A)
+
+\n- vercel: [vc]: #jEhJPt+AL+1e53Fxc2ksgtvyIOq3H4fC8ouEDP26zp0=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNnE5bTRYZ2RmcVNqUFFBWDgzVkhzOE5iUUZ5YiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWVyaWNmYWJyZXUtZml4LW1hY29zdGFwLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWVyaWNmYWJyZXUtZml4LW1hY29zdGFwLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/6q9m4XgdfqSjPQAX83VHs8NbQFyb)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-ericfabreu-fix-macostap-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-ericfabreu-fix-macostap-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 22, 2024 5:27pm |
+
+\n- vercel: @ericfabreu is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%227bbc117f22051051ebc4ee9737026a6ee4102a46%22%7D%2C%22id%22%3A%22Qmag4N9iudnqBwXCjdsmHMNS7v6Ywv1wmR28unpy5h3KE9%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2725%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The updates focus on refining the `onClick` event handling across different components (Accordion, Menu, and Tabs) to improve functionality and user interaction consistency, particularly with trackpad operations like tapping.
+
+## Changes
+
+| File Path                                     | Change Summary                                                                                      |
+|-----------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `.../accordion/src/use-accordion-item.ts`     | Adjusted `onClick` property handling to ensure proper event chaining for macOS tap-to-click behavior. |
+| `.../menu/src/use-menu-item.ts`               | Updated `onClick` property handling for macOS tap-to-click behavior consistency.                    |
+| `.../tabs/src/tab.tsx`                        | Enhanced `onClick` event logic to address macOS tap-to-click issues for the Tabs component.          |
+
+## Assessment against linked issues
+
+| Objective                                                                                     | Addressed | Explanation                                                                 |
+|-----------------------------------------------------------------------------------------------|-----------|-----------------------------------------------------------------------------|
+| Ensure Tabs component responds to tap-to-click on macOS touchpad (#1538)                      | ✅         |                                                                             |
+| Resolve inconsistent click vs tap behavior across components on macOS (#2606)                 | ❓         | Changes may impact behavior but specific to Tabs, not general components.   |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+packages/components/accordion/src/use-accordion-item.ts: In the `useAccordionItem` function, the `onClick` property handling has been modified to include additional props in the merge operation, ensuring proper event chaining.
+packages/components/tabs/src/tab.tsx: The 'Tap to click' behavior on macOS has been fixed by updating the `onClick` event handling logic in this file.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives (User Provided Facts)
+
+This pull request, numbered 2725, aims to resolve the issue related to the 'Tap to click' behavior on macOS for the Accordion, Tab, and Dropdown components in the NextUI library. The problem, highlighted in issues #1538 and #2606, involves these components not responding to a tap on the trackpad as expected, requiring a full click instead. The proposed solution involves adjusting the `onClick` event handling for these components by moving it to the `mergeProps` section, ensuring proper functionality while addressing the tap behavior issue. The PR includes demonstrations of the current behavior and the expected changes, emphasizing that there are no breaking changes introduced.
+
+### Comments Summary
+
+Ad-Mora requested extending the fix to the Switch component due to a similar issue occurring there. This comment suggests a potential expansion of the fix to address the 'Tap to click' behavior problem in the Switch component as well.
+
+### AI-Generated Summary of Generated Summaries
+
+The modifications across the components involve a consistent change in the handling of the `onClick` event. Specifically, the `onClick` event handling, which was previously directly assigned as a prop, has now been integrated into a function call or merged with other properties to ensure proper event chaining. This adjustment has been applied across multiple files:
+
+1. **Accordion**: The `onClick` handling in the `useAccordionItem` function now includes additional properties in the merge operation to ensure the event is triggered correctly.
+   
+2. **Tabs**: The 'Tap to click' behavior on macOS has been fixed by updating the `onClick` event handling logic in the `tab.tsx` file.
+
+These changes collectively aim to improve the user interaction with the Accordion, Dropdown, and Tab components on macOS devices, particularly addressing the issue with the 'Tap to click' setting on trackpads.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai -->
+
+---
+
+<details>
+
+<summary>Recent Review Details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>Commits</summary>
+Files that changed from the base of the PR and between 67a97c9b2cfaeb33dcfda69156eacbf81ccb0c48 and 87d991ef3bbad3859624c5f379f4f05329560f35.
+</details>
+
+
+<details>
+<summary>Files selected for processing (1)</summary>
+
+* .changeset/slimy-ways-repair.md (1 hunks)
+
+</details>
+
+
+
+
+
+<details>
+<summary>Files skipped from review as they are similar to previous changes (1)</summary>
+
+* .changeset/slimy-ways-repair.md
+
+</details>
+
+
+
+
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- 7bbc117f22051051ebc4ee9737026a6ee4102a46 -->
+<!-- d33f7c324578cbf082abddaf47b8bc9b3bb8b987 -->
+<!-- c55031da4a759470a966e6634023fe59b8acc33a -->
+<!-- 67a97c9b2cfaeb33dcfda69156eacbf81ccb0c48 -->
+<!-- 87d991ef3bbad3859624c5f379f4f05329560f35 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- Ad-Mora: Can this fix be extended to the Switch component? Same issue is occurring there\n- ericfabreu: > Can this fix be extended to the Switch component? Same issue is occurring there
+
+Would that be issue #2765? I haven't been able to reproduce it on my MacBook, unfortunately. Tapping or clicking on the slider on Chrome, Edge, and Safari works correctly for me. Would you happen to have any repro steps?\n- Ad-Mora: > Would that be issue #2765? I haven't been able to reproduce it on my MacBook, unfortunately. Tapping or clicking on the slider on Chrome, Edge, and Safari works correctly for me. Would you happen to have any repro steps?
+
+I just tried reproducing, and the issue no longer appears - how embarrassing. Previously, it was having the same behavior that the Tab component was, where the component was only sporadically registering the clicking from the Mac touchpad. But given that I can't reproduce the issue anymore, we can call this moot.
+
+\n- ha-sante: +1 - I get this issue on arc browser and its not just in my app itself. 
+Even on the nextui website (code / preview) buttons.
+
+Thought this was a mistake or some plugin i use.
+
+
+Another note is that when i click on the tab option multiple times - somehow it finally picks it up and shows the code preview.
+
+
+So as though am not contributing much to this solution - i share that its a big issue - at least for me.
+
+
+Thanks for all your hardwork.\n- scarqin: I have also encountered this issue.\n
+
+Files Changed:
+- .changeset/slimy-ways-repair.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/accordion": patch
++"@nextui-org/tabs": patch
++---
++
++Fix 'Tap to click' behavior on macOS for Accordion and Tab\n- packages/components/accordion/src/use-accordion-item.ts (modified, 5 changes)\n  Patch: @@ -169,8 +169,9 @@ export function useAccordionItem<T extends object = {}>(props: UseAccordionItemP
+         otherProps.onBlur,
+         item.props?.onBlur,
+       ),
+-      ...mergeProps(buttonProps, hoverProps, pressProps, props),
+-      onClick: chain(pressProps.onClick, onClick),
++      ...mergeProps(buttonProps, hoverProps, pressProps, props, {
++        onClick: chain(pressProps.onClick, onClick),
++      }),
+     };
+   };
+ \n- packages/components/tabs/src/tab.tsx (modified, 2 changes)\n  Patch: @@ -111,11 +111,11 @@ const Tab = forwardRef<"button", TabItemProps>((props, ref) => {
+           enabled: shouldFilterDOMProps,
+           omitPropNames: new Set(["title"]),
+         }),
++        {onClick: handleClick},
+       )}
+       className={slots.tab?.({class: tabStyles})}
+       title={otherProps?.titleValue}
+       type={Component === "button" ? "button" : undefined}
+-      onClick={handleClick}
+     >
+       {isSelected && !disableAnimation && !disableCursorAnimation && isMounted ? (
+         <LazyMotion features={domMax}>\n

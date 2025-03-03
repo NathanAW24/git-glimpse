@@ -1,0 +1,85 @@
+Pull Request Number: 224
+Title: fix: textGradient utility selection color
+Base Branch: main
+Head Branch: fix_215/gradient-text-selection
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/224
+State: MERGED
+Created At: 2022-02-03T02:29:56Z
+Merged At: 2022-02-03T02:35:46Z
+Participants: jrgarciadev
+
+Description:
+[react]/[utility]
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+selection color applied to textGradient utility
+
+
+
+
+Screenshots - Animations
+
+Commits:
+- fix: textGradient utility selection color\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/src/components/hero/styles.ts (modified, 6 changes)\n  Patch: @@ -15,10 +15,10 @@ export const StyledTitle = styled('h1', {
+ });
+ 
+ export const StyledGradientTitle = styled(StyledTitle, {
++  textGradient: '180deg, #FF1CF7 25%, #b249f8 100%',
+   '&::selection': {
+-    WebkitTextFillColor: '$colors$text',
+-  },
+-  textGradient: '180deg, #FF1CF7 25%, #b249f8 100%'
++    WebkitTextFillColor: '$colors$text'
++  }
+ });
+ 
+ export const StyledSubtitle = styled('p', {\n- apps/docs/src/components/primitives/index.ts (modified, 6 changes)\n  Patch: @@ -2,9 +2,6 @@ import { styled, Link } from '@nextui-org/react';
+ import { lightTheme } from '@theme/shared';
+ 
+ export const Title = styled('h1', {
+-  '&::selection': {
+-    WebkitTextFillColor: '$colors$text',
+-  },
+   display: 'inline',
+   fontWeight: '$bold',
+   color: '$text',
+@@ -17,6 +14,9 @@ export const Title = styled('h1', {
+   '@lg': {
+     fs: '3.5rem'
+   },
++  '&::selection': {
++    WebkitTextFillColor: '$colors$text'
++  },
+   variants: {
+     color: {
+       violet: {\n- packages/react/src/theme/common.ts (modified, 5 changes)\n  Patch: @@ -455,7 +455,10 @@ export const defaultUtils = {
+   textGradient: (value: Stitches.PropertyValue<'backgroundImage'>) => ({
+     backgroundImage: `linear-gradient(${value})`,
+     WebkitBackgroundClip: 'text',
+-    WebkitTextFillColor: 'transparent'
++    WebkitTextFillColor: 'transparent',
++    '&::selection': {
++      WebkitTextFillColor: '$colors$text'
++    }
+   })
+ };
+ \n

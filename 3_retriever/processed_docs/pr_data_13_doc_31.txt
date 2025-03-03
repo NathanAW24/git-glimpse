@@ -1,0 +1,328 @@
+Pull Request Number: 2677
+Title: fix: remove conflicting transition utilities
+Base Branch: main
+Head Branch: fix/tailwind-transition
+Author: u3u
+URL: https://github.com/nextui-org/nextui/pull/2677
+State: MERGED
+Created At: 2024-04-10T02:12:56Z
+Merged At: 2024-04-14T15:57:17Z
+Participants: u3u, eBinaaOM, jrgarciadev, wingkwong
+
+Description:
+Remove the default duplicate Transition utilities in TailwindCSS (they do not need to be redefined) to prevent users from customizing transition effects, such as duration-300 being overridden by the higher priority of the NextUI Plugin and not working.
+Removing these redundant transition effects will not cause existing component effects to fail because TailwindCSS already includes them. Please feel free to check the preview documentation page. We only need to set DEFAULT_TRANSITION_DURATION to the DEFAULT key in order to modify the default transition time.
+See: https://tailwindcss.com/docs/transition-property
+
+Closes #1502 
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Patched the theme package to resolve conflicts with transition utilities, enhancing CSS compatibility and addressing issue #1502.
+Removed conflicting transition definitions affecting CSS classes.
+
+Commits:
+- fix: remove conflicting transition utilities
+
+see: https://tailwindcss.com/docs/transition-property\n- chore: add changeset\n- fix: typo\n- chore: remove comments\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 42a1946c81c415ec3e70c35ebe0b5a9153d7e752
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/theme | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/u3u/nextui/new/fix/tailwind-transition?filename=.changeset/long-pets-end.md&value=---%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix%3A%20remove%20conflicting%20transition%20utilities%0A)
+
+\n- vercel: [vc]: #S1PyBLb9uACGWr6WigAJdlAlwEvyDJVWF+we7EpInvs=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvN0ZFUmpuNDFMa050S3Vtdm9jZGNaZ1JacnpFSyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXUzdS1maXgtdGFpbHdpbmQtNGY0NmE0LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXUzdS1maXgtdGFpbHdpbmQtNGY0NmE0LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/7FERjn41LkNtKumvocdcZgRZrzEK)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-u3u-fix-tailwind-4f46a4-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-u3u-fix-tailwind-4f46a4-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 10, 2024 2:46am |
+
+\n- vercel: @u3u is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f847f12224920f311cf3f3d5fd5ae7fb86be29bb%22%7D%2C%22id%22%3A%22Qmb54ME4HSkQb1TzoajyRX4JCt7HFh67C1KLDCoLGNeCRa%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2677%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The update addresses a conflict between the `@nextui-org/theme` package and Tailwind CSS by adjusting transition utilities. By deactivating specific transition definitions in NextUI, it prevents them from conflicting with Tailwind's default transitions, ensuring a smoother integration experience for developers utilizing both frameworks.
+
+## Changes
+
+| File Path                                      | Change Summary                                                                      |
+|------------------------------------------------|-------------------------------------------------------------------------------------|
+| `.changeset/rare-ants-ring.md`                 | Introduced a patch to resolve transition utility conflicts in `@nextui-org/theme`.  |
+| `packages/core/theme/src/plugin.ts`            | Added the default transition duration constant to the `transitionDuration` object.|
+| `packages/core/theme/src/utilities/transition.ts` | Commented out specific transition definitions for temporary removal or deactivation.|
+
+## Assessment against linked issues
+
+| Objective                                                                 | Addressed | Explanation                                                                 |
+|---------------------------------------------------------------------------|-----------|-----------------------------------------------------------------------------|
+| Prevent overriding of Tailwind's default `transition` by NextUI [#1502]   | ✅        |                                                                             |
+| Ensure no duplicate `transition` definitions when using NextUI [#1502]    | ✅        |                                                                             |
+| Maintain the ability to set custom `transition` effects in Tailwind [#1502]| ✅        |                                                                             |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/rare-ants-ring.md: The new file introduces a patch to the `@nextui-org/theme` package to remove conflicting transition utilities. It addresses issue #1502 related to transition properties in Tailwind CSS.
+
+---
+
+packages/core/theme/src/plugin.ts: Added the `DEFAULT_TRANSITION_DURATION` constant import from `./utilities/transition` and included it in the `transitionDuration` object with the key `DEFAULT`.
+
+---
+
+packages/core/theme/src/utilities/transition.ts: ## Short summary
+
+The change in functionality involves commenting out several transition definitions affecting CSS classes like `.transition`, `.transition-colors`, `.transition-opacity`, `.transition-shadow`, and `.transition-transform` for temporary removal or deactivation.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives (User Provided Facts)
+
+This pull request, numbered 2677 and titled "fix: remove conflicting transition utilities," aims to address the conflict between TailwindCSS and the NextUI Plugin regarding default transition properties. By removing redundant transition utilities in TailwindCSS, the PR seeks to prevent the NextUI Plugin from overriding these properties, enabling users to customize transition effects without interference.
+
+The linked issue, #1502, highlights how the NextUI Plugin supersedes TailwindCSS's default transition properties, causing issues in setting custom transitions. The PR intends to rectify this by adjusting the `DEFAULT_TRANSITION_DURATION` to the `DEFAULT` key, ensuring existing component effects remain unaffected by these changes. The goal is to eliminate duplicate transitions and provide a seamless transition customization experience for users.
+
+### AI-Generated Summary of Generated Summaries
+
+In response to the conflict between TailwindCSS and the NextUI Plugin regarding transition utilities, this pull request introduces changes across multiple files to resolve the issue effectively. A new changeset file (`rare-ants-ring.md`) has been created to document the patch applied to the `@nextui-org/theme` package, specifically targeting the removal of conflicting transition utilities as outlined in issue #1502.
+
+Within the `plugin.ts` file located in the `packages/core/theme/src` directory, the PR incorporates the `DEFAULT_TRANSITION_DURATION` constant from `./utilities/transition` into the `transitionDuration` object under the key `DEFAULT`. This adjustment aims to streamline transition durations and mitigate conflicts between the two frameworks.
+
+Additionally, modifications in the `transition.ts` file within the same directory involve commenting out or temporarily removing various transition definitions affecting CSS classes like `.transition`, `.transition-colors`, `.transition-opacity`, `.transition-shadow`, and `.transition-transform. These actions are taken to deactivate redundant or conflicting transition utilities causing issues, as reported in the linked bug.
+
+Overall, these changes focus on resolving the priority conflict between TailwindCSS and NextUI's transition utilities, ensuring a smoother transition customization experience for users while maintaining the integrity of existing component effects.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai -->
+
+---
+
+<details>
+
+<summary>Recent Review Details</summary>
+
+**Configuration used: .coderabbit.yaml**
+
+<details>
+<summary>Commits</summary>
+Files that changed from the base of the PR and between b52abc94fe2ca2f55e57538aa93614d76f9ab822 and 42a1946c81c415ec3e70c35ebe0b5a9153d7e752.
+</details>
+
+
+<details>
+<summary>Files selected for processing (1)</summary>
+
+* packages/core/theme/src/utilities/transition.ts (2 hunks)
+
+</details>
+
+
+
+
+
+<details>
+<summary>Files skipped from review as they are similar to previous changes (1)</summary>
+
+* packages/core/theme/src/utilities/transition.ts
+
+</details>
+
+
+
+
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- f847f12224920f311cf3f3d5fd5ae7fb86be29bb -->
+<!-- b52abc94fe2ca2f55e57538aa93614d76f9ab822 -->
+<!-- 42a1946c81c415ec3e70c35ebe0b5a9153d7e752 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- eBinaaOM: @u3u @jrgarciadev Hello guys, I am having this trouble and I am a beginner , how can I use the fix?\n
+
+Files Changed:
+- .changeset/rare-ants-ring.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/theme": patch
++---
++
++Fix: remove conflicting transition utilities (close #1502)
++
++See: https://tailwindcss.com/docs/transition-property
+\ No newline at end of file\n- packages/core/theme/src/plugin.ts (modified, 2 changes)\n  Patch: @@ -20,6 +20,7 @@ import {createSpacingUnits, generateSpacingScale, isBaseTheme} from "./utils/the
+ import {ConfigTheme, ConfigThemes, DefaultThemeType, NextUIPluginConfig} from "./types";
+ import {lightLayout, darkLayout, defaultLayout} from "./default-layout";
+ import {baseStyles} from "./utils/classes";
++import {DEFAULT_TRANSITION_DURATION} from "./utilities/transition";
+ 
+ const DEFAULT_PREFIX = "nextui";
+ 
+@@ -264,6 +265,7 @@ const corePlugin = (
+             0: "0ms",
+             250: "250ms",
+             400: "400ms",
++            DEFAULT: DEFAULT_TRANSITION_DURATION,
+           },
+           transitionTimingFunction: {
+             "soft-spring": "cubic-bezier(0.155, 1.105, 0.295, 1.12)",\n- packages/core/theme/src/utilities/transition.ts (modified, 34 changes)\n  Patch: @@ -1,36 +1,14 @@
+-const DEFAULT_TRANSITION_DURATION = "250ms";
++export const DEFAULT_TRANSITION_DURATION = "250ms";
+ 
+ export default {
+   /**
+    * Transition utilities
+    */
+-  ".transition-all": {
+-    "transition-property": "all",
+-    "transition-timing-function": "ease",
+-    "transition-duration": DEFAULT_TRANSITION_DURATION,
+-  },
+   ".transition-background": {
+     "transition-property": "background",
+     "transition-timing-function": "ease",
+     "transition-duration": DEFAULT_TRANSITION_DURATION,
+   },
+-  ".transition": {
+-    "transition-property":
+-      "color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter",
+-    "transition-timing-function": "ease",
+-    "transition-duration": DEFAULT_TRANSITION_DURATION,
+-  },
+-  ".transition-colors": {
+-    "transition-property":
+-      "color, background-color, border-color, text-decoration-color, fill, stroke",
+-    "transition-timing-function": "ease",
+-    "transition-duration": DEFAULT_TRANSITION_DURATION,
+-  },
+-  ".transition-opacity": {
+-    "transition-property": "opacity",
+-    "transition-timing-function": "ease",
+-    "transition-duration": DEFAULT_TRANSITION_DURATION,
+-  },
+   ".transition-colors-opacity": {
+     "transition-property":
+       "color, background-color, border-color, text-decoration-color, fill, stroke, opacity",
+@@ -57,16 +35,6 @@ export default {
+     "transition-timing-function": "ease",
+     "transition-duration": DEFAULT_TRANSITION_DURATION,
+   },
+-  ".transition-shadow": {
+-    "transition-property": "box-shadow",
+-    "transition-timing-function": "ease",
+-    "transition-duration": DEFAULT_TRANSITION_DURATION,
+-  },
+-  ".transition-transform": {
+-    "transition-property": "transform",
+-    "transition-timing-function": "ease",
+-    "transition-duration": DEFAULT_TRANSITION_DURATION,
+-  },
+   ".transition-transform-opacity": {
+     "transition-property": "transform, opacity",
+     "transition-timing-function": "ease",\n

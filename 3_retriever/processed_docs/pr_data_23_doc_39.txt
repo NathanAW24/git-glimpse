@@ -1,0 +1,56 @@
+Pull Request Number: 1198
+Title: fix: added aria hide outside to popover
+Base Branch: feat/v2
+Head Branch: fix/added-aria-hide-outside-and-prevent-scroll-to-popover
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1198
+State: MERGED
+Created At: 2023-07-15T13:37:08Z
+Merged At: 2023-07-15T13:48:21Z
+Participants: jguddas, jrgarciadev
+
+Description:
+Hides content outside of popover from screen readers when the popover is open.
+
+Commits:
+- fix: added aria hide outside and prevent scroll to popover\n- chore: readded react-remove-scroll\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22769c58c7b7ad8c421c253c46028807c3b992ae97%22%7D%2C%22id%22%3A%22Qme84G63okepN8zpDaHPguhyta4WMhhtPgPHH2xUmn8bHZ%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1198%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/popover/src/use-popover.ts (modified, 10 changes)\n  Patch: @@ -4,12 +4,12 @@ import type {RefObject, Ref} from "react";
+ 
+ import {OverlayTriggerState, useOverlayTriggerState} from "@react-stately/overlays";
+ import {useFocusRing} from "@react-aria/focus";
+-import {useOverlayTrigger} from "@react-aria/overlays";
++import {useOverlayTrigger, ariaHideOutside} from "@react-aria/overlays";
+ import {OverlayTriggerProps} from "@react-types/overlays";
+ import {HTMLNextUIProps, mapPropsVariants, PropGetter} from "@nextui-org/system";
+ import {getArrowPlacement, getShouldUseAxisPlacement} from "@nextui-org/aria-utils";
+ import {popover} from "@nextui-org/theme";
+-import {mergeProps, mergeRefs} from "@react-aria/utils";
++import {mergeProps, mergeRefs, useLayoutEffect} from "@react-aria/utils";
+ import {createDOMRef} from "@nextui-org/react-utils";
+ import {clsx, dataAttr} from "@nextui-org/shared-utils";
+ import {ReactRef} from "@nextui-org/react-utils";
+@@ -223,6 +223,12 @@ export function usePopover(originalProps: UsePopoverProps) {
+     [arrowProps, ariaPlacement, placementProp, slots, classNames],
+   );
+ 
++  useLayoutEffect(() => {
++    if (state.isOpen && popoverRef.current) {
++      return ariaHideOutside([popoverRef.current]);
++    }
++  }, [state.isOpen, popoverRef]);
++
+   return {
+     Component,
+     children,\n

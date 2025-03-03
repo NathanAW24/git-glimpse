@@ -1,0 +1,86 @@
+Pull Request Number: 2199
+Title: fix(table): `fullWidth` doesn't work
+Base Branch: main
+Head Branch: patch-1
+Author: Aruelius
+URL: https://github.com/nextui-org/nextui/pull/2199
+State: CLOSED
+Created At: 2024-01-03T02:22:13Z
+Merged At: None
+Participants: Aruelius
+
+Description:
+📝 Description
+When set fullWidth to false, w-full class are not removed.
+⛳️ Current behavior (updates)
+The table is always full width, regardless of the value of fullWidth.
+🚀 New behavior
+To ensure fullWidth works, we need to remove the flex-col of the base element and set w-auto.
+💣 Is this a breaking change (Yes/No):
+No
+
+📝 Additional Information
+
+Commits:
+- fix(table): `fullWidth` doesn't work\n- fix(table): duplicate `flex-col`\n- Merge branch 'nextui-org:main' into patch-1\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 76593008696059563688929dfa2ee497ac6a5562
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/Aruelius/nextui/new/patch-1?filename=.changeset/silly-pears-buy.md&value=---%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(table)%3A%20%60fullWidth%60%20doesn't%20work%0A)
+
+\n- vercel: [vc]: #Z2QMhkbQXROZldoXI2hAjG4tjnf8iZixH2fDP28FKlI=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvSjlVNTQ4SFduU3FWS2Z2YXo4TVo1U0N1S2hycyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFydWVsaXVzLXBhdGNoLTEtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstYXJ1ZWxpdXMtcGF0Y2gtMS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/J9U548HWnSqVKfvaz8MZ5SCuKhrs)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-aruelius-patch-1-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-aruelius-patch-1-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jan 24, 2024 9:44am |
+
+\n- vercel: @Aruelius is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22377a1544471e0a2a297cfae13ac134c1437628f8%22%7D%2C%22id%22%3A%22QmXevSPMk9r7Mk2MU119ijqTiBhxdrHVi1W3X6WnuvVibR%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2199%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/core/theme/src/components/table.ts (modified, 9 changes)\n  Patch: @@ -40,7 +40,7 @@ import {dataFocusVisibleClasses} from "../utils";
+  */
+ const table = tv({
+   slots: {
+-    base: "flex flex-col relative gap-4",
++    base: "flex relative gap-4",
+     wrapper: [
+       "p-4",
+       "z-0",
+@@ -222,10 +222,15 @@ const table = tv({
+     },
+     fullWidth: {
+       true: {
+-        base: "w-full",
++        base: "w-full flex-col",
+         wrapper: "w-full",
+         table: "w-full",
+       },
++      false: {
++        base: "w-auto",
++        wrapper: "w-auto",
++        table: "w-auto",
++      }
+     },
+   },
+   defaultVariants: {\n

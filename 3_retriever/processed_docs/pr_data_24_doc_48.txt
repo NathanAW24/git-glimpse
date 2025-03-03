@@ -1,0 +1,76 @@
+Pull Request Number: 1016
+Title: fix: fix pagination page invalid
+Base Branch: main
+Head Branch: fix/pagination-page-invalid
+Author: Yukiniro
+URL: https://github.com/nextui-org/nextui/pull/1016
+State: MERGED
+Created At: 2023-01-19T02:00:35Z
+Merged At: 2023-05-25T02:39:01Z
+Participants: Yukiniro, jrgarciadev
+
+Description:
+Closes #1015
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix: fix page not working in usePagination #1015\n- fix: ignore setActivePage when isControlled\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #mkJHdhEh0rYLzesCbG3jq4vq1IIHYvibRZ80Jlefd3U=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLXl1a2luaXJvLWZpeC1wYWdpbmEtMTk0N2FjLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLzN4TnNRVWkyWnJFTkJvVFh0cUhZN29CcGFrcFIiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay1naXQtZm9yay15dWtpbmlyby1maXgtcGFnaW5hLTE5NDdhYy1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/3xNsQUi2ZrENBoTXtqHY7oBpakpR)) | [Visit Preview](https://nextui-storybook-git-fork-yukiniro-fix-pagina-1947ac-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-yukiniro-fix-pagina-1947ac-nextui-org.vercel.app) | Jan 19, 2023 at 2:03AM (UTC) |
+
+\n- vercel: @Yukiniro is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%221eb6ca78457b6f98d091ec1c52294f574e869925%22%7D%2C%22id%22%3A%22QmPfHmbntM5Ei8SikfeneW5D6YwVo9vYdDaUd1J6WFSxgY%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1016%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/react/src/use-pagination/index.ts (modified, 9 changes)\n  Patch: @@ -24,19 +24,22 @@ const usePagination = ({
+   onChange,
+ }: PaginationParams) => {
+   const [activePage, setActivePage] = useState(page || initialPage);
++  const isControlled = useMemo(() => page !== undefined, [page]);
+ 
+   useEffect(() => {
+     if (page && page !== activePage) {
+       setActivePage(page);
+     }
+-  }, [page]);
++  }, [page, activePage]);
+ 
+   const onChangeActivePage = useCallback(
+     (newPage: number) => {
+-      setActivePage(newPage);
++      if (!isControlled) {
++        setActivePage(newPage);
++      }
+       onChange?.(newPage);
+     },
+-    [setActivePage, onChange],
++    [setActivePage, onChange, isControlled],
+   );
+ 
+   const setPage = useCallback(\n

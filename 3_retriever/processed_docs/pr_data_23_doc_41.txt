@@ -1,0 +1,85 @@
+Pull Request Number: 1194
+Title: fix: pagination focus is now maintained after page switching
+Base Branch: feat/v2
+Head Branch: fix/pagination-focus-is-now-maintained-after-page-switching
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1194
+State: MERGED
+Created At: 2023-07-13T21:14:42Z
+Merged At: 2023-07-15T13:49:08Z
+Participants: jguddas, jrgarciadev
+
+Description:
+How it works now:
+
+  
+    
+    
+
+    simplescreenrecorder-2023-07-14_00.15.20.mp4
+
+Commits:
+- fix: pagination focus is now maintained after page switching\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22898b3c1dd4bac18090a2992e63cb7253d2bc97e9%22%7D%2C%22id%22%3A%22QmRiWy8ZRQsJP1qVwXPR32egZhj2fuwjEd1h9QPtGvxADo%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1194%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/pagination/src/pagination.tsx (modified, 9 changes)\n  Patch: @@ -38,7 +38,6 @@ const Pagination = forwardRef<PaginationProps, "nav">((props, ref) => {
+   const renderItem = useCallback(
+     (value: PaginationItemValue, index: number) => {
+       const isBefore = index < range.indexOf(activePage);
+-      const key = `${value}-${index}`;
+ 
+       if (renderItemProp && typeof renderItemProp === "function") {
+         return renderItemProp({
+@@ -61,7 +60,7 @@ const Pagination = forwardRef<PaginationProps, "nav">((props, ref) => {
+       if (value === PaginationItemType.PREV) {
+         return (
+           <PaginationItem
+-            key={key}
++            key={PaginationItemType.PREV}
+             className={slots.prev({
+               class: classNames?.prev,
+             })}
+@@ -78,7 +77,7 @@ const Pagination = forwardRef<PaginationProps, "nav">((props, ref) => {
+       if (value === PaginationItemType.NEXT) {
+         return (
+           <PaginationItem
+-            key={key}
++            key={PaginationItemType.NEXT}
+             className={slots.next({
+               class: clsx(classNames?.next),
+             })}
+@@ -100,7 +99,7 @@ const Pagination = forwardRef<PaginationProps, "nav">((props, ref) => {
+       if (value === PaginationItemType.DOTS) {
+         return (
+           <PaginationItem
+-            key={key}
++            key={PaginationItemType.DOTS + isBefore}
+             className={slots.item({
+               class: clsx(classNames?.item, "group"),
+             })}
+@@ -123,7 +122,7 @@ const Pagination = forwardRef<PaginationProps, "nav">((props, ref) => {
+       }
+ 
+       return (
+-        <PaginationItem {...getItemProps({value})} key={key} getAriaLabel={getItemAriaLabel}>
++        <PaginationItem {...getItemProps({value})} key={value} getAriaLabel={getItemAriaLabel}>
+           {value}
+         </PaginationItem>
+       );\n- packages/components/pagination/src/use-pagination.ts (modified, 1 changes)\n  Patch: @@ -313,7 +313,6 @@ export function usePagination(originalProps: UsePaginationProps) {
+   const getItemProps: PropGetter = (props = {}) => {
+     return {
+       ...props,
+-      key: props.value,
+       ref: (node) => getItemRef(node, props.value),
+       "data-slot": "item",
+       isActive: props.value === activePage,\n

@@ -1,0 +1,101 @@
+Pull Request Number: 173
+Title: Updated Components Position in order to fix issue with Search Bar hid…
+Base Branch: main
+Head Branch: Updated_Components_Position
+Author: Dhananjay-JSR
+URL: https://github.com/nextui-org/nextui/pull/173
+State: CLOSED
+Created At: 2022-01-28T07:38:53Z
+Merged At: None
+Participants: Dhananjay-JSR, jrgarciadev, codecov-commenter, erenkulaksiz
+
+Description:
+[LEVEL]/[COMPONENT]
+TASK: Fixing Issue with Search Box within nearby components
+This PR closes #158
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ Refactor
+
+Description, Motivation and Context
+This Issue was brought up in #158 which caused Button Group , Theme Switch and other components near search bar to go beyond viewing angle
+The Solution was to modify the position of components in such a way that they don't overlay upon any other components anymore while maintaining a safe distance for animation
+Screenshots - Animations
+Original Page:-
+
+Page After the Fix:-
+
+Commits:
+- Updated Components Position in order to fix issue with Search Bar hiding other components\n- Updated Dimentions to be ViewPort Based instead of Pixel\n- Merge branch 'nextui-org:main' into Updated_Components_Position\n- The Components Now uses Media Queries for Positioning\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- jrgarciadev: Hey @Dhananjay-JSR I appreciate you taking the time to fix this but could you please find a way to do it using relative units like `%, vw, vh` etc in order to avoid the floating components being too close on large monitors? 
+
+Huge thanks 🙌🏻 \n- Dhananjay-JSR: Can you please review the changes again 😃 \n- jrgarciadev: Hey @Dhananjay-JSR 🙌🏻 , on my monitor the components look too far apart: 
+
+![Screenshot 2022-01-30 at 18 46 56](https://user-images.githubusercontent.com/30373425/151719192-ece9f902-22f6-4b34-a9af-542e4b19d562.png)
+
+If you zoom out of the browser, the following happens:
+
+![Screenshot 2022-01-30 at 18 47 55](https://user-images.githubusercontent.com/30373425/151719220-e10755aa-7f5b-4e20-9df4-eceb7556cf68.png)
+
+
+\n- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/173?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#173](https://codecov.io/gh/nextui-org/nextui/pull/173?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (c95d12e) into [main](https://codecov.io/gh/nextui-org/nextui/commit/83a1826adc2a53484cb910e745c226fb2c3bd5d8?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (83a1826) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/173/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/173?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main     #173   +/-   ##
+=======================================
+  Coverage   75.67%   75.67%           
+=======================================
+  Files         140      140           
+  Lines        2269     2269           
+  Branches      677      677           
+=======================================
+  Hits         1717     1717           
+  Misses        548      548           
+  Partials        4        4           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/173?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/173?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [83a1826...c95d12e](https://codecov.io/gh/nextui-org/nextui/pull/173?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n- Dhananjay-JSR: > You can use @sm and @md media attributes to resize components instead of giving distance relative to viewport height.
+
+Thanks for your tip , I have used media query to position components \n- Dhananjay-JSR: ![image](https://user-images.githubusercontent.com/47073516/155831687-58e31c8d-2e3d-4a3c-9c41-b2aedae69640.png)
+\n
+
+Files Changed:
+- apps/docs/src/components/hero/components.tsx (modified, 4 changes)\n  Patch: @@ -24,6 +24,10 @@ const StyledContainer = styled('div', {
+   zIndex: '$2',
+   '@xsMax': {
+     display: 'none'
++  },
++  '@md': {
++    position: 'absolute',
++    top: '70px',
+   }
+ });
+ \n- apps/docs/src/pages/index.tsx (modified, 2 changes)\n  Patch: @@ -56,7 +56,7 @@ const IndexPage: React.FC<Props> = ({ routes, currentRoute }) => {
+       <Hero />
+ 
+       {/* Main features */}
+-      <Section>
++      <Section css={{'@md' : {position: 'relative', top: '100px'}}}>
+         <FeaturesGrid features={landingContent.topFeatures} />
+       </Section>
+ \n

@@ -1,0 +1,383 @@
+Pull Request Number: 3600
+Title: fix: navigator clipboard is not support in devtool panel
+Base Branch: canary
+Head Branch: feat-useclipboard-compatibility
+Author: komagic
+URL: https://github.com/nextui-org/nextui/pull/3600
+State: OPEN
+Created At: 2024-08-04T02:32:21Z
+Merged At: None
+Participants: komagic, wingkwong
+
+Description:
+Closes # 
+📝 Description
+
+Add a brief description
+navigator clipboard is not support in some envs, like in extension devtools panel.
+document.execCommand is a better choice for compatibility
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+New Features
+
+Introduced a compatibility function for copying text to the clipboard, enhancing support for older browsers.
+Added a fallback mechanism to ensure clipboard functionality works consistently across different environments.
+
+
+Improvements
+
+Enhanced robustness of the clipboard copying functionality by ensuring fallback mechanisms are in place for environments lacking modern clipboard API support.
+Updated the clipboard copy function to utilize a more reliable approach when the modern API is unavailable.
+
+Commits:
+- fix: navigator clipboard is not support in devtool panel\n- fix: error handler for compatibilityCopy\n- fix: lint & compatibilityCopy\n- docs: 为useClipboard compability添加changeset\n- docs: useClipboard compability fix, add changeset\n- docs: update changesets for useClipboard\n- feat: add compatibilityCopy test\n- fix: improve compatibilityCopy test\n- Merge remote-tracking branch 'origin/canary' into feat-useclipboard-compatibility\n- fix(useClipboard): merge canary\n- fix(useClipboard): fix lint warning\n
+
+Labels:
+👀 Status: To Review
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 28718ac14334010a795ac124b38c35b99552767c
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                      | Type  |
+| ------------------------- | ----- |
+| @nextui-org/use-clipboard | Patch |
+| @nextui-org/snippet       | Patch |
+| @nextui-org/react         | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/komagic/nextui/new/feat-useclipboard-compatibility?filename=.changeset/modern-flies-work.md&value=---%0A%22%40nextui-org%2Fuse-clipboard%22%3A%20patch%0A---%0A%0Afix%3A%20navigator%20clipboard%20is%20not%20support%20in%20devtool%20panel%0A)
+
+\n- vercel: @komagic is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%229c7410c43f10ea822499e4096b650a7b3589ece2%22%7D%2C%22id%22%3A%22QmPHAGMbK5NVABUhuz8V2KeuNMoMWG7VEUP54HQNZxcGk1%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3600%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes introduce a new function, `compatibilityCopy`, to enhance the `useClipboard` hook by providing a fallback mechanism for copying text when the `navigator.clipboard` API is unavailable. This ensures broader compatibility with older browsers by using a temporary input element and the `document.execCommand('copy')` method. The operation updates the state based on success or failure, improving usability across various environments.
+
+## Changes
+
+| Files                                               | Change Summary                                                                                  |
+|-----------------------------------------------------|------------------------------------------------------------------------------------------------|
+| `packages/hooks/use-clipboard/src/index.ts`        | Added `compatibilityCopy` function for fallback clipboard copying; modified `copy` function to utilize it when `navigator.clipboard` is unsupported. |
+| `packages/hooks/use-clipboard/__tests__/clipboard.test.tsx` | Added test for `compatibilityCopy` to verify fallback mechanism when `navigator.clipboard.writeText` fails. |
+
+## Sequence Diagram(s)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant ClipboardAPI
+    participant CompatibilityLayer
+
+    User->>ClipboardAPI: Trigger copy action
+    alt Modern API available
+        ClipboardAPI-->>User: Copy text using navigator.clipboard
+    else Fallback needed
+        CompatibilityLayer-->>User: Create temporary input element
+        CompatibilityLayer->>CompatibilityLayer: Set input value to text
+        CompatibilityLayer->>CompatibilityLayer: Execute document.execCommand('copy')
+        alt Copy successful
+            CompatibilityLayer-->>User: Update state to copied
+        else Copy failed
+            CompatibilityLayer-->>User: Log error and update state to not copied
+        end
+    end
+```
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+packages/hooks/use-clipboard/src/index.ts: ## AI-generated summary of changes
+
+The `useClipboard` function in `packages/hooks/use-clipboard/src/index.ts` has been updated to include a new internal function called `compatibilityCopy`. This function is responsible for copying text to the clipboard using a fallback method when the modern `navigator.clipboard` API is unavailable. It creates a temporary input element, sets its value to the text to be copied, and executes `document.execCommand("copy")`. If this operation fails, it sets an error state indicating that `document.execCommand` is not supported.
+
+The main `copy` function has been modified to first check for the availability of the `navigator.clipboard` API. If available, it attempts to write the text using `navigator.clipboard.writeText`. In case of failure, it now calls `compatibilityCopy` to attempt the copy operation using the fallback method. If the `navigator.clipboard` API is not supported, it directly invokes `compatibilityCopy` instead of merely setting an error state.
+
+These changes enhance the clipboard functionality by providing a robust fallback mechanism for copying text in environments lacking support for the modern clipboard API.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made in `packages/hooks/use-clipboard/src/index.ts`.
+
+---
+
+packages/hooks/use-clipboard/__tests__/clipboard.test.tsx: ## AI-generated summary of changes
+
+The diff introduces a new test case within the `UseClipboard` test suite. The added test, titled "compatibilityCopy: should use execCommand to copy text to clipboard when writeText fail," verifies the fallback mechanism for copying text to the clipboard. It simulates a scenario where `navigator.clipboard.writeText` fails by mocking it to reject with an error. In this case, the test checks that the `document.execCommand` method is called with the argument "copy" as a fallback. The test also asserts that the `copied` state is set to true after the copy operation and subsequently checks that the `copied` state reverts to false after a timeout. The overall structure of the test suite remains unchanged, with the new functionality focusing on ensuring compatibility when the primary clipboard method fails.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made in this diff.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+This pull request, titled "fix: navigator clipboard is not support in devtool panel," addresses an issue with clipboard functionality in specific environments, particularly in extension devtools panels where the `navigator.clipboard` API is unsupported. The author, komagic, suggests using `document.execCommand` as a more compatible alternative to enhance clipboard operations across various contexts.
+
+The current clipboard functionality may fail in these environments, leading to a lack of user feedback regarding permissions or errors, which are only visible in the console. The proposed changes aim to rectify this by implementing `document.execCommand`, thereby improving the reliability of clipboard operations when the `navigator.clipboard` API is not available.
+
+The pull request does not indicate any breaking changes, allowing existing users of NextUI to adopt this fix without requiring significant modifications to their code. While the author has not linked a specific GitHub issue in the description, the focus remains on enhancing compatibility and functionality for developers utilizing the library in diverse environments.
+
+## Comments Summary
+
+In the comments section, the author, komagic, engages in a discussion about the pull request. They express a preference for communicating in Chinese and request that the contributor add a changeset to the PR, which has been completed. Additionally, komagic emphasizes the importance of linting the code to ensure it meets the project's quality standards, and this has also been addressed.
+
+Komagic asks for a detailed explanation of how to reproduce the original issue, which involves using a snippet in Chrome's devtools where the clipboard copy functionality fails without any authorization prompts. They note that the issue does not provide adequate feedback, with permission errors only appearing in the console. To illustrate the problem, komagic shares a screenshot showing the clipboard functionality before the proposed changes.
+
+They also request a screen recording to demonstrate that the issue has been resolved with the changes made in the pull request, which has been provided. The screen recording shows the clipboard functionality working correctly after the implementation of `document.execCommand`.
+
+Furthermore, komagic seeks assistance from another contributor, @wingkwong, to review the changes for any additional issues. This collaborative effort highlights the importance of thorough testing and documentation to ensure that the proposed solution effectively addresses the identified issue. Overall, the comments reflect a focus on clarity, reproducibility of the issue, and validation of the proposed solution through visual evidence.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 9c7410c43f10ea822499e4096b650a7b3589ece2 -->
+<!-- e1d251548720d6dc3845722ee92f371dc744be78 -->
+<!-- 5509df0ac2890a76cf8c266ffb6bab2a16b72896 -->
+<!-- e643515895ec6e4a9406865d0b92b7cd74c7c366 -->
+<!-- df29993670e7b41ad7fdfa3c4ed2e1b7d8716b45 -->
+<!-- 165d24c69a3ce15c7fd208a3abd70bc1105ee24c -->
+<!-- 9fc29359d23b2e8e703c91c55a8949404d63dad9 -->
+<!-- f23bab7e4fe54a72ea96a7d3ce28a57b6b4daf30 -->
+<!-- 47d081f7242abdd97a9b74c59fd67da775b6aa2a -->
+<!-- 28718ac14334010a795ac124b38c35b99552767c -->
+
+<!-- commit_ids_reviewed_end -->
+
+---
+
+<details>
+<summary>📜 Recent review details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>📥 Commits</summary>
+
+Files that changed from the base of the PR and between 47d081f7242abdd97a9b74c59fd67da775b6aa2a and 28718ac14334010a795ac124b38c35b99552767c.
+
+</details>
+
+<details>
+<summary>📒 Files selected for processing (2)</summary>
+
+* packages/hooks/use-clipboard/__tests__/clipboard.test.tsx (1 hunks)
+* packages/hooks/use-clipboard/src/index.ts (1 hunks)
+
+</details>
+
+<details>
+<summary>🚧 Files skipped from review as they are similar to previous changes (2)</summary>
+
+* packages/hooks/use-clipboard/__tests__/clipboard.test.tsx
+* packages/hooks/use-clipboard/src/index.ts
+
+</details>
+
+</details><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- komagic: please add a changeset (done)
+please lint your code (done)
+please share how to reproduce the original issue
+original issue：
+当独立使用snippet，在chrome extension devtool panel里copy没效果 ,未能提示授权或无权限，无权限error只在console中显示了。
+改前：
+![image](https://github.com/user-attachments/assets/5494622a-8928-4068-9c80-c02b5a670716)
+
+
+please share the screen record to show the issue is solved with the PR change （done）
+改后：
+
+
+
+https://github.com/user-attachments/assets/b4e31927-793f-4978-9efa-147c516824e8
+
+@wingkwong 年轻的大佬帮忙看下有没有其他问题
+\n- komagic: what will be next \n- komagic: @wingkwong brother， i mean this pr\n- komagic: @wingkwong hi, bro
+please add test (done)
+please share how to set up chrome extension devtool panel(not sure what you mean, i posted a video already on Aut)
+please resolve conflict (done)
+
+![image](https://github.com/user-attachments/assets/322f8762-8653-4138-8e39-e68e21a8b48e)
+\n
+
+Files Changed:
+- .changeset/nervous-students-carry.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/use-clipboard": patch
++---
++
++fix: useClipboard compatibility fix, added compatibilityCopy\n- packages/hooks/use-clipboard/__tests__/clipboard.test.tsx (modified, 28 changes)\n  Patch: @@ -35,4 +35,32 @@ describe("UseClipboard", () => {
+ 
+     expect(navigator.clipboard.writeText).toHaveBeenCalledWith("test");
+   });
++
++  it("compatibilityCopy: should use execCommand to copy text to clipboard when writeText fail", async () => {
++    Object.assign(navigator, {
++      clipboard: {
++        writeText: jest.fn().mockRejectedValue(new Error("Clipboard write failed")),
++      },
++    });
++
++    Object.assign(document, {
++      execCommand: jest.fn().mockReturnValue(true),
++    });
++    jest.spyOn(navigator.clipboard, "writeText");
++    jest.spyOn(document, "execCommand");
++    const {result} = renderHook(() => useClipboard({timeout: 0}));
++
++    await act(async () => {
++      result.current.copy("test");
++    });
++
++    // Verify that navigator.clipboard.writeText was called with "test"
++    expect(navigator.clipboard.writeText).toHaveBeenCalledWith("test");
++    // Check if document.execCommand was called with "copy" as fallback
++    expect(document.execCommand).toHaveBeenCalledWith("copy");
++    // Ensure that the copied state is set to true
++    expect(result.current.copied).toBe(true);
++    jest.advanceTimersByTime(1000);
++    expect(result.current.copied).toBe(false);
++  });
+ });\n- packages/hooks/use-clipboard/src/index.ts (modified, 30 changes)\n  Patch: @@ -33,18 +33,44 @@ export function useClipboard({timeout = 2000}: UseClipboardProps = {}) {
+     [onClearTimeout, timeout],
+   );
+ 
++  const compatibilityCopy = useCallback(
++    (text: string) => {
++      const input = document.createElement("input");
++
++      input.setAttribute("value", text);
++      input.style.position = "absolute";
++      input.style.left = "-9999px";
++      document.body.appendChild(input);
++      input.select();
++      try {
++        let result = document.execCommand("copy");
++
++        handleCopyResult(result);
++      } catch (err) {
++        setCopied(false);
++        setError(new Error("useClipboard: document.execCommand is not supported"));
++      }
++      document.body.removeChild(input);
++    },
++    [handleCopyResult],
++  );
++
+   const copy = useCallback(
+     (valueToCopy: any) => {
+       if ("clipboard" in navigator) {
+         navigator.clipboard
+           .writeText(valueToCopy)
+           .then(() => handleCopyResult(true))
+-          .catch((err) => setError(err));
++          .catch((err) => {
++            setError(err);
++            compatibilityCopy(valueToCopy);
++          });
+       } else {
+         setError(new Error("useClipboard: navigator.clipboard is not supported"));
++        compatibilityCopy(valueToCopy);
+       }
+     },
+-    [handleCopyResult],
++    [handleCopyResult, compatibilityCopy],
+   );
+ 
+   const reset = useCallback(() => {\n

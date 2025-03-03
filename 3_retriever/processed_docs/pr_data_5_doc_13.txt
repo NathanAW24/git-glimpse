@@ -1,0 +1,357 @@
+Pull Request Number: 3774
+Title: fix(input): ensure clear button is not focusable when disabled
+Base Branch: canary
+Head Branch: fix/input-disabled-tabindex
+Author: ryxxn
+URL: https://github.com/nextui-org/nextui/pull/3774
+State: MERGED
+Created At: 2024-09-17T13:44:19Z
+Merged At: 2024-09-26T16:53:59Z
+Participants: ryxxn, wingkwong, ryo-manba
+
+Description:
+📝 Description
+This PR fixes an issue where the clear button inside the Input component could still receive focus when the input is disabled (isDisabled). The button is now properly excluded from the tab order by setting tabIndex to -1 when the input is disabled.
+⛳️ Current behavior (updates)
+
+  
+    
+    
+
+    record.mov
+    
+  
+
+  
+
+  
+
+
+Currently, the clear button in the Input component can still receive focus via the Tab key when the input is disabled. This behavior can cause accessibility issues and an inconsistent user experience.
+🚀 New behavior
+With this fix, the clear button will no longer be focusable when the input is disabled. The tabIndex for the clear button is set to -1 when isDisabled is true, preventing it from being part of the tab order.
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+This fix enhances accessibility and user experience by ensuring that the clear button behaves correctly when the input is disabled.
+
+Summary by CodeRabbit
+
+New Features
+
+Enhanced accessibility for the clear button in the input component by preventing focus when the input is disabled.
+Updated the clear button from a <span> to a <button> element for improved semantic meaning and usability.
+
+
+Bug Fixes
+
+Adjusted the tabIndex property for the clear button to ensure compliance with keyboard navigation standards.
+
+
+Tests
+
+Added new test cases to verify the correct behavior of the clear button's state when the input is disabled and ensure it is not focusable.
+
+Commits:
+- fix(input): ensure clear button is not focusable when disabled\n- test(input): add test to ensure clear button is not focusable when disabled\n- chore: add changeset for clear button focus fix when input is disabled\n- fix(input): update clear button to use button element\n- test(input): add focus test when disabled
+
+and update tests for clear button using button element\n- test(input): replace querySelector with getByRole for clear button\n- fix(input): set tabIndex to -1 for clear button\n- test(input): ensure clear button is not focusable\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 10b4a1d23f28df2d8bd5031b998bc48910d9fdae
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/input        | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/react        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/ryxxn/nextui/new/fix/input-disabled-tabindex?filename=.changeset/tough-grapes-clean.md&value=---%0A%22%40nextui-org%2Finput%22%3A%20patch%0A---%0A%0Afix(input)%3A%20ensure%20clear%20button%20is%20not%20focusable%20when%20disabled%0A)
+
+\n- vercel: @ryxxn is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%222823aead183182c1eeb9b636903e1dd782dd7c46%22%7D%2C%22id%22%3A%22Qmepmsi9h1rGbGvB4LXcwfqWbNmbL5rdDChkWWuyRrJKDz%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3774%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This update introduces a patch to the `@nextui-org/input` component, specifically modifying the behavior of the clear button when the input is disabled. The clear button will no longer receive focus in a disabled state, and its `tabIndex` is set to `-1` under this condition. Additionally, the clear button's implementation is changed from a `<span>` to a `<button>` element to improve accessibility. New test cases have been added to verify these behaviors.
+
+## Changes
+
+| File                                      | Change Summary                                                                                      |
+|-------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| .changeset/two-waves-own.md              | Introduced a patch for the clear button in the `@nextui-org/input` component to enhance accessibility. |
+| packages/components/input/__tests__/input.test.tsx | Added test cases for the `Input` component to check the behavior of the clear button when `isDisabled` is true and verify that it is not focusable. |
+| packages/components/input/src/use-input.ts | Modified button properties to reflect the disabled state based on the `isDisabled` property.  |
+| packages/components/input/src/input.tsx   | Changed the clear button from a `<span>` to a `<button>` element for improved semantic meaning and accessibility. |
+
+## Possibly related PRs
+- **#2958**: This PR enhances the hover and focus behavior of the input component, which is directly related to the changes made in the main PR regarding the input component's clear button behavior.
+- **#3000**: This PR addresses the focus management of the clear button in the autocomplete component, which aligns with the main PR's focus on the clear button's behavior when the input is disabled.
+- **#3643**: This PR ensures that the clear button is disabled when the input is read-only, which is relevant to the main PR's modifications to the clear button's functionality based on the input's state.
+- **#3533**: This PR introduces synchronization between the ref value and internal state in the input component, which is related to the overall functionality and behavior of the input and its associated clear button.
+
+## Suggested reviewers
+- jrgarciadev
+- wingkwong
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```
+.changeset/two-waves-own.md: ## AI-generated summary of changes
+
+This update introduces a patch for the `@nextui-org/input` component, specifically addressing the behavior of the clear button when the input is disabled. The key functionality added ensures that the clear button does not receive focus when the input field is in a disabled state. This change enhances user experience by preventing interaction with the clear button when the input is not available for user input, thereby aligning with expected accessibility practices. Additionally, the `tabIndex` property of the clear button is now conditionally set to `-1` when the `isDisabled` property is true, ensuring that disabled elements are not focusable via keyboard navigation.
+
+Furthermore, the rendering of the clear button has been updated from a `<span>` element to a `<button>` element, enhancing the semantic meaning and accessibility of the component. The button will now be recognized by assistive technologies, improving usability for users relying on such tools. 
+
+New test cases have been added to verify the behavior of the clear button when the `isDisabled` prop is set to true, ensuring that the clear button's state is correctly managed in conjunction with the disabled state of the input. The test suite has also been refined by updating selectors for better clarity and reliability.
+
+## Alterations to the declarations of exported or public entities
+
+- Added: Clear button focus behavior modification in `@nextui-org/input` component.
+- Added: New test case for `Input` component in `packages/components/input/__tests__/input.test.tsx` that checks the disabled state of the clear button when `isDisabled` is true.
+- Added: New test case for `Input` component in `packages/components/input/__tests__/input.test.tsx` that verifies the clear button is not focusable.
+- Modified: Selector for the submit button in `packages/components/input/__tests__/input.test.tsx` from `document.querySelector("button")` to `document.querySelector('button[type="submit"]')`.
+
+---
+
+packages/components/input/src/use-input.ts: ## AI-generated summary of changes
+
+The change modifies the properties of a button element within the `useInput` function. The `role` and `tabIndex` properties have been replaced with `type` and `disabled`. The `type` is now set to `"button"`, which is a standard practice for button elements, while the `tabIndex` is set to `-1`, indicating that the button is not focusable via keyboard navigation. The `disabled` property is dynamically assigned based on the `isDisabled` property from `originalProps`. This adjustment ensures that the button's state reflects whether it is enabled or disabled, improving the component's accessibility and usability by preventing interaction with disabled buttons.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made in this diff.
+
+---
+
+packages/components/input/src/input.tsx: ## AI-generated summary of changes
+
+The change in the provided diff modifies the rendering of a clear button within the `Input` component. Previously, the clear button was implemented as a `<span>` element, which is typically used for inline text and does not have inherent button functionality. The update replaces this `<span>` with a `<button>` element, enhancing the semantic meaning and accessibility of the component. This change ensures that the clear button behaves correctly as an interactive element, allowing for better user experience and compliance with web standards. The button will now be recognized by assistive technologies, improving usability for users relying on such tools.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made in this diff.
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(input): ensure clear button is not focusable when disabled" addresses an issue in the `Input` component of the NextUI library. The problem was that the `clear button` could still receive focus when the input field was disabled (`isDisabled`). This behavior posed potential accessibility concerns and led to an inconsistent user experience.
+
+To resolve this issue, the author, ryxxn, implemented a fix that sets the `tabIndex` of the `clear button` to `-1` when the input is disabled. This change effectively removes the button from the tab order, ensuring that it cannot be focused using the Tab key when the input is not active.
+
+The current behavior allowed the `clear button` to be focusable even when the input was disabled, which could confuse users and hinder accessibility. With the new implementation, the `clear button` will no longer be focusable under these conditions, thereby improving both accessibility and user experience.
+
+The author confirms that this change is not a breaking change, meaning it will not adversely affect existing users of the NextUI library. Overall, this fix enhances the functionality of the `Input` component by ensuring that the `clear button` behaves appropriately when the input is disabled.
+
+## Comments Summary
+
+In the comments section of the pull request, ryxxn mentioned an update to the code where the `span` element used for the clear button was replaced with a `button` element. This change was made to enhance accessibility and simplify the handling of focus behavior. By using a `button` element, the need to manually manage `tabIndex` and `role` attributes was eliminated, which streamlines the implementation and improves the overall accessibility of the component.
+
+This update reflects a commitment to ensuring that the `Input` component not only functions correctly but also adheres to best practices in web accessibility. The transition from a `span` to a `button` element is significant because it aligns with semantic HTML practices, where interactive elements should be represented by appropriate HTML elements to ensure that assistive technologies can interpret them correctly.
+
+Overall, the comments indicate a proactive approach to improving the component's usability and accessibility, reinforcing the importance of user experience in the development process.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 2823aead183182c1eeb9b636903e1dd782dd7c46 -->
+<!-- 081c0e416dc8f0bd507b6933a46bc3addf1559db -->
+<!-- b3bd46ab9434449c5db01f1f9daf0d1dd893ed9c -->
+<!-- 84fd6b4560ef3479e89215897daa6a6035407b74 -->
+<!-- 10b4a1d23f28df2d8bd5031b998bc48910d9fdae -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>:heart: Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>:placard: Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- ryxxn: @ryo-manba 
+I have updated the code to replace the span element with a button element for the clear button. 
+
+This change removes the need to manually handle tabIndex and role, while improving accessibility.\n- vercel: [vc]: #ObufVRfcQjUvBctt7jRWTPBFNiLeenIRSnL3DhLmoYs=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi8zTlFHQXR2MmpCR0JaYVZRVUdYR3VqM3ZwdUduIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLXJ5eHhuLWZpeC1pbnB1dC1kaXNhYi1mMDNkNmMtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLXJ5eHhuLWZpeC1pbnB1dC1kaXNhYi1mMDNkNmMtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi8zUTZ0WGlXY3ZzcHd2VGNkSFZwTG9CTFM2bnRMIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstcnl4eG4tZml4LWlucHV0LTYxMDdlOS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay1yeXh4bi1maXgtaW5wdXQtNjEwN2U5LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/3NQGAtv2jBGBZaVQUGXGuj3vpuGn)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-ryxxn-fix-input-disab-f03d6c-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-ryxxn-fix-input-disab-f03d6c-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 25, 2024 4:33pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/3Q6tXiWcvspwvTcdHVpLoBLS6ntL)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-ryxxn-fix-input-6107e9-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-ryxxn-fix-input-6107e9-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 25, 2024 4:33pm |
+
+
+\n- ryxxn: @wingkwong 
+
+Thank you for the feedback!
+I've added a test case.\n- ryxxn: @wingkwong 
+
+I previously received feedback suggesting that setting `tabIndex="-1"` for the clear button to make it non-focusable at all times would improve web accessibility. 
+
+https://github.com/nextui-org/nextui/pull/3774/files/b3bd46ab9434449c5db01f1f9daf0d1dd893ed9c#r1774284969
+
+
+
+Could we discuss which approach aligns better with the project's accessibility guidelines? Should the clear button always be non-focusable for accessibility, or should it remain focusable when the input is not disabled?
+
+I can adjust the implementation based on the preferred approach.
+\n- wingkwong: I see. Lemme discuss with Ryo internally first and get back to you afterwards. Thanks.\n- wingkwong: confirmed the clear button will not be focusable no matter it is disabled or not.
+
+ref: 
+- https://react-spectrum.adobe.com/react-aria/SearchField.html
+- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/search\n
+
+Files Changed:
+- .changeset/two-waves-own.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/input": patch
++---
++
++clear button should not receive focus when input is disabled.\n- packages/components/input/__tests__/input.test.tsx (modified, 22 changes)\n  Patch: @@ -37,6 +37,22 @@ describe("Input", () => {
+     expect(container.querySelector("input")).toHaveAttribute("disabled");
+   });
+ 
++  it("should disable the clear button when isDisabled", () => {
++    const {getByRole} = render(<Input isClearable isDisabled label="test input" />);
++
++    const clearButton = getByRole("button");
++
++    expect(clearButton).toBeDisabled();
++  });
++
++  it("should not allow clear button to be focusable", () => {
++    const {getByRole} = render(<Input isClearable label="test input" />);
++
++    const clearButton = getByRole("button");
++
++    expect(clearButton).toHaveAttribute("tabIndex", "-1");
++  });
++
+   it("should have required attribute when isRequired with native validationBehavior", () => {
+     const {container} = render(<Input isRequired label="test input" validationBehavior="native" />);
+ 
+@@ -141,7 +157,7 @@ describe("Input", () => {
+       />,
+     );
+ 
+-    const clearButton = getByRole("button");
++    const clearButton = getByRole("button")!;
+ 
+     expect(clearButton).not.toBeNull();
+ 
+@@ -197,7 +213,7 @@ describe("Input", () => {
+       />,
+     );
+ 
+-    const clearButton = getByRole("button");
++    const clearButton = getByRole("button")!;
+ 
+     expect(clearButton).not.toBeNull();
+ 
+@@ -256,7 +272,7 @@ describe("Input with React Hook Form", () => {
+     input1 = document.querySelector("input[name=withDefaultValue]")!;
+     input2 = document.querySelector("input[name=withoutDefaultValue]")!;
+     input3 = document.querySelector("input[name=requiredField]")!;
+-    submitButton = document.querySelector("button")!;
++    submitButton = document.querySelector('button[type="submit"]')!;
+   });
+ 
+   it("should work with defaultValues", () => {\n- packages/components/input/src/input.tsx (modified, 2 changes)\n  Patch: @@ -36,7 +36,7 @@ const Input = forwardRef<"input", InputProps>((props, ref) => {
+ 
+   const end = useMemo(() => {
+     if (isClearable) {
+-      return <span {...getClearButtonProps()}>{endContent || <CloseFilledIcon />}</span>;
++      return <button {...getClearButtonProps()}>{endContent || <CloseFilledIcon />}</button>;
+     }
+ 
+     return endContent;\n- packages/components/input/src/use-input.ts (modified, 5 changes)\n  Patch: @@ -510,8 +510,9 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+     (props = {}) => {
+       return {
+         ...props,
+-        role: "button",
+-        tabIndex: 0,
++        type: "button",
++        tabIndex: -1,
++        disabled: originalProps.isDisabled,
+         "aria-label": "clear input",
+         "data-slot": "clear-button",
+         "data-focus-visible": dataAttr(isClearButtonFocusVisible),\n

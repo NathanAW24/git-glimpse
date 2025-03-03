@@ -1,0 +1,93 @@
+Pull Request Number: 1278
+Title: fix(tooltip): behavior of tooltip trigger with delay
+Base Branch: main
+Head Branch: fix/tooltip-with-delay
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/1278
+State: MERGED
+Created At: 2023-08-05T10:04:07Z
+Merged At: 2023-08-05T13:46:02Z
+Participants: tianenpang, jrgarciadev
+
+Description:
+Closes #1168
+📝 Description
+The tooltip should not open again after the delay is not reached and the cursor moves out.
+⛳️ Current behavior (updates)
+Fix the trigger behavior to prevent it from opening again after the delay is not reached and the cursor moves out.
+🚀 New behavior
+Use triggerProps instead of custom on-pointer events, it already includes the correct pointer behavior.
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+Before
+
+  
+    
+    
+
+    before.webm
+    
+  
+
+  
+
+  
+
+
+After
+
+  
+    
+    
+
+    after.webm
+
+Commits:
+- fix(tooltip): use trigger-props instead of custom on-pointer events\n- chore(changeset): add tooltip changeset\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 9596e14b995d0b7a2f4936261083163660807a5a
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                | Type  |
+| ------------------- | ----- |
+| @nextui-org/tooltip | Patch |
+| @nextui-org/snippet | Patch |
+| @nextui-org/react   | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/tianenpang/nextui/new/fix/tooltip-with-delay?filename=.changeset/great-vans-lick.md&value=---%0A%22%40nextui-org%2Ftooltip%22%3A%20patch%0A---%0A%0Afix(tooltip)%3A%20behavior%20of%20tooltip%20trigger%20with%20delay%0A)
+
+\n- vercel: @tianenpang is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%229596e14b995d0b7a2f4936261083163660807a5a%22%7D%2C%22id%22%3A%22QmfKPWmsAywU1zBKs4goMWLAJDEYbr2kN1f1XQSFEDaTPT%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1278%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/olive-hounds-bake.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/tooltip": patch
++---
++
++Fix the trigger behavior to prevent it from opening again after the delay is not reached and the cursor moves out.\n- packages/components/tooltip/src/use-tooltip.ts (modified, 2 changes)\n  Patch: @@ -208,8 +208,6 @@ export function useTooltip(originalProps: UseTooltipProps) {
+       ...mergeProps(triggerProps, props),
+       ref: mergeRefs(_ref, triggerRef),
+       "aria-describedby": isOpen ? tooltipId : undefined,
+-      onPointerEnter: () => state.open(),
+-      onPointerLeave: () => state.isOpen && state.close(),
+     }),
+     [triggerProps, isOpen, tooltipId, state],
+   );\n
