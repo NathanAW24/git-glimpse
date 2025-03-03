@@ -1,0 +1,348 @@
+Pull Request Number: 3663
+Title: fix(theme): color discrepancy in select
+Base Branch: canary
+Head Branch: macci001/font-color-descrepancy-select
+Author: macci001
+URL: https://github.com/nextui-org/nextui/pull/3663
+State: MERGED
+Created At: 2024-08-16T09:04:21Z
+Merged At: 2024-09-07T07:31:12Z
+Participants: macci001, wingkwong, pompurin404, jrgarciadev
+
+Description:
+Closes #3659
+📝 Description
+
+The PR fixes the color of the selected value and label in SELECT component.
+
+⛳️ Current behavior (updates)
+
+Bordered: When value is selected in SELECT component, color remains text-foreground-500
+
+Underline:  When value is selected in SELECT component, color remains text-foreground-500. Label does not change the color according to the color variant.
+
+Flat: Currently the bg-color becomes darker on hover
+Faded: Hover does not have any effect on bg-color
+
+🚀 New behavior
+
+Bordered: Color becomes text-default-foreground when value is selected.
+
+Underline:  Color becomes text-default-foreground when value is selected. Label color changes according to the color variant.
+
+Flat: bg-color lightens on hover.
+Faded: bg-color will darken on hover.
+
+Select component after all changes
+
+
+Changes are made to the value slot in Border and Underline variants.
+
+
+Summary by CodeRabbit
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced styling for the select component to improve visual feedback based on the selection state.
+New color rule for the default state, adjusting text color when a value is present.
+
+
+
+Bug Fixes
+
+Corrected the color of the selected value to align with design standards.
+Resolved label color issues in the underlined state for improved clarity.
+
+Commits:
+- fix(select): resolving color descrepancy in select\n- fix(select): making the changes accroding to the asked design\n- chore(changeset): revise message\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 90c1ec2a59992adcf4990963b6ecd77e1b200e1b
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/theme | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/macci001/nextui/new/macci001/font-color-descrepancy-select?filename=.changeset/tricky-geese-help.md&value=---%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(theme)%3A%20color%20discrepancy%20in%20select%0A)
+
+\n- vercel: @macci001 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22c9d8a2880273dbfc790c188c6fbae3dba4ed098c%22%7D%2C%22id%22%3A%22QmR4omy1VFs1gKxaA91x3K3vbPTdmiStzwej6E34D4TuPH%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3663%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent changes modify the styling of the `select` component to resolve font color inconsistencies in the `bordered` variant. A new style rule has been added to ensure the text color matches the presence of a selected value, thereby enhancing visual feedback for users. These updates aim to align the appearance of the select component with other input elements.
+
+## Changes
+
+| Files                     | Change Summary                                                                                  |
+|---------------------------|------------------------------------------------------------------------------------------------|
+| `.../select.ts`          | Modified `underlined` state to change `label` to `value` with `"group-data-[has-value=true]:text-default-foreground"`; added new style rule for `default` state with the same value. |
+
+## Assessment against linked issues
+
+| Objective                                                         | Addressed | Explanation                  |
+|------------------------------------------------------------------|-----------|------------------------------|
+| Consistent font color in select component (#3659)                | ✅        |                              |
+| Ensure font color reflects the selected state in bordered select  | ✅        |                              |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+# Existing changesets
+
+packages/core/theme/src/components/select.ts: ## AI-generated summary of changes
+
+This update introduces modifications to the `select` component's styling configuration within the `packages/core/theme/src/components/select.ts` file. A new style rule for the `value` property has been added in the `default` state, setting it to `"group-data-[has-value=true]:text-default-foreground"`. Additionally, the existing `label` property in the `underlined` state has been changed to `value`, now also set to `"group-data-[has-value=true]:text-default-foreground"`. These changes correct the color of the selected value from `text-foreground-500` to `text-default-foreground`, ensuring that the selected state visually aligns with expected design standards. The modifications enhance the overall appearance and usability of the component, improving user interaction cues and providing clearer visual feedback.
+
+## Alterations to the declarations of exported or public entities
+
+- `label: "group-data-[filled=true]:text-foreground"` in `underlined` state of `select` component in `packages/core/theme/src/components/select.ts` → `value: "group-data-[has-value=true]:text-default-foreground"` in `underlined` state of `select` component in `packages/core/theme/src/components/select.ts`
+- `value: "group-data-[has-value=true]:text-default-foreground"` added in `default` state of `select` component in `packages/core/theme/src/components/select.ts`
+
+
+# New changesets
+
+packages/core/theme/src/components/select.ts: ## AI-generated summary of changes
+
+The diff modifies the styling configuration of the `select` component in the `packages/core/theme/src/components/select.ts` file. It introduces a new style rule for the `value` property in the `default` state, setting it to `"group-data-[has-value=true]:text-default-foreground"`. Additionally, the `label` property in the `underlined` state has been replaced with `value`, which is now also set to `"group-data-[has-value=true]:text-default-foreground"`. These changes improve visual feedback by ensuring the text color reflects the presence of a value in the select component, enhancing user interaction cues. The overall control flow remains unchanged.
+
+## Alterations to the declarations of exported or public entities
+
+- `label: "group-data-[filled=true]:text-foreground"` in `underlined` state of `select` component in `packages/core/theme/src/components/select.ts` → `value: "group-data-[has-value=true]:text-default-foreground"` in `underlined` state of `select` component in `packages/core/theme/src/components/select.ts`
+- `value: "group-data-[has-value=true]:text-default-foreground"` added in `default` state of `select` component in `packages/core/theme/src/components/select.ts`
+
+
+# New changesets
+
+.changeset/tall-walls-sell.md: ## AI-generated summary of changes
+
+This update introduces a patch for the `@nextui-org/theme` library, specifically addressing issues related to the color representation in the SELECT component. The primary modification corrects the color of the selected value, changing it from `text-foreground-500` to `text-default-foreground`, ensuring that the selected state visually aligns with expected design standards. Additionally, the patch resolves a problem where the label slot in the SELECT component's UNDERLINE did not apply the intended color variant, enhancing the overall appearance and usability of the component. These changes improve the consistency and clarity of the component's visual feedback, contributing to a better user experience.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(theme): color discrepancy in select" addresses a bug identified in issue #3659 concerning the color of the selected value and label in the SELECT component of the NextUI library. The current behavior shows that when a value is selected in both the Bordered and Underline variants of the SELECT component, the color remains `text-foreground-500`, leading to visual inconsistency. This PR proposes a solution that changes the color to `text-default-foreground` upon selection, ensuring that the label color adjusts according to the specified `color` variant. Screenshots included in the PR illustrate the changes in color for both variants, demonstrating improved visual consistency when a selection is made. The modifications specifically target the `value` slot in both the Bordered and Underline variants, enhancing the overall user experience.
+
+## Objectives from Linked Issues
+
+The linked issue #3659 describes a bug where the font color in the Bordered SELECT component remains gray, regardless of the `color` prop set by the user. This inconsistency is problematic, as the font color in the Input component appears black while the SELECT component's font color remains gray. The issue was reported by a user who provided an example of the Bordered SELECT component with the `color="primary"` prop, which did not change the font color as expected. The user anticipated that the font color would align with the selected color variant, highlighting the need for a fix to ensure that the SELECT component behaves consistently with other input components. The objective is to resolve this inconsistency in font color and provide a mechanism for users to effectively change the color in the SELECT component.
+
+## Comments Summary
+
+The comments on the PR primarily consist of a request from user `wingkwong` asking the PR author, `macci001`, to direct message them on Discord, using the same username. No additional feedback or discussions regarding the changes made in the PR were provided in the comments section. This indicates that the focus of the interaction was on private communication rather than public review or critique of the proposed changes. As such, there are no further insights or discussions about the implementation or potential improvements to the PR at this time. The absence of comments may suggest either a lack of immediate concern from other contributors or that the changes were straightforward and aligned with the expectations set by the linked issue.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- c9d8a2880273dbfc790c188c6fbae3dba4ed098c -->
+<!-- 26974e53eba122ef0c54f7b08a740b2b450f03ac -->
+<!-- ba70e054083e5799107a3b4c3938a789115b3a2e -->
+<!-- 90c1ec2a59992adcf4990963b6ecd77e1b200e1b -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- wingkwong: @macci001 please DM me at discord (same username)\n- macci001: @wingkwong applied the asked changes and updated the PR description.\n- pompurin404: > * Flat: Currently the bg-color becomes darker on hover
+
+I'm sorry, but I personally think there is an issue with this change, as it causes the Select component and the Input component to behave inconsistently.
+
+![recording](https://github.com/user-attachments/assets/892e102a-dc0c-4803-966a-49bce853f8f8)
+\n- wingkwong: @macci001 please take a look\n
+
+Files Changed:
+- .changeset/tall-walls-sell.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/theme": patch
++---
++
++The color of the selected value in SELECT component was `text-foreground-500` instead of `text-default-foreground`. Also label slot in SELECT component's UNDERLINE had no effect of color variant. The change includes the fix for the mentioned issues (#3659).\n- packages/core/theme/src/components/select.ts (modified, 25 changes)\n  Patch: @@ -44,6 +44,7 @@ const select = tv({
+       faded: {
+         trigger: [
+           "bg-default-100",
++          "data-[hover=true]:bg-default-200",
+           "border-medium",
+           "border-default-200",
+           "data-[hover=true]:border-default-400",
+@@ -59,6 +60,7 @@ const select = tv({
+           "data-[focus=true]:border-default-foreground",
+           "data-[focus=true]:border-default-foreground",
+         ],
++        value: "group-data-[has-value=true]:text-default-foreground",
+       },
+       underlined: {
+         trigger: [
+@@ -84,7 +86,7 @@ const select = tv({
+           "data-[open=true]:after:w-full",
+           "data-[focus=true]:after:w-full",
+         ],
+-        label: "group-data-[filled=true]:text-foreground",
++        value: "group-data-[has-value=true]:text-default-foreground",
+       },
+     },
+     color: {
+@@ -217,16 +219,17 @@ const select = tv({
+       color: "default",
+       class: {
+         value: "group-data-[has-value=true]:text-default-foreground",
++        trigger: ["bg-default-100", "data-[hover=true]:bg-default-50"],
+       },
+     },
+     {
+       variant: "flat",
+       color: "primary",
+       class: {
+         trigger: [
+-          "bg-primary-50",
++          "bg-primary-100",
+           "text-primary",
+-          "data-[hover=true]:bg-primary-100",
++          "data-[hover=true]:bg-primary-50",
+           "group-data-[focus=true]:bg-primary-50",
+         ],
+         value: "text-primary",
+@@ -238,9 +241,9 @@ const select = tv({
+       color: "secondary",
+       class: {
+         trigger: [
+-          "bg-secondary-50",
++          "bg-secondary-100",
+           "text-secondary",
+-          "data-[hover=true]:bg-secondary-100",
++          "data-[hover=true]:bg-secondary-50",
+           "group-data-[focus=true]:bg-secondary-50",
+         ],
+         value: "text-secondary",
+@@ -252,10 +255,10 @@ const select = tv({
+       color: "success",
+       class: {
+         trigger: [
+-          "bg-success-50",
++          "bg-success-100",
+           "text-success-600",
+           "dark:text-success",
+-          "data-[hover=true]:bg-success-100",
++          "data-[hover=true]:bg-success-50",
+           "group-data-[focus=true]:bg-success-50",
+         ],
+         value: "text-success-600 dark:text-success",
+@@ -267,10 +270,10 @@ const select = tv({
+       color: "warning",
+       class: {
+         trigger: [
+-          "bg-warning-50",
++          "bg-warning-100",
+           "text-warning-600",
+           "dark:text-warning",
+-          "data-[hover=true]:bg-warning-100",
++          "data-[hover=true]:bg-warning-50",
+           "group-data-[focus=true]:bg-warning-50",
+         ],
+         value: "text-warning-600 dark:text-warning",
+@@ -282,10 +285,10 @@ const select = tv({
+       color: "danger",
+       class: {
+         trigger: [
+-          "bg-danger-50",
++          "bg-danger-100",
+           "text-danger",
+           "dark:text-danger-500",
+-          "data-[hover=true]:bg-danger-100",
++          "data-[hover=true]:bg-danger-50",
+           "group-data-[focus=true]:bg-danger-50",
+         ],
+         value: "text-danger dark:text-danger-500",\n

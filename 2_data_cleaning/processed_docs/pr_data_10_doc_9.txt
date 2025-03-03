@@ -1,0 +1,280 @@
+Pull Request Number: 3123
+Title: Update regex-validation.ts
+Base Branch: canary
+Head Branch: patch-1
+Author: Softwaremanufaktur
+URL: https://github.com/nextui-org/nextui/pull/3123
+State: MERGED
+Created At: 2024-05-29T12:56:25Z
+Merged At: 2024-06-15T00:02:26Z
+Participants: Softwaremanufaktur, wingkwong, jrgarciadev
+
+Description:
+Fix example email regex
+📝 Description
+This fixes an issue where the email "example@acme" would have been shown as valid, because the dot "." was not properly escaped and treated as a standard regex wildcard
+⛳️ Current behavior (updates)
+False positive for a valid mail: "example@acme"
+🚀 New behavior
+Invalid mail: "example@acme"
+Valid mail: "example@acme.org"
+💣 Is this a breaking change (Yes/No):
+No
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Corrected email validation regex to properly match email addresses by escaping the dot in the domain part.
+
+Commits:
+- Update regex-validation.ts
+
+Fix email regex\n- Update email regex input.stories.tsx\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: c8183cae9825392936405cc243f2df60ca0fbb1c
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/Softwaremanufaktur/nextui/new/patch-1?filename=.changeset/four-apes-flow.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Finput%22%3A%20patch%0A---%0A%0AUpdate%20regex-validation.ts%0A)
+
+\n- vercel: [vc]: #8RQe93jOkavPT86znnewi+RjJizxBwsghEOhrPabl6k=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvM1I4OFVKbllrTXh5QkdQZExvSmJya0FoRWQ4cyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXNvZnR3YXJlbWFudWZha3QtNmQ3ZDBmLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXNvZnR3YXJlbWFudWZha3QtNmQ3ZDBmLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/3R88UJnYkMxyBGPdLoJbrkAhEd8s)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-softwaremanufakt-6d7d0f-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-softwaremanufakt-6d7d0f-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 31, 2024 8:17am |
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent changes focus on correcting the regular expression used for email validation in two different files. The primary adjustment involves escaping the dot character in the domain part of the email pattern to ensure proper matching of email addresses. This modification enhances the accuracy of email validation across the application.
+
+## Changes
+
+| Files                                         | Change Summary                                                                                          |
+|-----------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| apps/docs/content/components/input/regex-validation.ts | Corrected the regular expression in the `validateEmail` function to escape the dot character in the domain part. |
+| packages/components/input/stories/input.stories.tsx    | Updated the `validateEmail` function in the `RegexValidationTemplate` component to escape the dot character in the domain part. |
+
+## Sequence Diagram(s) (Beta)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant InputComponent
+    participant ValidationFunction
+
+    User->>InputComponent: Enters email
+    InputComponent->>ValidationFunction: Calls validateEmail with entered email
+    ValidationFunction-->>InputComponent: Returns validation result
+    InputComponent-->>User: Displays validation feedback
+```
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+apps/docs/content/components/input/regex-validation.ts: ## Short Summary
+
+The change in functionality for `regex-validation.ts` involves correcting the regular expression in the `validateEmail` function to properly match email addresses by escaping the dot in the domain part.
+
+## Alterations to the declarations of exported or public entities
+
+- `const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)` in `regex-validation.ts`
+  → `const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)` in `regex-validation.ts`
+
+# New changesets
+
+packages/components/input/stories/input.stories.tsx: ## Summary
+
+In the file `input.stories.tsx`, the `validateEmail` function's regular expression in the `RegexValidationTemplate` component was modified to escape the dot character in the domain part of the email pattern.
+
+## Alterations to the declarations of exported or public entities
+
+- `const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)` in `RegexValidationTemplate` in `input.stories.tsx` → `const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)` in `RegexValidationTemplate` in `input.stories.tsx`
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+### PR Summary
+
+**Title:** Update regex-validation.ts  
+**User:** Softwaremanufaktur  
+**Number:** 3123  
+
+**Description:**  
+This pull request addresses an issue in the `regex-validation.ts` file where the email "example@acme" was incorrectly validated as a valid email address. The problem was due to the dot "." not being properly escaped, causing it to be treated as a standard regex wildcard. The update ensures that "example@acme" is now considered invalid, while "example@acme.org" is correctly validated as a valid email address. This change does not introduce any breaking changes.
+
+### Comments Summary
+
+1. **Softwaremanufaktur:**  
+   - Questioned whether the new regex was actually used in the update.
+   - Provided a link to a StackBlitz example for testing: [StackBlitz Example](https://stackblitz.com/edit/react-i2jazt?file=src%2FApp.js).
+
+2. **wingkwong:**  
+   - Mentioned that the testing was done in Storybook.
+   - Highlighted the need to update the regex in another location as well: [NextUI Input Stories](https://github.com/nextui-org/nextui/blob/750b4662214a8e67ed7784e551c81d99ed1a6adc/packages/components/input/stories/input.stories.tsx#L140).
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated summary of generated summaries
+
+The recent changes involve updates to the email validation regular expression in two files: `regex-validation.ts` and `input.stories.tsx`. In both files, the regular expression used in the `validateEmail` function was corrected to properly escape the dot character in the domain part of the email pattern. This ensures that the email validation correctly matches email addresses by treating the dot as a literal character rather than a wildcard.
+
+### Alterations to the declarations of exported or public entities
+
+#### `regex-validation.ts`
+
+- **Before:**
+  ```typescript
+  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)
+  ```
+
+- **After:**
+  ```typescript
+  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)
+  ```
+
+#### `input.stories.tsx`
+
+- **Before:**
+  ```typescript
+  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)
+  ```
+
+- **After:**
+  ```typescript
+  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)
+  ```
+- **Feedback from the user on the previous review**: undefined
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 4c3a9e299e3f6d3f0d360b166b04c75b4484c0b7 -->
+<!-- c8183cae9825392936405cc243f2df60ca0fbb1c -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: @Softwaremanufaktur is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%224c3a9e299e3f6d3f0d360b166b04c75b4484c0b7%22%7D%2C%22id%22%3A%22QmYhje3V5KXyHm3MxjGLKznUiCLTFV78Qowj4qDQUaujkS%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3123%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- Softwaremanufaktur: Are you really sure that you have used the new regex?
+
+https://stackblitz.com/edit/react-i2jazt?file=src%2FApp.js\n- wingkwong: @Softwaremanufaktur oh I was testing in storybook. Please also update here as well.
+
+https://github.com/nextui-org/nextui/blob/750b4662214a8e67ed7784e551c81d99ed1a6adc/packages/components/input/stories/input.stories.tsx#L140\n
+
+Files Changed:
+- apps/docs/content/components/input/regex-validation.ts (modified, 2 changes)\n  Patch: @@ -3,7 +3,7 @@ const App = `import {Input} from "@nextui-org/react";
+ export default function App() {
+   const [value, setValue] = React.useState("junior2nextui.org");
+ 
+-  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
++  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
+ 
+   const isInvalid = React.useMemo(() => {
+     if (value === "") return false;\n- packages/components/input/stories/input.stories.tsx (modified, 2 changes)\n  Patch: @@ -137,7 +137,7 @@ const PasswordTemplate = (args) => {
+ const RegexValidationTemplate = (args) => {
+   const [value, setValue] = React.useState("");
+ 
+-  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
++  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
+ 
+   const validationState = React.useMemo(() => {
+     if (value === "") return undefined;\n

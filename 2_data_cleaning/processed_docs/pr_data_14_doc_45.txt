@@ -1,0 +1,422 @@
+Pull Request Number: 2522
+Title: fix(popover): unexpected props on a DOM element
+Base Branch: main
+Head Branch: fix/eng-478
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2522
+State: MERGED
+Created At: 2024-03-14T10:04:44Z
+Merged At: 2024-04-02T01:33:27Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes #2474
+Closes #2528
+Closes #2593
+
+📝 Description
+Currently if you create a Custom Trigger in Dropdown with elements which don't have isDisabled prop, e.g. div, <User/>, adding isDisabled would make React fail to recognize it on a DOM element. Hence, adding the isDisabled logic to cover this case. Also remove isDisabled prop for non NextUI button elements.
+⛳️ Current behavior (updates)
+Currently if you set isDisabled to dropdown, it won't make it disabled.
+
+🚀 New behavior
+With this fix, the dropdown is disabled.
+
+💣 Is this a breaking change (Yes/No):
+
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+New Features
+
+Introduced a new property isDropdownDisabled for enhanced control over the disabled state of Popover triggers.
+
+
+Enhancements
+
+Improved handling of custom triggers and DOM elements within Popover components, including disabled state management.
+Added a utility function to identify NextUI components, enhancing component recognition capabilities.
+
+Commits:
+- fix(popover): handle isDisabled logic for elements without isDisabled props\n- chore(popover): isDisabled not necessary in restProps\n- chore(changset): handle isDisabled logic for elements without isDisabled props\n- fix(popover): keep all the props but isDisabled for non nextui button\n- refactor(popover): move isDisabled handling to getTriggerProps\n- refactor(popover): get the popover trigger styles from theme instead\n- feat(theme): add isDisabled styles in popover\n- chore(changeset): add patch to @nextui-org/theme\n- refactor(popover): avoid re-instantiate popover styles\n- fix(popover): apply filterDOMProps in popover trigger\n- fix(popover): avoid conflicts with tooltip isDisabled\n- chore(core): add isNextUIEl function to check if a component is a NextUI component\n- chore(changeset): add system-rsc and revise message\n- Merge branch 'main' into fix/eng-478\n- feat(dropdown): add tests for custom trigger with isDisabled\n- fix(dropdown): incorrect User import path\n- feat(dropdown): revise User and add mockRestore\n- fix(dropdown): revise user import path\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: fc2c55aea92d78ae59009972f48a25d30bfed2f7
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 28 packages</summary>
+
+  | Name                           | Type  |
+| ------------------------------ | ----- |
+| @nextui-org/popover            | Patch |
+| @nextui-org/system-rsc         | Patch |
+| @nextui-org/theme              | Patch |
+| @nextui-org/autocomplete       | Patch |
+| @nextui-org/dropdown           | Patch |
+| @nextui-org/select             | Patch |
+| @nextui-org/react              | Patch |
+| @nextui-org/badge              | Patch |
+| @nextui-org/code               | Patch |
+| @nextui-org/divider            | Patch |
+| @nextui-org/kbd                | Patch |
+| @nextui-org/skeleton           | Patch |
+| @nextui-org/spacer             | Patch |
+| @nextui-org/spinner            | Patch |
+| @nextui-org/system             | Patch |
+| @nextui-org/accordion          | Patch |
+| @nextui-org/button             | Patch |
+| @nextui-org/listbox            | Patch |
+| @nextui-org/menu               | Patch |
+| @nextui-org/modal              | Patch |
+| @nextui-org/navbar             | Patch |
+| @nextui-org/slider             | Patch |
+| @nextui-org/snippet            | Patch |
+| @nextui-org/table              | Patch |
+| @nextui-org/tabs               | Patch |
+| @nextui-org/tooltip            | Patch |
+| @nextui-org/aria-utils         | Patch |
+| @nextui-org/framer-transitions | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/wingkwong/nextui/new/fix/eng-478?filename=.changeset/thirty-tools-roll.md&value=---%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A%22%40nextui-org%2Fpopover%22%3A%20patch%0A%22%40nextui-org%2Fsystem-rsc%22%3A%20patch%0A%22%40nextui-org%2Fsystem%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(popover)%3A%20unexpected%20props%20on%20a%20DOM%20element%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: rate limited by coderabbit.ai -->
+
+> [!WARNING]
+> ## Rate Limit Exceeded
+> 
+> @wingkwong has exceeded the limit for the number of commits or files that can be reviewed per hour. Please wait **20 minutes and 15 seconds** before requesting another review.
+> 
+> <details>
+> 
+> <summary>How to resolve this issue?</summary>
+> 
+> After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR.
+> 
+> We recommend that you space out your commits to avoid hitting the rate limit.
+> 
+> </details>
+> 
+> <details>
+> 
+> <summary>How do rate limits work?</summary>
+> 
+> CodeRabbit enforces hourly rate limits for each developer per organization.
+> Our paid plans have higher rate limits than the trial, open-source and free plans. In all cases, we re-allow further reviews after a brief timeout.
+> Please see our [FAQ](https://coderabbit.ai/docs/faq) for further information.
+> 
+> </details>
+> 
+> <details>
+> <summary>Commits</summary>
+> Files that changed from the base of the PR and between 1da2651551e6f27cba3df5fc4449b93fde5941ee and fc2c55aea92d78ae59009972f48a25d30bfed2f7.
+> </details>
+
+<!-- end of auto-generated comment: rate limited by coderabbit.ai --><!-- walkthrough_start -->
+
+## Walkthrough
+The recent updates encompass enhancements and bug fixes in a React application, focusing on prop handling and component recognition. These changes address issues related to unrecognized props on DOM elements, refine disabled state management in dropdown components, and introduce utility functions for identifying NextUI components. This holistic approach not only resolves specific bug reports but also enhances the overall robustness and developer experience within the library.
+
+## Changes
+
+| File Path | Change Summary |
+|-----------|----------------|
+| `.packages/components/popover/src/popover-trigger.tsx` | Added imports and logic for `isDisabled` prop handling, custom triggers, and introduced `isDropdownDisabled` property. |
+| `.packages/core/theme/src/components/popover.ts` | Incorporated styles based on the `isDropdownDisabled` state. |
+| `.packages/core/system-rsc/src/utils.ts` | Introduced `isNextUIEl` function to enhance component recognition for NextUI components. |
+| `.packages/components/dropdown/__tests__/dropdown.test.tsx`<br>`.packages/components/input/__tests__/input.test.tsx` | Updated test cases for dropdown and input components. |
+
+## Assessment against linked issues
+
+| Objective | Addressed | Explanation |
+|-----------|-----------|-------------|
+| Address React warning about unrecognized `isDisabled` and `originalProps` props on DOM elements (#2474, #2528, #2593) | ✅ |  |
+| Ensure custom attributes are correctly handled and do not generate warnings in React (#2474, #2528, #2593) | ✅ |  |
+| Introduce utility function for identifying NextUI components to improve component recognition and handling (#2474, #2528, #2593) | ✅ |  |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.packages/components/popover/src/popover-trigger.tsx: ## Short summary
+The changes in `popover-trigger.tsx` involve adding the `cn`, `isNextUIEl`, and `filterDOMProps` imports, renaming `rest` to `restProps`, introducing `isDisabled` and `isNextUIElement` variables, adjusting the handling of `restProps` to include `isDisabled` logic for custom triggers and DOM elements in `cloneElement`, and introducing a new `isDropdownDisabled` property to handle cases where the `PopoverTrigger` child lacks the `isDisabled` prop. This property is conditionally set based on the presence of `props.isDisabled`.
+
+.packages/core/theme/src/components/popover.ts: ## Short summary
+Added logic for handling the `isDropdownDisabled` state in the popover component, setting trigger styles based on the state.
+
+.packages/core/system-rsc/src/utils.ts: ## Short Summary
+Added a new exported function `isNextUIEl` to check if a component is a NextUI component based on its type's render display name.
+
+packages/components/dropdown/__tests__/dropdown.test.tsx: ## Short summary
+Added an import statement for `User` from "@nextui-org/user" in the test file. Two new test cases were added to ensure the dropdown renders correctly with a custom trigger and when disabled.
+
+packages/components/input/__tests__/input.test.tsx: ## Short summary
+The functionality change in the `input.test.tsx` file involves removing asynchronous behavior from the test case related to updating the value via a ref in the `Input` component.
+
+packages/components/radio/src/use-radio.ts: ## Short Summary
+In the `useRadio` function in `use-radio.ts`, the `getInputProps` function has been modified to merge props differently, removing direct prop spreading and adjusting the order of merging.
+
+.changeset/thirty-islands-trade.md: The new file introduces a patch for "@nextui-org/radio" to fix missing required props and validationMessage.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+This pull request aims to address a bug in the NextUI library related to handling unexpected props on DOM elements, specifically focusing on the `isDisabled` prop within the Dropdown component's custom triggers. The issue arises when non-button elements lack the `isDisabled` prop, causing React warnings. By introducing logic to manage `isDisabled` for custom triggers and DOM elements, the PR ensures correct behavior without warnings. Changes in `popover-trigger.tsx` and the theme component for popovers address this issue. Additionally, the PR resolves similar warnings in linked bug reports (#2474, #2528, #2593) concerning `originalProps` and `isDisabled` props on DOM elements, enhancing the library's robustness and developer experience.
+
+### Comments Summary
+
+A comment by `jrgarciadev` requests the addition of tests to prevent similar issues in the future, highlighting the importance of test coverage for maintaining code quality and preventing regressions. This underscores the focus on ensuring the long-term stability and reliability of the codebase through comprehensive testing practices.
+
+### AI-generated Summary of Generated Summaries
+
+The PR addresses a bug in NextUI related to unexpected props on DOM elements, specifically handling `isDisabled` in Dropdown custom triggers. It introduces logic to manage `isDisabled` for custom triggers and DOM elements, resolving React warnings. Changes in `popover-trigger.tsx` and the popover theme component address this issue. The PR also fixes warnings in linked bug reports (#2474, #2528, #2593) related to `originalProps` and `isDisabled` on DOM elements, enhancing library robustness. Additionally, a comment requests adding tests for future issue prevention, emphasizing the importance of test coverage for code quality and stability.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 58eccebf86f424dc2551c93dfb295b3d2ae67a61 -->
+<!-- ac5cddacbf3aad4d4c087053a40ec651ccde8a3c -->
+<!-- 1001b5e88f99a73eeb01932a2810eb3f1db86897 -->
+<!-- 0147b9a745629bb4c298097bfcf4384e85339f47 -->
+<!-- 7e8b4e8e248691f75da7bea9941c2242f93f18be -->
+<!-- 6023e89bbcd5551d6e29eedf9e548c135abc9573 -->
+<!-- f3c7c1dd450328951181f77171dbb166017cb42a -->
+<!-- 1da2651551e6f27cba3df5fc4449b93fde5941ee -->
+<!-- 4f6099d51c46eab8ea37961820e2716fc7a0bb0c -->
+<!-- 3c0ed1e4e94bfe0a48741f5e9215f8b214b7cfd7 -->
+
+<!-- commit_ids_reviewed_end --><!-- tweet_start -->
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<!-- tweet_end --><!-- tips_start -->
+
+---
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with CodeRabbit:
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- The JSON schema for the configuration file is available [here](https://coderabbit.ai/integrations/coderabbit-overrides.v2.json).
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/coderabbit-overrides.v2.json`
+
+### CodeRabbit Discord Community
+
+Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #NFdQKHuMjYPGAoJK2xo1rooevKSaMs0ksuujlEheTD4=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNW5OemlqQW1KeE00VnRuV05QajJ4QjcyeDhlMSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtZW5nLTQ3OC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay13aW5na3dvbmctZml4LWVuZy00NzgtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/5nNzijAmJxM4VtnWNPj2xB72x8e1)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-478-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-478-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 1, 2024 6:50am |
+
+\n- vercel: @wingkwong is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22a2fc2bdd2e7a1f8d0665c68c5c7f1d290c76d164%22%7D%2C%22id%22%3A%22QmPqVDrU2nCeVMBY95AEBVh2VTUKRSRgCXqfutoFtcMd5f%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2522%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: @wingkwong could you please add some tests to avoid this happening in the future?\n
+
+Files Changed:
+- .changeset/lovely-snakes-approve.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/popover": patch
++"@nextui-org/system-rsc": patch
++"@nextui-org/theme": patch
++---
++
++Fixed unexpected props on a DOM element (#2474)\n- packages/components/dropdown/__tests__/dropdown.test.tsx (modified, 45 changes)\n  Patch: @@ -2,6 +2,7 @@ import * as React from "react";
+ import {act, render} from "@testing-library/react";
+ import {Button} from "@nextui-org/button";
+ import userEvent from "@testing-library/user-event";
++import {User} from "@nextui-org/user";
+ 
+ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, DropdownSection} from "../src";
+ 
+@@ -416,4 +417,48 @@ describe("Dropdown", () => {
+ 
+     expect(onSelectionChange).toBeCalledTimes(0);
+   });
++
++  it("should render without error (custom trigger + isDisabled)", async () => {
++    const spy = jest.spyOn(console, "error").mockImplementation(() => {});
++
++    render(
++      <Dropdown isDisabled>
++        <DropdownTrigger>
++          <div>Trigger</div>
++        </DropdownTrigger>
++        <DropdownMenu aria-label="Actions" onAction={alert}>
++          <DropdownItem key="new">New file</DropdownItem>
++          <DropdownItem key="copy">Copy link</DropdownItem>
++          <DropdownItem key="edit">Edit file</DropdownItem>
++          <DropdownItem key="delete" color="danger">
++            Delete file
++          </DropdownItem>
++        </DropdownMenu>
++      </Dropdown>,
++    );
++
++    expect(spy).toBeCalledTimes(0);
++
++    spy.mockRestore();
++
++    render(
++      <Dropdown isDisabled>
++        <DropdownTrigger>
++          <User as="button" description="@tonyreichert" name="Tony Reichert" />
++        </DropdownTrigger>
++        <DropdownMenu aria-label="Actions" onAction={alert}>
++          <DropdownItem key="new">New file</DropdownItem>
++          <DropdownItem key="copy">Copy link</DropdownItem>
++          <DropdownItem key="edit">Edit file</DropdownItem>
++          <DropdownItem key="delete" color="danger">
++            Delete file
++          </DropdownItem>
++        </DropdownMenu>
++      </Dropdown>,
++    );
++
++    expect(spy).toBeCalledTimes(0);
++
++    spy.mockRestore();
++  });
+ });\n- packages/components/popover/src/popover-trigger.tsx (modified, 23 changes)\n  Patch: @@ -1,6 +1,6 @@
+ import React, {Children, cloneElement, useMemo} from "react";
+-import {forwardRef} from "@nextui-org/system";
+-import {pickChildren} from "@nextui-org/react-utils";
++import {forwardRef, isNextUIEl} from "@nextui-org/system";
++import {pickChildren, filterDOMProps} from "@nextui-org/react-utils";
+ import {useAriaButton} from "@nextui-org/use-aria-button";
+ import {Button} from "@nextui-org/button";
+ import {mergeProps} from "@react-aria/utils";
+@@ -29,7 +29,7 @@ const PopoverTrigger = forwardRef<"button", PopoverTriggerProps>((props, _) => {
+     };
+   }, [children]);
+ 
+-  const {onPress, ...rest} = useMemo(() => {
++  const {onPress, ...restProps} = useMemo(() => {
+     return getTriggerProps(mergeProps(otherProps, child.props), child.ref);
+   }, [getTriggerProps, child.props, otherProps, child.ref]);
+ 
+@@ -42,7 +42,22 @@ const PopoverTrigger = forwardRef<"button", PopoverTriggerProps>((props, _) => {
+     return triggerChildren?.[0] !== undefined;
+   }, [triggerChildren]);
+ 
+-  return cloneElement(child, mergeProps(rest, hasNextUIButton ? {onPress} : buttonProps));
++  const isDisabled = !!restProps?.isDisabled;
++
++  const isNextUIElement = isNextUIEl(child);
++
++  return cloneElement(
++    child,
++    mergeProps(
++      // if we add `isDisabled` prop to DOM elements,
++      // react will fail to recognize it on a DOM element,
++      // hence, apply filterDOMProps for such case
++      filterDOMProps(restProps, {
++        enabled: isDisabled && !isNextUIElement,
++      }),
++      hasNextUIButton ? {onPress} : buttonProps,
++    ),
++  );
+ });
+ 
+ PopoverTrigger.displayName = "NextUI.PopoverTrigger";\n- packages/components/popover/src/use-popover.ts (modified, 7 changes)\n  Patch: @@ -244,7 +244,12 @@ export function usePopover(originalProps: UsePopoverProps) {
+         "aria-haspopup": "dialog",
+         ...mergeProps(triggerProps, props),
+         onPress,
+-        className: slots.trigger({class: clsx(classNames?.trigger, props.className)}),
++        className: slots.trigger({
++          class: clsx(classNames?.trigger, props.className),
++          // apply isDisabled class names to make the trigger child disabled
++          // e.g. for elements like div or NextUI elements that don't have `isDisabled` prop
++          isDropdownDisabled: !!props?.isDisabled,
++        }),
+         ref: mergeRefs(_ref, triggerRef),
+       };
+     },\n- packages/core/system-rsc/src/utils.ts (modified, 9 changes)\n  Patch: @@ -100,3 +100,12 @@ export const mapPropsVariantsWithCommon = <
+  * Classnames utility
+  */
+ export const cn = clsx;
++
++/**
++ * Checks if a component is a NextUI component.
++ * @param component - The component to check.
++ * @returns `true` if the component is a NextUI component, `false` otherwise.
++ */
++export const isNextUIEl = (component: React.ReactComponentElement<any>) => {
++  return !!component.type?.render?.displayName?.includes("NextUI");
++};\n- packages/core/theme/src/components/popover.ts (modified, 6 changes)\n  Patch: @@ -162,6 +162,12 @@ const popover = tv({
+         base: "animate-none",
+       },
+     },
++    isDropdownDisabled: {
++      true: {
++        trigger: "opacity-disabled pointer-events-none",
++      },
++      false: {},
++    },
+   },
+   defaultVariants: {
+     color: "default",\n

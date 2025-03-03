@@ -1,0 +1,68 @@
+Pull Request Number: 743
+Title: fix: Link icon example missing isExternal prop (fix #742)
+Base Branch: main
+Head Branch: fix/LinkExampleError
+Author: sun0day
+URL: https://github.com/nextui-org/nextui/pull/743
+State: CLOSED
+Created At: 2022-09-06T16:09:24Z
+Merged At: None
+Participants: sun0day, benmneb, jrgarciadev
+
+Description:
+Closes #742
+📝 Description
+https://nextui.org/docs/components/link#external-link miss isExternal prop.
+⛳️ Current behavior (updates)
+
+🚀 New behavior
+
+💣 Is this a breaking change (Yes/No):
+
+No
+📝 Additional Information
+Link uses isExternal prop just to control whether to show LinkIcon. The literal meaning of isExternal is a bit obscure. Maybe naming it icon is better? When icon is set true, show default internal LinkIcon; When icon is set other icon component, then just show it. @jrgarciadev
+
+Commits:
+- fix: Link icon example missing isExternal prop (fix #742)\n- docs: remove useless icon prop in Link example\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/8M2ifkcXmWTmAnX9ksHC1T7KsXpy)) | [Visit Preview](https://nextui-storybook-git-fork-sun0day-fix-linkexa-6f5996-nextui-org.vercel.app) | Sep 8, 2022 at 1:52AM (UTC) |
+
+\n- vercel: @sun0day is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2253ce84d8a204891d3e14f06700ef5e48fd3a4e5e%22%7D%2C%22id%22%3A%22QmVmEdZsv21AfGxuVHfwXu92th3HeHPCSGPcjS1QE7goax%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A743%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- benmneb: whats the deal with the `icon` prop here? it just puts `Warning: Received 'true' for a non-boolean attribute 'icon'.` in the console\n- sun0day: > whats the deal with the `icon` prop here? it just puts `Warning: Received 'true' for a non-boolean attribute 'icon'.` in the console
+
+For now, `icon` prop is useless, see https://nextui.org/docs/components/link#link-props, and `Link` will pass it directly into the `a` tag which causes the warning output. I'll remove it from the example.
+\n- jrgarciadev: Hey @sun0day thanks for your contribution, however, the `isExternal` prop has already been included in the example, would you like to send another PR with the suggestions you made?
+
+1. Add the `rel="noopener"` & `target="_blank` when the `isExternal` prop is `true`
+2. Add a prop called `externalcon?: React.ReactNode` in case it's defined render it, otherwise render the `LinkIcon`
+
+
+Thanks beforehand! 🙏🏻 \n
+
+Files Changed:
+- apps/docs/content/components/link/icon.ts (modified, 4 changes)\n  Patch: @@ -3,11 +3,11 @@ const App = `import { Link, Spacer } from "@nextui-org/react";
+ export default function App() {
+   return (
+     <>
+-      <Link href="#" icon>
++      <Link href="#">
+         "First solve the problem. Then, write the code." - Jon Johnson.
+       </Link>
+       <Spacer />
+-      <Link href="#" icon color>
++      <Link href="#" isExternal>
+         "First solve the problem. Then, write the code." - Jon Johnson.
+       </Link>
+     </>\n

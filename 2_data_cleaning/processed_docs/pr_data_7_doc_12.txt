@@ -1,0 +1,285 @@
+Pull Request Number: 3505
+Title: fix(date-range-picker): calendar-content width as per visible-months
+Base Branch: canary
+Head Branch: fix/date-picker-n-date-range-picker-visible-month
+Author: awesome-pro
+URL: https://github.com/nextui-org/nextui/pull/3505
+State: MERGED
+Created At: 2024-07-18T14:29:37Z
+Merged At: 2024-07-18T17:34:13Z
+Participants: awesome-pro, jrgarciadev, wingkwong
+
+Description:
+Closes #3504
+📝 Description
+Fixed the width of calendar  and calendarContent  for calendar, date-picker and date-range-picker as per the visibleMonths
+⛳️ Current behavior (updates)
+
+🚀 New behavior
+
+  
+    
+    
+
+    Screen.Recording.2024-07-18.at.7.48.36.PM.mov
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No): NO
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Fixed the width calculation for the calendar content to align it with the visible month.
+
+
+
+Improvements
+
+Enhanced the datePicker component to dynamically adjust the calendar width based on the number of visible months for better responsiveness and display accuracy.
+
+Commits:
+- fix(date-range-picker): calendar-content width as per visible-months\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 0d5a16bfa3bf7d414b86a8fa73b94e51edb8cbdb
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 4 packages</summary>
+
+  | Name                    | Type  |
+| ----------------------- | ----- |
+| @nextui-org/calendar    | Patch |
+| @nextui-org/theme       | Patch |
+| @nextui-org/date-picker | Patch |
+| @nextui-org/react       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/abhinandan-verma/nextui/new/fix/date-picker-n-date-range-picker-visible-month?filename=.changeset/odd-mails-provide.md&value=---%0A%22%40nextui-org%2Fcalendar%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(date-range-picker)%3A%20calendar-content%20width%20as%20per%20visible-months%0A)
+
+\n- vercel: @abhinandan-verma is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%220d5a16bfa3bf7d414b86a8fa73b94e51edb8cbdb%22%7D%2C%22id%22%3A%22QmX9vDK5LCae6fyRQax6Rr4st9Ap46y2q3u2cL1ny5iFS5%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3505%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent changes address issues in the `@nextui-org/calendar` and `@nextui-org/theme` packages, focusing on the `DateRangePicker` component's display of multiple months. The updates ensure that the width of the calendar content dynamically adjusts based on the number of visible months, resolving display problems that occurred when `visibleMonths` was set to values greater than one.
+
+## Changes
+
+| Files/Groups | Change Summary |
+|--------------|----------------|
+| `packages/components/calendar/src/use-calendar-base.ts` | Modified `useCalendarBase` function to handle `visibleMonths` and `calendarWidth` properties by converting them to strings if they are numbers, setting these as CSS variables. |
+| `packages/core/theme/src/components/date-picker.ts` | Updated width calculations for `calendar` and `calendarContent` elements to dynamically adjust based on the number of visible months using CSS variables. |
+
+## Assessment against linked issues
+
+| Objective (Issue #) | Addressed | Explanation |
+|---------------------|-----------|-------------|
+| Fix display of multiple months in `DateRangePicker` when `visibleMonths` is greater than 1 (#3504) | ✅ | |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+.changeset/short-garlics-wink.md: ## AI-generated summary of changes
+
+The new file introduces patches for `@nextui-org/calendar` and `@nextui-org/theme`. It includes a fix for the `calendarContent` width to align it with the visible month.
+
+---
+
+packages/components/calendar/src/use-calendar-base.ts: ## AI-generated summary of changes
+
+The `useCalendarBase` function in `use-calendar-base.ts` now handles the `visibleMonths` and `calendarWidth` properties differently by converting them to strings if they are numbers before setting CSS variables.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useCalendarBase(originalProps: UseCalendarBasePropsComplete)` in `use-calendar-base.ts`
+- `--visible-months: visibleMonths` in `use-calendar-base.ts`
+- `--calendar-width: calendarWidth` in `use-calendar-base.ts`
+
+---
+
+packages/core/theme/src/components/date-picker.ts: ## AI-generated summary of changes
+
+The functionality of the `datePicker` component in `packages/core/theme/src/components/date-picker.ts` has been altered. Specifically, the width calculation for the calendar and calendar content elements now dynamically adjusts based on the number of visible months. This change introduces a new calculation method using CSS variables to determine the width, replacing the static width definitions.
+
+## Alterations to the declarations of exported or public entities
+
+- `calendar: "w-[var(--calendar-width)] shadow-none"` in `date-picker.ts` → `calendar: "w-[calc(var(--visible-months)_*_var(--calendar-width))] shadow-none"`
+- `calendarContent: "w-[var(--calendar-width)]"` in `date-picker.ts` → `calendarContent: "w-[calc(var(--visible-months)_*_var(--calendar-width))]"
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+**Title:** fix(date-range-picker): calendar-content width as per visible-months  
+**User:** abhinandan-verma  
+**Number:** 3505  
+**URL:** [https://github.com/nextui-org/nextui/pull/3505](https://github.com/nextui-org/nextui/pull/3505)  
+
+**Description:**  
+This pull request addresses the issue of the `calendar` and `calendarContent` width in the `calendar`, `date-picker`, and `date-range-picker` components. The width is now adjusted according to the `visibleMonths` property. This change ensures that the calendar content displays correctly when multiple months are set to be visible.
+
+**Current Behavior:**  
+The calendar view is broken when the `visibleMonths` property is set to a value higher than 1. Only the first month's table is shown, while the calendar header displays correctly.
+
+**New Behavior:**  
+The calendar content width is fixed to accommodate the number of months specified by the `visibleMonths` property, ensuring all months are visible in the calendar view.
+
+**Breaking Change:** No
+
+## Objectives from Linked Issues
+
+**Linked Issue:** #3504  
+
+**Title:** [BUG] - DateRangePicker not showing multiple months correctly after 2.4.3 update  
+
+**Description:**  
+The issue describes a bug in the DateRangePicker component where the calendar view is broken when the `visibleMonths` property is set to a value higher than 1. The calendar header shows correctly, but only the first month's table is displayed.
+
+**Steps to Reproduce the Bug or Issue:**
+1. Add the `visibleMonths` attribute to the DateRangePicker.
+2. Observe that the calendar view is broken, showing only the first month.
+
+**Expected Behavior:**  
+All the months specified by the `visibleMonths` property should be visible in the calendar view.
+
+**Example Website or App:**  
+[https://stackblitz.com/edit/vitejs-vite-jtg1mt?file=src%2FApp.jsx](https://stackblitz.com/edit/vitejs-vite-jtg1mt?file=src%2FApp.jsx)
+
+**Operating System Version:**  
+- macOS
+- Ubuntu 22.04
+
+**Browser:**  
+- Chrome
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 0d5a16bfa3bf7d414b86a8fa73b94e51edb8cbdb -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/short-garlics-wink.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/calendar": patch
++"@nextui-org/theme": patch
++---
++
++Fixed the calendarContent width as per visible month\n- packages/components/calendar/src/use-calendar-base.ts (modified, 2 changes)\n  Patch: @@ -279,7 +279,7 @@ export function useCalendarBase(originalProps: UseCalendarBasePropsComplete) {
+     "data-has-multiple-months": dataAttr(hasMultipleMonths),
+     style: {
+       // @ts-ignore
+-      "--visible-months": visibleMonths,
++      "--visible-months": typeof visibleMonths === "number" ? `${visibleMonths}` : visibleMonths,
+       "--calendar-width": typeof calendarWidth === "number" ? `${calendarWidth}px` : calendarWidth,
+     } as React.CSSProperties,
+   };\n- packages/core/theme/src/components/date-picker.ts (modified, 4 changes)\n  Patch: @@ -13,8 +13,8 @@ const datePicker = tv({
+     selectorButton: "-mr-2 text-inherit",
+     selectorIcon: "text-lg text-inherit pointer-events-none flex-shrink-0",
+     popoverContent: "p-0 w-full",
+-    calendar: "w-[var(--calendar-width)] shadow-none",
+-    calendarContent: "w-[var(--calendar-width)]",
++    calendar: "w-[calc(var(--visible-months)_*_var(--calendar-width))] shadow-none",
++    calendarContent: "w-[calc(var(--visible-months)_*_var(--calendar-width))]",
+     timeInputLabel: "font-medium",
+     timeInput: "px-5 pb-4 flex-wrap gap-x-6",
+   },\n

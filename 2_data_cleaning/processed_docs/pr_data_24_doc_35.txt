@@ -1,0 +1,72 @@
+Pull Request Number: 1088
+Title: Fix: #1085 - Updated Textarea component to proper resize when controlled
+Base Branch: main
+Head Branch: fix/#1085
+Author: nooikko
+URL: https://github.com/nextui-org/nextui/pull/1088
+State: MERGED
+Created At: 2023-04-09T05:10:59Z
+Merged At: 2023-05-25T02:54:41Z
+Participants: nooikko, jrgarciadev
+
+Description:
+Closes #1085
+📝 Description
+
+Updated the Textarea component to properly handle resizing when controlled by an outside state controller such as useState or useInput
+
+⛳️ Current behavior (updates)
+
+The current behavior causes the form to not properly handle resizing, resulting in a scrollbar appearing no matter the props (such as maxRows) passed in, when such props would typically cause the Textarea to expand accordingly.
+
+🚀 New behavior
+
+The Textarea now correctly expands when utilizing props such as maxRows.
+
+💣 Is this a breaking change (Yes/No):
+No
+
+📝 Additional Information
+As a consideration, the general typing of for value when using an input allows for string | string[] | number | undefined. This PR does cause this to be assumed to be string which should be fine as all three of the available types are translated to string under the hood.
+
+Commits:
+- Fix: #1085 - Updated Textarea component to proper resize when controlled\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #WHs0kaT6W2YkZNNwiEDs4qXjVL8EsS4i9BxCR3/eRPY=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLW5vb2lra28tZml4LTEwODUtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn0sImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2svUnU1UEJ0WHRCVHR0TnpmM1JzNHFDNmo2VVlwVCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLW5vb2lra28tZml4LTEwODUtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/Ru5PBtXtBTttNzf3Rs4qC6j6UYpT)) | [Visit Preview](https://nextui-storybook-git-fork-nooikko-fix-1085-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-nooikko-fix-1085-nextui-org.vercel.app) | Apr 9, 2023 5:13am |
+
+\n- vercel: Someone is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%220d17f67290502b316fb7ba56e2a8ad9317124c06%22%7D%2C%22id%22%3A%22QmVURZxyFG7oy5egTuxmYkcVKSE2HxhcAykcbhcJQ2qKq4%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1088%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/react/src/textarea/textarea.tsx (modified, 6 changes)\n  Patch: @@ -84,7 +84,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+ 
+       const [height, rowHeight] = calculateNodeHeight(
+         nodeSizingData,
+-        node.value || node.placeholder || "x",
++        (isControlled && (props.value as string)) || node.value || node.placeholder || "x",
+         rows || minRows,
+         rows || maxRows,
+       );
+@@ -97,9 +97,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+     };
+ 
+     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+-      if (!isControlled) {
+-        resizeTextarea();
+-      }
++      resizeTextarea();
+       onChange && onChange(event);
+     };
+ \n

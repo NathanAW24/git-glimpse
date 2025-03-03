@@ -1,0 +1,106 @@
+Pull Request Number: 137
+Title: Fix #136
+Base Branch: main
+Head Branch: custom-classname-in-theme
+Author: remorses
+URL: https://github.com/nextui-org/nextui/pull/137
+State: MERGED
+Created At: 2022-01-15T19:37:16Z
+Merged At: 2022-01-16T18:15:03Z
+Participants: remorses, jrgarciadev, codecov-commenter
+
+Description:
+theme
+TASK: fix #136
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Allow customizing the created theme class name
+Screenshots - Animations
+
+Commits:
+- allow customizing theme class\n- fix doc typo\n
+
+Labels:
+✨ Type: Enhancement
+
+Comments:
+- jrgarciadev: Thank you so much @remorses  🙌🏻 \n- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/137?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#137](https://codecov.io/gh/nextui-org/nextui/pull/137?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (6d54e14) into [main](https://codecov.io/gh/nextui-org/nextui/commit/64a7c04c35b41d161b00b64e0fac823b06596050?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (64a7c04) will **decrease** coverage by `0.03%`.
+> The diff coverage is `50.00%`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/137/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/137?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@            Coverage Diff             @@
+##             main     #137      +/-   ##
+==========================================
+- Coverage   75.64%   75.61%   -0.04%     
+==========================================
+  Files         141      141              
+  Lines        2271     2272       +1     
+  Branches      677      678       +1     
+==========================================
+  Hits         1718     1718              
+- Misses        548      549       +1     
+  Partials        5        5              
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/137?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/react/src/theme/stitches.config.ts](https://codecov.io/gh/nextui-org/nextui/pull/137/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3RoZW1lL3N0aXRjaGVzLmNvbmZpZy50cw==) | `45.45% <50.00%> (-4.55%)` | :arrow_down: |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/137?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/137?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [dac5185...6d54e14](https://codecov.io/gh/nextui-org/nextui/pull/137?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- apps/docs/content/docs/theme/dark-mode.mdx (modified, 2 changes)\n  Patch: @@ -41,13 +41,15 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes';
+ // 2. Call `createTheme` and pass your custom values
+ const lightTheme = createTheme({
+   type: 'light',
++  className: 'light', // customize the class that enables this theme, `light-theme` by default
+   theme: {
+     colors: {...},
+   }
+ })
+ 
+ const darkTheme = createTheme({
+   type: 'dark',
++  className: 'dark', // customize the class that enables this theme, `dark-theme` by default
+   theme: {
+     colors: {...},
+   }\n- packages/react/src/theme/stitches.config.ts (modified, 4 changes)\n  Patch: @@ -60,12 +60,12 @@ export const sharedVisuallyHidden = css({
+   position: 'absolute'
+ });
+ 
+-export const createTheme = ({ type, theme }: Theme) => {
++export const createTheme = ({ type, theme, className }: Theme) => {
+   if (!type) {
+     throw new Error('Theme type is required');
+   }
+   return createThemeBase(
+-    `${type}-theme`,
++    className || `${type}-theme`,
+     deepMerge(type === 'dark' ? darkTheme : lightTheme, theme)
+   );
+ };\n- packages/react/src/theme/types.ts (modified, 1 changes)\n  Patch: @@ -47,6 +47,7 @@ export interface TokenValue {
+ 
+ export type Theme = {
+   type?: ThemeType | string;
++  className?: string;
+   theme?: BaseTheme;
+ };
+ \n

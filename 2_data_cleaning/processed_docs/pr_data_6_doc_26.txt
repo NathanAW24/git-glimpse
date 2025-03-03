@@ -1,0 +1,264 @@
+Pull Request Number: 3601
+Title: fix(navbar): allow height prop to accept number type and fix broken menu
+Base Branch: canary
+Head Branch: fix/navbar-height
+Author: FacundoTenuta
+URL: https://github.com/nextui-org/nextui/pull/3601
+State: MERGED
+Created At: 2024-08-04T06:50:11Z
+Merged At: 2024-08-29T04:55:10Z
+Participants: FacundoTenuta, awesome-pro, wingkwong, jrgarciadev
+
+Description:
+📝 Description
+
+Navbar menu breaks when passing a custom height of type number. This PR fixes the issue by converting the height to pixels if it is a number.
+
+⛳️ Current behavior (updates)
+
+Fixed the mentioned error. Now, we can pass custom height as either a number or a string without breaking the navbar menu.
+
+🚀 New behavior
+
+The height parameter can be provided as a number, which will be automatically converted to pixels, or as a string. This ensures the navbar menu remains intact regardless of the input type.
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+No additional information
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Improved handling of the height property in the navbar component to prevent layout issues when specifying a numerical height value.
+
+
+
+New Features
+
+Enhanced robustness of the --navbar-height CSS variable assignment by ensuring it always receives a valid pixel format for numerical values.
+
+Commits:
+- fix(navbar): allow height prop to accept number type and fix broken menu\n- fix(navbar): menu breaking when a numerical height value is provided. changeset\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: e0564e7e1c184fed83efe52be807a0d1b84ca2d4
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name               | Type  |
+| ------------------ | ----- |
+| @nextui-org/navbar | Patch |
+| @nextui-org/react  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/FacundoTenuta/nextui/new/fix/navbar-height?filename=.changeset/wise-pugs-tan.md&value=---%0A%22%40nextui-org%2Fnavbar%22%3A%20patch%0A---%0A%0Afix(navbar)%3A%20allow%20height%20prop%20to%20accept%20number%20type%20and%20fix%20broken%20menu%0A)
+
+\n- vercel: @FacundoTenuta is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%220fda96038854df657c94c1ae0953137a63a96dd5%22%7D%2C%22id%22%3A%22QmZ3Bo9TmezmGR8uUiXuQAQ5rW8ae5CNcfQqnsdbmWBAhU%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3601%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes made to the `NavbarMenu` and `useNavbar` components improve the handling of the `height` property for the navbar's CSS variable. By introducing type checks, numeric heights are converted to pixel strings, enhancing the robustness of the components and preventing potential runtime errors. This ensures more consistent styling behavior across the navbar, ultimately leading to a more reliable user interface experience.
+
+## Changes
+
+| Files                                         | Change Summary                                                                                             |
+|-----------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| `.../navbar/src/navbar-menu.tsx`             | Enhanced `height` handling in inline styles to ensure valid CSS values by converting numbers to pixel strings. |
+| `.../navbar/src/use-navbar.ts`                | Modified the assignment of `--navbar-height` to format numeric heights correctly, improving styling integrity. |
+| `.changeset/healthy-clouds-refuse.md`        | Introduced a patch for the `@nextui-org/navbar` component to convert numerical height values to pixels, preventing layout issues. |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+```
+packages/components/navbar/src/navbar-menu.tsx: ## AI-generated summary of changes
+
+The changes in the `NavbarMenu` component focus on the handling of the `height` property within the inline styles. The original implementation directly assigned the `height` value to the CSS variable `--navbar-height`, which could lead to issues if `height` was not a string representing a valid CSS value. The updated logic introduces a type check to ensure that if `height` is a number, it is converted to a string with a pixel unit (e.g., `${height}px`). This adjustment enhances the robustness of the component by preventing potential runtime errors related to invalid CSS values and ensures consistent styling behavior. This change is applied in two locations within the component: one in the main style object and another within a conditional rendering block for the menu.
+
+## Alterations to the declarations of exported or public entities
+
+- No changes to the declarations of exported or public entities were made in `packages/components/navbar/src/navbar-menu.tsx`.
+
+---
+
+packages/components/navbar/src/use-navbar.ts: ## AI-generated summary of changes
+
+The diff modifies the `useNavbar` function in the `navbar` component, specifically changing how the `--navbar-height` CSS variable is set. The original implementation directly assigned the `height` variable to `--navbar-height`, which could potentially lead to invalid CSS values if `height` is not a number. The updated implementation introduces a conditional check: it now assigns `--navbar-height` a value formatted as a pixel string (e.g., `${height}px`) only if `height` is a number. If `height` is not a number, it assigns it directly without modification. This change enhances the robustness of the CSS variable assignment, ensuring that it consistently receives a valid format, thereby improving the overall integrity of the styling applied to the navbar.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useNavbar(originalProps: UseNavbarProps)` in `src/use-navbar.ts` → No changes in the function signature.
+```
+
+
+# New changesets
+
+.changeset/healthy-clouds-refuse.md: ## AI-generated summary of changes
+
+The new file introduces a patch for the `@nextui-org/navbar` component, addressing an issue where the navbar menu breaks when a numerical height value is specified. The modification ensures that if a numerical height is provided, it is automatically converted to pixels, thereby preventing layout issues and enhancing the component's robustness. This change improves the control flow by allowing more flexible height specifications without compromising the navbar's functionality. Overall, this enhancement contributes to a more reliable user interface experience.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(navbar): allow height prop to accept number type and fix broken menu" addresses an issue with the navbar menu in the NextUI library. The problem arose when a custom height was passed as a number, which caused the navbar menu to break.
+
+This PR implements a solution by modifying the height property to accept both number and string types. When a number is provided, it is automatically converted to pixels, ensuring that the navbar menu functions correctly regardless of the input type.
+
+The current behavior has been updated to allow for this flexibility, thus preventing any breakage of the navbar menu when different height formats are used. The author confirms that this change does not introduce any breaking changes to the existing functionality of the library.
+
+Overall, the PR enhances the usability of the navbar component by accommodating a broader range of input types for the height property.
+
+## Comments Summary
+
+In the comments on the pull request, the user `@awesome-pro` provided feedback requesting additional information to be included in the PR. Specifically, they asked the author, `@FacundoTenuta`, to add a changeset by running the command `pnpm changeset`. This step is important for documenting the changes made in the PR and ensuring proper versioning.
+
+Additionally, `@awesome-pro` requested that the author include a screen recording or screenshots demonstrating the navbar menu's appearance before and after the changes were applied. This visual documentation would help reviewers understand the impact of the changes and verify that the issue has been resolved effectively.
+
+Overall, the comments emphasize the importance of thorough documentation and visual evidence in the review process, ensuring that all changes are clearly communicated and understood by the community.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 0fda96038854df657c94c1ae0953137a63a96dd5 -->
+<!-- e0564e7e1c184fed83efe52be807a0d1b84ca2d4 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- awesome-pro: @FacundoTenuta  kindly add following in your PR
+1. changeset (run `pnpm changeset`)
+2. screen-recording/screenshot to issue before change
+3. solution after change
+\n- FacundoTenuta: @wingkwong Sorry for the oversight. The changeset has been added and is now up to date.\n
+
+Files Changed:
+- .changeset/healthy-clouds-refuse.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/navbar": patch
++---
++
++Fix navbar menu breaking when a numerical height value is provided. The height value is now converted to pixels if it is a number.\n- packages/components/navbar/src/navbar-menu.tsx (modified, 4 changes)\n  Patch: @@ -50,7 +50,7 @@ const NavbarMenu = forwardRef<"ul", NavbarMenuProps>((props, ref) => {
+         data-open={dataAttr(isMenuOpen)}
+         style={{
+           // @ts-expect-error
+-          "--navbar-height": height,
++          "--navbar-height": typeof height === "number" ? `${height}px` : height,
+         }}
+         {...otherProps}
+       >
+@@ -72,7 +72,7 @@ const NavbarMenu = forwardRef<"ul", NavbarMenuProps>((props, ref) => {
+               initial="exit"
+               style={{
+                 // @ts-expect-error
+-                "--navbar-height": height,
++                "--navbar-height": typeof height === "number" ? `${height}px` : height,
+                 ...style,
+               }}
+               variants={menuVariants}\n- packages/components/navbar/src/use-navbar.ts (modified, 2 changes)\n  Patch: @@ -198,7 +198,7 @@ export function useNavbar(originalProps: UseNavbarProps) {
+     ref: domRef,
+     className: slots.base({class: clsx(baseStyles, props?.className)}),
+     style: {
+-      "--navbar-height": height,
++      "--navbar-height": typeof height === "number" ? `${height}px` : height,
+       ...otherProps?.style,
+       ...props?.style,
+     },\n

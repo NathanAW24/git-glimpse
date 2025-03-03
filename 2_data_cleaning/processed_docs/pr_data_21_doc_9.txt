@@ -1,0 +1,76 @@
+Pull Request Number: 1496
+Title: fix(navbar): unable to Close NavbarMenu
+Base Branch: main
+Head Branch: fix-navbar-menu
+Author: TIMMLOPK
+URL: https://github.com/nextui-org/nextui/pull/1496
+State: MERGED
+Created At: 2023-08-26T06:01:14Z
+Merged At: 2023-08-26T13:29:28Z
+Participants: TIMMLOPK, jrgarciadev
+
+Description:
+Closes #1440
+📝 Description
+fix unable to Close NavbarMenu
+⛳️ Current behavior (updates)
+When you close and open (clicking) fastly multiple times the NavbarMenu, the Menu crashes and you are unable to close it. And you need to reload the browser to use your website!
+🚀 New behavior
+You can close it normally.
+💣 Is this a breaking change (No):
+📝 Additional Information
+
+Commits:
+- add mode wait to AnimatePresence\n- add changeset\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: a0fceffe30ec57a1060582d18aec159149cd24ba
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name               | Type  |
+| ------------------ | ----- |
+| @nextui-org/navbar | Patch |
+| @nextui-org/react  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/TIMMLOPK/nextui/new/fix-navbar-menu?filename=.changeset/stupid-poets-build.md&value=---%0A%22%40nextui-org%2Fnavbar%22%3A%20patch%0A---%0A%0Afix(navbar)%3A%20unable%20to%20Close%20NavbarMenu%0A)
+
+\n- vercel: [vc]: #gUR0UjC6IJ5SHmw+SPhRu8kIV4bXWmJ1l3ccAe/tVm0=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvQXNzR2VtQk5jc3Q2VUxCMWVuVDFLZU5Bb044dCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXRpbW1sb3BrLWZpeC1uYXYtNjhhNmViLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXRpbW1sb3BrLWZpeC1uYXYtNjhhNmViLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/AssGemBNcst6ULB1enT1KeNAoN8t)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-timmlopk-fix-nav-68a6eb-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-timmlopk-fix-nav-68a6eb-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 26, 2023 6:38am |
+
+\n- vercel: @TIMMLOPK is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%224521d021ad5ddbafe77eef26ce2be551580c73c4%22%7D%2C%22id%22%3A%22QmQgzHHWn6KEYyLJgnbwVKeuDjSD8EuiCvH4CHsWdUutoF%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1496%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/small-badgers-look.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/navbar": patch
++---
++
++fix unable to close NavbarMenu\n- packages/components/navbar/src/navbar-menu.tsx (modified, 2 changes)\n  Patch: @@ -58,7 +58,7 @@ const NavbarMenu = forwardRef<"ul", NavbarMenuProps>((props, ref) => {
+       </ul>
+     </MenuWrapper>
+   ) : (
+-    <AnimatePresence>
++    <AnimatePresence mode="wait">
+       {isMenuOpen ? (
+         <MenuWrapper>
+           <motion.ul\n

@@ -1,0 +1,428 @@
+Pull Request Number: 3316
+Title: fix(popover): arrow combine with border of box
+Base Branch: canary
+Head Branch: fix/popover-arrow-border
+Author: arindam1997007
+URL: https://github.com/nextui-org/nextui/pull/3316
+State: CLOSED
+Created At: 2024-06-25T01:39:18Z
+Merged At: None
+Participants: arindam1997007, wingkwong
+
+Description:
+Closes #3235
+📝 Description
+Popover arrow combines with that of the box's content.
+⛳️ Current behavior (updates)
+Arrow is with negative zIndex, being put behind the content box.
+🚀 New behavior
+Arrow is in same zIndex, and the rest of the arrow is clipped using clip-path.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+This changes also affects the same look for the arrow, for Tooltip component, since both of these component uses the same design.
+📸 Output
+
+
+
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Improved positioning and styling of popover elements for better visual presentation.
+Fixed issue with popover arrow alignment with the border.
+
+Commits:
+- refactor: created clip path utilities
+
+- Clip-path utilities created for popover for all directions\n- fix(popover): combined popover arrow with content
+
+- Removed negative-zIndex on before element
+- Added clip-path to clip the before element based on placement directions\n- chore: added changeset for the fix\n- docs: added comments for clip-path utilities\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: b5c0a41fecfcf2ae0a174e809fc1462d5de7de74
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/theme | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/arindam1997007/nextui/new/fix/popover-arrow-border?filename=.changeset/polite-paws-work.md&value=---%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(popover)%3A%20arrow%20combine%20with%20border%20of%20box%0A)
+
+\n- vercel: [vc]: #pjP1F3qdhaUIotUdeyoCRXL9LuS6NlIU4gs9IvDWXAc=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvR21pc0tpUVNUVmpSYWRUWHF4Q3NYMUw1cGF2biIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFyaW5kYW0xOTk3MDA3LWYtNTlkZjRhLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFyaW5kYW0xOTk3MDA3LWYtNTlkZjRhLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/GmisKiQSTVjRadTXqxCsX1L5pavn)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-arindam1997007-f-59df4a-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-arindam1997007-f-59df4a-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jun 25, 2024 0:21am |
+
+\n- vercel: @arindam1997007 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2227d5428fb46d356bf9ee83a0148ec831c1add73f%22%7D%2C%22id%22%3A%22QmY6WAAU7JsW8jE4gcEaeby12GdrDoCMqfymzBBHyp5GDv%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3316%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes primarily address the visual integration of popover elements by refining their positioning and styling, adding utilities for `clip-path` handling, and ensuring the popover arrow seamlessly combines with the border of the box. Adjustments include space recalculations and clip-path styles for better presentation.
+
+## Changes
+
+| **Files**                                                   | **Change Summary**                                                                                                                                         |
+|-------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `.../components/popover.ts`                                 | Removed `"before:z-[-1]"`, updated positioning calculations, and added `clip-path` styles for popover elements.                                               |
+| `.../utilities/clip-path.ts`                                | Added utilities defining `clip-path` CSS properties for different popover positions (top, bottom, left, right).                                             |
+| `.../utilities/index.ts`                                    | Added `import clipPath` and included `clipPath` utility in the `utilities` object.                                                                          |
+| `.changeset/flat-insects-heal.md`                           | Introduced a patch for `@nextui-org/theme` to fix the popover arrow combining issue with the border of the box.                                             |
+
+## Sequence Diagram(s)
+
+The changes do not modify or introduce new control flows significantly enough to warrant sequence diagrams.
+
+## Assessment against linked issues
+
+| **Objective**                                                   | **Addressed** | **Explanation**                                                                             |
+|-----------------------------------------------------------------|---------------|---------------------------------------------------------------------------------------------|
+| Popover's arrow should combine with the border line of the box (#3235) | ✅             |                                                                                             |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+packages/core/theme/src/components/popover.ts: ### Short Summary:
+The changes in `popover.ts` involve adjustments to the positioning and styling of popover elements based on different placements (top, bottom, left, right) within a UI component. These changes include modifications to the calculation of spacing values and the addition of clip-path styles for better visual presentation.
+
+### Alterations to the declarations of exported or public entities:
+- `const popover` in `src/components/popover.ts`:
+  - Removed `"before:z-[-1]"`.
+  - Updated positioning calculations for top and bottom placements with adjusted spacing values and added `clip-path` styles.
+  - Adjusted positioning calculations for left and right placements with updated spacing values and added `clip-path` styles.
+
+---
+
+packages/core/theme/src/utilities/clip-path.ts: ## Short summary
+
+The file `clip-path.ts` contains a set of clip path utilities for different popover positions, defining clip-path CSS properties for top, bottom, left, and right positions.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities.
+
+---
+
+packages/core/theme/src/utilities/index.ts: ## Short Summary
+
+In the `index.ts` file located in `packages/core/theme/src/utilities`, a new import statement for `clipPath` has been added, and the `clipPath` utility has been included in the `utilities` object.
+
+## Alterations to the declarations of exported or public entities
+
+- `import clipPath from "./clip-path"` added in `packages/core/theme/src/utilities/index.ts`
+- `...clipPath` added to the `utilities` object in `packages/core/theme/src/utilities/index.ts`
+
+---
+
+.changeset/flat-insects-heal.md: ## Short summary
+
+The file introduces a patch for the `@nextui-org/theme` package, fixing the issue where the popover arrow is now combined with the border of the box.
+
+## Alterations to the declarations of exported or public entities
+
+No alterations to the declarations of exported or public entities.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+### PR Summary
+
+**Title**: fix(popover): arrow combine with border of box  
+**User**: arindam1997007  
+**Number**: 3316  
+
+**Description**:  
+This pull request addresses and closes issue #3235. The main objective is to ensure that the Popover arrow combines seamlessly with the border of the box. Previously, the arrow had a negative zIndex, causing it to be placed behind the content box. The update modifies the arrow to share the same zIndex as the content box and clips the rest of the arrow using the `clip-path` property. This change also affects the Tooltip component, as it shares the same design with the Popover component. The update does not introduce any breaking changes.
+
+**Output**:  
+The provided images show the visual changes where the arrow now correctly aligns with the border of the box.
+
+### Objectives from Linked Issues
+
+**Issue #3235**: [BUG] - Popover's arrow should combine with the border line of the box  
+**NextUI Version**: v2.4  
+
+**Description**:  
+The issue describes a bug where the Popover's arrow does not combine properly with the border line of the box. 
+
+**Steps to Reproduce the Bug or Issue**:
+1. Render the Popover component.
+2. Set the `showArrow` property to `true`.
+3. Click the button to display the Popover.
+
+**Expected Behavior**:  
+The arrow should visually combine with the border line of the Popover box, as depicted in the provided image.
+
+**Operating System**: MacOS, Windows  
+**Browser**: Chrome
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated summary of generated summaries
+
+The updates across the files in the `@nextui-org/theme` package focus on enhancing the positioning and styling of popover elements. Specifically, in `popover.ts`, adjustments were made to the spacing calculations and the addition of `clip-path` styles for better visual presentation of popovers depending on their placement (top, bottom, left, right). The `clip-path.ts` file provides utilities for these `clip-path` styles, although no changes were made to the exported entities in this file. In `index.ts` within the `utilities` directory, a new import statement for `clipPath` was added, and the `clipPath` utility was included in the `utilities` object. Additionally, a patch was introduced in `.changeset/flat-insects-heal.md` to fix an issue where the popover arrow is now combined with the border of the box.
+
+### Alterations to the declarations of exported or public entities
+
+#### packages/core/theme/src/components/popover.ts
+- **Before:**
+  ```javascript
+  const popover = {
+    // existing properties and styles
+    "before:z-[-1]",
+    // positioning calculations for top, bottom, left, right
+  };
+  ```
+- **After:**
+  ```javascript
+  const popover = {
+    // existing properties and styles
+    // Updated positioning calculations for top and bottom placements with adjusted spacing values and added clip-path styles
+    // Updated positioning calculations for left and right placements with adjusted spacing values and added clip-path styles
+  };
+  ```
+
+#### packages/core/theme/src/utilities/index.ts
+- **Before:**
+  ```javascript
+  const utilities = {
+    // existing utilities
+  };
+  ```
+- **After:**
+  ```javascript
+  import clipPath from "./clip-path";
+
+  const utilities = {
+    // existing utilities
+    ...clipPath
+  };
+  ```
+
+#### .changeset/flat-insects-heal.md
+- **Before:**
+  ```markdown
+  // No previous content
+  ```
+- **After:**
+  ```markdown
+  ## Short summary
+
+  The file introduces a patch for the `@nextui-org/theme` package, fixing the issue where the popover arrow is now combined with the border of the box.
+  ```
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 27d5428fb46d356bf9ee83a0148ec831c1add73f -->
+<!-- b5c0a41fecfcf2ae0a174e809fc1462d5de7de74 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- arindam1997007: > Thanks for the PR.
+> 
+> Since you've modified something inside packages, therefore you need to add a [changeset](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md)
+
+@wingkwong Changeset is added now.\n- wingkwong: After an internal discussion, we’ve decided not to move forward with integrating this pull request and keep the original design as it is. Please do not be discouraged. We hope this decision will not deter you from continuing to contribute in the future.  Thank you once again for your understanding and your interest in contributing to us.\n
+
+Files Changed:
+- .changeset/flat-insects-heal.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/theme": patch
++---
++
++Fixed `popover arrow` to be combined with border of box (#3316)\n- packages/core/theme/src/components/popover.ts (modified, 33 changes)\n  Patch: @@ -27,7 +27,6 @@ const popover = tv({
+       // arrow
+       "before:content-['']",
+       "before:hidden",
+-      "before:z-[-1]",
+       "before:absolute",
+       "before:rotate-45",
+       "before:w-2.5",
+@@ -36,36 +35,48 @@ const popover = tv({
+       // visibility
+       "data-[arrow=true]:before:block",
+       // top
+-      "data-[placement=top]:before:-bottom-[calc(theme(spacing.5)/4_-_1.5px)]",
++      "data-[placement=top]:before:-bottom-[calc(theme(spacing.5)/4)]",
++      "data-[placement=top]:before:clip-path-popover-top",
+       "data-[placement=top]:before:left-1/2",
+       "data-[placement=top]:before:-translate-x-1/2",
+       "data-[placement=top-start]:before:-bottom-[calc(theme(spacing.5)/4_-_1.5px)]",
++      "data-[placement=top-start]:before:clip-path-popover-top",
+       "data-[placement=top-start]:before:left-3",
+       "data-[placement=top-end]:before:-bottom-[calc(theme(spacing.5)/4_-_1.5px)]",
++      "data-[placement=top-end]:before:clip-path-popover-top",
+       "data-[placement=top-end]:before:right-3",
+       // bottom
+-      "data-[placement=bottom]:before:-top-[calc(theme(spacing.5)/4_-_1.5px)]",
++      "data-[placement=bottom]:before:-top-[calc(theme(spacing.5)/4)]",
++      `data-[placement=bottom]:before:clip-path-popover-bottom`,
+       "data-[placement=bottom]:before:left-1/2",
+       "data-[placement=bottom]:before:-translate-x-1/2",
+-      "data-[placement=bottom-start]:before:-top-[calc(theme(spacing.5)/4_-_1.5px)]",
++      "data-[placement=bottom-start]:before:-top-[calc(theme(spacing.5)/4_-_1px)]",
++      `data-[placement=bottom-start]:before:clip-path-popover-bottom`,
+       "data-[placement=bottom-start]:before:left-3",
+-      "data-[placement=bottom-end]:before:-top-[calc(theme(spacing.5)/4_-_1.5px)]",
++      "data-[placement=bottom-end]:before:-top-[calc(theme(spacing.5)/4_-_1px)]",
++      `data-[placement=bottom-end]:before:clip-path-popover-bottom`,
+       "data-[placement=bottom-end]:before:right-3",
+       // left
+-      "data-[placement=left]:before:-right-[calc(theme(spacing.5)/4_-_2px)]",
++      "data-[placement=left]:before:-right-[calc(theme(spacing.5)/4)]",
++      `data-[placement=left]:before:clip-path-popover-left`,
+       "data-[placement=left]:before:top-1/2",
+       "data-[placement=left]:before:-translate-y-1/2",
+-      "data-[placement=left-start]:before:-right-[calc(theme(spacing.5)/4_-_3px)]",
++      "data-[placement=left-start]:before:-right-[calc(theme(spacing.5)/4)]",
++      `data-[placement=left-start]:before:clip-path-popover-left`,
+       "data-[placement=left-start]:before:top-1/4",
+-      "data-[placement=left-end]:before:-right-[calc(theme(spacing.5)/4_-_3px)]",
++      "data-[placement=left-end]:before:-right-[calc(theme(spacing.5)/4)]",
++      `data-[placement=left-end]:before:clip-path-popover-left`,
+       "data-[placement=left-end]:before:bottom-1/4",
+       // right
+-      "data-[placement=right]:before:-left-[calc(theme(spacing.5)/4_-_2px)]",
++      "data-[placement=right]:before:-left-[calc(theme(spacing.5)/4)]",
++      `data-[placement=right]:before:clip-path-popover-right`,
+       "data-[placement=right]:before:top-1/2",
+       "data-[placement=right]:before:-translate-y-1/2",
+-      "data-[placement=right-start]:before:-left-[calc(theme(spacing.5)/4_-_3px)]",
++      "data-[placement=right-start]:before:-left-[calc(theme(spacing.5)/4)]",
++      `data-[placement=right-start]:before:clip-path-popover-right`,
+       "data-[placement=right-start]:before:top-1/4",
+-      "data-[placement=right-end]:before:-left-[calc(theme(spacing.5)/4_-_3px)]",
++      "data-[placement=right-end]:before:-left-[calc(theme(spacing.5)/4)]",
++      `data-[placement=right-end]:before:clip-path-popover-right`,
+       "data-[placement=right-end]:before:bottom-1/4",
+       // focus ring
+       ...dataFocusVisibleClasses,\n- packages/core/theme/src/utilities/clip-path.ts (added, 19 changes)\n  Patch: @@ -0,0 +1,19 @@
++export default {
++  /**
++   * Clip Path utilities for popover in every directions.
++   * Additional 5px is added to ensure the box-shadow is not clipped.
++   */
++  ".clip-path-popover-top": {
++    "clip-path":
++      "polygon(calc(100% + 5px) -5px,calc(100% + 5px) calc(100% + 5px),-5px calc(100% + 5px))",
++  },
++  ".clip-path-popover-bottom": {
++    "clip-path": "polygon(calc(100% + 5px) -5px,-5px -5px,-5px calc(100% + 5px))",
++  },
++  ".clip-path-popover-left": {
++    "clip-path": "polygon(-5px -5px,calc(100% + 5px) -5px,calc(100% + 5px) calc(100% + 5px))",
++  },
++  ".clip-path-popover-right": {
++    "clip-path": "polygon(-5px -5px,-5px calc(100% + 5px),calc(100% + 5px) calc(100% + 5px))",
++  },
++};\n- packages/core/theme/src/utilities/index.ts (modified, 2 changes)\n  Patch: @@ -1,9 +1,11 @@
+ import transition from "./transition";
+ import custom from "./custom";
+ import scrollbarHide from "./scrollbar-hide";
++import clipPath from "./clip-path";
+ 
+ export const utilities = {
+   ...custom,
+   ...transition,
+   ...scrollbarHide,
++  ...clipPath,
+ };\n

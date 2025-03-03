@@ -1,0 +1,78 @@
+Pull Request Number: 1495
+Title: fix(shared-utils): expose getProp
+Base Branch: main
+Head Branch: expose-getProp
+Author: bdbergeron
+URL: https://github.com/nextui-org/nextui/pull/1495
+State: CLOSED
+Created At: 2023-08-26T01:06:18Z
+Merged At: None
+Participants: bdbergeron, jrgarciadev
+
+Description:
+📝 Description
+Exposes the getProp helper function, which unlike getKeyValue, allows for retrieving properties from nested objects. This is helpful when working with dynamic Table instances.
+⛳️ Current behavior (updates)
+getProp is not exported for consumers to use.
+🚀 New behavior
+getProp can be properly imported for consumers to use.
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(shared-utils): expose getProp\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: a15ff052b4b8df61da7f0e9cae7b78fd4268460f
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/table | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/bdbergeron/nextui/new/expose-getProp?filename=.changeset/olive-kangaroos-invite.md&value=---%0A%22%40nextui-org%2Ftable%22%3A%20patch%0A---%0A%0Afix(shared-utils)%3A%20expose%20getProp%0A)
+
+\n- vercel: [vc]: #aOiNKH/kZ45JPscGKHNQf5UTMooQzMeFchcHiOIKp6I=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvSjd1Y3NLUXhDUUpjM0FvVEpWdDVrUkRCYmJiYyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWJkYmVyZ2Vyb24tZXhwb3MtMGIyZGFiLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWJkYmVyZ2Vyb24tZXhwb3MtMGIyZGFiLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/J7ucsKQxCQJc3AoTJVt5kRDBbbbc)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-bdbergeron-expos-0b2dab-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-bdbergeron-expos-0b2dab-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 26, 2023 1:08am |
+
+\n- vercel: @bdbergeron is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22a15ff052b4b8df61da7f0e9cae7b78fd4268460f%22%7D%2C%22id%22%3A%22QmTchdu1KUSUVqrG1b2WhTsNevtfgPqF6R3XgBrwK7Mka3%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1495%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Hey @bdbergeron I appreciate your effort in sending this PR, however, this function is meant to be used internally, if we expose it we will need to be careful when changing it, users have options as the `get` one from [lodash](https://lodash.com/docs/4.17.15#get) that offers better support and is well tested.
+
+Thanks!\n
+
+Files Changed:
+- .changeset/chilly-taxis-matter.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/table": patch
++---
++
++Expose getProp for use with Tables, similar to getKeyValue. getProp allows for keying into nested objects.\n- packages/components/table/src/index.ts (modified, 2 changes)\n  Patch: @@ -12,7 +12,7 @@ export type {
+ export {useTable} from "./use-table";
+ 
+ // export utils
+-export {getKeyValue} from "@nextui-org/shared-utils";
++export {getKeyValue, getProp} from "@nextui-org/shared-utils";
+ 
+ // export component
+ export {default as Table} from "./table";\n

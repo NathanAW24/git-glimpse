@@ -1,0 +1,716 @@
+Pull Request Number: 3829
+Title: feat(autocomplete): add autoHighlight prop
+Base Branch: canary
+Head Branch: feat/autocomplete-highlight
+Author: dgz9
+URL: https://github.com/nextui-org/nextui/pull/3829
+State: OPEN
+Created At: 2024-10-01T05:33:05Z
+Merged At: None
+Participants: dgz9, wingkwong
+
+Description:
+Closes # N/A
+📝 Description
+
+Introduces a new autoHighlight  prop to the Autocomplete component, which automatically highlights the first item in the dropdown list as the user types.
+
+⛳️ Current behavior (updates)
+
+Currently, the Autocomplete component does not automatically highlight any option when the user types. Users need to manually navigate through the list to select an option.
+
+🚀 New behavior
+
+
+A new autoHighlight  prop is added to the Autocomplete component.
+When autoHighlight  is set to true, the first item in the dropdown list is automatically highlighted as the user types.
+Users can immediately press Enter to select the highlighted option without needing to navigate through the list.
+If isAutoHighlighted is false or not provided, the component behaves as it did previously.
+
+
+💣 Is this a breaking change (Yes/No):
+
+No
+
+📝 Additional Information
+
+Added SB test and sample to documentation.
+
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced an autocomplete component for selecting animals with automatic highlighting for the first suggestion.
+Added a new property, autoHighlight, to enhance user experience in both autocomplete and listbox components.
+
+
+
+Documentation
+
+Updated documentation for the Autocomplete component to include new features and clarify existing properties.
+Expanded API section with detailed descriptions of new properties and events related to the autocomplete functionality.
+
+
+
+Bug Fixes
+
+Improved logic for highlighting items in the listbox based on user interactions.
+
+Commits:
+- feat(autocomplete): add isAutoHighlight prop to automatically highlight the first item in the list\n- Merge branch 'nextui-org:canary' into feat/autocomplete-highlight\n- feat(autocomplete): add isAutoHighlight prop\n- docs: replace isAutoHighlight with autoHighlight\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 2a313e86db5274a5f36e0548123a4911d74c6a61
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 4 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/autocomplete | Minor |
+| @nextui-org/listbox      | Minor |
+| @nextui-org/react        | Patch |
+| @nextui-org/select       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/dgz9/nextui/new/feat/autocomplete-highlight?filename=.changeset/cuddly-cats-cross.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A%22%40nextui-org%2Flistbox%22%3A%20patch%0A---%0A%0Afeat(autocomplete)%3A%20add%20isAutoHighlight%20prop%0A)
+
+\n- vercel: @dgz9 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%226bc348e4acd173d1e9e6245dc3c8103bcfde5f22%22%7D%2C%22id%22%3A%22QmVHyMwELRfiT5Tg97gm6241156USbf8KbP6MsA5gSHpKh%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3829%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This pull request introduces an autocomplete component that allows users to select animals from a predefined dataset. Key features include the addition of an `autoHighlight` property, which automatically highlights the first item in the list when the dropdown is opened. The changes span multiple files, including updates to documentation, component props, and internal logic to support this new functionality.
+
+## Changes
+
+| File Path                                               | Change Summary                                                                                          |
+|--------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| apps/docs/content/components/autocomplete/auto-highlight.ts | Introduced an autocomplete component with an `animals` dataset and an `autoHighlight` property.      |
+| apps/docs/content/components/autocomplete/index.ts     | Added import for `autoHighlight` to `autocompleteContent`.                                          |
+| apps/docs/content/docs/components/autocomplete.mdx     | Updated documentation to include `autoHighlight` and refined existing sections for clarity.          |
+| packages/components/autocomplete/__tests__/autocomplete.test.tsx | Added tests for `autoHighlight` functionality in the `Autocomplete` component.                      |
+| packages/components/autocomplete/src/use-autocomplete.ts| Added `autoHighlight` property to `Props` interface and updated logic to handle automatic highlighting. |
+| packages/components/autocomplete/stories/autocomplete.stories.tsx | Introduced `autoHighlight` property in `argTypes`, added `AutoHighlightTemplate` and `WithAutoHighlight` export. |
+| packages/components/listbox/src/listbox.tsx           | Added `autoHighlight` property to `Listbox` component for conditional highlighting.                  |
+| packages/components/listbox/src/use-listbox.ts         | Added `autoHighlight` property to `Props` interface, updated destructuring and return object.       |
+| packages/components/listbox/src/use-listbox-item.ts    | Introduced `autoHighlighted` property to control item highlighting in the listbox.                   |
+
+## Possibly related PRs
+- **#2186**: This PR enhances the `Autocomplete` component by automatically focusing the first non-disabled item, which is related to the new `autoHighlight` feature introduced in the main PR.
+- **#3726**: This PR fixes the highlighting of items in the `AutocompleteSection` during keyboard navigation, which is directly related to the autocomplete functionality being developed in the main PR.
+- **#3788**: This PR ensures that the autocomplete dropdown remains open after clicking the clear button, which is relevant to the user interaction improvements made in the main PR.
+- **#3845**: This PR addresses the exit animation of the autocomplete popover, which is related to the overall user experience enhancements in the main PR.
+
+## Suggested labels
+`👀 Status: In Review`
+
+## Suggested reviewers
+- wingkwong
+- jrgarciadev
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+apps/docs/content/components/autocomplete/auto-highlight.ts:
+
+"""
+## AI-generated summary of changes
+
+The new file introduces an autocomplete component for selecting animals, utilizing a predefined dataset of animal objects. The dataset, stored in a variable named `animals`, contains an array of objects, each with `label`, `value`, and `description` properties for various animals. The `App` component imports the `Autocomplete` and `AutocompleteItem` components from the `@nextui-org/react` library and renders an `Autocomplete` element configured with the `autoHighlight` property, a label, a placeholder, and a class for styling. The `defaultItems` prop is set to the `animals` dataset, allowing users to search for and select their favorite animal. Each item in the autocomplete dropdown is displayed using the `AutocompleteItem` component, which renders the animal's label. The file exports an object containing the `App` component and the `animals` dataset for use in other parts of the application.
+
+## Alterations to the declarations of exported or public entities
+
+- Variable added: `const animals` in `data.js`
+- Component added: `export default function App()` in `App.jsx`
+- Exported object added: `export default { ...react }` in the module
+"""
+
+---
+
+apps/docs/content/components/autocomplete/index.ts:
+
+"""
+## AI-generated summary of changes
+
+The diff introduces a new import statement for `autoHighlight` from the file `./auto-highlight`. This import is added to the `autocompleteContent` object, which consolidates various components related to the autocomplete functionality. The inclusion of `autoHighlight` enhances the `autocompleteContent` by integrating additional functionality that likely pertains to automatic highlighting within the autocomplete component.
+
+## Alterations to the declarations of exported or public entities
+
+- Variable added: `autoHighlight` in `autocompleteContent` in `apps/docs/content/components/autocomplete/index.ts`
+"""
+
+---
+
+apps/docs/content/docs/components/autocomplete.mdx:
+
+"""
+## AI-generated summary of changes
+
+The documentation for the `Autocomplete` component has been updated to include a new feature called "Auto Highlight," which describes the `autoHighlight` property that automatically highlights the first list item when the autocomplete is opened. This addition enhances the usability of the component by providing a clearer indication of the first option available to users. Additionally, the section regarding the `isReadOnly` property has been clarified to specify that while the listbox will display all available options, users will not be able to select any of them. The overall structure of the documentation remains intact, with existing sections refined for clarity and consistency. The API section has been updated to reflect the new `autoHighlight` property, ensuring that developers have comprehensive information about the available props and their functionalities. The changes contribute to a more user-friendly and informative documentation experience for developers utilizing the `Autocomplete` component.
+
+## Alterations to the declarations of exported or public entities
+
+- Property added: `autoHighlight` in `Autocomplete` component props.
+"""
+
+---
+
+packages/components/autocomplete/__tests__/autocomplete.test.tsx:
+
+"""
+## AI-generated summary of changes
+
+The diff introduces three new test cases for the `Autocomplete` component, specifically targeting the `autoHighlight` feature. The first test verifies that the first non-disabled item is auto-highlighted when the `autoHighlight` prop is set to true. The second test checks that disabled items are skipped during the auto-highlighting process. The third test confirms that no items are auto-highlighted when the `autoHighlight` prop is set to false. These additions enhance the testing coverage for the `Autocomplete` component's behavior regarding item highlighting based on the `autoHighlight` property.
+
+## Alterations to the declarations of exported or public entities
+
+- New test case added: `it("should auto-highlight the first non-disabled item when autoHighlight is true")` in `packages/components/autocomplete/__tests__/autocomplete.test.tsx`
+- New test case added: `it("should skip disabled items when auto-highlighting")` in `packages/components/autocomplete/__tests__/autocomplete.test.tsx`
+- New test case added: `it("should not auto-highlight when autoHighlight is false")` in `packages/components/autocomplete/__tests__/autocomplete.test.tsx`
+"""
+
+---
+
+packages/components/autocomplete/src/use-autocomplete.ts:
+
+"""
+## AI-generated summary of changes
+
+The diff introduces a new optional property `autoHighlight` to the `Props` interface in the `useAutocomplete` function, which determines whether the first item in the autocomplete list should be automatically highlighted as the user types. This property defaults to `false`. The logic within the `useAutocomplete` function is updated to conditionally focus the first item in the collection based on the value of `autoHighlight`. Specifically, the `useEffect` hook that manages the focus behavior is modified to check if `autoHighlight` is `true` before setting the focused key to the first item. Additionally, the `getListBoxProps` function is updated to include the `autoHighlight` property in its return value. The changes also include a deprecation notice for the `disableClearable` property, indicating that it will be removed in a future release. The overall structure and flow of the `useAutocomplete` function remain intact, with the new functionality integrated into the existing logic.
+
+## Alterations to the declarations of exported or public entities
+
+- Property added: `autoHighlight?: boolean` in interface `Props<T>` in `packages/components/autocomplete/src/use-autocomplete.ts`
+- Method signature updated: `export function useAutocomplete<T extends object>(originalProps: UseAutocompleteProps<T>)` in `packages/components/autocomplete/src/use-autocomplete.ts` → includes handling for the new `autoHighlight` property.
+"""
+
+---
+
+packages/components/autocomplete/stories/autocomplete.stories.tsx:
+
+"""
+## AI-generated summary of changes
+
+The diff introduces a new boolean property `autoHighlight` to the `argTypes` of the `Autocomplete` component, allowing users to control whether the autocomplete suggestions should be automatically highlighted. This property is integrated into a new template called `AutoHighlightTemplate`, which demonstrates the functionality of the `autoHighlight` feature. Additionally, a new export named `WithAutoHighlight` is added to showcase this template in the storybook. The existing templates and their functionalities remain unchanged, with the primary focus on enhancing the autocomplete behavior through this new property.
+
+## Alterations to the declarations of exported or public entities
+
+- Property added: `autoHighlight` in `AutocompleteProps` in `packages/components/autocomplete/stories/autocomplete.stories.tsx`
+- New template added: `AutoHighlightTemplate` in `packages/components/autocomplete/stories/autocomplete.stories.tsx`
+- New export added: `WithAutoHighlight` in `packages/components/autocomplete/stories/autocomplete.stories.tsx`
+"""
+
+---
+
+packages/components/listbox/src/listbox.tsx:
+
+"""
+## AI-generated summary of changes
+
+The diff introduces a new property, `autoHighlight`, to the `Listbox` component, which is derived from the `useListbox` hook. This property is used to determine if a listbox item should be automatically highlighted based on the focused key in the selection manager. The `ListboxItem` component is updated to include a new prop, `autoHighlighted`, which conditionally applies highlighting when `autoHighlight` is true and the focused key matches the item's key. The overall structure of the `Listbox` component remains unchanged, with the addition of logic to handle the new highlighting feature.
+
+## Alterations to the declarations of exported or public entities
+
+- Property added: `autoHighlight` in the `Listbox` component's props in `packages/components/listbox/src/listbox.tsx`
+- Prop added: `autoHighlighted` in the `ListboxItem` component's props in `packages/components/listbox/src/listbox.tsx`
+"""
+
+---
+
+packages/components/listbox/src/use-listbox-item.ts:
+
+"""
+## AI-generated summary of changes
+
+The changes introduce a new optional property, `autoHighlighted`, to the `Props` interface in the `useListboxItem` function. This property allows for additional control over the highlighting behavior of listbox items. The logic for determining whether an item is highlighted has been updated to include this new property. Specifically, the condition for `isHighlighted` now incorporates `autoHighlighted`, allowing it to influence the highlighting state alongside existing conditions related to focus and hover states. The default value for `autoHighlighted` is set to `false` within the destructured props. This modification enhances the control flow by adding an additional state that can affect the visual representation of listbox items.
+
+## Alterations to the declarations of exported or public entities
+
+- Interface modified: `Props<T extends object>` in `packages/components/listbox/src/use-listbox-item.ts` now includes `autoHighlighted?: boolean;`
+- Function signature updated: `export function useListboxItem<T extends object>(originalProps: UseListboxItemProps<T>)` remains unchanged, but the internal logic has been modified to accommodate the new `autoHighlighted` property.
+"""
+
+---
+
+packages/components/listbox/src/use-listbox.ts:
+
+"""
+## AI-generated summary of changes
+
+The diff introduces a new optional property `autoHighlight` to the `Props` interface in the `useListbox` function. This property allows the listbox to automatically highlight the first item in the list, with a default value of `false`. The `autoHighlight` property is included in the destructuring of `props` within the `useListbox` function, making it available for use in the component's logic. The return object of the `useListbox` function is updated to include `autoHighlight`, ensuring that this new property can be accessed by components utilizing the hook. Additionally, the documentation for the `Props` interface is updated to describe the new `autoHighlight` property, specifying its purpose and default value.
+
+## Alterations to the declarations of exported or public entities
+
+- Property added: `autoHighlight?: boolean` in interface `Props<T>` in `packages/components/listbox/src/use-listbox.ts`
+- Method signature updated: `export function useListbox<T extends object>(props: UseListboxProps<T>)` in `packages/components/listbox/src/use-listbox.ts` → now includes `autoHighlight` in the destructured `props` within the function.
+- Return type updated: `return { ... }` in `useListbox` now includes `autoHighlight` in the returned object.
+"""
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "feat(autocomplete): add isAutoHighlight prop" introduces a new feature to the Autocomplete component in the NextUI library. It adds an `isAutoHighlighted` prop that enables the automatic highlighting of the first item in the dropdown list as the user types.
+
+Currently, the Autocomplete component does not highlight any options automatically, requiring users to manually navigate through the list to make a selection. With the introduction of the `isAutoHighlighted` prop, when set to true, the first item in the dropdown will be automatically highlighted, allowing users to quickly select it by pressing Enter without additional navigation.
+
+The pull request specifies that this change is not a breaking change, meaning it will not disrupt existing functionality for users who do not utilize the new prop. Additionally, the author has included a Storybook test and updated the documentation to reflect this new feature, ensuring that users can easily understand and implement the `isAutoHighlighted` functionality in their applications.
+
+This enhancement aims to improve the user experience by streamlining the selection process within the Autocomplete component.
+
+## Comments Summary
+
+In the comments section of the pull request, the author, dgz9, provided several updates regarding the changes made. They noted that they removed their previous logic and retained only the prop to enable or disable the highlight feature, which was part of an earlier pull request (#2186). This indicates a refinement of the feature to focus solely on the new `isAutoHighlighted` functionality.
+
+Additionally, dgz9 mentioned that they added tests for the new prop, ensuring that the functionality is properly validated and behaves as expected. This is a crucial step in maintaining the quality and reliability of the component. Furthermore, they indicated that a changeset was added, which typically includes information about the changes made in the pull request for tracking purposes.
+
+Overall, the comments reflect a commitment to enhancing the Autocomplete component while ensuring that the new feature is well-tested and documented.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 6bc348e4acd173d1e9e6245dc3c8103bcfde5f22 -->
+<!-- 6a260a371ce730b8b0b623539e3aa5b8ac827f0b -->
+<!-- 094efcbd650da80f8414fdf3685447d908355985 -->
+<!-- 2a313e86db5274a5f36e0548123a4911d74c6a61 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- dgz9: 1. Removed my logic and only left the prop to enabled/disable the highlight feature in #2186
+2. Added tests for the new prop.
+3. Added changeset.\n- dgz9: Prop renamed to autoHiglight\n- vercel: [vc]: #HkIFAvpw4SlKf94HQR2PvbYbMsw3ynOpxvDnJBKuwPc=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvM29mbWdZRnZEbVpXaXpVRnlxYnAxbzFLV3F6cyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWRnejktZmVhdC1hdXRvY28tMjRlMmE4LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWRnejktZmVhdC1hdXRvY28tMjRlMmE4LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi83SGpITlZyNlVZSGY2Y3RVWnNBUFdRR0Q0dXZhIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLWRnejktZmVhdC1hdXRvY29tcGxldC0yZjE0ODUtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLWRnejktZmVhdC1hdXRvY29tcGxldC0yZjE0ODUtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/7HjHNVr6UYHf6ctUZsAPWQGD4uva)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-dgz9-feat-autocomplet-2f1485-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-dgz9-feat-autocomplet-2f1485-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 14, 2024 0:13am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/3ofmgYFvDmZWizUFyqbp1o1KWqzs)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-dgz9-feat-autoco-24e2a8-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-dgz9-feat-autoco-24e2a8-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 14, 2024 0:13am |
+
+
+\n- dgz9: @wingkwong  If you're okay with it, I think this can be closed. I initially just wanted the first item on the list to be selected by default and didn't realize someone else had already pushed that to canary. I don't think a prop is necessary to enable/disable the auto highlight feature.\n
+
+Files Changed:
+- .changeset/angry-pillows-accept.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/autocomplete": minor
++"@nextui-org/listbox": minor
++---
++
++add prop autoHighlight to enable/disable the automatic focus on autocomplete items (#2186)\n- apps/docs/content/components/autocomplete/auto-highlight.ts (added, 53 changes)\n  Patch: @@ -0,0 +1,53 @@
++const data = `export const animals = [
++  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
++  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
++  {label: "Elephant", value: "elephant", description: "The largest land animal"},
++  {label: "Lion", value: "lion", description: "The king of the jungle"},
++  {label: "Tiger", value: "tiger", description: "The largest cat species"},
++  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
++  {
++    label: "Dolphin",
++    value: "dolphin",
++    description: "A widely distributed and diverse group of aquatic mammals",
++  },
++  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
++  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
++  {
++    label: "Shark",
++    value: "shark",
++    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
++  },
++  {
++    label: "Whale",
++    value: "whale",
++    description: "Diverse group of fully aquatic placental marine mammals",
++  },
++  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
++  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++];`;
++
++const App = `import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
++import {animals} from "./data";
++
++export default function App() {
++  return (
++      <Autocomplete
++        autoHighlight
++        label="Favorite Animal"
++        placeholder="Search an animal"
++        className="max-w-xs"
++        defaultItems={animals}
++      >
++        {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
++      </Autocomplete>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++  "/data.js": data,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/autocomplete/index.ts (modified, 2 changes)\n  Patch: @@ -26,6 +26,7 @@ import customSectionsStyle from "./custom-sections-style";
+ import customStyles from "./custom-styles";
+ import customEmptyContentMessage from "./custom-empty-content-message";
+ import readOnly from "./read-only";
++import autoHighlight from "./auto-highlight";
+ 
+ export const autocompleteContent = {
+   usage,
+@@ -56,4 +57,5 @@ export const autocompleteContent = {
+   customStyles,
+   customEmptyContentMessage,
+   readOnly,
++  autoHighlight,
+ };\n- apps/docs/content/docs/components/autocomplete.mdx (modified, 8 changes)\n  Patch: @@ -84,7 +84,7 @@ the end of the label and the autocomplete will be required.
+ 
+ ### Read Only
+ 
+-If you pass the `isReadOnly` property to the Autocomplete, the Listbox will open to display 
++If you pass the `isReadOnly` property to the Autocomplete, the Listbox will open to display
+ all available options, but users won't be able to select any of the listed options.
+ 
+ <CodeDemo title="Read Only" highlightedLines="8" files={autocompleteContent.readOnly} />
+@@ -322,6 +322,12 @@ You can use the `AutocompleteSection` component to group autocomplete items.
+ 
+ <CodeDemo title="With Sections" files={autocompleteContent.sections} />
+ 
++### Auto Highlight
++
++If you pass the `autoHighlight` property to the Autocomplete, the Listbox will show the first list item automatically highlighted.
++
++<CodeDemo title="Auto Highlight" files={autocompleteContent.autoHighlight} />
++
+ ### Custom Sections Style
+ 
+ You can customize the sections style by using the `classNames` property of the `AutocompleteSection` component.\n- packages/components/autocomplete/__tests__/autocomplete.test.tsx (modified, 72 changes)\n  Patch: @@ -861,3 +861,75 @@ describe("Autocomplete with React Hook Form", () => {
+     expect(onSubmit).toHaveBeenCalledTimes(1);
+   });
+ });
++
++it("should auto-highlight the first non-disabled item when autoHighlight is true", async () => {
++  const {getByRole, getAllByRole} = render(
++    <Autocomplete
++      autoHighlight
++      aria-label="Favorite Animal"
++      items={itemsData}
++      label="Favorite Animal"
++    >
++      {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
++    </Autocomplete>,
++  );
++
++  const input = getByRole("combobox");
++
++  await act(async () => {
++    await userEvent.click(input);
++  });
++
++  const options = getAllByRole("option");
++
++  expect(options[0]).toHaveAttribute("data-hover", "true");
++});
++
++it("should skip disabled items when auto-highlighting", async () => {
++  const {getByRole, getAllByRole} = render(
++    <Autocomplete
++      autoHighlight
++      aria-label="Favorite Animal"
++      disabledKeys={["cat", "dog"]}
++      items={itemsData}
++      label="Favorite Animal"
++    >
++      {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
++    </Autocomplete>,
++  );
++
++  const input = getByRole("combobox");
++
++  await act(async () => {
++    await userEvent.click(input);
++  });
++
++  const options = getAllByRole("option");
++
++  expect(options[2]).toHaveAttribute("data-hover", "true");
++});
++
++it("should not auto-highlight when autoHighlight is false", async () => {
++  const {getByRole, getAllByRole} = render(
++    <Autocomplete
++      aria-label="Favorite Animal"
++      autoHighlight={false}
++      items={itemsData}
++      label="Favorite Animal"
++    >
++      {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
++    </Autocomplete>,
++  );
++
++  const input = getByRole("combobox");
++
++  await act(async () => {
++    await userEvent.click(input);
++  });
++
++  const options = getAllByRole("option");
++
++  options.forEach((option) => {
++    expect(option).not.toHaveAttribute("data-hover", "true");
++  });
++});\n- packages/components/autocomplete/src/use-autocomplete.ts (modified, 18 changes)\n  Patch: @@ -110,6 +110,11 @@ interface Props<T> extends Omit<HTMLNextUIProps<"input">, keyof ComboBoxProps<T>
+    * Callback fired when the select menu is closed.
+    */
+   onClose?: () => void;
++  /**
++   * Whether to automatically highlight the first item in the list as the user types.
++   * @default false
++   */
++  autoHighlight?: boolean;
+ }
+ 
+ export type UseAutocompleteProps<T> = Props<T> &
+@@ -165,6 +170,7 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     onOpenChange,
+     onClose,
+     isReadOnly = false,
++    autoHighlight = false,
+     ...otherProps
+   } = props;
+ 
+@@ -319,12 +325,14 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+ 
+   // focus first non-disabled item
+   useEffect(() => {
+-    let key = state.collection.getFirstKey();
++    if (autoHighlight) {
++      let key = state.collection.getFirstKey();
+ 
+-    while (key && state.disabledKeys.has(key)) {
+-      key = state.collection.getKeyAfter(key);
++      while (key && state.disabledKeys.has(key)) {
++        key = state.collection.getKeyAfter(key);
++      }
++      state.selectionManager.setFocusedKey(key);
+     }
+-    state.selectionManager.setFocusedKey(key);
+   }, [state.collection, state.disabledKeys]);
+ 
+   useEffect(() => {
+@@ -432,6 +440,7 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+       ...mergeProps(slotsProps.listboxProps, listBoxProps, {
+         shouldHighlightOnFocus: true,
+       }),
++      autoHighlight,
+     } as ListboxProps);
+ 
+   const getPopoverProps = (props: DOMAttributes = {}) => {
+@@ -515,6 +524,7 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     disableAnimation,
+     allowsCustomValue,
+     selectorIcon,
++    autoHighlight,
+     getBaseProps,
+     getInputProps,
+     getListBoxProps,\n- packages/components/autocomplete/stories/autocomplete.stories.tsx (modified, 27 changes)\n  Patch: @@ -65,6 +65,11 @@ export default {
+         type: "boolean",
+       },
+     },
++    autoHighlight: {
++      control: {
++        type: "boolean",
++      },
++    },
+     validationBehavior: {
+       control: {
+         type: "select",
+@@ -803,6 +808,21 @@ const WithReactHookFormTemplate = (args: AutocompleteProps) => {
+   );
+ };
+ 
++const AutoHighlightTemplate = ({color, variant, ...args}: AutocompleteProps<Animal>) => (
++  <Autocomplete
++    autoHighlight
++    className="max-w-xs"
++    color={color}
++    defaultItems={animalsData}
++    label="Favorite Animal"
++    placeholder="Select an animal"
++    variant={variant}
++    {...args}
++  >
++    {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
++  </Autocomplete>
++);
++
+ export const Default = {
+   render: Template,
+   args: {
+@@ -1061,3 +1081,10 @@ export const FullyControlled = {
+     ...defaultProps,
+   },
+ };
++
++export const WithAutoHighlight = {
++  render: AutoHighlightTemplate,
++  args: {
++    ...defaultProps,
++  },
++};\n- packages/components/listbox/src/listbox.tsx (modified, 2 changes)\n  Patch: @@ -24,6 +24,7 @@ function Listbox<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLUListE
+     disableAnimation,
+     getEmptyContentProps,
+     getListProps,
++    autoHighlight,
+   } = useListbox<T>({...props, ref});
+ 
+   const content = (
+@@ -51,6 +52,7 @@ function Listbox<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLUListE
+           <ListboxItem
+             key={item.key}
+             {...itemProps}
++            autoHighlighted={autoHighlight && state.selectionManager.focusedKey === item.key}
+             classNames={mergeProps(itemClasses, item.props?.classNames)}
+             shouldHighlightOnFocus={shouldHighlightOnFocus}
+           />\n- packages/components/listbox/src/use-listbox-item.ts (modified, 6 changes)\n  Patch: @@ -21,6 +21,7 @@ import {ListState} from "@react-stately/list";
+ interface Props<T extends object> extends ListboxItemBaseProps<T> {
+   item: Node<T>;
+   state: ListState<T>;
++  autoHighlighted?: boolean;
+ }
+ 
+ export type UseListboxItemProps<T extends object> = Props<T> &
+@@ -46,6 +47,7 @@ export function useListboxItem<T extends object>(originalProps: UseListboxItemPr
+     onPress,
+     onClick,
+     shouldHighlightOnFocus,
++    autoHighlighted = false,
+     hideSelectedIcon = false,
+     isReadOnly = false,
+     ...otherProps
+@@ -111,7 +113,8 @@ export function useListboxItem<T extends object>(originalProps: UseListboxItemPr
+ 
+   const isHighlighted =
+     (shouldHighlightOnFocus && isFocused) ||
+-    (isMobile ? isHovered || isPressed : isHovered || (isFocused && !isFocusVisible));
++    (isMobile ? isHovered || isPressed : isHovered || (isFocused && !isFocusVisible)) ||
++    autoHighlighted;
+ 
+   const getItemProps: PropGetter = (props = {}) => ({
+     ref: domRef,
+@@ -178,6 +181,7 @@ export function useListboxItem<T extends object>(originalProps: UseListboxItemPr
+     selectedIcon,
+     hideSelectedIcon,
+     disableAnimation,
++    isHighlighted,
+     getItemProps,
+     getLabelProps,
+     getWrapperProps,\n- packages/components/listbox/src/use-listbox.ts (modified, 7 changes)\n  Patch: @@ -92,6 +92,11 @@ interface Props<T> extends Omit<HTMLNextUIProps<"ul">, "children"> {
+    * The menu items classNames.
+    */
+   itemClasses?: ListboxItemProps["classNames"];
++  /**
++   * Whether to automatically highlight the first item in the list.
++   * @default false
++   */
++  autoHighlight?: boolean;
+ }
+ 
+ export type UseListboxProps<T = object> = Props<T> & AriaListBoxOptions<T> & ListboxVariantProps;
+@@ -118,6 +123,7 @@ export function useListbox<T extends object>(props: UseListboxProps<T>) {
+     hideEmptyContent = false,
+     shouldHighlightOnFocus = false,
+     classNames,
++    autoHighlight = false,
+     ...otherProps
+   } = props;
+ 
+@@ -181,6 +187,7 @@ export function useListbox<T extends object>(props: UseListboxProps<T>) {
+     disableAnimation,
+     className,
+     itemClasses,
++    autoHighlight,
+     getBaseProps,
+     getListProps,
+     getEmptyContentProps,\n

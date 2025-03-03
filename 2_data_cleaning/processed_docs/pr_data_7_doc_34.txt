@@ -1,0 +1,423 @@
+Pull Request Number: 3464
+Title: fix(autocomplete): remove unnecessary state.close
+Base Branch: canary
+Head Branch: fix/eng-1129
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/3464
+State: MERGED
+Created At: 2024-07-13T10:36:54Z
+Merged At: 2024-07-16T21:11:28Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes #3454
+📝 Description
+state.close is not required since the focus will make it open anyway.
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced a new fully controlled Autocomplete component story with custom filtering logic.
+
+
+
+Bug Fixes
+
+Ensured the input value in the Autocomplete component is cleared and remains focused after clicking the clear button.
+
+Commits:
+- fix(autocomplete): remove unnecessary state.close\n- feat(autocomplete): add fully controlled template\n- feat(autocomplete): should clear value after clicking clear button (controlled)\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-1129/[bug]-fully-controlled-autocomplete-component-example-does-not-work">ENG-1129 [BUG] - Fully controlled Autocomplete component example does not work with latest component version</a></p>\n- vercel: [vc]: #eNz11Mpmb/SUD6yunXypSxMZejJ2yX+pAV/h2qOP4Zw=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9Ebng0OVBDcEZIUjd0azdpTnRIRDRxSGVNQXRrIiwicHJldmlld1VybCI6IiIsIm5leHRDb21taXRTdGF0dXMiOiJDQU5DRUxFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiIifX0seyJuYW1lIjoibmV4dHVpLXN0b3J5Ym9vay12MiIsInJvb3REaXJlY3RvcnkiOiJwYWNrYWdlcy9zdG9yeWJvb2siLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLXYyL0JQczdNeTFVSlVGREVpZVRwdkM1NWVSNGN6UGUiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZml4LWVuZy0xMTI5LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1maXgtZW5nLTExMjktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | 🛑 Canceled ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/Dnx49PCpFHR7tk7iNtHD4qHeMAtk)) |  |  | Jul 13, 2024 10:49am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/BPs7My1UJUFDEieTpvC55eR4czPe)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-1129-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-1129-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jul 13, 2024 10:49am |
+
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes enhance the Autocomplete component by ensuring it correctly clears the input value and keeps the focus after pressing the clear button. This update includes adding a test to verify this behavior, modifying the `onClear` function to avoid closing the component, and introducing a fully controlled Autocomplete story with custom filtering logic.
+
+## Changes
+
+| File Path                                                    | Change Summary                                                                                                    |
+|--------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| `.../autocomplete/__tests__/autocomplete.test.tsx`           | Added a test case to verify clearing the value and focusing the input after clicking the clear button.             |
+| `.../autocomplete/src/use-autocomplete.ts`                   | Removed `state.close()` call within the `onClear` function.                                                        |
+| `.../autocomplete/stories/autocomplete.stories.tsx`          | Introduced `FullyControlledTemplate` component and `FullyControlled` story, and added import for `useFilter`.      |
+
+## Sequence Diagram(s)
+
+Silently ignored.
+
+## Assessment against linked issues
+
+| Objective                                                                                   | Addressed | Explanation                                                                                                    |
+|---------------------------------------------------------------------------------------------|-----------|---------------------------------------------------------------------------------------------------------------|
+| Ensure fully controlled Autocomplete component example works with the latest component version (#3454). | ✅         |                                                                                                               |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+packages/components/autocomplete/__tests__/autocomplete.test.tsx: ### Summary
+
+In the `autocomplete.test.tsx` file, the changes include the addition of a test case to verify clearing the value after clicking a clear button in a controlled Autocomplete component. The test ensures that the input value is emptied and remains focused after the clear button is clicked.
+
+---
+
+packages/components/autocomplete/src/use-autocomplete.ts: ## Summary
+
+In the provided diff for `packages/components/autocomplete/src/use-autocomplete.ts`, the change involves removing the `state.close()` call within the `onClear` function.
+
+## Alterations to the declarations of exported or public entities
+
+No alterations to the declarations of exported or public entities were identified in this diff.
+
+---
+
+packages/components/autocomplete/stories/autocomplete.stories.tsx: ### Summary
+
+In the `autocomplete.stories.tsx` file:
+- Added an import for `useFilter` from "@react-aria/i18n".
+- Introduced a new `FullyControlledTemplate` function component that manages Autocomplete input state and items, implements custom filtering logic, and handles selection and input changes.
+- Defined a new story `FullyControlled` that renders the `FullyControlledTemplate`.
+
+### Alterations to the declarations of exported or public entities
+
+- Added:
+  - `import {useFilter} from "@react-aria/i18n"` in `packages/components/autocomplete/stories/autocomplete.stories.tsx`
+- Added:
+  - `const FullyControlledTemplate = () => { ... }` in `packages/components/autocomplete/stories/autocomplete.stories.tsx`
+- Added:
+  - `export const FullyControlled = { ... }` in `packages/components/autocomplete/stories/autocomplete.stories.tsx`
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR summary
+
+**Title:** fix(autocomplete): remove unnecessary state.close  
+**User:** wingkwong  
+**Number:** 3464  
+**URL:** [https://github.com/nextui-org/nextui/pull/3464](https://github.com/nextui-org/nextui/pull/3464)
+
+**Description:**
+The pull request aims to address an issue in the Autocomplete component by removing an unnecessary call to `state.close`. This change is intended to resolve a bug where the fully controlled Autocomplete component example does not work correctly with the latest version of the component.
+
+## Objectives from linked issues
+
+**Issue Number:** #3454  
+**Title:** [BUG] - Fully controlled Autocomplete component example does not work with latest component version
+
+**Description:**
+The issue describes a bug encountered with the Autocomplete component in NextUI version 2.4.2. The problem occurs when trying to clear values from the component using the fully controlled example provided in the NextUI documentation. The bug can be reproduced by installing the latest version of NextUI, copying the fully controlled example from the documentation, and attempting to click the clear button. The expected behavior is that the data should be properly cleared from the Autocomplete component. The issue does not occur in version 2.0.15 of the Autocomplete component. The problem was observed on macOS using the Chrome browser.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+## Summary of generated summaries
+
+### Summary of Changes
+
+1. **`autocomplete.test.tsx`**:
+   - Added a test case to verify that the value is cleared and the input remains focused after clicking a clear button in a controlled Autocomplete component.
+
+2. **`use-autocomplete.ts`**:
+   - Removed the `state.close()` call within the `onClear` function.
+
+3. **`autocomplete.stories.tsx`**:
+   - Imported `useFilter` from "@react-aria/i18n".
+   - Introduced `FullyControlledTemplate`, a new function component managing Autocomplete input state and items, implementing custom filtering logic, and handling selection and input changes.
+   - Added a new story `FullyControlled` that renders the `FullyControlledTemplate`.
+
+## Alterations to the declarations of exported or public entities
+
+### `autocomplete.stories.tsx`
+
+- **Added**:
+  - `import {useFilter} from "@react-aria/i18n"`
+  - `const FullyControlledTemplate = () => { ... }`
+  - `export const FullyControlled = { ... }`
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 4917ff76ea15cf5d67116ee2aa069edadb3ca370 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 4917ff76ea15cf5d67116ee2aa069edadb3ca370
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/fix/eng-1129?filename=.changeset/ten-cooks-wonder.md&value=---%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A---%0A%0Afix(autocomplete)%3A%20remove%20unnecessary%20state.close%0A)
+
+\n- jrgarciadev: @wingkwong please check this scenario
+
+
+https://github.com/user-attachments/assets/0de1f853-666d-4eb2-be61-a98c13a46e55
+
+\n- wingkwong: @jrgarciadev not related to this issue / pr. will create a new one to track.\n
+
+Files Changed:
+- packages/components/autocomplete/__tests__/autocomplete.test.tsx (modified, 44 changes)\n  Patch: @@ -235,6 +235,50 @@ describe("Autocomplete", () => {
+     expect(autocomplete).toHaveFocus();
+   });
+ 
++  it("should clear value after clicking clear button (controlled)", async () => {
++    const wrapper = render(
++      <ControlledAutocomplete data-testid="autocomplete" items={itemsData}>
++        {(item) => <AutocompleteItem key={item.value}>{item.value}</AutocompleteItem>}
++      </ControlledAutocomplete>,
++    );
++
++    const autocomplete = wrapper.getByTestId("autocomplete");
++
++    // open the select listbox
++    await act(async () => {
++      await userEvent.click(autocomplete);
++    });
++
++    // assert that the autocomplete listbox is open
++    expect(autocomplete).toHaveAttribute("aria-expanded", "true");
++
++    let options = wrapper.getAllByRole("option");
++
++    // select the target item
++    await act(async () => {
++      await userEvent.click(options[0]);
++    });
++
++    const {container} = wrapper;
++
++    const clearButton = container.querySelector(
++      "[data-slot='inner-wrapper'] button:nth-of-type(1)",
++    )!;
++
++    expect(clearButton).not.toBeNull();
++
++    // select the target item
++    await act(async () => {
++      await userEvent.click(clearButton);
++    });
++
++    // assert that the input has empty value
++    expect(autocomplete).toHaveValue("");
++
++    // assert that input is focused
++    expect(autocomplete).toHaveFocus();
++  });
++
+   it("should open and close listbox by clicking selector button", async () => {
+     const wrapper = render(
+       <Autocomplete aria-label="Favorite Animal" data-testid="autocomplete" label="Favorite Animal">\n- packages/components/autocomplete/src/use-autocomplete.ts (modified, 1 changes)\n  Patch: @@ -364,7 +364,6 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+   const onClear = useCallback(() => {
+     state.setInputValue("");
+     state.setSelectedKey(null);
+-    state.close();
+   }, [state]);
+ 
+   const onFocus = useCallback(\n- packages/components/autocomplete/stories/autocomplete.stories.tsx (modified, 78 changes)\n  Patch: @@ -3,6 +3,7 @@ import type {ValidationResult} from "@react-types/shared";
+ import React, {Key} from "react";
+ import {Meta} from "@storybook/react";
+ import {useForm} from "react-hook-form";
++import {useFilter} from "@react-aria/i18n";
+ import {autocomplete, input, button} from "@nextui-org/theme";
+ import {
+   Pokemon,
+@@ -161,6 +162,76 @@ const FormTemplate = ({color, variant, ...args}: AutocompleteProps) => {
+   );
+ };
+ 
++const FullyControlledTemplate = () => {
++  // Store Autocomplete input value, selected option, open state, and items
++  // in a state tracker
++  const [fieldState, setFieldState] = React.useState({
++    selectedKey: "",
++    inputValue: "",
++    items: animalsData,
++  });
++
++  // Implement custom filtering logic and control what items are
++  // available to the Autocomplete.
++  const {startsWith} = useFilter({sensitivity: "base"});
++
++  // Specify how each of the Autocomplete values should change when an
++  // option is selected from the list box
++  const onSelectionChange = (key) => {
++    // eslint-disable-next-line no-console
++    console.log(`onSelectionChange ${key}`);
++    setFieldState((prevState) => {
++      let selectedItem = prevState.items.find((option) => option.value === key);
++
++      return {
++        inputValue: selectedItem?.label || "",
++        selectedKey: key,
++        items: animalsData.filter((item) => startsWith(item.label, selectedItem?.label || "")),
++      };
++    });
++  };
++
++  // Specify how each of the Autocomplete values should change when the input
++  // field is altered by the user
++  const onInputChange = (value) => {
++    // eslint-disable-next-line no-console
++    console.log(`onInputChange ${value}`);
++    setFieldState((prevState: any) => ({
++      inputValue: value,
++      selectedKey: value === "" ? null : prevState.selectedKey,
++      items: animalsData.filter((item) => startsWith(item.label, value)),
++    }));
++  };
++
++  // Show entire list if user opens the menu manually
++  const onOpenChange = (isOpen, menuTrigger) => {
++    if (menuTrigger === "manual" && isOpen) {
++      setFieldState((prevState) => ({
++        inputValue: prevState.inputValue,
++        selectedKey: prevState.selectedKey,
++        items: animalsData,
++      }));
++    }
++  };
++
++  return (
++    <Autocomplete
++      className="max-w-xs"
++      inputValue={fieldState.inputValue}
++      items={fieldState.items}
++      label="Favorite Animal"
++      placeholder="Search an animal"
++      selectedKey={fieldState.selectedKey}
++      variant="bordered"
++      onInputChange={onInputChange}
++      onOpenChange={onOpenChange}
++      onSelectionChange={onSelectionChange}
++    >
++      {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
++    </Autocomplete>
++  );
++};
++
+ const MirrorTemplate = ({color, variant, ...args}: AutocompleteProps) => (
+   <div className="w-full max-w-xl flex flex-row gap-4">
+     <Autocomplete
+@@ -983,3 +1054,10 @@ export const CustomStylesWithCustomItems = {
+     ...defaultProps,
+   },
+ };
++
++export const FullyControlled = {
++  render: FullyControlledTemplate,
++  args: {
++    ...defaultProps,
++  },
++};\n

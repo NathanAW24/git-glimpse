@@ -1,0 +1,1306 @@
+Pull Request Number: 2746
+Title: Fix DropdownItem onPress
+Base Branch: main
+Head Branch: fix/2743
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/2746
+State: MERGED
+Created At: 2024-04-16T20:48:23Z
+Merged At: 2024-04-18T02:27:36Z
+Participants: jrgarciadev
+
+Description:
+📝 Description
+
+Closes #2743
+Closes #2751
+
+For some reason the react-aria pressUp event is breaking the onClick / onPress callback, to fix this we had to implement our own use-menu-item hook and control the pressUp event, in addition, we passed down the properties to control the press events directly.
+⛳️ Current behavior (updates)
+Press / onClick events are not working on menu based components like Listbox / Dropdown / Menu / Etc
+🚀 New behavior
+Press events fixed
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced dropdown menus with closeOnSelect and onClose options for better user control.
+Introduced new package @nextui-org/use-aria-menu for improved menu accessibility and behavior.
+
+
+
+Bug Fixes
+
+Addressed issues with dropdown and menu handling through internal updates.
+
+
+
+Documentation
+
+Added README for @nextui-org/use-aria-menu detailing internal utility components.
+
+
+
+Tests
+
+Implemented new tests for event handling in menu components ensuring robust interaction capabilities.
+
+
+
+Refactor
+
+Updated event handling in menu items for enhanced responsiveness and user experience.
+Reorganized imports and dependencies across menu components for streamlined functionality.
+
+Commits:
+- chore(dropdown): missing events added\n- fix(menu): item selection events\n- Merge branch 'main' of github.com:nextui-org/nextui into fix/2743\n- chore(menu): changeset\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 70bd1b92a9981075ed96de59df452e318da97696
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 4 packages</summary>
+
+  | Name                      | Type  |
+| ------------------------- | ----- |
+| @nextui-org/dropdown      | Patch |
+| @nextui-org/menu          | Patch |
+| @nextui-org/use-aria-menu | Patch |
+| @nextui-org/react         | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/2743?filename=.changeset/wild-rabbits-sip.md&value=---%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A%22%40nextui-org%2Fmenu%22%3A%20patch%0A%22%40nextui-org%2Fuse-aria-menu%22%3A%20patch%0A---%0A%0AFix%20DropdownItem%20onPress%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This set of changes primarily enhances the handling of press events in dropdown and menu components within the NextUI framework. It introduces new hooks for better ARIA compliance and revises existing components to improve interaction handling. The updates address specific bugs related to event handling in dropdown items, ensuring that press events are effectively managed and that components close correctly upon selection.
+
+## Changes
+
+| File Path                                | Change Summary                                                                                                                                 |
+|------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| `.../dropdown/src/use-dropdown.ts`       | Added `closeOnSelect` and `onClose` to props, enhancing control over menu actions and closing behavior.                                         |
+| `.../dropdown/stories/dropdown.stories.tsx` | Removed `onAction` prop from `DropdownMenu`, altering action handling within the menu.                                                         |
+| `.../menu/__tests__/menu.test.tsx`       | Added tests for event handling in `Menu` items, using Jest and React Testing Library.                                                           |
+| `.../menu/package.json`                  | Included new dependencies for better menu handling.                                                                                            |
+| `.../menu/src/use-menu-item.ts`          | Updated event handling and imports, integrating `useAriaMenuItem`.                                                                             |
+| `.../menu/src/use-menu.ts`               | Reorganized imports and adjusted menu functionality imports.                                                                                    |
+| `.../use-aria-menu/...`                  | Multiple files added or updated to support ARIA-compliant menu behaviors and interactions, including the introduction of new hooks and utilities.|
+
+## Assessment against linked issues
+
+| Objective                                                                 | Addressed | Explanation                                                                                   |
+|---------------------------------------------------------------------------|-----------|-----------------------------------------------------------------------------------------------|
+| DropdownItem onPress not working [#2743]                                  | ✅         |                                                                                               |
+| onPress, onPressStart, onPressEnd, onPressChange, onPressUp not working in DropdownItem [#2751] | ✅         |                                                                                               |
+| Proper handling of `closeOnSelect` behavior [#2743]                       | ✅         |                                                                                               |
+| Integration of ARIA standards in menu components [#2743, #2751]           | ✅         |                                                                                               |
+| Ensure dropdown closes correctly after selection [#2743]                  | ✅         |                                                                                               |
+
+The changes effectively address the issues reported in #2743 and #2751, focusing on improving event handling and ARIA compliance in dropdown and menu components. The updates ensure that press events are managed correctly and that components behave as expected upon user interactions.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/healthy-parents-brake.md: The new file introduces patches for "@nextui-org/dropdown," "@nextui-org/menu," and "@nextui-org/use-aria-menu" packages. It addresses issues #2743 and #2751 by implementing internal React-Aria use-menu hooks to handle press events.
+
+---
+
+packages/components/dropdown/src/use-dropdown.ts: ## Short summary
+
+In the `useDropdown` function within `use-dropdown.ts`, the change involves adding the `closeOnSelect` and `onClose` properties to the merged props, affecting the control flow related to menu actions and closing behavior.
+
+---
+
+packages/components/dropdown/stories/dropdown.stories.tsx: ## Short summary
+
+In the given diff for `dropdown.stories.tsx`, the change involves removing the `onAction` prop from the `DropdownMenu` component, affecting the handling of actions triggered within the dropdown menu.
+
+---
+
+packages/components/menu/__tests__/menu.test.tsx: ## Short summary
+
+- Added event handling tests for menu items in the `Menu` component.
+- Tests include dispatching `onAction` events correctly, handling disabled items, and testing multiple event handlers.
+- Utilized Jest and React Testing Library for testing.
+- Ensured proper event handling behavior for menu interactions.
+
+---
+
+packages/components/menu/package.json: ## Short summary
+
+Added a new dependency `@nextui-org/use-aria-menu` to `dependencies` and `@nextui-org/test-utils` to `devDependencies` in the `package.json` file.
+
+---
+
+packages/components/menu/src/use-menu-item.ts: ## Short summary
+
+The changes in `use-menu-item.ts` involve reorganizing imports, updating dependencies, and adjusting event handling for menu items. Notable modifications include the introduction of `useAriaMenuItem` from `@nextui-org/use-aria-menu`, refactoring of press and hover handling, and the addition of new press-related event handlers like `onPressStart`, `onPressUp`, `onPressEnd`, and `onPressChange`.
+
+---
+
+packages/components/menu/src/use-menu.ts: ### Short Summary
+
+The change in functionality involves reorganizing imports related to menu functionality, specifically adjusting the import statements for `AriaMenuProps` and `useAriaMenu`. The file now imports `AriaMenuProps` from `@react-types/menu`, `AriaMenuOptions` from `@react-aria/menu`, and `useAriaMenu` from `@nextui-org/use-aria-menu`.
+
+---
+
+packages/hooks/use-aria-menu/README.md: This new file introduces `@nextui-org/use-aria-menu-item`, an internal utility component not intended for public usage.
+
+---
+
+packages/hooks/use-aria-menu/package.json: **Summary:**
+
+The new file `packages/hooks/use-aria-menu/package.json` introduces a package named `@nextui-org/use-aria-menu` version 2.0.0. It provides React-aria `useMenu` hooks with custom implementations, including dependencies on various React-aria libraries for interactions, menus, selections, and more. The package is configured for building with TypeScript and includes scripts for building, type-checking, and development tasks.
+
+---
+
+packages/hooks/use-aria-menu/src/index.ts: The new file `index.ts` in the `use-aria-menu` package exports functions for managing ARIA-compliant menus and menu items. It re-exports functions from `use-menu` for creating menus and menu items, along with their associated types.
+
+---
+
+packages/hooks/use-aria-menu/src/use-menu-item.ts: The new file `use-menu-item.ts` provides functionality for managing behavior and accessibility of items in a menu. It includes interfaces for defining menu item properties and methods for handling menu item interactions such as selection, focus, hover, and keyboard events. The file offers a comprehensive set of props and hooks to facilitate the implementation of menu items within a menu component.
+
+---
+
+packages/hooks/use-aria-menu/src/use-menu.ts: This file introduces a hook `useMenu` that provides behavior and accessibility implementation for a menu component. It handles menu props, state management, keyboard interactions, and accessibility features for creating menus with selectable options. The hook supports virtual scrolling, custom keyboard delegates, and ensures proper accessibility attributes are set. It also manages menu data like onClose and onAction callbacks.
+
+---
+
+packages/hooks/use-aria-menu/tsconfig.json: The new `tsconfig.json` file extends a base configuration and includes specific source files for the `use-aria-menu` package.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives (User Provided Facts)
+
+**Title:** Fix DropdownItem onPress
+
+**PR Number:** 2746
+
+**Description and Issues Addressed:**
+The pull request addresses issues with the `onPress` and related event handlers (`onClick`, `onPressStart`, `onPressEnd`, `onPressChange`, `onPressUp`) not functioning correctly in components like `DropdownItem`. These issues are documented in linked bug reports #2743 and #2751. The problem arose after updates in the NextUI version 2.3.0 and persisted in 2.3.1, where pressing on a dropdown item would unexpectedly close the dropdown without triggering the intended action.
+
+To resolve this, the PR introduces a custom hook, `use-menu-item`, replacing the react-aria `pressUp` event handling with a more controlled approach. This involves passing down properties directly to manage press events effectively. The changes ensure that press events are now functional across menu-based components like Listbox, Dropdown, Menu, etc.
+
+**Technical Changes:**
+- A new internal hook `use-menu-item` is implemented to handle menu item interactions properly.
+- Modifications in `use-dropdown.ts` include additional properties (`closeOnSelect`, `onClose`) to manage dropdown behaviors.
+- Updates in `dropdown.stories.tsx` remove the `onAction` prop from the `DropdownMenu` component, reflecting the new event handling strategy.
+- The `menu` package sees the addition of new dependencies and tests to ensure the correct functioning of event handlers.
+- The introduction of the `@nextui-org/use-aria-menu` package provides custom implementations of React-aria `useMenu` hooks, crucial for the revamped event handling.
+
+### AI-Generated Summary of Generated Summaries
+
+The pull request introduces significant changes across several components and packages to fix issues with event handling in dropdown menus. Key modifications include:
+
+1. **Introduction of New Hooks and Utilities:**
+   - A new internal hook, `use-menu-item`, is created to manage press events more effectively, replacing the default react-aria `pressUp` handling.
+   - The `@nextui-org/use-aria-menu` package is introduced, providing custom implementations of React-aria `useMenu` hooks. This package includes various functionalities for managing ARIA-compliant menus and menu items, focusing on behavior, accessibility, and interaction handling.
+
+2. **Changes in Existing Components and Hooks:**
+   - In `use-dropdown.ts`, properties like `closeOnSelect` and `onClose` are added to enhance control over dropdown behaviors.
+   - The `dropdown.stories.tsx` sees the removal of the `onAction` prop from the `DropdownMenu` component, aligning with the new event handling approach.
+   - The `menu` package is updated with new dependencies (`@nextui-org/use-aria-menu`, `@nextui-org/test-utils`) and tests to ensure the correct functioning of the new event handlers.
+
+3. **Documentation and Configuration Updates:**
+   - New README and `package.json` files for the `@nextui-org/use-aria-menu` package detail its purpose, dependencies, and configuration for building and development tasks.
+
+These changes collectively address the malfunctioning press events in dropdown items and enhance the control and flexibility of event handling in UI components, ensuring compliance with expected behaviors and accessibility standards.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai -->
+
+---
+
+<details>
+
+<summary>Recent Review Details</summary>
+
+**Configuration used: .coderabbit.yaml**
+
+<details>
+<summary>Commits</summary>
+Files that changed from the base of the PR and between 4ca6e2c1f6c4ebd8950a4de4b1eed1dc2d9d1d86 and 70bd1b92a9981075ed96de59df452e318da97696.
+</details>
+
+<details>
+<summary>Files ignored due to path filters (1)</summary>
+
+* `pnpm-lock.yaml` is excluded by `!pnpm-lock.yaml`
+
+</details>
+
+
+<details>
+<summary>Files selected for processing (13)</summary>
+
+* .changeset/healthy-parents-brake.md (1 hunks)
+* packages/components/dropdown/src/use-dropdown.ts (1 hunks)
+* packages/components/dropdown/stories/dropdown.stories.tsx (1 hunks)
+* packages/components/menu/__tests__/menu.test.tsx (2 hunks)
+* packages/components/menu/package.json (2 hunks)
+* packages/components/menu/src/use-menu-item.ts (6 hunks)
+* packages/components/menu/src/use-menu.ts (1 hunks)
+* packages/hooks/use-aria-menu/README.md (1 hunks)
+* packages/hooks/use-aria-menu/package.json (1 hunks)
+* packages/hooks/use-aria-menu/src/index.ts (1 hunks)
+* packages/hooks/use-aria-menu/src/use-menu-item.ts (1 hunks)
+* packages/hooks/use-aria-menu/src/use-menu.ts (1 hunks)
+* packages/hooks/use-aria-menu/tsconfig.json (1 hunks)
+
+</details>
+
+
+
+
+<details>
+<summary>Files skipped from review due to trivial changes (2)</summary>
+
+* packages/hooks/use-aria-menu/src/index.ts
+* packages/hooks/use-aria-menu/tsconfig.json
+
+</details>
+
+
+<details>
+<summary>Additional Context Used</summary>
+
+<details><summary>LanguageTool (3)</summary><blockquote>
+
+<details><summary>.changeset/healthy-parents-brake.md (1)</summary><blockquote>
+
+Near line 7: Possible spelling mistake found.
+Context: ...s down the press events and control the pressUp one 
+
+</blockquote></details>
+<details><summary>packages/hooks/use-aria-menu/README.md (2)</summary><blockquote>
+
+Near line 3: Consider using the synonym “brief” (= concise, using a few words, not lasting long) to strengthen your wording.
+Context: # @nextui-org/use-aria-menu-item  A Quick description of the component  > This is...
+
+---
+
+Near line 17: Usually, a comma is necessary before ‘Yes’ at the end of a sentence. Did you mean “, please”?
+Context: ...aria-menu-item ```  ## Contribution  Yes please! See the [contributing guidelines](http...
+
+</blockquote></details>
+
+</blockquote></details>
+
+</details>
+<details><summary>Additional comments not posted (15)</summary><blockquote>
+<details><summary>packages/hooks/use-aria-menu/README.md (1)</summary><blockquote>
+
+`3-3`: Consider using "Brief description of the component" for clarity and conciseness.
+
+</blockquote></details>
+<details><summary>packages/components/menu/package.json (1)</summary><blockquote>
+
+`48-48`: Ensure the version specification for `@nextui-org/use-aria-menu` matches the expected version range.
+
+</blockquote></details>
+<details><summary>packages/hooks/use-aria-menu/src/use-menu.ts (1)</summary><blockquote>
+
+`45-47`: Ensure accessibility labels are provided. Consider throwing an error or providing a default label if none is provided.
+
+</blockquote></details>
+<details><summary>packages/components/dropdown/src/use-dropdown.ts (1)</summary><blockquote>
+
+`142-146`: Ensure that the `onMenuAction` function correctly handles the `menuCloseOnSelect` parameter and respects the `closeOnSelect` property.
+
+</blockquote></details>
+<details><summary>packages/components/menu/src/use-menu-item.ts (1)</summary><blockquote>
+
+`82-93`: > :memo: **NOTE**
+> This review was outside the diff hunks and was mapped to the diff hunk with the greatest overlap. Original lines [72-90]
+
+Verify the new press-related event handlers (`onPressStart`, `onPressUp`, `onPressEnd`, `onPressChange`) are correctly implemented and triggered in the appropriate scenarios.
+
+</blockquote></details>
+<details><summary>packages/hooks/use-aria-menu/src/use-menu-item.ts (6)</summary><blockquote>
+
+`54-54`: Deprecation notice for `isDisabled` property.
+
+The `isDisabled` property is marked as deprecated. Ensure that all references in the codebase are updated to use the new recommended approach.
+
+---
+
+`60-60`: Deprecation notice for `isSelected` property.
+
+The `isSelected` property is marked as deprecated. Ensure that all references in the codebase are updated to use the new recommended approach.
+
+---
+
+`72-72`: Deprecation notice for `onClose` handler.
+
+The `onClose` handler is marked as deprecated. Ensure that all references in the codebase are updated to use the new recommended approach.
+
+---
+
+`87-87`: Deprecation notice for `onAction` handler.
+
+The `onAction` handler is marked as deprecated. Ensure that all references in the codebase are updated to use the new recommended approach.
+
+---
+
+`144-144`: Conditional assignment of `onAction` might lead to unexpected behavior.
+
+The `onAction` is conditionally set to an empty function if `isTrigger` is true, which might lead to unexpected behavior where no action is performed even if an action handler is provided. Verify this logic to ensure it aligns with intended behavior.
+
+---
+
+`312-340`: Return structure of `useMenuItem` hook.
+
+The return structure of the `useMenuItem` hook is well-organized and provides a clear interface for the menu item properties.
+
+</blockquote></details>
+<details><summary>packages/components/menu/__tests__/menu.test.tsx (3)</summary><blockquote>
+
+`278-299`: Ensure `onAction` event is dispatched correctly.
+
+The test verifies that the `onAction` event is dispatched correctly when a menu item is clicked. This is crucial for ensuring that the event handling logic is functioning as expected.
+
+---
+
+`301-324`: Check for non-dispatch of `onAction` when item is disabled.
+
+The test correctly checks that the `onAction` event is not dispatched when the menu item is disabled. This is important for ensuring that disabled items do not trigger actions.
+
+---
+
+`326-353`: Test for multiple event dispatches on menu item interaction.
+
+The test ensures that `onPress`, `onAction`, and `onClick` events are all dispatched correctly when a menu item is interacted with. This comprehensive testing is essential for verifying complex interactions.
+
+</blockquote></details>
+<details><summary>packages/components/dropdown/stories/dropdown.stories.tsx (1)</summary><blockquote>
+
+`140-140`: Removal of `onAction` prop from `DropdownMenu`.
+
+The `onAction` prop has been removed from the `DropdownMenu` component. This change aligns with the new event handling strategy mentioned in the PR description. Ensure that this change is reflected across all relevant parts of the application.
+
+</blockquote></details></blockquote></details>
+
+
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- 70bd1b92a9981075ed96de59df452e318da97696 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #wt5hUJ7RmFu5xFkdC8fjQ8PFFoLDjUyVyWe55mcChpE=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi85cGRYUzRpY3plRmRTczdRaFVUNlNmTmlaQVc3IiwicHJldmlld1VybCI6IiIsIm5leHRDb21taXRTdGF0dXMiOiJDQU5DRUxFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiIifX0seyJuYW1lIjoibmV4dHVpLXN0b3J5Ym9vay12MiIsInJvb3REaXJlY3RvcnkiOiJwYWNrYWdlcy9zdG9yeWJvb2siLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLXYyL0Z2NWJWbzM0cWdDblhocE0xSjRlZmRYcjlLanYiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZml4LTI3NDMtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC0yNzQzLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | 🛑 Canceled ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/9pdXS4iczeFdSs7QhUT6SfNiZAW7)) |  |  | Apr 18, 2024 2:24am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/Fv5bVo34qgCnXhpM1J4efdXr9Kjv)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-2743-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-2743-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 18, 2024 2:24am |
+
+
+\n
+
+Files Changed:
+- .changeset/healthy-parents-brake.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/dropdown": patch
++"@nextui-org/menu": patch
++"@nextui-org/use-aria-menu": patch
++---
++
++Fix #2743 #2751 internal react-aria use-menu hooks implemented to pass down the press events and control the pressUp one\n- packages/components/dropdown/src/use-dropdown.ts (modified, 6 changes)\n  Patch: @@ -139,7 +139,11 @@ export function useDropdown(props: UseDropdownProps) {
+     return {
+       ref: mergeRefs(_ref, menuRef),
+       menuProps,
+-      ...mergeProps(props, {onAction: () => onMenuAction(props?.closeOnSelect)}),
++      closeOnSelect,
++      ...mergeProps(props, {
++        onAction: () => onMenuAction(props?.closeOnSelect),
++        onClose: state.close,
++      }),
+     } as MenuProps;
+   };
+ \n- packages/components/dropdown/stories/dropdown.stories.tsx (modified, 2 changes)\n  Patch: @@ -137,7 +137,7 @@ const Template = ({color, variant, ...args}: DropdownProps & DropdownMenuProps)
+     <DropdownTrigger>
+       <Button>Trigger</Button>
+     </DropdownTrigger>
+-    <DropdownMenu aria-label="Actions" color={color} variant={variant} onAction={alert}>
++    <DropdownMenu aria-label="Actions" color={color} variant={variant}>
+       <DropdownItem key="new">New file</DropdownItem>
+       <DropdownItem key="copy">Copy link</DropdownItem>
+       <DropdownItem key="edit">Edit file</DropdownItem>\n- packages/components/menu/__tests__/menu.test.tsx (modified, 78 changes)\n  Patch: @@ -109,6 +109,7 @@ describe("Menu", () => {
+       <Menu aria-label="Actions" items={menuItems}>
+         {(section: any) => (
+           <MenuSection aria-label={section.title} items={section.children} title={section.title}>
++            {/* @ts-ignore */}
+             {(item: any) => <MenuItem key={item.key}>{item.name}</MenuItem>}
+           </MenuSection>
+         )}
+@@ -273,4 +274,81 @@ describe("Menu", () => {
+ 
+     expect(checkmark1).toBeFalsy();
+   });
++
++  it("should dispatch onAction events correctly", async () => {
++    let onAction = jest.fn();
++
++    const wrapper = render(
++      <Menu aria-label="Actions" onAction={onAction}>
++        <MenuItem key="new">New file</MenuItem>
++        <MenuItem key="copy">Copy link</MenuItem>
++        <MenuItem key="edit">Edit file</MenuItem>
++        <MenuItem key="delete" color="danger">
++          Delete file
++        </MenuItem>
++      </Menu>,
++    );
++
++    let menuItems = wrapper.getAllByRole("menuitem");
++
++    await act(async () => {
++      await userEvent.click(menuItems[1]);
++
++      expect(onAction).toBeCalledTimes(1);
++    });
++  });
++
++  it("should not dispatch onAction events if item is disabled", async () => {
++    let onAction = jest.fn();
++
++    const wrapper = render(
++      <Menu aria-label="Actions" onAction={onAction}>
++        <MenuItem key="new">New file</MenuItem>
++        <MenuItem key="copy" isDisabled>
++          Copy link
++        </MenuItem>
++        <MenuItem key="edit">Edit file</MenuItem>
++        <MenuItem key="delete" color="danger">
++          Delete file
++        </MenuItem>
++      </Menu>,
++    );
++
++    let menuItems = wrapper.getAllByRole("menuitem");
++
++    await act(async () => {
++      await userEvent.click(menuItems[1]);
++
++      expect(onAction).toBeCalledTimes(0);
++    });
++  });
++
++  it("should dispatch onPress, onAction and onClick events", async () => {
++    let onPress = jest.fn();
++    let onClick = jest.fn();
++    let onAction = jest.fn();
++
++    const wrapper = render(
++      <Menu aria-label="Actions" onAction={onAction}>
++        <MenuItem key="new" onClick={onClick} onPress={onPress}>
++          New file
++        </MenuItem>
++        <MenuItem key="copy">Copy link</MenuItem>
++        <MenuItem key="edit">Edit file</MenuItem>
++        <MenuItem key="delete" color="danger">
++          Delete file
++        </MenuItem>
++      </Menu>,
++    );
++
++    let menuItems = wrapper.getAllByRole("menuitem");
++
++    await act(async () => {
++      await userEvent.click(menuItems[0]);
++
++      expect(onAction).toBeCalledTimes(1);
++      expect(onPress).toBeCalledTimes(1);
++      expect(onClick).toBeCalledTimes(1);
++    });
++  });
+ });\n- packages/components/menu/package.json (modified, 2 changes)\n  Patch: @@ -45,6 +45,7 @@
+     "@nextui-org/use-is-mobile": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
++    "@nextui-org/use-aria-menu": "workspace:*",
+     "@react-aria/focus": "^3.16.2",
+     "@react-aria/interactions": "^3.21.1",
+     "@react-aria/menu": "^3.13.1",
+@@ -57,6 +58,7 @@
+   "devDependencies": {
+     "@nextui-org/theme": "workspace:*",
+     "@nextui-org/system": "workspace:*",
++    "@nextui-org/test-utils": "workspace:*",
+     "clean-package": "2.2.0",
+     "@nextui-org/shared-icons": "workspace:*",
+     "react": "^18.0.0",\n- packages/components/menu/src/use-menu-item.ts (modified, 39 changes)\n  Patch: @@ -1,17 +1,16 @@
+ import type {MenuItemBaseProps} from "./base/menu-item-base";
++import type {Node} from "@react-types/shared";
+ 
+ import {useMemo, useRef, useCallback} from "react";
+ import {menuItem} from "@nextui-org/theme";
+ import {HTMLNextUIProps, mapPropsVariants, PropGetter} from "@nextui-org/system";
+ import {useFocusRing} from "@react-aria/focus";
+-import {Node} from "@react-types/shared";
+-import {filterDOMProps} from "@nextui-org/react-utils";
+ import {TreeState} from "@react-stately/tree";
+ import {clsx, dataAttr, objectToDeps, removeEvents} from "@nextui-org/shared-utils";
+-import {useMenuItem as useAriaMenuItem} from "@react-aria/menu";
+-import {chain, mergeProps} from "@react-aria/utils";
+-import {useHover, usePress} from "@react-aria/interactions";
++import {useAriaMenuItem} from "@nextui-org/use-aria-menu";
++import {mergeProps} from "@react-aria/utils";
+ import {useIsMobile} from "@nextui-org/use-is-mobile";
++import {filterDOMProps} from "@nextui-org/react-utils";
+ 
+ interface Props<T extends object> extends MenuItemBaseProps<T> {
+   item: Node<T>;
+@@ -38,8 +37,12 @@ export function useMenuItem<T extends object>(originalProps: UseMenuItemProps<T>
+     classNames,
+     onAction,
+     autoFocus,
+-    onPress,
+     onClick,
++    onPress,
++    onPressStart,
++    onPressUp,
++    onPressEnd,
++    onPressChange,
+     hideSelectedIcon = false,
+     isReadOnly = false,
+     closeOnSelect,
+@@ -61,21 +64,13 @@ export function useMenuItem<T extends object>(originalProps: UseMenuItemProps<T>
+ 
+   const isMobile = useIsMobile();
+ 
+-  const {pressProps, isPressed} = usePress({
+-    ref: domRef,
+-    isDisabled: isDisabled,
+-    onPress,
+-  });
+-
+-  const {isHovered, hoverProps} = useHover({
+-    isDisabled,
+-  });
+-
+   const {isFocusVisible, focusProps} = useFocusRing({
+     autoFocus,
+   });
+ 
+   const {
++    isHovered,
++    isPressed,
+     isFocused,
+     isSelected,
+     menuItemProps,
+@@ -87,6 +82,12 @@ export function useMenuItem<T extends object>(originalProps: UseMenuItemProps<T>
+       key,
+       onClose,
+       isDisabled,
++      onPress,
++      onClick,
++      onPressStart,
++      onPressUp,
++      onPressEnd,
++      onPressChange,
+       "aria-label": props["aria-label"],
+       closeOnSelect,
+       isVirtualized,
+@@ -117,12 +118,11 @@ export function useMenuItem<T extends object>(originalProps: UseMenuItemProps<T>
+   const getItemProps: PropGetter = (props = {}) => ({
+     ref: domRef,
+     ...mergeProps(
+-      itemProps,
+-      isReadOnly ? {} : mergeProps(focusProps, pressProps),
+-      hoverProps,
++      isReadOnly ? {} : focusProps,
+       filterDOMProps(otherProps, {
+         enabled: shouldFilterDOMProps,
+       }),
++      itemProps,
+       props,
+     ),
+     "data-focus": dataAttr(isFocused),
+@@ -133,7 +133,6 @@ export function useMenuItem<T extends object>(originalProps: UseMenuItemProps<T>
+     "data-pressed": dataAttr(isPressed),
+     "data-focus-visible": dataAttr(isFocusVisible),
+     className: slots.base({class: clsx(baseStyles, props.className)}),
+-    onClick: chain(pressProps.onClick, onClick),
+   });
+ 
+   const getLabelProps: PropGetter = (props = {}) => ({\n- packages/components/menu/src/use-menu.ts (modified, 5 changes)\n  Patch: @@ -1,7 +1,8 @@
+ import type {HTMLNextUIProps, PropGetter} from "@nextui-org/system";
+-import type {AriaMenuProps} from "@react-types/menu";
+ 
+-import {AriaMenuOptions, useMenu as useAriaMenu} from "@react-aria/menu";
++import {AriaMenuProps} from "@react-types/menu";
++import {AriaMenuOptions} from "@react-aria/menu";
++import {useAriaMenu} from "@nextui-org/use-aria-menu";
+ import {menu, MenuVariantProps, SlotsToClasses, MenuSlots} from "@nextui-org/theme";
+ import {TreeState, useTreeState} from "@react-stately/tree";
+ import {ReactRef, filterDOMProps, useDOMRef} from "@nextui-org/react-utils";\n- packages/hooks/use-aria-menu/README.md (added, 24 changes)\n  Patch: @@ -0,0 +1,24 @@
++# @nextui-org/use-aria-menu-item
++
++A Quick description of the component
++
++> This is an internal utility, not intended for public usage.
++
++## Installation
++
++```sh
++yarn add @nextui-org/use-aria-menu-item
++# or
++npm i @nextui-org/use-aria-menu-item
++```
++
++## Contribution
++
++Yes please! See the
++[contributing guidelines](https://github.com/nextui-org/nextui/blob/master/CONTRIBUTING.md)
++for details.
++
++## License
++
++This project is licensed under the terms of the
++[MIT license](https://github.com/nextui-org/nextui/blob/master/LICENSE).\n- packages/hooks/use-aria-menu/package.json (added, 63 changes)\n  Patch: @@ -0,0 +1,63 @@
++{
++  "name": "@nextui-org/use-aria-menu",
++  "version": "2.0.0",
++  "description": "React-aria useMenu hooks with custom implementations",
++  "keywords": [
++    "use-aria-menu"
++  ],
++  "author": "Junior Garcia <jrgarciadev@gmail.com>",
++  "homepage": "https://nextui.org",
++  "license": "MIT",
++  "main": "src/index.ts",
++  "sideEffects": false,
++  "files": [
++    "dist"
++  ],
++  "publishConfig": {
++    "access": "public"
++  },
++  "repository": {
++    "type": "git",
++    "url": "git+https://github.com/nextui-org/nextui.git",
++    "directory": "packages/hooks/use-aria-menu"
++  },
++  "bugs": {
++    "url": "https://github.com/nextui-org/nextui/issues"
++  },
++  "scripts": {
++    "build": "tsup src --dts",
++    "build:fast": "tsup src",
++    "dev": "pnpm build:fast --watch",
++    "clean": "rimraf dist .turbo",
++    "typecheck": "tsc --noEmit",
++    "prepack": "clean-package",
++    "postpack": "clean-package restore"
++  },
++  "peerDependencies": {
++    "react": ">=18"
++  },
++  "dependencies": {
++    "@react-aria/utils": "^3.23.2",
++    "@react-types/shared": "^3.22.1",
++    "@react-aria/menu": "^3.13.1",
++    "@react-aria/interactions": "^3.21.1",
++    "@react-stately/tree": "^3.7.6",
++    "@react-aria/i18n": "^3.10.2",
++    "@react-aria/selection": "^3.17.5",
++    "@react-stately/collections": "^3.10.5",
++    "@react-types/menu": "^3.9.7"
++  },
++  "devDependencies": {
++    "clean-package": "2.2.0",
++    "react": "^18.0.0"
++  },
++  "clean-package": "../../../clean-package.config.json",
++  "tsup": {
++    "clean": true,
++    "target": "es2019",
++    "format": [
++      "cjs",
++      "esm"
++    ]
++  }
++}\n- packages/hooks/use-aria-menu/src/index.ts (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++export {menuData, useMenu as useAriaMenu} from "./use-menu";
++export {useMenuItem as useAriaMenuItem} from "./use-menu-item";
++
++export type {AriaMenuOptions, MenuAria} from "./use-menu";
++export type {AriaMenuItemProps, MenuItemAria} from "./use-menu-item";\n- packages/hooks/use-aria-menu/src/use-menu-item.ts (added, 341 changes)\n  Patch: @@ -0,0 +1,341 @@
++import {
++  DOMAttributes,
++  DOMProps,
++  FocusableElement,
++  FocusEvents,
++  HoverEvents,
++  Key,
++  KeyboardEvents,
++  PressEvent,
++  PressEvents,
++} from "@react-types/shared";
++import {chain, filterDOMProps, mergeProps, useRouter, useSlotId} from "@react-aria/utils";
++import {getItemCount} from "@react-stately/collections";
++import {isFocusVisible, useFocus, useHover, useKeyboard, usePress} from "@react-aria/interactions";
++import {RefObject} from "react";
++import {TreeState} from "@react-stately/tree";
++import {useSelectableItem} from "@react-aria/selection";
++
++import {menuData} from "./use-menu";
++
++export interface MenuItemAria {
++  /** Props for the menu item element. */
++  menuItemProps: DOMAttributes;
++
++  /** Props for the main text element inside the menu item. */
++  labelProps: DOMAttributes;
++
++  /** Props for the description text element inside the menu item, if any. */
++  descriptionProps: DOMAttributes;
++
++  /** Props for the keyboard shortcut text element inside the item, if any. */
++  keyboardShortcutProps: DOMAttributes;
++
++  /** Whether the item is currently hovered. */
++  isHovered: boolean;
++  /** Whether the item is currently focused. */
++  isFocused: boolean;
++  /** Whether the item is currently selected. */
++  isSelected: boolean;
++  /** Whether the item is currently in a pressed state. */
++  isPressed: boolean;
++  /** Whether the item is disabled. */
++  isDisabled: boolean;
++}
++
++export interface AriaMenuItemProps
++  extends DOMProps,
++    PressEvents,
++    HoverEvents,
++    KeyboardEvents,
++    FocusEvents {
++  /**
++   * Whether the menu item is disabled.
++   * @deprecated - pass disabledKeys to useTreeState instead.
++   */
++  isDisabled?: boolean;
++
++  /**
++   * Whether the menu item is selected.
++   * @deprecated - pass selectedKeys to useTreeState instead.
++   */
++  isSelected?: boolean;
++
++  /** A screen reader only label for the menu item. */
++  "aria-label"?: string;
++
++  /** The unique key for the menu item. */
++  key?: Key;
++
++  /**
++   * Handler that is called when the menu should close after selecting an item.
++   * @deprecated - pass to the menu instead.
++   */
++  onClose?: () => void;
++
++  /**
++   * Whether the menu should close when the menu item is selected.
++   * @default true
++   */
++  closeOnSelect?: boolean;
++
++  /** Whether the menu item is contained in a virtual scrolling menu. */
++  isVirtualized?: boolean;
++
++  /**
++   * Handler that is called when the user activates the item.
++   * @deprecated - pass to the menu instead.
++   */
++  onAction?: (key: Key) => void;
++
++  onClick?: DOMAttributes["onClick"];
++
++  /** What kind of popup the item opens. */
++  "aria-haspopup"?: "menu" | "dialog";
++
++  /** Indicates whether the menu item's popup element is expanded or collapsed. */
++  "aria-expanded"?: boolean | "true" | "false";
++
++  /** Identifies the menu item's popup element whose contents or presence is controlled by the menu item. */
++  "aria-controls"?: string;
++}
++
++/**
++ * Provides the behavior and accessibility implementation for an item in a menu.
++ * See `useMenu` for more details about menus.
++ * @param props - Props for the item.
++ * @param state - State for the menu, as returned by `useTreeState`.
++ */
++export function useMenuItem<T>(
++  props: AriaMenuItemProps,
++  state: TreeState<T>,
++  ref: RefObject<FocusableElement>,
++): MenuItemAria {
++  let {
++    key,
++    closeOnSelect,
++    isVirtualized,
++    "aria-haspopup": hasPopup,
++    onPressStart: pressStartProp,
++    onPressUp: pressUpProp,
++    onPress,
++    onPressChange,
++    onPressEnd,
++    onHoverStart: hoverStartProp,
++    onHoverChange,
++    onHoverEnd,
++    onKeyDown,
++    onKeyUp,
++    onFocus,
++    onFocusChange,
++    onBlur,
++    onClick,
++  } = props;
++
++  let isTrigger = !!hasPopup;
++  // @ts-ignore
++  let isDisabled = props.isDisabled ?? state.disabledKeys.has(key);
++  // @ts-ignore
++  let isSelected = props.isSelected ?? state.selectionManager.isSelected(key);
++  let data = menuData.get(state);
++  // @ts-ignore
++  let onClose = props.onClose || data.onClose;
++  // @ts-ignore
++  let onAction = isTrigger ? () => {} : props.onAction || data.onAction;
++  let router = useRouter();
++  let performAction = (e: PressEvent) => {
++    if (onAction) {
++      // @ts-ignore
++      onAction(key);
++    }
++
++    if (e.target instanceof HTMLAnchorElement) {
++      router.open(e.target, e);
++    }
++  };
++
++  let role = "menuitem";
++
++  if (!isTrigger) {
++    if (state.selectionManager.selectionMode === "single") {
++      role = "menuitemradio";
++    } else if (state.selectionManager.selectionMode === "multiple") {
++      role = "menuitemcheckbox";
++    }
++  }
++
++  let labelId = useSlotId();
++  let descriptionId = useSlotId();
++  let keyboardId = useSlotId();
++
++  let ariaProps = {
++    "aria-disabled": isDisabled || undefined,
++    role,
++    "aria-label": props["aria-label"],
++    "aria-labelledby": labelId,
++    "aria-describedby": [descriptionId, keyboardId].filter(Boolean).join(" ") || undefined,
++    "aria-controls": props["aria-controls"],
++    "aria-haspopup": hasPopup,
++    "aria-expanded": props["aria-expanded"],
++  };
++
++  if (state.selectionManager.selectionMode !== "none" && !isTrigger) {
++    // @ts-ignore
++    ariaProps["aria-checked"] = isSelected;
++  }
++
++  // @ts-ignore
++  let item = state.collection.getItem(key);
++
++  if (isVirtualized) {
++    // @ts-ignore
++    ariaProps["aria-posinset"] = item?.index;
++    // @ts-ignore
++    ariaProps["aria-setsize"] = getItemCount(state.collection);
++  }
++
++  let onPressStart = (e: PressEvent) => {
++    if (e.pointerType === "keyboard") {
++      performAction(e);
++    }
++
++    pressStartProp?.(e);
++  };
++
++  let onPressUp = (e: PressEvent) => {
++    if (e.pointerType !== "keyboard") {
++      setTimeout(() => {
++        performAction(e);
++      });
++      // // Pressing a menu item should close by default in single selection mode but not multiple
++      // // selection mode, except if overridden by the closeOnSelect prop.
++      if (
++        !isTrigger &&
++        onClose &&
++        (closeOnSelect ??
++          (state.selectionManager.selectionMode !== "multiple" ||
++            // @ts-ignore
++            state.selectionManager.isLink(key)))
++      ) {
++        setTimeout(() => {
++          onClose?.();
++        });
++      }
++    }
++
++    pressUpProp?.(e);
++  };
++
++  let {itemProps, isFocused} = useSelectableItem({
++    selectionManager: state.selectionManager,
++    // @ts-ignore
++    key,
++    ref,
++    shouldSelectOnPressUp: true,
++    allowsDifferentPressOrigin: true,
++    // Disable all handling of links in useSelectable item
++    // because we handle it ourselves. The behavior of menus
++    // is slightly different from other collections because
++    // actions are performed on key down rather than key up.
++    linkBehavior: "none",
++  });
++
++  let {pressProps, isPressed} = usePress({
++    onPressStart,
++    onPress,
++    onPressUp,
++    onPressChange,
++    onPressEnd,
++    isDisabled,
++  });
++
++  let {isHovered, hoverProps} = useHover({
++    isDisabled,
++    onHoverStart(e) {
++      if (!isFocusVisible()) {
++        state.selectionManager.setFocused(true);
++        // @ts-ignore
++        state.selectionManager.setFocusedKey(key);
++      }
++      hoverStartProp?.(e);
++    },
++    onHoverChange,
++    onHoverEnd,
++  });
++
++  let {keyboardProps} = useKeyboard({
++    onKeyDown: (e) => {
++      // Ignore repeating events, which may have started on the menu trigger before moving
++      // focus to the menu item. We want to wait for a second complete key press sequence.
++      if (e.repeat) {
++        e.continuePropagation();
++
++        return;
++      }
++
++      switch (e.key) {
++        case " ":
++          if (
++            !isDisabled &&
++            state.selectionManager.selectionMode === "none" &&
++            !isTrigger &&
++            closeOnSelect !== false &&
++            onClose
++          ) {
++            onClose();
++          }
++          break;
++        case "Enter":
++          // The Enter key should always close on select, except if overridden.
++          if (!isDisabled && closeOnSelect !== false && !isTrigger && onClose) {
++            onClose();
++          }
++          break;
++        default:
++          if (!isTrigger) {
++            e.continuePropagation();
++          }
++
++          onKeyDown?.(e);
++          break;
++      }
++    },
++    onKeyUp,
++  });
++
++  let {focusProps} = useFocus({onBlur, onFocus, onFocusChange});
++  // @ts-ignore
++  let domProps = filterDOMProps(item.props, {isLink: !!item?.props?.href});
++
++  delete domProps.id;
++
++  return {
++    menuItemProps: {
++      ...ariaProps,
++      ...mergeProps(
++        domProps,
++        isTrigger ? {onFocus: itemProps.onFocus} : itemProps,
++        pressProps,
++        hoverProps,
++        keyboardProps,
++        focusProps,
++      ),
++      onClick: chain(onClick, pressProps.onClick),
++      tabIndex: itemProps.tabIndex != null ? -1 : undefined,
++    },
++    labelProps: {
++      id: labelId,
++    },
++    descriptionProps: {
++      id: descriptionId,
++    },
++    keyboardShortcutProps: {
++      id: keyboardId,
++    },
++    isHovered,
++    isFocused,
++    isSelected,
++    isPressed,
++    isDisabled,
++  };
++}\n- packages/hooks/use-aria-menu/src/use-menu.ts (added, 84 changes)\n  Patch: @@ -0,0 +1,84 @@
++/* eslint-disable no-console */
++import {AriaMenuProps} from "@react-types/menu";
++import {DOMAttributes, Key, KeyboardDelegate, KeyboardEvents} from "@react-types/shared";
++import {filterDOMProps, mergeProps} from "@react-aria/utils";
++import {RefObject} from "react";
++import {TreeState} from "@react-stately/tree";
++import {useSelectableList} from "@react-aria/selection";
++
++export interface MenuAria {
++  /** Props for the menu element. */
++  menuProps: DOMAttributes;
++}
++
++export interface AriaMenuOptions<T> extends Omit<AriaMenuProps<T>, "children">, KeyboardEvents {
++  /** Whether the menu uses virtual scrolling. */
++  isVirtualized?: boolean;
++
++  /**
++   * An optional keyboard delegate implementation for type to select,
++   * to override the default.
++   */
++  keyboardDelegate?: KeyboardDelegate;
++}
++
++interface MenuData {
++  onClose?: () => void;
++  onAction?: (key: Key) => void;
++}
++
++export const menuData = new WeakMap<TreeState<unknown>, MenuData>();
++
++/**
++ * Provides the behavior and accessibility implementation for a menu component.
++ * A menu displays a list of actions or options that a user can choose.
++ * @param props - Props for the menu.
++ * @param state - State for the menu, as returned by `useListState`.
++ */
++export function useMenu<T>(
++  props: AriaMenuOptions<T>,
++  state: TreeState<T>,
++  ref: RefObject<HTMLElement>,
++): MenuAria {
++  let {shouldFocusWrap = true, onKeyDown, onKeyUp, ...otherProps} = props;
++
++  if (!props["aria-label"] && !props["aria-labelledby"]) {
++    console.warn("An aria-label or aria-labelledby prop is required for accessibility.");
++  }
++
++  // @ts-ignore
++  let domProps = filterDOMProps(props, {labelable: true});
++  let {listProps} = useSelectableList({
++    ...otherProps,
++    ref,
++    selectionManager: state.selectionManager,
++    collection: state.collection,
++    disabledKeys: state.disabledKeys,
++    shouldFocusWrap,
++    linkBehavior: "override",
++  });
++
++  menuData.set(state, {
++    onClose: props.onClose,
++    onAction: props.onAction,
++  });
++
++  return {
++    menuProps: mergeProps(
++      domProps,
++      {onKeyDown, onKeyUp},
++      {
++        role: "menu",
++        ...listProps,
++        // @ts-ignore
++        onKeyDown: (e) => {
++          // don't clear the menu selected keys if the user is presses escape since escape closes the menu
++          if (e.key !== "Escape") {
++            // @ts-ignore
++            listProps.onKeyDown(e);
++          }
++        },
++      },
++    ),
++  };
++}\n- packages/hooks/use-aria-menu/tsconfig.json (added, 4 changes)\n  Patch: @@ -0,0 +1,4 @@
++{
++  "extends": "../../../tsconfig.json",
++  "include": ["src", "index.ts"]
++}\n- pnpm-lock.yaml (modified, 43 changes)\n  Patch: @@ -1716,6 +1716,9 @@ importers:
+       '@nextui-org/shared-utils':
+         specifier: workspace:*
+         version: link:../../utilities/shared-utils
++      '@nextui-org/use-aria-menu':
++        specifier: workspace:*
++        version: link:../../hooks/use-aria-menu
+       '@nextui-org/use-is-mobile':
+         specifier: workspace:*
+         version: link:../../hooks/use-is-mobile
+@@ -1750,6 +1753,9 @@ importers:
+       '@nextui-org/system':
+         specifier: workspace:*
+         version: link:../../core/system
++      '@nextui-org/test-utils':
++        specifier: workspace:*
++        version: link:../../utilities/test-utils
+       '@nextui-org/theme':
+         specifier: workspace:*
+         version: link:../../core/theme
+@@ -3167,6 +3173,43 @@ importers:
+         specifier: ^18.2.0
+         version: 18.2.0
+ 
++  packages/hooks/use-aria-menu:
++    dependencies:
++      '@react-aria/i18n':
++        specifier: ^3.10.2
++        version: 3.10.2(react@18.2.0)
++      '@react-aria/interactions':
++        specifier: ^3.21.1
++        version: 3.21.1(react@18.2.0)
++      '@react-aria/menu':
++        specifier: ^3.13.1
++        version: 3.13.1(react-dom@18.2.0)(react@18.2.0)
++      '@react-aria/selection':
++        specifier: ^3.17.5
++        version: 3.17.5(react-dom@18.2.0)(react@18.2.0)
++      '@react-aria/utils':
++        specifier: ^3.23.2
++        version: 3.23.2(react@18.2.0)
++      '@react-stately/collections':
++        specifier: ^3.10.5
++        version: 3.10.5(react@18.2.0)
++      '@react-stately/tree':
++        specifier: ^3.7.6
++        version: 3.7.6(react@18.2.0)
++      '@react-types/menu':
++        specifier: ^3.9.7
++        version: 3.9.7(react@18.2.0)
++      '@react-types/shared':
++        specifier: ^3.22.1
++        version: 3.22.1(react@18.2.0)
++    devDependencies:
++      clean-package:
++        specifier: 2.2.0
++        version: 2.2.0
++      react:
++        specifier: ^18.2.0
++        version: 18.2.0
++
+   packages/hooks/use-aria-modal-overlay:
+     dependencies:
+       '@react-aria/overlays':\n

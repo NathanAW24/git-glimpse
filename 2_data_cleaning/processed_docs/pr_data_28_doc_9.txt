@@ -1,0 +1,98 @@
+Pull Request Number: 485
+Title: theme: Amend utility function `bgBlur` to not modulate background value
+Base Branch: next
+Head Branch: danny/bgblur
+Author: DannyNemer
+URL: https://github.com/nextui-org/nextui/pull/485
+State: MERGED
+Created At: 2022-05-23T19:39:05Z
+Merged At: 2022-05-24T13:04:39Z
+Participants: DannyNemer, jrgarciadev
+
+Description:
+📝 Description
+Amends the Stitches utility function bgBlur to set the passed background-color value as-is instead of appending 66 (for alpha), which only works for hex color codes.
+This change enables passing other color code formats, like hsla() and rgb(), and color tokens just like the rest of NextUI. The previous implementation confuses users for why their color value does not work.
+Second, the previous implementation of setting the passed color alpha to 66% is hidden from the user. If the user wants to pass a value with a particular alpha that is not 66%, she must think about the additional 66% modification happening to her color.
+For example, I would like to set the background color for this blur effect to exactly hsla(0, 0%, 100%, 0.1), where I can easily tweak the alpha value. However, this color code format is incompatible with the current implementation for the reason explained above. Second, if I instead find the corresponding hex color code for this value, I can not tweak the alpha easily; and when I do, I must also account for the 66% happening in the background.
+⛳️ Current behavior (updates)
+
+Requires the value passed to the utility function bgBlur to be a hex color code with a leading #.
+Automatically applies 66% alpha the passed color code.
+
+🚀 New behavior
+
+Handles any color code format and color tokens, like the rest of NextUI.
+Does not internally apply 66% alpha to the passed color value.
+
+💣 Is this a breaking change (Yes/No):
+Yes. Any existing users of this utility function (which I estimate is few considering it is tricky to enable if you do not know the passed value must be a hex color code with a leading #), must append 66 to the passed value to achieve the same background as before.
+
+Commits:
+- theme: Amend utility function `bgBlur` to not modulate background value
+
+Amends the Stitches utility function `bgBlur` to set the passed background-color value as-is instead of appending `66` (for alpha), which only works for hex color codes.
+
+This change enables passing other color code formats, like `hsla()` and `rgb()`, just like the rest of NextUI. The previous implementation confuses users for why their color value does not work.
+
+Second, the previous implementation of setting the passed color alpha to 66% is hidden from the user. If the user wants to pass a value with a particular alpha that is not 66%, she must think about the additional 66% modification happening to her color.
+
+For example, I would like to set the background color for this blur effect to exactly `hsla(0, 0%, 100%, 0.1)`, where I can easily tweak the alpha value. However, this color code format is incompatible with the current implementation for the reason explained above. Second, if I instead find the corresponding hex color code for this value, I can not tweak the alpha easily; and when I do, I must also account for the 66% happening in the background.\n
+
+Labels:
+💥 Type: Breaking Change
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/content/components/card/cover.ts (modified, 4 changes)\n  Patch: @@ -93,7 +93,7 @@ export const Card4 = () => (
+       blur
+       css={{
+         position: "absolute",
+-        bgBlur: "#ffffff",
++        bgBlur: "#ffffff66",
+         borderTop: "$borderWeights$light solid rgba(255, 255, 255, 0.2)",
+         bottom: 0,
+         zIndex: 1,
+@@ -153,7 +153,7 @@ export const Card5 = () => (
+       blur
+       css={{
+         position: "absolute",
+-        bgBlur: "#0f1114",
++        bgBlur: "#0f111466",
+         borderTop: "$borderWeights$light solid $gray700",
+         bottom: 0,
+         zIndex: 1,\n- apps/docs/content/docs/theme/utilities.mdx (modified, 2 changes)\n  Patch: @@ -161,7 +161,7 @@ export const utils = {
+   }),
+   bgBlur: (value) => ({
+     bf: 'saturate(180%) blur(10px)',
+-    bg: `${value}66`
++    bg: value
+   }),
+   bgColor: (value) => ({
+     backgroundColor: value\n- apps/docs/content/landing/index.tsx (modified, 2 changes)\n  Patch: @@ -394,7 +394,7 @@ export default CustomButton;
+   }),
+   bgBlur: (value) => ({
+     bf: 'saturate(180%) blur(10px)',
+-    bg: \`$\{value}66\`,
++    bg: value
+   }),
+   bgColor: (value) => ({
+     backgroundColor: value\n- packages/react/src/card/card.stories.tsx (modified, 2 changes)\n  Patch: @@ -243,7 +243,7 @@ export const AbsImgWithHeaderFooter = () => {
+             blur
+             css={{
+               position: 'absolute',
+-              bgBlur: '#0f1114',
++              bgBlur: '#0f111466',
+               borderTop: '$borderWeights$light solid $gray500',
+               bottom: 0,
+               zIndex: 1\n- packages/react/src/theme/common.ts (modified, 2 changes)\n  Patch: @@ -321,7 +321,7 @@ export const defaultUtils = {
+   }),
+   bgBlur: (value: Stitches.PropertyValue<'backgroundColor'>) => ({
+     bf: 'saturate(180%) blur(10px)',
+-    bg: `${value}66`
++    bg: value
+   }),
+   bgColor: (value: Stitches.PropertyValue<'backgroundColor'>) => ({
+     backgroundColor: value\n

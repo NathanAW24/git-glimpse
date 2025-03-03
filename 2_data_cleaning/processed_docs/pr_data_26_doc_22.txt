@@ -1,0 +1,79 @@
+Pull Request Number: 738
+Title: Fix 707/textarea input circular dependecy
+Base Branch: next
+Head Branch: fix_707/textarea-input-circular-dependecy
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/738
+State: MERGED
+Created At: 2022-09-06T00:58:13Z
+Merged At: 2022-09-06T00:58:58Z
+Participants: jrgarciadev
+
+Description:
+Closes #707
+📝 Description
+Circular dependency between the input and Textarea components
+⛳️ Current behavior (updates)
+#707
+🚀 New behavior
+Textarea import was removed from the Input files
+💣 Is this a breaking change (Yes/No): Yes
+If you are using the Input.Textarea compound component, you should migrate to Textarea
+
+Commits:
+- fix(docs-navbar): codesandbox common layout\n- Merge branch 'main' of github.com:nextui-org/nextui into next\n- fix(input): remove textarea import\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/9PLajmvUR5q4yWBtMhmDPETQDE9Y)) | [Visit Preview](https://nextui-docs-git-fix707-textarea-input-circula-15b718-nextui-org.vercel.app) | Sep 6, 2022 at 0:58AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/39JVBudRcnKJ6TaVpDT6yhZrt7EK)) | [Visit Preview](https://nextui-storybook-git-fix707-textarea-input-ci-8675c5-nextui-org.vercel.app) | Sep 6, 2022 at 0:58AM (UTC) |
+
+
+\n
+
+Files Changed:
+- apps/docs/content/components/navbar/common.ts (modified, 4 changes)\n  Patch: @@ -109,9 +109,7 @@ import { Box } from "./Box.js";
+ export const Layout = ({ children }) => (
+   <Box
+     css={{
+-      maxW: "100%",
+-      position: "relative",
+-      overflow: "visible scroll",
++      maxW: "100%"
+     }}
+   >
+     {children}\n- packages/react/src/input/index.ts (modified, 3 changes)\n  Patch: @@ -1,5 +1,3 @@
+-import Textarea from "../textarea";
+-
+ import Input from "./input";
+ import InputPassword from "./input-password";
+ 
+@@ -29,7 +27,6 @@ export type {
+   InputContentVariantsProps,
+ } from "./input.styles";
+ 
+-Input.Textarea = Textarea;
+ Input.Password = InputPassword;
+ 
+ export default Input;\n- packages/react/src/input/input.tsx (modified, 2 changes)\n  Patch: @@ -11,7 +11,6 @@ import {useLabel} from "@react-aria/label";
+ 
+ import {ContentPosition} from "../utils/prop-types";
+ import {CSS} from "../theme/stitches.config";
+-import Textarea from "../textarea";
+ import useTheme from "../use-theme";
+ import {warn} from "../utils/console";
+ import ClearIcon from "../utils/clear-icon";
+@@ -376,7 +375,6 @@ const Input = React.forwardRef<FormElement, InputProps>(
+ type InputComponent<T, P = {}> = React.ForwardRefExoticComponent<
+   PropsWithoutRef<P> & RefAttributes<T>
+ > & {
+-  Textarea: typeof Textarea;
+   Password: typeof InputPassword;
+ };
+ \n

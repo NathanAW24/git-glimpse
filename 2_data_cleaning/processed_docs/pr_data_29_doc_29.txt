@@ -1,0 +1,201 @@
+Pull Request Number: 350
+Title: fix[react](collapse): wrong close when the content includes a input/t…
+Base Branch: next
+Head Branch: fix_336/collapse-open-space-enter-key
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/350
+State: MERGED
+Created At: 2022-03-20T21:50:09Z
+Merged At: 2022-03-20T21:50:39Z
+Participants: jrgarciadev
+
+Description:
+[react]/[collapse]
+Closing: #336
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Wrong close/open when the content includes a input/textarea component fixed
+
+
+
+Screenshots - Animations
+
+Commits:
+- fix[react](collapse): wrong close when the content includes a input/textarea\n
+
+Labels:
+⏳ Status: Waiting for Next Release
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/react/src/collapse/collapse.stories.tsx (modified, 34 changes)\n  Patch: @@ -1,6 +1,6 @@
+ import React from 'react';
+ import { Meta } from '@storybook/react';
+-import { Grid, Text } from '../index';
++import { Grid, Text, Input } from '../index';
+ import Collapse from './index';
+ import useTheme from '../use-theme';
+ import { Minus, Plus, User, Mail, Activity } from '../utils/icons';
+@@ -56,6 +56,38 @@ export const Default = () => (
+   </Collapse.Group>
+ );
+ 
++export const WithInput = () => (
++  <Collapse.Group onChange={(index, value) => console.log({ index, value })}>
++    <Collapse title={<h3>Option 1</h3>}>
++      <Input />
++    </Collapse>
++    <Collapse title="Option B">
++      <Text>
++        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
++        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
++        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
++        commodo consequat.
++      </Text>
++    </Collapse>
++    <Collapse title="Option C">
++      <Text>
++        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
++        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
++        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
++        commodo consequat.
++      </Text>
++    </Collapse>
++    <Collapse title="Option D">
++      <Text>
++        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
++        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
++        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
++        commodo consequat.
++      </Text>
++    </Collapse>
++  </Collapse.Group>
++);
++
+ export const NoAccordion = () => (
+   <Collapse.Group accordion={false}>
+     <Collapse title="Option A">\n- packages/react/src/collapse/collapse.styles.ts (modified, 45 changes)\n  Patch: @@ -1,4 +1,9 @@
+-import { styled, sharedFocus, VariantProps } from '../theme/stitches.config';
++import {
++  styled,
++  sharedFocus,
++  VariantProps,
++  cssFocusVisible
++} from '../theme/stitches.config';
+ 
+ export const StyledCollapse = styled(
+   'div',
+@@ -130,26 +135,30 @@ export const StyledCollapse = styled(
+   sharedFocus
+ );
+ 
+-export const StyledCollapseView = styled('div', {
+-  w: '100%',
+-  d: 'block',
+-  ta: 'left',
+-  bg: 'transparent',
+-  border: 'none',
+-  cursor: 'pointer',
+-  outline: 'none',
+-  padding: '$lg 0',
+-  variants: {
+-    disabled: {
+-      true: {
+-        cursor: 'not-allowed',
+-        '.nextui-collapse-title, .nextui-collapse-subtitle': {
+-          opacity: 0.5
++export const StyledCollapseView = styled(
++  'div',
++  {
++    w: '100%',
++    d: 'block',
++    ta: 'left',
++    bg: 'transparent',
++    border: 'none',
++    cursor: 'pointer',
++    outline: 'none',
++    padding: '$lg 0',
++    variants: {
++      disabled: {
++        true: {
++          cursor: 'not-allowed',
++          '.nextui-collapse-title, .nextui-collapse-subtitle': {
++            opacity: 0.5
++          }
+         }
+       }
+     }
+-  }
+-});
++  },
++  cssFocusVisible
++);
+ 
+ export const StyledCollapseContent = styled('div', {
+   fontSize: '$base',\n- packages/react/src/collapse/collapse.tsx (modified, 20 changes)\n  Patch: @@ -1,4 +1,5 @@
+ import React, { useEffect, useMemo } from 'react';
++import { useFocusRing } from '@react-aria/focus';
+ import CollapseIcon from './collapse-icon';
+ import Expand from '../utils/expand';
+ import { useCollapseContext } from './collapse-context';
+@@ -91,6 +92,17 @@ const Collapse: React.FC<React.PropsWithChildren<CollapseProps>> = ({
+     updateValues
+   } = useCollapseContext();
+ 
++  const {
++    isFocusVisible,
++    focusProps
++  }: {
++    isFocusVisible: boolean;
++    focusProps: Omit<
++      React.HTMLAttributes<HTMLButtonElement>,
++      keyof CollapseProps
++    >;
++  } = useFocusRing();
++
+   if (!title) {
+     useWarning('"title" is required.', 'Collapse');
+   }
+@@ -148,7 +160,7 @@ const Collapse: React.FC<React.PropsWithChildren<CollapseProps>> = ({
+ 
+   return (
+     <StyledCollapse
+-      tabIndex={disabled ? -1 : 0}
++      tabIndex={-1}
+       shadow={shadow}
+       bordered={bordered}
+       animated={animated}
+@@ -159,19 +171,21 @@ const Collapse: React.FC<React.PropsWithChildren<CollapseProps>> = ({
+       className={clsx(className, preClass, `${preClass}--${getState}`)}
+       isDark={isDark}
+       {...props}
+-      {...bindings}
+     >
+       <StyledCollapseView
+         role="button"
+-        tabIndex={-1}
++        tabIndex={disabled ? -1 : 0}
+         id={ariaLabelledById}
+         className={`${preClass}-view`}
+         data-state={getState}
+         disabled={disabled}
+         aria-disabled={disabled}
+         aria-expanded={visible}
+         aria-controls={ariaControlId}
++        isFocusVisible={isFocusVisible}
+         onClick={handleChange}
++        {...focusProps}
++        {...bindings}
+       >
+         <div className={clsx(`${preClass}-title-container`)}>
+           {contentLeft && (\n

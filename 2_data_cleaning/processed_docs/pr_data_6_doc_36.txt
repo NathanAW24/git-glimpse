@@ -1,0 +1,232 @@
+Pull Request Number: 3578
+Title: fix(select): use-multi-select typescript error
+Base Branch: canary
+Head Branch: fix/multiselect-typescript-error
+Author: awesome-pro
+URL: https://github.com/nextui-org/nextui/pull/3578
+State: CLOSED
+Created At: 2024-07-30T08:09:46Z
+Merged At: None
+Participants: awesome-pro, wingkwong
+
+Description:
+📝 Description
+Fixed the typescript undefined  error in use-multiselect hook
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No): NO
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Improvements
+
+Enhanced type safety and clarity in the useMultiSelect function for better handling of selected keys.
+Updated imports to utilize explicit type definitions, reducing potential type-related errors.
+
+Commits:
+- fix(navbar): fixed the height when style h-full\n- fix(navbar): fixed the height when style h-full\n- Merge branch 'nextui-org:canary' into canary\n- Merge branch 'nextui-org:canary' into canary\n- fix(select): typescript error in use-multiselect\n- fix(select): typescript error in use-multiselect\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 80763d976ca1ec034f1904909984d66b18b364da
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/abhinandan-verma/nextui/new/fix/multiselect-typescript-error?filename=.changeset/dull-hotels-design.md&value=---%0A%22%40nextui-org%2Fuse-aria-multiselect%22%3A%20patch%0A---%0A%0Afix(select)%3A%20use-multi-select%20typescript%20error%0A)
+
+\n- vercel: @abhinandan-verma is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2280763d976ca1ec034f1904909984d66b18b364da%22%7D%2C%22id%22%3A%22QmP6c9ode3mhbXmKgg2UxhfRHZ7Yv4gzQpREti7pvJ5o2G%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3578%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes primarily enhance type safety and clarity in the `useMultiSelect` function within the `use-multiselect.ts` file. By importing the `Key` type from React and applying type casting to selected keys, the code aims to minimize type-related errors while maintaining the original functionality of selecting keys based on their list positions.
+
+## Changes
+
+| Files                                        | Change Summary                                                                                           |
+|----------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| `packages/hooks/use-aria-multiselect/src/use-multiselect.ts` | Enhanced type safety by importing `Key` from React and casting selected keys, ensuring clearer type usage and preventing potential runtime errors. Core logic remains unchanged. |
+
+## Sequence Diagram(s)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant MultiSelect
+    participant Delegate
+
+    User->>MultiSelect: Select key
+    MultiSelect->>Delegate: Get selected keys
+    Delegate->>MultiSelect: Return selected keys
+    MultiSelect->>User: Update selection
+```
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+packages/hooks/use-aria-multiselect/src/use-multiselect.ts: ## AI-generated summary of changes
+
+The changes in the `use-multiselect.ts` file primarily involve enhancements to type safety and clarity in the handling of selected keys within the `useMultiSelect` function. The import statement has been updated to include the `Key` type from React, which indicates a shift towards more explicit type usage. In the function body, the calls to `delegate.getKeyAbove` and `delegate.getKeyBelow` have been modified to cast the value retrieved from `state.selectedKeys.values().next().value` to the `Key` type. This change ensures that the keys being processed are explicitly recognized as the correct type, potentially preventing type-related errors during runtime and improving overall code robustness.
+
+Additionally, the overall logic flow remains unchanged; the core functionality of selecting keys based on their relative positions in the list is preserved. However, the introduction of type casting enhances the clarity and safety of the code, making it easier for developers to understand the expected types and reducing the likelihood of bugs related to type mismatches.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useMultiSelect<T>(...)` in `packages/hooks/use-aria-multiselect/src/use-multiselect.ts` → No changes in the function signature.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(select): use-multi-select typescript error" was submitted by the user abhinandan-verma. The main objective of this PR is to address a TypeScript error related to `undefined` in the `use-multiselect` hook. 
+
+In the description, the author notes that the current behavior being modified involves a TypeScript error that arises when using the `use-multiselect` hook. The proposed changes aim to resolve this issue, ensuring that the hook functions correctly without triggering TypeScript errors. 
+
+The author explicitly states that this PR does not introduce any breaking changes, indicating that existing users of NextUI will not need to make any adjustments or migrations as a result of this update. 
+
+Overall, the PR focuses on a bug fix related to TypeScript type handling within a specific hook, contributing to the stability and reliability of the NextUI library.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 80763d976ca1ec034f1904909984d66b18b364da -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- awesome-pro: @wingkwong  the issue is `eslint` `error TS2354` on these lines while project is open
+1. [line 1](https://github.com/nextui-org/nextui/blob/canary/packages/hooks/use-aria-multiselect/src/use-multiselect.ts#L67)
+2. [line 2](https://github.com/nextui-org/nextui/blob/canary/packages/hooks/use-aria-multiselect/src/use-multiselect.ts#L81)
+
+do I need to add `changeset`\n- wingkwong: i don't see such error \n- awesome-pro: @wingkwong  kindly see here (vs code)
+
+<img width="1379" alt="Screenshot 2024-07-30 at 2 46 20 PM" src="https://github.com/user-attachments/assets/a3ad119a-c4c6-40da-a064-6e23be96def6">
+\n- wingkwong: I also use vscode and havent seen this issue\n- awesome-pro: but I am having this issue for a longer time, every time I open this file,
+So I thought to remove it.\n- wingkwong: closing - this part may be modified when bumping RA version\n
+
+Files Changed:
+- packages/hooks/use-aria-multiselect/src/use-multiselect.ts (modified, 6 changes)\n  Patch: @@ -11,7 +11,7 @@ import {AriaListBoxOptions} from "@react-aria/listbox";
+ import {useMenuTrigger} from "@react-aria/menu";
+ import {ListKeyboardDelegate, useTypeSelect} from "@react-aria/selection";
+ import {chain, filterDOMProps, mergeProps, useId} from "@react-aria/utils";
+-import {FocusEvent, HTMLAttributes, RefObject, useMemo} from "react";
++import {FocusEvent, HTMLAttributes, Key, RefObject, useMemo} from "react";
+ import {ValidationResult} from "@react-types/shared";
+ 
+ export type MultiSelectProps<T> = MultiSelectStateProps<T>;
+@@ -64,7 +64,7 @@ export function useMultiSelect<T>(
+ 
+           const key =
+             state.selectedKeys.size > 0
+-              ? delegate.getKeyAbove(state.selectedKeys.values().next().value)
++              ? delegate.getKeyAbove(state.selectedKeys.values().next().value as Key)
+               : delegate.getFirstKey();
+ 
+           if (key) {
+@@ -78,7 +78,7 @@ export function useMultiSelect<T>(
+ 
+           const key =
+             state.selectedKeys.size > 0
+-              ? delegate.getKeyBelow(state.selectedKeys.values().next().value)
++              ? delegate.getKeyBelow(state.selectedKeys.values().next().value as Key)
+               : delegate.getFirstKey();
+ 
+           if (key) {\n

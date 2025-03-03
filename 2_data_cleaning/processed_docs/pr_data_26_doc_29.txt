@@ -1,0 +1,456 @@
+Pull Request Number: 716
+Title: Fix 389/table user select
+Base Branch: next
+Head Branch: fix_389/table-user-select
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/716
+State: MERGED
+Created At: 2022-08-30T02:47:40Z
+Merged At: 2022-08-30T02:53:49Z
+Participants: jrgarciadev
+
+Description:
+Closes #389
+⛳️ Current behavior (updates)
+Table cell doesn't allow selecting content and copy.
+🚀 New behavior
+Table cell is now selectable only for non-selectable tables, that is, selectMode=none && !hoverable
+💣 Is this a breaking change (Yes/No): No
+
+Commits:
+- chore(docs-navbar): bordered navbar on variants example\n- fix(react-table): user select applied on non-selectable tables\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/7fzXrpAeQFfsVhYreWpVpGbFvRcq)) | [Visit Preview](https://nextui-docs-git-fix389-table-user-select-nextui-org.vercel.app) | Aug 30, 2022 at 2:47AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/AiLsqYtBpQShAkC2bgunowhXZoFo)) | [Visit Preview](https://nextui-storybook-git-fix389-table-user-select-nextui-org.vercel.app) | Aug 30, 2022 at 2:47AM (UTC) |
+
+
+\n
+
+Files Changed:
+- apps/docs/content/components/navbar/variants.ts (modified, 6 changes)\n  Patch: @@ -1,21 +1,19 @@
+ import {Layout, Box, AcmeLogo, Content, VariantsSelectorWrapper} from "./common";
+ 
+ const App = `import React from "react";
+-import { Navbar, Button, Link, Text, Card, Radio, useTheme } from "@nextui-org/react";
++import { Navbar, Button, Link, Text, Card, Radio } from "@nextui-org/react";
+ import { Layout } from "./Layout.js";
+ import { AcmeLogo } from "./AcmeLogo.js";
+ import { VariantsSelectorWrapper } from "./VariantsSelectorWrapper.js";
+ 
+ export default function App() {
+   const [variant, setVariant] = React.useState("static");
+ 
+-  const { isDark } = useTheme();
+-
+   const variants = ["static", "floating", "sticky"];
+   
+   return (
+     <Layout>
+-      <Navbar isBordered={isDark} variant={variant}>
++      <Navbar isBordered variant={variant}>
+         <Navbar.Brand>
+           <AcmeLogo />
+           <Text b color="inherit" hideIn="xs">\n- apps/docs/src/pages/examples/navbar/variants.tsx (modified, 6 changes)\n  Patch: @@ -1,6 +1,6 @@
+ import React from "react";
+ import {Examples} from "@components";
+-import {Navbar, Text, Button, Card, Radio, Link, styled, useTheme} from "@nextui-org/react";
++import {Navbar, Text, Button, Card, Radio, Link, styled} from "@nextui-org/react";
+ 
+ const VariantsSelectorWrapper = styled("div", {
+   dflex: "center",
+@@ -19,13 +19,11 @@ const VariantsSelectorWrapper = styled("div", {
+ export default function NavbarVariantsExample() {
+   const [variant, setVariant] = React.useState<any>("static");
+ 
+-  const {isDark} = useTheme();
+-
+   const variants = ["static", "floating", "sticky"];
+ 
+   return (
+     <Examples.NavbarLayout>
+-      <Navbar isBordered={isDark} variant={variant}>
++      <Navbar isBordered variant={variant}>
+         <Navbar.Brand>
+           <Examples.AcmeLogo />
+           <Text b color="inherit" hideIn="xs">\n- packages/react/src/table/__tests__/__snapshots__/index.test.tsx.snap (removed, 5 changes)\n  Patch: @@ -1,5 +0,0 @@
+-// Jest Snapshot v1, https://goo.gl/fbAQLP
+-
+-exports[`Table should render a static table correctly with sorting 1`] = `"<div class=\\"nextui-c-hWZRae nextui-c-hWZRae-gikTHb-shadow-true nextui-c-hWZRae-bzEnZV-borderWeight-normal nextui-c-hWZRae-iPJLV-css nextui-table-container\\"><table class=\\"nextui-c-fcXuxO nextui-c-fcXuxO-fyxmJu-color-primary nextui-c-fcXuxO-fPgLZC-lineWeight-light nextui-table\\" aria-label=\\"Test sorting table\\" id=\\"react-aria9575136216-15\\" role=\\"grid\\" tabindex=\\"0\\" aria-describedby=\\"\\"><thead class=\\"nextui-c-PJLV nextui-table-row-group\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-fRbcxI nextui-table-header-row\\" role=\\"row\\"><th class=\\"nextui-c-jhJWUH nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.0\\" role=\\"columnheader\\" id=\\"react-aria9575136216-15-.0.0\\">NAME</th><th class=\\"nextui-c-jhJWUH nextui-c-PJLV nextui-c-jhJWUH-hHqiAG-allowsSorting-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.1\\" role=\\"columnheader\\" id=\\"react-aria9575136216-15-.0.1\\" aria-sort=\\"none\\" aria-describedby=\\"react-aria-description-0\\">TYPE<svg aria-hidden=\\"true\\" class=\\"nextui-c-cqpNQI nextui-c-cqpNQI-ihOkgrg-css nextui-table-sort-icon\\" fill=\\"none\\" focusable=\\"false\\" height=\\"22\\" role=\\"presentation\\" viewBox=\\"0 0 24 24\\" width=\\"22\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path d=\\"M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.06 11.27L12.53 14.8C12.38 14.95 12.19 15.02 12 15.02C11.81 15.02 11.62 14.95 11.47 14.8L7.94 11.27C7.65 10.98 7.65 10.5 7.94 10.21C8.23 9.92 8.71 9.92 9 10.21L12 13.21L15 10.21C15.29 9.92 15.77 9.92 16.06 10.21C16.35 10.5 16.35 10.97 16.06 11.27Z\\"></path></svg></th><th class=\\"nextui-c-jhJWUH nextui-c-PJLV nextui-c-jhJWUH-hHqiAG-allowsSorting-true nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.2\\" role=\\"columnheader\\" id=\\"react-aria9575136216-15-.0.2\\" aria-sort=\\"none\\" aria-describedby=\\"react-aria-description-0\\">DATE MODIFIED<svg aria-hidden=\\"true\\" class=\\"nextui-c-cqpNQI nextui-c-cqpNQI-ihOkgrg-css nextui-table-sort-icon\\" fill=\\"none\\" focusable=\\"false\\" height=\\"22\\" role=\\"presentation\\" viewBox=\\"0 0 24 24\\" width=\\"22\\" xmlns=\\"http://www.w3.org/2000/svg\\"><path d=\\"M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.06 11.27L12.53 14.8C12.38 14.95 12.19 15.02 12 15.02C11.81 15.02 11.62 14.95 11.47 14.8L7.94 11.27C7.65 10.98 7.65 10.5 7.94 10.21C8.23 9.92 8.71 9.92 9 10.21L12 13.21L15 10.21C15.29 9.92 15.77 9.92 16.06 10.21C16.35 10.5 16.35 10.97 16.06 11.27Z\\"></path></svg></th></tr><tr aria-hidden=\\"true\\" class=\\"nextui-c-gNVTSf nextui-c-gNVTSf-hakyQ-inline-false nextui-c-gNVTSf-icCJVMZ-css nextui-table-hidden-row\\"></tr></thead><tbody class=\\"nextui-c-PJLV nextui-c-PJLV-iccTTUn-css nextui-table-body\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-bUbfzy nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-row\\" role=\\"row\\" tabindex=\\"-1\\" data-key=\\"1\\" aria-labelledby=\\"react-aria9575136216-15-1-.0.0\\" aria-hidden=\\"false\\"><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.0\\" role=\\"rowheader\\" id=\\"react-aria9575136216-15-1-.0.0\\">Games</td><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.1\\" role=\\"gridcell\\">File folder</td><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.2\\" role=\\"gridcell\\">6/7/2020</td></tr></tbody></table></div>"`;
+-
+-exports[`Table should render correctly 1`] = `"<div class=\\"nextui-c-hWZRae nextui-c-hWZRae-gikTHb-shadow-true nextui-c-hWZRae-bzEnZV-borderWeight-normal nextui-c-hWZRae-iPJLV-css nextui-table-container\\"><table class=\\"nextui-c-fcXuxO nextui-c-fcXuxO-fyxmJu-color-primary nextui-c-fcXuxO-fPgLZC-lineWeight-light nextui-table\\" aria-label=\\"Test example table\\" id=\\"react-aria9575136216-2\\" role=\\"grid\\" tabindex=\\"0\\" aria-describedby=\\"\\"><thead class=\\"nextui-c-PJLV nextui-table-row-group\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-fRbcxI nextui-table-header-row\\" role=\\"row\\"><th class=\\"nextui-c-jhJWUH nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.0\\" role=\\"columnheader\\" id=\\"react-aria9575136216-2-.0.0\\">NAME</th><th class=\\"nextui-c-jhJWUH nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.1\\" role=\\"columnheader\\" id=\\"react-aria9575136216-2-.0.1\\">TYPE</th><th class=\\"nextui-c-jhJWUH nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-column-header\\" tabindex=\\"-1\\" data-key=\\".0.2\\" role=\\"columnheader\\" id=\\"react-aria9575136216-2-.0.2\\">DATE MODIFIED</th></tr><tr aria-hidden=\\"true\\" class=\\"nextui-c-gNVTSf nextui-c-gNVTSf-hakyQ-inline-false nextui-c-gNVTSf-icCJVMZ-css nextui-table-hidden-row\\"></tr></thead><tbody class=\\"nextui-c-PJLV nextui-c-PJLV-iccTTUn-css nextui-table-body\\" role=\\"rowgroup\\"><tr class=\\"nextui-c-bUbfzy nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-row\\" role=\\"row\\" tabindex=\\"-1\\" data-key=\\"1\\" aria-labelledby=\\"react-aria9575136216-2-1-.0.0\\" aria-hidden=\\"false\\"><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.0\\" role=\\"rowheader\\" id=\\"react-aria9575136216-2-1-.0.0\\">Games</td><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.1\\" role=\\"gridcell\\">File folder</td><td class=\\"nextui-c-PJLV nextui-c-czOCAM nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-table-cell\\" tabindex=\\"-1\\" data-key=\\"1.2\\" role=\\"gridcell\\">6/7/2020</td></tr></tbody></table></div>"`;\n- packages/react/src/table/__tests__/index.test.tsx (modified, 2 changes)\n  Patch: @@ -35,7 +35,6 @@ describe("Table", () => {
+       </Table>,
+     );
+ 
+-    expect(wrapper.html()).toMatchSnapshot();
+     expect(() => wrapper.unmount()).not.toThrow();
+   });
+ 
+@@ -270,7 +269,6 @@ describe("Table", () => {
+     expect(thirdColumnHeader.text()).toBe("DATE MODIFIED");
+     expect(thirdColumnHeader.props()["aria-sort"]).toBe("none");
+ 
+-    expect(wrapper.html()).toMatchSnapshot();
+     expect(() => wrapper.unmount()).not.toThrow();
+   });
+ \n- packages/react/src/table/table-body.tsx (modified, 6 changes)\n  Patch: @@ -21,6 +21,8 @@ interface Props<T> {
+   animated?: boolean;
+   hideLoading?: boolean;
+   hasPagination?: boolean;
++  // @internal
++  isStatic?: boolean;
+   color?: TableVariantsProps["color"];
+   as?: keyof JSX.IntrinsicElements;
+ }
+@@ -40,6 +42,7 @@ const TableBody: React.FC<React.PropsWithChildren<TableBodyProps>> = ({
+   color,
+   hasPagination,
+   hideLoading,
++  isStatic,
+   ...props
+ }) => {
+   const {currentPage, rowsPerPage} = useTableContext();
+@@ -107,7 +110,6 @@ const TableBody: React.FC<React.PropsWithChildren<TableBodyProps>> = ({
+       as="tbody"
+       className={clsx("nextui-table-body", props.className)}
+       css={{
+-        pb: "$10",
+         position: "relative",
+         ...(props.css as any),
+         ...(collection.body?.props?.css as any),
+@@ -134,7 +136,7 @@ const TableBody: React.FC<React.PropsWithChildren<TableBodyProps>> = ({
+                   state={state}
+                 />
+               ) : (
+-                <TableCell key={cell?.key} cell={cell} state={state} />
++                <TableCell key={cell?.key} cell={cell} isStatic={isStatic} state={state} />
+               ),
+             )}
+           </TableRow>\n- packages/react/src/table/table-cell.tsx (modified, 26 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import React, {useRef, useImperativeHandle} from "react";
++import React from "react";
+ import {useTableCell} from "@react-aria/table";
+ import {GridNode} from "@react-types/grid";
+ import {TableState} from "@react-stately/table";
+@@ -7,6 +7,7 @@ import {mergeProps} from "@react-aria/utils";
+ 
+ import {CSS} from "../theme/stitches.config";
+ import clsx from "../utils/clsx";
++import {useDOMRef} from "../utils/dom";
+ 
+ import {StyledTableCell} from "./table.styles";
+ 
+@@ -15,6 +16,8 @@ type CellProps<T> = GridNode<T> & {rendered: React.ReactNode};
+ interface Props<T> {
+   cell: CellProps<T>;
+   state: TableState<T>;
++  // @internal
++  isStatic?: boolean;
+   as?: keyof JSX.IntrinsicElements;
+ }
+ 
+@@ -23,26 +26,33 @@ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props<any>>;
+ export type TableCellProps<T = unknown> = Props<T> & NativeAttrs & {css?: CSS};
+ 
+ const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
+-  ({cell, state, ...props}, ref: React.Ref<HTMLTableCellElement | null>) => {
+-    const tableCellRef = useRef<HTMLTableCellElement | null>(null);
+-
+-    useImperativeHandle(ref, () => tableCellRef?.current);
++  ({cell, state, isStatic, ...props}, ref: React.Ref<HTMLTableCellElement | null>) => {
++    const domRef = useDOMRef<HTMLTableCellElement>(ref);
+ 
+     const {
+       gridCellProps,
+     }: {
+       gridCellProps: Omit<React.HTMLAttributes<unknown>, keyof TableCellProps<unknown>>;
+-    } = useTableCell({node: cell}, state, tableCellRef);
++    } = useTableCell({node: cell}, state, domRef);
+ 
+     const {isFocusVisible, focusProps} = useFocusRing();
+ 
++    const customGridCellProps = isStatic
++      ? {
++          ...gridCellProps,
++          onMouseDown: (e: MouseEvent) => e.stopPropagation(),
++          onPointerDown: (e: MouseEvent) => e.stopPropagation(),
++        }
++      : gridCellProps;
++
+     return (
+       <StyledTableCell
+-        ref={tableCellRef}
++        ref={domRef}
+         className={clsx("nextui-table-cell", props.className)}
+         css={cell.props.css}
+         isFocusVisible={isFocusVisible}
+-        {...mergeProps(gridCellProps, focusProps, props)}
++        isStatic={isStatic}
++        {...mergeProps(customGridCellProps, focusProps, props)}
+       >
+         {cell.rendered}
+       </StyledTableCell>\n- packages/react/src/table/table.stories.tsx (modified, 69 changes)\n  Patch: @@ -2,7 +2,18 @@ import React from "react";
+ import {Meta} from "@storybook/react";
+ 
+ import {getKeyValue} from "../utils/object";
+-import {User, Text, Col, Row, Tooltip, styled, useAsyncList, useCollator} from "../index";
++import {
++  Badge,
++  User,
++  Text,
++  Col,
++  Row,
++  Tooltip,
++  styled,
++  useAsyncList,
++  useCollator,
++  BadgeProps,
++} from "../index";
+ import {Eye, Edit, Delete} from "../utils/icons";
+ 
+ import Table, {TableProps, SortDescriptor} from "./index";
+@@ -19,41 +30,6 @@ export default {
+   ],
+ } as Meta;
+ 
+-const StyledBadge = styled("span", {
+-  display: "inline-block",
+-  textTransform: "uppercase",
+-  padding: "$2 $3",
+-  margin: "0 2px",
+-  fontSize: "10px",
+-  fontWeight: "$bold",
+-  borderRadius: "14px",
+-  letterSpacing: "0.6px",
+-  lineHeight: 1,
+-  boxShadow: "1px 2px 5px 0px rgb(0 0 0 / 5%)",
+-  alignItems: "center",
+-  alignSelf: "center",
+-  color: "$white",
+-  variants: {
+-    type: {
+-      active: {
+-        bg: "$successLight",
+-        color: "$success",
+-      },
+-      paused: {
+-        bg: "$errorLight",
+-        color: "$error",
+-      },
+-      vacation: {
+-        bg: "$warningLight",
+-        color: "$warning",
+-      },
+-    },
+-  },
+-  defaultVariants: {
+-    type: "active",
+-  },
+-});
+-
+ const IconButton = styled("button", {
+   dflex: "center",
+   border: "none",
+@@ -279,7 +255,9 @@ export const Sortable = () => {
+     async sort({items, sortDescriptor}: {items: any[]; sortDescriptor: SortDescriptor}) {
+       return {
+         items: items.sort((a, b) => {
++          // @ts-ignore
+           let first = a[sortDescriptor.column];
++          // @ts-ignore
+           let second = b[sortDescriptor.column];
+           let cmp = collator.compare(first, second);
+ 
+@@ -517,6 +495,13 @@ export const CustomCells = () => {
+ 
+   const renderCell = (user: UserType, columnKey: React.Key) => {
+     const cellValue = user[columnKey];
++    const statusColor: {
++      [key: string]: BadgeProps["color"];
++    } = {
++      active: "success",
++      paused: "warning",
++      vacation: "error",
++    };
+ 
+     switch (columnKey) {
+       case "name":
+@@ -541,7 +526,17 @@ export const CustomCells = () => {
+           </Col>
+         );
+       case "status":
+-        return <StyledBadge type={user?.status}>{cellValue}</StyledBadge>;
++        return (
++          <Badge
++            color={statusColor[user?.status]}
++            css={{
++              tt: "capitalize",
++            }}
++            variant="flat"
++          >
++            {cellValue}
++          </Badge>
++        );
+ 
+       case "actions":
+         return (\n- packages/react/src/table/table.styles.ts (modified, 51 changes)\n  Patch: @@ -8,25 +8,25 @@ export const StyledTableHeaderRow = styled("tr", {
+ export const StyledTableColumnHeader = styled(
+   "th",
+   {
+-    height: '$14',
+-    cursor: 'default',
+-    bg: '$accents0',
+-    color: '$accents7',
+-    fontSize: '$xs',
+-    textAlign: 'left',
+-    position: 'relative',
+-    '@motion': {
+-      transition: 'none'
+-    },
+-    '&:first-child': {
+-      pl: '$8',
+-      btlr: '$md',
+-      bblr: '$md',
+-    },
+-    '&:last-child': {
+-      pr: '$8',
+-      btrr: '$md',
+-      bbrr: '$md'
++    height: "$14",
++    cursor: "default",
++    bg: "$accents0",
++    color: "$accents7",
++    fontSize: "$xs",
++    textAlign: "left",
++    position: "relative",
++    "@motion": {
++      transition: "none",
++    },
++    "&:first-child": {
++      pl: "$8",
++      btlr: "$md",
++      bblr: "$md",
++    },
++    "&:last-child": {
++      pr: "$8",
++      btrr: "$md",
++      bbrr: "$md",
+     },
+     variants: {
+       align: {
+@@ -106,6 +106,7 @@ export const StyledTableCell = styled(
+   {
+     position: "relative",
+     userSelect: "none",
++    cursor: "default",
+     py: "$5",
+     pr: "$5",
+     zIndex: "$2",
+@@ -142,6 +143,12 @@ export const StyledTableCell = styled(
+           textAlign: "right",
+         },
+       },
++      isStatic: {
++        true: {
++          cursor: "text",
++          userSelect: "text",
++        },
++      },
+     },
+   },
+   cssFocusVisible,
+@@ -188,6 +195,7 @@ export const StyledTableRowGroup = styled("thead", {
+         display: "block",
+         height: "100%",
+         overflow: "auto",
++        pb: "$10",
+         [`& ${StyledTableRow}`]: {
+           display: "table",
+           width: "100%",
+@@ -402,11 +410,6 @@ export const StyledTable = styled("table", {
+           },
+         },
+       },
+-      false: {
+-        [`& ${StyledTableCell}`]: {
+-          userSelect: "all",
+-        },
+-      },
+     },
+     isMultiple: {
+       true: {},\n- packages/react/src/table/table.tsx (modified, 19 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import React, {useImperativeHandle, useRef, RefAttributes, PropsWithoutRef} from "react";
++import React, {useMemo, RefAttributes, PropsWithoutRef} from "react";
+ import {useTable} from "@react-aria/table";
+ import {useTableState, TableStateProps} from "@react-stately/table";
+ import {SelectionMode, SelectionBehavior, CollectionChildren} from "@react-types/shared";
+@@ -8,6 +8,7 @@ import {CSS} from "../theme/stitches.config";
+ import {pickSingleChild} from "../utils/collections";
+ import withDefaults from "../utils/with-defaults";
+ import clsx from "../utils/clsx";
++import {useDOMRef} from "../utils/dom";
+ 
+ import TableRowGroup from "./table-row-group";
+ import TableColumnHeader from "./table-column-header";
+@@ -88,16 +89,14 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+           : selectionMode === "multiple" && selectionBehavior !== "replace",
+     });
+ 
+-    const tableRef = useRef<HTMLTableElement | null>(null);
+-
+-    useImperativeHandle(ref, () => tableRef?.current);
++    const domRef = useDOMRef<HTMLTableElement>(ref);
+ 
+     const {collection} = state;
+     const {
+       gridProps,
+     }: {
+       gridProps: Omit<React.HTMLAttributes<unknown>, keyof TableProps<unknown>>;
+-    } = useTable(tableProps, state, tableRef);
++    } = useTable(tableProps, state, domRef);
+ 
+     const initialValues = React.useMemo<Partial<TableConfig>>(() => {
+       return {
+@@ -108,6 +107,11 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+       };
+     }, [collection, animated, color, rowsPerPage]);
+ 
++    const isHoverable = useMemo(
++      () => !!(selectionMode !== "none" || hoverable),
++      [selectionMode, hoverable],
++    );
++
+     return (
+       <TableContext.Provider defaultValues={initialValues}>
+         <StyledTableContainer
+@@ -118,13 +122,13 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+           shadow={shadow}
+         >
+           <StyledTable
+-            ref={tableRef}
++            ref={domRef}
+             animated={animated}
+             className={clsx("nextui-table", className)}
+             color={color}
+             css={css}
+             hasPagination={hasPagination}
+-            hoverable={selectionMode !== "none" || hoverable}
++            hoverable={isHoverable}
+             isMultiple={selectionMode === "multiple"}
+             shadow={shadow}
+             {...gridProps}
+@@ -160,6 +164,7 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+               color={color}
+               hasPagination={hasPagination}
+               hideLoading={hideLoading}
++              isStatic={!isHoverable}
+               state={state}
+             />
+ \n

@@ -1,0 +1,283 @@
+Pull Request Number: 2649
+Title: fix(select): disabled select shouldn't get update by keyboard
+Base Branch: main
+Head Branch: fix/eng-339
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2649
+State: MERGED
+Created At: 2024-04-05T12:49:04Z
+Merged At: 2024-04-14T19:35:07Z
+Participants: wingkwong, ShrinidhiUpadhyaya, jrgarciadev
+
+Description:
+Closes #2345
+📝 Description
+
+set all keys to disabled mode so that users cannot update a value in a disabled select
+
+⛳️ Current behavior (updates)
+Currently if you go to [disabled select storybook], click the background, then press tab, then press 'w', the value changes to Whale.
+🚀 New behavior
+The value shouldn't get updated if it is disabled
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Fixed an issue where disabled select components could still be changed using blur and keyboard shortcuts.
+
+
+Tests
+
+Added a test to verify that disabled select elements do not update via keyboard input.
+
+
+Refactor
+
+Modified state variable initialization in the select component for enhanced flexibility and reliability.
+
+Commits:
+- fix(select): disable all keys for isDisabled case\n- fix(select): add "disabled select shouldn't update by keyboard" test case\n- refactor(select): remove unnecessary map\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: c4558a74ade910572111671bb5193210f7cdc2a6
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name               | Type  |
+| ------------------ | ----- |
+| @nextui-org/select | Patch |
+| @nextui-org/react  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/wingkwong/nextui/new/fix/eng-339?filename=.changeset/old-pugs-repair.md&value=---%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A---%0A%0Afix(select)%3A%20disabled%20select%20shouldn't%20get%20update%20by%20keyboard%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes address a bug in the `@nextui-org/select` component where a disabled select element could still be updated using keyboard shortcuts or by blurring the element. The patch involves modifying the component's internal state management to respect the disabled state and prevent updates via keyboard inputs. A test case has also been added to ensure the fix's effectiveness, ensuring that disabled select elements remain immutable to user interactions that previously led to unintended behavior.
+
+## Changes
+
+| File Path                               | Change Summary                                                |
+|-----------------------------------------|---------------------------------------------------------------|
+| `.changeset/nervous-geckos-visit.md`    | Introduces a patch fixing the disabled select update issue.   |
+| `.../select/__tests__/select.test.tsx`  | Adds a test case for the disabled select element.             |
+| `.../select/src/use-select.ts`          | Modifies state initialization and augmentation in `useSelect`.|
+
+## Assessment against linked issues
+
+| Objective                                   | Addressed | Explanation |
+|---------------------------------------------|-----------|-------------|
+| Prevent disabled Select from changing value using blur + keyboard [#2345] | ✅        |             |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/nervous-geckos-visit.md: The new file introduces a patch for "@nextui-org/select" that fixes an issue where the disabled select allows changes using blur and keyboard shortcuts.
+
+---
+
+packages/components/select/__tests__/select.test.tsx: ## Short summary
+
+Added a test case to ensure that a disabled select element does not update via keyboard input.
+
+---
+
+packages/components/select/src/use-select.ts: ### Short Summary
+
+In the `use-select.ts` file, the change involves modifying the initialization of the `state` variable in the `useSelect` function. Previously, `state` was declared using `const`, and now it is declared using `let` to allow for reassignment. Additionally, after the state initialization, there is an augmentation of the `state` object based on the `originalProps` conditionally.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+This Pull Request (PR) titled "fix(select): disabled select shouldn't get update by keyboard" with the number 2649 aims to address a bug identified in issue #2345, where a disabled select component could still be updated through keyboard inputs. The bug was specifically reproducible in scenarios where a user would navigate to a disabled select component using the tab key and then change its value by pressing a key corresponding to the first letter of one of the select options. This behavior was contrary to the expected functionality, where a disabled select component should not accept any input or change in value, maintaining its state as disabled and unchangeable by user actions.
+
+The PR introduces a fix that ensures all keys are set to a disabled mode for the select component, effectively preventing users from updating its value through keyboard inputs when it is disabled. This change is aimed at enhancing the usability and integrity of the UI components by ensuring that the disabled state of select components is fully respected and enforced, preventing any unintended interactions.
+
+The PR includes a detailed description of the current behavior, highlighting the issue with the disabled select component that allows its value to be changed through keyboard inputs after gaining focus via tab navigation or by clicking on the select's label. The proposed new behavior ensures that the value of a disabled select component cannot be updated, aligning with the expected behavior for disabled UI elements.
+
+Additionally, the PR includes a link to a StackBlitz example demonstrating the bug, steps to reproduce the issue, and the expected behavior after the fix is applied. The PR asserts that the fix is not a breaking change and provides additional information to aid in the review and understanding of the changes made.
+
+### AI-Generated Summary of Generated Summaries
+
+The Pull Request (PR) #2649 addresses a critical usability issue where a disabled select component could be updated through keyboard inputs, as detailed in issue #2345. The core of the fix involves modifying the behavior of the select component to ensure that it remains truly disabled when specified as such, preventing any updates through keyboard interactions. This is achieved by setting all keys to a disabled mode for the select component, ensuring that its value remains unchanged despite any keyboard inputs when it is in a disabled state.
+
+To validate the effectiveness of the fix, a new test case has been added, specifically designed to confirm that a disabled select element does not update its value when keyboard inputs are made. This addition underscores the commitment to maintaining the integrity and reliability of the component's behavior, especially in scenarios where user interaction should be restricted.
+
+The implementation of the fix involved a notable change in the `use-select.ts` file, where the initialization of the `state` variable within the `useSelect` function was modified. The change from a `const` declaration to a `let` allows for the reassignment of the `state` variable, facilitating the augmentation of the `state` object based on conditional checks against the `originalProps`. This adjustment is a key part of the solution, ensuring that the disabled state of the select component is effectively enforced and maintained, preventing any unintended value changes through keyboard inputs.
+
+In summary, PR #2649 introduces a crucial fix to the disabled state handling of select components, ensuring they adhere to expected behavior by preventing updates through keyboard inputs. This is achieved through strategic modifications and enhancements in the component's state management and is validated through the addition of a targeted test case.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 032d306315b5dc02403980431cc1ab22e624c145 -->
+<!-- c4558a74ade910572111671bb5193210f7cdc2a6 -->
+
+<!-- commit_ids_reviewed_end --><!-- tweet_start -->
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<!-- tweet_end --><!-- tips_start -->
+
+---
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/coderabbit-overrides.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #e1fQQn73gcuMOolRt8fFbH+6nnegWZPfosj8P5Oiicc=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNWY2dnVRMTlRTkxRb1E4aXFGVmRpUHBOcm9IaiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtZW5nLTMzOS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay13aW5na3dvbmctZml4LWVuZy0zMzktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/5f6vuQ19QNLQoQ8iqFVdiPpNroHj)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-339-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-339-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 6, 2024 7:55am |
+
+\n- vercel: @wingkwong is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22850ec070568ee6f0cab4a2507063a25543be5f2e%22%7D%2C%22id%22%3A%22QmYCZyrJBYFVB6ew7ybHHXf9hQv32UmTeDVtesRxnAGhUa%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2649%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/nervous-geckos-visit.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/select": patch
++---
++
++Fixed Disabled Select Allows Changes Using Blur + Keyboard (#2345)\n- packages/components/select/__tests__/select.test.tsx (modified, 35 changes)\n  Patch: @@ -361,4 +361,39 @@ describe("Select", () => {
+     // assert that the select is closed
+     expect(select).toHaveAttribute("aria-expanded", "false");
+   });
++
++  it("disabled select shouldn't update by keyboard", async () => {
++    let onSelectionChange = jest.fn();
++
++    const wrapper = render(
++      <Select
++        isDisabled
++        aria-label="Favorite Animal"
++        data-testid="test-select"
++        label="Favorite Animal"
++        selectionMode="single"
++        value="penguin"
++        onSelectionChange={onSelectionChange}
++      >
++        <SelectItem key="penguin" value="penguin">
++          Penguin
++        </SelectItem>
++        <SelectItem key="zebra" value="zebra">
++          Zebra
++        </SelectItem>
++        <SelectItem key="shark" value="shark">
++          Shark
++        </SelectItem>
++      </Select>,
++    );
++    const select = wrapper.getByTestId("test-select");
++
++    await act(async () => {
++      await userEvent.click(document.body);
++      await userEvent.tab();
++      await userEvent.type(select, "z", {skipClick: true});
++
++      expect(onSelectionChange).toBeCalledTimes(0);
++    });
++  });
+ });\n- packages/components/select/src/use-select.ts (modified, 9 changes)\n  Patch: @@ -204,7 +204,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+   const listBoxRef = useRef<HTMLUListElement>(null);
+   const popoverRef = useRef<HTMLDivElement>(null);
+ 
+-  const state = useMultiSelectState<T>({
++  let state = useMultiSelectState<T>({
+     ...props,
+     isOpen,
+     selectionMode,
+@@ -235,6 +235,13 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+     },
+   });
+ 
++  state = {
++    ...state,
++    ...(originalProps?.isDisabled && {
++      disabledKeys: new Set([...state.collection.getKeys()]),
++    }),
++  };
++
+   const {labelProps, triggerProps, valueProps, menuProps, descriptionProps, errorMessageProps} =
+     useMultiSelect(
+       {...props, disallowEmptySelection, isDisabled: originalProps?.isDisabled},\n

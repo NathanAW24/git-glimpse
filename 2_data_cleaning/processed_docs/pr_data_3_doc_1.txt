@@ -1,0 +1,223 @@
+Pull Request Number: 4053
+Title: fix: div-in-p issue in tooltip
+Base Branch: canary
+Head Branch: fix/tooltip
+Author: rishabhverma54321
+URL: https://github.com/nextui-org/nextui/pull/4053
+State: OPEN
+Created At: 2024-11-14T19:33:18Z
+Merged At: None
+Participants: rishabhverma54321, wingkwong
+
+Description:
+Closes # 
+📝 Description
+This PR adds support for using React lazy or server components inside a Tooltip component
+⛳️ Current behavior (updates)
+Currently, in Next 14 and above, passing a lazy or server component inside a tooltip results in an error.
+In HTML, <div> cannot be a descendant of <p>. This will cause a hydration error.
+🚀 New behavior
+A new check has been added to render lazy and server components in a div instead of a p tag to prevent hydration issues.
+💣 Is this a breaking change (Yes/No):
+No - This condition will only work with lazy and server components.
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced Tooltip component to support lazy-loaded React elements.
+Improved validation for the children prop to ensure it is a valid React element or a lazy element.
+
+
+
+Bug Fixes
+
+Added error handling for invalid children, defaulting to a <p> element when necessary.
+
+
+
+Documentation
+
+Updated type definitions and utility functions for better clarity and usability.
+
+Commits:
+- fix: div-in-p issue in tooltip\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- vercel: @rishabhverma54321 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22e948c458ae40c40807fdf098654d4f6ff05a091e%22%7D%2C%22id%22%3A%22QmY2M5CQBVsQj365gR8t7hPHEcfPpB8L3rBQJDDPwq8vRN%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A4053%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: e948c458ae40c40807fdf098654d4f6ff05a091e
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/rishabhverma54321/nextui/new/fix/tooltip?filename=.changeset/many-rivers-brake.md&value=---%0A%22%40nextui-org%2Ftooltip%22%3A%20patch%0A---%0A%0Afix%3A%20div-in-p%20issue%20in%20tooltip%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The changes in this pull request enhance the `Tooltip` component by introducing support for lazy-loaded React elements. A new utility function, `isLazyElement`, is added to validate the `children` prop, ensuring it is either a valid React element or a lazy element. If validation fails, a default `<p>` element is rendered. The `use-tooltip.ts` file is also updated to include a new type alias, `LazyElement`, and the corresponding function to check for lazy elements. Overall, these modifications improve the flexibility and robustness of the tooltip's child element handling.
+
+## Changes
+
+| File Path                                    | Change Summary                                                                                     |
+|----------------------------------------------|---------------------------------------------------------------------------------------------------|
+| packages/components/tooltip/src/tooltip.tsx | - Imported `isLazyElement` from `./use-tooltip`. <br> - Updated `children` prop validation logic. <br> - Default rendering behavior modified for invalid children. |
+| packages/components/tooltip/src/use-tooltip.ts | - Added type alias `LazyElement`. <br> - Implemented `isLazyElement` function to check for lazy elements. <br> - Updated React import to include `ReactElement`. |
+
+## Possibly related issues
+- **nextui-org/nextui#3975**: The changes address a `div-in-p` hydration issue by ensuring that the `children` prop is validated correctly, potentially preventing hydration errors in server components.
+
+## Suggested reviewers
+- jrgarciadev
+- wingkwong
+
+<!-- walkthrough_end -->
+
+
+<!-- internal state start -->
+
+
+<!-- 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= -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- packages/components/tooltip/src/tooltip.tsx (modified, 6 changes)\n  Patch: @@ -7,7 +7,7 @@ import {Children, cloneElement, isValidElement} from "react";
+ import {getTransformOrigins} from "@nextui-org/aria-utils";
+ import {mergeProps} from "@react-aria/utils";
+ 
+-import {UseTooltipProps, useTooltip} from "./use-tooltip";
++import {UseTooltipProps, isLazyElement, useTooltip} from "./use-tooltip";
+ 
+ export interface TooltipProps extends Omit<UseTooltipProps, "disableTriggerFocus" | "backdrop"> {}
+ 
+@@ -41,8 +41,10 @@ const Tooltip = forwardRef<"div", TooltipProps>((props, ref) => {
+ 
+     if (childrenNum !== 1) throw new Error();
+ 
+-    if (!isValidElement(children)) {
++    if (!isValidElement(children) && !isLazyElement(children)) {
+       trigger = <p {...getTriggerProps()}>{children}</p>;
++    } else if (isLazyElement(children)) {
++      trigger = <div {...getTriggerProps()}>{children}</div>;
+     } else {
+       const child = children as React.ReactElement & {
+         ref?: React.Ref<any>;\n- packages/components/tooltip/src/use-tooltip.ts (modified, 17 changes)\n  Patch: @@ -4,7 +4,7 @@ import type {OverlayTriggerProps} from "@react-types/overlays";
+ import type {HTMLMotionProps} from "framer-motion";
+ import type {OverlayOptions} from "@nextui-org/aria-utils";
+ 
+-import {ReactNode, Ref, useId, useImperativeHandle} from "react";
++import {ReactElement, ReactNode, Ref, useId, useImperativeHandle} from "react";
+ import {useTooltipTriggerState} from "@react-stately/tooltip";
+ import {mergeProps} from "@react-aria/utils";
+ import {useTooltip as useReactAriaTooltip, useTooltipTrigger} from "@react-aria/tooltip";
+@@ -91,6 +91,8 @@ export type UseTooltipProps = Props &
+   OverlayOptions &
+   PopoverVariantProps;
+ 
++export type LazyElement = ReactElement | ReactNode | null | undefined;
++
+ export function useTooltip(originalProps: UseTooltipProps) {
+   const globalContext = useProviderContext();
+   const [props, variantProps] = mapPropsVariants(originalProps, popover.variantKeys);
+@@ -294,4 +296,17 @@ export function useTooltip(originalProps: UseTooltipProps) {
+   };
+ }
+ 
++export function isLazyElement(element: LazyElement): boolean {
++  if (typeof element !== "object" || element === null) {
++    return false;
++  }
++
++  // Check if it's a ReactElement and has the $$typeof property of React.lazy
++  const reactElement = element as ReactNode & {
++    $$typeof: symbol;
++  };
++
++  return reactElement.$$typeof === Symbol.for("react.lazy");
++}
++
+ export type UseTooltipReturn = ReturnType<typeof useTooltip>;\n

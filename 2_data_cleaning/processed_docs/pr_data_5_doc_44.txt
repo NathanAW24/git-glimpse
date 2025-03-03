@@ -1,0 +1,378 @@
+Pull Request Number: 3710
+Title: fix(menu)/dropdown menu selection
+Base Branch: canary
+Head Branch: fix/dropdown-menu-selection
+Author: sohan01fw
+URL: https://github.com/nextui-org/nextui/pull/3710
+State: OPEN
+Created At: 2024-09-04T10:43:20Z
+Merged At: None
+Participants: sohan01fw, wingkwong
+
+Description:
+Closes #1560
+📝 Description
+This PR addresses the issue where the dropdown selection functionality is not working on mobile devices as well as in web.
+⛳️ Current behavior (updates)
+As you can see the figure below the bug is the selection stay at the same place when cursor move out of the menu.
+
+  
+    
+    
+
+    04.09.2024_15.24.15_REC.mp4
+    
+  
+
+  
+
+  
+
+
+🚀 New behavior
+As Video below the bug get solved by applying some condition in code
+
+  
+    
+    
+
+    fix.mp4
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No):No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced focus and selection management for menu items, improving user interaction and visual feedback.
+Improved interactivity by refining conditions for item selection based on hover state.
+
+
+
+Bug Fixes
+
+Resolved issues with item selection, ensuring items can be selected when hovered over, particularly enhancing dropdown functionality on mobile devices.
+
+Commits:
+- fix(menu): resolve dropdown selection issue on mobile\n- fix(menu): enhance focus handling for menu item selection\n- fix(menu): tab on focus on dropdown menu item\n- fix(menu): added and deleted spaces\n- fix(menu): added changedset\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 22b4c34e8cf3cc8018194bf04a275b7efb905888
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                 | Type  |
+| -------------------- | ----- |
+| @nextui-org/menu     | Patch |
+| @nextui-org/dropdown | Patch |
+| @nextui-org/react    | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/sohan01fw/nextui-project/new/fix/dropdown-menu-selection?filename=.changeset/curly-turkeys-trade.md&value=---%0A%22%40nextui-org%2Fmenu%22%3A%20patch%0A---%0A%0Afix(menu)%2Fdropdown%20menu%20selection%0A)
+
+\n- vercel: @sohan01fw is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%222718d21ffe78db938b0dad45eccc1e9016413a04%22%7D%2C%22id%22%3A%22QmSvmxv1wuwUSwJX541UY24PkqaHXnXDepgsNzJr2YBaLX%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3710%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The changes in the `useMenuItem` function enhance focus and selection management within the dropdown component. The logic for determining the selectable state has been refined to depend on both `isHovered` and `isSelectable`, ensuring that user interactions are more accurately represented. The `itemProps` object has been updated to reflect these changes, improving the handling of focus and selection states.
+
+## Changes
+
+| Files                                           | Change Summary                                                                                              |
+|-------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| `packages/components/menu/src/use-menu-item.ts` | Modified `data-selectable` attribute to depend on `isHovered` and `isSelectable`; improved readability by removing a blank line. |
+
+## Assessment against linked issues
+
+| Objective                                                   | Addressed | Explanation                                      |
+|------------------------------------------------------------|-----------|--------------------------------------------------|
+| Dropdown selection examples are not working in mobile (#1560) | ✅         |                                                  |
+
+## Possibly related PRs
+- **#2598**: This PR modifies the selection logic in the `@nextui-org/menu` component, which directly relates to the changes made in the `useMenuItem` function.
+- **#3119**: This PR addresses an issue with the `navigate` function, which may indirectly relate to the focus and selection logic improvements in the `useMenuItem` function.
+- **#3240**: This PR updates React Aria dependencies that could impact focus management and selection behavior in components.
+- **#3336**: This PR updates the `onSelectionChange` type in the `DropdownMenu`, relevant to the focus and selection logic enhancements.
+- **#3414**: This PR fixes popover behavior, which may relate to overall user interaction improvements in the menu components.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+<existing_changesets>
+# Existing changesets
+
+# Existing changesets
+
+# Existing changesets
+
+packages/components/menu/src/use-menu-item.ts: ## AI-generated summary of changes
+
+The changes in the `useMenuItem` function primarily enhance the logic surrounding focus and selection states. A new variable, `isFocusActive`, is introduced to encapsulate the conditions under which an item is considered focused. This variable combines the existing `isHovered` state with either `isFocused` or `isFocusVisible`, thereby refining the focus management logic. 
+
+The `itemProps` object is updated to utilize `isFocusActive` instead of the previous `isFocused` for the `"data-focus"` and `"data-focus-visible"` attributes. This change ensures that the focus state reflects a more comprehensive condition, potentially improving user experience by providing clearer visual feedback on item focus. Additionally, the `"data-selectable"` attribute's value is modified to depend on `isPressed`, which adds a layer of interactivity based on user actions.
+
+Overall, these modifications enhance the control flow related to focus and selection, making the component more responsive to user interactions.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useMenuItem<T extends object>(originalProps: UseMenuItemProps<T>)` in `packages/components/menu/src/use-menu-item.ts` → No changes to the function signature.
+
+
+# New changesets
+
+packages/components/menu/src/use-menu-item.ts: ## AI-generated summary of changes
+
+The changes in the `useMenuItem` function primarily enhance the logic surrounding focus and selection states. The `data-selectable` attribute's value is modified to depend on both `isHovered` and `isSelectable`, which refines the conditions under which an item is considered selectable. This adjustment improves the interactivity of the component by ensuring that the selectable state is more accurately represented based on user actions. 
+
+Additionally, the removal of a blank line improves the overall readability of the code without affecting its functionality. The focus management logic remains intact, with no introduction of new variables or significant alterations to existing logic. Overall, these modifications enhance the control flow related to focus and selection, making the component more responsive to user interactions.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useMenuItem<T extends object>(originalProps: UseMenuItemProps<T>)` in `packages/components/menu/src/use-menu-item.ts` → No changes to the function signature.
+
+
+# New changesets
+
+packages/components/menu/src/use-menu-item.ts: ## AI-generated summary of changes
+
+The changes in the `useMenuItem` function primarily enhance the logic surrounding the `data-selectable` attribute. The value of this attribute is now contingent upon both `isHovered` and `isSelectable`, refining the conditions under which an item is deemed selectable. This adjustment improves the interactivity of the component by ensuring that the selectable state accurately reflects user actions. The logic for the `data-hover` attribute remains unchanged, maintaining the existing focus management without introducing new variables or significant alterations to the control flow. Overall, these modifications enhance the responsiveness of the component to user interactions.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useMenuItem<T extends object>(originalProps: UseMenuItemProps<T>)` in `packages/components/menu/src/use-menu-item.ts` → No changes to the function signature.
+</existing_changesets>
+
+
+<new_changesets>
+# New changesets
+
+.changeset/silly-cooks-divide.md: ## AI-generated summary of changes
+
+The update introduces a modification to the selection logic within the `@nextui-org/menu` component. Specifically, the condition for determining whether an item is selectable has been enhanced to include the `isHovered` state alongside the existing `isSelectable` condition. This adjustment ensures that items can be selected when the cursor hovers over them, resolving a previously identified issue where the selection would remain static even if the cursor moved outside the menu boundaries. This change is particularly beneficial for improving the dropdown selection functionality on mobile devices, thereby enhancing the overall user experience.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- Modified: Selection logic condition in `@nextui-org/menu` to include `isHovered` along with `isSelectable`.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(menu)/dropdown menu selection" by user sohan01fw addresses an issue with the dropdown selection functionality in the NextUI library. This PR resolves the problem where the dropdown selection does not work correctly on both mobile devices and web platforms. The current behavior, as shown in the provided figure, indicates that the selection remains unchanged when the cursor moves out of the dropdown menu. The new behavior, demonstrated in a linked video, shows that the issue has been fixed by applying specific conditions in the code. The PR does not introduce any breaking changes and successfully closes the linked issue #1560, which reported the dropdown selection problems on mobile devices.
+
+## Objectives from Linked Issues
+
+The linked issue #1560 titled "[BUG] - Dropdown selection examples are not working in mobile" describes the difficulties users faced when testing the NextUI dropdown component on mobile devices. A user reported the issue while using a Xiaomi POCO F4 smartphone with the Chrome browser. They noted that when trying to select options from the dropdown in the single selection example, no changes occurred, and the initial option remained selected. The expected behavior was for users to be able to select options other than the preselected initial one. This issue emphasizes the necessity for a functional dropdown selection mechanism that operates effectively across various devices, especially on mobile platforms. The PR aims to address this objective by correcting the underlying code issues that hindered dropdown functionality.
+
+## Comments Summary
+
+In the comments section of the PR, user sohan01fw inquired about the visual appearance of the dropdown menu, specifically whether it should display a blue border instead of a gray background. User wingkwong clarified that the blue border is known as a focus ring, which indicates when an item is being focused, regardless of whether it is hovered over. Sohan01fw then shared a video demonstrating their understanding of the focus ring's behavior and sought confirmation from wingkwong regarding its correctness.
+
+Wingkwong responded, indicating that the focus ring should be visible when the dropdown is opened, not just when the arrow down key is pressed. They suggested comparing the behavior with the production storybook to ensure consistency. Sohan01fw acknowledged this feedback and shared another video, suggesting that the updated behavior was satisfactory. However, wingkwong tested the changes in the PR's storybook and noted discrepancies, asking if all changes had been pushed to the repository.
+
+Sohan01fw then apologized for missing some updates and committed to fixing the issues pointed out by wingkwong. The comments reflect a collaborative effort to refine the dropdown menu's functionality and appearance, with a focus on ensuring that the user experience aligns with expectations and existing standards in the production environment. The dialogue illustrates a back-and-forth process aimed at achieving a polished and functional dropdown component that meets user needs across different devices.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- announcements_start -->
+
+> [!TIP]
+> <details>
+> <summary>OpenAI O1 model for chat</summary>
+> 
+> - We have deployed OpenAI's latest O1 model for chat.
+> - OpenAI claims that this model has superior reasoning capabilities than their GPT-4o model.
+> - Please share any feedback with us in the [discussions post](https://discord.com/channels/1134356397673414807/1283929536186155099).
+> 
+> </details>
+
+<!-- announcements_end --><!-- commit_ids_reviewed_start -->
+
+<!-- 2718d21ffe78db938b0dad45eccc1e9016413a04 -->
+<!-- db0b3efd30281232a280507ade5b3ca8e3878b8e -->
+<!-- 9b8440d9b480a986bb6f03f2c29de300365193cf -->
+<!-- 22b4c34e8cf3cc8018194bf04a275b7efb905888 -->
+
+<!-- commit_ids_reviewed_end -->
+
+---
+
+<details>
+<summary>Recent review details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>Commits</summary>
+
+Files that changed from the base of the PR and between 9b8440d9b480a986bb6f03f2c29de300365193cf and 22b4c34e8cf3cc8018194bf04a275b7efb905888.
+
+</details>
+
+
+<details>
+<summary>Files selected for processing (1)</summary>
+
+* .changeset/silly-cooks-divide.md (1 hunks)
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<details>
+<summary>Additional comments not posted (1)</summary><blockquote>
+
+<details>
+<summary>.changeset/silly-cooks-divide.md (1)</summary><blockquote>
+
+`1-5`: **LGTM!**
+
+The changeset message provides a clear and concise explanation of the problem and the solution. The addition of the `isHovered` condition to the `data-selectable` attribute should indeed fix the issue where the dropdown selection remains unchanged when the cursor moves out of the menu. This change will improve the user experience on mobile devices by ensuring that the dropdown selection works as expected.
+
+</blockquote></details>
+
+</blockquote></details>
+
+</details><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+
+
+<!-- tips_end -->\n- vercel: [vc]: #j62LbJcMMxGXu4Qr74SQpoqryNK/3E7LT8NLabiaups=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRzNMVlF5WHpVUnUyZWN5cGt0TktBMnNtdnVzQSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXNvaGFuMDFmdy1maXgtZHItNzdiZjkzLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXNvaGFuMDFmdy1maXgtZHItNzdiZjkzLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/G3LVQyXzURu2ecypktNKA2smvusA)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-sohan01fw-fix-dr-77bf93-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-sohan01fw-fix-dr-77bf93-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 10, 2024 1:03pm |
+
+\n- sohan01fw: so it only have to show that blue border not gray background?\n- wingkwong: That's called focus ring. It shows when the item is being focused, regardless of being hovered or not.\n- sohan01fw: 
+https://github.com/user-attachments/assets/75a62540-2ce5-442f-9410-84cc7a352115
+
+@wingkwong  is this alright?
+\n- wingkwong: I think not. When you open it, the focus ring should be already there. From the video it looks you it shows only when you press the arrow down key. You can compare it with the production storybook https://storybook.nextui.org/?path=/story/components-dropdown--default&globals=locale:bg-BG.\n- sohan01fw: wait! i already got that solution before lol\n- sohan01fw: 
+https://github.com/user-attachments/assets/1c7998b8-358f-4a9d-85fe-e8baeda25027
+
+this is ok i guess\n- wingkwong: The one in video is fine. However, I tested in your PR storybook - https://nextui-storybook-v2-git-fork-sohan01fw-fix-dr-77bf93-nextui-org.vercel.app/?path=%2Fstory%2Fcomponents-dropdown--default. It doesn't match. Have you pushed all the changes?\n- sohan01fw: yeah i just pushed one now
+\n- sohan01fw: oh iam sorry i didn't saw that i will fix it\n- sohan01fw: > what is the reason to add isHovered in L137 but not to isSelectable ?
+
+isHovered is utilized to provide immediate visual feedback regarding the item's hover state, enhancing user interaction. In contrast, isSelectable denotes the inherent capability of the item to be selected based on the menu's configuration. These two states serve distinct functions: isHovered pertains to the current interaction state, while isSelectable reflects the broader selection criteria defined by the menu's logic.And if isSelectable used it didn't solve the bug. It will still get presist. \n- wingkwong: I mean the value of `data-selectable` should be based on `isSelectable`. However, in your PR, it breaks this statement because you included `isHovered` as well in L137.\n- sohan01fw: oh there i just checked if there is isHovered present or not and it get solved.That is just a checking statement. previously i had written in optional chaining but i think this is concise so.\n
+
+Files Changed:
+- .changeset/silly-cooks-divide.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/menu": patch
++---
++
++The condition for data-selectable now includes isHovered along with isSelectable.This ensures that the item can be selected when it is hovered over, addressing the issue where the selection stays in the same place when the cursor moves out of the menu.This change should help fix the dropdown selection functionality on mobile devices and improve the user experience.\n- packages/components/menu/src/use-menu-item.ts (modified, 2 changes)\n  Patch: @@ -134,7 +134,7 @@ export function useMenuItem<T extends object>(originalProps: UseMenuItemProps<T>
+       props,
+     ),
+     "data-focus": dataAttr(isFocused),
+-    "data-selectable": dataAttr(isSelectable),
++    "data-selectable": dataAttr(isHovered && isSelectable),
+     "data-hover": dataAttr(isMobile ? isHovered || isPressed : isHovered),
+     "data-disabled": dataAttr(isDisabled),
+     "data-selected": dataAttr(isSelected),\n

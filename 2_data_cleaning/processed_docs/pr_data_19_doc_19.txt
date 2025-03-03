@@ -1,0 +1,1463 @@
+Pull Request Number: 1746
+Title: feat(core): slider tooltip support added, popover modified
+Base Branch: feat/slider
+Head Branch: feat/slider-tooltip
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/1746
+State: MERGED
+Created At: 2023-10-06T23:36:12Z
+Merged At: 2023-10-07T11:23:35Z
+Participants: jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+Slider tooltip support added
+💣 Is this a breaking change (Yes/No): Yes
+
+📝 Additional Information
+Breaking Changes
+
+Popover API changed to improve the arrow implementation, arrow is now a pseudo-element, which allows the popover to also move the arrow altogether, this change impacts the Popover, Tooltip and Select implementations.
+
+Popover changes:
+  <Popover
+      showArrow
+      backdrop="opaque"
+      placement="right"
+      classNames={{
+-        base: "py-3 px-4 border border-default-200 bg-gradient-to-br from-white to-default-300 dark:from-default-100 dark:to-default-50",
+-        arrow: "bg-default-200",
++        base: [
++          // the "before" pseudo element is now the popover' arrow
++          "before:bg-default-200"
++        ],
++        content: [ // now we need to use the "content" slot to actually modify the popover' content styles
++          "py-3 px-4 border border-default-200",
++          "bg-gradient-to-br from-white to-default-300",
++          "dark:from-default-100 dark:to-default-50",
+        ],
+      }}
+    >
+      <PopoverTrigger>
+        <Button>Open Popover</Button>
+      </PopoverTrigger>
+      <PopoverContent>
+        {(titleProps) => (
+          <div className="px-1 py-2">
+            <h3 className="text-small font-bold" {...titleProps}>
+              Popover Content
+            </h3>
+            <div className="text-tiny">This is the popover content</div>
+          </div>
+        )}
+      </PopoverContent>
+  </Popover>
+Tooltip changes:
+ <Tooltip
+      showArrow
+      placement="right"
+      content="I am a tooltip"
+      classNames={{
+-        base: "py-2 px-4 shadow-xl text-black bg-gradient-to-br from-white to-neutral-400",
+-        arrow: "bg-neutral-400 dark:bg-white",
++        base: [
++          // the "before" pseudo element is now the popover' arrow
++          "before:bg-neutral-400 dark:before:bg-white",
++        ],
++        content: [ // now we need to use the "content" slot to actually modify the popover' content styles
++          "py-2 px-4 shadow-xl",
++          "text-black bg-gradient-to-br from-white to-neutral-400",
++        ],
+      }}
+    >
+      <Button variant="flat">Hover me</Button>
+</Tooltip>
+Select changes:
+ <Select
+      items={users}
+      label="Assigned to"
+      className="max-w-xs"
+      variant="bordered"
+      classNames={{
+        label: "group-data-[filled=true]:-translate-y-5",
+        trigger: "min-h-unit-16",
+        listboxWrapper: "max-h-[400px]",
+      }}
+      listboxProps={{
+        itemClasses: {
+          base: [
+            "rounded-md",
+            "text-default-500",
+            "transition-opacity",
+            "data-[hover=true]:text-foreground",
+            "data-[hover=true]:bg-default-100",
+            "dark:data-[hover=true]:bg-default-50",
+            "data-[selectable=true]:focus:bg-default-50",
+            "data-[pressed=true]:opacity-70",
+            "data-[focus-visible=true]:ring-default-500",
+          ],
+        },
+      }}
+      popoverProps={{
+        classNames: {
+-          base: "p-0 border-small border-divider bg-background",
+-          arrow: "bg-default-200",
++          base: "before:bg-default-200", // the before pseudo element controls the popover's arrow
++          content: "p-0 border-small border-divider bg-background", // now instead of the "base" slot we use the "content" slot
+        },
+      }}
+      renderValue={(items) => {
+        return items.map((item) => (
+          <div key={item.key} className="flex items-center gap-2">
+            <Avatar
+              alt={item.data.name}
+              className="flex-shrink-0"
+              size="sm"
+              src={item.data.avatar}
+            />
+            <div className="flex flex-col">
+              <span>{item.data.name}</span>
+              <span className="text-default-500 text-tiny">({item.data.email})</span>
+            </div>
+          </div>
+        ));
+      }}
+    >
+      {(user) => (
+        <SelectItem key={user.id} textValue={user.name}>
+          <div className="flex gap-2 items-center">
+            <Avatar alt={user.name} className="flex-shrink-0" size="sm" src={user.avatar} />
+            <div className="flex flex-col">
+              <span className="text-small">{user.name}</span>
+              <span className="text-tiny text-default-400">{user.email}</span>
+            </div>
+          </div>
+        </SelectItem>
+      )}
+    </Select>
+  );
+}`;
+
+Commits:
+- feat(core): slider tooltip support added, popover modified\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 9dbd61b3a83c90b32439976a29edc43621ad5bde
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 38 packages</summary>
+
+  | Name                      | Type  |
+| ------------------------- | ----- |
+| @nextui-org/shared-icons  | Patch |
+| @nextui-org/popover       | Patch |
+| @nextui-org/tooltip       | Patch |
+| @nextui-org/select        | Patch |
+| @nextui-org/slider        | Patch |
+| @nextui-org/badge         | Patch |
+| @nextui-org/theme         | Patch |
+| @nextui-org/accordion     | Patch |
+| @nextui-org/avatar        | Patch |
+| @nextui-org/button        | Patch |
+| @nextui-org/checkbox      | Patch |
+| @nextui-org/chip          | Patch |
+| @nextui-org/dropdown      | Patch |
+| @nextui-org/input         | Patch |
+| @nextui-org/link          | Patch |
+| @nextui-org/listbox       | Patch |
+| @nextui-org/menu          | Patch |
+| @nextui-org/modal         | Patch |
+| @nextui-org/navbar        | Patch |
+| @nextui-org/pagination    | Patch |
+| @nextui-org/snippet       | Patch |
+| @nextui-org/switch        | Patch |
+| @nextui-org/table         | Patch |
+| @nextui-org/tabs          | Patch |
+| @nextui-org/react         | Patch |
+| @nextui-org/card          | Patch |
+| @nextui-org/code          | Patch |
+| @nextui-org/divider       | Patch |
+| @nextui-org/image         | Patch |
+| @nextui-org/kbd           | Patch |
+| @nextui-org/progress      | Patch |
+| @nextui-org/radio         | Patch |
+| @nextui-org/ripple        | Patch |
+| @nextui-org/scroll-shadow | Patch |
+| @nextui-org/skeleton      | Patch |
+| @nextui-org/spacer        | Patch |
+| @nextui-org/spinner       | Patch |
+| @nextui-org/user          | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/feat/slider-tooltip?filename=.changeset/seven-clocks-happen.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fpopover%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Fslider%22%3A%20patch%0A%22%40nextui-org%2Ftooltip%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afeat(core)%3A%20slider%20tooltip%20support%20added%2C%20popover%20modified%0A)
+
+\n- vercel: [vc]: #bzqC8elFnryezC0vrw8BteSyiy49vFazFh5ttAQcCl4=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi81TThoZFd1MXFyYjFZZHN1cDR4YkttaFVtSDc2IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mZWF0LXNsaWRlci10b29sdGlwLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktZG9jcy12Mi1naXQtZmVhdC1zbGlkZXItdG9vbHRpcC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX0seyJuYW1lIjoibmV4dHVpLXN0b3J5Ym9vay12MiIsInJvb3REaXJlY3RvcnkiOiJwYWNrYWdlcy9zdG9yeWJvb2siLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLXYyLzhSVGtYaWF1YWpzSjFjWXRzS2tHWmpGVWJQUHoiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZmVhdC1zbGlkZXItdG9vbHRpcC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZmVhdC1zbGlkZXItdG9vbHRpcC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/5M8hdWu1qrb1Ydsup4xbKmhUmH76)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-feat-slider-tooltip-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-feat-slider-tooltip-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 6, 2023 11:39pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/8RTkXiauajsJ1cYtsKkGZjFUbPPz)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-feat-slider-tooltip-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-feat-slider-tooltip-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 6, 2023 11:39pm |
+
+
+\n
+
+Files Changed:
+- .changeset/hip-years-sip.md (added, 147 changes)\n  Patch: @@ -0,0 +1,147 @@
++---
++"@nextui-org/shared-icons": patch
++"@nextui-org/popover": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/select": patch
++"@nextui-org/slider": patch
++"@nextui-org/badge": patch
++"@nextui-org/theme": patch
++---
++
++Changes
++
++- Slider tooltip support added
++
++Breaking Changes
++
++- Popover API changed to improve the arrow implementation, arrow is now a pseudo element, this allows the popover to also move the arrow all-together, this change impacts the Popover, Tooltip and Select implementations.
++
++Popover changes:
++
++```diff
++  <Popover
++      showArrow
++      backdrop="opaque"
++      placement="right"
++      classNames={{
++-        base: "py-3 px-4 border border-default-200 bg-gradient-to-br from-white to-default-300 dark:from-default-100 dark:to-default-50",
+++        base: [
+++          // the "before" pseudo element is now the popover' arrow
+++          "before:bg-default-200"
+++        ],
++-        arrow: "bg-default-200",
+++        content: [ // now we need to use the "content" slot to actually modify the popover' content styles
+++          "py-3 px-4 border border-default-200",
+++          "bg-gradient-to-br from-white to-default-300",
+++          "dark:from-default-100 dark:to-default-50",
++        ],
++      }}
++    >
++      <PopoverTrigger>
++        <Button>Open Popover</Button>
++      </PopoverTrigger>
++      <PopoverContent>
++        {(titleProps) => (
++          <div className="px-1 py-2">
++            <h3 className="text-small font-bold" {...titleProps}>
++              Popover Content
++            </h3>
++            <div className="text-tiny">This is the popover content</div>
++          </div>
++        )}
++      </PopoverContent>
++  </Popover>
++```
++
++Tooltip changes:
++
++```diff
++ <Tooltip
++      showArrow
++      placement="right"
++      content="I am a tooltip"
++      classNames={{
++-        base: "py-2 px-4 shadow-xl text-black bg-gradient-to-br from-white to-neutral-400",
++-        arrow: "bg-neutral-400 dark:bg-white",
+++        base: [
+++          // the "before" pseudo element is now the popover' arrow
+++          "before:bg-neutral-400 dark:before:bg-white",
+++        ],
+++        content: [ // now we need to use the "content" slot to actually modify the popover' content styles
+++          "py-2 px-4 shadow-xl",
+++          "text-black bg-gradient-to-br from-white to-neutral-400",
+++        ],
++      }}
++    >
++      <Button variant="flat">Hover me</Button>
++</Tooltip>
++```
++
++Select changes:
++
++```diff
++ <Select
++      items={users}
++      label="Assigned to"
++      className="max-w-xs"
++      variant="bordered"
++      classNames={{
++        label: "group-data-[filled=true]:-translate-y-5",
++        trigger: "min-h-unit-16",
++        listboxWrapper: "max-h-[400px]",
++      }}
++      listboxProps={{
++        itemClasses: {
++          base: [
++            "rounded-md",
++            "text-default-500",
++            "transition-opacity",
++            "data-[hover=true]:text-foreground",
++            "data-[hover=true]:bg-default-100",
++            "dark:data-[hover=true]:bg-default-50",
++            "data-[selectable=true]:focus:bg-default-50",
++            "data-[pressed=true]:opacity-70",
++            "data-[focus-visible=true]:ring-default-500",
++          ],
++        },
++      }}
++      popoverProps={{
++        classNames: {
++-          base: "p-0 border-small border-divider bg-background",
++-          arrow: "bg-default-200",
+++          base: "before:bg-default-200", // the before pseudo element controls the popover's arrow
+++          content: "p-0 border-small border-divider bg-background", // now instead of the "base" slot we use the "content" slot
++        },
++      }}
++      renderValue={(items) => {
++        return items.map((item) => (
++          <div key={item.key} className="flex items-center gap-2">
++            <Avatar
++              alt={item.data.name}
++              className="flex-shrink-0"
++              size="sm"
++              src={item.data.avatar}
++            />
++            <div className="flex flex-col">
++              <span>{item.data.name}</span>
++              <span className="text-default-500 text-tiny">({item.data.email})</span>
++            </div>
++          </div>
++        ));
++      }}
++    >
++      {(user) => (
++        <SelectItem key={user.id} textValue={user.name}>
++          <div className="flex gap-2 items-center">
++            <Avatar alt={user.name} className="flex-shrink-0" size="sm" src={user.avatar} />
++            <div className="flex flex-col">
++              <span className="text-small">{user.name}</span>
++              <span className="text-tiny text-default-400">{user.email}</span>
++            </div>
++          </div>
++        </SelectItem>
++      )}
++    </Select>
++  );
++}`;
++```\n- apps/docs/content/components/popover/custom-styles.ts (modified, 11 changes)\n  Patch: @@ -7,8 +7,15 @@ export default function App() {
+       backdrop="opaque"
+       placement="right"
+       classNames={{
+-        base: "py-3 px-4 border border-default-200 bg-gradient-to-br from-white to-default-300 dark:from-default-100 dark:to-default-50",
+-        arrow: "bg-default-200",
++        base: [  
++          // arrow color
++          "before:bg-default-200"
++        ],
++        content: [
++          "py-3 px-4 border border-default-200",
++          "bg-gradient-to-br from-white to-default-300",
++          "dark:from-default-100 dark:to-default-50",
++        ],
+       }}
+     >
+       <PopoverTrigger>\n- apps/docs/content/components/select/custom-styles.ts (modified, 4 changes)\n  Patch: @@ -233,8 +233,8 @@ export default function App() {
+       }}
+       popoverProps={{
+         classNames: {
+-          base: "p-0 border-small border-divider bg-background",
+-          arrow: "bg-default-200",
++          base: "before:bg-default-200",
++          content: "p-0 border-small border-divider bg-background",
+         },
+       }}
+       renderValue={(items) => {\n- apps/docs/content/components/tooltip/custom-styles.ts (modified, 10 changes)\n  Patch: @@ -7,8 +7,14 @@ export default function App() {
+       placement="right"
+       content="I am a tooltip"
+       classNames={{
+-        base: "py-2 px-4 shadow-xl text-black bg-gradient-to-br from-white to-neutral-400",
+-        arrow: "bg-neutral-400 dark:bg-white",
++        base: [
++          // arrow color
++          "before:bg-neutral-400 dark:before:bg-white",
++        ],
++        content: [
++          "py-2 px-4 shadow-xl",
++          "text-black bg-gradient-to-br from-white to-neutral-400",
++        ],
+       }}
+     >
+       <Button variant="flat">Hover me</Button>\n- apps/docs/content/docs/components/popover.mdx (modified, 8 changes)\n  Patch: @@ -14,7 +14,7 @@ additional rich content on top of something.
+ 
+ ---
+ 
+-<CarbonAd/>
++<CarbonAd />
+ 
+ ## Import
+ 
+@@ -92,10 +92,10 @@ Popover offers a `motionProps` property to customize the `enter` / `exit` animat
+ 
+ ## Slots
+ 
+-- **base**: The main popover slot, it wraps the popover content.
++- **base**: The main popover slot, it wraps the popover content and contains the arrow as a pseudo-element (::before).
+ - **trigger**: The popover trigger slot, it has small styles to ensure the trigger works correctly.
+ - **backdrop**: The backdrop slot, it contains the backdrop styles.
+-- **arrow**: The arrow slot, it wraps the popover arrow, the placement of the arrow is based on the popover placement, e.g. `data-[placement=top]:...`.
++- **content**: The content slot, it contains the popover content.
+ 
+ ### Custom Styles
+ 
+@@ -162,7 +162,7 @@ You can customize the `Popover` component by passing custom Tailwind CSS classes
+ | triggerRef                | `RefObject<HTMLElement>`                                                    | The ref for the element which the popover positions itself with respect to.                                                                                  | -               |
+ | scrollRef                 | `RefObject<HTMLElement>`                                                    | A ref for the scrollable region within the popover.                                                                                                          | `overlayRef`    |
+ | disableAnimation          | `boolean`                                                                   | Whether the popover is animated.                                                                                                                             | `false`         |
+-| classNames                | `Record<"base"｜ "trigger"｜ "backdrop"｜ "arrow", string>`                 | Allows to set custom class names for the popover slots.                                                                                                      | -               |
++| classNames                | `Record<"base"｜ "trigger"｜ "backdrop"｜ "content", string>`               | Allows to set custom class names for the popover slots.                                                                                                      | -               |
+ 
+ <Spacer y={1} />
+ \n- apps/docs/content/docs/components/select.mdx (modified, 80 changes)\n  Patch: @@ -261,7 +261,7 @@ the popover and listbox components.
+ - **value**: The select value. This is also the slot that wraps the `renderValue` function result.
+ - **listboxWrapper**: The wrapper of the listbox. This wraps the listbox component, this slot is used on top of the scroll shadow component.
+ - **listbox**: The listbox component. This is the component that wraps the select items.
+-- **popover**: The popover component. This is the component that wraps the listbox component.
++- **popoverContent**: The popover content slot. Use this to modify the popover conten styles.
+ - **helperWrapper**: The wrapper of the helper text. This wraps the helper text and the error message.
+ - **description**: The description of the select.
+ - **errorMessage**: The error message of the select.
+@@ -333,45 +333,45 @@ the popover and listbox components.
+ 
+ ### Select Props
+ 
+-| Attribute                    | Type                                                                                                                                                                                                            | Description                                                                                                            | Default            |
+-| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------ |
+-| children\*                   | `ReactNode[]`                                                                                                                                                                                                   | The children to render. Usually a list of `SelectItem` and `SelectSection` elements.                                   | -                  |
+-| items                        | [`Iterable<T>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)                                                                                                          | Item objects in the select. (dynamic)                                                                                  | -                  |
+-| selectionMode                | `single` \| `multiple`                                                                                                                                                                                          | The type of selection that is allowed in the collection.                                                               | -                  |
+-| selectedKeys                 | `all` \| `React.Key[]`                                                                                                                                                                                          | The currently selected keys in the collection (controlled).                                                            | -                  |
+-| disabledKeys                 | `all` \| `React.Key[]`                                                                                                                                                                                          | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with.                | -                  |
+-| defaultSelectedKeys          | `all` \| `React.Key[]`                                                                                                                                                                                          | The initial selected keys in the collection (uncontrolled).                                                            | -                  |
+-| variant                      | `flat` \| `bordered` \| `faded` \| `underlined`                                                                                                                                                                 | The variant of the select.                                                                                             | `flat`             |
+-| color                        | `default` \| `primary` \| `secondary` \| `success` \| `warning` \| `danger`                                                                                                                                     | The color of the select.                                                                                               | `default`          |
+-| size                         | `sm` \| `md` \| `lg`                                                                                                                                                                                            | The size of the select.                                                                                                | `md`               |
+-| radius                       | `none` \| `sm` \| `md` \| `lg` \| `full`                                                                                                                                                                        | The radius of the select.                                                                                              | -                  |
+-| placeholder                  | `string`                                                                                                                                                                                                        | The placeholder of the select.                                                                                         | `Select an option` |
+-| labelPlacement               | `inside` \| `outside` \| `outside-left`                                                                                                                                                                         | The position of the label.                                                                                             | `inside`           |
+-| label                        | `ReactNode`                                                                                                                                                                                                     | The content to display as the label.                                                                                   | -                  |
+-| description                  | `ReactNode`                                                                                                                                                                                                     | A description for the select. Provides a hint such as specific requirements for what to choose.                        | -                  |
+-| errorMessage                 | `ReactNode`                                                                                                                                                                                                     | An error message for the select.                                                                                       | -                  |
+-| startContent                 | `ReactNode`                                                                                                                                                                                                     | Element to be rendered in the left side of the select.                                                                 | -                  |
+-| endContent                   | `ReactNode`                                                                                                                                                                                                     | Element to be rendered in the right side of the select.                                                                | -                  |
+-| selectorIcon                 | `ReactNode`                                                                                                                                                                                                     | Element to be rendered as the selector icon.                                                                           | -                  |
+-| scrollRef                    | `React.RefObject<HTMLElement>`                                                                                                                                                                                  | A ref to the scrollable element.                                                                                       | -                  |
+-| spinnerRef                   | `React.RefObject<HTMLElement>`                                                                                                                                                                                  | A ref to the spinner element.                                                                                          | -                  |
+-| fullWidth                    | `boolean`                                                                                                                                                                                                       | Whether the select should take up the width of its parent.                                                             | `true`             |
+-| isOpen                       | `boolean`                                                                                                                                                                                                       | Whether the select is open by default (controlled).                                                                    | -                  |
+-| defaultOpen                  | `boolean`                                                                                                                                                                                                       | Whether the select is open by default (uncontrolled).                                                                  | -                  |
+-| isRequired                   | `boolean`                                                                                                                                                                                                       | Whether user select is required on the select before form submission.                                                  | `false`            |
+-| isDisabled                   | `boolean`                                                                                                                                                                                                       | Whether the select is disabled.                                                                                        | `false`            |
+-| isMultiline                  | `boolean`                                                                                                                                                                                                       | Whether the select should allow multiple lines of text.                                                                | `false`            |
+-| isInvalid                    | `boolean`                                                                                                                                                                                                       | Whether the select is invalid.                                                                                         | `false`            |
+-| validationState              | `valid` \| `invalid`                                                                                                                                                                                            | Whether the select should display its "valid" or "invalid" visual styling. (**Deprecated**) use **isInvalid** instead. | -                  |
+-| showScrollIndicators         | `boolean`                                                                                                                                                                                                       | Whether the select should show scroll indicators when the listbox is scrollable.                                       | `true`             |
+-| autoFocus                    | `boolean`                                                                                                                                                                                                       | Whether the select should be focused on the first mount.                                                               | `false`            |
+-| disallowEmptySelection       | `boolean`                                                                                                                                                                                                       | Whether the collection allows empty selection.                                                                         | `false`            |
+-| disableAnimation             | `boolean`                                                                                                                                                                                                       | Whether the select should be animated.                                                                                 | `true`             |
+-| disableSelectionIconRotation | `boolean`                                                                                                                                                                                                       | Whether the select should disable the rotation of the selector icon.                                                   | `false`            |
+-| popoverProps                 | [PopoverProps](/docs/components/popover#api)                                                                                                                                                                    | Props to be passed to the popover component.                                                                           | -                  |
+-| listboxProps                 | [ListboxProps](/docs/components/listbox#api)                                                                                                                                                                    | Props to be passed to the listbox component.                                                                           | -                  |
+-| scrollShadowProps            | [ScrollShadowProps](/docs/components/scroll-shadow#api)                                                                                                                                                         | Props to be passed to the scroll shadow component.                                                                     | -                  |
+-| classNames                   | `Record<"base"｜ "label"｜ "trigger"｜ "mainWrapper" ｜ "innerWrapper"｜ "selectorIcon" ｜ "value" ｜ "listboxWrapper"｜ "listbox" ｜ "popover" ｜ "helperWrapper" ｜ "description" ｜ "errorMessage", string>` | Allows to set custom class names for the dropdown item slots.                                                          | -                  |
++| Attribute                    | Type                                                                                                                                                                                                                   | Description                                                                                                            | Default            |
++| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------ |
++| children\*                   | `ReactNode[]`                                                                                                                                                                                                          | The children to render. Usually a list of `SelectItem` and `SelectSection` elements.                                   | -                  |
++| items                        | [`Iterable<T>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)                                                                                                                 | Item objects in the select. (dynamic)                                                                                  | -                  |
++| selectionMode                | `single` \| `multiple`                                                                                                                                                                                                 | The type of selection that is allowed in the collection.                                                               | -                  |
++| selectedKeys                 | `all` \| `React.Key[]`                                                                                                                                                                                                 | The currently selected keys in the collection (controlled).                                                            | -                  |
++| disabledKeys                 | `all` \| `React.Key[]`                                                                                                                                                                                                 | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with.                | -                  |
++| defaultSelectedKeys          | `all` \| `React.Key[]`                                                                                                                                                                                                 | The initial selected keys in the collection (uncontrolled).                                                            | -                  |
++| variant                      | `flat` \| `bordered` \| `faded` \| `underlined`                                                                                                                                                                        | The variant of the select.                                                                                             | `flat`             |
++| color                        | `default` \| `primary` \| `secondary` \| `success` \| `warning` \| `danger`                                                                                                                                            | The color of the select.                                                                                               | `default`          |
++| size                         | `sm` \| `md` \| `lg`                                                                                                                                                                                                   | The size of the select.                                                                                                | `md`               |
++| radius                       | `none` \| `sm` \| `md` \| `lg` \| `full`                                                                                                                                                                               | The radius of the select.                                                                                              | -                  |
++| placeholder                  | `string`                                                                                                                                                                                                               | The placeholder of the select.                                                                                         | `Select an option` |
++| labelPlacement               | `inside` \| `outside` \| `outside-left`                                                                                                                                                                                | The position of the label.                                                                                             | `inside`           |
++| label                        | `ReactNode`                                                                                                                                                                                                            | The content to display as the label.                                                                                   | -                  |
++| description                  | `ReactNode`                                                                                                                                                                                                            | A description for the select. Provides a hint such as specific requirements for what to choose.                        | -                  |
++| errorMessage                 | `ReactNode`                                                                                                                                                                                                            | An error message for the select.                                                                                       | -                  |
++| startContent                 | `ReactNode`                                                                                                                                                                                                            | Element to be rendered in the left side of the select.                                                                 | -                  |
++| endContent                   | `ReactNode`                                                                                                                                                                                                            | Element to be rendered in the right side of the select.                                                                | -                  |
++| selectorIcon                 | `ReactNode`                                                                                                                                                                                                            | Element to be rendered as the selector icon.                                                                           | -                  |
++| scrollRef                    | `React.RefObject<HTMLElement>`                                                                                                                                                                                         | A ref to the scrollable element.                                                                                       | -                  |
++| spinnerRef                   | `React.RefObject<HTMLElement>`                                                                                                                                                                                         | A ref to the spinner element.                                                                                          | -                  |
++| fullWidth                    | `boolean`                                                                                                                                                                                                              | Whether the select should take up the width of its parent.                                                             | `true`             |
++| isOpen                       | `boolean`                                                                                                                                                                                                              | Whether the select is open by default (controlled).                                                                    | -                  |
++| defaultOpen                  | `boolean`                                                                                                                                                                                                              | Whether the select is open by default (uncontrolled).                                                                  | -                  |
++| isRequired                   | `boolean`                                                                                                                                                                                                              | Whether user select is required on the select before form submission.                                                  | `false`            |
++| isDisabled                   | `boolean`                                                                                                                                                                                                              | Whether the select is disabled.                                                                                        | `false`            |
++| isMultiline                  | `boolean`                                                                                                                                                                                                              | Whether the select should allow multiple lines of text.                                                                | `false`            |
++| isInvalid                    | `boolean`                                                                                                                                                                                                              | Whether the select is invalid.                                                                                         | `false`            |
++| validationState              | `valid` \| `invalid`                                                                                                                                                                                                   | Whether the select should display its "valid" or "invalid" visual styling. (**Deprecated**) use **isInvalid** instead. | -                  |
++| showScrollIndicators         | `boolean`                                                                                                                                                                                                              | Whether the select should show scroll indicators when the listbox is scrollable.                                       | `true`             |
++| autoFocus                    | `boolean`                                                                                                                                                                                                              | Whether the select should be focused on the first mount.                                                               | `false`            |
++| disallowEmptySelection       | `boolean`                                                                                                                                                                                                              | Whether the collection allows empty selection.                                                                         | `false`            |
++| disableAnimation             | `boolean`                                                                                                                                                                                                              | Whether the select should be animated.                                                                                 | `true`             |
++| disableSelectionIconRotation | `boolean`                                                                                                                                                                                                              | Whether the select should disable the rotation of the selector icon.                                                   | `false`            |
++| popoverProps                 | [PopoverProps](/docs/components/popover#api)                                                                                                                                                                           | Props to be passed to the popover component.                                                                           | -                  |
++| listboxProps                 | [ListboxProps](/docs/components/listbox#api)                                                                                                                                                                           | Props to be passed to the listbox component.                                                                           | -                  |
++| scrollShadowProps            | [ScrollShadowProps](/docs/components/scroll-shadow#api)                                                                                                                                                                | Props to be passed to the scroll shadow component.                                                                     | -                  |
++| classNames                   | `Record<"base"｜ "label"｜ "trigger"｜ "mainWrapper" ｜ "innerWrapper"｜ "selectorIcon" ｜ "value" ｜ "listboxWrapper"｜ "listbox" ｜ "popoverContent" ｜ "helperWrapper" ｜ "description" ｜ "errorMessage", string>` | Allows to set custom class names for the dropdown item slots.                                                          | -                  |
+ 
+ ### Select Events
+ \n- packages/components/popover/src/free-solo-popover.tsx (modified, 12 changes)\n  Patch: @@ -62,28 +62,21 @@ const FreeSoloPopover = forwardRef<"div", FreeSoloPopoverProps>((props, ref) =>
+     children,
+     placement,
+     backdrop,
+-    showArrow,
+     portalContainer,
+     disableAnimation,
+     motionProps,
+     isNonModal,
+     getPopoverProps,
+     getBackdropProps,
+     getDialogProps,
+-    getArrowProps,
++    getContentProps,
+   } = usePopover({
+     ...props,
+     // avoid closing the popover when navigating with the keyboard
+     shouldCloseOnInteractOutside: undefined,
+     ref,
+   });
+ 
+-  const arrowContent = React.useMemo(() => {
+-    if (!showArrow) return null;
+-
+-    return <span {...getArrowProps()} />;
+-  }, [showArrow, getArrowProps]);
+-
+   const backdropContent = React.useMemo(() => {
+     if (backdrop === "transparent") {
+       return null;
+@@ -116,8 +109,7 @@ const FreeSoloPopover = forwardRef<"div", FreeSoloPopoverProps>((props, ref) =>
+           {...getDialogProps()}
+         >
+           {!isNonModal && <DismissButton onDismiss={state.close} />}
+-          {children}
+-          {arrowContent}
++          <div {...getContentProps()}>{children}</div>
+           <DismissButton onDismiss={state.close} />
+         </FreeSoloPopoverWrapper>
+       </Component>\n- packages/components/popover/src/popover-content.tsx (modified, 16 changes)\n  Patch: @@ -21,21 +21,20 @@ export interface PopoverContentProps
+ }
+ 
+ const PopoverContent = forwardRef<"div", PopoverContentProps>((props, _) => {
+-  const {as, children, ...otherProps} = props;
++  const {as, children, className, ...otherProps} = props;
+ 
+   const {
+     Component: OverlayComponent,
+     isOpen,
+     placement,
+-    showArrow,
+     motionProps,
+     backdrop,
+     disableAnimation,
+     shouldBlockScroll,
+     getPopoverProps,
+-    getArrowProps,
+     getDialogProps,
+     getBackdropProps,
++    getContentProps,
+     isNonModal,
+     onClose,
+   } = usePopoverContext();
+@@ -48,19 +47,14 @@ const PopoverContent = forwardRef<"div", PopoverContentProps>((props, _) => {
+   // Not needed in the popover context, the popover role comes from getPopoverProps
+   delete dialogProps.role;
+ 
+-  const arrowContent = useMemo(() => {
+-    if (!showArrow) return null;
+-
+-    return <span {...getArrowProps()} />;
+-  }, [showArrow, getArrowProps]);
+-
+   const content = (
+     <>
+       {!isNonModal && <DismissButton onDismiss={onClose} />}
+       <Component {...getDialogProps(mergeProps(dialogProps, otherProps))} ref={dialogRef}>
+-        {typeof children === "function" ? children(titleProps) : children}
++        <div {...getContentProps({className})}>
++          {typeof children === "function" ? children(titleProps) : children}
++        </div>
+       </Component>
+-      {arrowContent}
+       <DismissButton onDismiss={onClose} />
+     </>
+   );\n- packages/components/popover/src/use-popover.ts (modified, 31 changes)\n  Patch: @@ -55,9 +55,9 @@ export interface Props extends HTMLNextUIProps<"div"> {
+    * ```ts
+    * <Popover classNames={{
+    *    base:"base-classes",
++   *    content: "content-classes",
+    *    trigger: "trigger-classes",
+    *    backdrop: "backdrop-classes",
+-   *    arrow: "arrow-classes",
+    * }} />
+    * ```
+    */
+@@ -133,7 +133,6 @@ export function usePopover(originalProps: UsePopoverProps) {
+   const {
+     popoverProps,
+     underlayProps,
+-    arrowProps,
+     placement: ariaPlacement,
+   } = useReactAriaPopover(
+     {
+@@ -175,18 +174,31 @@ export function usePopover(originalProps: UsePopoverProps) {
+   });
+ 
+   const getDialogProps: PropGetter = (props = {}) => ({
++    "data-slot": "base",
+     "data-open": dataAttr(state.isOpen),
+     "data-focus": dataAttr(isFocused),
++    "data-arrow": dataAttr(showArrow),
+     "data-focus-visible": dataAttr(isFocusVisible),
+     "data-placement": getArrowPlacement(ariaPlacement, placementProp),
+     ...mergeProps(focusProps, props),
+-    className: slots.base({class: clsx(baseStyles, props.className)}),
++    className: slots.base({class: clsx(baseStyles)}),
+     style: {
+       // this prevent the dialog to have a default outline
+       outline: "none",
+     },
+   });
+ 
++  const getContentProps = useCallback<PropGetter>(
++    (props = {}) => ({
++      "data-slot": "content",
++      "data-open": dataAttr(isOpen),
++      "data-arrow": dataAttr(showArrow),
++      "data-placement": getArrowPlacement(ariaPlacement, placementProp),
++      className: slots.content({class: clsx(classNames?.content, props.className)}),
++    }),
++    [slots, isOpen, showArrow, ariaPlacement, placementProp, classNames],
++  );
++
+   const placement = useMemo(
+     () => (getShouldUseAxisPlacement(ariaPlacement, placementProp) ? ariaPlacement : placementProp),
+     [ariaPlacement, placementProp],
+@@ -195,6 +207,7 @@ export function usePopover(originalProps: UsePopoverProps) {
+   const getTriggerProps = useCallback<PropGetter>(
+     (props = {}, _ref: Ref<any> | null | undefined = null) => {
+       return {
++        "data-slot": "trigger",
+         "aria-haspopup": "dialog",
+         ...mergeProps(triggerProps, props),
+         className: slots.trigger({class: clsx(classNames?.trigger, props.className)}),
+@@ -206,6 +219,7 @@ export function usePopover(originalProps: UsePopoverProps) {
+ 
+   const getBackdropProps = useCallback<PropGetter>(
+     (props = {}) => ({
++      "data-slot": "backdrop",
+       className: slots.backdrop({class: classNames?.backdrop}),
+       onClick: () => state.close(),
+       ...underlayProps,
+@@ -214,15 +228,6 @@ export function usePopover(originalProps: UsePopoverProps) {
+     [slots, classNames, underlayProps],
+   );
+ 
+-  const getArrowProps = useCallback<PropGetter>(
+-    () => ({
+-      className: slots.arrow({class: classNames?.arrow}),
+-      "data-placement": getArrowPlacement(ariaPlacement, placementProp),
+-      ...arrowProps,
+-    }),
+-    [arrowProps, ariaPlacement, placementProp, slots, classNames],
+-  );
+-
+   useEffect(() => {
+     if (state.isOpen && domRef?.current) {
+       return ariaHideOutside([domRef?.current]);
+@@ -249,8 +254,8 @@ export function usePopover(originalProps: UsePopoverProps) {
+     getBackdropProps,
+     getPopoverProps,
+     getTriggerProps,
+-    getArrowProps,
+     getDialogProps,
++    getContentProps,
+   };
+ }
+ \n- packages/components/popover/stories/popover.stories.tsx (modified, 1 changes)\n  Patch: @@ -483,7 +483,6 @@ export const WithBackdrop = {
+     offset: 10,
+     placement: "left",
+     backdrop: "blur",
+-    className: "bg-content1",
+   },
+ };
+ \n- packages/components/select/src/use-select.ts (modified, 10 changes)\n  Patch: @@ -435,9 +435,11 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+         ref: popoverRef,
+         scrollRef: listboxRef,
+         triggerType: "listbox",
+-        className: slots.popover({
+-          class: clsx(classNames?.popover, props.className),
+-        }),
++        classNames: {
++          content: slots.popoverContent({
++            class: clsx(classNames?.popoverContent, props.className),
++          }),
++        },
+         ...mergeProps(userPopoverProps, props),
+         offset:
+           state.selectedItems && state.selectedItems.length > 0
+@@ -446,7 +448,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+             : userPopoverProps?.offset,
+       } as PopoverProps;
+     },
+-    [slots, classNames?.popover, userPopoverProps, triggerRef, state, state.selectedItems],
++    [slots, classNames?.popoverContent, userPopoverProps, triggerRef, state, state.selectedItems],
+   );
+ 
+   const getSelectorIconProps = useCallback(\n- packages/components/slider/package.json (modified, 1 changes)\n  Patch: @@ -42,6 +42,7 @@
+     "@nextui-org/theme": "workspace:*",
+     "@nextui-org/shared-utils": "workspace:*",
+     "@nextui-org/react-utils": "workspace:*",
++    "@nextui-org/tooltip": "workspace:*",
+     "@react-aria/focus": "^3.14.1",
+     "@react-aria/i18n": "^3.8.2",
+     "@react-aria/interactions": "^3.18.0",\n- packages/components/slider/src/slider-thumb.tsx (modified, 10 changes)\n  Patch: @@ -1,20 +1,26 @@
+ import {forwardRef} from "@nextui-org/system";
++import {Tooltip} from "@nextui-org/tooltip";
+ import {VisuallyHidden} from "@react-aria/visually-hidden";
+ 
+ import {UseSliderThumbProps, useSliderThumb} from "./use-slider-thumb";
+ 
+ export interface SliderThumbProps extends UseSliderThumbProps {}
+ 
+ const SliderThumb = forwardRef<"div", SliderThumbProps>((props, ref) => {
+-  const {Component, getThumbProps, getInputProps} = useSliderThumb({...props, ref});
++  const {Component, showTooltip, getTooltipProps, getThumbProps, getInputProps} = useSliderThumb({
++    ...props,
++    ref,
++  });
+ 
+-  return (
++  const content = (
+     <Component {...getThumbProps()}>
+       <VisuallyHidden>
+         <input {...getInputProps()} />
+       </VisuallyHidden>
+     </Component>
+   );
++
++  return showTooltip ? <Tooltip {...getTooltipProps()}>{content}</Tooltip> : content;
+ });
+ 
+ SliderThumb.displayName = "NextUI.SliderThumb";\n- packages/components/slider/src/use-slider-thumb.ts (modified, 50 changes)\n  Patch: @@ -10,6 +10,9 @@ import {useHover, usePress} from "@react-aria/interactions";
+ import {useFocusRing} from "@react-aria/focus";
+ import {mergeProps} from "@react-aria/utils";
+ import {dataAttr} from "@nextui-org/shared-utils";
++import {TooltipProps} from "@nextui-org/tooltip";
++
++import {UseSliderProps} from "./use-slider";
+ 
+ interface Props extends HTMLNextUIProps<"div"> {
+   /**
+@@ -24,12 +27,41 @@ interface Props extends HTMLNextUIProps<"div"> {
+    * A ref to the track element.
+    */
+   trackRef: RefObject<HTMLDivElement>;
++  /**
++   * @internal
++   */
++  isVertical: boolean;
++  /**
++   * @internal
++   */
++  showTooltip?: boolean;
++  /**
++   * @internal
++   */
++  renderOutput?: UseSliderProps["renderOutput"];
++  /**
++   * @internal
++   */
++  tooltipProps?: UseSliderProps["tooltipProps"];
+ }
+ 
+ export type UseSliderThumbProps = Props & AriaSliderThumbProps & SliderVariantProps;
+ 
+ export function useSliderThumb(props: UseSliderThumbProps) {
+-  const {ref, as, state, index, name, trackRef, className, ...otherProps} = props;
++  const {
++    ref,
++    as,
++    state,
++    index,
++    name,
++    trackRef,
++    className,
++    renderOutput,
++    tooltipProps,
++    isVertical,
++    showTooltip,
++    ...otherProps
++  } = props;
+ 
+   const Component = as || "div";
+ 
+@@ -68,6 +100,20 @@ export function useSliderThumb(props: UseSliderThumbProps) {
+     };
+   };
+ 
++  const getTooltipProps = () => {
++    const value = state.values[index ?? 0];
++
++    const content =
++      renderOutput && typeof renderOutput === "function" ? renderOutput(`${value}`) : value;
++
++    return {
++      ...tooltipProps,
++      content,
++      isOpen: isHovered || isDragging,
++      placement: isVertical ? "right" : "top",
++    } as TooltipProps;
++  };
++
+   const getInputProps: PropGetter = (props = {}) => {
+     return {
+       ref: inputRef,
+@@ -76,7 +122,7 @@ export function useSliderThumb(props: UseSliderThumbProps) {
+     };
+   };
+ 
+-  return {Component, getThumbProps, getInputProps};
++  return {Component, showTooltip, getThumbProps, getTooltipProps, getInputProps};
+ }
+ 
+ export type UseSliderThumbReturn = ReturnType<typeof useSliderThumb>;\n- packages/components/slider/src/use-slider.ts (modified, 48 changes)\n  Patch: @@ -9,6 +9,8 @@ import {useNumberFormatter, useLocale} from "@react-aria/i18n";
+ import {mergeProps} from "@react-aria/utils";
+ import {AriaSliderProps, useSlider as useAriaSlider} from "@react-aria/slider";
+ import {clsx} from "@nextui-org/shared-utils";
++import {TooltipProps} from "@nextui-org/tooltip";
++import {useHover} from "@react-aria/interactions";
+ 
+ import {SliderThumbProps} from "./slider-thumb";
+ 
+@@ -44,6 +46,11 @@ interface Props extends HTMLNextUIProps<"div"> {
+    * @default false
+    */
+   showSteps?: boolean;
++  /**
++   * Whether the thumbs should have a tooltip with the value on hover the slider.
++   * @default false
++   */
++  showTooltip?: boolean;
+   /**
+    * Custom steps labels.
+    * @example [{value: 0, label: "0"}, {value: 50, label: "50"}, {value: 100, label: "100"}]
+@@ -79,12 +86,32 @@ interface Props extends HTMLNextUIProps<"div"> {
+    * ```
+    */
+   classNames?: SlotsToClasses<SliderSlots>;
++  /**
++   * Tooltip props.
++   * @see [Tooltip](https://nextui.org/components/tooltip) for more details.
++   * @default {
++   *  offset: 15,
++   *  delay: 0,
++   *  size: "sm",
++   *  showArrow: true,
++   *  placement: "top", // "right" for vertical slider
++   *  content: [sliderOutputValue],
++   *  color: sliderProps?.color, // same as the slider color
++   *  isDisabled: sliderProps?.isDisabled,
++   * }
++   */
++  tooltipProps?: Partial<TooltipProps>;
+   /**
+    * Function to format the output label.
+    *
+    * @param value {string}
+    */
+   renderOutput?: (value: string) => React.ReactNode;
++
++  /**
++   * Function to render the thumb. It can be used to add a tooltip or custom icon.
++   */
++  renderThumb?: (props: SliderThumbProps, index: number) => React.ReactNode;
+ }
+ 
+ export type UseSliderProps = Omit<Props, "onChange"> & AriaSliderProps & SliderVariantProps;
+@@ -102,6 +129,7 @@ export function useSlider(originalProps: UseSliderProps) {
+     minValue = 0,
+     step = 1,
+     showSteps = false,
++    showTooltip = false,
+     orientation = "horizontal",
+     marks = [],
+     startContent,
+@@ -110,6 +138,8 @@ export function useSlider(originalProps: UseSliderProps) {
+     className,
+     classNames,
+     renderOutput,
++    renderThumb,
++    tooltipProps: userTooltipProps = {},
+     ...otherProps
+   } = props;
+ 
+@@ -132,7 +162,18 @@ export function useSlider(originalProps: UseSliderProps) {
+     numberFormatter,
+   });
+ 
++  const tooltipProps: Partial<TooltipProps> = {
++    offset: 5,
++    delay: 0,
++    size: "sm",
++    showArrow: true,
++    color: originalProps?.color as TooltipProps["color"],
++    isDisabled: originalProps.isDisabled,
++    ...userTooltipProps,
++  };
++
+   const {groupProps, trackProps, labelProps, outputProps} = useAriaSlider(props, state, trackRef);
++  const {isHovered, hoverProps} = useHover({isDisabled: originalProps.isDisabled});
+ 
+   const baseStyles = clsx(classNames?.base, className);
+   const isVertical = orientation === "vertical";
+@@ -158,9 +199,11 @@ export function useSlider(originalProps: UseSliderProps) {
+       ref: domRef,
+       "data-orientation": state.orientation,
+       "data-slot": "base",
++      "data-hover": isHovered,
+       className: slots.base({class: baseStyles}),
+       ...mergeProps(
+         groupProps,
++        hoverProps,
+         filterDOMProps(otherProps, {
+           enabled: shouldFilterDOMProps,
+         }),
+@@ -247,6 +290,10 @@ export function useSlider(originalProps: UseSliderProps) {
+       state,
+       trackRef,
+       orientation,
++      isVertical,
++      renderOutput,
++      tooltipProps,
++      showTooltip,
+       className: slots.thumb({class: classNames?.thumb}),
+       ...props,
+     } as SliderThumbProps;
+@@ -300,6 +347,7 @@ export function useSlider(originalProps: UseSliderProps) {
+     marks,
+     startContent,
+     endContent,
++    renderThumb,
+     getStepProps,
+     getBaseProps,
+     getTrackWrapperProps,\n- packages/components/slider/stories/slider.stories.tsx (modified, 32 changes)\n  Patch: @@ -28,6 +28,11 @@ export default {
+         type: "boolean",
+       },
+     },
++    showTooltip: {
++      control: {
++        type: "boolean",
++      },
++    },
+     step: {
+       control: {
+         type: "number",
+@@ -113,6 +118,7 @@ export const Range = {
+   render: Template,
+   args: {
+     ...defaultProps,
++    showTooltip: true,
+     label: "Select a range",
+     formatOptions: {style: "currency", currency: "USD"},
+     defaultValue: [20, 80],
+@@ -156,6 +162,32 @@ export const WithMarks = {
+   },
+ };
+ 
++export const WithTooltip = {
++  render: Template,
++  args: {
++    ...defaultProps,
++    label: "Select a value",
++    showTooltip: true,
++    renderOutput: (value) => `${value}%`,
++    step: 10,
++    marks: [
++      {
++        value: 20,
++        label: "20%",
++      },
++      {
++        value: 50,
++        label: "50%",
++      },
++      {
++        value: 80,
++        label: "80%",
++      },
++    ],
++    defaultValue: 20,
++  },
++};
++
+ export const VerticalOrientation = {
+   render: VerticalTemplate,
+   args: {\n- packages/components/tooltip/src/tooltip.tsx (modified, 53 changes)\n  Patch: @@ -1,11 +1,11 @@
+-import {useMemo} from "react";
+ import {forwardRef} from "@nextui-org/system";
+ import {OverlayContainer} from "@react-aria/overlays";
+ import {AnimatePresence, motion} from "framer-motion";
+ import {TRANSITION_VARIANTS} from "@nextui-org/framer-transitions";
+ import {warn} from "@nextui-org/shared-utils";
+ import {Children, cloneElement} from "react";
+ import {getTransformOrigins} from "@nextui-org/aria-utils";
++import {mergeProps} from "@react-aria/utils";
+ 
+ import {UseTooltipProps, useTooltip} from "./use-tooltip";
+ 
+@@ -21,19 +21,16 @@ const Tooltip = forwardRef<"div", TooltipProps>((props, ref) => {
+     placement,
+     disableAnimation,
+     motionProps,
+-    showArrow,
+     getTriggerProps,
+     getTooltipProps,
+-    getArrowProps,
++    getTooltipContentProps,
+   } = useTooltip({
+     ...props,
+     ref,
+   });
+ 
+   let trigger: React.ReactElement;
+ 
+-  const {className, ...otherTooltipProps} = getTooltipProps();
+-
+   try {
+     /**
+      * Ensure tooltip has only one child node
+@@ -48,40 +45,32 @@ const Tooltip = forwardRef<"div", TooltipProps>((props, ref) => {
+     warn("Tooltip must have only one child node. Please, check your code.");
+   }
+ 
+-  const arrowContent = useMemo(() => {
+-    if (!showArrow) return null;
+-
+-    return <span {...getArrowProps()} />;
+-  }, [showArrow, getArrowProps]);
++  const {ref: tooltipRef, id, style, ...otherTooltipProps} = getTooltipProps();
+ 
+-  const animatedContent = useMemo(() => {
+-    return (
+-      <div {...otherTooltipProps}>
+-        <motion.div
+-          animate="enter"
+-          exit="exit"
+-          initial="exit"
+-          style={{
+-            ...getTransformOrigins(placement),
+-          }}
+-          variants={TRANSITION_VARIANTS.scaleSpring}
+-          {...motionProps}
+-        >
+-          <Component className={className}>{content}</Component>
+-          {arrowContent}
+-        </motion.div>
+-      </div>
+-    );
+-  }, [otherTooltipProps, className, placement, motionProps, Component, content, arrowContent]);
++  const animatedContent = (
++    <div ref={tooltipRef} id={id} style={style}>
++      <motion.div
++        animate="enter"
++        exit="exit"
++        initial="exit"
++        variants={TRANSITION_VARIANTS.scaleSpring}
++        {...mergeProps(motionProps, otherTooltipProps)}
++        style={{
++          ...getTransformOrigins(placement),
++        }}
++      >
++        <Component {...getTooltipContentProps()}>{content}</Component>
++      </motion.div>
++    </div>
++  );
+ 
+   return (
+     <>
+       {trigger}
+       {disableAnimation && isOpen ? (
+         <OverlayContainer portalContainer={portalContainer}>
+-          <div {...otherTooltipProps}>
+-            <Component className={className}>{content}</Component>
+-            {arrowContent}
++          <div ref={tooltipRef} id={id} style={style} {...otherTooltipProps}>
++            <Component {...getTooltipContentProps()}>{content}</Component>
+           </div>
+         </OverlayContainer>
+       ) : (\n- packages/components/tooltip/src/use-tooltip.ts (modified, 39 changes)\n  Patch: @@ -65,11 +65,12 @@ interface Props extends Omit<HTMLNextUIProps, "content"> {
+    * ```ts
+    * <Tooltip classNames={{
+    *    base:"base-classes",
++   *    content: "content-classes",
+    *    arrow: "arrow-classes",
+    * }} />
+    * ```
+    */
+-  classNames?: SlotsToClasses<"base" | "arrow">;
++  classNames?: SlotsToClasses<"base" | "arrow" | "content">;
+ }
+ 
+ export type UseTooltipProps = Props &
+@@ -158,11 +159,7 @@ export function useTooltip(originalProps: UseTooltipProps) {
+     state,
+   );
+ 
+-  const {
+-    overlayProps: positionProps,
+-    arrowProps,
+-    placement,
+-  } = useOverlayPosition({
++  const {overlayProps: positionProps, placement} = useOverlayPosition({
+     isOpen: isOpen,
+     targetRef: triggerRef,
+     placement: toReactAriaPlacement(placementProp),
+@@ -215,33 +212,43 @@ export function useTooltip(originalProps: UseTooltipProps) {
+   const getTooltipProps = useCallback<PropGetter>(
+     () => ({
+       ref: overlayRef,
++      "data-slot": "base",
+       "data-open": dataAttr(isOpen),
++      "data-arrow": dataAttr(showArrow),
+       "data-disabled": dataAttr(isDisabled),
+       "data-placement": getArrowPlacement(placement, placementProp),
+-      className: slots.base({class: baseStyles}),
+       ...mergeProps(tooltipProps, overlayProps, otherProps),
+       style: mergeProps(positionProps.style, otherProps.style, props.style),
++      className: slots.base({class: baseStyles}),
+       id: tooltipId,
+     }),
+     [
+-      baseStyles,
++      slots,
++      isOpen,
++      showArrow,
++      isDisabled,
++      placement,
++      placementProp,
++      tooltipProps,
+       overlayProps,
+       otherProps,
+-      overlayRef,
+       positionProps,
+-      slots,
++      props,
++      baseStyles,
+       tooltipId,
+-      tooltipProps,
+     ],
+   );
+ 
+-  const getArrowProps = useCallback<PropGetter>(
++  const getTooltipContentProps = useCallback<PropGetter>(
+     () => ({
+-      className: slots.arrow({class: classNames?.arrow}),
++      "data-slot": "content",
++      "data-open": dataAttr(isOpen),
++      "data-arrow": dataAttr(showArrow),
++      "data-disabled": dataAttr(isDisabled),
+       "data-placement": getArrowPlacement(placement, placementProp),
+-      ...arrowProps,
++      className: slots.content({class: classNames?.content}),
+     }),
+-    [arrowProps, placement, placementProp, slots, classNames],
++    [slots, isOpen, showArrow, isDisabled, placement, placementProp, classNames],
+   );
+ 
+   return {
+@@ -256,9 +263,9 @@ export function useTooltip(originalProps: UseTooltipProps) {
+     disableAnimation: originalProps?.disableAnimation,
+     isDisabled,
+     motionProps,
++    getTooltipContentProps,
+     getTriggerProps,
+     getTooltipProps,
+-    getArrowProps,
+   };
+ }
+ \n- packages/components/tooltip/stories/tooltip.stories.tsx (modified, 13 changes)\n  Patch: @@ -33,6 +33,11 @@ export default {
+       },
+       options: ["none", "sm", "md", "lg", "full"],
+     },
++    showArrow: {
++      control: {
++        type: "boolean",
++      },
++    },
+     placement: {
+       control: {
+         type: "select",
+@@ -250,15 +255,9 @@ const ControlledTemplate = (args: TooltipProps) => {
+     setIsOpen((prev) => !prev);
+   };
+ 
+-  const handleOpenChange = (open: boolean) => {
+-    if (!open && isOpen) {
+-      setIsOpen(false);
+-    }
+-  };
+-
+   return (
+     <div className="flex flex-col items-center gap-2">
+-      <Tooltip {...args} content="Tooltip 1" isOpen={isOpen} onOpenChange={handleOpenChange}>
++      <Tooltip {...args} content="Tooltip 1" isOpen={isOpen}>
+         <Button onPress={handleOpen}>{isOpen ? "Close" : "Open"}</Button>
+       </Tooltip>
+     </div>\n- packages/core/theme/src/components/popover.ts (modified, 151 changes)\n  Patch: @@ -5,127 +5,140 @@ import {colorVariants, dataFocusVisibleClasses} from "../utils";
+ /**
+  * Popover wrapper **Tailwind Variants** component
+  *
+- * const { base, trigger, backdrop, arrow } = popover({...})
++ * const { base, content, trigger, backdrop } = popover({...})
+  *
+  * @example
+  * <div>
+  *  <div className={backdrop()} />
+  *  <button className={trigger()} aria-expanded="true/false">your trigger</button>
+  *  <div className={base()}>
+- *    // popover content
+- *    <span className={arrow()} data-placement="top/bottom/left/right..." /> // arrow
++ *    <div className={content()} />
++ *      // popover content
++ *    </div>
+  *  </div>
+  * </div>
+  */
+ const popover = tv({
+   slots: {
+     base: [
+-      "z-10",
++      "z-0",
+       "relative",
++      "bg-transparent",
++      // arrow
++      "before:content-['']",
++      "before:hidden",
++      "before:z-[-1]",
++      "before:absolute",
++      "before:rotate-45",
++      "before:w-2.5",
++      "before:h-2.5",
++      "before:rounded-sm",
++      // visibility
++      "data-[arrow=true]:before:block",
++      // top
++      "data-[placement=top]:before:-bottom-1",
++      "data-[placement=top]:before:left-1/2",
++      "data-[placement=top]:before:-translate-x-1/2",
++      "data-[placement=top-start]:before:-bottom-1",
++      "data-[placement=top-start]:before:left-3",
++      "data-[placement=top-end]:before:-bottom-1",
++      "data-[placement=top-end]:before:right-3",
++      // bottom
++      "data-[placement=bottom]:before:-top-1",
++      "data-[placement=bottom]:before:left-1/2",
++      "data-[placement=bottom]:before:-translate-x-1/2",
++      "data-[placement=bottom-start]:before:-top-1",
++      "data-[placement=bottom-start]:before:left-3",
++      "data-[placement=bottom-end]:before:-top-1",
++      "data-[placement=bottom-end]:before:right-3",
++      // left
++      "data-[placement=left]:before:-right-[calc(theme(spacing.1)_-_1px)]",
++      "data-[placement=left]:before:top-1/2",
++      "data-[placement=left]:before:-translate-y-1/2",
++      "data-[placement=left-start]:before:-right-[calc(theme(spacing.1)_-_1.5px)]",
++      "data-[placement=left-start]:before:top-1/4",
++      "data-[placement=left-end]:before:-right-[calc(theme(spacing.1)_-_1.5px)]",
++      "data-[placement=left-end]:before:bottom-1/4",
++      // right
++      "data-[placement=right]:before:-left-[calc(theme(spacing.1)_-_1px)]",
++      "data-[placement=right]:before:top-1/2",
++      "data-[placement=right]:before:-translate-y-1/2",
++      "data-[placement=right-start]:before:-left-[calc(theme(spacing.1)_-_1.5px)]",
++      "data-[placement=right-start]:before:top-1/4",
++      "data-[placement=right-end]:before:-left-[calc(theme(spacing.1)_-_1.5px)]",
++      "data-[placement=right-end]:before:bottom-1/4",
++      // focus ring
++      ...dataFocusVisibleClasses,
++    ],
++    content: [
++      "z-10",
++      "px-4",
++      "py-1",
+       "inline-flex",
+       "flex-col",
+       "items-center",
+       "justify-center",
+       "box-border",
+       "subpixel-antialiased",
+-      "px-4",
+-      "py-1",
+       "outline-none",
+       "box-border",
+-      // focus ring
+-      ...dataFocusVisibleClasses,
+     ],
+     trigger: ["z-10"],
+     backdrop: ["hidden"],
+-    arrow: [
+-      "z-[-1]",
+-      "absolute",
+-      "rotate-45",
+-      "w-2.5",
+-      "h-2.5",
+-      "rounded-sm",
+-      // top
+-      "data-[placement=top]:-bottom-1",
+-      "data-[placement=top]:-translate-x-1/2",
+-      "data-[placement=top-start]:-bottom-1",
+-      "data-[placement=top-start]:-translate-x-8",
+-      "data-[placement=top-end]:-bottom-1",
+-      "data-[placement=top-end]:translate-x-6",
+-      // bottom
+-      "data-[placement=bottom]:-top-1",
+-      "data-[placement=bottom]:-translate-x-1/2",
+-      "data-[placement=bottom-start]:-top-1",
+-      "data-[placement=bottom-start]:-translate-x-8",
+-      "data-[placement=bottom-end]:-top-1",
+-      "data-[placement=bottom-end]:translate-x-6",
+-      // left
+-      "data-[placement=left]:-right-1",
+-      "data-[placement=left]:-translate-y-1/2",
+-      "data-[placement=left-start]:-right-1",
+-      "data-[placement=left-start]:-translate-y-3",
+-      "data-[placement=left-end]:-right-1",
+-      "data-[placement=left-end]:translate-y-0.5",
+-      // right
+-      "data-[placement=right]:-left-1",
+-      "data-[placement=right]:-translate-y-1/2",
+-      "data-[placement=right-start]:-left-1",
+-      "data-[placement=right-start]:-translate-y-3",
+-      "data-[placement=right-end]:-left-1",
+-      "data-[placement=right-end]:translate-y-0.5",
+-    ],
++    arrow: [],
+   },
+   variants: {
+     size: {
+-      sm: {base: "text-tiny"},
+-      md: {base: "text-small"},
+-      lg: {base: "text-medium"},
++      sm: {content: "text-tiny"},
++      md: {content: "text-small"},
++      lg: {content: "text-medium"},
+     },
+     color: {
+       default: {
+-        base: "bg-content1",
+-        arrow: "shadow-small bg-content1",
++        base: "before:bg-content1 before:shadow-small",
++        content: "bg-content1",
+       },
+       foreground: {
+-        base: colorVariants.solid.foreground,
+-        arrow: "bg-foreground",
++        base: "before:bg-foreground",
++        content: colorVariants.solid.foreground,
+       },
+       primary: {
+-        base: colorVariants.solid.primary,
+-        arrow: "bg-primary",
++        base: "before:bg-primary",
++        content: colorVariants.solid.primary,
+       },
+       secondary: {
+-        base: colorVariants.solid.secondary,
+-        arrow: "bg-secondary",
++        base: "before:bg-secondary",
++        content: colorVariants.solid.secondary,
+       },
+       success: {
+-        base: colorVariants.solid.success,
+-        arrow: "bg-success",
++        base: "before:bg-success",
++        content: colorVariants.solid.success,
+       },
+       warning: {
+-        base: colorVariants.solid.warning,
+-        arrow: "bg-warning",
++        base: "before:bg-warning",
++        content: colorVariants.solid.warning,
+       },
+       danger: {
+-        base: colorVariants.solid.danger,
+-        arrow: "bg-danger",
++        base: "before:bg-danger",
++        content: colorVariants.solid.danger,
+       },
+     },
+     radius: {
+-      none: {base: "rounded-none"},
+-      sm: {base: "rounded-small"},
+-      md: {base: "rounded-medium"},
+-      lg: {base: "rounded-large"},
+-      full: {base: "rounded-full"},
++      none: {content: "rounded-none"},
++      sm: {content: "rounded-small"},
++      md: {content: "rounded-medium"},
++      lg: {content: "rounded-large"},
++      full: {content: "rounded-full"},
+     },
+     shadow: {
+       sm: {
+-        base: "shadow-small",
++        content: "shadow-small",
+       },
+       md: {
+-        base: "shadow-medium",
++        content: "shadow-medium",
+       },
+       lg: {
+-        base: "shadow-large",
++        content: "shadow-large",
+       },
+     },
+     backdrop: {\n- packages/core/theme/src/components/select.ts (modified, 2 changes)\n  Patch: @@ -17,7 +17,7 @@ const select = tv({
+     value: "font-normal w-full text-left opacity-60 group-data-[filled=true]:opacity-100",
+     listboxWrapper: "scroll-py-6 max-h-64 w-full",
+     listbox: "",
+-    popover: "w-full p-1 overflow-hidden",
++    popoverContent: "w-full p-1 overflow-hidden",
+     helperWrapper: "flex relative flex-col gap-1.5 pt-1 px-1",
+     description: "text-tiny text-foreground-400",
+     errorMessage: "text-tiny text-danger",\n- pnpm-lock.yaml (modified, 3 changes)\n  Patch: @@ -1917,6 +1917,9 @@ importers:
+       '@nextui-org/theme':
+         specifier: workspace:*
+         version: link:../../core/theme
++      '@nextui-org/tooltip':
++        specifier: workspace:*
++        version: link:../tooltip
+       '@react-aria/focus':
+         specifier: ^3.14.1
+         version: 3.14.1(react@18.2.0)\n

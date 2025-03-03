@@ -1,0 +1,332 @@
+Pull Request Number: 3902
+Title: fix(modal): onOpenChange triggering when modal opens
+Base Branch: canary
+Head Branch: fix/modalOpen_OnChangeNotTriggered
+Author: sanuj21
+URL: https://github.com/nextui-org/nextui/pull/3902
+State: OPEN
+Created At: 2024-10-16T12:20:38Z
+Merged At: None
+Participants: sanuj21, chirokas, ryo-manba, weeix, wingkwong
+
+Description:
+Closes #3887 
+📝 Description
+The changes in this PR makes the onOpenChange fire when modal opens, making it consistent.
+
+⛳️ Current behavior (updates)
+
+onOpenChange fires only when modal closes and not when it opens.
+onOpenChange in useDisclosure decides which action to fire on isOpen state.
+
+
+🚀 New behavior
+
+onOpenChange fires on both states consistently.
+Added useEffect, so when isOpen changes to true, onOpenChange is called.
+onOpenChange in useDisclosure decides which action to fire on basis of isOpen argument, used to do isOpen state earlier.
+
+
+💣 Is this a breaking change (Yes/No):
+No
+
+📝 Additional Information
+
+onClose function in modal is basically coming from useOuterlayTriggerState, but onOpen is just a normal function. Thats why we need that useEffect to fire onOpenChange explicitly.
+Make sure to pass the isOpen variable when you are wrapping onOpenChange inside a function. Like this onOpenChange(isOpen).
+
+
+Summary by CodeRabbit
+
+
+New Features
+
+Improved modal functionality with enhanced responsiveness to state changes.
+Updated disclosure logic to better handle open and close actions based on boolean parameters.
+
+
+
+Bug Fixes
+
+Fixed issues related to side effects not triggering correctly when the modal opens.
+
+
+
+Tests
+
+Added a new test case to verify the onOpenChange callback is triggered when the "Open" button is clicked.
+
+Commits:
+- fix: onOpenChange triggering when modal opens\n- chore: summarized changeset\n- test: when modal opens onOpenChange is called\n- test: corrected the modal testcase\n
+
+Labels:
+📞 Status: Internal Discussion
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: d20d2f24e45c9a065c91bc5820b743ee22cf1dda
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                       | Type  |
+| -------------------------- | ----- |
+| @nextui-org/modal          | Patch |
+| @nextui-org/use-disclosure | Patch |
+| @nextui-org/react          | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/sanuj21/nextui/new/fix/modalOpen_OnChangeNotTriggered?filename=.changeset/odd-pets-live.md&value=---%0A%22%40nextui-org%2Fmodal%22%3A%20patch%0A%22%40nextui-org%2Fuse-disclosure%22%3A%20patch%0A---%0A%0Afix%3A%20onOpenChange%20triggering%20when%20modal%20opens%0A)
+
+\n- vercel: @sanuj21 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%224741a8470c36ca051605c97745561ced159c96cc%22%7D%2C%22id%22%3A%22QmRq3kcSy799BSz8n9AoKHSxNLNr6Z4KJsJUy7YcQmRkhg%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3902%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The changes in this pull request involve modifications to the `useModal` and `useDisclosure` hooks. A `useEffect` hook has been added in `useModal` to trigger the `onOpenChange` callback when the modal's `isOpen` state changes to `true`. Additionally, the `onOpenChange` function in `useDisclosure` has been updated to accept a boolean parameter, enhancing its responsiveness to state changes.
+
+## Changes
+
+| File Path                                       | Change Summary                                                                                          |
+|-------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| .changeset/early-ghosts-fix.md                 | Added a `useEffect` in `useModal` to trigger `onOpenChange` on modal open; updated `onOpenChange` in `useDisclosure` to accept a boolean. |
+| packages/hooks/use-disclosure/src/index.ts      | Updated `onOpenChange` function signature to accept a boolean parameter.                                |
+| packages/components/modal/__tests__/modal.test.tsx | Added a test case to verify that `onOpenChange` is triggered when the "Open" button is clicked.        |
+
+## Assessment against linked issues
+
+| Objective                                               | Addressed | Explanation                                   |
+|--------------------------------------------------------|-----------|-----------------------------------------------|
+| `onOpenChange` should fire when the modal opens (#3887) | ✅        |                                               |
+| Ensure side effects are executed when modal opens (#3887) | ✅        |                                               |
+
+## Possibly related PRs
+- **#3495**: This PR addresses a related issue with the modal component, specifically fixing the double scrollbar problem when using `scrollBehavior="inside"`, which is relevant to the changes made in the `useModal` hook in the main PR.
+- **#3691**: This PR focuses on adjusting the modal's position when the keyboard appears, which relates to the overall functionality and responsiveness of the modal, similar to the enhancements made in the `useDisclosure` hook in the main PR.
+
+## Suggested reviewers
+- wingkwong
+- jrgarciadev
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+.changeset/early-ghosts-fix.md:
+
+"""
+## AI-generated summary of changes
+
+The changes introduce modifications to the `useModal` and `useDisclosure` hooks. In `useModal`, a `useEffect` hook has been added to trigger the `onOpenChange` callback whenever the `onOpen` state transitions to `true`, ensuring that any side effects associated with opening the modal are executed at the appropriate time. Additionally, in `useDisclosure`, the `onOpenChange` callback function has been updated to accept a boolean parameter `isOpen`, allowing it to directly determine whether to call `onOpen` or `onClose` based on the passed argument. The dependencies of the `onOpenChange` callback have also been updated to include `isOpen`, `onOpen`, and `onClose`, enhancing the responsiveness of the disclosure logic to external changes in the `onOpen` value.
+
+Modifications to the test suite for the `Modal` component include a new import statement for the `Button` component from the `@nextui-org/button` package and the `useDisclosure` hook from the `src` module. A new test case is added to verify that the `onOpenChange` callback is triggered when the "Open" button is clicked. This test involves rendering a `ModalWrapper` component that includes a `Button` to open the modal and checks if the `onOpenChange` function is called upon clicking the button. The existing tests remain unchanged, continuing to focus on rendering, ref forwarding, aria attributes, and the behavior of the modal when the close button is clicked or the escape key is pressed.
+
+## Alterations to the declarations of exported or public entities
+
+- Dependency added: `"@nextui-org/modal": patch`
+- Dependency added: `"@nextui-org/use-disclosure": patch`
+- Function signature updated: `const onOpenChange = useCallback(() => {...})` in function `useDisclosure` in `packages/hooks/use-disclosure/src/index.ts` → `const onOpenChange = useCallback((isOpen: boolean) => {...})` in function `useDisclosure` in `packages/hooks/use-disclosure/src/index.ts`
+- Method added: `test("should fire 'onOpenChange' callback when open button is clicked and modal opens", async () => {...})` in the test suite for `Modal` in `packages/components/modal/__tests__/modal.test.tsx`
+- Component added: `const ModalWrapper = ({onOpenChange}) => {...}` in the test suite for `Modal` in `packages/components/modal/__tests__/modal.test.tsx`
+"""
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix: onOpenChange triggering when modal opens" was created by user sanuj21 and is identified as PR number 3902 on GitHub. The primary objective of this PR is to modify the behavior of the `onOpenChange` event in the NextUI modal component. Previously, this event only triggered when the modal closed, which led to inconsistencies, especially for users wanting to perform actions when the modal opened.
+
+The changes introduced in this PR ensure that `onOpenChange` fires consistently for both opening and closing actions of the modal. This is achieved by adding a `useEffect` hook that calls `onOpenChange` when the `isOpen` state changes to true. The PR also clarifies that the `onOpenChange` function in the `useDisclosure` hook determines the action based on the `isOpen` argument. The author notes that this change does not introduce any breaking changes for existing users of NextUI.
+
+The PR addresses the issue raised in linked issue #3887, where users reported that the `onOpenChange` event only fired on modal closure, impacting functionalities like lazy loading content when the modal opens.
+
+## Objectives from Linked Issues
+
+The linked issue #3887 describes a bug in the NextUI modal component where the `onOpenChange` event only triggers when the modal closes, not when it opens. The user reported that they were attempting to lazy load a video within the modal and pause it upon closing, but the event's limited firing behavior hindered this functionality.
+
+The issue was illustrated with a code example demonstrating that the `onOpenChange` event did not fire when the modal was opened, which was contrary to the user's expectations. The user anticipated that the event would trigger after the modal was fully opened and all content was loaded. The objective of the linked issue is to resolve this inconsistency, allowing developers to utilize the `onOpenChange` event for both opening and closing actions of the modal, thereby enhancing the component's usability and functionality.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 4741a8470c36ca051605c97745561ced159c96cc -->
+<!-- dbf2c49018a9d9a80a42d749397927c4ed109783 -->
+<!-- d20d2f24e45c9a065c91bc5820b743ee22cf1dda -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- chirokas: - The current commit causes `onOpenChange` to trigger twice when in an uncontrolled state.
+- Should we treat [this](https://github.com/nextui-org/nextui/issues/3887) as incorrect usage rather than a bug? 🤔 See [here](https://stackblitz.com/edit/vitejs-vite-sufbgs?file=src%2FApp.tsx).
+\n- ryo-manba: @chirokas 
+Thanks for the comment! In basic use cases, it seems that the approach in your example would work well. However, I think this behavior of the `Modal` is also a bug.  I'll be sure to pay attention to `onChange` in `useDisclosure` when making fixes. Thank you!\n
+
+Files Changed:
+- .changeset/early-ghosts-fix.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/modal": patch
++"@nextui-org/use-disclosure": patch
++---
++
++Added useEffect in useModal to fire onOpenChange and in useDisclosure, onOpenChange now accepts onOpen as parameter(#3887)\n- packages/components/modal/__tests__/modal.test.tsx (modified, 35 changes)\n  Patch: @@ -1,8 +1,9 @@
+ import * as React from "react";
+ import {render, fireEvent} from "@testing-library/react";
+ import userEvent from "@testing-library/user-event";
++import {Button} from "@nextui-org/button";
+ 
+-import {Modal, ModalContent, ModalBody, ModalHeader, ModalFooter} from "../src";
++import {Modal, ModalContent, ModalBody, ModalHeader, ModalFooter, useDisclosure} from "../src";
+ 
+ // e.g. console.error Warning: Function components cannot be given refs.
+ // Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
+@@ -91,6 +92,38 @@ describe("Modal", () => {
+     expect(onClose).toHaveBeenCalled();
+   });
+ 
++  const ModalWrapper = ({onOpenChange}) => {
++    const {isOpen, onOpen} = useDisclosure();
++
++    return (
++      <>
++        <Button aria-label="Open" onClick={onOpen}>
++          Open Modal
++        </Button>
++        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
++          <ModalContent>
++            <ModalHeader>Modal header</ModalHeader>
++            <ModalBody>Modal body</ModalBody>
++            <ModalFooter>Modal footer</ModalFooter>
++          </ModalContent>
++        </Modal>
++      </>
++    );
++  };
++
++  test("should fire 'onOpenChange' callback when open button is clicked and modal opens", async () => {
++    const onOpenChange = jest.fn();
++
++    const {getByLabelText} = render(<ModalWrapper onOpenChange={onOpenChange} />);
++
++    const openButton = getByLabelText("Open");
++    const user = userEvent.setup();
++
++    await user.click(openButton);
++
++    expect(onOpenChange).toHaveBeenCalled();
++  });
++
+   it("should hide the modal when pressing the escape key", () => {
+     const onClose = jest.fn();
+ \n- packages/components/modal/src/use-modal.ts (modified, 8 changes)\n  Patch: @@ -3,7 +3,7 @@ import type {HTMLMotionProps} from "framer-motion";
+ 
+ import {AriaModalOverlayProps} from "@react-aria/overlays";
+ import {useAriaModalOverlay} from "@nextui-org/use-aria-modal-overlay";
+-import {useCallback, useId, useRef, useState, useMemo, ReactNode} from "react";
++import {useCallback, useId, useRef, useState, useMemo, ReactNode, useEffect} from "react";
+ import {modal} from "@nextui-org/theme";
+ import {
+   HTMLNextUIProps,
+@@ -129,6 +129,12 @@ export function useModal(originalProps: UseModalProps) {
+     },
+   });
+ 
++  useEffect(() => {
++    if (isOpen) {
++      onOpenChange?.(isOpen);
++    }
++  }, [isOpen]);
++
+   const {modalProps, underlayProps} = useAriaModalOverlay(
+     {
+       isDismissable,\n- packages/hooks/use-disclosure/src/index.ts (modified, 11 changes)\n  Patch: @@ -44,11 +44,14 @@ export function useDisclosure(props: UseDisclosureProps = {}) {
+     onOpenPropCallbackRef?.();
+   }, [isControlled, onOpenPropCallbackRef]);
+ 
+-  const onOpenChange = useCallback(() => {
+-    const action = isOpen ? onClose : onOpen;
++  const onOpenChange = useCallback(
++    (isOpen: boolean) => {
++      const action = isOpen ? onOpen : onClose;
+ 
+-    action();
+-  }, [isOpen, onOpen, onClose]);
++      action();
++    },
++    [isOpen, onOpen, onClose],
++  );
+ 
+   return {
+     isOpen: !!isOpen,\n

@@ -1,0 +1,64 @@
+Pull Request Number: 1001
+Title: fix: fix input cursor postposition #975
+Base Branch: main
+Head Branch: fix/input-cursor
+Author: Yukiniro
+URL: https://github.com/nextui-org/nextui/pull/1001
+State: MERGED
+Created At: 2023-01-11T15:18:37Z
+Merged At: 2023-05-25T02:12:19Z
+Participants: Yukiniro, dburger, nnavascues, yaseenmustapha, tabuckner, jrgarciadev
+
+Description:
+Closes #975
+📝 Description
+
+When value in the props has changed, selfValue will update in useEffect. But target.value is not equal selfValue and it will reset the value of input element causing the cursor postposition. So, controlledValue should use value instead of selfValue when isControlledComponent is true.
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- fix: fix input cursor postposition #975\n
+
+Labels:
+
+
+Comments:
+- vercel: @Yukiniro is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%220a47bf42bcdff6ca8d526712492c17fc3fdf9972%22%7D%2C%22id%22%3A%22QmX2JdD3vCihN5QsjiwcT3tKK8U4df25WRWbNexKYuS8rU%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1001%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #iKmkQe4T0MYabF6z6bvq8ayQtHdOy/HtzKGB2zeG24M=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLXl1a2luaXJvLWZpeC1pbnB1dC1jdXJzb3ItbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn0sImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2svNU03N3M3d2pGYVRBQ2NuZ3liajNqSFRQSEhlRCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLXl1a2luaXJvLWZpeC1pbnB1dC1jdXJzb3ItbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIn1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/5M77s7wjFaTACcngybj3jHTPHHeD)) | [Visit Preview](https://nextui-storybook-git-fork-yukiniro-fix-input-cursor-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-yukiniro-fix-input-cursor-nextui-org.vercel.app) | Jan 11, 2023 at 3:20PM (UTC) |
+
+\n- Yukiniro: Closes #1064 \n- dburger: Hey there. This is a pretty irritating bug and this fix has been sitting
+there for month than 2 months. If this is the right fix can we get an
+approval for merging this? Thanks.\n- nnavascues: Hey, it would be great if this PR can be merged; this error is pretty annoying!
+Thanks\n- yaseenmustapha: @jrgarciadev could you take a look at this?\n- tabuckner: I'm also curious about if this is still merge-able. I'm running in to this bug and would love to avoid having to fix it in my implementation.\n
+
+Files Changed:
+- packages/react/src/input/input.tsx (modified, 4 changes)\n  Patch: @@ -172,9 +172,7 @@ const Input = React.forwardRef<FormElement, InputProps>(
+ 
+     const isTextarea = useMemo(() => Component === "textarea", [Component]);
+ 
+-    const controlledValue = isControlledComponent
+-      ? {value: selfValue}
+-      : {defaultValue: initialValue};
++    const controlledValue = isControlledComponent ? {value} : {defaultValue: initialValue};
+ 
+     const inputProps = {
+       ...props,\n
