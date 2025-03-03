@@ -1,0 +1,130 @@
+Pull Request Number: 1406
+Title: fix(input): don't always use controlled mode
+Base Branch: main
+Head Branch: fix/controlled-mode-always-enabled
+Author: remorses
+URL: https://github.com/nextui-org/nextui/pull/1406
+State: MERGED
+Created At: 2023-08-15T14:58:12Z
+Merged At: 2023-08-15T17:24:55Z
+Participants: remorses, jrgarciadev, jguddas
+
+Description:
+closes: #1395
+📝 Description
+Passing "" to react-aria forces the input to be in controlled mode, where the ref value is ignored
+⛳️ Current behavior (updates)
+Input does not use ref value
+🚀 New behavior
+Input can be initialized with ref.current.value = 'xx', which is what react-hook-form does
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Commits:
+- fix(input): don't always use controlled mode\n- fix(input): don't pass value to useTextField\n- test(input): added test for mutating input via ref\n- chore(input): changelog\n
+
+Labels:
+
+
+Comments:
+- vercel: @remorses is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228c1ec0740ad3b97c9c74ea2de526e34e906819eb%22%7D%2C%22id%22%3A%22Qmee33Lhro3FAc3v97eLjyYTFTvEub8vpN5UddhDF7bHb6%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1406%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: dbc0e6708ddf04fb24b49a233239914555fcb680
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/input | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/remorses/nextui/new/fix/controlled-mode-always-enabled?filename=.changeset/orange-coats-join.md&value=---%0A%22%40nextui-org%2Finput%22%3A%20patch%0A---%0A%0Afix(input)%3A%20don't%20always%20use%20controlled%20mode%0A)
+
+\n- vercel: [vc]: #ur9jUwOze8VNQ/t2j1a2Eshvw0bSN2PPIgkZt1tgjbc=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvN3ZVbWdGUHpFcFRta3BMek1mcHpHSHE0VkpXaSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXJlbW9yc2VzLWZpeC1jb24tZGQyNTVlLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXJlbW9yc2VzLWZpeC1jb24tZGQyNTVlLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/7vUmgFPzEpTmkpLzMfpzGHq4VJWi)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-remorses-fix-con-dd255e-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-remorses-fix-con-dd255e-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 15, 2023 5:29pm |
+
+\n- jrgarciadev: Hey @remorses please check this issue https://github.com/nextui-org/nextui/issues/1332, it was part of the solution https://github.com/nextui-org/nextui/pull/1369/files, but yes, we need to find a better one to fix both\n- remorses: With this PR that issue should be solved too, the problem that caused the warning in the console was these lines:
+```ts
+props.value ?? undefined,
+props.defaultValue ?? undefined,
+```
+If you pass undefined `react-aria` will think that the input is not controlled, if instead you pass `""` it will switch the input to controlled mode, and not print the warning, 
+
+it's the responsibility of the user to pass `""`, not Nextui, always passing `""` will cause much worse bugs like #1395\n- jrgarciadev: > With this PR that issue should be solved too, the problem that caused the warning in the console was these lines:
+> 
+> ```ts
+> props.value ?? undefined,
+> props.defaultValue ?? undefined,
+> ```
+> 
+> If you pass undefined `react-aria` will think that the input is not controlled, if instead you pass `""` it will switch the input to controlled mode, and not print the warning,
+> 
+> it's the responsibility of the user to pass `""`, not Nextui, always passing `""` will cause much worse bugs like #1395
+
+The "Warning: A component is changing an uncontrolled input to be controlled. ..." is still there with your changes, I figured out that I was passing the value to the `useTextField` hook but that's not necessary, the solution is to remove the `value: inputValue` prop, could you update the PR please?, and test your use case\n- remorses: Ok i removed the value from `useTextField` and my use case still works
+
+I added a test for my use case, it does the check 2 times because previously the value was being reset asynchronously, it would first go to "value" and then ""
+
+\n- jrgarciadev: Ok thanks!, please add the changeset as well to be able to publish the changes \n
+
+Files Changed:
+- .changeset/eleven-pans-juggle.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/input": patch
++---
++
++Input is no more always controlled, supporting mutations via ref\n- packages/components/input/__tests__/input.test.tsx (modified, 23 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import * as React from "react";
+-import {render} from "@testing-library/react";
++import {render, waitFor} from "@testing-library/react";
+ 
+ import {Input} from "../src";
+ 
+@@ -99,4 +99,25 @@ describe("Input", () => {
+ 
+     expect(onFocus).toHaveBeenCalledTimes(1);
+   });
++  it("ref should update the value", async () => {
++    const ref = React.createRef<HTMLInputElement>();
++
++    const {container} = render(<Input ref={ref} type="text" />);
++
++    if (!ref.current) {
++      throw new Error("ref is null");
++    }
++    const value = "value";
++
++    ref.current!.value = value;
++
++    container.querySelector("input")?.focus();
++
++    await waitFor(() => {
++      return expect(ref.current?.value)?.toBe(value);
++    });
++    await waitFor(() => {
++      return expect(ref.current?.value)?.toBe(value);
++    });
++  });
+ });\n- packages/components/input/src/use-input.ts (modified, 1 changes)\n  Patch: @@ -125,7 +125,6 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+         originalProps?.placeholder,
+       ),
+       inputElementType: isMultiline ? "textarea" : "input",
+-      value: inputValue ?? "",
+       onChange: setInputValue,
+     },
+     domRef,\n

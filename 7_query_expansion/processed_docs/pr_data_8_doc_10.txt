@@ -1,0 +1,263 @@
+Pull Request Number: 3376
+Title: fix: remove autoCapitalize to prevent Firefox warning
+Base Branch: canary
+Head Branch: fix/auto-capitalize-error
+Author: ryo-manba
+URL: https://github.com/nextui-org/nextui/pull/3376
+State: MERGED
+Created At: 2024-06-30T14:08:25Z
+Merged At: 2024-07-06T07:17:08Z
+Participants: ryo-manba, jrgarciadev, wingkwong
+
+Description:
+Closes #3297
+📝 Description
+This bug occurs because react-aria sets autoCapitalize: 'off' on each segment of the DateInput , but in Firefox, it defaults to 'none'. This discrepancy between server side rendering and client-side rendering  results in a warning. In Safari and Chrome, it remains 'off', so no warning is displayed. Since the DateInput has input-mode=numeric, which already shows a numeric keyboard, the autoCapitalize setting is unnecessary.
+⛳️ Current behavior (updates)
+A warning is displayed when rendering a component with DateInput in Firefox.
+
+🚀 New behavior
+No warning is displayed.
+
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Removed autoCapitalize property from the DateInputSegment component to resolve compatibility issues in Firefox.
+
+Commits:
+- fix: remove autoCapitalize to prevent firefox warning\n- chore: add changeset\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #z+M2dHx7UWPuXv4KO/S46vcWobr5ajgvu895KwY9eZ8=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZpeC1hdXRvLWNhcGl0YWxpemUtZXJyb3ItbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn0sImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1kb2NzLXYyL0dVVFJ4eFMzQ3FQa1laczhWQWd6S1h0aDFYWXUiLCJwcmV2aWV3VXJsIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZpeC1hdXRvLWNhcGl0YWxpemUtZXJyb3ItbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIn0seyJuYW1lIjoibmV4dHVpLXN0b3J5Ym9vay12MiIsInJvb3REaXJlY3RvcnkiOiJwYWNrYWdlcy9zdG9yeWJvb2siLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZml4LWF1dG8tY2FwaXRhbGl6ZS1lcnJvci1uZXh0dWktb3JnLnZlcmNlbC5hcHAifSwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi84THpoVmtMSlhhckN6cWJKQlRyQ3VKYlIzRDFjIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC1hdXRvLWNhcGl0YWxpemUtZXJyb3ItbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIn1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/GUTRxxS3CqPkYZs8VAgzKXth1XYu)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-auto-capitalize-error-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-auto-capitalize-error-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jul 3, 2024 0:37am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/8LzhVkLJXarCzqbJBTrCuJbR3D1c)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-auto-capitalize-error-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-auto-capitalize-error-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jul 3, 2024 0:37am |
+
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 508086dc6127c0cbce793105b64624a528dba201
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                    | Type  |
+| ----------------------- | ----- |
+| @nextui-org/date-input  | Patch |
+| @nextui-org/date-picker | Patch |
+| @nextui-org/react       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/auto-capitalize-error?filename=.changeset/short-beans-build.md&value=---%0A%22%40nextui-org%2Fdate-input%22%3A%20patch%0A---%0A%0Afix%3A%20remove%20autoCapitalize%20to%20prevent%20Firefox%20warning%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+A patch was introduced to the `@nextui-org/date-input` package, specifically modifying the `DateInputSegment` component. The primary change was the removal of the `autoCapitalize` prop due to compatibility issues with Firefox, resolving a bug where server and client prop values differed.
+
+## Changes
+
+| File Path                                                                              | Change Summary               |
+|----------------------------------------------------------------------------------------|------------------------------|
+| `packages/components/date-input/src/date-input-segment.tsx`                            | Removed `autoCapitalize` prop to resolve server-client mismatch issues in Firefox and updated export declaration. |
+| `.changeset/chatty-pianos-run.md`                                                      | Documented the patch introducing the removal of `autoCapitalize` to prevent warnings |
+
+## Sequence Diagram(s)
+
+N/A
+
+## Assessment against linked issues
+
+| Objective                                                                        | Addressed | Explanation                                                                 |
+|----------------------------------------------------------------------------------|-----------|-----------------------------------------------------------------------------|
+| Resolve Prop `autoCapitalize` did not match issue in Firefox (#3297)            | ✅        |                                                                             |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+packages/components/date-input/src/date-input-segment.tsx: ## Short Summary
+
+The change in functionality involves removing the `autoCapitalize` prop from `segmentProps` in the `DateInputSegment` component due to issues in Firefox.
+
+## Alterations to the declarations of exported or public entities
+
+- `export const DateInputSegment: React.FC<DateInputSegmentProps>` in `packages/components/date-input/src/date-input-segment.tsx`
+
+# New changesets
+
+.changeset/chatty-pianos-run.md: ## Summary
+
+The file `chatty-pianos-run.md` introduces a patch for `@nextui-org/date-input` that removes `autoCapitalize` to prevent warnings.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+**Title:** fix: remove autoCapitalize to prevent Firefox warning  
+**User:** ryo-manba  
+**Number:** 3376  
+
+**Description:**  
+This pull request addresses a bug where a warning is displayed when rendering a component with `DateInput` in Firefox. The issue arises because `react-aria` sets `autoCapitalize: 'off'` on each segment of the `DateInput`, while Firefox defaults it to 'none'. This discrepancy between server-side rendering and client-side rendering results in a warning. The `autoCapitalize` setting is deemed unnecessary since the `DateInput` already uses `input-mode=numeric`, which ensures a numeric keyboard is shown. The fix involves removing the `autoCapitalize` attribute to prevent the warning.
+
+## Objectives from Linked Issues
+
+**Issue #3297:**  
+The linked issue reports a bug with the `DateRangePicker` component in a Next.js project, where a console error appears in Firefox: "Prop `autoCapitalize` did not match. Server: 'none' Client: 'off'". The issue is reproducible by creating a Next.js app, importing the `DateRangePicker` component, and observing the browser console in Firefox. The expected behavior is for no error to be displayed. The issue affects the NextUI versions `@nextui-org/date-picker: ^2.1.2` and `@nextui-org/react: ^2.4.2`.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated summary of generated summaries
+
+The `DateInputSegment` component in the `@nextui-org/date-input` package has been updated to remove the `autoCapitalize` prop from `segmentProps`. This change addresses issues encountered in Firefox and aims to prevent related warnings.
+
+### Alterations to the declarations of exported or public entities
+
+#### Before Changes
+```typescript
+export const DateInputSegment: React.FC<DateInputSegmentProps>
+```
+
+#### After Changes
+```typescript
+export const DateInputSegment: React.FC<DateInputSegmentProps>
+```
+
+(Note: The signature remains the same, but the internal logic related to `segmentProps` has been modified to exclude the `autoCapitalize` prop.)
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- announcements_start -->
+
+> [!TIP]
+> <details>
+> <summary>AI model upgrade</summary>
+> 
+> ## `gpt-4o` model for reviews and chat is now live
+> 
+> OpenAI claims that this model is better at understanding and generating code than the previous models. Please join our [Discord Community](https://discord.com/invite/GsXnASn26c) to provide any feedback or to report any issues.
+> 
+> </details>
+
+<!-- announcements_end --><!-- commit_ids_reviewed_start -->
+
+<!-- 100b267beca56443444a08e5819e4c2873e90c30 -->
+<!-- 508086dc6127c0cbce793105b64624a528dba201 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- ryo-manba: In linear, it was v2.5.0, but v2.4.3 certainly looks good. I will leave the rest to Junior to decide.\n
+
+Files Changed:
+- .changeset/chatty-pianos-run.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/date-input": patch
++---
++
++Removed autoCapitalize to prevent warnings (#3297)\n- packages/components/date-input/src/date-input-segment.tsx (modified, 5 changes)\n  Patch: @@ -25,6 +25,11 @@ export const DateInputSegment: React.FC<DateInputSegmentProps> = ({
+ 
+   let {segmentProps} = useDateSegment(segment, state, ref);
+ 
++  // @ts-expect-error autoCapitalize is not a valid prop
++  // Removing autoCapitalize as it causes bugs in Firefox.
++  // See: https://github.com/adobe/react-spectrum/issues/5599
++  delete segmentProps.autoCapitalize;
++
+   return (
+     <div
+       {...mergeProps(segmentProps, otherProps)}\n

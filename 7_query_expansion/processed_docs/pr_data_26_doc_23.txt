@@ -1,0 +1,116 @@
+Pull Request Number: 736
+Title: fix: solve circular dependencies between Textarea and Input (fix #707)
+Base Branch: main
+Head Branch: fix/textareaCicularDepents
+Author: sun0day
+URL: https://github.com/nextui-org/nextui/pull/736
+State: CLOSED
+Created At: 2022-09-05T05:08:07Z
+Merged At: None
+Participants: sun0day, jrgarciadev
+
+Description:
+Closes #707
+📝 Description
+There are circular dependencies between Textarea and Input. See
+
+  
+    
+      nextui/packages/react/src/input/index.ts
+    
+    
+         Line 1
+      in
+      1becf04
+    
+  
+  
+    
+
+        
+          
+           import Textarea from "../textarea"; 
+        
+    
+  
+
+
+
+  
+    
+      nextui/packages/react/src/textarea/textarea.tsx
+    
+    
+         Line 4
+      in
+      1becf04
+    
+  
+  
+    
+
+        
+          
+           import Input from "../input"; 
+        
+    
+  
+
+
+⛳️ Current behavior (updates)
+Error happens when import Textarea in create-react-app because of  circular dependencies.
+
+🚀 New behavior
+No error happens when import Textarea.
+💣 Is this a breaking change (Yes/No):
+
+No
+📝 Additional Information
+
+Commits:
+- fix: solve circular dependencies between Textarea and Input (fix #707)\n
+
+Labels:
+
+
+Comments:
+- vercel: @sun0day is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22b2d7b1a2c7b9db5168ed4b61a932c7543da336d5%22%7D%2C%22id%22%3A%22QmYp4JhWyEhdYSjyEXnVGRb43KeMNVNipQ2kpbrhthzSg7%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A736%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/hYP2L23MNAEYGAHYmQnAmsYCPVDg)) | [Visit Preview](https://nextui-storybook-git-fork-sun0day-fix-textare-54d0f7-nextui-org.vercel.app) | Sep 5, 2022 at 5:08AM (UTC) |
+
+\n- jrgarciadev: Hey @sun0day thank you 🙌🏼, I think we can remove the `Input.Texarea` assign, here's the needed changes:
+
+`nextui/packages/react/src/input/index.ts`
+```diff
+- import Textarea from "../textarea";
+...
+- Input.Textarea = Textarea;
+```
+
+`nextui/packages/react/src/input/input.tsx`
+```diff
+- import Textarea from "../textarea";
+...
+-  Textarea: typeof Textarea;
+```
+
+\n- jrgarciadev: Hey @sun0day I really appreciate your contribution, however, I sent another PR to fix this, thank you! 🙏🏻\n- sun0day: > Hey @sun0day I really appreciate your contribution, however, I sent another PR to fix this, thank you! 🙏🏻
+
+I'm ok with that. You are welcome\n
+
+Files Changed:
+- packages/react/src/textarea/textarea.tsx (modified, 2 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import React, {useRef, useImperativeHandle, useLayoutEffect} from "react";
+ 
+ import withDefaults from "../utils/with-defaults";
+-import Input from "../input";
++import Input from "../input/input";
+ import useResize from "../use-resize";
+ import {warn} from "../utils/console";
+ import {Props as InputProps} from "../input/input-props";\n

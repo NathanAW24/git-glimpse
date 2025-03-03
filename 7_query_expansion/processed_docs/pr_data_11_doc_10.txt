@@ -1,0 +1,446 @@
+Pull Request Number: 2953
+Title: fix(component): update type definition to prevent primitive values as items
+Base Branch: canary
+Head Branch: fix/eng-2938
+Author: ryo-manba
+URL: https://github.com/nextui-org/nextui/pull/2953
+State: MERGED
+Created At: 2024-05-05T07:48:23Z
+Merged At: 2024-05-19T19:42:29Z
+Participants: ryo-manba, jrgarciadev, wingkwong
+
+Description:
+Closes #2938
+📝 Description
+Fixed the type definitions of the component.
+The same definition is applied in DatePicker:
+
+  
+    
+      nextui/packages/components/date-picker/src/date-picker.tsx
+    
+    
+        Lines 83 to 86
+      in
+      633f9d2
+    
+  
+  
+    
+
+        
+          
+           export type DatePickerProps<T extends DateValue = DateValue> = Props<T> & {ref?: Ref<HTMLElement>}; 
+        
+
+        
+          
+            
+        
+
+        
+          
+           // forwardRef doesn't support generic parameters, so cast the result to the correct type 
+        
+
+        
+          
+           export default forwardRef(DatePicker) as <T extends DateValue>( 
+        
+    
+  
+
+
+⛳️ Current behavior (updates)
+Arrays that contain non-object values can be passed to items, which leads to a runtime error.
+🚀 New behavior
+Passing arrays with non-object values to items will now raise a linting warning.
+
+💣 Is this a breaking change (Yes/No):
+
+No.
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Fixed type definitions across various UI components to ensure only object types are used as generic parameters, enhancing type safety and compatibility.
+
+
+
+Refactor
+
+Updated type constraints in components like Autocomplete, Dropdown Menu, Listbox, Menu, Select, and Tabs to enforce stricter type checking.
+
+Commits:
+- fix: update type definition to prevent primitive values as items\n- fix: typecheck\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 003fba070a0bce806a3567ffe3fd7a20dab245ec
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 8 packages</summary>
+
+  | Name                             | Type  |
+| -------------------------------- | ----- |
+| @nextui-org/autocomplete         | Patch |
+| @nextui-org/dropdown             | Patch |
+| @nextui-org/listbox              | Patch |
+| @nextui-org/menu                 | Patch |
+| @nextui-org/select               | Patch |
+| @nextui-org/tabs                 | Patch |
+| @nextui-org/use-aria-multiselect | Patch |
+| @nextui-org/react                | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/eng-2938?filename=.changeset/quiet-ants-fold.md&value=---%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A%22%40nextui-org%2Flistbox%22%3A%20patch%0A%22%40nextui-org%2Fmenu%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Ftabs%22%3A%20patch%0A---%0A%0Afix(component)%3A%20update%20type%20definition%20to%20prevent%20primitive%20values%20as%20items%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The recent updates across various UI components focus on refining type definitions to ensure that the generic type `T` extends `object`, thereby preventing the use of primitive values like strings or numbers as items. This change enhances type safety and compatibility across components such as Autocomplete, Dropdown Menu, Listbox, Menu, Select, and Tabs.
+
+## Changes
+
+| File Path                                         | Change Summary                                                                                                                                                   |
+|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `.../autocomplete/src/autocomplete.tsx`           | Updated `AutocompleteProps` to ensure `T extends object`.                                                                                                        |
+| `.../dropdown/src/dropdown-menu.tsx`              | Updated generic type constraints in `Props` and `DropdownMenuProps`.                                                                                             |
+| `.../dropdown/src/use-dropdown.ts`                | Modified type parameter in `getMenuProps` function.                                                                                                              |
+| `.../listbox/src/listbox.tsx`                     | Updated `ListboxProps` to specify `T extends object`.                                                                                                            |
+| `.../menu/src/menu.tsx`                           | Updated `MenuProps` to ensure `T extends object`.                                                                                                                |
+| `.../select/src/select.tsx`                       | Refined `SelectProps` to specify `T must extend object`.                                                                                                          |
+| `.../tabs/src/tabs.tsx`                           | Updated `TabsProps` to ensure stricter type checking by requiring `T extends object`.                                                                            |
+
+## Assessment against linked issues
+
+| Objective                                                                                   | Addressed | Explanation                                                                                                 |
+|---------------------------------------------------------------------------------------------|-----------|-------------------------------------------------------------------------------------------------------------|
+| Prevent usage of scalar values as `items` in Select (#2938)                                 | ✅        |                                                                                                             |
+| Ensure type safety by refining generic type constraints across UI components (#2938)        | ✅        |                                                                                                             |
+| Address error with scalar values in Select by refining type constraints (#2938)             | ✅        |                                                                                                             |
+| Update type definitions to enhance compatibility and prevent type-related errors (#2938)    | ✅        |                                                                                                             |
+| Ensure the `items` parameter in Select strictly accepts objects, not scalars (#2938)        | ✅        |                                                                                                             |
+
+The changes successfully address the issue of scalar values causing errors in the Select component by updating type definitions to enforce that all `items` must be objects, thereby aligning with the objectives outlined in the linked issue.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+```
+.changeset/great-singers-repeat.md: ## Summary
+The file `great-singers-repeat.md` introduces updates related to fixing the type definition to prevent primitive values as items in various Next UI components.
+
+---
+
+packages/components/autocomplete/src/autocomplete.tsx: ## Short Summary
+
+In the `autocomplete.tsx` file, the `AutocompleteProps` type declaration has been updated to specify that the generic type `T` must extend `object` rather than defaulting to `object`. This change affects the type definition for `AutocompleteProps` and the function signature for the `forwardRef` call.
+
+## Alterations to the declarations of exported or public entities
+
+- `export type AutocompleteProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};` in `packages/components/autocomplete/src/autocomplete.tsx` 
+  → 
+  `export default forwardRef(Autocomplete) as <T extends object>(`
+
+---
+
+packages/components/dropdown/src/dropdown-menu.tsx: ## Short Summary
+
+The change in functionality involves updating the generic type constraint in the `Props` interface and `DropdownMenuProps` type declaration in `dropdown-menu.tsx`. The generic type constraint is refined to `T extends object = object` in both declarations.
+
+## Alterations to the declarations of exported or public entities
+
+- `interface Props<T extends object = object> extends Omit<MenuProps<T>, "menuProps"> {}` in `dropdown-menu.tsx` 
+  → 
+  `export type DropdownMenuProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};` in `dropdown-menu.tsx`
+
+- `export default forwardRef(DropdownMenu) as <T extends object>(`
+
+---
+
+packages/components/dropdown/src/use-dropdown.ts: ## Summary
+
+In the file `use-dropdown.ts` within the `dropdown` component, the `getMenuProps` function's type parameter has been updated to `T extends object` from just `<T>`.
+
+---
+
+packages/components/listbox/src/listbox.tsx: ## Summary
+
+In the `listbox.tsx` file, the change involves updating the `ListboxProps` type declaration to specify that the generic type `T` must extend `object`. This change ensures type safety and compatibility with the specified constraints.
+
+## Alterations to the declarations of exported or public entities
+
+- `export type ListboxProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};` in `packages/components/listbox/src/listbox.tsx` 
+  → 
+  `export default forwardRef(Listbox) as <T extends object>(props: ListboxProps<T>) => ReactElement;` in `packages/components/listbox/src/listbox.tsx`
+
+---
+
+packages/components/menu/src/menu.tsx: ## Short Summary
+
+In the `menu.tsx` file, the `MenuProps` type declaration has been updated to specify that the generic type `T` must extend `object`. The function signature for the default export has also been adjusted to reflect this change.
+
+## Alterations to the Declarations of Exported or Public Entities
+
+- `export type MenuProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};` in `packages/components/menu/src/menu.tsx` → `export default forwardRef(Menu) as <T extends object>(props: MenuProps<T>) => ReactElement;` in `packages/components/menu/src/menu.tsx`
+
+---
+
+packages/components/select/src/select.tsx: ## Short Summary
+
+The change in functionality involves refining the type declaration for `SelectProps` in `select.tsx` to specify that the generic type `T` must extend `object` rather than defaulting to `object`. This modification ensures stricter type checking for the `SelectProps` type.
+
+## Alterations to the Declarations of Exported or Public Entities
+
+- `export type SelectProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};` in `select.tsx`
+  →
+  `export default forwardRef(Select) as <T extends object>(props: SelectProps<T>) => ReactElement;` in `select.tsx`
+
+---
+
+packages/components/tabs/src/tabs.tsx: ## Short Summary
+The change in functionality involves refining the type declaration for `TabsProps` in `tabs.tsx` to specify that the generic type `T` must extend `object` rather than defaulting to `object`. This change ensures stricter type checking for the `TabsProps` type.
+
+## Alterations to the Declarations of Exported or Public Entities
+- `export type TabsProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};` in `tabs.tsx`
+  →
+  `export default forwardRef(Tabs) as <T extends object>(props: TabsProps<T>) => ReactElement;` in `tabs.tsx`
+```
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives (User Provided Facts)
+
+The pull request (PR) number 2953 titled "fix(component): update type definition to prevent primitive values as items" aims to address a bug identified in issue #2938 of the NextUI repository. The bug involves a runtime error when scalar values (e.g., strings or numbers) are passed as items to the `Select` component. The error is due to the component's inability to handle non-object values in the `items` array, which leads to an invalid operation in a WeakMap.
+
+To resolve this, the PR updates the type definitions across various components to ensure that only arrays containing objects are acceptable for the `items` parameter. This change aligns with the type definitions used in other components like `DatePicker`, enhancing consistency across the library. The PR includes a screenshot demonstrating the linting warning that will now appear if non-object values are passed to `items`, helping developers catch this issue during development rather than at runtime.
+
+The PR is categorized as a bugfix and does not introduce breaking changes for existing users of NextUI. It is focused solely on type definition updates without adding new dependencies or significantly altering the existing codebase beyond the necessary type checks.
+
+### AI-Generated Summary of Generated Summaries
+
+The pull request introduces a series of type definition updates across multiple components within the NextUI library to enforce stricter type constraints. Specifically, the generic type `T` in various component props is now required to extend `object`, ensuring that only arrays of objects can be passed to the `items` parameter. This change is applied to the `Autocomplete`, `DropdownMenu`, `Listbox`, `Menu`, `Select`, and `Tabs` components.
+
+Each component's props type (`AutocompleteProps`, `DropdownMenuProps`, `ListboxProps`, `MenuProps`, `SelectProps`, `TabsProps`) has been modified to include this constraint. Additionally, the function signatures for the default exports of these components have been adjusted to reflect the updated type constraints, ensuring that the components are correctly typed when used with forward references.
+
+These updates collectively enhance type safety across the library, preventing runtime errors associated with incorrect item types and aligning with best practices for TypeScript usage in component libraries. The changes are backward compatible and do not require existing users to modify their implementations unless they are passing incorrect types, in which case the new type definitions will prompt them to make necessary adjustments.
+
+### Alterations to the Declarations of Exported or Public Entities
+
+**Autocomplete Component:**
+- Before: `export type AutocompleteProps<T = object> = Props<T> & {ref?: Ref<HTMLElement>};`
+- After: `export default forwardRef(Autocomplete) as <T extends object>(props: AutocompleteProps<T>) => ReactElement;`
+
+**Dropdown Menu Component:**
+- Before: `interface Props<T = object> extends Omit<MenuProps<T>, "menuProps"> {}`
+- After: `export type DropdownMenuProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};`
+- Additional: `export default forwardRef(DropdownMenu) as <T extends object>(props: DropdownMenuProps<T>) => ReactElement;`
+
+**Listbox Component:**
+- Before: `export type ListboxProps<T = object> = Props<T> & {ref?: Ref<HTMLElement>};`
+- After: `export default forwardRef(Listbox) as <T extends object>(props: ListboxProps<T>) => ReactElement;`
+
+**Menu Component:**
+- Before: `export type MenuProps<T = object> = Props<T> & {ref?: Ref<HTMLElement>};`
+- After: `export default forwardRef(Menu) as <T extends object>(props: MenuProps<T>) => ReactElement;`
+
+**Select Component:**
+- Before: `export type SelectProps<T = object> = Props<T> & {ref?: Ref<HTMLElement>};`
+- After: `export default forwardRef(Select) as <T extends object>(props: SelectProps<T>) => ReactElement;`
+
+**Tabs Component:**
+- Before: `export type TabsProps<T = object> = Props<T> & {ref?: Ref<HTMLElement>};`
+- After: `export default forwardRef(Tabs) as <T extends object>(props: TabsProps<T>) => ReactElement;`
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 003fba070a0bce806a3567ffe3fd7a20dab245ec -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #NdNEKy6Kth9zrw+bVWyWxv0+HRBqSqpAXIRltufR2Vs=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9HSDZkYmRnY0pYUXhSNm1VV1M2YTExZFdBckZOIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTI5MzgtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTI5MzgtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi9DZnR4OGtjS0ZFdlhEd3Q4TUxkZ2hTekpNVVpTIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC1lbmctMjkzOC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZml4LWVuZy0yOTM4LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/GH6dbdgcJXQxR6mUWS6a11dWArFN)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-2938-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-2938-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 5, 2024 8:10am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/Cftx8kcKFEvXDwt8MLdghSzJMUZS)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-2938-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-2938-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 5, 2024 8:10am |
+
+
+\n
+
+Files Changed:
+- .changeset/great-singers-repeat.md (added, 11 changes)\n  Patch: @@ -0,0 +1,11 @@
++---
++"@nextui-org/autocomplete": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/listbox": patch
++"@nextui-org/menu": patch
++"@nextui-org/select": patch
++"@nextui-org/tabs": patch
++"@nextui-org/use-aria-multiselect": patch
++---
++
++Fix update type definition to prevent primitive values as items (#2938)\n- packages/components/autocomplete/src/autocomplete.tsx (modified, 4 changes)\n  Patch: @@ -58,10 +58,10 @@ function Autocomplete<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLI
+   );
+ }
+ 
+-export type AutocompleteProps<T = object> = Props<T> & {ref?: Ref<HTMLElement>};
++export type AutocompleteProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};
+ 
+ // forwardRef doesn't support generic parameters, so cast the result to the correct type
+-export default forwardRef(Autocomplete) as <T = object>(
++export default forwardRef(Autocomplete) as <T extends object>(
+   props: AutocompleteProps<T>,
+ ) => ReactElement;
+ \n- packages/components/dropdown/src/dropdown-menu.tsx (modified, 6 changes)\n  Patch: @@ -6,7 +6,7 @@ import {ForwardedRef, ReactElement, Ref} from "react";
+ 
+ import {useDropdownContext} from "./dropdown-context";
+ 
+-interface Props<T> extends Omit<MenuProps<T>, "menuProps"> {}
++interface Props<T extends object = object> extends Omit<MenuProps<T>, "menuProps"> {}
+ 
+ function DropdownMenu<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLUListElement>) {
+   const {getMenuProps} = useDropdownContext();
+@@ -20,10 +20,10 @@ function DropdownMenu<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLU
+   );
+ }
+ 
+-export type DropdownMenuProps<T = object> = Props<T> & {ref?: Ref<HTMLElement>};
++export type DropdownMenuProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};
+ 
+ // forwardRef doesn't support generic parameters, so cast the result to the correct type
+-export default forwardRef(DropdownMenu) as <T = object>(
++export default forwardRef(DropdownMenu) as <T extends object>(
+   props: DropdownMenuProps<T>,
+ ) => ReactElement;
+ \n- packages/components/dropdown/src/use-dropdown.ts (modified, 2 changes)\n  Patch: @@ -132,7 +132,7 @@ export function useDropdown(props: UseDropdownProps) {
+     };
+   };
+ 
+-  const getMenuProps = <T>(
++  const getMenuProps = <T extends object>(
+     props?: Partial<MenuProps<T>>,
+     _ref: Ref<any> | null | undefined = null,
+   ) => {\n- packages/components/listbox/src/listbox.tsx (modified, 4 changes)\n  Patch: @@ -76,7 +76,7 @@ function Listbox<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLUListE
+ 
+ Listbox.displayName = "NextUI.Listbox";
+ 
+-export type ListboxProps<T = object> = Props<T> & {ref?: Ref<HTMLElement>};
++export type ListboxProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};
+ 
+ // forwardRef doesn't support generic parameters, so cast the result to the correct type
+-export default forwardRef(Listbox) as <T = object>(props: ListboxProps<T>) => ReactElement;
++export default forwardRef(Listbox) as <T extends object>(props: ListboxProps<T>) => ReactElement;\n- packages/components/menu/src/menu.tsx (modified, 4 changes)\n  Patch: @@ -71,9 +71,9 @@ function Menu<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLUListElem
+   );
+ }
+ 
+-export type MenuProps<T = object> = Props<T> & {ref?: Ref<HTMLElement>};
++export type MenuProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};
+ 
+ // forwardRef doesn't support generic parameters, so cast the result to the correct type
+-export default forwardRef(Menu) as <T = object>(props: MenuProps<T>) => ReactElement;
++export default forwardRef(Menu) as <T extends object>(props: MenuProps<T>) => ReactElement;
+ 
+ Menu.displayName = "NextUI.Menu";\n- packages/components/select/src/select.tsx (modified, 4 changes)\n  Patch: @@ -144,9 +144,9 @@ function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectE
+   );
+ }
+ 
+-export type SelectProps<T = object> = Props<T> & {ref?: Ref<HTMLElement>};
++export type SelectProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};
+ 
+ // forwardRef doesn't support generic parameters, so cast the result to the correct type
+-export default forwardRef(Select) as <T = object>(props: SelectProps<T>) => ReactElement;
++export default forwardRef(Select) as <T extends object>(props: SelectProps<T>) => ReactElement;
+ 
+ Select.displayName = "NextUI.Select";\n- packages/components/tabs/src/tabs.tsx (modified, 4 changes)\n  Patch: @@ -57,9 +57,9 @@ function Tabs<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLDivElemen
+   return renderTabs;
+ }
+ 
+-export type TabsProps<T = object> = Props<T> & {ref?: Ref<HTMLElement>};
++export type TabsProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};
+ 
+ // forwardRef doesn't support generic parameters, so cast the result to the correct type
+-export default forwardRef(Tabs) as <T = object>(props: TabsProps<T>) => ReactElement;
++export default forwardRef(Tabs) as <T extends object>(props: TabsProps<T>) => ReactElement;
+ 
+ Tabs.displayName = "NextUI.Tabs";\n

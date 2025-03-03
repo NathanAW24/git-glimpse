@@ -1,0 +1,72 @@
+Pull Request Number: 542
+Title: Need Import React in Example
+Base Branch: main
+Head Branch: patch-1
+Author: MrScrappy
+URL: https://github.com/nextui-org/nextui/pull/542
+State: MERGED
+Created At: 2022-06-12T06:09:44Z
+Merged At: 2022-06-18T14:51:32Z
+Participants: MrScrappy, jrgarciadev, RodrigoRVSN
+
+Description:
+When trying to replicate the example it will fail since in the example the React instance is being requested in:
+     return {
+                ...initialProps,
+                styles: React.Children.toArray([initialProps.styles])
+     //                  ^
+};
+  }
+and this at no time matters
+
+Closes # 
+📝 Description
+
+When trying to replicate the example it will fail since in the example the React instance is being requested and this at no time matters
+
+⛳️ Current behavior (updates)
+
+I add the line import React from 'react'
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+At the time of following the steps and copying and pasting the example, this error will stop appearing
+
+💣 Is this a breaking change (Yes/No):  No
+
+📝 Additional Information
+It's something simple that users can add, but for novice programmers it can be a headache to understand what is going wrong, and the idea that the learning curve or creating your project can be as simple as copy and paste.
+
+Commits:
+- Need Import React in Example
+
+When trying to replicate the example it will fail since in the example the React instance is being requested in:
+
+```jsx
+     return {
+                ...initialProps,
+                styles: React.Children.toArray([initialProps.styles])
+     //                  ^
+};
+  }
+```
+
+and this at no time matters\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Hey @MrScrappy , thanks 🙌🏻 \n
+
+Files Changed:
+- apps/docs/content/docs/guide/nextui-plus-nextjs.mdx (modified, 1 changes)\n  Patch: @@ -50,6 +50,7 @@ to create file `_document.js`.
+ Then we add the following code to the file:
+ 
+ ```jsx
++import React from 'react';
+ import Document, { Html, Head, Main, NextScript } from 'next/document';
+ import { CssBaseline } from '@nextui-org/react';
+ \n

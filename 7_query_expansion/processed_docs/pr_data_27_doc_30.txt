@@ -1,0 +1,102 @@
+Pull Request Number: 547
+Title: fix #538
+Base Branch: main
+Head Branch: main
+Author: JigolKa
+URL: https://github.com/nextui-org/nextui/pull/547
+State: CLOSED
+Created At: 2022-06-16T12:14:19Z
+Merged At: None
+Participants: JigolKa, cyanxiao, jrgarciadev
+
+Description:
+📝 Description
+fixed the bug where trigger="click" doesn't work on the tooltip component
+⛳️ Current behavior (updates)
+Tooltip trigger="click" works fine
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- fix #538
+
+Fixed tooltip bug (trigger="click")\n
+
+Labels:
+
+
+Comments:
+- cyanxiao: Nice work @JigolKa. I have thought of this but didn't come up with a solution to nested interaction.\n- jrgarciadev: Hey @JigolKa I appreciate your contribution, however, our idea to fix this is to migrate the current tooltip impl to [react aria tooltip](https://react-spectrum.adobe.com/react-aria/useTooltipTrigger.html ) this is going to be carried out by one of the core members since it requires changes on the current tooltip APIs\n
+
+Files Changed:
+- packages/react/src/tooltip/tooltip.tsx (modified, 64 changes)\n  Patch: @@ -139,27 +139,49 @@ const Tooltip: React.FC<React.PropsWithChildren<TooltipProps>> = ({
+     changeVisible(customVisible);
+   }, [customVisible]);
+ 
+-  return (
+-    <StyledTooltipTrigger
+-      ref={ref}
+-      role="button"
+-      tabIndex={-1}
+-      className={`nextui-tooltip-button ${className}`}
+-      onClick={clickEventHandler}
+-      onKeyUp={() => mouseEventHandler(true)}
+-      onMouseEnter={() => mouseEventHandler(true)}
+-      onMouseLeave={() => mouseEventHandler(false)}
+-      onFocus={() => mouseEventHandler(true)}
+-      onBlur={() => mouseEventHandler(false)}
+-      css={{
+-        ...(triggerCss as any)
+-      }}
+-      {...props}
+-    >
+-      {children}
+-      {content && <TooltipContent {...contentProps}>{content}</TooltipContent>}
+-    </StyledTooltipTrigger>
+-  );
++  if (trigger === 'click') {
++    return (
++      <StyledTooltipTrigger
++        ref={ref}
++        role="button"
++        tabIndex={-1}
++        className={`nextui-tooltip-button ${className}`}
++        onFocus={clickEventHandler}
++        css={{
++          ...(triggerCss as any)
++        }}
++        {...props}
++      >
++        {children}
++        {content && (
++          <TooltipContent {...contentProps}>{content}</TooltipContent>
++        )}
++      </StyledTooltipTrigger>
++    );
++  } else {
++    return (
++      <StyledTooltipTrigger
++        ref={ref}
++        role="button"
++        tabIndex={-1}
++        className={`nextui-tooltip-button ${className}`}
++        onKeyUp={() => mouseEventHandler(true)}
++        onMouseEnter={() => mouseEventHandler(true)}
++        onMouseLeave={() => mouseEventHandler(false)}
++        onFocus={() => mouseEventHandler(true)}
++        onBlur={() => mouseEventHandler(false)}
++        css={{
++          ...(triggerCss as any)
++        }}
++        {...props}
++      >
++        {children}
++        {content && (
++          <TooltipContent {...contentProps}>{content}</TooltipContent>
++        )}
++      </StyledTooltipTrigger>
++    );
++  }
+ };
+ 
+ Tooltip.toString = () => '.nextui-tooltip';\n

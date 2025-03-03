@@ -1,0 +1,1855 @@
+Pull Request Number: 1777
+Title: v2.2.0 🕹️
+Base Branch: main
+Head Branch: v2.2.0
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/1777
+State: MERGED
+Created At: 2023-10-16T18:33:13Z
+Merged At: 2023-11-03T14:05:16Z
+Participants: jrgarciadev, qWici, sayem314, toxsick, jguddas, mauriciabad
+
+Description:
+Closes #172
+Closes #886
+Closes #888
+Closes #1685
+Closes #694
+Closes #1780
+Closes #1737
+Closes #1650
+Closes #1804
+Closes #1822
+Closes #760
+Closes #1670
+Closes #1654
+Closes #1534
+Closes #1397
+Closes #1650
+Closes #1691
+Closes #1837
+Closes #1761
+📝 Description
+
+New component added: Slider #1686
+New component added: Breadcrumbs #1794
+New component: Single selection Autocomplete based on useComboBox and useComboBoxState
+React Aria Client side router support added, this allows components such as Link, Tabs, Listbox and Dropdown items to be rendered as links and navigate using the proper navigation function for each framework. #1764
+RTL Support added to Accordion. #1725
+RTL Support added to Avatar & AvatarGroup components #1727
+RTL Support added to ButtonGroup #1726
+Spacing units changed from px to rem this improves the mobile components' sizes #1688
+Tabs/Tab new prop added shouldSelectOnPressUp which is enabled by default true, this prop defines whether the tabs selection should occur on press up instead of press down. #1688
+Chip font size changed to text-tiny on sm size. #1688
+Button with only the icon now displays only the spinner during loading #1800
+Popover open state fixed for blur/opaque backdrops #1812
+The ScrollShadow API has been enhanced with new features. Users can now manage the visibility of shadows using the visibility and onVisibilityChange props.  #1819
+emptyContent property added to Listbox/Menu/Dropdown
+topContent and bottomContent properties added to Listbox/Menu/Dropdown
+baseRef added to Input, it allows to control the input's parent element ref
+tailwind-variants upgraded to v0.1.18 it includes slot variants control
+Custom usePress implemented to fix the corner press issue, opened a PR and Issue on react-aria project adobe/react-spectrum#5291
+Custom usePress implemented across all NextUI interactive components
+Input & Select label animations & position improved
+react-aria packages and framer-motion upgraded
+Generic items typescript support added to Menu and DropdownMenu #1691
+Popover animation improved
+Package dependencies were modified to not include the ones already installed through either global or individual installations. This reduces the individual package bundle size. #1848
+Input outline removed on focus-visible
+ButtonGroup radius prop fixed
+isActive prop added to NavbarMenuItem
+Pagination custom-items example fixed, key prop added
+Collection Items are now supported by extendVariants function #1761
+Transition added to menu/listbox items
+disableAutosize prop added to Textarea, this disable the auto resize.
+Textarea styles fixed
+Textarea height style animated
+hoverOpacity key added to themes object in the plugin
+Button hover effect added
+
+💣 Is this a breaking change (Yes/No): Yes
+
+📝 Additional Information
+Breaking Changes
+
+Popover API changed to improve the arrow implementation, arrow is now a pseudo-element, which allows the popover to also move the arrow altogether, this change impacts the Popover, Tooltip and Select implementations.
+
+Popover changes:
+  <Popover
+      showArrow
+      backdrop="opaque"
+      placement="right"
+      classNames={{
+-        base: "py-3 px-4 border border-default-200 bg-gradient-to-br from-white to-default-300 dark:from-default-100 dark:to-default-50",
+-        arrow: "bg-default-200",
++        base: [
++          // the "before" pseudo element is now the popover' arrow
++          "before:bg-default-200"
++        ],
++        content: [ // now we need to use the "content" slot to actually modify the popover' content styles
++          "py-3 px-4 border border-default-200",
++          "bg-gradient-to-br from-white to-default-300",
++          "dark:from-default-100 dark:to-default-50",
+        ],
+      }}
+    >
+      <PopoverTrigger>
+        <Button>Open Popover</Button>
+      </PopoverTrigger>
+      <PopoverContent>
+        {(titleProps) => (
+          <div className="px-1 py-2">
+            <h3 className="text-small font-bold" {...titleProps}>
+              Popover Content
+            </h3>
+            <div className="text-tiny">This is the popover content</div>
+          </div>
+        )}
+      </PopoverContent>
+  </Popover>
+Tooltip changes:
+ <Tooltip
+      showArrow
+      placement="right"
+      content="I am a tooltip"
+      classNames={{
+-        base: "py-2 px-4 shadow-xl text-black bg-gradient-to-br from-white to-neutral-400",
+-        arrow: "bg-neutral-400 dark:bg-white",
++        base: [
++          // the "before" pseudo element is now the popover' arrow
++          "before:bg-neutral-400 dark:before:bg-white",
++        ],
++        content: [ // now we need to use the "content" slot to actually modify the popover' content styles
++          "py-2 px-4 shadow-xl",
++          "text-black bg-gradient-to-br from-white to-neutral-400",
++        ],
+      }}
+    >
+      <Button variant="flat">Hover me</Button>
+</Tooltip>
+Select changes:
+ <Select
+      items={users}
+      label="Assigned to"
+      className="max-w-xs"
+      variant="bordered"
+      classNames={{
+        label: "group-data-[filled=true]:-translate-y-5",
+        trigger: "min-h-unit-16",
+        listboxWrapper: "max-h-[400px]",
+      }}
+      listboxProps={{
+        itemClasses: {
+          base: [
+            "rounded-md",
+            "text-default-500",
+            "transition-opacity",
+            "data-[hover=true]:text-foreground",
+            "data-[hover=true]:bg-default-100",
+            "dark:data-[hover=true]:bg-default-50",
+            "data-[selectable=true]:focus:bg-default-50",
+            "data-[pressed=true]:opacity-70",
+            "data-[focus-visible=true]:ring-default-500",
+          ],
+        },
+      }}
+      popoverProps={{
+        classNames: {
+-          base: "p-0 border-small border-divider bg-background",
+-          arrow: "bg-default-200",
++          base: "before:bg-default-200", // the before pseudo element controls the popover's arrow
++          content: "p-0 border-small border-divider bg-background", // now instead of the "base" slot we use the "content" slot
+        },
+      }}
+      renderValue={(items) => {
+        return items.map((item) => (
+          <div key={item.key} className="flex items-center gap-2">
+            <Avatar
+              alt={item.data.name}
+              className="flex-shrink-0"
+              size="sm"
+              src={item.data.avatar}
+            />
+            <div className="flex flex-col">
+              <span>{item.data.name}</span>
+              <span className="text-default-500 text-tiny">({item.data.email})</span>
+            </div>
+          </div>
+        ));
+      }}
+    >
+      {(user) => (
+        <SelectItem key={user.id} textValue={user.name}>
+          <div className="flex gap-2 items-center">
+            <Avatar alt={user.name} className="flex-shrink-0" size="sm" src={user.avatar} />
+            <div className="flex flex-col">
+              <span className="text-small">{user.name}</span>
+              <span className="text-tiny text-default-400">{user.email}</span>
+            </div>
+          </div>
+        </SelectItem>
+      )}
+    </Select>
+  );
+}`;
+Dropdown Changes
+    <Dropdown
+      showArrow
+      classNames={{
+-        base: "py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black",
+-        arrow: "bg-default-200",
++        content: "py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black",  // now instead of the "base" slot we use the "content" 
++        base: "before:bg-default-200",  // the before pseudo element controls the popover's arrow
+      }}
+    >
+📝 Additional Information
+
+Commits:
+- feat: Slider Component (#1686)
+
+* feat(slider): initial structure
+
+* chore(slider): readme improved
+
+* fix: fixed border color of slider track
+
+* docs: added range story
+
+* feat: added rtl support to slider
+
+* feat: improved value label formatting
+
+* feat: refactor styling and add colors support to slider
+
+* chore: improved thumb color
+
+* docs: improved slider stories
+
+* chore(slider): default color changed by foreground
+
+* Update packages/core/theme/src/components/slider.ts
+
+Co-authored-by: Jakob Guddas <github@jguddas.de>
+
+* feat: added fillOffset prop
+
+* Update packages/components/slider/src/use-slider.ts
+
+* fix(slider): animation
+
+* Update packages/components/slider/src/use-slider.ts
+
+* Update packages/core/theme/src/components/slider.ts
+
+* feat: slider steps
+
+* refactor: renamed variables
+
+* feat: improved slider step styling
+
+* fix: hide infinite steps
+
+* fix: fixed step transparency issue
+
+* fix: fixed thumb focus issue
+
+* Update packages/components/slider/src/use-slider.ts
+
+Co-authored-by: Junior Garcia <jrgarciadev@gmail.com>
+
+* feat(slider): vertical orientation added, start & end content, bug fixes
+
+* chore(slider): tests added
+
+* fix(docs): scrollbar added to the sidebar (#1743)
+
+* feat(slider): marks added
+
+* chore(slider): example ts-doc changed
+
+* feat(slider): vertical marks support
+
+* feat(core): slider tooltip support added, popover modified (#1746)
+
+* Feat/slider custom styles (#1751)
+
+* feat(slider): custom styles story added
+
+* fix(slider): custom styles on different sizes
+
+* Fix/slider tooltip android position (#1753)
+
+* feat(slider): custom styles story added
+
+* fix(slider): tooltip update position dependecies added
+
+* fix(popover): arrow placements improved
+
+* feat(slider): docs started, custom thumb and custom output stories added
+
+* feat(slider): render function added to custom render the slider parts
+
+* feat(slider): docs in progress, new properties and examples added
+
+* fix(slider): some issues fixed, output renamed to value, documentation improved
+
+* feat(slider): docs done
+
+* chore: changeset
+
+---------
+
+Co-authored-by: Jakob Guddas <github@jguddas.de>\n- fix: lock conflicts\n- Client side routing (#1764)
+
+* feat(slider): initial structure
+
+* chore(slider): readme improved
+
+* fix: fixed border color of slider track
+
+* docs: added range story
+
+* feat: added rtl support to slider
+
+* feat: improved value label formatting
+
+* feat: refactor styling and add colors support to slider
+
+* chore: improved thumb color
+
+* docs: improved slider stories
+
+* chore(slider): default color changed by foreground
+
+* Update packages/core/theme/src/components/slider.ts
+
+Co-authored-by: Jakob Guddas <github@jguddas.de>
+
+* feat: added fillOffset prop
+
+* Update packages/components/slider/src/use-slider.ts
+
+* fix(slider): animation
+
+* Update packages/components/slider/src/use-slider.ts
+
+* Update packages/core/theme/src/components/slider.ts
+
+* feat: slider steps
+
+* refactor: renamed variables
+
+* feat: improved slider step styling
+
+* fix: hide infinite steps
+
+* fix: fixed step transparency issue
+
+* fix: fixed thumb focus issue
+
+* Update packages/components/slider/src/use-slider.ts
+
+Co-authored-by: Junior Garcia <jrgarciadev@gmail.com>
+
+* feat(slider): vertical orientation added, start & end content, bug fixes
+
+* chore(slider): tests added
+
+* feat(slider): marks added
+
+* chore(slider): example ts-doc changed
+
+* feat(slider): vertical marks support
+
+* feat(core): slider tooltip support added, popover modified (#1746)
+
+* Feat/slider custom styles (#1751)
+
+* feat(slider): custom styles story added
+
+* fix(slider): custom styles on different sizes
+
+* Fix/slider tooltip android position (#1753)
+
+* feat(slider): custom styles story added
+
+* fix(slider): tooltip update position dependecies added
+
+* fix(popover): arrow placements improved
+
+* feat(slider): docs started, custom thumb and custom output stories added
+
+* feat(slider): render function added to custom render the slider parts
+
+* feat(slider): docs in progress, new properties and examples added
+
+* fix(slider): some issues fixed, output renamed to value, documentation improved
+
+* feat(slider): docs done
+
+* chore: changeset
+
+* chore: react aria packages upgraded
+
+* feat(system): router provider added
+
+* feat: client side routing support added to items components
+
+* chore(docs): routing docs started
+
+* chore: changeset
+
+* feat(docs): client side routing documented
+
+* feat(pagination): client router support added to pagination
+
+* fix(link): csr added
+
+---------
+
+Co-authored-by: Jakob Guddas <github@jguddas.de>\n- feat: added RTL support to accordion component (#1725)
+
+* feat: added RTL support to accordion component
+
+* Create healthy-cobras-crash.md\n- feat: added RTL support to avatar and avatar group component (#1727)
+
+* feat: added RTL support to avatar and avatar group components
+
+* Create tender-penguins-love.md
+
+* Update tender-penguins-love.md\n- feat: added RTL support to button group component (#1726)
+
+* feat: added RTL support to button component
+
+* feat: added RTL support to button component
+
+* Create orange-bobcats-kneel.md
+
+* Update button.ts\n- refactor(root): styles refactor (#1688)
+
+* refactor(root): styles refactor
+
+* chore(tabs): remove needless type extends
+
+* fix(tabs): typecheck\n- Merge branch 'main' of github.com:nextui-org/nextui into v2.2.0\n- Breadcrumbs component (#1794)
+
+* feat(components): breadcrumbs initial structure
+
+* feat(breadcrumbs): tests and examples added
+
+* feat(docs): breadcrumbs documentation done
+
+* feat(docs): breadcrumbs docs done
+
+* chore(breadcrumbs): readme changed\n- fix(slider): Place last dragged slider handle over the other handle (#1778)
+
+* Set `data-focused` in handle
+
+* Style focused handle on top
+
+* Add tests\n- fix(core): tests and build\n- fix(button): show only spinner if button isLoading & isIconOnly (#1800)
+
+* fix(button): show only spinner if button isLoading & isIconOnly
+
+* chore: add changeset
+
+* fix(button): remove repeating code\n- Fix blur/opaque Popover (#1812)
+
+* fix(popover): double underlay click
+
+* chore: use ref instead of a state\n- Feat/controlled scroll shadow (#1819)
+
+* feat(scroll-shadow): logic improved, controlled support added
+
+* feat(scroll-shadow): controlled visibility
+
+* fix(scroll-shadow): visibility tests\n- Autocomplete component (Single Selection) (#1797)
+
+* feat(autocomplete): initial structure
+
+* feat(core): use press custom hook implemented, autocomplete improved, input and select animations fixed
+
+* chore(button): add console.log on press
+
+* feat(core): select & input label position, autocomplete improvements, listbox and menu empty state
+
+* chore: tailwind-variants upgraded
+
+* chore: autocomplete stories in progress
+
+* fix: input and select label placement
+
+* fix(autocomplete): popover trigger
+
+* chore(root): react-aria pkgs and framer-motion upgraded
+
+* fix(input,select): outside label scale removed
+
+* feat(autocomplete): more stories and use cases supported
+
+* fix(core): custom items support on collection-based comps, menu generic items support added
+
+* chore(core): tailwind-variants upgraded, custom tv function adapted
+
+* chore(docs): select on-change controlled e.g. changed, sandpack theme fixed
+
+* chore(autocomplete): docs started, tests added
+
+* chore: in progress
+
+* feat(menu): top and end content added, autocomplete docs improved
+
+* feat(docs): autocomplete documentation almost done
+
+* fix(input): outside styles
+
+* feat(docs): autocomplete async filtering added
+
+* chore(docs): autocomplete highlighted lines added
+
+* feat(docs): autocomplete a11y and slots added
+
+* feat(docs): autocomplete a11y and slots added
+
+* feat(docs): autocomplete docs done\n- fix(root): peer dependencies (#1848)\n- Fix/small issues (#1851)
+
+* fix(input): visible outline
+
+* fix(button): button group radius prop
+
+* chore(navbar): menu item active status added
+
+* fix(docs): pagination missing keys custom items
+
+* fix(core): extendVariants support added to collection-based components
+
+* fix(theme): card body padding
+
+* chore(theme): transition added to menu/listbox items
+
+* fix(input): textarea styles fixed, new prop added
+
+* chore(input): textarea height animated
+
+* feat(button): hover opacity added
+
+* chore(textarea): hide scroll when the limit hasn't been reached
+
+* chore(docs): updated badge added to textarea\n- feat(docs): blog v2.2.0 image and entry added\n- fix(avatar): ring primary color\n- chore(docs): tabs added again, autocomplete iframes removed\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: ea19a782f6813a22e9d11a3af9e8a359e559af9a
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 59 packages</summary>
+
+  | Name                                 | Type  |
+| ------------------------------------ | ----- |
+| @nextui-org/button                   | Patch |
+| @nextui-org/listbox                  | Patch |
+| @nextui-org/tabs                     | Patch |
+| @nextui-org/theme                    | Patch |
+| @nextui-org/use-aria-accordion-item  | Patch |
+| @nextui-org/use-aria-modal-overlay   | Patch |
+| @nextui-org/use-aria-toggle-button   | Patch |
+| @nextui-org/use-aria-multiselect     | Patch |
+| @nextui-org/react-rsc-utils          | Patch |
+| @nextui-org/use-aria-accordion       | Patch |
+| @nextui-org/shared-icons             | Patch |
+| @nextui-org/pagination               | Patch |
+| @nextui-org/use-aria-button          | Patch |
+| @nextui-org/accordion                | Patch |
+| @nextui-org/use-disclosure           | Patch |
+| @nextui-org/aria-utils               | Patch |
+| @nextui-org/checkbox                 | Patch |
+| @nextui-org/dropdown                 | Patch |
+| @nextui-org/progress                 | Patch |
+| @nextui-org/use-aria-link            | Patch |
+| @nextui-org/divider                  | Patch |
+| @nextui-org/popover                  | Patch |
+| @nextui-org/snippet                  | Patch |
+| @nextui-org/tooltip                  | Patch |
+| @nextui-org/avatar                   | Patch |
+| @nextui-org/navbar                   | Patch |
+| @nextui-org/select                   | Patch |
+| @nextui-org/slider                   | Patch |
+| @nextui-org/switch                   | Patch |
+| @nextui-org/badge                    | Patch |
+| @nextui-org/input                    | Patch |
+| @nextui-org/modal                    | Patch |
+| @nextui-org/radio                    | Patch |
+| @nextui-org/table                    | Patch |
+| @nextui-org/card                     | Patch |
+| @nextui-org/chip                     | Patch |
+| @nextui-org/link                     | Patch |
+| @nextui-org/menu                     | Patch |
+| @nextui-org/user                     | Patch |
+| @nextui-org/kbd                      | Patch |
+| @nextui-org/system                   | Patch |
+| @nextui-org/react                    | Patch |
+| @nextui-org/breadcrumbs              | Patch |
+| @nextui-org/framer-transitions       | Patch |
+| @nextui-org/autocomplete             | Patch |
+| @nextui-org/use-aria-press           | Patch |
+| @nextui-org/test-utils               | Patch |
+| @nextui-org/ripple                   | Patch |
+| @nextui-org/system-rsc               | Patch |
+| @nextui-org/use-data-scroll-overflow | Patch |
+| @nextui-org/scroll-shadow            | Patch |
+| @nextui-org/stories-utils            | Patch |
+| @nextui-org/skeleton                 | Patch |
+| @nextui-org/spinner                  | Patch |
+| @nextui-org/spacer                   | Patch |
+| @nextui-org/image                    | Patch |
+| @nextui-org/code                     | Patch |
+| @nextui-org/react-utils              | Patch |
+| @nextui-org/use-real-shape           | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/v2.2.0?filename=.changeset/spicy-vans-clap.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Av2.2.0%20%F0%9F%95%B9%EF%B8%8F%0A)
+
+\n- vercel: [vc]: #DMwA3lARAEaTy171TEFw4ncUA+Rglb9o2KYeslaY5mM=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi82R0pSMXYzaWlaZ3hjU2hyaGpvMWZwMlZyejU3IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC12MjIwLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktZG9jcy12Mi1naXQtdjIyMC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX0seyJuYW1lIjoibmV4dHVpLXN0b3J5Ym9vay12MiIsInJvb3REaXJlY3RvcnkiOiJwYWNrYWdlcy9zdG9yeWJvb2siLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLXYyLzRrN3RpeVVZVm5LSFhEc3FTRFRxV1Y3c0VFS3EiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtdjIyMC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtdjIyMC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/6GJR1v3iiZgxcShrhjo1fp2Vrz57)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-v220-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-v220-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 3, 2023 0:18am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/4k7tiyUYVnKHXDsqSDTqWV7sEEKq)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-v220-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-v220-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 3, 2023 0:18am |
+
+
+\n- qWici: @jrgarciadev can you tell when the release of this version is planned?\n- sayem314: Any ETA for release? Need range slider by next week or must go with 3rd party lib by then. \n- toxsick: Hey @jrgarciadev, the new Autocomplete component looks awesome, but is there any chance we can have something like `renderValue` of the [Select](https://nextui.org/docs/components/select#custom-render-value) to render a custom selected values?
+
+Thanks for the awesome work!\n- jrgarciadev: > Hey @jrgarciadev, the new Autocomplete component looks awesome, but is there any chance we can have something like `renderValue` of the [Select](https://nextui.org/docs/components/select#custom-render-value) to render a custom selected values?
+> 
+> Thanks for the awesome work!
+
+Hey @toxsick thanks!, we plan to add custom render value support later, once we include the `multiple` selection mode \n
+
+Files Changed:
+- .changeset/chatty-tools-invent.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/button": patch
++---
++
++The button with only the icon now displays only the spinner during loading\n- .changeset/dry-teachers-doubt.md (removed, 2 changes)\n  Patch: @@ -1,2 +0,0 @@
+----
+----\n- .changeset/fifty-snails-glow.md (added, 11 changes)\n  Patch: @@ -0,0 +1,11 @@
++---
++"@nextui-org/listbox": patch
++"@nextui-org/tabs": patch
++"@nextui-org/theme": patch
++---
++
++Styles Changes
++
++- Spacing units changed to from `px` to `rem` this improves the mobile components sizes
++- Tabs/Tab new prop added `shouldSelectOnPressUp` which is enabled by default `true`, this prop defines whether the tabs selection should occur on press up instead of press down.
++- Chip font size changed to `text-tiny` on `sm` size.\n- .changeset/flat-wasps-hug.md (added, 46 changes)\n  Patch: @@ -0,0 +1,46 @@
++---
++"@nextui-org/use-aria-accordion-item": patch
++"@nextui-org/use-aria-modal-overlay": patch
++"@nextui-org/use-aria-toggle-button": patch
++"@nextui-org/use-aria-multiselect": patch
++"@nextui-org/react-rsc-utils": patch
++"@nextui-org/use-aria-accordion": patch
++"@nextui-org/shared-icons": patch
++"@nextui-org/pagination": patch
++"@nextui-org/use-aria-button": patch
++"@nextui-org/accordion": patch
++"@nextui-org/use-disclosure": patch
++"@nextui-org/aria-utils": patch
++"@nextui-org/checkbox": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/progress": patch
++"@nextui-org/use-aria-link": patch
++"@nextui-org/divider": patch
++"@nextui-org/listbox": patch
++"@nextui-org/popover": patch
++"@nextui-org/snippet": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/avatar": patch
++"@nextui-org/button": patch
++"@nextui-org/navbar": patch
++"@nextui-org/select": patch
++"@nextui-org/slider": patch
++"@nextui-org/switch": patch
++"@nextui-org/badge": patch
++"@nextui-org/input": patch
++"@nextui-org/modal": patch
++"@nextui-org/radio": patch
++"@nextui-org/table": patch
++"@nextui-org/card": patch
++"@nextui-org/chip": patch
++"@nextui-org/link": patch
++"@nextui-org/menu": patch
++"@nextui-org/tabs": patch
++"@nextui-org/user": patch
++"@nextui-org/kbd": patch
++"@nextui-org/system": patch
++"@nextui-org/react": patch
++"@nextui-org/theme": patch
++---
++
++React Aria Client side router provider added to NextUI Provider, it allows users to pass the router they're using to customize how components items should navigate, this is supported by Listbox items, tabs items, dropdown items and table rows.\n- .changeset/four-actors-give.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/theme": patch
++---
++
++- New variable added to the theme layout `hoverOpacity`
++- Hover opacity added to button\n- .changeset/four-trainers-move.md (added, 47 changes)\n  Patch: @@ -0,0 +1,47 @@
++---
++"@nextui-org/use-aria-accordion-item": patch
++"@nextui-org/use-aria-modal-overlay": patch
++"@nextui-org/use-aria-toggle-button": patch
++"@nextui-org/use-aria-multiselect": patch
++"@nextui-org/react-rsc-utils": patch
++"@nextui-org/use-aria-accordion": patch
++"@nextui-org/breadcrumbs": patch
++"@nextui-org/shared-icons": patch
++"@nextui-org/pagination": patch
++"@nextui-org/use-aria-button": patch
++"@nextui-org/accordion": patch
++"@nextui-org/use-disclosure": patch
++"@nextui-org/aria-utils": patch
++"@nextui-org/checkbox": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/progress": patch
++"@nextui-org/use-aria-link": patch
++"@nextui-org/divider": patch
++"@nextui-org/listbox": patch
++"@nextui-org/popover": patch
++"@nextui-org/snippet": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/avatar": patch
++"@nextui-org/button": patch
++"@nextui-org/navbar": patch
++"@nextui-org/select": patch
++"@nextui-org/slider": patch
++"@nextui-org/switch": patch
++"@nextui-org/badge": patch
++"@nextui-org/input": patch
++"@nextui-org/modal": patch
++"@nextui-org/radio": patch
++"@nextui-org/table": patch
++"@nextui-org/card": patch
++"@nextui-org/chip": patch
++"@nextui-org/link": patch
++"@nextui-org/menu": patch
++"@nextui-org/tabs": patch
++"@nextui-org/user": patch
++"@nextui-org/kbd": patch
++"@nextui-org/system": patch
++"@nextui-org/react": patch
++"@nextui-org/theme": patch
++---
++
++New component: Breadcrumbs\n- .changeset/fresh-dolphins-pay.md (added, 53 changes)\n  Patch: @@ -0,0 +1,53 @@
++---
++"@nextui-org/use-aria-accordion-item": patch
++"@nextui-org/use-aria-modal-overlay": patch
++"@nextui-org/use-aria-toggle-button": patch
++"@nextui-org/framer-transitions": patch
++"@nextui-org/use-aria-multiselect": patch
++"@nextui-org/react-rsc-utils": patch
++"@nextui-org/use-aria-accordion": patch
++"@nextui-org/autocomplete": patch
++"@nextui-org/breadcrumbs": patch
++"@nextui-org/shared-icons": patch
++"@nextui-org/pagination": patch
++"@nextui-org/use-aria-button": patch
++"@nextui-org/accordion": patch
++"@nextui-org/use-aria-press": patch
++"@nextui-org/use-disclosure": patch
++"@nextui-org/aria-utils": patch
++"@nextui-org/test-utils": patch
++"@nextui-org/checkbox": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/progress": patch
++"@nextui-org/use-aria-link": patch
++"@nextui-org/divider": patch
++"@nextui-org/listbox": patch
++"@nextui-org/popover": patch
++"@nextui-org/snippet": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/avatar": patch
++"@nextui-org/button": patch
++"@nextui-org/navbar": patch
++"@nextui-org/ripple": patch
++"@nextui-org/select": patch
++"@nextui-org/slider": patch
++"@nextui-org/switch": patch
++"@nextui-org/badge": patch
++"@nextui-org/input": patch
++"@nextui-org/modal": patch
++"@nextui-org/radio": patch
++"@nextui-org/table": patch
++"@nextui-org/card": patch
++"@nextui-org/chip": patch
++"@nextui-org/link": patch
++"@nextui-org/menu": patch
++"@nextui-org/tabs": patch
++"@nextui-org/user": patch
++"@nextui-org/system-rsc": patch
++"@nextui-org/kbd": patch
++"@nextui-org/system": patch
++"@nextui-org/react": patch
++"@nextui-org/theme": patch
++---
++
++react-aria packages & framer-motion upgraded\n- .changeset/gentle-maps-lick.md (added, 61 changes)\n  Patch: @@ -0,0 +1,61 @@
++---
++"@nextui-org/use-data-scroll-overflow": patch
++"@nextui-org/use-aria-accordion-item": patch
++"@nextui-org/use-aria-modal-overlay": patch
++"@nextui-org/use-aria-toggle-button": patch
++"@nextui-org/framer-transitions": patch
++"@nextui-org/use-aria-multiselect": patch
++"@nextui-org/react-rsc-utils": patch
++"@nextui-org/scroll-shadow": patch
++"@nextui-org/use-aria-accordion": patch
++"@nextui-org/autocomplete": patch
++"@nextui-org/stories-utils": patch
++"@nextui-org/breadcrumbs": patch
++"@nextui-org/shared-icons": patch
++"@nextui-org/pagination": patch
++"@nextui-org/use-aria-button": patch
++"@nextui-org/accordion": patch
++"@nextui-org/use-aria-press": patch
++"@nextui-org/use-disclosure": patch
++"@nextui-org/aria-utils": patch
++"@nextui-org/test-utils": patch
++"@nextui-org/checkbox": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/progress": patch
++"@nextui-org/skeleton": patch
++"@nextui-org/use-aria-link": patch
++"@nextui-org/divider": patch
++"@nextui-org/listbox": patch
++"@nextui-org/popover": patch
++"@nextui-org/snippet": patch
++"@nextui-org/spinner": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/avatar": patch
++"@nextui-org/button": patch
++"@nextui-org/navbar": patch
++"@nextui-org/ripple": patch
++"@nextui-org/select": patch
++"@nextui-org/slider": patch
++"@nextui-org/spacer": patch
++"@nextui-org/switch": patch
++"@nextui-org/badge": patch
++"@nextui-org/image": patch
++"@nextui-org/input": patch
++"@nextui-org/modal": patch
++"@nextui-org/radio": patch
++"@nextui-org/table": patch
++"@nextui-org/card": patch
++"@nextui-org/chip": patch
++"@nextui-org/code": patch
++"@nextui-org/link": patch
++"@nextui-org/menu": patch
++"@nextui-org/tabs": patch
++"@nextui-org/user": patch
++"@nextui-org/system-rsc": patch
++"@nextui-org/kbd": patch
++"@nextui-org/system": patch
++"@nextui-org/react": patch
++"@nextui-org/theme": patch
++---
++
++Peer dependencies fixed to not install depedencies that were already installed\n- .changeset/healthy-cobras-crash.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/theme": patch
++---
++
++feat: added RTL support to accordion component\n- .changeset/hip-years-sip.md (added, 147 changes)\n  Patch: @@ -0,0 +1,147 @@
++---
++"@nextui-org/shared-icons": patch
++"@nextui-org/popover": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/select": patch
++"@nextui-org/slider": patch
++"@nextui-org/badge": patch
++"@nextui-org/theme": patch
++---
++
++Changes
++
++- Slider tooltip support added
++
++Breaking Changes
++
++- Popover API changed to improve the arrow implementation, arrow is now a pseudo element, this allows the popover to also move the arrow all-together, this change impacts the Popover, Tooltip and Select implementations.
++
++Popover changes:
++
++```diff
++  <Popover
++      showArrow
++      backdrop="opaque"
++      placement="right"
++      classNames={{
++-        base: "py-3 px-4 border border-default-200 bg-gradient-to-br from-white to-default-300 dark:from-default-100 dark:to-default-50",
+++        base: [
+++          // the "before" pseudo element is now the popover' arrow
+++          "before:bg-default-200"
+++        ],
++-        arrow: "bg-default-200",
+++        content: [ // now we need to use the "content" slot to actually modify the popover' content styles
+++          "py-3 px-4 border border-default-200",
+++          "bg-gradient-to-br from-white to-default-300",
+++          "dark:from-default-100 dark:to-default-50",
++        ],
++      }}
++    >
++      <PopoverTrigger>
++        <Button>Open Popover</Button>
++      </PopoverTrigger>
++      <PopoverContent>
++        {(titleProps) => (
++          <div className="px-1 py-2">
++            <h3 className="text-small font-bold" {...titleProps}>
++              Popover Content
++            </h3>
++            <div className="text-tiny">This is the popover content</div>
++          </div>
++        )}
++      </PopoverContent>
++  </Popover>
++```
++
++Tooltip changes:
++
++```diff
++ <Tooltip
++      showArrow
++      placement="right"
++      content="I am a tooltip"
++      classNames={{
++-        base: "py-2 px-4 shadow-xl text-black bg-gradient-to-br from-white to-neutral-400",
++-        arrow: "bg-neutral-400 dark:bg-white",
+++        base: [
+++          // the "before" pseudo element is now the popover' arrow
+++          "before:bg-neutral-400 dark:before:bg-white",
+++        ],
+++        content: [ // now we need to use the "content" slot to actually modify the popover' content styles
+++          "py-2 px-4 shadow-xl",
+++          "text-black bg-gradient-to-br from-white to-neutral-400",
+++        ],
++      }}
++    >
++      <Button variant="flat">Hover me</Button>
++</Tooltip>
++```
++
++Select changes:
++
++```diff
++ <Select
++      items={users}
++      label="Assigned to"
++      className="max-w-xs"
++      variant="bordered"
++      classNames={{
++        label: "group-data-[filled=true]:-translate-y-5",
++        trigger: "min-h-unit-16",
++        listboxWrapper: "max-h-[400px]",
++      }}
++      listboxProps={{
++        itemClasses: {
++          base: [
++            "rounded-md",
++            "text-default-500",
++            "transition-opacity",
++            "data-[hover=true]:text-foreground",
++            "data-[hover=true]:bg-default-100",
++            "dark:data-[hover=true]:bg-default-50",
++            "data-[selectable=true]:focus:bg-default-50",
++            "data-[pressed=true]:opacity-70",
++            "data-[focus-visible=true]:ring-default-500",
++          ],
++        },
++      }}
++      popoverProps={{
++        classNames: {
++-          base: "p-0 border-small border-divider bg-background",
++-          arrow: "bg-default-200",
+++          base: "before:bg-default-200", // the before pseudo element controls the popover's arrow
+++          content: "p-0 border-small border-divider bg-background", // now instead of the "base" slot we use the "content" slot
++        },
++      }}
++      renderValue={(items) => {
++        return items.map((item) => (
++          <div key={item.key} className="flex items-center gap-2">
++            <Avatar
++              alt={item.data.name}
++              className="flex-shrink-0"
++              size="sm"
++              src={item.data.avatar}
++            />
++            <div className="flex flex-col">
++              <span>{item.data.name}</span>
++              <span className="text-default-500 text-tiny">({item.data.email})</span>
++            </div>
++          </div>
++        ));
++      }}
++    >
++      {(user) => (
++        <SelectItem key={user.id} textValue={user.name}>
++          <div className="flex gap-2 items-center">
++            <Avatar alt={user.name} className="flex-shrink-0" size="sm" src={user.avatar} />
++            <div className="flex flex-col">
++              <span className="text-small">{user.name}</span>
++              <span className="text-tiny text-default-400">{user.email}</span>
++            </div>
++          </div>
++        </SelectItem>
++      )}
++    </Select>
++  );
++}`;
++```\n- .changeset/odd-impalas-swim.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/use-data-scroll-overflow": patch
++"@nextui-org/scroll-shadow": patch
++---
++
++- use-data-scroll-shadow hook logic improved
++- controlled way to set the shadow visibility added to ScrollShadow\n- .changeset/orange-bobcats-kneel.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/theme": patch
++---
++
++feat: added RTL support to button group component\n- .changeset/seven-buses-cry.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/theme": patch
++---
++
++Transition animation added to Menu/Listbox items\n- .changeset/shy-camels-press.md (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++---
++"@nextui-org/react-rsc-utils": patch
++"@nextui-org/breadcrumbs": patch
++"@nextui-org/shared-icons": patch
++---
++
++- pickChildren function return type fixed
++- new icon added to the shared icons
++- breadcrumbs improvements\n- .changeset/shy-pans-juggle.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/input": patch
++"@nextui-org/theme": patch
++---
++
++- Textarea styles fixed
++- New prop added to text area `disableAutosize` to preventthe resize\n- .changeset/stupid-experts-jam.md (added, 16 changes)\n  Patch: @@ -0,0 +1,16 @@
++---
++"@nextui-org/react-rsc-utils": patch
++"@nextui-org/shared-icons": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/popover": patch
++"@nextui-org/snippet": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/select": patch
++"@nextui-org/slider": patch
++"@nextui-org/badge": patch
++"@nextui-org/react": patch
++"@nextui-org/theme": patch
++---
++
++- New component: Slider
++- Arrow removed from the popover styles and code as well as from related components such as Tooltip, Snippet and Select\n- .changeset/tender-penguins-love.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/avatar": patch
++"@nextui-org/theme": patch
++---
++
++feat: added RTL support to avatar and avatar group component\n- .changeset/wise-apples-travel.md (added, 10 changes)\n  Patch: @@ -0,0 +1,10 @@
++---
++"@nextui-org/listbox": patch
++"@nextui-org/table": patch
++"@nextui-org/menu": patch
++"@nextui-org/tabs": patch
++"@nextui-org/system-rsc": patch
++"@nextui-org/theme": patch
++---
++
++Collection-based components support on extendVariants function added, input focus-visible outline removed, collection item components "as" prop fixed\n- apps/docs/app/examples/autocomplete/async-filtering/page.tsx (added, 47 changes)\n  Patch: @@ -0,0 +1,47 @@
++/* eslint-disable no-console */
++"use client";
++
++import * as React from "react";
++import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
++import {useAsyncList} from "@react-stately/data";
++
++type SWCharacter = {
++  name: string;
++  height: string;
++  mass: string;
++  birth_year: string;
++};
++
++export default function Page() {
++  let list = useAsyncList<SWCharacter>({
++    async load({signal, filterText}) {
++      let res = await fetch(`https://swapi.py4e.com/api/people/?search=${filterText}`, {signal});
++      let json = await res.json();
++
++      return {
++        items: json.results,
++      };
++    },
++  });
++
++  return (
++    <div className="p-6">
++      <Autocomplete
++        className="max-w-xs"
++        inputValue={list.filterText}
++        isLoading={list.isLoading}
++        items={list.items}
++        label="Select a character"
++        placeholder="Type to search..."
++        variant="bordered"
++        onInputChange={list.setFilterText}
++      >
++        {(item) => (
++          <AutocompleteItem key={item.name} className="capitalize">
++            {item.name}
++          </AutocompleteItem>
++        )}
++      </Autocomplete>
++    </div>
++  );
++}\n- apps/docs/app/examples/autocomplete/async-items-loading/page.tsx (added, 113 changes)\n  Patch: @@ -0,0 +1,113 @@
++/* eslint-disable no-console */
++"use client";
++
++import * as React from "react";
++import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
++import {useInfiniteScroll} from "@nextui-org/use-infinite-scroll";
++
++type Pokemon = {
++  name: string;
++  url: string;
++};
++
++type UsePokemonListProps = {
++  /** Delay to wait before fetching more items */
++  fetchDelay?: number;
++};
++
++function usePokemonList({fetchDelay = 0}: UsePokemonListProps = {}) {
++  const [items, setItems] = React.useState<Pokemon[]>([]);
++  const [hasMore, setHasMore] = React.useState(true);
++  const [isLoading, setIsLoading] = React.useState(false);
++  const [offset, setOffset] = React.useState(0);
++  const limit = 10; // Number of items per page, adjust as necessary
++
++  const loadPokemon = async (currentOffset: number) => {
++    const controller = new AbortController();
++    const {signal} = controller;
++
++    try {
++      setIsLoading(true);
++
++      if (offset > 0) {
++        // Delay to simulate network latency
++        await new Promise((resolve) => setTimeout(resolve, fetchDelay));
++      }
++
++      let res = await fetch(
++        `https://pokeapi.co/api/v2/pokemon?offset=${currentOffset}&limit=${limit}`,
++        {signal},
++      );
++
++      if (!res.ok) {
++        throw new Error("Network response was not ok");
++      }
++
++      let json = await res.json();
++
++      setHasMore(json.next !== null);
++      // Append new results to existing ones
++      setItems((prevItems) => [...prevItems, ...json.results]);
++    } catch (error) {
++      // @ts-ignore
++      if (error.name === "AbortError") {
++        console.log("Fetch aborted");
++      } else {
++        console.error("There was an error with the fetch operation:", error);
++      }
++    } finally {
++      setIsLoading(false);
++    }
++  };
++
++  React.useEffect(() => {
++    loadPokemon(offset);
++  }, []);
++
++  const onLoadMore = () => {
++    const newOffset = offset + limit;
++
++    setOffset(newOffset);
++    loadPokemon(newOffset);
++  };
++
++  return {
++    items,
++    hasMore,
++    isLoading,
++    onLoadMore,
++  };
++}
++
++export default function Page() {
++  const [isOpen, setIsOpen] = React.useState(false);
++  const {items, hasMore, isLoading, onLoadMore} = usePokemonList({fetchDelay: 1500});
++
++  const [, scrollerRef] = useInfiniteScroll({
++    hasMore,
++    isEnabled: isOpen,
++    shouldUseLoader: false, // We don't want to show the loader at the bottom of the list
++    onLoadMore,
++  });
++
++  return (
++    <div className="p-6">
++      <Autocomplete
++        className="max-w-xs"
++        defaultItems={items}
++        isLoading={isLoading}
++        label="Pick a Pokemon"
++        placeholder="Select a Pokemon"
++        scrollRef={scrollerRef}
++        variant="bordered"
++        onOpenChange={setIsOpen}
++      >
++        {(item) => (
++          <AutocompleteItem key={item.name} className="capitalize">
++            {item.name}
++          </AutocompleteItem>
++        )}
++      </Autocomplete>
++    </div>
++  );
++}\n- apps/docs/app/examples/autocomplete/fully-controlled/page.tsx (added, 107 changes)\n  Patch: @@ -0,0 +1,107 @@
++"use client";
++
++import * as React from "react";
++import {Autocomplete, AutocompleteItem, MenuTriggerAction} from "@nextui-org/react";
++import {useFilter} from "@react-aria/i18n";
++
++const animals = [
++  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
++  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
++  {label: "Elephant", value: "elephant", description: "The largest land animal"},
++  {label: "Lion", value: "lion", description: "The king of the jungle"},
++  {label: "Tiger", value: "tiger", description: "The largest cat species"},
++  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
++  {
++    label: "Dolphin",
++    value: "dolphin",
++    description: "A widely distributed and diverse group of aquatic mammals",
++  },
++  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
++  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
++  {
++    label: "Shark",
++    value: "shark",
++    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
++  },
++  {
++    label: "Whale",
++    value: "whale",
++    description: "Diverse group of fully aquatic placental marine mammals",
++  },
++  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
++  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++];
++
++type FieldState = {
++  selectedKey: React.Key | null;
++  inputValue: string;
++  items: typeof animals;
++};
++
++export default function Page() {
++  // Store ComboBox input value, selected option, open state, and items
++  // in a state tracker
++  const [fieldState, setFieldState] = React.useState<FieldState>({
++    selectedKey: "",
++    inputValue: "",
++    items: animals,
++  });
++
++  // Implement custom filtering logic and control what items are
++  // available to the Autocomplete.
++  const {startsWith} = useFilter({sensitivity: "base"});
++
++  // Specify how each of the Autocomplete values should change when an
++  // option is selected from the list box
++  const onSelectionChange = (key: React.Key) => {
++    setFieldState((prevState) => {
++      let selectedItem = prevState.items.find((option) => option.value === key);
++
++      return {
++        inputValue: selectedItem?.label || "",
++        selectedKey: key,
++        items: animals.filter((item) => startsWith(item.label, selectedItem?.label || "")),
++      };
++    });
++  };
++
++  // Specify how each of the Autocomplete values should change when the input
++  // field is altered by the user
++  const onInputChange = (value: string) => {
++    setFieldState((prevState) => ({
++      inputValue: value,
++      selectedKey: value === "" ? null : prevState.selectedKey,
++      items: animals.filter((item) => startsWith(item.label, value)),
++    }));
++  };
++
++  // Show entire list if user opens the menu manually
++  const onOpenChange = (isOpen: boolean, menuTrigger: MenuTriggerAction) => {
++    if (menuTrigger === "manual" && isOpen) {
++      setFieldState((prevState) => ({
++        inputValue: prevState.inputValue,
++        selectedKey: prevState.selectedKey,
++        items: animals,
++      }));
++    }
++  };
++
++  return (
++    <div className="p-6">
++      <Autocomplete
++        className="max-w-xs"
++        inputValue={fieldState.inputValue}
++        items={fieldState.items}
++        label="Favorite Animal"
++        placeholder="Select an animal"
++        selectedKey={fieldState.selectedKey}
++        variant="bordered"
++        onInputChange={onInputChange}
++        onOpenChange={onOpenChange}
++        onSelectionChange={onSelectionChange}
++      >
++        {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
++      </Autocomplete>
++    </div>
++  );
++}\n- apps/docs/app/examples/perf/page.tsx (modified, 302 changes)\n  Patch: @@ -9,10 +9,17 @@ import {
+   Textarea,
+   Input,
+   Tab,
++  Avatar,
++  Select,
++  SelectItem,
+   AccordionItem,
++  Pagination,
+   extendVariants,
++  PaginationItem,
+ } from "@nextui-org/react";
+-import {useState} from "react";
++import {useFilter} from "@react-aria/i18n";
++import {useEffect, useMemo, useRef, useState} from "react";
++import {useSearchParams} from "next/navigation";
+ 
+ import {SearchLinearIcon} from "@/components/icons";
+ 
+@@ -178,13 +185,297 @@ const MyButton2 = extendVariants(Button, {
+   defaultVariants: {},
+ });
+ 
++const usersData = [
++  {
++    id: 1,
++    name: "Tony Reichert",
++    role: "CEO",
++    team: "Management",
++    status: "active",
++    age: "29",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/1.png",
++    email: "tony.reichert@example.com",
++  },
++  {
++    id: 2,
++    name: "Zoey Lang",
++    role: "Tech Lead",
++    team: "Development",
++    status: "paused",
++    age: "25",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/1.png",
++    email: "zoey.lang@example.com",
++  },
++  {
++    id: 3,
++    name: "Jane Fisher",
++    role: "Sr. Dev",
++    team: "Development",
++    status: "active",
++    age: "22",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/2.png",
++    email: "jane.fisher@example.com",
++  },
++  {
++    id: 4,
++    name: "William Howard",
++    role: "C.M.",
++    team: "Marketing",
++    status: "vacation",
++    age: "28",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/2.png",
++    email: "william.howard@example.com",
++  },
++  {
++    id: 5,
++    name: "Kristen Copper",
++    role: "S. Manager",
++    team: "Sales",
++    status: "active",
++    age: "24",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/3.png",
++    email: "kristen.cooper@example.com",
++  },
++  {
++    id: 6,
++    name: "Brian Kim",
++    role: "P. Manager",
++    team: "Management",
++    age: "29",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/3.png",
++    email: "brian.kim@example.com",
++    status: "Active",
++  },
++  {
++    id: 7,
++    name: "Michael Hunt",
++    role: "Designer",
++    team: "Design",
++    status: "paused",
++    age: "27",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/4.png",
++    email: "michael.hunt@example.com",
++  },
++  {
++    id: 8,
++    name: "Samantha Brooks",
++    role: "HR Manager",
++    team: "HR",
++    status: "active",
++    age: "31",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/4.png",
++    email: "samantha.brooks@example.com",
++  },
++  {
++    id: 9,
++    name: "Frank Harrison",
++    role: "F. Manager",
++    team: "Finance",
++    status: "vacation",
++    age: "33",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/5.png",
++    email: "frank.harrison@example.com",
++  },
++  {
++    id: 10,
++    name: "Emma Adams",
++    role: "Ops Manager",
++    team: "Operations",
++    status: "active",
++    age: "35",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/5.png",
++    email: "emma.adams@example.com",
++  },
++  {
++    id: 11,
++    name: "Brandon Stevens",
++    role: "Jr. Dev",
++    team: "Development",
++    status: "active",
++    age: "22",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/7.png",
++    email: "brandon.stevens@example.com",
++  },
++  {
++    id: 12,
++    name: "Megan Richards",
++    role: "P. Manager",
++    team: "Product",
++    status: "paused",
++    age: "28",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/7.png",
++    email: "megan.richards@example.com",
++  },
++  {
++    id: 13,
++    name: "Oliver Scott",
++    role: "S. Manager",
++    team: "Security",
++    status: "active",
++    age: "37",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/8.png",
++    email: "oliver.scott@example.com",
++  },
++  {
++    id: 14,
++    name: "Grace Allen",
++    role: "M. Specialist",
++    team: "Marketing",
++    status: "active",
++    age: "30",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/8.png",
++    email: "grace.allen@example.com",
++  },
++  {
++    id: 15,
++    name: "Noah Carter",
++    role: "IT Specialist",
++    team: "I. Technology",
++    status: "paused",
++    age: "31",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/9.png",
++    email: "noah.carter@example.com",
++  },
++  {
++    id: 16,
++    name: "Ava Perez",
++    role: "Manager",
++    team: "Sales",
++    status: "active",
++    age: "29",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/9.png",
++    email: "ava.perez@example.com",
++  },
++  {
++    id: 17,
++    name: "Liam Johnson",
++    role: "Data Analyst",
++    team: "Analysis",
++    status: "active",
++    age: "28",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/11.png",
++    email: "liam.johnson@example.com",
++  },
++  {
++    id: 18,
++    name: "Sophia Taylor",
++    role: "QA Analyst",
++    team: "Testing",
++    status: "active",
++    age: "27",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/11.png",
++    email: "sophia.taylor@example.com",
++  },
++  {
++    id: 19,
++    name: "Lucas Harris",
++    role: "Administrator",
++    team: "Information Technology",
++    status: "paused",
++    age: "32",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/male/12.png",
++    email: "lucas.harris@example.com",
++  },
++  {
++    id: 20,
++    name: "Mia Robinson",
++    role: "Coordinator",
++    team: "Operations",
++    status: "active",
++    age: "26",
++    avatar: "https://d2u8k2ocievbld.cloudfront.net/memojis/female/12.png",
++    email: "mia.robinson@example.com",
++  },
++];
++
+ export default function NextUIPerf() {
+   const [textA, setTextA] = useState<string>("");
+   const [textB, setTextB] = useState<string>("");
+   const [textC, setTextC] = useState<string>("");
++  const [isOpen, setIsOpen] = useState<boolean>(false);
++  const [inputValue, setInputValue] = useState<string>();
++  const [selectedKey, setSelectedKey] = useState<string>("");
++
++  const searchParams = useSearchParams();
++
++  const page = Number(searchParams.get("page"));
++
++  let {startsWith} = useFilter({sensitivity: "base"});
++
++  const filteredItems = inputValue
++    ? usersData.filter((item) => startsWith(item.name, inputValue))
++    : usersData;
++
++  const inputRef = useRef<HTMLInputElement>(null);
++
++  useEffect(() => {
++    isOpen && inputRef?.current?.focus();
++  }, [isOpen]);
++
++  const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
++    setSelectedKey(e.target.value);
++  };
++
++  const topContent = useMemo(() => {
++    return (
++      <Input
++        ref={inputRef}
++        isClearable
++        aria-activedescendant={selectedKey}
++        aria-expanded={isOpen}
++        aria-label="Search user"
++        autoComplete="off"
++        autoCorrect="off"
++        className="z-10 sticky top-1"
++        placeholder="Search..."
++        spellCheck={false}
++        startContent={<SearchLinearIcon className="text-default-400" size={18} strokeWidth="2" />}
++        type="text"
++        onValueChange={setInputValue}
++      />
++    );
++  }, [inputRef, selectedKey, isOpen]);
+ 
+   return (
+     <div className="w-full p-24 gap-4 flex flex-col">
++      <Select
++        classNames={{
++          base: "max-w-xs",
++          listboxWrapper: "scroll-pb-6 scroll-pt-28",
++        }}
++        items={filteredItems}
++        label="Assigned to"
++        labelPlacement="outside"
++        listboxProps={{
++          topContent,
++          variant: "flat",
++          classNames: {
++            base: [
++              "before:content-[''] before:rounded-t-medium before:fixed before:w-full before:h-14 before:z-10",
++              "before:top-0 before:left-0 before:bg-gradient-to-b before:from-default-50",
++            ],
++          },
++        }}
++        placeholder="Select a user"
++        selectedKeys={[selectedKey]}
++        showScrollIndicators={false}
++        variant="flat"
++        onChange={handleSelectionChange}
++        onOpenChange={setIsOpen}
++      >
++        {(item) => (
++          <SelectItem key={item.id} textValue={item.name}>
++            <div className="flex gap-2 items-center">
++              <Avatar alt={item.name} className="flex-shrink-0" size="sm" src={item.avatar} />
++              <div className="flex flex-col">
++                <span className="text-small">{item.name}</span>
++                <span className="text-tiny text-default-400">{item.email}</span>
++              </div>
++            </div>
++          </SelectItem>
++        )}
++      </Select>
++
+       <Accordion>
+         <AccordionItem key="1" aria-label="Accordion 1" title="Accordion 1">
+           Non est aliqua tempor occaecat laborum. Lorem culpa minim irure mollit. Est qui
+@@ -254,6 +545,15 @@ export default function NextUIPerf() {
+       <Button>Click Me!</Button>
+ 
+       <MyButton2 color="foreground">Press Me!</MyButton2>
++
++      <Pagination
++        showControls
++        initialPage={page ?? 1}
++        renderItem={({page, ...itemProps}) => {
++          return <PaginationItem href={`/examples/perf?page=${page}`} {...itemProps} />;
++        }}
++        total={10}
++      />
+     </div>
+   );
+ }\n- apps/docs/app/providers.tsx (modified, 5 changes)\n  Patch: @@ -4,15 +4,18 @@ import * as React from "react";
+ import {NextUIProvider} from "@nextui-org/react";
+ import {ThemeProvider as NextThemesProvider} from "next-themes";
+ import {ThemeProviderProps} from "next-themes/dist/types";
++import {useRouter} from "next/navigation";
+ 
+ export interface ProvidersProps {
+   children: React.ReactNode;
+   themeProps?: ThemeProviderProps;
+ }
+ 
+ export function Providers({children, themeProps}: ProvidersProps) {
++  const router = useRouter();
++
+   return (
+-    <NextUIProvider>
++    <NextUIProvider navigate={router.push}>
+       <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+     </NextUIProvider>
+   );\n- apps/docs/components/demos/music-player.tsx (modified, 10 changes)\n  Patch: @@ -1,6 +1,6 @@
+ "use client";
+ 
+-import {Card, CardBody, Button, Image, Progress, CardProps} from "@nextui-org/react";
++import {Card, CardBody, Button, Image, Slider, CardProps} from "@nextui-org/react";
+ import {useState, FC} from "react";
+ import {clsx} from "@nextui-org/shared-utils";
+ import NextImage from "next/image";
+@@ -63,15 +63,15 @@ export const MusicPlayer: FC<MusicPlayerProps> = ({className, ...otherProps}) =>
+             </div>
+ 
+             <div className="flex flex-col mt-3 gap-1">
+-              <Progress
++              <Slider
+                 aria-label="Music progress"
+                 classNames={{
+-                  indicator: "bg-default-800 dark:bg-white",
+                   track: "bg-default-500/30",
++                  thumb: "w-2 h-2 after:w-2 after:h-2 after:bg-foreground",
+                 }}
+-                color="default"
++                color="foreground"
++                defaultValue={33}
+                 size="sm"
+-                value={33}
+               />
+               <div className="flex justify-between">
+                 <p className="text-sm">1:23</p>\n- apps/docs/components/docs/components/code-demo/code-demo.tsx (modified, 3 changes)\n  Patch: @@ -32,7 +32,6 @@ interface CodeDemoProps extends UseCodeDemoProps, WindowResizerProps {
+   showSandpackPreview?: boolean;
+   initialEditorOpen?: boolean;
+   enableResize?: boolean;
+-  showTabs?: boolean;
+   showPreview?: boolean;
+   hideWindowActions?: boolean;
+   showOpenInCodeSandbox?: boolean;
+@@ -54,6 +53,7 @@ export const CodeDemo: React.FC<CodeDemoProps> = ({
+   showEditor = true,
+   showPreview = true,
+   asIframe = false,
++  showTabs = true,
+   resizeEnabled = true,
+   hideWindowActions = false,
+   showSandpackPreview = false,
+@@ -66,7 +66,6 @@ export const CodeDemo: React.FC<CodeDemoProps> = ({
+   previewHeight = "auto",
+   overflow = "visible",
+   displayMode = "always",
+-  showTabs = true,
+   gradientColor,
+   highlightedLines,
+   iframeInitialWidth,\n- apps/docs/components/docs/sidebar.tsx (modified, 11 changes)\n  Patch: @@ -70,6 +70,7 @@ function TreeItem<T>(props: TreeItemProps<T>) {
+       };
+ 
+   const isNew = item.props?.newPost;
++  const isUpdated = item.props?.updated;
+ 
+   const isExpanded = state.expandedKeys.has(key);
+   const isSelected =
+@@ -159,6 +160,16 @@ function TreeItem<T>(props: TreeItemProps<T>) {
+             >
+               {rendered}
+             </span>
++            {isUpdated && (
++              <Chip
++                className="ml-1 py-1 text-tiny text-default-400 bg-default-100/50"
++                color="default"
++                size="sm"
++                variant="flat"
++              >
++                Updated
++              </Chip>
++            )}
+             {isNew && (
+               <Chip className="ml-1 py-1 text-tiny" color="primary" size="sm" variant="flat">
+                 New\n- apps/docs/components/mdx-components.tsx (modified, 2 changes)\n  Patch: @@ -229,7 +229,7 @@ export const MDXComponents = {
+   ),
+   Steps: ({...props}) => (
+     <div
+-      className="[&>h3]:step [&>h3>a]:pt-0.5 mb-12 ml-4 relative border-l border-default-100 pl-[1.625rem] [counter-reset:step]"
++      className="[&>h3]:step [&>h3>a]:pt-0.5 [&>h4]:step [&>h4>a]:pt-0.5 mb-12 ml-4 relative border-l border-default-100 pl-[1.625rem] [counter-reset:step]"
+       {...props}
+     />
+   ),\n- apps/docs/components/navbar.tsx (modified, 8 changes)\n  Patch: @@ -249,11 +249,11 @@ export const Navbar: FC<NavbarProps> = ({children, routes, mobileRoutes = [], sl
+               color="secondary"
+               href="/blog/v2.1.0"
+               variant="dot"
+-              onClick={() => handlePressNavbarItem("New components v2.1.0", "/blog/v2.1.0")}
++              onClick={() => handlePressNavbarItem("Introducing v2.2.0", "/blog/v2.2.0")}
+             >
+-              New components v2.1.0&nbsp;
+-              <span aria-label="party emoji" role="img">
+-                🎉
++              Introducing v2.2.0&nbsp;
++              <span aria-label="rocket emoji" role="img">
++                🚀
+               </span>
+             </Chip>
+           </NavbarItem>\n- apps/docs/components/sandpack/code-viewer.tsx (modified, 8 changes)\n  Patch: @@ -10,6 +10,7 @@ import {Language} from "prism-react-renderer";
+ import {HighlightedLines} from "./types";
+ import {Decorators} from "./types";
+ 
++import {trackEvent} from "@/utils/va";
+ import {Codeblock} from "@/components/docs/components";
+ 
+ export interface CodeViewerProps {
+@@ -83,6 +84,13 @@ export const SandpackCodeViewer = React.forwardRef<any, CodeViewerProps>(
+     const handleExpand = () => {
+       const nextIsExpanded = !isExpanded;
+ 
++      trackEvent("CodeViewer - Expand", {
++        name: activeFile,
++        action: "expand",
++        category: "docs",
++        data: nextIsExpanded ? "expanded" : "collapsed",
++      });
++
+       setIsExpanded(nextIsExpanded);
+       if (containerRef && containerRef?.current !== null) {
+         const container = containerRef?.current;\n- apps/docs/components/sandpack/entries.ts (modified, 17 changes)\n  Patch: @@ -1,4 +1,4 @@
+-export const getFileEntry = (theme: string) => `
++export const rootFile = `
+ import React from "react";
+ import ReactDOM from "react-dom/client";
+ import { NextUIProvider } from "@nextui-org/react";
+@@ -8,13 +8,26 @@ import "./styles.css";
+ ReactDOM.createRoot(document.getElementById("root")).render(
+   <React.StrictMode>
+     <NextUIProvider>
+-      <div className="w-screen h-screen ${theme} text-foreground bg-background p-8 flex items-start justify-center">
++      <div className="w-screen h-screen p-8 flex items-start justify-center">
+         <App />
+       </div>  
+     </NextUIProvider>
+   </React.StrictMode>
+ );`;
+ 
++export const getHtmlFile = (theme: string, entryFile: string) => `<!DOCTYPE html>
++<html lang="en">
++  <head>
++    <meta charset="UTF-8" />
++    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++    <title>Vite App</title>
++  </head>
++  <body class="${theme} text-foreground bg-background">
++    <div id="root"></div>
++    <script type="module" src="/${entryFile}"></script>
++  </body>
++</html>`;
++
+ export const tailwindConfig = `const { nextui } = require("@nextui-org/react");
+ 
+ /** @type {import('tailwindcss').Config} */\n

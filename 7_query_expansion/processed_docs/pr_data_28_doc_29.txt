@@ -1,0 +1,71 @@
+Pull Request Number: 447
+Title: Fix 426/button onclick keyboard
+Base Branch: next
+Head Branch: fix_426/button-onclick-keyboard
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/447
+State: MERGED
+Created At: 2022-05-02T02:00:27Z
+Merged At: 2022-05-02T02:03:27Z
+Participants: jrgarciadev
+
+Description:
+Closes #426
+📝 Description
+The button component is not dispatching the onClick event, a temporal solution was implemented until we fully migrate to the useButton props
+⛳️ Current behavior (updates)
+The button component is not dispatching the onClick event
+🚀 New behavior
+A temporal solution was implemented until we fully migrate to theuseButton props
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(react-button): onClick function is now beign dispatched\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/react/src/button/button.tsx (modified, 7 changes)\n  Patch: @@ -33,6 +33,7 @@ export interface Props extends PressEvents, FocusableProps, AriaButtonProps {
+   ripple?: boolean;
+   icon?: React.ReactNode;
+   iconRight?: React.ReactNode;
++  // @deprecated
+   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+   as?: keyof JSX.IntrinsicElements;
+   className?: string;
+@@ -101,6 +102,8 @@ const Button = React.forwardRef(
+     const handlePress = (e: PressEvent) => {
+       if (e.pointerType === 'keyboard' || e.pointerType === 'virtual') {
+         handleDrip(e);
++        // TODO: take this out and deprecate onClick function for next release (only use the @react-aria/button impl)
++        onClick?.(e as any);
+       }
+       onPress?.(e);
+     };
+@@ -109,6 +112,7 @@ const Button = React.forwardRef(
+     const { buttonProps, isPressed } = useButton(
+       {
+         ...btnProps,
++        onClick: handleClick,
+         isDisabled: disabled,
+         elementType: as,
+         onPress: handlePress
+@@ -135,9 +139,6 @@ const Button = React.forwardRef(
+       buttonRef
+     );
+ 
+-    // TODO: remove this when we can use the new onPress(e) => e.clientX && e.clientY API
+-    buttonProps.onClick = handleClick;
+-
+     /* eslint-enable @typescript-eslint/no-unused-vars */
+     if (__DEV__ && filteredProps.color === 'gradient' && (flat || light)) {
+       useWarning(\n

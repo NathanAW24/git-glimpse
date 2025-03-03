@@ -1,0 +1,231 @@
+Pull Request Number: 1633
+Title: Fix/1632
+Base Branch: main
+Head Branch: fix_1632/comp-dropdownitem-close-modal
+Author: chongruei
+URL: https://github.com/nextui-org/nextui/pull/1633
+State: CLOSED
+Created At: 2023-09-16T08:35:53Z
+Merged At: None
+Participants: chongruei
+
+Description:
+Closes #1632
+📝 Description
+The modal closes immediately if it is opened from the Dropdown component.
+⛳️ Current behavior (updates)
+The modal automatically closes when triggered by onMenuAction in use-dropdown.ts.
+🚀 New behavior
+The modal will not close when menuAction is performed.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+Please kindly let me know if any suggestions.
+
+Commits:
+- fix(dropdown): modal close by dropdown menuaction\n- fix(dropdown): changest\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 0e69148004333b95e897cfb34e5b18f6ea836c47
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                 | Type  |
+| -------------------- | ----- |
+| @nextui-org/dropdown | Patch |
+| @nextui-org/modal    | Patch |
+| @nextui-org/react    | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/chongruei/nextui/new/fix_1632/comp-dropdownitem-close-modal?filename=.changeset/dirty-squids-yell.md&value=---%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A%22%40nextui-org%2Fmodal%22%3A%20patch%0A---%0A%0AFix%2F1632%0A)
+
+\n- vercel: [vc]: #YQPYPZd2coEgwzc+A6dDDLngzcDIHOHsVVLJsWMIWw4=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvVHkxUjRxc3I0Mk5ucFpGdUZEWU5YWFpXenQyQiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWNob25ncnVlaS1maXgxNjMtMDBjNmU0LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWNob25ncnVlaS1maXgxNjMtMDBjNmU0LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/Ty1R4qsr42NnpZFuFDYNXXZWzt2B)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-chongruei-fix163-00c6e4-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-chongruei-fix163-00c6e4-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 16, 2023 8:53am |
+
+\n- vercel: @chongruei is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22267bc24893f6ed35ae8cac720b90f536a688611d%22%7D%2C%22id%22%3A%22QmajE3cpMhdokJ6KaUVwnSrsVX4y8TwjCw61BBzrNVKgAv%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1633%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- chongruei: Close this pull request because there's still a dropdown overlay issue between Modal and outside of Modal that needs to be fixed.\n
+
+Files Changed:
+- .changeset/fresh-paws-exist.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/dropdown": patch
++"@nextui-org/modal": patch
++---
++
++Fix #1632 modal closes immediately if it is opened from the Dropdown component.\n- packages/components/dropdown/__tests__/dropdown.test.tsx (modified, 68 changes)\n  Patch: @@ -1,6 +1,8 @@
+ import * as React from "react";
+ import {act, render} from "@testing-library/react";
+ import {Button} from "@nextui-org/button";
++import {Modal, ModalContent} from "@nextui-org/modal";
++import {useDisclosure} from "@nextui-org/use-disclosure";
+ import userEvent from "@testing-library/user-event";
+ 
+ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, DropdownSection} from "../src";
+@@ -386,4 +388,70 @@ describe("Dropdown", () => {
+ 
+     expect(onSelectionChange).toBeCalledTimes(0);
+   });
++
++  it("should not close the modal content", async () => {
++    const ModalItem = () => {
++      const {isOpen, onOpen, onClose} = useDisclosure();
++
++      return (
++        <>
++          <button
++            data-testid="trigger-test-modal"
++            onClick={() => {
++              onOpen();
++            }}
++          >
++            Open Modal
++          </button>
++          <Modal backdrop={"opaque"} isOpen={isOpen} onClose={onClose}>
++            <ModalContent>
++              <div data-testid="modal-content">Modal Content</div>
++            </ModalContent>
++          </Modal>
++        </>
++      );
++    };
++
++    const wrapper = render(
++      <Dropdown placement="bottom-end">
++        <DropdownTrigger className="mt-10 ml-10">
++          <button data-testid="trigger-test">trigger</button>
++        </DropdownTrigger>
++        <DropdownMenu variant="flat">
++          <DropdownItem>
++            <ModalItem />
++          </DropdownItem>
++        </DropdownMenu>
++      </Dropdown>,
++    );
++
++    let triggerButton = wrapper.getByTestId("trigger-test");
++
++    expect(triggerButton).toBeTruthy();
++
++    act(() => {
++      triggerButton.click();
++    });
++
++    let menu = wrapper.getByRole("menu");
++
++    expect(menu).toBeTruthy();
++
++    let triggerModalButton = wrapper.getByTestId("trigger-test-modal");
++
++    expect(triggerModalButton).toBeTruthy();
++
++    act(() => {
++      triggerModalButton.click();
++    });
++
++    let modal = document.querySelector("[data-modal-open=true]");
++
++    expect(modal).toBeTruthy();
++
++    let modalContent = wrapper.getByTestId("modal-content");
++
++    expect(modalContent).toBeTruthy();
++    expect(modalContent.textContent).toBe("Modal Content");
++  });
+ });\n- packages/components/dropdown/package.json (modified, 2 changes)\n  Patch: @@ -53,7 +53,9 @@
+   "devDependencies": {
+     "@nextui-org/button": "workspace:*",
+     "@nextui-org/avatar": "workspace:*",
++    "@nextui-org/modal": "workspace:*",
+     "@nextui-org/user": "workspace:*",
++    "@nextui-org/use-disclosure": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+     "framer-motion": "^10.15.1",
+     "clean-package": "2.2.0",\n- packages/components/dropdown/src/use-dropdown.ts (modified, 27 changes)\n  Patch: @@ -8,7 +8,7 @@ import {useMenuTrigger} from "@react-aria/menu";
+ import {dropdown} from "@nextui-org/theme";
+ import {clsx} from "@nextui-org/shared-utils";
+ import {ReactRef, mergeRefs} from "@nextui-org/react-utils";
+-import {useMemo, useRef} from "react";
++import {useEffect, useMemo, useRef} from "react";
+ import {mergeProps} from "@react-aria/utils";
+ import {MenuProps} from "@nextui-org/menu";
+ 
+@@ -66,6 +66,7 @@ export function useDropdown(props: UseDropdownProps) {
+   const menuTriggerRef = triggerRefProp || triggerRef;
+   const menuRef = useRef<HTMLUListElement>(null);
+   const popoverRef = useRef<HTMLDivElement>(null);
++  const menuActionTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+ 
+   const state = useMenuTriggerState({
+     trigger,
+@@ -93,13 +94,25 @@ export function useDropdown(props: UseDropdownProps) {
+     [className],
+   );
+ 
++  useEffect(() => {
++    return () => {
++      if (menuActionTimeoutRef.current) clearTimeout(menuActionTimeoutRef.current);
++    };
++  }, []);
++
+   const onMenuAction = (menuCloseOnSelect?: boolean) => {
+-    if (menuCloseOnSelect !== undefined && !menuCloseOnSelect) {
+-      return;
+-    }
+-    if (closeOnSelect) {
+-      state.close();
+-    }
++    menuActionTimeoutRef.current = setTimeout(() => {
++      if (
++        (menuCloseOnSelect !== undefined && !menuCloseOnSelect) ||
++        document.querySelector("[data-modal-open=true]")
++      ) {
++        return;
++      }
++
++      if (closeOnSelect) {
++        state.close();
++      }
++    }, 0);
+   };
+ 
+   const getPopoverProps: PropGetter = (props = {}) => ({\n- packages/components/modal/src/modal-content.tsx (modified, 2 changes)\n  Patch: @@ -89,7 +89,7 @@ const ModalContent = forwardRef<"div", ModalContentProps, KeysToOmit>((props, _)
+   }, [backdrop, disableAnimation, getBackdropProps]);
+ 
+   return (
+-    <div tabIndex={-1}>
++    <div data-modal-open={isOpen} tabIndex={-1}>
+       {backdropContent}
+       <RemoveScroll forwardProps enabled={shouldBlockScroll && isOpen} removeScrollBar={false}>
+         {disableAnimation ? (\n- pnpm-lock.yaml (modified, 6 changes)\n  Patch: @@ -1028,9 +1028,15 @@ importers:
+       '@nextui-org/button':
+         specifier: workspace:*
+         version: link:../button
++      '@nextui-org/modal':
++        specifier: workspace:*
++        version: link:../modal
+       '@nextui-org/shared-icons':
+         specifier: workspace:*
+         version: link:../../utilities/shared-icons
++      '@nextui-org/use-disclosure':
++        specifier: workspace:*
++        version: link:../../hooks/use-disclosure
+       '@nextui-org/user':
+         specifier: workspace:*
+         version: link:../user\n

@@ -1,0 +1,1715 @@
+Pull Request Number: 3554
+Title:  feat(calendar): add custom cell content to Calendar
+Base Branch: canary
+Head Branch: canary
+Author: 1amageek
+URL: https://github.com/nextui-org/nextui/pull/3554
+State: OPEN
+Created At: 2024-07-25T03:53:50Z
+Merged At: None
+Participants: 1amageek, jrgarciadev, wingkwong
+
+Description:
+📝 Description
+This PR adds the ability to render custom content in calendar cells. It introduces a new renderCellContent prop that allows developers to specify custom content for each calendar cell.
+⛳️ Current behavior (updates)
+Currently, the calendar cells render only the default formatted date content, and there is no way to customize the content within each cell.
+🚀 New behavior
+With this PR, developers can pass a renderCellContent function as a prop to the Calendar component. This function receives the date of the cell and allows custom content to be rendered within the cell. If renderCellContent is not provided, the cell will fall back to rendering the default formatted date.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+This update enhances the flexibility and customizability of the calendar component, allowing for a wide range of use cases where specific content needs to be displayed within calendar cells.
+
+Summary by CodeRabbit
+Release Notes
+
+
+New Features
+
+Introduced customizable cell content rendering in both Calendar and RangeCalendar components.
+Added new components: CalendarCellContent, CalendarCellBody, CalendarCellHeader.
+Enhanced Storybook examples for Calendar and RangeCalendar, showcasing custom cell content rendering.
+
+
+
+Tests
+
+Added new test suites to verify custom cell content rendering for Calendar and RangeCalendar components.
+
+
+
+Documentation
+
+Expanded documentation sections for both Calendar and RangeCalendar, detailing new customization options and components.
+
+Commits:
+- feat(calendar): add custom cell content\n- refactor(calendar-cell): add useRef hook to improve performance\n- refactor: improve CalendarCell by destructuring props and adding type annotations for clarity\n- test(calendar): add test for custom cell content in Calendar and RangeCalendar\n- chore: add changeset for custom cell content feature in Calendar and RangeCalendar\n- refactor: use shared template component for custom cell content in calendar stories\n- feat: add calendar width and custom cell templates for calendar and range calendar\n- feat(calendar): add renderCellContent prop for custom cell content\n- feat(calendar): move renderCellContent to context\n- feat(calendar): add cell components and context management\n- feat(calendar): implement custom cell content rendering\n- feat(docs): add custom cell content examples for calendar components\n- fix(theme): correct typo in calendar cellBody height class\n- Merge branch 'canary' into canary\n- feat(calendar): add day of week calculation to CalendarCell component\n- refactor(calendar): improve calendar cell components and remove unused files\n- feat(calendar): update components to use CalendarCellHeader\n- refactor(theme): update gridBodyRow styles for better spacing\n- refactor(calendar): integrate CalendarCellHeader into calendar cell components\n- feat(calendar): add support for custom cell content in calendar components\n- feat(calendar): add role and aria-label to birthday events\n- feat(calendar): add calendar cell components and context support\n- feat(calendar): add calendar cell components and context support\n- ci(changesets): version packages\n- Merge pull request #1 from 1amageek/changeset-release/canary
+
+ci(changesets): :package: version packages\n- Add support for custom cell content in Calendar components\n- Merge branch 'canary' into canary\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 5e2da7c77d0b891df0659fe2993c889a6b9f7086
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/1amageek/nextui/new/canary?filename=.changeset/beige-experts-accept.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fcalendar%22%3A%20patch%0A%22%40nextui-org%2Fdate-picker%22%3A%20patch%0A%22%40nextui-org%2Freact%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0A%20feat(calendar)%3A%20add%20custom%20cell%20content%20to%20Calendar%0A)
+
+\n- vercel: @1amageek is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22448ab55c773ef02423c1c9192c75702896cc2d57%22%7D%2C%22id%22%3A%22c9711ZPmF416ZWcDsP7t%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3554%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This pull request introduces several new components and enhancements to the Calendar and RangeCalendar components, including the addition of custom cell content rendering capabilities. Key changes involve the creation of new components such as `CalendarCellBody`, `CalendarCellContent`, `CalendarCellHeader`, and their integration into the existing calendar structure. Additionally, new test cases have been added to verify the rendering of custom content in both Calendar and RangeCalendar components. Documentation has also been updated to reflect these changes, improving clarity on customization options.
+
+## Changes
+
+| File Path                                             | Change Summary                                                                                              |
+|------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| `packages/components/calendar/__tests__/calendar.test.tsx` | Added a new test suite "Custom cell content" with a test case for rendering custom content in calendar cells. |
+| `packages/components/calendar/src/calendar-cell-body.tsx` | Introduced `CalendarCellBody` component with props extending HTML attributes and context integration.         |
+| `packages/components/calendar/src/calendar-cell-content-default.tsx` | Added `CalendarCellContentDefault` component for displaying the day of the month in a header format.         |
+| `packages/components/calendar/src/calendar-cell-content.tsx` | Introduced `CalendarCellContent` component for rendering calendar cell content with context integration.      |
+| `packages/components/calendar/src/calendar-cell-context.tsx` | Created context for managing calendar cell state, including properties like date and selection status.       |
+| `packages/components/calendar/src/calendar-cell.tsx` | Updated `CalendarCell` to use new context and rendering logic, allowing for flexible cell content display.   |
+| `packages/components/calendar/src/calendar.tsx`     | Modified `Props` interface to include an optional `children` property for custom rendering of calendar cells. |
+| `packages/components/calendar/src/index.ts`         | Expanded exports to include new components: `CalendarCellContent`, `CalendarCellHeader`, and `CalendarCellBody`. |
+| `packages/components/calendar/src/range-calendar.tsx` | Updated `RangeCalendar` to support custom rendering of calendar cells via a new `children` prop.             |
+| `packages/components/calendar/src/use-calendar-base.ts` | Added `cellContent` property to `Props` interface for custom cell rendering.                                |
+| `packages/components/calendar/src/use-calendar.ts`   | Introduced `cellContent` as an optional property in the `useCalendar` function.                             |
+| `packages/components/calendar/src/use-range-calendar.ts` | Added `cellContent` to `useRangeCalendar` parameters for custom rendering.                                   |
+| `packages/components/calendar/stories/calendar.stories.tsx` | Enhanced Storybook with `CustomCellTemplate` for demonstrating custom cell content.                         |
+| `packages/components/calendar/stories/range-calendar.stories.tsx` | Updated `CustomCellTemplate` in Storybook for `RangeCalendar` to showcase custom cell rendering.            |
+| `packages/core/theme/src/components/calendar.ts`    | Modified calendar component to include new slots for `cellContent` and `cellBody`.                          |
+| `apps/docs/content/components/calendar/custom-cell-content.ts` | Added new file exporting `App` and `AppTs` components for rendering calendar interfaces.                     |
+| `apps/docs/content/components/calendar/index.ts`     | Updated to include `customCellContent` in the `calendarContent` object.                                      |
+| `apps/docs/content/components/range-calendar/custom-cell-content.ts` | Introduced new file for `RangeCalendar` with `App` and `AppTs` components.                                  |
+| `apps/docs/content/components/range-calendar/index.ts` | Added `customCellContent` to the `rangeCalendarContent` object.                                             |
+| `apps/docs/content/docs/components/calendar.mdx`     | Enhanced documentation with a new section on custom cell content and updated slots.                          |
+| `apps/docs/content/docs/components/range-calendar.mdx` | Improved documentation for `RangeCalendar`, including examples of new components and props.                  |
+| `packages/components/calendar/__tests__/range-calendar.test.tsx` | Added a test suite "Custom cell content" to verify rendering of custom content in `RangeCalendar` cells.    |
+| `packages/components/calendar/src/calendar-cell-header.tsx` | Introduced `CalendarCellHeader` component for rendering headers in calendar cells.                           |
+
+## Sequence Diagram(s)
+```mermaid
+sequenceDiagram
+    participant User
+    participant Calendar
+    participant CalendarCellContent
+    participant CalendarCellBody
+    participant CalendarCellHeader
+
+    User->>Calendar: Render calendar
+    Calendar->>CalendarCellContent: Pass cell content
+    CalendarCellContent->>CalendarCellBody: Render body content
+    CalendarCellContent->>CalendarCellHeader: Render header content
+    CalendarCellBody-->>Calendar: Return body
+    CalendarCellHeader-->>Calendar: Return header
+    Calendar-->>User: Display calendar with custom content
+```
+
+## Possibly related PRs
+- **#3302**: This PR introduces month and year pickers to the `RangeCalendar`, which relates to the main PR's focus on rendering custom content in calendar cells, enhancing the overall calendar functionality.
+- **#3773**: This PR addresses the propagation of `classNames` in the `calendarProps` for the DatePicker, which is relevant as it ensures that the Calendar component's styling is correctly applied, potentially impacting how custom content is rendered in the main PR's new test case.
+
+## Suggested reviewers
+- jrgarciadev
+- wingkwong
+
+<!-- walkthrough_end -->
+
+
+
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- 1amageek: #3313 was closed and the PR was remade.\n- jrgarciadev: Hey @1amageek please update this PR so we can include this into the 2.5.0 release\n- 1amageek: @wingkwong @jrgarciadev I made further improvements to the PR, added support for the Storyboard, documentation, and tests.  Please review it again.\n- wingkwong: can you check those comments made by coderabbitai and click Resolve Conversation if resolved\n- vercel: [vc]: #HeOOjhm+CsOpJwrzTlS0EkArIpa2kf0U5LlheKBLxls=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRG5kREF5V2E5aUIzcFJ4UHF2Z1FpZTZaVVVNTSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLTFhbWFnZWVrLWNhbmFyeS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay0xYW1hZ2Vlay1jYW5hcnktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1kb2NzLXYyIiwicm9vdERpcmVjdG9yeSI6ImFwcHMvZG9jcyIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1kb2NzLXYyLzdUZjR4c0Q2MWt0MlpHVVg1aU54TG5KRWFBNEMiLCJwcmV2aWV3VXJsIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZvcmstMWFtYWdlZWstY2FuYXJ5LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktZG9jcy12Mi1naXQtZm9yay0xYW1hZ2Vlay1jYW5hcnktbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/7Tf4xsD61kt2ZGUX5iNxLnJEaA4C)) | [Visit Preview](https://nextui-docs-v2-git-fork-1amageek-canary-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-1amageek-canary-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 7, 2024 1:06pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/DndDAyWa9iB3pRxPqvgQie6ZUUMM)) | [Visit Preview](https://nextui-storybook-v2-git-fork-1amageek-canary-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-1amageek-canary-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 7, 2024 1:06pm |
+
+
+\n
+
+Files Changed:
+- apps/docs/content/components/calendar/custom-cell-content.ts (added, 72 changes)\n  Patch: @@ -0,0 +1,72 @@
++const App = `import {Calendar, CalendarCellContent, CalendarCellHeader, CalendarCellBody} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Calendar calendarWidth={400}>
++      {(date) => (
++        <CalendarCellContent>
++          <CalendarCellHeader />
++          <CalendarCellBody>
++            <div className="flex flex-col w-full text-tiny gap-0.5 px-0.5">
++              {date.day % 7 === 0 && (
++                <span 
++                  className="bg-red-500/20 w-full rounded-md px-1 text-red-400 line-clamp-1"
++                  role="status"
++                  aria-label="Birthday event"
++                > 
++                Birth day
++                </span>
++              )}
++              {date.day % 5 === 0 && (
++                <span 
++                  className="bg-green-500/20 w-full rounded-md px-1 text-green-400 line-clamp-1"
++                  role="status"
++                  aria-label="Birthday event"
++                > 
++                  MTG
++                </span>
++              )}
++              {date.day % 3 === 0 && (
++                <span 
++                  className="bg-yellow-500/20 w-full rounded-md px-1 text-yellow-400 line-clamp-1"
++                  role="status"
++                  aria-label="Birthday event"
++                > 
++                  MTG
++                </span>
++              )}
++            </div>
++          </CalendarCellBody>
++        </CalendarCellContent>
++      )}
++    </Calendar>
++  );
++}`;
++
++const AppTs = `import {Calendar, CalendarCellContent, CalendarCellHeader, CalendarCellBody} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Calendar>
++      <CalendarCellContent>
++        <CalendarCellHeader />
++        <CalendarCellBody>
++          <div className="flex flex-col w-full gap-0.5 justify-center items-center p-0.5">
++            <span className="bg-red-600 h-1 w-full rounded-full" />
++            <span className="bg-green-600 h-1 w-full rounded-full" />
++            <span className="bg-yellow-600 h-1 w-full rounded-full" />
++          </div>
++        </CalendarCellBody>
++      </CalendarCellContent>
++    </Calendar>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++  "/App.tsx": AppTs,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/calendar/index.ts (modified, 2 changes)\n  Patch: @@ -12,6 +12,7 @@ import internationalCalendars from "./international-calendars";
+ import visibleMonths from "./visible-months";
+ import pageBehaviour from "./page-behaviour";
+ import presets from "./presets";
++import customCellContent from "./custom-cell-content";
+ 
+ export const calendarContent = {
+   usage,
+@@ -28,4 +29,5 @@ export const calendarContent = {
+   visibleMonths,
+   pageBehaviour,
+   presets,
++  customCellContent,
+ };\n- apps/docs/content/components/range-calendar/custom-cell-content.ts (added, 72 changes)\n  Patch: @@ -0,0 +1,72 @@
++const App = `import {RangeCalendar, CalendarCellContent, CalendarCellHeader, CalendarCellBody} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <RangeCalendar calendarWidth={400}>
++      {(date) => (
++        <CalendarCellContent>
++          <CalendarCellHeader />
++          <CalendarCellBody>
++                <div className="flex flex-col w-full text-tiny gap-0.5 px-0.5">
++              {date.day % 7 === 0 && (
++                <span 
++                  className="bg-red-500/20 w-full rounded-md px-1 text-red-400 line-clamp-1"
++                  role="status"
++                  aria-label="Birthday event"
++                > 
++                Birth day
++                </span>
++              )}
++              {date.day % 5 === 0 && (
++                <span 
++                  className="bg-green-500/20 w-full rounded-md px-1 text-green-400 line-clamp-1"
++                  role="status"
++                  aria-label="Birthday event"
++                > 
++                  MTG
++                </span>
++              )}
++              {date.day % 3 === 0 && (
++                <span 
++                  className="bg-yellow-500/20 w-full rounded-md px-1 text-yellow-400 line-clamp-1"
++                  role="status"
++                  aria-label="Birthday event"
++                > 
++                  MTG
++                </span>
++              )}
++            </div>
++          </CalendarCellBody>
++        </CalendarCellContent>
++      )}
++    </RangeCalendar>
++  );
++}`;
++
++const AppTs = `import {RangeCalendar, CalendarCellContent, CalendarCellHeader, CalendarCellBody} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <RangeCalendar>
++      <CalendarCellContent>
++        <CalendarCellHeader />
++        <CalendarCellBody>
++          <div className="flex flex-col w-full gap-0.5 justify-center items-center p-0.5">
++            <span className="bg-red-600 h-1 w-full rounded-full" />
++            <span className="bg-green-600 h-1 w-full rounded-full" />
++            <span className="bg-yellow-600 h-1 w-full rounded-full" />
++          </div>
++        </CalendarCellBody>
++      </CalendarCellContent>
++    </RangeCalendar>
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++  "/App.tsx": AppTs,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/range-calendar/index.ts (modified, 2 changes)\n  Patch: @@ -12,6 +12,7 @@ import internationalCalendars from "./international-calendars";
+ import visibleMonths from "./visible-months";
+ import pageBehaviour from "./page-behaviour";
+ import presets from "./presets";
++import customCellContent from "./custom-cell-content";
+ import withMonthAndYearPicker from "./with-month-and-year-picker";
+ 
+ export const rangeCalendarContent = {
+@@ -29,5 +30,6 @@ export const rangeCalendarContent = {
+   visibleMonths,
+   pageBehaviour,
+   presets,
++  customCellContent,
+   withMonthAndYearPicker,
+ };\n- apps/docs/content/docs/components/calendar.mdx (modified, 18 changes)\n  Patch: @@ -129,6 +129,20 @@ Here's the example to customize `topContent` and `bottomContent` to have some pr
+ 
+ <CodeDemo title="Presets" files={calendarContent.presets} />
+ 
++### Custom Cell Content
++
++The Calendar component supports customizing the cell content in two ways:
++
++<CodeDemo title="Custom Cell" files={calendarContent.customCellContent} />
++
++The Calendar provides three components for cell customization:
++
++- `CalendarCellContent`: The wrapper component for the cell content
++- `CalendarCellHeader`: The interactive header element that handles selection
++- `CalendarCellBody`: Additional content container below the button
++
++These components inherit all calendar states (selected, disabled, etc.) and maintain proper accessibility.
++
+ ## Slots
+ 
+ - **base**: Calendar wrapper, it handles alignment, placement, and general appearance.
+@@ -146,6 +160,10 @@ Here's the example to customize `topContent` and `bottomContent` to have some pr
+ - **gridBodyRow**: The date grid body row element (e.g. `<tr>`).
+ - **cell**: The date grid cell element (e.g. `<td>`).
+ - **cellButton**: The button element within the cell.
++- **cellContent**: The wrapper for custom cell content.
++- **cellHeaderWrapper**: The wrapper for the cell header content.
++- **cellHeader**: The header element within the cell that handles selection.
++- **cellBody**: The container for additional cell content.
+ - **pickerWrapper**: The wrapper for the picker
+ - **pickerMonthList**: The month list picker.
+ - **pickerYearList**: The year list picker.\n- apps/docs/content/docs/components/range-calendar.mdx (modified, 74 changes)\n  Patch: @@ -13,6 +13,7 @@ A range calendar consists of a grouping element containing one or more date grid
+ 
+ ---
+ 
++
+ <CarbonAd/>
+ 
+ ## Installation
+@@ -32,8 +33,8 @@ A range calendar consists of a grouping element containing one or more date grid
+ 
+ <ImportTabs
+   commands={{
+-    main: 'import {RangeCalendar} from "@nextui-org/react";',
+-    individual: 'import {RangeCalendar} from "@nextui-org/calendar";',
++    main: 'import {RangeCalendar, CalendarCellContent, CalendarCellHeader, CalendarCellBody} from "@nextui-org/react";',
++    individual: 'import {RangeCalendar, CalendarCellContent, CalendarCellHeader, CalendarCellBody} from "@nextui-org/calendar";',
+   }}
+ />
+ 
+@@ -45,6 +46,56 @@ Date values are provided using objects in the [@internationalized/date](https://
+ 
+ <CodeDemo title="Usage" files={rangeCalendarContent.usage} />
+ 
++### Custom Cell Content
++
++The Calendar component supports customizing the cell content in two ways:
++
++1. Using a render function:
++```tsx
++<RangeCalendar>
++  {(date, cellState) => (
++    <CalendarCellContent>
++      <CalendarCellHeader>
++        <span 
++          className={
++            getDayOfWeek(date, locale) === 0 
++              ? "text-red-500" 
++              : "text-default-500"
++          }
++        >
++          {date.day}
++        </span>
++      </CalendarCellHeader>
++    </CalendarCellContent>
++  )}
++</RangeCalendar>
++```
++
++2. Using component composition:
++```tsx
++<RangeCalendar>
++  <CalendarCellContent>
++    <CalendarCellHeader />
++    <CalendarCellBody>
++      <div className="flex flex-col w-full gap-0.5 justify-center items-center p-0.5">
++        <span className="bg-red-600 h-1 w-full rounded-full" />
++        <span className="bg-green-600 h-1 w-full rounded-full" />
++        <span className="bg-yellow-600 h-1 w-full rounded-full" />
++      </div>
++    </CalendarCellBody>
++  </CalendarCellContent>
++</RangeCalendar>
++```
++
++The calendar provides three components for cell customization:
++- `CalendarCellContent`: Wrapper component for the entire cell content
++- `CalendarCellHeader`: Interactive button element that handles selection
++- `CalendarCellBody`: Container for additional content below the button
++
++These components inherit all calendar states (selected, disabled, etc.) and maintain proper accessibility.
++
++<CodeDemo title="Custom Cell Content" files={rangeCalendarContent.customCellContent} />
++
+ ### Disabled
+ 
+ The `isDisabled` boolean prop makes the Calendar disabled. Cells cannot be focused or selected.
+@@ -137,6 +188,21 @@ Here's the example to customize `topContent` and `bottomContent` to have some pr
+ 
+ <CodeDemo title="Presets" files={rangeCalendarContent.presets} />
+ 
++### Custom Cell Content
++
++The Calendar component supports customizing the cell content in two ways:
++
++<CodeDemo title="Custom Cell" files={rangeCalendarContent.customCellContent} />
++
++The Calendar provides three components for cell customization:
++
++- `CalendarCellContent`: The wrapper component for the cell content
++- `CalendarCellHeader`: The interactive header element that handles selection
++- `CalendarCellBody`: Additional content container below the button
++
++These components inherit all calendar states (selected, disabled, etc.) and maintain proper accessibility.
++
++
+ ## Slots
+ 
+ - **base**: Calendar wrapper, it handles alignment, placement, and general appearance.
+@@ -154,6 +220,10 @@ Here's the example to customize `topContent` and `bottomContent` to have some pr
+ - **gridBodyRow**: The date grid body row element (e.g. `<tr>`).
+ - **cell**: The date grid cell element (e.g. `<td>`).
+ - **cellButton**: The button element within the cell.
++- **cellContent**: The wrapper for custom cell content.
++- **cellHeaderWrapper**: The wrapper for the cell header content.
++- **cellHeader**: The header element within the cell that handles selection.
++- **cellBody**: The container for additional cell content.
+ - **pickerWrapper**: The wrapper for the picker
+ - **pickerMonthList**: The month list picker.
+ - **pickerYearList**: The year list picker.\n- packages/components/calendar/CHANGELOG.md (modified, 35 changes)\n  Patch: @@ -1,5 +1,39 @@
+ # @nextui-org/calendar
+ 
++
++## 2.3.0
++
++### Minor Changes
++
++- [`0218de1`](https://github.com/nextui-org/nextui/commit/0218de16f0831a7fee14065352b3284aa52c39c3) Thanks [@1amageek](https://github.com/1amageek)! - Added support for custom cell content rendering in Calendar components:
++  - Added `children` prop to both `Calendar` and `RangeCalendar`
++  - `children` can be either a render function `(date: CalendarDate) => ReactNode` or a `ReactNode`
++  - Allows full customization of calendar cell content
++
++  Example usage:
++  1. Full Custom Rendering - Complete control over cell content:
++```tsx
++  <Calendar>
++    {(date) => (
++      <div>
++        <span>{date.day}</span>
++        {isHoliday(date) && <span>🎉</span>}
++      </div>
++    )}
++  </Calendar>
++```
++  2. Content Extension - Using built-in components with custom content:
++```tsx
++  <Calendar>
++    {(date) => (
++      <CalendarCellContent>
++        <CalendarCellHeader />
++        <CalendarCellBody>Custom content</CalendarCellBody>
++      </CalendarCellContent>
++    )}
++  </Calendar>
++```
++
+ ## 2.2.3
+ 
+ ### Patch Changes
+@@ -10,6 +44,7 @@
+   - @nextui-org/button@2.2.3
+   - @nextui-org/framer-utils@2.1.3
+ 
++
+ ## 2.2.2
+ 
+ ### Patch Changes\n- packages/components/calendar/__tests__/calendar.test.tsx (modified, 21 changes)\n  Patch: @@ -464,4 +464,25 @@ describe("Calendar", () => {
+       expect(year).toHaveAttribute("data-value", "2567");
+     });
+   });
++
++  describe("Custom cell content", () => {
++    it("should render custom content in the calendar cells", () => {
++      const wrapper = render(
++        <Calendar defaultValue={new CalendarDate(2024, 3, 31)}>
++          {(date) => (
++            <div>
++              {date.day}
++              <span>*</span>
++            </div>
++          )}
++        </Calendar>,
++      );
++
++      const gridCells = wrapper.getAllByRole("gridcell");
++      const customContentCell = gridCells.find((cell) => cell.textContent === "31*");
++
++      expect(customContentCell).not.toBeNull();
++      expect(customContentCell).toHaveTextContent("31*");
++    });
++  });
+ });\n- packages/components/calendar/__tests__/range-calendar.test.tsx (modified, 26 changes)\n  Patch: @@ -748,4 +748,30 @@ describe("RangeCalendar", () => {
+       expect(end).toEqual(new CalendarDate(2019, 6, 25));
+     });
+   });
++
++  describe("Custom cell content", () => {
++    it("should render custom content in the range calendar cells", () => {
++      const wrapper = render(
++        <RangeCalendar
++          defaultValue={{start: new CalendarDate(2024, 6, 25), end: new CalendarDate(2024, 6, 26)}}
++        >
++          {(date) => (
++            <div>
++              {date.day}
++              <span>*</span>
++            </div>
++          )}
++        </RangeCalendar>,
++      );
++
++      const gridCells = wrapper.getAllByRole("gridcell");
++      const customContentCellA = gridCells.find((cell) => cell.textContent === "25*");
++      const customContentCellB = gridCells.find((cell) => cell.textContent === "26*");
++
++      expect(customContentCellA).not.toBeNull();
++      expect(customContentCellA).toHaveTextContent("25*");
++      expect(customContentCellB).not.toBeNull();
++      expect(customContentCellB).toHaveTextContent("26*");
++    });
++  });
+ });\n- packages/components/calendar/package.json (modified, 2 changes)\n  Patch: @@ -1,6 +1,6 @@
+ {
+   "name": "@nextui-org/calendar",
+-  "version": "2.2.3",
++  "version": "2.3.0",
+   "description": "A calendar displays one or more date grids and allows users to select a single date.",
+   "keywords": [
+     "calendar"\n- packages/components/calendar/src/calendar-cell-body.tsx (added, 29 changes)\n  Patch: @@ -0,0 +1,29 @@
++import type {HTMLNextUIProps} from "@nextui-org/system";
++
++import React from "react";
++
++import {useCalendarContext} from "./calendar-context";
++
++interface Props extends HTMLNextUIProps<"div"> {
++  children: React.ReactNode;
++}
++
++export type CalendarCellBodyProps = Props;
++
++export const CalendarCellBody = React.forwardRef<HTMLDivElement, CalendarCellBodyProps>(
++  ({children, ...props}, ref) => {
++    const {slots, classNames} = useCalendarContext();
++    const bodyProps = {
++      ...props,
++      ref: ref,
++      className: slots?.cellBody({class: classNames?.cellBody}),
++      "data-slot": "cell-body",
++    };
++
++    return <div {...bodyProps}>{children}</div>;
++  },
++);
++
++CalendarCellBody.displayName = "NextUI.CalendarCellBody";
++
++export default CalendarCellBody;\n- packages/components/calendar/src/calendar-cell-content-default.tsx (added, 19 changes)\n  Patch: @@ -0,0 +1,19 @@
++import React from "react";
++import {CalendarDate} from "@internationalized/date";
++
++import {CalendarCellContent} from "./calendar-cell-content";
++import {CalendarCellHeader} from "./calendar-cell-header";
++
++export interface CalendarCellContentDefaultProps {
++  date: CalendarDate;
++}
++
++export const CalendarCellContentDefault: React.FC<CalendarCellContentDefaultProps> = ({date}) => {
++  return (
++    <CalendarCellContent>
++      <CalendarCellHeader>{date.day}</CalendarCellHeader>
++    </CalendarCellContent>
++  );
++};
++
++CalendarCellContentDefault.displayName = "NextUI.CalendarCellContentDefault";\n- packages/components/calendar/src/calendar-cell-content.tsx (added, 25 changes)\n  Patch: @@ -0,0 +1,25 @@
++import type {HTMLNextUIProps} from "@nextui-org/system";
++
++import {useCalendarContext} from "./calendar-context";
++
++export interface CalendarCellContentProps extends HTMLNextUIProps<"div"> {
++  children: React.ReactNode;
++}
++
++export const CalendarCellContent = ({children, ...props}: CalendarCellContentProps) => {
++  const {slots, classNames} = useCalendarContext();
++
++  return (
++    <div
++      className={slots?.cellContent({class: classNames?.cellContent})}
++      data-slot="cell-content"
++      {...props}
++    >
++      {children}
++    </div>
++  );
++};
++
++CalendarCellContent.displayName = "NextUI.CalendarCellContent";
++
++export default CalendarCellContent;\n- packages/components/calendar/src/calendar-cell-context.tsx (added, 45 changes)\n  Patch: @@ -0,0 +1,45 @@
++import type {CalendarState, RangeCalendarState} from "@react-stately/calendar";
++import type {CalendarDate} from "@internationalized/date";
++import type {DOMAttributes} from "@react-types/shared";
++
++import {createContext} from "@nextui-org/react-utils";
++
++export interface CalendarCellContextType {
++  // Core date and state
++  date: CalendarDate;
++  state: CalendarState | RangeCalendarState;
++  buttonProps: DOMAttributes;
++  formattedDate: string;
++
++  // Selection states
++  isSelected: boolean;
++  isRangeSelection: boolean;
++  isRangeStart: boolean;
++  isRangeEnd: boolean;
++  isSelectionStart: boolean;
++  isSelectionEnd: boolean;
++
++  // Interaction states
++  isDisabled: boolean;
++  isPressable: boolean;
++  isPressed: boolean;
++  isFocused: boolean;
++  isFocusVisible: boolean;
++  isHovered: boolean;
++
++  // Validation states
++  isInvalid: boolean;
++  isUnavailable: boolean;
++
++  // Display states
++  isOutsideMonth: boolean;
++  isToday: boolean;
++  isReadOnly: boolean;
++}
++
++export const [CalendarCellProvider, useCalendarCell] = createContext<CalendarCellContextType>({
++  name: "CalendarCellContext",
++  strict: true,
++  errorMessage:
++    "useCalendarCell: `context` is undefined. Seems you forgot to wrap component within the CalendarCellProvider",
++});\n- packages/components/calendar/src/calendar-cell-header.tsx (added, 72 changes)\n  Patch: @@ -0,0 +1,72 @@
++import type {HTMLNextUIProps} from "@nextui-org/system";
++
++import {dataAttr} from "@nextui-org/shared-utils";
++
++import {useCalendarCell} from "./calendar-cell-context";
++import {useCalendarContext} from "./calendar-context";
++
++export interface CalendarCellHeaderProps extends HTMLNextUIProps<"div"> {
++  children?: React.ReactNode;
++}
++
++export const CalendarCellHeader = ({children}: CalendarCellHeaderProps) => {
++  const {slots, classNames} = useCalendarContext();
++  const {
++    date,
++    state,
++    isSelected,
++    isDisabled,
++    isInvalid,
++    isOutsideMonth,
++    isToday,
++    isUnavailable,
++    isRangeSelection,
++    isRangeStart,
++    isRangeEnd,
++    isSelectionStart,
++    isSelectionEnd,
++    isFocused,
++    isFocusVisible,
++    isHovered,
++    isPressed,
++  } = useCalendarCell();
++
++  return (
++    <div
++      className={slots?.cellHeaderWrapper({class: classNames?.cellHeaderWrapper})}
++      data-range-end={dataAttr(isRangeEnd)}
++      data-range-selection={dataAttr(isRangeSelection)}
++      data-range-start={dataAttr(isRangeStart)}
++      data-readonly={dataAttr(state.isReadOnly)}
++      data-selected={dataAttr(isSelected)}
++      data-selection-end={dataAttr(isSelectionEnd)}
++      data-selection-start={dataAttr(isSelectionStart)}
++    >
++      <span
++        className={slots?.cellHeader({class: classNames?.cellButton})}
++        data-disabled={dataAttr(isDisabled && !isInvalid)}
++        data-focus-visible={dataAttr(isFocused && isFocusVisible)}
++        data-hover={dataAttr(isHovered)}
++        data-invalid={dataAttr(isInvalid)}
++        data-outside-month={dataAttr(isOutsideMonth)}
++        data-pressed={dataAttr(isPressed && !state.isReadOnly)}
++        data-range-end={dataAttr(isRangeEnd)}
++        data-range-selection={dataAttr(isRangeSelection)}
++        data-range-start={dataAttr(isRangeStart)}
++        data-readonly={dataAttr(state.isReadOnly)}
++        data-selected={dataAttr(isSelected)}
++        data-selection-end={dataAttr(isSelectionEnd)}
++        data-selection-start={dataAttr(isSelectionStart)}
++        data-slot="cell-header"
++        data-today={dataAttr(isToday)}
++        data-unavailable={dataAttr(isUnavailable)}
++      >
++        {children ? children : date.day}
++      </span>
++    </div>
++  );
++};
++
++CalendarCellHeader.displayName = "NextUI.CalendarCellHeader";
++
++export default CalendarCellHeader;\n- packages/components/calendar/src/calendar-cell.tsx (modified, 60 changes)\n  Patch: @@ -9,7 +9,10 @@ import {useLocale} from "@react-aria/i18n";
+ import {useFocusRing} from "@react-aria/focus";
+ import {useHover} from "@react-aria/interactions";
+ import {useRef} from "react";
+-import {dataAttr} from "@nextui-org/shared-utils";
++
++import {CalendarCellContextType, CalendarCellProvider} from "./calendar-cell-context";
++import {CalendarCellContentDefault} from "./calendar-cell-content-default";
++import {useCalendarContext} from "./calendar-context";
+ 
+ export interface CalendarCellProps extends HTMLNextUIProps<"td">, AriaCalendarCellProps {
+   state: CalendarState | RangeCalendarState;
+@@ -23,6 +26,7 @@ export function CalendarCell(originalProps: CalendarCellProps) {
+   const {state, slots, isPickerVisible, currentMonth, classNames, ...props} = originalProps;
+ 
+   const ref = useRef<HTMLButtonElement>(null);
++  const {cellContent} = useCalendarContext();
+ 
+   const {
+     cellProps,
+@@ -67,29 +71,51 @@ export function CalendarCell(originalProps: CalendarCellProps) {
+     isDisabled: isDisabled || isUnavailable || state.isReadOnly,
+   });
+ 
++  const cellContextValue: CalendarCellContextType = {
++    // Core date and state
++    date: props.date,
++    state,
++    buttonProps,
++    formattedDate,
++
++    // Selection states
++    isSelected,
++    isRangeSelection: isSelected && "highlightedRange" in state,
++    isRangeStart,
++    isRangeEnd,
++    isSelectionStart,
++    isSelectionEnd,
++
++    // Interaction states
++    isDisabled,
++    isPressable: !isDisabled && !isUnavailable && !state.isReadOnly,
++    isPressed,
++    isFocused,
++    isFocusVisible,
++    isHovered,
++
++    // Validation states
++    isInvalid,
++    isUnavailable,
++
++    // Display states
++    isOutsideMonth: !isSameMonth(props.date, currentMonth),
++    isToday: isToday(props.date, state.timeZone),
++    isReadOnly: state.isReadOnly,
++  };
++
+   return (
+     <td className={slots?.cell({class: classNames?.cell})} data-slot="cell" {...cellProps}>
+       <span
+         {...mergeProps(buttonProps, hoverProps, focusProps)}
+         ref={ref}
+         className={slots?.cellButton({class: classNames?.cellButton})}
+-        data-disabled={dataAttr(isDisabled && !isInvalid)}
+-        data-focus-visible={dataAttr(isFocused && isFocusVisible)}
+-        data-hover={dataAttr(isHovered)}
+-        data-invalid={dataAttr(isInvalid)}
+-        data-outside-month={dataAttr(!isSameMonth(props.date, currentMonth))}
+-        data-pressed={dataAttr(isPressed && !state.isReadOnly)}
+-        data-range-end={dataAttr(isRangeEnd)}
+-        data-range-selection={dataAttr(isSelected && "highlightedRange" in state)}
+-        data-range-start={dataAttr(isRangeStart)}
+-        data-readonly={dataAttr(state.isReadOnly)}
+-        data-selected={dataAttr(isSelected)}
+-        data-selection-end={dataAttr(isSelectionEnd)}
+-        data-selection-start={dataAttr(isSelectionStart)}
+-        data-today={dataAttr(isToday(props.date, state.timeZone))}
+-        data-unavailable={dataAttr(isUnavailable)}
+       >
+-        <span>{formattedDate}</span>
++        <CalendarCellProvider value={cellContextValue}>
++          {typeof cellContent === "function"
++            ? cellContent(props.date)
++            : cellContent ?? <CalendarCellContentDefault date={props.date} />}
++        </CalendarCellProvider>
+       </span>
+     </td>
+   );\n- packages/components/calendar/src/calendar.tsx (modified, 14 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import type {DateValue} from "@internationalized/date";
++import type {CalendarDate, DateValue} from "@internationalized/date";
+ import type {ForwardedRef, ReactElement} from "react";
+ 
+ import {forwardRef} from "@nextui-org/system";
+@@ -7,15 +7,23 @@ import {UseCalendarProps, useCalendar} from "./use-calendar";
+ import {CalendarProvider} from "./calendar-context";
+ import {CalendarBase} from "./calendar-base";
+ 
+-interface Props<T extends DateValue> extends Omit<UseCalendarProps<T>, "isHeaderWrapperExpanded"> {}
++interface Props<T extends DateValue>
++  extends Omit<UseCalendarProps<T>, "isHeaderWrapperExpanded" | "children"> {
++  children?: ((date: CalendarDate) => React.ReactNode) | React.ReactNode;
++}
+ 
+ export type CalendarProps<T extends DateValue = DateValue> = Props<T>;
+ 
+ const Calendar = forwardRef(function Calendar<T extends DateValue>(
+   props: CalendarProps<T>,
+   ref: ForwardedRef<HTMLDivElement>,
+ ) {
+-  const {context, getBaseCalendarProps} = useCalendar<T>({...props, ref});
++  const {children, ...otherProps} = props;
++  const {context, getBaseCalendarProps} = useCalendar<T>({
++    ...otherProps,
++    ref,
++    cellContent: children,
++  });
+ 
+   return (
+     <CalendarProvider value={context}>\n- packages/components/calendar/src/index.ts (modified, 5 changes)\n  Patch: @@ -1,5 +1,8 @@
+ import Calendar from "./calendar";
+ import RangeCalendar from "./range-calendar";
++import CalendarCellContent from "./calendar-cell-content";
++import CalendarCellHeader from "./calendar-cell-header";
++import CalendarCellBody from "./calendar-cell-body";
+ 
+ // export types
+ export type {CalendarProps} from "./calendar";
+@@ -16,4 +19,4 @@ export {useRangeCalendar} from "./use-range-calendar";
+ export {CalendarProvider, useCalendarContext} from "./calendar-context";
+ 
+ // export component
+-export {Calendar, RangeCalendar};
++export {Calendar, RangeCalendar, CalendarCellContent, CalendarCellHeader, CalendarCellBody};\n- packages/components/calendar/src/range-calendar.tsx (modified, 15 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import type {DateValue} from "@internationalized/date";
++import type {CalendarDate, DateValue} from "@internationalized/date";
+ import type {ForwardedRef, ReactElement} from "react";
+ 
+ import {forwardRef} from "@nextui-org/system";
+@@ -10,16 +10,23 @@ import {CalendarBase} from "./calendar-base";
+ interface Props<T extends DateValue>
+   extends Omit<
+     UseRangeCalendarProps<T>,
+-    "isHeaderExpanded" | "onHeaderExpandedChange" | "isHeaderWrapperExpanded"
+-  > {}
++    "isHeaderExpanded" | "onHeaderExpandedChange" | "isHeaderWrapperExpanded" | "children"
++  > {
++  children?: ((date: CalendarDate) => React.ReactNode) | React.ReactNode;
++}
+ 
+ export type RangeCalendarProps<T extends DateValue = DateValue> = Props<T>;
+ 
+ const RangeCalendar = forwardRef(function RangeCalendar<T extends DateValue>(
+   props: RangeCalendarProps<T>,
+   ref: ForwardedRef<HTMLDivElement>,
+ ) {
+-  const {context, getBaseCalendarProps} = useRangeCalendar<T>({...props, ref});
++  const {children, ...otherProps} = props;
++  const {context, getBaseCalendarProps} = useRangeCalendar<T>({
++    ...otherProps,
++    ref,
++    cellContent: children,
++  });
+ 
+   return (
+     <CalendarProvider value={context}>\n- packages/components/calendar/src/use-calendar-base.ts (modified, 9 changes)\n  Patch: @@ -81,6 +81,12 @@ interface Props extends NextUIBaseProps {
+    * @returns void
+    */
+   onHeaderExpandedChange?: (isExpanded: boolean) => void;
++  /**
++   * Function to custom render the content of the calendar cell
++   * @param date The date to render
++   * @returns ReactNode
++   */
++  cellContent?: ((date: CalendarDate) => React.ReactNode) | React.ReactNode;
+   /**
+    * This function helps to reduce the bundle size by providing a custom calendar system.
+    *
+@@ -181,6 +187,7 @@ export type ContextType<T extends CalendarState | RangeCalendarState> = {
+   setIsHeaderExpanded?: (isExpanded: boolean) => void;
+   classNames?: SlotsToClasses<CalendarSlots>;
+   disableAnimation?: boolean;
++  cellContent?: ((date: CalendarDate) => React.ReactNode) | React.ReactNode;
+ };
+ 
+ export function useCalendarBase(originalProps: UseCalendarBasePropsComplete) {
+@@ -200,7 +207,6 @@ export function useCalendarBase(originalProps: UseCalendarBasePropsComplete) {
+   const {
+     ref,
+     as,
+-    children,
+     className,
+     topContent,
+     bottomContent,
+@@ -315,7 +321,6 @@ export function useCalendarBase(originalProps: UseCalendarBasePropsComplete) {
+ 
+   return {
+     Component,
+-    children,
+     domRef,
+     slots,
+     locale,\n- packages/components/calendar/src/use-calendar.ts (modified, 5 changes)\n  Patch: @@ -18,12 +18,12 @@ export type UseCalendarProps<T extends DateValue> = UseCalendarBaseProps & AriaC
+ export function useCalendar<T extends DateValue>({
+   buttonPickerProps: buttonPickerPropsProp,
+   className,
++  cellContent,
+   ...originalProps
+ }: UseCalendarProps<T>) {
+   const {
+     Component,
+     slots,
+-    children,
+     domRef,
+     locale,
+     minValue,
+@@ -107,6 +107,7 @@ export function useCalendar<T extends DateValue>({
+       classNames,
+       showMonthAndYearPickers,
+       disableAnimation,
++      cellContent,
+     }),
+     [
+       state,
+@@ -118,12 +119,12 @@ export function useCalendar<T extends DateValue>({
+       visibleMonths,
+       disableAnimation,
+       showMonthAndYearPickers,
++      cellContent,
+     ],
+   );
+ 
+   return {
+     Component,
+-    children,
+     domRef,
+     context,
+     state,\n- packages/components/calendar/src/use-range-calendar.ts (modified, 7 changes)\n  Patch: @@ -16,7 +16,7 @@ import {CalendarBaseProps} from "./calendar-base";
+ 
+ type NextUIBaseProps<T extends DateValue> = Omit<
+   HTMLNextUIProps<"div">,
+-  keyof AriaRangeCalendarProps<T>
++  keyof AriaRangeCalendarProps<T> | "children"
+ >;
+ 
+ interface Props<T extends DateValue> extends UseCalendarBaseProps, NextUIBaseProps<T> {}
+@@ -26,12 +26,12 @@ export type UseRangeCalendarProps<T extends DateValue> = Props<T> & AriaRangeCal
+ export function useRangeCalendar<T extends DateValue>({
+   buttonPickerProps: buttonPickerPropsProp,
+   className,
++  cellContent,
+   ...originalProps
+ }: UseRangeCalendarProps<T>) {
+   const {
+     Component,
+     slots,
+-    children,
+     domRef,
+     locale,
+     showHelper,
+@@ -115,6 +115,7 @@ export function useRangeCalendar<T extends DateValue>({
+       showMonthAndYearPickers,
+       classNames,
+       disableAnimation,
++      cellContent,
+     }),
+     [
+       state,
+@@ -125,13 +126,13 @@ export function useRangeCalendar<T extends DateValue>({
+       setIsHeaderExpanded,
+       visibleMonths,
+       disableAnimation,
++      cellContent,
+       showMonthAndYearPickers,
+     ],
+   );
+ 
+   return {
+     Component,
+-    children,
+     domRef,
+     context,
+     state,\n- packages/components/calendar/stories/calendar.stories.tsx (modified, 83 changes)\n  Patch: @@ -8,14 +8,22 @@ import {
+   isWeekend,
+   startOfWeek,
+   startOfMonth,
++  getDayOfWeek,
+ } from "@internationalized/date";
+ import {I18nProvider, useLocale} from "@react-aria/i18n";
+ import {Button, ButtonGroup} from "@nextui-org/button";
+ import {Radio, RadioGroup} from "@nextui-org/radio";
+ import {cn} from "@nextui-org/theme";
+ import {NextUIProvider} from "@nextui-org/system";
+ 
+-import {Calendar, CalendarProps, DateValue} from "../src";
++import {
++  Calendar,
++  CalendarProps,
++  DateValue,
++  CalendarCellContent,
++  CalendarCellHeader,
++  CalendarCellBody,
++} from "../src";
+ 
+ export default {
+   title: "Components/Calendar",
+@@ -262,6 +270,72 @@ const CalendarWidthTemplate = (args: CalendarProps) => {
+   );
+ };
+ 
++const CustomCellTemplate = (args: CalendarProps) => {
++  const {locale} = useLocale();
++
++  return (
++    <div className="flex gap-4">
++      <div className="flex flex-col items-center gap-4">
++        <Calendar {...args} calendarWidth={340}>
++          {(date) => (
++            <CalendarCellContent>
++              <CalendarCellHeader />
++              <CalendarCellBody>
++                <div className="flex flex-col w-full text-tiny gap-0.5 px-0.5">
++                  {date.day % 7 === 0 && (
++                    <span
++                      aria-label="Birthday event"
++                      className="bg-red-500/20 w-full rounded-md px-1 text-red-400 line-clamp-1"
++                      role="status"
++                    >
++                      Birth day
++                    </span>
++                  )}
++                  {date.day % 5 === 0 && (
++                    <span
++                      aria-label="Birthday event"
++                      className="bg-green-500/20 w-full rounded-md px-1 text-green-400 line-clamp-1"
++                      role="status"
++                    >
++                      MTG
++                    </span>
++                  )}
++                  {date.day % 3 === 0 && (
++                    <span
++                      aria-label="Birthday event"
++                      className="bg-yellow-500/20 w-full rounded-md px-1 text-yellow-400 line-clamp-1"
++                      role="status"
++                    >
++                      MTG
++                    </span>
++                  )}
++                </div>
++              </CalendarCellBody>
++            </CalendarCellContent>
++          )}
++        </Calendar>
++      </div>
++      <div className="flex flex-col items-center gap-4">
++        <Calendar {...args}>
++          {(date) => {
++            const dayOfWeek = getDayOfWeek(date, locale);
++            const style =
++              dayOfWeek === 0 ? "text-red-500" : dayOfWeek === 6 ? "text-blue-500" : "inherit";
++
++            return (
++              <CalendarCellContent>
++                <CalendarCellHeader>
++                  <span className={style}>{date.day}</span>
++                </CalendarCellHeader>
++              </CalendarCellContent>
++            );
++          }}
++        </Calendar>
++      </div>
++    </div>
++  );
++};
++
+ const ReducedMotionTemplate = (args: CalendarProps) => {
+   return (
+     <div className="flex gap-4">
+@@ -406,6 +480,13 @@ export const CalendarWidth = {
+   },
+ };
+ 
++export const CustomCellContent = {
++  render: CustomCellTemplate,
++  args: {
++    ...defaultProps,
++  },
++};
++
+ export const ReducedMotion = {
+   render: ReducedMotionTemplate,
+   args: {\n- packages/components/calendar/stories/range-calendar.stories.tsx (modified, 100 changes)\n  Patch: @@ -12,13 +12,20 @@ import {
+   startOfWeek,
+   endOfMonth,
+   endOfWeek,
++  getDayOfWeek,
+ } from "@internationalized/date";
+ import {I18nProvider, useLocale} from "@react-aria/i18n";
+ import {Button, ButtonGroup} from "@nextui-org/button";
+ import {Radio, RadioGroup} from "@nextui-org/radio";
+ import {cn} from "@nextui-org/theme";
+ 
+-import {RangeCalendar, RangeCalendarProps} from "../src";
++import {
++  RangeCalendar,
++  RangeCalendarProps,
++  CalendarCellContent,
++  CalendarCellHeader,
++  CalendarCellBody,
++} from "../src";
+ 
+ export default {
+   title: "Components/RangeCalendar",
+@@ -75,7 +82,11 @@ const ControlledTemplate = (args: RangeCalendarProps) => {
+         <RangeCalendar
+           aria-label="Date range (controlled)"
+           value={value}
+-          onChange={setValue}
++          onChange={(newValue) => {
++            if (newValue) {
++              setValue(newValue);
++            }
++          }}
+           {...args}
+           color="secondary"
+         />
+@@ -156,7 +167,11 @@ const InvalidDatesTemplate = (args: RangeCalendarProps) => {
+       errorMessage={isInvalid ? "Stay dates cannot fall on weekends" : undefined}
+       isInvalid={isInvalid}
+       value={date}
+-      onChange={setDate}
++      onChange={(newValue) => {
++        if (newValue) {
++          setDate(newValue);
++        }
++      }}
+     />
+   );
+ };
+@@ -278,14 +293,84 @@ const PresetsTemplate = (args: RangeCalendarProps) => {
+           </ButtonGroup>
+         }
+         value={value}
+-        onChange={setValue}
++        onChange={(newValue) => {
++          if (newValue) {
++            setValue(newValue);
++          }
++        }}
+         onFocusChange={setFocusedValue}
+         {...args}
+       />
+     </div>
+   );
+ };
+ 
++const CustomCellTemplate = (args: RangeCalendarProps) => {
++  const {locale} = useLocale();
++
++  return (
++    <div className="flex gap-4">
++      <div className="flex flex-col items-center gap-4">
++        <RangeCalendar {...args} calendarWidth={340}>
++          {(date) => (
++            <CalendarCellContent>
++              <CalendarCellHeader />
++              <CalendarCellBody>
++                <div className="flex flex-col w-full text-tiny gap-0.5 px-0.5">
++                  {date.day % 7 === 0 && (
++                    <span
++                      aria-label="Birthday event"
++                      className="bg-red-500/20 w-full rounded-md px-1 text-red-400 line-clamp-1"
++                      role="status"
++                    >
++                      Birth day
++                    </span>
++                  )}
++                  {date.day % 5 === 0 && (
++                    <span
++                      aria-label="Birthday event"
++                      className="bg-green-500/20 w-full rounded-md px-1 text-green-400 line-clamp-1"
++                      role="status"
++                    >
++                      MTG
++                    </span>
++                  )}
++                  {date.day % 3 === 0 && (
++                    <span
++                      aria-label="Birthday event"
++                      className="bg-yellow-500/20 w-full rounded-md px-1 text-yellow-400 line-clamp-1"
++                      role="status"
++                    >
++                      MTG
++                    </span>
++                  )}
++                </div>
++              </CalendarCellBody>
++            </CalendarCellContent>
++          )}
++        </RangeCalendar>
++      </div>
++      <div className="flex flex-col items-center gap-4">
++        <RangeCalendar {...args}>
++          {(date) => {
++            const dayOfWeek = getDayOfWeek(date, locale);
++            const style =
++              dayOfWeek === 0 ? "text-red-500" : dayOfWeek === 6 ? "text-blue-500" : "inherit";
++
++            return (
++              <CalendarCellContent>
++                <CalendarCellHeader>
++                  <span className={style}>{date.day}</span>
++                </CalendarCellHeader>
++              </CalendarCellContent>
++            );
++          }}
++        </RangeCalendar>
++      </div>
++    </div>
++  );
++};
++
+ export const Default = {
+   render: Template,
+   args: {
+@@ -414,3 +499,10 @@ export const Presets = {
+     ...defaultProps,
+   },
+ };
++
++export const CustomCellContent = {
++  render: CustomCellTemplate,
++  args: {
++    ...defaultProps,
++  },
++};\n- packages/components/date-picker/CHANGELOG.md (modified, 2 changes)\n  Patch: @@ -4,6 +4,7 @@
+ 
+ ### Patch Changes
+ 
++
+ - [#4255](https://github.com/nextui-org/nextui/pull/4255) [`6a94a12`](https://github.com/nextui-org/nextui/commit/6a94a125d4836b0a18d9cd2cb521c85a6bfa9050) Thanks [@wingkwong](https://github.com/wingkwong)! - fixed incorrect peerDependencies for theme and system package (#4254)
+ 
+ - Updated dependencies [[`6a94a12`](https://github.com/nextui-org/nextui/commit/6a94a125d4836b0a18d9cd2cb521c85a6bfa9050)]:
+@@ -14,6 +15,7 @@
+   - @nextui-org/form@2.1.3
+   - @nextui-org/aria-utils@2.2.3
+ 
++
+ ## 2.3.2
+ 
+ ### Patch Changes\n- packages/core/react/CHANGELOG.md (modified, 1 changes)\n  Patch: @@ -52,6 +52,7 @@
+   - @nextui-org/system@2.4.3
+   - @nextui-org/framer-utils@2.1.3
+ 
++
+ ## 2.6.3
+ 
+ ### Patch Changes\n- packages/core/theme/src/components/calendar.ts (modified, 113 changes)\n  Patch: @@ -28,12 +28,15 @@ const calendar = tv({
+     grid: "w-full border-collapse z-0",
+     gridHeader: "bg-content1 shadow-[0px_20px_20px_0px_rgb(0_0_0/0.05)]",
+     gridHeaderRow: "px-4 pb-2 flex justify-center text-default-400",
+-    gridHeaderCell: "flex w-8 justify-center items-center font-medium text-small",
+-    gridBody: "",
+-    gridBodyRow: "flex justify-center items-center first:mt-2",
+-    cell: "py-0.5 px-0",
+-    cellButton: [
+-      "w-8 h-8 flex items-center text-foreground justify-center rounded-full",
++    gridHeaderCell: "flex w-full justify-center items-center font-medium text-small",
++    gridBody: "w-full h-full",
++    gridBodyRow: "flex h-full px-4 justify-start items-start first:mt-2",
++    cell: "py-0.5 px-0 w-full h-full",
++    cellButton: ["relative w-full h-full justify-start", ...dataFocusVisibleClasses],
++    cellContent: "flex flex-col w-full gap-0.5 justify-start items-center ",
++    cellHeaderWrapper: ["flex w-full h-full justify-center items-center"],
++    cellHeader: [
++      "w-8 h-8 flex items-center text-foreground justify-center rounded-full shrink-0",
+       "box-border appearance-none select-none whitespace-nowrap font-normal",
+       "subpixel-antialiased overflow-hidden tap-highlight-transparent",
+       "data-[disabled=true]:text-default-300",
+@@ -43,8 +46,8 @@ const calendar = tv({
+       "data-[unavailable=true]:text-default-300",
+       "data-[unavailable=true]:cursor-default",
+       "data-[unavailable=true]:line-through",
+-      ...dataFocusVisibleClasses,
+     ],
++    cellBody: "w-full h-full",
+     pickerWrapper:
+       "absolute inset-x-0 top-0 flex w-full h-[var(--picker-height)] justify-center opacity-0 pointer-events-none",
+     pickerMonthList: "items-start",
+@@ -71,29 +74,49 @@ const calendar = tv({
+     // @internal
+     isRange: {
+       true: {
+-        cellButton: [
++        cellHeaderWrapper: [
+           // base
+           "relative",
+           "overflow-visible",
+ 
+           // before pseudo element
+           "before:content-[''] before:absolute before:inset-0 before:z-[-1] before:rounded-none",
++          "after:content-[''] after:absolute after:inset-0 after:z-[-1] after:rounded-none",
+ 
+           // hide before pseudo element when the selected cell is outside the month
+           "data-[outside-month=true]:before:hidden",
+           "data-[selected=true]:data-[range-selection=true]:data-[outside-month=true]:bg-transparent",
+           "data-[selected=true]:data-[range-selection=true]:data-[outside-month=true]:text-default-300",
++          "data-[outside-month=true]:after:hidden",
++          "data-[selected=true]:data-[range-selection=true]:data-[outside-month=true]:bg-transparent",
++          "data-[selected=true]:data-[range-selection=true]:data-[outside-month=true]:text-default-300",
+ 
+           // middle
+           // "data-[selected=true]:data-[range-selection=true]:bg-transparent",
+ 
+           // start (pseudo)
+           "data-[range-start=true]:before:rounded-l-full",
+           "data-[selection-start=true]:before:rounded-l-full",
++          "data-[range-start=true]:before:w-8",
++          "data-[selection-start=true]:before:w-8",
++          "data-[range-start=true]:before:justify-self-center",
++          "data-[selection-start=true]:before:justify-self-center",
++          "data-[range-start=true]:after:w-1/2",
++          "data-[selection-start=true]:after:w-1/2",
++          "data-[range-start=true]:after:justify-self-end",
++          "data-[selection-start=true]:after:justify-self-end",
+ 
+           // end (pseudo)
+           "data-[range-end=true]:before:rounded-r-full",
+           "data-[selection-end=true]:before:rounded-r-full",
++          "data-[range-end=true]:before:w-8",
++          "data-[selection-end=true]:before:w-8",
++          "data-[range-end=true]:before:justify-self-center",
++          "data-[selection-end=true]:before:justify-self-center",
++          "data-[range-end=true]:after:w-1/2",
++          "data-[selection-end=true]:after:w-1/2",
++          "data-[range-end=true]:after:justify-self-start",
++          "data-[selection-end=true]:after:justify-self-start",
+ 
+           // start (selected)
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:rounded-full",
+@@ -106,7 +129,7 @@ const calendar = tv({
+     },
+     hideDisabledDates: {
+       true: {
+-        cellButton: "data-[disabled=true]:data-[outside-month=true]:opacity-0",
++        cellHeader: "data-[disabled=true]:data-[outside-month=true]:opacity-0",
+       },
+       false: {},
+     },
+@@ -130,20 +153,20 @@ const calendar = tv({
+     },
+     showShadow: {
+       true: {
+-        cellButton: "data-[selected=true]:shadow-md",
++        cellHeader: "data-[selected=true]:shadow-md",
+       },
+       false: {
+-        cellButton: "shadow-none data-[selected=true]:shadow-none",
++        cellHeader: "shadow-none data-[selected=true]:shadow-none",
+       },
+     },
+     disableAnimation: {
+       true: {
+-        cellButton: "transition-none",
++        cellHeader: "transition-none",
+       },
+       false: {
+         headerWrapper: ["[&_.chevron-icon]:transition-transform", "after:transition-height"],
+         grid: "transition-opacity",
+-        cellButton: ["origin-center transition-[transform,background-color,color] !duration-150"],
++        cellHeader: ["origin-center transition-[transform,background-color,color] !duration-150"],
+         pickerWrapper: "transition-opacity !duration-250",
+         pickerItem: "transition-opacity",
+       },
+@@ -161,7 +184,7 @@ const calendar = tv({
+       isRange: false,
+       color: "foreground",
+       class: {
+-        cellButton: [
++        cellHeader: [
+           "data-[hover=true]:bg-default-200",
+           "data-[selected=true]:bg-foreground",
+           "data-[selected=true]:text-background",
+@@ -176,7 +199,7 @@ const calendar = tv({
+       isRange: false,
+       color: "primary",
+       class: {
+-        cellButton: [
++        cellHeader: [
+           "data-[selected=true]:bg-primary",
+           "data-[selected=true]:text-primary-foreground",
+           "data-[hover=true]:bg-primary-50",
+@@ -190,7 +213,7 @@ const calendar = tv({
+       isRange: false,
+       color: "secondary",
+       class: {
+-        cellButton: [
++        cellHeader: [
+           "data-[selected=true]:bg-secondary",
+           "data-[selected=true]:text-secondary-foreground",
+           "data-[hover=true]:bg-secondary-50",
+@@ -204,7 +227,7 @@ const calendar = tv({
+       isRange: false,
+       color: "success",
+       class: {
+-        cellButton: [
++        cellHeader: [
+           "data-[selected=true]:bg-success",
+           "data-[selected=true]:text-success-foreground",
+           "data-[hover=true]:bg-success-100",
+@@ -222,7 +245,7 @@ const calendar = tv({
+       isRange: false,
+       color: "warning",
+       class: {
+-        cellButton: [
++        cellHeader: [
+           "data-[selected=true]:bg-warning",
+           "data-[selected=true]:text-warning-foreground",
+           "data-[hover=true]:bg-warning-100",
+@@ -240,7 +263,7 @@ const calendar = tv({
+       isRange: false,
+       color: "danger",
+       class: {
+-        cellButton: [
++        cellHeader: [
+           "data-[selected=true]:bg-danger",
+           "data-[selected=true]:text-danger-foreground",
+           "data-[hover=true]:bg-danger-100",
+@@ -259,11 +282,13 @@ const calendar = tv({
+       isRange: true,
+       color: "foreground",
+       class: {
+-        cellButton: [
++        cellHeaderWrapper: [
+           // middle
+           "data-[selected=true]:data-[range-selection=true]:before:bg-foreground/10",
+           "data-[selected=true]:data-[range-selection=true]:text-foreground",
+-
++          "data-[selected=true]:data-[range-selection=true]:after:bg-foreground/10",
++        ],
++        cellHeader: [
+           // start (selected)
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:bg-foreground",
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:text-background",
+@@ -278,11 +303,13 @@ const calendar = tv({
+       isRange: true,
+       color: "primary",
+       class: {
+-        cellButton: [
++        cellHeaderWrapper: [
+           // middle
+           "data-[selected=true]:data-[range-selection=true]:before:bg-primary-50",
+           "data-[selected=true]:data-[range-selection=true]:text-primary",
+-
++          "data-[selected=true]:data-[range-selection=true]:after:bg-primary-50",
++        ],
++        cellHeader: [
+           // start (selected)
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:bg-primary",
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:text-primary-foreground",
+@@ -297,11 +324,13 @@ const calendar = tv({
+       isRange: true,
+       color: "secondary",
+       class: {
+-        cellButton: [
++        cellHeaderWrapper: [
+           // middle
+           "data-[selected=true]:data-[range-selection=true]:before:bg-secondary-50",
+           "data-[selected=true]:data-[range-selection=true]:text-secondary",
+-
++          "data-[selected=true]:data-[range-selection=true]:after:bg-secondary-50",
++        ],
++        cellHeader: [
+           // start (selected)
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:bg-secondary",
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:text-secondary-foreground",
+@@ -316,13 +345,16 @@ const calendar = tv({
+       isRange: true,
+       color: "success",
+       class: {
+-        cellButton: [
++        cellHeaderWrapper: [
+           // middle
+           "data-[selected=true]:data-[range-selection=true]:before:bg-success-100",
+           "data-[selected=true]:data-[range-selection=true]:text-success-600",
+           "dark:data-[selected=true]:data-[range-selection=true]:before:bg-success-50",
+           "dark:data-[selected=true]:data-[range-selection=true]:text-success-500",
+-
++          "data-[selected=true]:data-[range-selection=true]:after:bg-success-100",
++          "dark:data-[selected=true]:data-[range-selection=true]:after:bg-success-50",
++        ],
++        cellHeader: [
+           // start (selected)
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:bg-success",
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:text-success-foreground",
+@@ -339,12 +371,15 @@ const calendar = tv({
+       isRange: true,
+       color: "warning",
+       class: {
+-        cellButton: [
++        cellHeaderWrapper: [
+           // middle
+           "data-[selected=true]:data-[range-selection=true]:before:bg-warning-100",
+           "dark:data-[selected=true]:data-[range-selection=true]:before:bg-warning-50",
+           "data-[selected=true]:data-[range-selection=true]:text-warning-500",
+-
++          "data-[selected=true]:data-[range-selection=true]:after:bg-warning-100",
++          "dark:data-[selected=true]:data-[range-selection=true]:after:bg-warning-50",
++        ],
++        cellHeader: [
+           // start (selected)
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:bg-warning",
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:text-warning-foreground",
+@@ -359,11 +394,13 @@ const calendar = tv({
+       isRange: true,
+       color: "danger",
+       class: {
+-        cellButton: [
++        cellHeaderWrapper: [
+           // middle
+           "data-[selected=true]:data-[range-selection=true]:before:bg-danger-50",
+           "data-[selected=true]:data-[range-selection=true]:text-danger-500",
+-
++          "data-[selected=true]:data-[range-selection=true]:after:bg-danger-50",
++        ],
++        cellHeader: [
+           // start (selected)
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:bg-danger",
+           "data-[selected=true]:data-[selection-start=true]:data-[range-selection=true]:text-danger-foreground",
+@@ -379,50 +416,50 @@ const calendar = tv({
+       showShadow: true,
+       color: "foreground",
+       class: {
+-        cellButton: "data-[selected=true]:shadow-foreground/40",
++        cellHeader: "data-[selected=true]:shadow-foreground/40",
+       },
+     },
+     {
+       showShadow: true,
+       color: "primary",
+       class: {
+-        cellButton: "data-[selected=true]:shadow-primary/40",
++        cellHeader: "data-[selected=true]:shadow-primary/40",
+       },
+     },
+     {
+       showShadow: true,
+       color: "secondary",
+       class: {
+-        cellButton: "data-[selected=true]:shadow-secondary/40",
++        cellHeader: "data-[selected=true]:shadow-secondary/40",
+       },
+     },
+     {
+       showShadow: true,
+       color: "success",
+       class: {
+-        cellButton: "data-[selected=true]:shadow-success/40",
++        cellHeader: "data-[selected=true]:shadow-success/40",
+       },
+     },
+     {
+       showShadow: true,
+       color: "warning",
+       class: {
+-        cellButton: "data-[selected=true]:shadow-warning/40",
++        cellHeader: "data-[selected=true]:shadow-warning/40",
+       },
+     },
+     {
+       showShadow: true,
+       color: "danger",
+       class: {
+-        cellButton: "data-[selected=true]:shadow-danger/40",
++        cellHeader: "data-[selected=true]:shadow-danger/40",
+       },
+     },
+     // showShadow & isRange
+     {
+       showShadow: true,
+       isRange: true,
+       class: {
+-        cellButton: [
++        cellHeader: [
+           // remove shadow from middle
+           "data-[selected=true]:shadow-none",
+           // add shadow to start (selected)\n

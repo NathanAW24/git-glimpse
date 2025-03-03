@@ -1,0 +1,563 @@
+Pull Request Number: 2943
+Title: fix(system): missing useHref logic
+Base Branch: canary
+Head Branch: fix/eng-783
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2943
+State: MERGED
+Created At: 2024-05-04T11:51:03Z
+Merged At: 2024-09-10T15:21:31Z
+Participants: wingkwong, winchesHe, jrgarciadev, tianenpang
+
+Description:
+📝 Description
+Patch the missing logic due to the previous react aria upgrade
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Fixed missing useHref logic in the UI system package.
+Updated routing functions to handle additional parameters and enhanced navigation checks.
+
+
+
+New Features
+
+Enhanced autocomplete functionality by allowing null values in selection changes.
+Introduced a useHref prop in the NextUIProvider for improved link handling.
+
+
+
+Documentation
+
+Revised and restructured routing guide documentation for improved clarity and accessibility.
+
+
+
+Dependency Updates
+
+Updated @react-types/shared to version 3.23.0 across multiple packages.
+
+Commits:
+- chore(deps): update pnpm-lock.yaml\n- fix(system): missing useHref logic\n- chore(docs): restructure heading\n- feat(docs): add useHref content to routing page\n- fix(hooks): revise useAriaLink onClick logic\n- chore(deps): bump @react-types/shared\n- chore(deps): bump @react-types/shared\n- fix(hooks): add missing parameters\n- fix(pagination): add missing parameters\n- feat(changeset): add missing router.open parameters due to rounter change\n- fix(docs): onSelectionChange type\n- refactor(changeset): revise changeset message\n- Merge branch 'canary' into fix/eng-783\n- chore(deps): lock deps\n- Merge branch 'canary' into fix/eng-783\n- chore(hooks): bump @react-types/shared to 3.23.0\n- Merge branch 'canary' into fix/eng-783\n- chore(changeset): remove this changeset since it is already in canary\n- Merge branch 'canary' into fix/eng-783\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-783/[bug]-cannot-read-properties-of-undefined-reading-startswith">ENG-783 [BUG] - Cannot read properties of undefined (reading 'startsWith')</a></p>\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: d21f0b0f469fc5b0aeaa1fed71b8b7592119b892
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 19 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/system       | Patch |
+| @nextui-org/accordion    | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/calendar     | Patch |
+| @nextui-org/date-picker  | Patch |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/listbox      | Patch |
+| @nextui-org/menu         | Patch |
+| @nextui-org/modal        | Patch |
+| @nextui-org/navbar       | Patch |
+| @nextui-org/popover      | Patch |
+| @nextui-org/select       | Patch |
+| @nextui-org/slider       | Patch |
+| @nextui-org/snippet      | Patch |
+| @nextui-org/tabs         | Patch |
+| @nextui-org/tooltip      | Patch |
+| @nextui-org/react        | Patch |
+| @nextui-org/aria-utils   | Patch |
+| @nextui-org/framer-utils | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/eng-783?filename=.changeset/ninety-masks-change.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fsystem%22%3A%20patch%0A---%0A%0Afix(system)%3A%20missing%20useHref%20logic%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The recent changes enhance routing and link functionalities across the codebase by introducing a `useHref` prop in the `NextUIProvider`, updating dependency versions, and refining the handling of `href` and `routerOptions` in link-related functions. Documentation has also been restructured for clarity, ensuring better guidance on implementing these updates.
+
+## Changes
+
+| File Path | Summary |
+|-----------|---------|
+| `.changeset/curvy-eels-tap.md` <br> `packages/core/system/src/provider.tsx` | Introduced `useHref` logic in `@nextui-org/system`. |
+| `.changeset/friendly-months-tease.md` <br> `packages/components/pagination/src/...` <br> `packages/hooks/use-aria-link/src/index.ts` <br> `packages/hooks/use-aria-menu/src/...` | Updated dependency versions, enhanced navigation handling by checking `props.href`, and added `props.routerOptions` to `router.open`. |
+| `apps/docs/app/examples/autocomplete/...` | Modified `onSelectionChange` to accept an additional `null` type for `key`. |
+| `apps/docs/content/docs/guide/routing.mdx` | Adjusted header levels for routing documentation and introduced `useHref` implementation details. |
+| `package.json` <br> `packages/hooks/use-aria-menu/package.json` | Updated `@react-types/shared` from `3.22.1` to `3.23.0`. |
+
+## Assessment against linked issues
+
+| Objective | Addressed | Explanation |
+|-----------|-----------|-------------|
+| Fix navigation error when clicking links (#2934, #2930) | ✅ | - |
+| Ensure proper function of `NextUIProvider` with `useRouter` in various setups (#2934, #2941, #2930) | ✅ | - |
+| Update dependencies to match new router functionalities (#2941) | ✅ | - |
+| Address undefined `path` error in `NextUIProvider` (#2930) | ❓ | The changes seem to address navigation issues, but more information is needed to confirm if the specific `path is undefined` error is resolved. |
+| Ensure all linked components properly utilize `routerOptions` (#2941) | ✅ | - |
+
+These updates are crucial for maintaining the functionality and user experience of applications using these packages, particularly in terms of navigation and link management.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+```
+.changeset/curvy-eels-tap.md: ## Summary
+The file `curvy-eels-tap.md` introduces a patch to fix missing `useHref` logic in the `@nextui-org/system` package.
+
+---
+
+.changeset/friendly-months-tease.md: ## Summary
+The file `friendly-months-tease.md` introduces updates to dependencies related to pagination, aria links, and aria menus. Additionally, it addresses missing parameters in the `router.open` function due to a router change.
+
+---
+
+apps/docs/app/examples/autocomplete/fully-controlled/page.tsx: ## Short Summary
+
+The change in functionality involves modifying the `onSelectionChange` function in the `Page` component of the autocomplete example. The function now accepts an additional parameter `key` of type `React.Key | null`.
+
+## Alterations to the declarations of exported or public entities
+
+- `const onSelectionChange = (key: React.Key | null) => {` in `Page` component in `apps/docs/app/examples/autocomplete/fully-controlled/page.tsx`
+
+---
+
+apps/docs/content/docs/guide/routing.mdx: ## Alterations to the declarations of exported or public entities
+
+- `### NextUIProvider Setup` changed to `## NextUIProvider Setup`
+- `#### App Router` changed to `### App Router`
+- `#### Pages Router` changed to `### Pages Router`
+- `### React Router` changed to `## React Router`
+- `## Remix` changed to `# Remix`
+- `### Usage examples` changed to `## Usage examples`
+
+---
+
+package.json: ## Short Summary
+
+The change in `package.json` involves updating the version of `@react-types/shared` from `3.22.1` to `3.23.0`.
+
+## Alterations to the declarations of exported or public entities
+
+- `@react-types/shared`: Updated version from `3.22.1` to `3.23.0` in the `dependencies` section of `package.json`
+
+---
+
+packages/components/pagination/src/use-pagination-item.ts: ## Short Summary
+
+In the `usePaginationItem` function in `use-pagination-item.ts`, the logic for handling navigation has been updated to include checking for the presence of `props.href` and passing additional `props.routerOptions` to the `router.open` function.
+
+## Alterations to the declarations of exported or public entities
+
+- `usePaginationItem` function in `use-pagination-item.ts`:
+  - Updated logic for navigation handling to include checking for `props.href` and passing `props.routerOptions` to `router.open`
+
+---
+
+packages/core/system/src/provider.tsx: ### Summary
+
+In `packages/core/system/src/provider.tsx`, the `NextUIProviderProps` interface now includes a new `useHref` function that converts an `href` to a native `href` for link components. The `NextUIProvider` component now accepts and uses this `useHref` function alongside the existing `navigate` function within the `RouterProvider`.
+
+---
+
+packages/hooks/use-aria-link/src/index.ts: ## Short Summary
+The change in functionality involves adding a condition to check for the presence of `props.href` before calling `router.open()` with additional parameters in the `useAriaLink` function.
+
+## Alterations to the declarations of exported or public entities
+- `export function useAriaLink(props: AriaLinkOptions, ref: RefObject<FocusableElement>): void` in `packages/hooks/use-aria-link/src/index.ts` → `export function useAriaLink(props: AriaLinkOptions, ref: RefObject<FocusableElement>): void`
+
+---
+
+packages/hooks/use-aria-menu/package.json: ## Short Summary
+The change in functionality involves updating the versions of various dependencies in the `package.json` file for the `use-aria-menu` package.
+
+## Alterations to the declarations of exported or public entities
+- `@react-types/shared`: Updated version from `3.22.1` to `3.23.0` in the `dependencies` section of `package.json` for the `use-aria-menu` package.
+
+---
+
+packages/hooks/use-aria-menu/src/use-menu-item.ts: ### Alterations to the declarations of exported or public entities:
+
+- Added `RouterOptions` to the import list in `use-menu-item.ts`
+- Added `item` declaration before `onClose` assignment in `useMenuItem` function in `use-menu-item.ts`
+- Modified `router.open` call to include `item?.props.href` and `item?.props.routerOptions as RouterOptions` parameters in `useMenuItem` function in `use-menu-item.ts`
+```
+
+
+# New changesets
+
+apps/docs/content/docs/guide/routing.mdx: ## AI-generated summary of changes
+
+The diff introduces several structural and semantic modifications to the documentation regarding the `NextUIProvider` setup and its integration with various routing libraries in a Next.js application. The primary change is the enhancement of the `NextUIProvider` component to accept an additional `useHref` prop, which allows for the customization of link behavior by prepending a base path to the `href` attributes of links. This is particularly useful when using the Next.js `basePath` configuration, ensuring that all links generated by the provider are correctly prefixed.
+
+The documentation now includes detailed instructions on how to implement the `useHref` function in both the Next.js and React Router contexts. For Next.js, the `useHref` function is defined to concatenate the environment variable `BASE_PATH` with the provided `href`. Similarly, in the React Router section, the `useHref` function is utilized to prepend the router's `basePath` to the links.
+
+Additionally, the headings in the documentation have been updated for clarity and consistency, changing from smaller headings (###) to larger ones (##) for sections like "NextUIProvider Setup," "Next.js," and "Pages Router." This change improves the readability and organization of the document.
+
+Overall, the modifications enhance the functionality of the `NextUIProvider` by allowing for more flexible link handling and improve the clarity of the documentation structure.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- `NextUIProvider` in `@nextui-org/react` → `NextUIProvider` in `@nextui-org/react` (added `useHref` prop)
+- `function Providers({children}: { children: React.ReactNode })` in `app/providers.tsx` → `function Providers({children}: { children: React.ReactNode })` in `app/providers.tsx` (added `useHref` function)
+- `function MyApp({ Component, pageProps }: AppProps)` in `pages/_app.tsx` → `function MyApp({ Component, pageProps }: AppProps)` in `pages/_app.tsx` (added `useHref` function)
+- `function App()` in `App.tsx or App.jsx` → `function App()` in `App.tsx or App.jsx` (added `useHref` function)
+- `function App()` in `app/root.tsx` → `function App()` in `app/root.tsx` (added `useHref` function)
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(system): missing useHref logic" was created by the user wingkwong and is identified by the number 2943. The primary purpose of this PR is to address a missing logic issue that arose following a previous upgrade of the React Aria library. The description indicates that the patch is necessary to restore functionality that was lost during the upgrade process. Specifically, the missing logic is related to the `useHref` hook, which is crucial for client navigation within the application. The user has noted that the version has been changed to v2.4.7 to ensure compatibility, as the `useHref` functionality was present in earlier versions but was overlooked during the upgrade. The PR does not specify whether this change constitutes a breaking change for existing users of NextUI, and it invites further discussion on the potential impact and migration path if necessary.
+
+## Comments Summary
+
+In the comments section of the pull request, the user wingkwong provides additional context regarding the changes made. They clarify that the decision to change the version to v2.4.7 was based on the observation that the `useHref` functionality was missing after upgrading the React Aria version. This oversight is suspected to be the cause of failures in client navigation, which is a critical aspect of user experience in web applications.
+
+The comment emphasizes the importance of the `useHref` logic in maintaining seamless navigation and suggests that restoring this functionality is essential for the proper operation of the system. There are no other comments or discussions present in the PR at this time, indicating that the focus remains on the technical fix being proposed. The comment does not elaborate on any potential implications for users or provide a detailed migration path, leaving that aspect open for further discussion among the maintainers and contributors of the NextUI project.
+
+Overall, the comments reflect a straightforward acknowledgment of the issue and a clear intent to resolve it through the proposed changes in the pull request.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 5e9df63f13e891334e454c049c1b8da9ea81e9b8 -->
+<!-- 1e88944313922181c5cc4250adeec7b27c603fde -->
+<!-- c0cf7dd7fa689cd854b4e060f714ebfbd30c6c24 -->
+<!-- 7d4b1a5b1cf275f1d0c9c45057f1edc341ee90f7 -->
+<!-- d21f0b0f469fc5b0aeaa1fed71b8b7592119b892 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #a9PmSFaOo1vtj/hsEM3uE/dGYggYQ/liWo5xMtnw5ug=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9FaDlFcEx2VnBBb3p3TmF2OEJ2bjlQZTdrN01tIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTc4My1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZpeC1lbmctNzgzLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvSFBSWGJranppSlg4d2JpTENvc2lzZlI2ZnJMSiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1maXgtZW5nLTc4My1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZml4LWVuZy03ODMtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/Eh9EpLvVpAozwNav8Bvn9Pe7k7Mm)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-783-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-783-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 31, 2024 6:09pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/HPRXbkjziJX8wbiLCosisfR6frLJ)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-783-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-783-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 31, 2024 6:09pm |
+
+
+\n- wingkwong: changing to v2.4.7 since `useHref` was a few versions before and this part was missing when we upgraded RA version. suspected this missing part causes client navigation failing.\n
+
+Files Changed:
+- .changeset/curvy-eels-tap.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/system": patch
++---
++
++Fix missing `useHref` logic (#2934)\n- apps/docs/content/docs/guide/routing.mdx (modified, 93 changes)\n  Patch: @@ -17,7 +17,7 @@ component configures all NextUI components within it to navigate using the clien
+ Set this up once in the root of your app, and any NextUI component with the href prop will automatically navigate
+ using your router.
+ 
+-### NextUIProvider Setup
++## NextUIProvider Setup
+ 
+ The `NextUIProvider` accepts a prop called `navigate`. This should be set to a function received from your
+ router for performing a client side navigation programmatically. The following example shows the general
+@@ -43,9 +43,9 @@ function App() {
+ 
+ <Spacer y={2} />
+ 
+-### Next.js 
++## Next.js 
+ 
+-#### App Router
++### App Router
+ 
+ Go to your `app/providers.tsx` or `app/providers.jsx` (create it if it doesn't exist) and add the
+ `useRouter` hook from `next/navigation`, it returns a router object that can be used to perform navigation.
+@@ -95,15 +95,49 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
+ 
+ > **Note**: Skip this step if you already set up the `NextUIProvider` in your app.
+ 
++#### Add useHref (Optional)
++
++If you are using the Next.js [basePath](https://nextjs.org/docs/app/api-reference/next-config-js/basePath) setting, you'll need to configure an environment variable to access it. 
++
++```js
++// next.config.js
++const basePath = '...';
++const nextConfig = {
++  basePath,
++  env: {
++    BASE_PATH: basePath
++  }
++};
++```
++Then, provide a custom `useHref` function to prepend it to the href for all links.
++
++```tsx {9,12}
++// app/providers.tsx
++'use client'
++
++import {NextUIProvider} from '@nextui-org/react';
++import {useRouter} from 'next/navigation'
++
++export function Providers({children}: { children: React.ReactNode }) {
++  const router = useRouter();
++  const useHref = (href: string) => process.env.BASE_PATH + href;
++
++  return (
++    <NextUIProvider navigate={router.push} useHref={useHref}>
++      {children}
++    </NextUIProvider>
++  )
++}
++```
++
+ </Steps>
+ 
+-#### Pages Router
++### Pages Router
+ 
+ Go to pages`/_app.js` or `pages/_app.tsx` (create it if it doesn't exist) and add the`useRouter` hook 
+ from `next/router`, it returns a router object that can be used to perform navigation.
+ 
+-
+-```tsx {7}
++```tsx {7,10}
+ // pages/_app.tsx
+ import type { AppProps } from 'next/app';
+ import {NextUIProvider} from '@nextui-org/react';
+@@ -122,23 +156,47 @@ function MyApp({ Component, pageProps }: AppProps) {
+ export default MyApp;
+ ```
+ 
+-### React Router
++When using the [basePath](https://nextjs.org/docs/app/api-reference/next-config-js/basePath) configuration option, provide a `useHref` option to the router passed to Provider to prepend it to links automatically.
++
++```tsx {8,11}
++// pages/_app.tsx
++import type { AppProps } from 'next/app';
++import {NextUIProvider} from '@nextui-org/react';
++import {useRouter} from 'next/router';
++
++function MyApp({ Component, pageProps }: AppProps) {
++  const router = useRouter();
++  const useHref = (href: string) => router.basePath + href;
++
++  return (
++    <NextUIProvider navigate={router.push} useHref={useHref}>
++      <Component {...pageProps} />
++    </NextUIProvider>
++  )
++}
++
++export default MyApp;
++```
++
++## React Router
+ 
+-The `useNavigate` hook from `react-router-dom` returns a `navigate` function that can be used to perform navigation.
++The `useNavigate` hook from `react-router-dom` returns a `navigate` function that can be used to perform navigation. 
++
++The `useHref` hook can also be provided if you're using React Router's `basename` option. Ensure that the component that calls useNavigate and renders Provider is inside the router component (e.g. `BrowserRouter`) so that it has access to React Router's internal context. The React Router `<Routes>` element should also be defined inside `<NextUIProvider>` so that links inside the rendered routes have access to the router.
+ 
+ Go to the `App` file commonly called `App.jsx` or `App.tsx`, add the `useNavigate` hook and pass the 
+ `navigate` function to the `NextUIProvider`:
+ 
+ ```jsx {6,9}
+ // App.tsx or App.jsx
+-import {BrowserRouter, useNavigate} from 'react-router-dom';
++import {BrowserRouter, useNavigate, useHref} from 'react-router-dom';
+ import {NextUIProvider} from '@nextui-org/react';
+ 
+ function App() {
+   const navigate = useNavigate();
+ 
+   return (
+-    <NextUIProvider navigate={navigate}>
++    <NextUIProvider navigate={navigate} useHref={useHref}>
+       {/* Your app here... */}
+       <Routes>
+         <Route path="/" element={<HomePage />} />
+@@ -164,17 +222,16 @@ component (e.g. `BrowserRouter`) so that it has access to React Router's interna
+ element should also be defined inside `NextUIProvider` so that links inside the rendered routes have access
+ to the router.
+ 
++## Remix
+ 
+-### Remix
+-
+-Remix uses React Router under the hood, so the same `useNavigate` hook described above also works in Remix 
++Remix uses React Router under the hood, so the same `useNavigate` and `useHref` hook described above also works in Remix 
+ apps. `NextUIProvider` should be rendered at the `root` of each page that includes NextUI components, or in 
+ `app/root.tsx` to add it to all pages. See the [Remix docs](https://remix.run/docs/en/main/file-conventions/root) 
+ for more details.
+ 
+ ```jsx {14}
+ // app/root.tsx
+-import {useNavigate, Outlet} from '@remix-run/react';
++import {useNavigate, useHref, Outlet} from '@remix-run/react';
+ import {NextUIProvider} from '@nextui-org/react';
+ 
+ export default function App() {
+@@ -186,7 +243,7 @@ export default function App() {
+         {/* ... */}
+       </head>
+       <body>
+-        <NextUIProvider navigate={navigate}>
++        <NextUIProvider navigate={navigate} useHref={useHref}>
+           <Outlet />
+         </NextUIProvider>
+         {/* ... */}
+@@ -196,8 +253,7 @@ export default function App() {
+ }
+ ```
+ 
+-
+-### TanStack
++## TanStack
+ 
+ To use [TanStack Router](https://tanstack.com/router/latest) with NextUI, render NextUI's RouterProvider inside your root route. Use `router.navigate` in the `navigate` prop, and `router.buildLocation` in the `useHref` prop. 
+ 
+@@ -219,8 +275,7 @@ function RootRoute() {
+ }
+ ```
+ 
+-
+-### Usage examples
++## Usage examples
+ 
+ Now that you have set up the `NextUIProvider` in your app, you can use the `href` prop in the `Tabs`, 
+ `Listbox` and `Dropdown` items to navigate between pages.\n- packages/core/system/src/provider.tsx (modified, 16 changes)\n  Patch: @@ -1,5 +1,6 @@
+ import type {ModalProviderProps} from "@react-aria/overlays";
+ import type {ProviderContextProps} from "./provider-context";
++import type {Href} from "@react-types/shared";
+ 
+ import {I18nProvider, I18nProviderProps} from "@react-aria/i18n";
+ import {RouterProvider} from "@react-aria/utils";
+@@ -31,11 +32,20 @@ export interface NextUIProviderProps
+    * Link, Menu, Tabs, Table, etc.
+    */
+   navigate?: (path: string) => void;
++  /**
++   * Convert an `href` provided to a link component to a native `href`
++   * For example, a router might accept hrefs relative to a base path,
++   * or offer additional custom ways of specifying link destinations.
++   * The original href specified on the link is passed to the navigate function of the RouterProvider,
++   * and useHref is used to generate the full native href to put on the actual DOM element.
++   */
++  useHref?: (href: Href) => string;
+ }
+ 
+ export const NextUIProvider: React.FC<NextUIProviderProps> = ({
+   children,
+   navigate,
++  useHref,
+   disableAnimation = false,
+   disableRipple = false,
+   skipFramerMotionAnimations = disableAnimation,
+@@ -50,7 +60,11 @@ export const NextUIProvider: React.FC<NextUIProviderProps> = ({
+   let contents = children;
+ 
+   if (navigate) {
+-    contents = <RouterProvider navigate={navigate}>{contents}</RouterProvider>;
++    contents = (
++      <RouterProvider navigate={navigate} useHref={useHref}>
++        {contents}
++      </RouterProvider>
++    );
+   }
+ 
+   const context = useMemo<ProviderContextProps>(() => {\n

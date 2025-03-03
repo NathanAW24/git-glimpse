@@ -1,0 +1,1759 @@
+Pull Request Number: 610
+Title: Feat/badge component
+Base Branch: next
+Head Branch: feat/badge
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/610
+State: MERGED
+Created At: 2022-07-10T01:22:17Z
+Merged At: 2022-07-10T01:32:58Z
+Participants: jrgarciadev
+
+Description:
+Closes #584 #312
+📝 Description
+The badge component has been created 🎉
+
+
+
+
+
+💣 Is this a breaking change (Yes/No): Yes
+The margin of some HTML primitives has been removed from the CssBaseline
+  "dl, dd, hr, figure, p": {
+    margin: 0,
+  },
+
+Commits:
+- feat(react-badge): initial structure created, variants and styles\n- feat(badge): test passing, variants added, styles added\n- feat(react-badge): badge component almost done\n- Merge branch 'next' of github.com:nextui-org/nextui into feat/badge\n- feat(docs-badge): badge docs done\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/content/components/avatar/icon.ts (modified, 20 changes)\n  Patch: @@ -1,6 +1,4 @@
+-const SunIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const SunIcon = ({
++const SunIcon = `export const SunIcon = ({
+   fill = "currentColor",
+   filled,
+   size,
+@@ -60,9 +58,7 @@ export const SunIcon = ({
+   );
+ };`;
+ 
+-const MoonIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const MoonIcon = ({
++const MoonIcon = `export const MoonIcon = ({
+   fill = "currentColor",
+   filled,
+   size,
+@@ -102,9 +98,7 @@ export const MoonIcon = ({
+   );
+ };`;
+ 
+-const VideoIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const VideoIcon = ({
++const VideoIcon = `export const VideoIcon = ({
+   fill = "currentColor",
+   filled,
+   size,
+@@ -145,9 +139,7 @@ export const VideoIcon = ({
+   );
+ };`;
+ 
+-const VolumeUpIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const VolumeUpIcon = ({
++const VolumeUpIcon = `export const VolumeUpIcon = ({
+   fill = "currentColor",
+   filled,
+   size,
+@@ -176,9 +168,7 @@ export const VolumeUpIcon = ({
+   );
+ };`;
+ 
+-const MicrophoneIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const MicrophoneIcon = ({
++const MicrophoneIcon = `export const MicrophoneIcon = ({
+   fill = "currentColor",
+   filled,
+   size,\n- apps/docs/content/components/badge/a11y.ts (added, 62 changes)\n  Patch: @@ -0,0 +1,62 @@
++const NotificationIcon = `export const NotificationIcon = ({
++  fill = "currentColor",
++  size,
++  height,
++  width,
++  ...props
++}) => {
++  return (
++    <svg
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M19.3399 14.49L18.3399 12.83C18.1299 12.46 17.9399 11.76 17.9399 11.35V8.82C17.9399 6.47 16.5599 4.44 14.5699 3.49C14.0499 2.57 13.0899 2 11.9899 2C10.8999 2 9.91994 2.59 9.39994 3.52C7.44994 4.49 6.09994 6.5 6.09994 8.82V11.35C6.09994 11.76 5.90994 12.46 5.69994 12.82L4.68994 14.49C4.28994 15.16 4.19994 15.9 4.44994 16.58C4.68994 17.25 5.25994 17.77 5.99994 18.02C7.93994 18.68 9.97994 19 12.0199 19C14.0599 19 16.0999 18.68 18.0399 18.03C18.7399 17.8 19.2799 17.27 19.5399 16.58C19.7999 15.89 19.7299 15.13 19.3399 14.49Z"
++        fill={fill}
++      />
++      <path
++        d="M14.8297 20.01C14.4097 21.17 13.2997 22 11.9997 22C11.2097 22 10.4297 21.68 9.87969 21.11C9.55969 20.81 9.31969 20.41 9.17969 20C9.30969 20.02 9.43969 20.03 9.57969 20.05C9.80969 20.08 10.0497 20.11 10.2897 20.13C10.8597 20.18 11.4397 20.21 12.0197 20.21C12.5897 20.21 13.1597 20.18 13.7197 20.13C13.9297 20.11 14.1397 20.1 14.3397 20.07C14.4997 20.05 14.6597 20.03 14.8297 20.01Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const App = `import { Badge, Grid, styled } from "@nextui-org/react";
++import { NotificationIcon } from "./NotificationIcon";
++
++const StyledButton = styled("button", {
++  background: "transparent",
++  border: "none",
++  cursor: "pointer",
++  '&:active': {
++    opacity: 0.8,
++  }
++});
++
++export default function App() {
++  return (
++    <Grid.Container alignItems="center" gap={2}>
++      <Grid>
++        <StyledButton aria-label="more than 99 notifications">
++          <Badge color="error" content="99+" shape="circle">
++            <NotificationIcon fill="currentColor" size={30} />
++          </Badge>
++        </StyledButton>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++  "/NotificationIcon.js": NotificationIcon,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/bordered.ts (added, 44 changes)\n  Patch: @@ -0,0 +1,44 @@
++const App = `import { Badge, Grid } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid>
++        <Badge variant="bordered">Neutral</Badge>
++      </Grid>
++      <Grid>
++        <Badge color="primary" variant="bordered">
++          Primary
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge color="secondary" variant="bordered">
++          Secondary
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge color="success" variant="bordered">
++          Success
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge color="warning" variant="bordered">
++          Warning
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge color="error" variant="bordered">
++          Error
++        </Badge>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/colors.ts (added, 34 changes)\n  Patch: @@ -0,0 +1,34 @@
++const App = `import { Badge, Grid } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid>
++        <Badge>Neutral</Badge>
++      </Grid>
++      <Grid>
++        <Badge color="primary">Primary</Badge>
++      </Grid>
++      <Grid>
++        <Badge color="secondary">Secondary</Badge>
++      </Grid>
++      <Grid>
++        <Badge color="success">Success</Badge>
++      </Grid>
++      <Grid>
++        <Badge color="warning">Warning</Badge>
++      </Grid>
++      <Grid>
++        <Badge color="error">Error</Badge>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/content-offset.ts (added, 79 changes)\n  Patch: @@ -0,0 +1,79 @@
++const CheckIcon = `export const CheckIcon = ({
++  fill = "currentColor",
++  size,
++  height,
++  width,
++  ...props
++}) => {
++  return (
++    <svg
++      width={size || width || 18}
++      height={size || height || 18}
++      viewBox="0 0 24 24"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M7.75 11.9999L10.58 14.8299L16.25 9.16992"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++    </svg>
++  );
++};`;
++
++const App = `import { Badge, Avatar, Grid } from "@nextui-org/react";
++import { CheckIcon } from "./CheckIcon";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid>
++        <Badge
++          color="success"
++          shape="rectangle"
++          content={<CheckIcon width={24} height={24} />}
++          css={{ p: "0" }}
++          horizontalOffset="45%"
++          verticalOffset="45%"
++        >
++          <Avatar
++            squared
++            bordered
++            size="lg"
++            color="success"
++            src="https://i.pravatar.cc/300?u=a042581f4e290267073"
++          />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge
++          content={<CheckIcon />}
++          css={{ p: 0 }}
++          shape="circle"
++          placement="bottom-right"
++          horizontalOffset="35%"
++          verticalOffset="-10%"
++          size="xs"
++        >
++          <Avatar
++            size="lg"
++            src="https://i.pravatar.cc/300?u=a042581f4e290267072"
++          />
++        </Badge>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++  "/CheckIcon.js": CheckIcon,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/content-placements.ts (added, 60 changes)\n  Patch: @@ -0,0 +1,60 @@
++const App = `import { Badge, Avatar, Grid } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid>
++        <Badge color="error" content={5}>
++          <Avatar
++            bordered
++            squared
++            color="primary"
++            size="lg"
++            src="https://i.pravatar.cc/300?u=a042581f4e29026707d"
++          />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge color="error" content={5} placement="bottom-right">
++          <Avatar
++            bordered
++            squared
++            color="primary"
++            size="lg"
++            src="https://i.pravatar.cc/300?u=a042581f4e29026707e"
++          />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge color="error" content={5} placement="top-left">
++          <Avatar
++            bordered
++            squared
++            color="primary"
++            size="lg"
++            src="https://i.pravatar.cc/300?u=a042581f4e290267072"
++          />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge color="error" content={5} placement="bottom-left">
++          <Avatar
++            bordered
++            squared
++            color="primary"
++            size="lg"
++            src="https://i.pravatar.cc/300?u=a042581f4e290267073"
++          />
++        </Badge>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/content-shape.ts (added, 33 changes)\n  Patch: @@ -0,0 +1,33 @@
++const App = `import { Badge, Avatar, Grid } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid>
++        <Badge color="error" content={5} shape="rectangle">
++          <Avatar
++            squared
++            size="lg"
++            src="https://i.pravatar.cc/300?u=a042581f4e290267072"
++          />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge color="error" content={5} shape="circle">
++          <Avatar
++            size="lg"
++            src="https://i.pravatar.cc/300?u=a042581f4e290267073"
++          />
++        </Badge>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/content-visibility.ts (added, 115 changes)\n  Patch: @@ -0,0 +1,115 @@
++const NotificationIcon = `export const NotificationIcon = ({
++  fill = "currentColor",
++  size,
++  height,
++  width,
++  ...props
++}) => {
++  return (
++    <svg
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M19.3399 14.49L18.3399 12.83C18.1299 12.46 17.9399 11.76 17.9399 11.35V8.82C17.9399 6.47 16.5599 4.44 14.5699 3.49C14.0499 2.57 13.0899 2 11.9899 2C10.8999 2 9.91994 2.59 9.39994 3.52C7.44994 4.49 6.09994 6.5 6.09994 8.82V11.35C6.09994 11.76 5.90994 12.46 5.69994 12.82L4.68994 14.49C4.28994 15.16 4.19994 15.9 4.44994 16.58C4.68994 17.25 5.25994 17.77 5.99994 18.02C7.93994 18.68 9.97994 19 12.0199 19C14.0599 19 16.0999 18.68 18.0399 18.03C18.7399 17.8 19.2799 17.27 19.5399 16.58C19.7999 15.89 19.7299 15.13 19.3399 14.49Z"
++        fill={fill}
++      />
++      <path
++        d="M14.8297 20.01C14.4097 21.17 13.2997 22 11.9997 22C11.2097 22 10.4297 21.68 9.87969 21.11C9.55969 20.81 9.31969 20.41 9.17969 20C9.30969 20.02 9.43969 20.03 9.57969 20.05C9.80969 20.08 10.0497 20.11 10.2897 20.13C10.8597 20.18 11.4397 20.21 12.0197 20.21C12.5897 20.21 13.1597 20.18 13.7197 20.13C13.9297 20.11 14.1397 20.1 14.3397 20.07C14.4997 20.05 14.6597 20.03 14.8297 20.01Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const CartIcon = `export const CartIcon = ({
++  fill = "currentColor",
++  size,
++  height,
++  width,
++  ...props
++}) => {
++  return (
++    <svg
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M16.25 22.5C17.2165 22.5 18 21.7165 18 20.75C18 19.7835 17.2165 19 16.25 19C15.2835 19 14.5 19.7835 14.5 20.75C14.5 21.7165 15.2835 22.5 16.25 22.5Z"
++        fill={fill}
++      />
++      <path
++        d="M8.25 22.5C9.2165 22.5 10 21.7165 10 20.75C10 19.7835 9.2165 19 8.25 19C7.2835 19 6.5 19.7835 6.5 20.75C6.5 21.7165 7.2835 22.5 8.25 22.5Z"
++        fill={fill}
++      />
++      <path
++        d="M4.84 3.94L4.64 6.39C4.6 6.86 4.97 7.25 5.44 7.25H20.75C21.17 7.25 21.52 6.93 21.55 6.51C21.68 4.74 20.33 3.3 18.56 3.3H6.27C6.17 2.86 5.97 2.44 5.66 2.09C5.16 1.56 4.46 1.25 3.74 1.25H2C1.59 1.25 1.25 1.59 1.25 2C1.25 2.41 1.59 2.75 2 2.75H3.74C4.05 2.75 4.34 2.88 4.55 3.1C4.76 3.33 4.86 3.63 4.84 3.94Z"
++        fill={fill}
++      />
++      <path
++        d="M20.5101 8.75H5.17005C4.75005 8.75 4.41005 9.07 4.37005 9.48L4.01005 13.83C3.87005 15.54 5.21005 17 6.92005 17H18.0401C19.5401 17 20.8601 15.77 20.9701 14.27L21.3001 9.6C21.3401 9.14 20.9801 8.75 20.5101 8.75Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const App = `import { Badge, Grid } from "@nextui-org/react";
++import { NotificationIcon } from './NotificationIcon';
++import { CartIcon } from './CartIcon';
++
++export default function App() {
++  const [isInvisible, setIsInvisible] = React.useState(false);
++
++  return (
++    <Grid.Container alignItems="center" gap={2}>
++      <Grid>
++        <Badge
++          color="error"
++          content={5}
++          isInvisible={isInvisible}
++          shape="circle"
++        >
++          <NotificationIcon fill="currentColor" size={30} />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge
++          color="error"
++          content="9+"
++          isInvisible={isInvisible}
++          shape="circle"
++        >
++          <CartIcon fill="currentColor" size={30} />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Row align="center">
++          <Switch
++            initialChecked
++            onChange={(ev) => setIsInvisible(!ev.target.checked)}
++          />
++          <Text css={{ ml: "$3" }}>Show badge</Text>
++        </Row>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++  "/NotificationIcon.js": NotificationIcon,
++  "/CartIcon.js": CartIcon,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/content.ts (added, 160 changes)\n  Patch: @@ -0,0 +1,160 @@
++const CheckIcon = `export const CheckIcon = ({
++  fill = "currentColor",
++  size,
++  height,
++  width,
++  ...props
++}) => {
++  return (
++    <svg
++      width={size || width || 18}
++      height={size || height || 18}
++      viewBox="0 0 24 24"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M7.75 11.9999L10.58 14.8299L16.25 9.16992"
++        stroke={fill}
++        strokeWidth={1.5}
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      />
++    </svg>
++  );
++};`;
++
++const NotificationIcon = `export const NotificationIcon = ({
++  fill = "currentColor",
++  size,
++  height,
++  width,
++  ...props
++}) => {
++  return (
++    <svg
++      width={size || width || 24}
++      height={size || height || 24}
++      viewBox="0 0 24 24"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      {...props}
++    >
++      <path
++        d="M19.3399 14.49L18.3399 12.83C18.1299 12.46 17.9399 11.76 17.9399 11.35V8.82C17.9399 6.47 16.5599 4.44 14.5699 3.49C14.0499 2.57 13.0899 2 11.9899 2C10.8999 2 9.91994 2.59 9.39994 3.52C7.44994 4.49 6.09994 6.5 6.09994 8.82V11.35C6.09994 11.76 5.90994 12.46 5.69994 12.82L4.68994 14.49C4.28994 15.16 4.19994 15.9 4.44994 16.58C4.68994 17.25 5.25994 17.77 5.99994 18.02C7.93994 18.68 9.97994 19 12.0199 19C14.0599 19 16.0999 18.68 18.0399 18.03C18.7399 17.8 19.2799 17.27 19.5399 16.58C19.7999 15.89 19.7299 15.13 19.3399 14.49Z"
++        fill={fill}
++      />
++      <path
++        d="M14.8297 20.01C14.4097 21.17 13.2997 22 11.9997 22C11.2097 22 10.4297 21.68 9.87969 21.11C9.55969 20.81 9.31969 20.41 9.17969 20C9.30969 20.02 9.43969 20.03 9.57969 20.05C9.80969 20.08 10.0497 20.11 10.2897 20.13C10.8597 20.18 11.4397 20.21 12.0197 20.21C12.5897 20.21 13.1597 20.18 13.7197 20.13C13.9297 20.11 14.1397 20.1 14.3397 20.07C14.4997 20.05 14.6597 20.03 14.8297 20.01Z"
++        fill={fill}
++      />
++    </svg>
++  );
++};`;
++
++const App = `import { Badge, Avatar, Grid } from "@nextui-org/react";
++import { NotificationIcon } from './NotificationIcon"
++import { CheckIcon } from "./CheckIcon";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid>
++        <Badge color="error" content={5}>
++          <Avatar
++            bordered
++            squared
++            color="secondary"
++            size="lg"
++            src="https://i.pravatar.cc/300?u=a042581f4e29026707d"
++          />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge
++          content=""
++          color="success"
++          placement="bottom-right"
++          shape="circle"
++          variant="dot"
++          size="md"
++        >
++          <Avatar
++            size="lg"
++            src="https://i.pravatar.cc/300?u=a042581f4e29026707e"
++          />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge
++          content=""
++          isSquared
++          color="primary"
++          placement="bottom-right"
++          variant="points"
++          size="md"
++        >
++          <Avatar
++            squared
++            size="lg"
++            src="https://i.pravatar.cc/150?u=a04258114e29026702d"
++          />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge content="new" color="error" placement="top-right" size="xs">
++          <Avatar
++            bordered
++            squared
++            size="lg"
++            color="error"
++            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
++          />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge
++          content={<CheckIcon />}
++          color="success"
++          css={{ p: 0 }}
++          placement="bottom-right"
++          size="xs"
++        >
++          <Avatar
++            bordered
++            squared
++            size="lg"
++            color="success"
++            src="https://i.pravatar.cc/300?u=a042581f4e290267072"
++          />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge
++          content={<NotificationIcon fill="currentColor" size={12} />}
++          css={{p: "$2"}}
++          color="error"
++          placement="top-right"
++          shape="circle"
++          size="md"
++        >
++          <Avatar
++            size="lg"
++            src="https://i.pravatar.cc/300?u=a042581f4e29026704f"
++          />
++        </Badge>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++  "/CheckIcon.js": CheckIcon,
++  "/NotificationIcon.js": NotificationIcon,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/default.ts (added, 13 changes)\n  Patch: @@ -0,0 +1,13 @@
++const App = `import { Badge } from "@nextui-org/react";
++
++export default function App() {
++  return <Badge>DEFAULT</Badge>;
++}`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/disable-outline.ts (added, 34 changes)\n  Patch: @@ -0,0 +1,34 @@
++const App = `import { Badge, Avatar, Grid } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid>
++        <Badge color="error" content={5} shape="rectangle" size="md">
++          <Avatar
++            squared
++            size="lg"
++            src="https://i.pravatar.cc/300?u=a042581f4e290267072"
++          />
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge disableOutline color="error" content={5} shape="circle" size="md">
++          <Avatar
++            squared
++            size="lg"
++            src="https://i.pravatar.cc/300?u=a042581f4e290267072"
++          />
++        </Badge>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/dot.ts (added, 40 changes)\n  Patch: @@ -0,0 +1,40 @@
++const App = `import { Badge, Text, Grid } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container gap={0.5}>
++      <Grid xs={12} alignItems="center">
++        <Badge variant="dot" />
++        <Text css={{ ml: "$2" }}>Default</Text>
++      </Grid>
++      <Grid xs={12} alignItems="center">
++        <Badge color="primary" variant="dot" />
++        <Text css={{ ml: "$2" }}>Primary</Text>
++      </Grid>
++      <Grid xs={12} alignItems="center">
++        <Badge color="secondary" variant="dot" />
++        <Text css={{ ml: "$2" }}>Secondary</Text>
++      </Grid>
++      <Grid xs={12} alignItems="center">
++        <Badge color="success" variant="dot" />
++        <Text css={{ ml: "$2" }}>Success</Text>
++      </Grid>
++      <Grid xs={12} alignItems="center">
++        <Badge color="warning" variant="dot" />
++        <Text css={{ ml: "$2" }}>Warning</Text>
++      </Grid>
++      <Grid xs={12} alignItems="center">
++        <Badge color="error" variant="dot" />
++        <Text css={{ ml: "$2" }}>Error</Text>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/flat.ts (added, 44 changes)\n  Patch: @@ -0,0 +1,44 @@
++const App = `import { Badge, Grid } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid>
++        <Badge variant="flat">Neutral</Badge>
++      </Grid>
++      <Grid>
++        <Badge color="primary" variant="flat">
++          Primary
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge color="secondary" variant="flat">
++          Secondary
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge color="success" variant="flat">
++          Success
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge color="warning" variant="flat">
++          Warning
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge color="error" variant="flat">
++          Error
++        </Badge>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/index.ts (added, 35 changes)\n  Patch: @@ -0,0 +1,35 @@
++import defaultBadge from "./default";
++import sizesBadge from "./sizes";
++import colorsBadge from "./colors";
++import shadowBadge from "./shadow";
++import dotBadge from "./dot";
++import pointsBadge from "./points";
++import borderedBadge from "./bordered";
++import flatBadge from "./flat";
++import squaredBadge from "./squared";
++import contentBadge from "./content";
++import contentPlacementsBadge from "./content-placements";
++import contentShapeBadge from "./content-shape";
++import contentVisibilityBadge from "./content-visibility";
++import contentOffset from "./content-offset";
++import disableOutline from "./disable-outline";
++import a11y from "./a11y";
++
++export default {
++  defaultBadge,
++  sizesBadge,
++  colorsBadge,
++  shadowBadge,
++  dotBadge,
++  pointsBadge,
++  borderedBadge,
++  flatBadge,
++  squaredBadge,
++  contentBadge,
++  contentPlacementsBadge,
++  contentShapeBadge,
++  contentVisibilityBadge,
++  contentOffset,
++  disableOutline,
++  a11y,
++};\n- apps/docs/content/components/badge/points.ts (added, 34 changes)\n  Patch: @@ -0,0 +1,34 @@
++const App = `import { Badge, Grid } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid>
++        <Badge variant="points" />
++      </Grid>
++      <Grid>
++        <Badge color="primary" variant="points" />
++      </Grid>
++      <Grid>
++        <Badge color="secondary" variant="points" />
++      </Grid>
++      <Grid>
++        <Badge color="success" variant="points" />
++      </Grid>
++      <Grid>
++        <Badge color="warning" variant="points" />
++      </Grid>
++      <Grid>
++        <Badge color="error" variant="points" />
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/shadow.ts (added, 46 changes)\n  Patch: @@ -0,0 +1,46 @@
++const App = `import { Badge, Grid } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid>
++        <Badge enableShadow disableOutline>
++          Neutral
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge enableShadow disableOutline color="primary">
++          Primary
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge enableShadow disableOutline color="secondary">
++          Secondary
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge enableShadow disableOutline color="success">
++          Success
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge enableShadow disableOutline color="warning">
++          Warning
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge enableShadow disableOutline color="error">
++          Error
++        </Badge>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/sizes.ts (added, 82 changes)\n  Patch: @@ -0,0 +1,82 @@
++const App = `import { Badge, Avatar, Grid } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container>
++      <Grid.Container alignItems="center" gap={1}>
++        <Grid>
++          <Badge size="xs">New (xs)</Badge>
++        </Grid>
++        <Grid>
++          <Badge size="sm">New (sm)</Badge>
++        </Grid>
++        <Grid>
++          <Badge size="md">New (md)</Badge>
++        </Grid>
++        <Grid>
++          <Badge size="lg">New (lg)</Badge>
++        </Grid>
++        <Grid>
++          <Badge size="xl">New (xl)</Badge>
++        </Grid>
++      </Grid.Container>
++      <Spacer y={0.5} />
++      <Grid.Container gap={1}>
++        <Grid>
++          <Badge disableOutline content="xs" size="xs">
++            <Avatar
++              squared
++              size="lg"
++              src="https://i.pravatar.cc/300?u=a042581f4e29026707d"
++            />
++          </Badge>
++        </Grid>
++        <Grid>
++          <Badge disableOutline content="sm" size="sm">
++            <Avatar
++              squared
++              size="lg"
++              src="https://i.pravatar.cc/300?u=a042581f4e29026707e"
++            />
++          </Badge>
++        </Grid>
++        <Grid>
++          <Badge disableOutline content="md" size="md">
++            <Avatar
++              squared
++              size="lg"
++              src="https://i.pravatar.cc/300?u=a042581f4e290267072"
++            />
++          </Badge>
++        </Grid>
++        <Grid>
++          <Badge disableOutline content="lg" size="lg">
++            <Avatar
++              squared
++              size="lg"
++              src="https://i.pravatar.cc/300?u=a042581f4e290267073"
++            />
++          </Badge>
++        </Grid>
++        <Grid>
++          <Badge disableOutline content="xl" size="xl">
++            <Avatar
++              squared
++              size="lg"
++              src="https://i.pravatar.cc/300?u=a042581f4e290267071"
++            />
++          </Badge>
++        </Grid>
++      </Grid.Container>
++    </Grid.Container>
++  );
++}
++`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/badge/squared.ts (added, 44 changes)\n  Patch: @@ -0,0 +1,44 @@
++const App = `import { Badge, Grid } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Grid.Container gap={2}>
++      <Grid>
++        <Badge isSquared>Neutral</Badge>
++      </Grid>
++      <Grid>
++        <Badge isSquared color="primary" variant="bordered">
++          Primary
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge isSquared color="secondary" variant="flat">
++          Secondary
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge isSquared color="success">
++          Success
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge isSquared color="warning" variant="bordered">
++          Warning
++        </Badge>
++      </Grid>
++      <Grid>
++        <Badge isSquared color="error" variant="flat">
++          Error
++        </Badge>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/button/icon.ts (modified, 32 changes)\n  Patch: @@ -1,6 +1,4 @@
+-const HeartIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const HeartIcon = ({
++const HeartIcon = `export const HeartIcon = ({
+   fill = 'currentColor',
+   filled,
+   size,
+@@ -27,11 +25,9 @@ export const HeartIcon = ({
+       />
+     </svg>
+   );
+-}`;
+-
+-const CameraIcon = `import { React } from '@nextui-org/react';\n
++};`;
+ 
+-export const CameraIcon = ({
++const CameraIcon = `export const CameraIcon = ({
+   fill = 'currentColor',
+   filled,
+   size,
+@@ -57,11 +53,9 @@ export const CameraIcon = ({
+       />
+     </svg>
+   );
+-}`;
+-
+-const LockIcon = `import { React } from '@nextui-org/react';\n
++};`;
+ 
+-export const LockIcon = ({
++const LockIcon = `export const LockIcon = ({
+   fill = 'currentColor',
+   filled,
+   size,
+@@ -99,11 +93,9 @@ export const LockIcon = ({
+       </g>
+     </svg>
+   );
+-}`;
++};`;
+ 
+-const NotificationIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const NotificationIcon = ({
++const NotificationIcon = `export const NotificationIcon = ({
+   fill = 'currentColor',
+   filled,
+   size,
+@@ -129,11 +121,9 @@ export const NotificationIcon = ({
+       />
+     </svg>
+   );
+-}`;
+-
+-const UserIcon = `import { React } from '@nextui-org/react';\n
++};`;
+ 
+-export const UserIcon = ({
++const UserIcon = `export const UserIcon = ({
+   fill = 'currentColor',
+   filled,
+   size,
+@@ -172,7 +162,7 @@ export const UserIcon = ({
+   );
+ }`;
+ 
+-const AppJs = `import { Button,Spacer } from '@nextui-org/react';
++const AppJs = `import { Button, Spacer } from '@nextui-org/react';
+ import { HeartIcon } from './HeartIcon';
+ import { CameraIcon } from './CameraIcon';
+ import { LockIcon } from './LockIcon';
+@@ -212,12 +202,12 @@ export default function App() {
+ }`;
+ 
+ const react = {
++  "/App.js": AppJs,
+   "/HeartIcon.js": HeartIcon,
+   "/CameraIcon.js": CameraIcon,
+   "/LockIcon.js": LockIcon,
+   "/NotificationIcon.js": NotificationIcon,
+   "/UserIcon.js": UserIcon,
+-  "/App.js": AppJs,
+ };
+ 
+ export default {\n- apps/docs/content/components/collapse/custom-arrow.ts (modified, 18 changes)\n  Patch: @@ -1,6 +1,4 @@
+-const SunIcon = `import { React } from '@nextui-org/react';
+-
+-export const SunIcon = ({
++const SunIcon = `export const SunIcon = ({
+   fill = 'currentColor',
+   filled,
+   size,
+@@ -58,11 +56,9 @@ export const SunIcon = ({
+       ></path>
+     </svg>
+   );
+-}`;
+-
+-const MoonIcon = `import { React } from '@nextui-org/react';
++};`;
+ 
+-export const MoonIcon = ({
++const MoonIcon = `export const MoonIcon = ({
+   fill = 'currentColor',
+   filled,
+   size,
+@@ -100,11 +96,9 @@ export const MoonIcon = ({
+       ></path>
+     </svg>
+   );
+-}`;
+-
+-const AnchorIcon = `import { React } from '@nextui-org/react';
++};`;
+ 
+-export const AnchorIcon = ({
++const AnchorIcon = `export const AnchorIcon = ({
+   fill = 'currentColor',
+   filled,
+   size,
+@@ -131,7 +125,7 @@ export const AnchorIcon = ({
+       ></path>
+     </svg>
+   );
+-}`;
++};`;
+ 
+ const AppJs = `import { Collapse,Text,Grid } from '@nextui-org/react';
+ import { SunIcon } from './SunIcon';\n- apps/docs/content/components/dropdown/description.ts (modified, 16 changes)\n  Patch: @@ -1,6 +1,4 @@
+-const AddNoteIcon = `import { React } from "@nextui-org/react";
+-
+-export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
++const AddNoteIcon = `export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+@@ -22,9 +20,7 @@ export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const CopyDocumentIcon = `import { React } from "@nextui-org/react";
+-
+-export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
++const CopyDocumentIcon = `export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+@@ -50,9 +46,7 @@ export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const EditDocumentIcon = `import { React } from "@nextui-org/react";
+-
+-export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
++const EditDocumentIcon = `export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+@@ -74,9 +68,7 @@ export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const DeleteDocumentIcon = `import { React } from "@nextui-org/react";
+-
+-export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
++const DeleteDocumentIcon = `export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"\n- apps/docs/content/components/dropdown/disable-animation.ts (modified, 16 changes)\n  Patch: @@ -1,6 +1,4 @@
+-const AddNoteIcon = `import { React } from "@nextui-org/react";
+-
+-export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
++const AddNoteIcon = `export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+@@ -22,9 +20,7 @@ export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const CopyDocumentIcon = `import { React } from "@nextui-org/react";
+-
+-export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
++const CopyDocumentIcon = `export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+@@ -50,9 +46,7 @@ export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const EditDocumentIcon = `import { React } from "@nextui-org/react";
+-
+-export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
++const EditDocumentIcon = `export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+@@ -74,9 +68,7 @@ export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const DeleteDocumentIcon = `import { React } from "@nextui-org/react";
+-
+-export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
++const DeleteDocumentIcon = `export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"\n- apps/docs/content/components/dropdown/icon.ts (modified, 16 changes)\n  Patch: @@ -1,6 +1,4 @@
+-const AddNoteIcon = `import { React } from "@nextui-org/react";
+-
+-export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
++const AddNoteIcon = `export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+@@ -22,9 +20,7 @@ export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const CopyDocumentIcon = `import { React } from "@nextui-org/react";
+-
+-export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
++const CopyDocumentIcon = `export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+@@ -50,9 +46,7 @@ export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const EditDocumentIcon = `import { React } from "@nextui-org/react";
+-
+-export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
++const EditDocumentIcon = `export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+@@ -74,9 +68,7 @@ export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const DeleteDocumentIcon = `import { React } from "@nextui-org/react";
+-
+-export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
++const DeleteDocumentIcon = `export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"\n- apps/docs/content/components/dropdown/sections.ts (modified, 16 changes)\n  Patch: @@ -1,6 +1,4 @@
+-const AddNoteIcon = `import { React } from "@nextui-org/react";
+-
+-export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
++const AddNoteIcon = `export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+@@ -22,9 +20,7 @@ export const AddNoteIcon = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const CopyDocumentIcon = `import { React } from "@nextui-org/react";
+-
+-export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
++const CopyDocumentIcon = `export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+@@ -50,9 +46,7 @@ export const CopyDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const EditDocumentIcon = `import { React } from "@nextui-org/react";
+-
+-export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
++const EditDocumentIcon = `export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"
+@@ -74,9 +68,7 @@ export const EditDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   );
+ };`;
+ 
+-const DeleteDocumentIcon = `import { React } from "@nextui-org/react";
+-
+-export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
++const DeleteDocumentIcon = `export const DeleteDocumentIcon = ({ fill, size, height, width, ...props }) => {
+   return (
+     <svg
+       xmlns="http://www.w3.org/2000/svg"\n- apps/docs/content/components/index.ts (modified, 2 changes)\n  Patch: @@ -24,6 +24,7 @@ import gridContent from "./grid";
+ import spacerContent from "./spacer";
+ import popoverContent from "./popover";
+ import dropdownContent from "./dropdown";
++import badgeContent from "./badge";
+ 
+ export default {
+   tableContent,
+@@ -52,4 +53,5 @@ export default {
+   spacerContent,
+   popoverContent,
+   dropdownContent,
++  badgeContent,
+ };\n- apps/docs/content/components/input/password.ts (modified, 8 changes)\n  Patch: @@ -1,6 +1,4 @@
+-const LockIcon = `import { React } from '@nextui-org/react';
+-
+-export const LockIcon = ({
++const LockIcon = `export const LockIcon = ({
+   fill,
+   filled,
+   size,
+@@ -40,9 +38,7 @@ export const LockIcon = ({
+   );
+ };`;
+ 
+-const UnLockIcon = `import { React } from "@nextui-org/react";
+-
+-export const UnLockIcon = ({
++const UnLockIcon = `export const UnLockIcon = ({
+   fill,
+   filled,
+   size,\n- apps/docs/content/components/switch/icon.ts (modified, 32 changes)\n  Patch: @@ -1,6 +1,4 @@
+-const SunIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const SunIcon = ({
++const SunIcon = `export const SunIcon = ({
+   fill = "currentColor",
+   filled,
+   size,
+@@ -60,9 +58,7 @@ export const SunIcon = ({
+   );
+ };`;
+ 
+-const MoonIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const MoonIcon = ({
++const MoonIcon = `export const MoonIcon = ({
+   fill = "currentColor",
+   filled,
+   size,
+@@ -102,9 +98,7 @@ export const MoonIcon = ({
+   );
+ };`;
+ 
+-const VideoIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const VideoIcon = ({
++const VideoIcon = `export const VideoIcon = ({
+   fill = "currentColor",
+   filled,
+   size,
+@@ -145,9 +139,7 @@ export const VideoIcon = ({
+   );
+ };`;
+ 
+-const VideoOffIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const VideoOffIcon = ({
++const VideoOffIcon = `export const VideoOffIcon = ({
+   fill = "currentColor",
+   filled,
+   size,
+@@ -188,9 +180,7 @@ export const VideoOffIcon = ({
+   );
+ };`;
+ 
+-const VolumeUpIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const VolumeUpIcon = ({
++const VolumeUpIcon = `export const VolumeUpIcon = ({
+   fill = "currentColor",
+   size,
+   height,
+@@ -218,9 +208,7 @@ export const VolumeUpIcon = ({
+   );
+ };`;
+ 
+-const NotificationIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const NotificationIcon = ({
++const NotificationIcon = `export const NotificationIcon = ({
+   fill = "currentColor",
+   filled,
+   size,
+@@ -248,9 +236,7 @@ export const NotificationIcon = ({
+   );
+ };`;
+ 
+-const MicrophoneIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const MicrophoneIcon = ({
++const MicrophoneIcon = `export const MicrophoneIcon = ({
+  fill = "currentColor",
+   filled,
+   size,
+@@ -299,9 +285,7 @@ export const MicrophoneIcon = ({
+   );
+ };`;
+ 
+-const MicrophoneOffIcon = `import { React } from '@nextui-org/react';\n
+-
+-export const MicrophoneOffIcon = ({
++const MicrophoneOffIcon = `export const MicrophoneOffIcon = ({
+   fill = "currentColor",
+   filled,
+   size,\n- apps/docs/content/components/table/custom-cells.ts (modified, 18 changes)\n  Patch: @@ -54,8 +54,7 @@ export const IconButton = styled('button', {
+   }
+ });`;
+ 
+-const EyeIconTs = `import { React } from '@nextui-org/react';\n
+-type IconProps = {
++const EyeIconTs = `type IconProps = {
+   fill?: string;
+   size?: string | number;
+   height?: string | number;
+@@ -96,8 +95,7 @@ export const EyeIcon: React.FC<IconProps> = ({
+   );
+ };`;
+ 
+-const EditIconTs = `import { React } from '@nextui-org/react';\n
+-type IconProps = {
++const EditIconTs = `type IconProps = {
+   fill?: string;
+   size?: string | number;
+   height?: string | number;
+@@ -148,8 +146,7 @@ export const EditIcon: React.FC<IconProps> = ({
+   );
+ };`;
+ 
+-const DeleteIconTs = `import { React } from '@nextui-org/react';\n
+-type IconProps = {
++const DeleteIconTs = `type IconProps = {
+   fill?: string;
+   size?: string | number;
+   height?: string | number;
+@@ -211,8 +208,7 @@ export const DeleteIcon: React.FC<IconProps> = ({
+   );
+ };`;
+ 
+-const EyeIconJs = `import { React } from '@nextui-org/react';\n
+-export const EyeIcon = ({
++const EyeIconJs = `export const EyeIcon = ({
+   fill,
+   size,
+   height,
+@@ -246,8 +242,7 @@ export const EyeIcon = ({
+   );
+ };`;
+ 
+-const EditIconJs = `import { React } from '@nextui-org/react';\n
+-export const EditIcon = ({
++const EditIconJs = `export const EditIcon = ({
+   fill,
+   size,
+   height,
+@@ -291,8 +286,7 @@ export const EditIcon = ({
+   );
+ };`;
+ 
+-const DeleteIconJs = `import { React } from '@nextui-org/react';\n
+-export const DeleteIcon = ({
++const DeleteIconJs = `export const DeleteIcon = ({
+   fill,
+   size,
+   height,\n- apps/docs/content/docs/components/badge.mdx (added, 189 changes)\n  Patch: @@ -0,0 +1,189 @@
++---
++title: "Badge"
++description: "Badges are used as a small numerical value or status descriptor for UI elements."
++url: https://nextui.org/docs/components/badge
++---
++
++# Badge
++
++Badges are used as a small numerical value or status descriptor for UI elements.
++
++```jsx
++import { Badge } from "@nextui-org/react";
++```
++
++<CarbonAd />
++
++<Spacer y={2} />
++
++<Playground
++  title="Default"
++  desc="Badge with default styles, used in standalone when `content` prop is empty."
++  files={badgeContent.defaultBadge}
++/>
++
++<Playground
++  title="Sizes"
++  desc="Use `size` prop to change the size of the badge."
++  files={badgeContent.sizesBadge}
++/>
++
++<Playground
++  title="Colors"
++  desc="We preset a series of colorful Badge styles for use in different situations."
++  files={badgeContent.colorsBadge}
++/>
++
++<Playground
++  title="Shadow"
++  desc="Use `enableShadow` prop to add a shadow to the badge."
++  files={badgeContent.shadowBadge}
++/>
++
++<Playground
++  title="Dot"
++  desc="Use the `dot` variant to create a dot badge. Useful for indicating a status or showing a notification that there is new content."
++  files={badgeContent.dotBadge}
++/>
++
++<Playground
++  title="Points"
++  desc="Use the `points` variant to create a badge with a points animation. Useful for indicating a writing or loading status."
++  files={badgeContent.pointsBadge}
++/>
++
++<Playground
++  title="Bordered"
++  desc="Use the `bordered` variant to create a badge with a border and an empty background."
++  files={badgeContent.borderedBadge}
++/>
++
++<Playground
++  title="Flat"
++  desc="Use the `flat` variant to create a badge with a flat background that contrasts with the text based on the selected color. [Leran more about the color palette](/docs/theme/default-theme#understanding-the-base-scale)."
++  files={badgeContent.flatBadge}
++/>
++
++<Playground
++  title="Squared"
++  desc="Use the `isSquared` prop to create a badge with squared corners."
++  files={badgeContent.squaredBadge}
++/>
++
++<Playground
++  title="Content"
++  desc="If you pass the `content` prop, the badge will be rendered relative to its children."
++  files={badgeContent.contentBadge}
++/>
++
++<Playground
++  title="Content Placements"
++  desc="Use the `placement` prop to change the placement of the badge content. The default placement is `top-right`."
++  files={badgeContent.contentPlacementsBadge}
++/>
++
++<Playground
++  title="Content Shape"
++  desc="Use the `shape` prop to place the badge content relative to the corner of the children element. The default shape is `rectangle`."
++  files={badgeContent.contentShapeBadge}
++/>
++
++<Playground
++  title="Content Visibility"
++  desc="The visibility of badges can be controlled using the `isInvisible` prop."
++  files={badgeContent.contentVisibilityBadge}
++/>
++
++<Playground
++  title="Content Offset"
++  desc="You can use the `verticalOffset` and `horizontalOffset` props to adjust the position of the badge content. The default offset is `5%` for rectangles and `15%` for circles."
++  files={badgeContent.contentOffset}
++/>
++
++<Playground
++  title="Disable Outline"
++  desc="Use the `disableOutline` prop to remove the outline from the badge. The default outline is `2px` with a `solid` background color."
++  files={badgeContent.disableOutline}
++/>
++
++<Playground
++  title="Accessibility"
++  desc="You shouldn't rely on the content of the badge to be announced correctly. You should provide a full description, for instance, with `aria-label`."
++  files={badgeContent.a11y}
++/>
++
++<Spacer y={3} />
++
++### APIs
++
++<Spacer y={2} />
++
++#### Badge Props
++
++| Attribute            | Type                                 | Description                                                                        | Default     |
++| -------------------- | ------------------------------------ | ---------------------------------------------------------------------------------- | ----------- |
++| **children**         | `ReactNode`                          | The wrapped component.                                                             | -           |
++| **content**          | `string` `number` `ReactNode`        | The content of the badge. The badge will be rendered relative to its **children**. | -           |
++| **color**            | [SimpleColors](#simple-colors)       | The badge color.                                                                   | `default`   |
++| **size**             | [NormalSizes](#normal-sizes)         | The badge size.                                                                    | `md`        |
++| **variant**          | [BadgeVariant](#badge-variants)      | The badge variation.                                                               | `default`   |
++| **placement**        | [BadgePlacements](#badge-placements) | The placement of the badge **content**.                                            | `top-right` |
++| **borderWeight**     | [NormalWeights](#normal-weights)     | The border weight for **bordered** badge variation.                                | `normal`    |
++| **shape**            | `circle` `rectangle`                 | The wrapped shape the badge should overlap.                                        | `rectangle` |
++| **horizontalOffset** | `string` `number`                    | The horizontal offset of the badge **content**.                                    | -           |
++| **verticalOffset**   | `string` `number`                    | The vertical offset of the badge **content**.                                      | -           |
++| **isInvisible**      | `boolean`                            | Whether the badge is invisible.                                                    | `false`     |
++| **enableShadow**     | `boolean`                            | Whether the badge shadow should be enabled.                                        | `false`     |
++| **isSquared**        | `boolean`                            | Whether the badge corners should be squared.                                       | `false`     |
++| **disableOutline**   | `boolean`                            | Whether the badge outline should be disabled.                                      | `false`     |
++| **disableAnimation** | `boolean`                            | Whether the badge **content** animation should be disabled.                | `false`     |
++| **css**              | `Stitches.CSS`                       | Override Default CSS style.                                                        | -           |
++| **as**               | `keyof JSX.IntrinsicElements`        | Changes which tag component outputs.                                               | `span`      |
++
++---
++
++<Spacer y={2} />
++
++### Badge types
++
++#### Simple Colors
++
++```ts
++type SimpleColors =
++  | "default"
++  | "primary"
++  | "secondary"
++  | "success"
++  | "warning"
++  | "error";
++```
++
++#### Normal Sizes
++
++```ts
++type NormalSizes = "xs" | "sm" | "md" | "lg" | "xl";
++```
++
++<Spacer y={1} />
++
++#### Badge Variants
++
++```ts
++type BadgeVariants = "default" | "flat" | "dot" | "points" | "bordered";
++```
++
++#### Badge Placements
++
++```ts
++type BadgePlacements =
++  | "top-right"
++  | "top-left"
++  | "bottom-right"
++  | "bottom-left";
++```
++
++#### Normal Weights
++
++```ts
++type NormalWeights = "light" | "normal" | "bold" | "extrabold" | "black";
++```\n- apps/docs/content/docs/components/button.mdx (modified, 26 changes)\n  Patch: @@ -1,6 +1,6 @@
+ ---
+-title: 'Button'
+-description: 'Buttons allow users to perform actions and choose with a single tap.'
++title: "Button"
++description: "Buttons allow users to perform actions and choose with a single tap."
+ url: https://nextui.org/docs/components/button
+ ---
+ 
+@@ -9,7 +9,7 @@ url: https://nextui.org/docs/components/button
+ Buttons allow users to perform actions and choose with a single tap.
+ 
+ ```jsx
+-import { Button } from '@nextui-org/react';
++import { Button } from "@nextui-org/react";
+ ```
+ 
+ <CarbonAd />
+@@ -103,7 +103,7 @@ _Note: `gradient` variant is not supported with the `flat` mode._"
+ | Attribute        | Type                                            | Description                               | Default   |
+ | ---------------- | ----------------------------------------------- | ----------------------------------------- | --------- |
+ | **color**        | [NormalColors](#normal-colors)                  | Change button color                       | `default` |
+-| **size**         | [NormalSizes](#normal-sizes)                    | Change button size                        | `medium`  |
++| **size**         | [NormalSizes](#normal-sizes)                    | Change button size                        | `md`      |
+ | **disabled**     | `boolean`                                       | Disable button                            | `false`   |
+ | **bordered**     | `boolean`                                       | Bordered button                           | `false`   |
+ | **flat**         | `boolean`                                       | Flat button                               | `false`   |
+@@ -153,23 +153,23 @@ _Note: `gradient` variant is not supported with the `flat` mode._"
+ 
+ ```ts
+ type NormalColors =
+-  | 'default'
+-  | 'primary'
+-  | 'secondary'
+-  | 'success'
+-  | 'warning'
+-  | 'error'
+-  | 'gradient';
++  | "default"
++  | "primary"
++  | "secondary"
++  | "success"
++  | "warning"
++  | "error"
++  | "gradient";
+ ```
+ 
+ #### Normal Sizes
+ 
+ ```ts
+-type NormalSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
++type NormalSizes = "xs" | "sm" | "md" | "lg" | "xl";
+ ```
+ 
+ #### Normal Weights
+ 
+ ```ts
+-type NormalWeights = 'light' | 'normal' | 'bold' | 'extrabold' | 'black';
++type NormalWeights = "light" | "normal" | "bold" | "extrabold" | "black";
+ ```\n

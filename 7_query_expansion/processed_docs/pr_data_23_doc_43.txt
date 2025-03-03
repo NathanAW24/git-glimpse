@@ -1,0 +1,91 @@
+Pull Request Number: 1190
+Title: fix: progress bar with more than 100% is shown as full and with proper label
+Base Branch: feat/v2
+Head Branch: fix/progress-bar-with-more-than-100-is-now-full
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1190
+State: MERGED
+Created At: 2023-07-11T21:05:41Z
+Merged At: 2023-07-11T21:37:35Z
+Participants: jguddas, jrgarciadev
+
+Description:
+Example with value: 555
+https://storiesv2.nextui.org/?path=/story/components-progress--with-value-formatting&args=value:555
+Now the label reflects the value and the progress bar is not stuck anymore.
+The label is also fixed for circular progress by this change.
+Before
+
+After
+
+Commits:
+- fix: progress bar with more than 100% is now full and has proper label\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2202517756044acf6058f18af71b43c65ff742ab4f%22%7D%2C%22id%22%3A%22QmU6tT2hU5ox3GGJm8rF8oLogkmFSwYwiz4QkQnCkZfxNL%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1190%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Could you please create a `clampPercentage` function inside `packages > utilities > shared-utilities > src > numbers`?
+
+Something like this:
+
+```ts
+export function clampPercentage(percentage: number): number {
+    return Math.min(Math.max(percentage, 0), 100);
+}
+```
+
+Then apply it to the `progress`, you could also do this logic inside the `use-progress` so the circular progress will also take advantage of it
+
+```tsx
+style={{
+   transform: `translateX(-${100 - clampPercentage(percentage)}%)`,
+}}
+```
+\n
+
+Files Changed:
+- packages/components/progress/src/use-aria-progress.ts (modified, 4 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import {AriaProgressBarProps} from "@react-types/progress";
+-import {clamp, filterDOMProps, mergeProps} from "@react-aria/utils";
++import {filterDOMProps, mergeProps} from "@react-aria/utils";
+ import {DOMAttributes} from "@react-types/shared";
+ import {useAriaLabel} from "@nextui-org/use-aria-label";
+ import {useNumberFormatter} from "@react-aria/i18n";
+@@ -36,7 +36,7 @@ export function useProgressBar(props: AriaProgressBarProps): ProgressBarAria {
+     labelElementType: "span",
+   });
+ 
+-  value = clamp(value, minValue, maxValue);
++  value = Math.max(value, minValue);
+   const percentage = (value - minValue) / (maxValue - minValue);
+   const formatter = useNumberFormatter(formatOptions);
+ \n- packages/components/progress/src/use-progress.ts (modified, 4 changes)\n  Patch: @@ -5,7 +5,7 @@ import type {AriaProgressBarProps} from "@react-types/progress";
+ import {HTMLNextUIProps, mapPropsVariants} from "@nextui-org/system";
+ import {progress} from "@nextui-org/theme";
+ import {useDOMRef} from "@nextui-org/react-utils";
+-import {clsx, dataAttr} from "@nextui-org/shared-utils";
++import {clampPercentage, clsx, dataAttr} from "@nextui-org/shared-utils";
+ import {ReactRef} from "@nextui-org/react-utils";
+ import {mergeProps} from "@react-aria/utils";
+ import {useMemo, useCallback} from "react";
+@@ -104,7 +104,7 @@ export function useProgress(originalProps: UseProgressProps) {
+     () =>
+       isIndeterminate || !selfMounted
+         ? undefined
+-        : ((value - minValue) / (maxValue - minValue)) * 100,
++        : clampPercentage(((value - minValue) / (maxValue - minValue)) * 100),
+     [selfMounted, isIndeterminate, value, minValue, maxValue],
+   );
+ \n- packages/utilities/shared-utils/src/numbers.ts (modified, 4 changes)\n  Patch: @@ -9,3 +9,7 @@ export function range(start: number, end: number) {
+ 
+   return Array.from({length}, (_, index) => index + start);
+ }
++
++export function clampPercentage(value: number) {
++  return Math.min(Math.max(value, 0), 100);
++}\n

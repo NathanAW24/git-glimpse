@@ -1,0 +1,770 @@
+Pull Request Number: 3523
+Title: refactor: optimisations
+Base Branch: canary
+Head Branch: refactor/optimisation
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/3523
+State: MERGED
+Created At: 2024-07-21T02:59:25Z
+Merged At: 2024-11-04T20:47:43Z
+Participants: wingkwong, ryo-manba, jrgarciadev
+
+Description:
+📝 Description
+(1) replace lodash with native approaches
+
+replaced most lodash usages with native approaches.
+
+(2) framer motion
+
+upgrade framer-motion versions
+
+Closes #3817
+Closes #2288
+
+
+reduce bundle size
+load domAnimation dynamically
+use domAnimation instead of domMax in Tabs component
+
+Affected components:
+
+accordion
+calendar
+modal
+navbar
+popover
+ripple
+tooltip
+
+Unchanged components:
+
+tabs
+
+For tabs component, we need to use domMax to achieve the shifting when switching between tabs. We cannot use dynamic load here as it fails sometimes, e.g. the animation will be gone sometimes. probably a bug in framer-motion.
+⛳️ Current behavior (updates)
+vite-template + 8 above-mentioned components
+dist/index.html                     0.97 kB │ gzip:   0.46 kB
+dist/assets/favicon-DI5FVxIz.ico   15.09 kB
+dist/assets/index-DhrH5Nzw.css    215.57 kB │ gzip:  23.66 kB
+dist/assets/index-32UuhZvQ.js     916.79 kB │ gzip: 292.41 kB
+
+🚀 New behavior
+vite-template + 8 above-mentioned components
+dist/index.html                     0.97 kB │ gzip:   0.46 kB
+dist/assets/favicon-DI5FVxIz.ico   15.09 kB
+dist/assets/index-DhrH5Nzw.css    215.57 kB │ gzip:  23.66 kB
+dist/assets/index-CAu8Gkyy.js      57.71 kB │ gzip:  20.37 kB
+dist/assets/index-C3R4YDRP.js     855.12 kB │ gzip: 269.47 kB
+
+
+left: before, right: after (initial load time has been reduced)
+/doc includes the above-mentioned 8 components that use LazyMotion.
+
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced several new utility functions: debounce, uniqBy, omit, kebabCase, mapKeys, get, and intersectionBy to enhance functionality.
+Added a new package @nextui-org/dom-animation for improved DOM animations.
+
+
+
+Bug Fixes
+
+Updated the testGoodContrast function for better clarity and maintainability in color testing.
+Streamlined import statements and removed dependencies on lodash, enhancing performance and code clarity.
+
+
+
+Chores
+
+Updated various package.json files to reflect dependency changes, including upgrading framer-motion to version 11.9.0.
+
+Commits:
+- refactor: replace lodash with native approaches\n- refactor(deps): update framer-motion versions\n- feat(utilities): add @nextui-org/dom-animation\n- refactor(components): load domAnimation dynamically\n- refactor(deps): add @nextui-org/dom-animation\n- fix(utilities): relocate index.ts\n- feat(changeset): framer motion optimization\n- Merge branch 'canary' into refactor/optimisation\n- chore(deps): bump framer-motion version\n- Merge branch 'canary' into refactor/optimisation\n- Merge branch 'canary' into refactor/optimisation\n- fix(docs): conflict issue\n- Merge branch 'canary' into refactor/optimisation\n- refactor(hooks): remove the unnecessary this aliasing\n- refactor(utilities): remove the unnecessary this aliasing\n- chore(docs): remove {} so that it won't be true all the time\n- chore(dom-animation): end with new line\n- refactor(hooks): use debounce from `@nextui-org/shared-utils`\n- chore(deps): add `@nextui-org/shared-utils`\n- refactor: move mapKeys logic to `@nextui-org/shared-utils`\n- refactor: use `get` from `@nextui-org/shared-utils`\n- refactor(docs): use `get` from `@nextui-org/shared-utils`\n- refactor(shared-utils): mapKeys\n- chore(deps): bump framer-motion version\n- chore(deps): remove lodash\n- refactor(docs): use intersectionBy from shared-utils\n- feat(shared-utils): add intersectionBy\n- chore(dom-animation): remove extra blank line\n- refactor(shared-utils): revise intersectionBy\n- fix(modal): add willChange\n- refactor(shared-utils): add comments\n- Merge branch 'canary' into refactor/optimisation\n- chore: merged with canary\n- fix: build & tests\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #ZtlnH4vNQT2sK6IBW/nXcKQ+UGzP6/EOmOGKdV594F4=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9DODJaWjc1ZU1GR0FTaTg1YnJZN1NKWjlLR0NMIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1yZWZhY3Rvci1vcHRpbWlzYXRpb24tbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1yZWZhY3Rvci1vcHRpbWlzYXRpb24tbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi9HR01YaEpNeHV3cTNmcXZRbm1KcUI3VzdXNVVjIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LXJlZmFjdG9yLW9wdGltaXNhdGlvbi1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtcmVmYWN0b3Itb3B0aW1pc2F0aW9uLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/C82ZZ75eMFGASi85brY7SJZ9KGCL)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-refactor-optimisation-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-refactor-optimisation-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 4, 2024 8:44pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/GGMXhJMxuwq3fqvQnmJqB7W7W5Uc)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-refactor-optimisation-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-refactor-optimisation-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 4, 2024 8:44pm |
+
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: b86e5a4dde86a2afe57dcc61a667b901cdb68292
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 54 packages</summary>
+
+  | Name                                 | Type  |
+| ------------------------------------ | ----- |
+| @nextui-org/calendar                 | Patch |
+| @nextui-org/theme                    | Patch |
+| @nextui-org/use-infinite-scroll      | Patch |
+| @nextui-org/shared-utils             | Patch |
+| @nextui-org/accordion                | Patch |
+| @nextui-org/modal                    | Patch |
+| @nextui-org/navbar                   | Patch |
+| @nextui-org/popover                  | Patch |
+| @nextui-org/ripple                   | Patch |
+| @nextui-org/tooltip                  | Patch |
+| @nextui-org/dom-animation            | Patch |
+| @nextui-org/autocomplete             | Patch |
+| @nextui-org/button                   | Patch |
+| @nextui-org/card                     | Patch |
+| @nextui-org/dropdown                 | Patch |
+| @nextui-org/select                   | Patch |
+| @nextui-org/snippet                  | Patch |
+| @nextui-org/tabs                     | Patch |
+| @nextui-org/system                   | Patch |
+| @nextui-org/framer-utils             | Patch |
+| @nextui-org/date-picker              | Patch |
+| @nextui-org/react                    | Patch |
+| @nextui-org/alert                    | Patch |
+| @nextui-org/avatar                   | Patch |
+| @nextui-org/badge                    | Patch |
+| @nextui-org/breadcrumbs              | Patch |
+| @nextui-org/checkbox                 | Patch |
+| @nextui-org/chip                     | Patch |
+| @nextui-org/code                     | Patch |
+| @nextui-org/date-input               | Patch |
+| @nextui-org/divider                  | Patch |
+| @nextui-org/drawer                   | Patch |
+| @nextui-org/image                    | Patch |
+| @nextui-org/input                    | Patch |
+| @nextui-org/kbd                      | Patch |
+| @nextui-org/link                     | Patch |
+| @nextui-org/listbox                  | Patch |
+| @nextui-org/menu                     | Patch |
+| @nextui-org/pagination               | Patch |
+| @nextui-org/progress                 | Patch |
+| @nextui-org/radio                    | Patch |
+| @nextui-org/scroll-shadow            | Patch |
+| @nextui-org/skeleton                 | Patch |
+| @nextui-org/slider                   | Patch |
+| @nextui-org/spacer                   | Patch |
+| @nextui-org/spinner                  | Patch |
+| @nextui-org/switch                   | Patch |
+| @nextui-org/table                    | Patch |
+| @nextui-org/user                     | Patch |
+| @nextui-org/use-data-scroll-overflow | Patch |
+| @nextui-org/use-pagination           | Patch |
+| @nextui-org/aria-utils               | Patch |
+| @nextui-org/react-utils              | Patch |
+| @nextui-org/use-real-shape           | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/refactor/optimisation?filename=.changeset/hungry-cooks-type.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Faccordion%22%3A%20patch%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A%22%40nextui-org%2Fbutton%22%3A%20patch%0A%22%40nextui-org%2Fcalendar%22%3A%20patch%0A%22%40nextui-org%2Fcard%22%3A%20patch%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A%22%40nextui-org%2Fmodal%22%3A%20patch%0A---%0A%0Arefactor%3A%20optimisations%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: failure by coderabbit.ai -->
+
+> [!CAUTION]
+> ## Review failed
+> 
+> The pull request is closed.
+
+<!-- end of auto-generated comment: failure by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The changes involve the introduction of several new utility functions in the `shared-utils` package, including `debounce`, `uniqBy`, `omit`, `kebabCase`, `mapKeys`, and `get`. The `capitalize` function has been updated for input validation. Additionally, the `testGoodContrast` function in the `semantic-colors.test.ts` file has been modified to accept color values directly. Multiple components have updated their `framer-motion` dependency versions, and import statements have been adjusted to utilize shared utilities instead of external libraries.
+
+## Changes
+
+| File(s)                                                                 | Change Summary                                                                                     |
+|-------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| packages/core/theme/__tests__/semantic-colors.test.ts                   | Updated `testGoodContrast` function to accept color and background parameters directly.            |
+| packages/utilities/shared-utils/src/functions.ts                         | Updated `capitalize` function and added new utility functions: `debounce`, `uniqBy`, `omit`, `kebabCase`, `mapKeys`, and `get`. |
+| apps/docs/components/sandpack/use-sandpack.ts                           | Updated `framer-motion` dependency version from `"11.0.22"` to `"11.9.0"`.                      |
+| **Multiple `package.json` files across components**                     | Updated `framer-motion` version in `peerDependencies` and `dependencies` to `>=11.5.6` and `^11.9.0` respectively; added `@nextui-org/dom-animation` in relevant files. |
+
+## Assessment against linked issues
+
+| Objective                                                          | Addressed | Explanation                                          |
+|--------------------------------------------------------------------|-----------|-----------------------------------------------------|
+| Ensure text is sharp when modal opens (related to blurry text issue) | ❌        | The changes do not address the specific issue of blurry text in modals. |
+| Prevent blurry animations during size transitions (related to button blur issue) | ❓        | The changes may indirectly impact animations, but it is unclear if they resolve the blur issue. |
+
+## Possibly related PRs
+- **#2943**: The main PR modifies utility functions, including `get`, which is also referenced in this PR that updates the import source for `get` from `lodash.get` to `@nextui-org/shared-utils`.
+- **#2987**: This PR introduces new utility functions, including `debounce`, which is relevant as it may relate to the new utility functions introduced in the main PR.
+- **#3119**: The changes in this PR involve the `get` function, which is also modified in the main PR, indicating a direct relationship.
+- **#3308**: This PR updates the `framer-motion` dependency, which is relevant as the main PR introduces several new utility functions that may interact with UI animations.
+- **#3691**: This PR addresses modal positioning, which may be relevant to the new utility functions that enhance user interaction and accessibility in the main PR.
+
+## Suggested labels
+`👀 Status: In Review`, `📋 Scope : Docs`
+
+## Suggested reviewers
+- wingkwong
+
+<!-- walkthrough_end -->
+
+
+
+<!-- internal state start -->
+
+
+<!-- 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= -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/mean-mangos-occur.md (added, 8 changes)\n  Patch: @@ -0,0 +1,8 @@
++---
++"@nextui-org/calendar": patch
++"@nextui-org/theme": patch
++"@nextui-org/use-infinite-scroll": patch
++"@nextui-org/shared-utils": patch
++---
++
++replaced lodash with native approaches\n- .changeset/swift-news-complain.md (added, 15 changes)\n  Patch: @@ -0,0 +1,15 @@
++---
++"@nextui-org/accordion": patch
++"@nextui-org/calendar": patch
++"@nextui-org/modal": patch
++"@nextui-org/navbar": patch
++"@nextui-org/popover": patch
++"@nextui-org/ripple": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/theme": patch
++"@nextui-org/use-infinite-scroll": patch
++"@nextui-org/dom-animation": patch
++"@nextui-org/shared-utils": patch
++---
++
++framer motion optimization (#3340)\n- .changeset/thirty-cheetahs-guess.md (added, 20 changes)\n  Patch: @@ -0,0 +1,20 @@
++---
++"@nextui-org/accordion": patch
++"@nextui-org/autocomplete": patch
++"@nextui-org/button": patch
++"@nextui-org/calendar": patch
++"@nextui-org/card": patch
++"@nextui-org/dropdown": patch
++"@nextui-org/modal": patch
++"@nextui-org/navbar": patch
++"@nextui-org/popover": patch
++"@nextui-org/ripple": patch
++"@nextui-org/select": patch
++"@nextui-org/snippet": patch
++"@nextui-org/tabs": patch
++"@nextui-org/tooltip": patch
++"@nextui-org/system": patch
++"@nextui-org/framer-utils": patch
++---
++
++update `framer-motion` versions\n- apps/docs/app/examples/table/custom-styles/page.tsx (modified, 2 changes)\n  Patch: @@ -23,7 +23,7 @@ import {
+ } from "@nextui-org/react";
+ import {ChevronDownIcon, SearchIcon} from "@nextui-org/shared-icons";
+ import {useCallback, useMemo, useState} from "react";
+-import {capitalize} from "lodash";
++import {capitalize} from "@nextui-org/shared-utils";
+ 
+ import {PlusLinearIcon} from "@/components/icons";
+ import {VerticalDotsIcon} from "@/components/icons/vertical-dots";\n- apps/docs/app/examples/table/use-case/page.tsx (modified, 2 changes)\n  Patch: @@ -23,7 +23,7 @@ import {
+ } from "@nextui-org/react";
+ import {ChevronDownIcon, SearchIcon} from "@nextui-org/shared-icons";
+ import {useCallback, useMemo, useState} from "react";
+-import {capitalize} from "lodash";
++import {capitalize} from "@nextui-org/shared-utils";
+ 
+ import {PlusLinearIcon} from "@/components/icons";
+ import {VerticalDotsIcon} from "@/components/icons/vertical-dots";\n- apps/docs/components/cmdk.tsx (modified, 2 changes)\n  Patch: @@ -13,7 +13,7 @@ import {clsx} from "@nextui-org/shared-utils";
+ import scrollIntoView from "scroll-into-view-if-needed";
+ import {isAppleDevice, isWebKit} from "@react-aria/utils";
+ import {create} from "zustand";
+-import {intersectionBy, isEmpty} from "lodash";
++import {isEmpty, intersectionBy} from "@nextui-org/shared-utils";
+ import {writeStorage, useLocalStorage} from "@rehooks/local-storage";
+ 
+ import {\n- apps/docs/components/demo-code-modal.tsx (modified, 5 changes)\n  Patch: @@ -12,7 +12,6 @@ import {
+   Skeleton,
+ } from "@nextui-org/react";
+ import Link from "next/link";
+-import {toLower} from "lodash";
+ 
+ import {CodeWindow} from "@/components/code-window";
+ import {useIsMobile} from "@/hooks/use-media-query";
+@@ -30,8 +29,8 @@ export const DemoCodeModal: FC<DemoCodeModalProps> = ({isOpen, code, title, subt
+ 
+   const isMobile = useIsMobile();
+ 
+-  const lowerTitle = toLower(title);
+-  const fileName = `${toLower(lowerTitle)}.tsx`;
++  const lowerTitle = title.toLowerCase();
++  const fileName = `${lowerTitle}.tsx`;
+ 
+   return (
+     <Modal\n- apps/docs/components/docs/components/code-demo/utils.ts (modified, 10 changes)\n  Patch: @@ -1,17 +1,19 @@
+-import {get} from "lodash";
+-
+ import {FileCode} from "./types";
+ 
+ const importRegex = /^(import)\s(?!type(of\s|\s)(?!from)).*?$/gm;
+ 
+ const exportDefaultRegex = /export\s+default\s+function\s+\w+\s*\(\s*\)\s*\{/;
+ 
+-export const transformCode = (code: string, imports = {}, compName = "App") => {
++export const transformCode = (
++  code: string,
++  imports: {[key: string]: any} = {},
++  compName = "App",
++) => {
+   let cleanedCode = code
+     .replace(importRegex, (match) => {
+       // get component name from the match ex. "import { Table } from '@nextui-org/react'"
+       const componentName = match.match(/\w+/g)?.[1] || "";
+-      const matchingImport = get(imports, componentName);
++      const matchingImport = imports[componentName];
+ 
+       if (matchingImport) {
+         // remove the matching import\n- apps/docs/components/docs/components/codeblock.tsx (modified, 2 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import React, {forwardRef, useEffect} from "react";
+ import {clsx, dataAttr, getUniqueID} from "@nextui-org/shared-utils";
+ import BaseHighlight, {Language, PrismTheme, defaultProps} from "prism-react-renderer";
+-import {debounce, omit} from "lodash";
++import {debounce, omit} from "@nextui-org/shared-utils";
+ 
+ import defaultTheme from "@/libs/prism-theme";
+ \n- apps/docs/components/docs/components/swatch-colors-set.tsx (modified, 4 changes)\n  Patch: @@ -4,7 +4,7 @@ import {commonColors, semanticColors} from "@nextui-org/theme";
+ import {useClipboard} from "@nextui-org/use-clipboard";
+ import {useState} from "react";
+ import {useTheme} from "next-themes";
+-import {get, isEmpty} from "lodash";
++import {get, isEmpty} from "@nextui-org/shared-utils";
+ 
+ type ColorsItem = {
+   color: string;
+@@ -106,7 +106,7 @@ const SemanticSwatch = ({
+   let value: string = "";
+   const [colorName, colorScale] = color.split("-");
+ 
+-  let currentPalette = get(semanticColors, theme ?? "", {});
++  const currentPalette = get(semanticColors, theme ?? "", {});
+ 
+   if (!colorScale) {
+     value = get(currentPalette, `${colorName}.DEFAULT`, "");\n- apps/docs/components/docs/sidebar.tsx (modified, 2 changes)\n  Patch: @@ -18,7 +18,7 @@ import {
+   dataFocusVisibleClasses,
+ } from "@nextui-org/react";
+ import Link from "next/link";
+-import {isEmpty} from "lodash";
++import {isEmpty} from "@nextui-org/shared-utils";
+ import {usePathname, useRouter} from "next/navigation";
+ 
+ import {ScrollArea} from "../scroll-area";\n- apps/docs/components/marketing/custom-themes/custom-themes.tsx (modified, 3 changes)\n  Patch: @@ -3,7 +3,6 @@
+ /* eslint-disable react/display-name */
+ import {useMemo, useState} from "react";
+ import {Tabs, Tab, Card, CardBody, Image, Button, RadioGroup, Radio} from "@nextui-org/react";
+-import get from "lodash/get";
+ import NextLink from "next/link";
+ import NextImage from "next/image";
+ 
+@@ -238,7 +237,7 @@ export const CustomThemes = () => {
+           <CodeWindow
+             showWindowIcons
+             className="max-h-[440px] min-h-[390px]"
+-            highlightLines={get(codeHighlights, selectedTheme)}
++            highlightLines={codeHighlights[selectedTheme]}
+             isScrollable={false}
+             language="jsx"
+             title="tailwind.config.js"\n- apps/docs/components/marketing/support.tsx (modified, 6 changes)\n  Patch: @@ -2,7 +2,7 @@
+ 
+ import {FC, useMemo, useRef} from "react";
+ import {Avatar, AvatarProps, Button, Spacer, Tooltip} from "@nextui-org/react";
+-import {clamp, get} from "lodash";
++import {clamp} from "@nextui-org/shared-utils";
+ 
+ import {sectionWrapper, titleWrapper, title, subtitle} from "../primitives";
+ 
+@@ -132,9 +132,7 @@ export const Support: FC<SupportProps> = ({sponsors = []}) => {
+             size={getSponsorSize(sponsor, isMobile)}
+             src={sponsor.image}
+             style={getSponsorAvatarStyles(index, sponsors)}
+-            onClick={() =>
+-              handleExternalLinkClick(get(sponsor, "website") || get(sponsor, "profile"))
+-            }
++            onClick={() => handleExternalLinkClick(sponsor["website"] || sponsor["profile"])}
+           />
+         ))}
+       </div>\n- apps/docs/components/navbar.tsx (modified, 9 changes)\n  Patch: @@ -24,7 +24,6 @@ import {isAppleDevice} from "@react-aria/utils";
+ import {clsx} from "@nextui-org/shared-utils";
+ import NextLink from "next/link";
+ import {usePathname} from "next/navigation";
+-import {includes} from "lodash";
+ import {motion, AnimatePresence} from "framer-motion";
+ import {useEffect} from "react";
+ import {usePress} from "@react-aria/interactions";
+@@ -197,7 +196,7 @@ export const Navbar: FC<NavbarProps> = ({children, routes, mobileRoutes = [], sl
+             <NextLink
+               className={navLinkClasses}
+               color="foreground"
+-              data-active={includes(docsPaths, pathname)}
++              data-active={docsPaths.includes(pathname)}
+               href="/docs/guide/introduction"
+               onClick={() => handlePressNavbarItem("Docs", "/docs/guide/introduction")}
+             >
+@@ -208,7 +207,7 @@ export const Navbar: FC<NavbarProps> = ({children, routes, mobileRoutes = [], sl
+             <NextLink
+               className={navLinkClasses}
+               color="foreground"
+-              data-active={includes(pathname, "components")}
++              data-active={pathname.includes("components")}
+               href="/docs/components/accordion"
+               onClick={() => handlePressNavbarItem("Components", "/docs/components/accordion")}
+             >
+@@ -219,7 +218,7 @@ export const Navbar: FC<NavbarProps> = ({children, routes, mobileRoutes = [], sl
+             <NextLink
+               className={navLinkClasses}
+               color="foreground"
+-              data-active={includes(pathname, "blog")}
++              data-active={pathname.includes("blog")}
+               href="/blog"
+               onClick={() => handlePressNavbarItem("Blog", "/blog")}
+             >
+@@ -230,7 +229,7 @@ export const Navbar: FC<NavbarProps> = ({children, routes, mobileRoutes = [], sl
+             <NextLink
+               className={navLinkClasses}
+               color="foreground"
+-              data-active={includes(pathname, "figma")}
++              data-active={pathname.includes("figma")}
+               href="/figma"
+               onClick={() => handlePressNavbarItem("Figma", "/figma")}
+             >\n- apps/docs/components/sandpack/bugreport-button.tsx (modified, 4 changes)\n  Patch: @@ -1,15 +1,15 @@
+ import React from "react";
+ import {usePathname} from "next/navigation";
+ import {Tooltip, Button} from "@nextui-org/react";
+-import {capitalize, last} from "lodash";
++import {capitalize} from "@nextui-org/shared-utils";
+ 
+ import {BugIcon} from "@/components/icons";
+ import {ISSUE_REPORT_URL} from "@/libs/github/constants";
+ 
+ export const BugReportButton = () => {
+   const pathname = usePathname();
+ 
+-  const componentTitle = capitalize(last(pathname?.split("/")));
++  const componentTitle = capitalize(pathname?.split("/")?.at(-1) ?? "");
+ 
+   const handlePress = () => {
+     window.open(`${ISSUE_REPORT_URL}${componentTitle}`, "_blank");\n- apps/docs/components/sandpack/use-sandpack.ts (modified, 4 changes)\n  Patch: @@ -70,7 +70,7 @@ export const useSandpack = ({
+   }, {});
+ 
+   let dependencies = {
+-    "framer-motion": "11.0.22",
++    "framer-motion": "11.9.0",
+     "@nextui-org/react": "latest",
+   };
+ 
+@@ -143,7 +143,7 @@ export const useSandpack = ({
+ 
+   // const dependencies = useMemo(() => {
+   //   let deps = {
+-  //     "framer-motion": "11.0.22",
++  //     "framer-motion": "11.9.0",
+   //   };
+ 
+   //   if (hasComponents) {\n- apps/docs/content/components/table/custom-styles.ts (modified, 4 changes)\n  Patch: @@ -220,8 +220,8 @@ const users = [
+ 
+ export {columns, users, statusOptions};`;
+ 
+-const utils = `export function capitalize(str) {
+-  return str.charAt(0).toUpperCase() + str.slice(1);
++const utils = `export function capitalize(s) {
++  return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
+ }`;
+ 
+ const PlusIcon = `export const PlusIcon = ({size = 24, width, height, ...props}) => (\n- apps/docs/content/components/table/use-case.ts (modified, 8 changes)\n  Patch: @@ -448,8 +448,8 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
+   size?: number;
+ };`;
+ 
+-const utils = `export function capitalize(str) {
+-  return str.charAt(0).toUpperCase() + str.slice(1);
++const utils = `export function capitalize(s) {
++  return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
+ }`;
+ 
+ const PlusIcon = `export const PlusIcon = ({size = 24, width, height, ...props}) => (
+@@ -544,8 +544,8 @@ const ChevronDownIcon = `export const ChevronDownIcon = ({strokeWidth = 1.5, ...
+   </svg>
+ );`;
+ 
+-const utilsTs = `export function capitalize(str: string) {
+-  return str.charAt(0).toUpperCase() + str.slice(1);
++const utilsTs = `export function capitalize(s: string) {
++  return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
+ }`;
+ 
+ const PlusIconTs = `import {IconSvgProps} from "./types";\n- apps/docs/package.json (modified, 4 changes)\n  Patch: @@ -55,11 +55,10 @@
+     "color2k": "^2.0.2",
+     "contentlayer2": "^0.5.1",
+     "date-fns": "^2.30.0",
+-    "framer-motion": "^11.1.7",
++    "framer-motion": "11.9.0",
+     "github-slugger": "^2.0.0",
+     "gray-matter": "^4.0.3",
+     "hast-util-to-html": "9.0.3",
+-    "lodash": "^4.17.21",
+     "marked": "^5.1.0",
+     "match-sorter": "^6.3.1",
+     "mini-svg-data-uri": "^1.4.3",
+@@ -102,7 +101,6 @@
+     "@react-types/shared": "3.24.1",
+     "@tailwindcss/typography": "^0.5.9",
+     "@types/canvas-confetti": "^1.4.2",
+-    "@types/lodash": "^4.14.194",
+     "@types/marked": "^5.0.0",
+     "@types/mdx": "^2.0.5",
+     "@types/node": "20.2.5",\n- apps/docs/utils/get-sponsors.ts (modified, 2 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import {uniqBy} from "lodash";
++import {uniqBy} from "@nextui-org/shared-utils";
+ import fetch from "node-fetch";
+ 
+ import {__PROD__} from "./env";\n- packages/components/accordion/package.json (modified, 5 changes)\n  Patch: @@ -42,7 +42,7 @@
+   "peerDependencies": {
+     "react": ">=18",
+     "react-dom": ">=18",
+-    "framer-motion": ">=10.17.0",
++    "framer-motion": ">=11.5.6",
+     "@nextui-org/theme": ">=2.1.0",
+     "@nextui-org/system": ">=2.0.0"
+   },
+@@ -54,6 +54,7 @@
+     "@nextui-org/framer-utils": "workspace:*",
+     "@nextui-org/divider": "workspace:*",
+     "@nextui-org/use-aria-accordion": "workspace:*",
++    "@nextui-org/dom-animation": "workspace:*",
+     "@react-aria/interactions": "3.22.2",
+     "@react-aria/focus": "3.18.2",
+     "@react-aria/utils": "3.25.2",
+@@ -69,7 +70,7 @@
+     "@nextui-org/avatar": "workspace:*",
+     "@nextui-org/input": "workspace:*",
+     "@nextui-org/test-utils": "workspace:*",
+-    "framer-motion": "^11.0.22",
++    "framer-motion": "11.9.0",
+     "clean-package": "2.2.0",
+     "react": "^18.0.0",
+     "react-dom": "^18.0.0"\n- packages/components/accordion/src/accordion-item.tsx (modified, 4 changes)\n  Patch: @@ -3,13 +3,15 @@ import type {Variants} from "framer-motion";
+ import {forwardRef} from "@nextui-org/system";
+ import {useMemo, ReactNode} from "react";
+ import {ChevronIcon} from "@nextui-org/shared-icons";
+-import {AnimatePresence, LazyMotion, domAnimation, m, useWillChange} from "framer-motion";
++import {AnimatePresence, LazyMotion, m, useWillChange} from "framer-motion";
+ import {TRANSITION_VARIANTS} from "@nextui-org/framer-utils";
+ 
+ import {UseAccordionItemProps, useAccordionItem} from "./use-accordion-item";
+ 
+ export interface AccordionItemProps extends UseAccordionItemProps {}
+ 
++const domAnimation = () => import("@nextui-org/dom-animation").then((res) => res.default);
++
+ const AccordionItem = forwardRef<"button", AccordionItemProps>((props, ref) => {
+   const {
+     Component,\n- packages/components/autocomplete/package.json (modified, 4 changes)\n  Patch: @@ -36,7 +36,7 @@
+   "peerDependencies": {
+     "@nextui-org/system": ">=2.0.0",
+     "@nextui-org/theme": ">=2.1.0",
+-    "framer-motion": ">=10.17.0",
++    "framer-motion": ">=11.5.6",
+     "react": ">=18",
+     "react-dom": ">=18"
+   },
+@@ -72,7 +72,7 @@
+     "@nextui-org/use-infinite-scroll": "workspace:*",
+     "@react-stately/data": "3.11.6",
+     "clean-package": "2.2.0",
+-    "framer-motion": "^11.0.28",
++    "framer-motion": "11.9.0",
+     "react": "^18.0.0",
+     "react-dom": "^18.0.0",
+     "react-hook-form": "^7.51.3"\n- packages/components/button/package.json (modified, 2 changes)\n  Patch: @@ -36,7 +36,7 @@
+   "peerDependencies": {
+     "react": ">=18",
+     "react-dom": ">=18",
+-    "framer-motion": ">=10.17.0",
++    "framer-motion": ">=11.5.6",
+     "@nextui-org/theme": ">=2.1.0",
+     "@nextui-org/system": ">=2.0.0"
+   },\n- packages/components/calendar/package.json (modified, 4 changes)\n  Patch: @@ -46,7 +46,7 @@
+     "@nextui-org/framer-utils": "workspace:*",
+     "@nextui-org/use-aria-button": "workspace:*",
+     "@nextui-org/button": "workspace:*",
+-    "lodash.debounce": "^4.0.8",
++    "@nextui-org/dom-animation": "workspace:*",
+     "@internationalized/date": "3.5.5",
+     "@react-aria/calendar": "3.5.11",
+     "@react-aria/focus": "3.18.2",
+@@ -67,7 +67,7 @@
+     "@nextui-org/theme": "workspace:*",
+     "@nextui-org/radio": "workspace:*",
+     "@nextui-org/test-utils": "workspace:*",
+-    "framer-motion": "^10.16.4",
++    "framer-motion": "11.9.0",
+     "clean-package": "2.2.0",
+     "react": "^18.0.0",
+     "react-dom": "^18.0.0"\n- packages/components/calendar/src/calendar-base.tsx (modified, 7 changes)\n  Patch: @@ -3,12 +3,11 @@ import type {As, HTMLNextUIProps} from "@nextui-org/system";
+ import type {ButtonProps} from "@nextui-org/button";
+ import type {HTMLAttributes, ReactNode, RefObject} from "react";
+ 
+-import {Fragment} from "react";
+-import {useState} from "react";
++import {Fragment, useState} from "react";
+ import {VisuallyHidden} from "@react-aria/visually-hidden";
+ import {Button} from "@nextui-org/button";
+ import {chain, mergeProps} from "@react-aria/utils";
+-import {AnimatePresence, LazyMotion, domAnimation, MotionConfig} from "framer-motion";
++import {AnimatePresence, LazyMotion, MotionConfig} from "framer-motion";
+ import {ResizablePanel} from "@nextui-org/framer-utils";
+ 
+ import {ChevronLeftIcon} from "./chevron-left";
+@@ -19,6 +18,8 @@ import {CalendarHeader} from "./calendar-header";
+ import {CalendarPicker} from "./calendar-picker";
+ import {useCalendarContext} from "./calendar-context";
+ 
++const domAnimation = () => import("@nextui-org/dom-animation").then((res) => res.default);
++
+ export interface CalendarBaseProps extends HTMLNextUIProps<"div"> {
+   Component?: As;
+   showHelper?: boolean;\n- packages/components/calendar/src/use-calendar-picker.ts (modified, 2 changes)\n  Patch: @@ -4,7 +4,7 @@ import type {PressEvent} from "@react-types/shared";
+ import {useDateFormatter} from "@react-aria/i18n";
+ import {HTMLNextUIProps} from "@nextui-org/system";
+ import {useCallback, useRef, useEffect} from "react";
+-import debounce from "lodash.debounce";
++import {debounce} from "@nextui-org/shared-utils";
+ import {areRectsIntersecting} from "@nextui-org/react-utils";
+ import scrollIntoView from "scroll-into-view-if-needed";
+ \n- packages/components/card/package.json (modified, 2 changes)\n  Patch: @@ -36,7 +36,7 @@
+   "peerDependencies": {
+     "react": ">=18",
+     "react-dom": ">=18",
+-    "framer-motion": ">=10.17.0",
++    "framer-motion": ">=11.5.6",
+     "@nextui-org/theme": ">=2.1.0",
+     "@nextui-org/system": ">=2.0.0"
+   },\n- packages/components/dropdown/package.json (modified, 4 changes)\n  Patch: @@ -36,7 +36,7 @@
+   "peerDependencies": {
+     "@nextui-org/system": ">=2.0.0",
+     "@nextui-org/theme": ">=2.1.0",
+-    "framer-motion": ">=10.17.0",
++    "framer-motion": ">=11.5.6",
+     "react": ">=18",
+     "react-dom": ">=18"
+   },
+@@ -62,7 +62,7 @@
+     "@nextui-org/theme": "workspace:*",
+     "@nextui-org/user": "workspace:*",
+     "clean-package": "2.2.0",
+-    "framer-motion": "^11.0.22",
++    "framer-motion": "11.9.0",
+     "react": "^18.0.0",
+     "react-dom": "^18.0.0"
+   },\n- packages/components/modal/package.json (modified, 5 changes)\n  Patch: @@ -36,7 +36,7 @@
+   "peerDependencies": {
+     "react": ">=18",
+     "react-dom": ">=18",
+-    "framer-motion": ">=10.17.0",
++    "framer-motion": ">=11.5.6",
+     "@nextui-org/theme": ">=2.1.0",
+     "@nextui-org/system": ">=2.0.0"
+   },
+@@ -49,6 +49,7 @@
+     "@nextui-org/react-utils": "workspace:*",
+     "@nextui-org/shared-icons": "workspace:*",
+     "@nextui-org/use-aria-modal-overlay": "workspace:*",
++    "@nextui-org/dom-animation": "workspace:*",
+     "@react-aria/dialog": "3.5.17",
+     "@react-aria/focus": "3.18.2",
+     "@react-aria/interactions": "3.22.2",
+@@ -66,7 +67,7 @@
+     "@nextui-org/link": "workspace:*",
+     "@nextui-org/switch": "workspace:*",
+     "react-lorem-component": "0.13.0",
+-    "framer-motion": "^11.0.22",
++    "framer-motion": "11.9.0",
+     "clean-package": "2.2.0",
+     "react": "^18.0.0",
+     "react-dom": "^18.0.0"\n

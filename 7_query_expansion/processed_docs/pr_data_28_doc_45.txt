@@ -1,0 +1,94 @@
+Pull Request Number: 422
+Title: Fix 406/table overflow
+Base Branch: next
+Head Branch: fix_406/table-overflow
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/422
+State: MERGED
+Created At: 2022-04-21T19:58:59Z
+Merged At: 2022-04-21T19:59:34Z
+Participants: jrgarciadev
+
+Description:
+[react]/[table]
+Closes: #406
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+overflow: auto applied in order to avoid diplaying scrollbars when not needed
+padding right added to table cells
+
+
+
+
+Screenshots - Animations
+
+Commits:
+- fix(docs-palette): backgroundContrast inverted color added\n- fix(react-table): overflow xy managed in a better way\n
+
+Labels:
+🧱 Type: Refactoring
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/src/components/palette/index.tsx (modified, 3 changes)\n  Patch: @@ -26,7 +26,8 @@ const reverseColors: { [key in string]: string } = {
+   text: '$background',
+   border: '$text',
+   white: '$black',
+-  black: '$white'
++  black: '$white',
++  backgroundContrast: '$foreground'
+ };
+ 
+ const getColorTitle = (color: string) => {\n- apps/docs/src/components/palette/item.tsx (modified, 4 changes)\n  Patch: @@ -38,7 +38,7 @@ const Item: React.FC<ItemProps> = ({
+         })}
+         css={{
+           size: '100px',
+-          px: '$4',
++          px: '$5',
+           dflex: 'center',
+           marginBottom: '20px',
+           flexDirection: 'column',
+@@ -67,7 +67,6 @@ const Item: React.FC<ItemProps> = ({
+             css={{
+               m: 0,
+               fontWeight: '$semibold',
+-              tt: 'capitalize',
+               color: textColor,
+               '@smMax': {
+                 fontSize: '$xs'
+@@ -82,7 +81,6 @@ const Item: React.FC<ItemProps> = ({
+               className="text"
+               css={{
+                 m: 0,
+-                tt: 'capitalize',
+                 fontWeight: '$semibold',
+                 color: textColor,
+                 '@smMax': {\n- packages/react/src/table/table.styles.ts (modified, 4 changes)\n  Patch: @@ -111,6 +111,7 @@ export const StyledTableCell = styled(
+     position: 'relative',
+     userSelect: 'none',
+     py: '$5',
++    pr: '$5',
+     zIndex: '$2',
+     ov: 'hidden',
+     whiteSpace: 'nowrap',
+@@ -572,7 +573,8 @@ export const StyledTableContainer = styled('div', {
+   display: 'flex',
+   flexDirection: 'column',
+   br: '$xl',
+-  overflowX: 'scroll',
++  overflowX: 'auto',
++  overflowY: 'hidden',
+   variants: {
+     shadow: {
+       true: {\n

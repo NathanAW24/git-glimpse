@@ -1,0 +1,262 @@
+Pull Request Number: 861
+Title: Pr/785
+Base Branch: next
+Head Branch: pr/785
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/861
+State: CLOSED
+Created At: 2022-11-06T14:58:06Z
+Merged At: None
+Participants: jrgarciadev, tianenpang
+
+Description:
+Closes #797
+📝 Description
+Fixes the disabledAnimation issue
+⛳️ Current behavior (updates)
+The Popover doesn't appear when disabledAnimation=true
+🚀 New behavior
+The Popover is now visible without any animation when disabledAnimation=true
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+This PR depends on #785
+
+Commits:
+- fix(react-transition): animation flickers in react 18\n- fix(popover#797): popover disabled animation\n- Merge branch 'next' of github.com:nextui-org/nextui into pr/785\n- chore(repo): merged with next branch\n- 1.0.0-beta.11-dbg1\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-docs/4N4ZrHjBGg7BLXDGMJZer8BXim6n)) |  |  | Nov 21, 2022 at 0:01AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/kfKgPjC4Hi78mEQ9gyuDrUjdfzJz)) | [Visit Preview](https://nextui-storybook-git-pr-785-nextui-org.vercel.app) |  | Nov 21, 2022 at 0:01AM (UTC) |
+
+
+\n
+
+Files Changed:
+- packages/react/package.json (modified, 2 changes)\n  Patch: @@ -1,6 +1,6 @@
+ {
+   "name": "@nextui-org/react",
+-  "version": "1.0.0-beta.10",
++  "version": "1.0.0-beta.11-dbg1",
+   "license": "MIT",
+   "description": "🚀 Beautiful and modern React UI library.",
+   "homepage": "https://nextui.org",\n- packages/react/src/popover/popover-content.tsx (modified, 33 changes)\n  Patch: @@ -85,6 +85,18 @@ const PopoverContent = React.forwardRef(
+ 
+     const {isFocusVisible, focusProps} = useFocusRing();
+ 
++    const transitionProps = useMemo(() => {
++      return {
++        clearTime: disableAnimation ? 0 : 300,
++        enterTime: disableAnimation ? 0 : 20,
++        leaveTime: disableAnimation ? 0 : 60,
++        name: "nextui-popover-content",
++        visible: state.isOpen,
++        onEntered: onEntered,
++        onExited: onExited,
++      };
++    }, [disableAnimation, state.isOpen]);
++
+     const contents = (
+       <StyledPopoverContentContainer
+         ref={mergeRefs(overlayRef, ref)}
+@@ -94,6 +106,7 @@ const PopoverContent = React.forwardRef(
+         )}
+         as={as}
+         className={clsx("nextui-popover-content-container", className)}
++        disableAnimation={disableAnimation}
+         isFocusVisible={isFocusVisible}
+       >
+         <DismissButton onDismiss={onClose} />
+@@ -104,23 +117,9 @@ const PopoverContent = React.forwardRef(
+ 
+     return (
+       <>
+-        {!disableAnimation ? (
+-          <FocusScope restoreFocus>
+-            <CSSTransition
+-              clearTime={300}
+-              enterTime={20}
+-              leaveTime={60}
+-              name="nextui-popover-content"
+-              visible={state.isOpen}
+-              onEntered={onEntered}
+-              onExited={onExited}
+-            >
+-              {contents}
+-            </CSSTransition>
+-          </FocusScope>
+-        ) : state.isOpen ? (
+-          <FocusScope restoreFocus>{contents}</FocusScope>
+-        ) : null}
++        <FocusScope restoreFocus>
++          <CSSTransition {...transitionProps}>{contents}</CSSTransition>
++        </FocusScope>
+       </>
+     );
+   },\n- packages/react/src/popover/popover.styles.ts (modified, 18 changes)\n  Patch: @@ -34,8 +34,8 @@ export const StyledPopoverContentContainer = styled(
+   "div",
+   {
+     /* variables */
+-    $$popoverMinWidth: "$space$13",
+-    $$popoverMinHeight: "$space$13",
++    $$popoverMinWidth: "$space$fit",
++    $$popoverMinHeight: "$space$fit",
+     $$popoverBorderRadius: "$radii$lg",
+     $$popoverBackground: "$colors$backgroundContrast",
+     $$popoverBoxShadow: "$shadows$md",
+@@ -59,18 +59,15 @@ export const StyledPopoverContentContainer = styled(
+ 
+     animationFillMode: "forwards",
+     willChange: "transform, opacity",
+-
+     "@motion": {
+       transition: "none",
+     },
+-
+     "&.nextui-popover-content-enter": {
+       animationName: appearanceIn,
+       animationTimingFunction: "ease-out",
+       animationDirection: "normal",
+       animationDuration: "300ms",
+     },
+-
+     "&.nextui-popover-content-leave": {
+       animationName: appearanceOut,
+       animationTimingFunction: "ease-in",
+@@ -110,6 +107,17 @@ export const StyledPopoverContentContainer = styled(
+           $$popoverBorderWeight: "$borderWeights$black",
+         },
+       },
++      disableAnimation: {
++        true: {
++          transition: "none",
++          "&.nextui-popover-content-enter": {
++            animation: "none",
++          },
++          "&.nextui-popover-content-leave": {
++            animation: "none",
++          },
++        },
++      },
+     },
+     defaultVariants: {
+       isBordered: false,\n- packages/react/src/utils/css-transition.ts (modified, 73 changes)\n  Patch: @@ -1,57 +1,48 @@
+-import React, {useEffect, useState} from "react";
++import type {FC, ReactNode, RefObject} from "react";
++
++import React, {useEffect, useState, isValidElement, cloneElement} from "react";
++import {flushSync} from "react-dom";
+ 
+-import withDefaults from "./with-defaults";
+ import clsx from "./clsx";
+ 
+-interface Props {
++export interface CSSTransitionProps {
++  name?: string;
+   visible?: boolean;
+-  childrenRef?: React.RefObject<HTMLElement>;
+   enterTime?: number;
+   leaveTime?: number;
+   clearTime?: number;
+   className?: string;
+-  name?: string;
+   onExited?: () => void;
+   onEntered?: () => void;
+-  children?: React.ReactNode;
++  children?: ReactNode;
++  childrenRef?: RefObject<HTMLElement>;
+ }
+ 
+-const defaultProps = {
+-  visible: false,
+-  enterTime: 60,
+-  leaveTime: 60,
+-  clearTime: 60,
+-  className: "",
+-  name: "transition",
+-};
++const CSSTransition: FC<CSSTransitionProps> = (props: CSSTransitionProps) => {
++  const {
++    children,
++    onExited,
++    onEntered,
++    className,
++    childrenRef,
++    enterTime = 60,
++    leaveTime = 60,
++    clearTime = 60,
++    visible = false,
++    name = "transition",
++    ...otherProps
++  } = props;
+ 
+-export type CSSTransitionProps = Props & typeof defaultProps;
+-
+-const CSSTransition: React.FC<CSSTransitionProps> = ({
+-  children,
+-  childrenRef,
+-  className,
+-  visible,
+-  enterTime,
+-  leaveTime,
+-  clearTime,
+-  name,
+-  onExited,
+-  onEntered,
+-  ...props
+-}) => {
+   const [classes, setClasses] = useState<string>("");
+   const [renderable, setRenderable] = useState<boolean>(visible);
+ 
+   useEffect(() => {
+     const statusClassName = visible ? "enter" : "leave";
+     const time = visible ? enterTime : leaveTime;
+ 
+-    if (visible && !renderable) {
+-      setRenderable(true);
+-    }
++    if (visible && !renderable) setRenderable(true);
+ 
+-    setClasses(`${name}-${statusClassName}`);
++    flushSync(() => setClasses(`${name}-${statusClassName}`));
+ 
+     // set class to active
+     const timer = setTimeout(() => {
+@@ -81,22 +72,22 @@ const CSSTransition: React.FC<CSSTransitionProps> = ({
+ 
+   // update children ref classes
+   useEffect(() => {
+-    if (!childrenRef?.current) {
+-      return;
+-    }
++    if (!childrenRef?.current) return;
++
+     const classesArr = classes.split(" ");
+     const refClassesArr = childrenRef.current.className.split(" ");
+     const newRefClassesArr = refClassesArr.filter((item) => !item.includes(name));
+ 
+     childrenRef.current.className = clsx(newRefClassesArr, classesArr);
+   }, [childrenRef, classes]);
+ 
+-  if (!React.isValidElement(children) || !renderable) return null;
++  if (!isValidElement(children) || !renderable) return null;
+ 
+-  return React.cloneElement(children, {
+-    ...props,
+-    className: clsx(children.props.className, className, !childrenRef?.current ? classes : ""),
++  return cloneElement(children, {
++    ...otherProps,
++    // @ts-ignore
++    className: clsx(children.props.className, className, !childrenRef?.current && classes),
+   });
+ };
+ 
+-export default withDefaults(CSSTransition, defaultProps);
++export default React.memo(CSSTransition);\n

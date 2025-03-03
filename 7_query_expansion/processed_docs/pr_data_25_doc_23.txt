@@ -1,0 +1,582 @@
+Pull Request Number: 944
+Title: Pr/839
+Base Branch: next
+Head Branch: pr/839
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/944
+State: MERGED
+Created At: 2022-12-11T20:28:48Z
+Merged At: 2022-12-11T20:30:20Z
+Participants: jrgarciadev, Knorrke
+
+Description:
+Closes #798
+📝 Description
+Based on #839 but with the conflicts fixed
+
+Update collection in TableContext when items change to update dependent components like Table.Pagination.
+
+⛳️ Current behavior (updates)
+Currently, the collection are only initialized once, so even if you add items the Pagination won't get additional pages. Only Table.Body uses the collections from props.
+🚀 New behavior
+When items prop of Table.Body changes, TableContext is updated and Pagination will update the number of pages accordingly.
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(table): update table context when items change\n- add test for context update and update snapshots\n- chore: fix conflicts with next branch\n- chore: snaps updated\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/DGMDfj6P4QmRYXXimAEUxacsbAXC)) | [Visit Preview](https://nextui-docs-git-pr-839-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-docs-git-pr-839-nextui-org.vercel.app) | Dec 11, 2022 at 8:31PM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/6BszxuEiWTmAguJ6X8gp38yJvDDD)) | [Visit Preview](https://nextui-storybook-git-pr-839-nextui-org.vercel.app) |  | Dec 11, 2022 at 8:31PM (UTC) |
+
+
+\n
+
+Files Changed:
+- packages/react/src/collapse/__tests__/__snapshots__/group.test.tsx.snap (added, 351 changes)\n  Patch: @@ -0,0 +1,351 @@
++// Jest Snapshot v1, https://goo.gl/fbAQLP
++
++exports[`Collapse Group should be no errors when children are missing 1`] = `ReactWrapper {}`;
++
++exports[`Collapse Group should render correctly 1`] = `ReactWrapper {}`;
++
++exports[`Collapse Group should work with bordered 1`] = `
++LoadedCheerio {
++  "0": <div
++    class="nextui-c-dWWWSv nextui-c-dWWWSv-eaqZHc-borderWeight-light nextui-c-dWWWSv-jXueSE-bordered-true"
++  >
++    <div
++      class="nextui-c-hPzDAx nextui-c-huiNHE nextui-c-hPzDAx-eLdNZT-borderWeight-light nextui-c-hPzDAx-jBQhgJ-divider-true nextui-c-hPzDAx-kMkCGX-animated-true nextui-c-hPzDAx-TDdeu-visible-false nextui-collapse nextui-collapse--closed"
++      data-state="closed"
++      tabindex="-1"
++    >
++      <div
++        aria-controls="react-aria9260875313-10"
++        aria-disabled="false"
++        aria-expanded="false"
++        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        data-state="closed"
++        id="react-aria9260875313-9"
++        role="button"
++        tabindex="0"
++      >
++        <div
++          class="nextui-collapse-title-container"
++        >
++          <div
++            class="nextui-collapse-title-content"
++          >
++            <h3
++              class="nextui-collapse-title"
++            >
++              title1
++            </h3>
++          </div>
++          <div
++            class="nextui-collapse-title-content-right"
++          >
++            <svg
++              class="nextui-c-fUXRSc nextui-collapse-icon"
++              fill="none"
++              focusable="false"
++              height="20"
++              role="presentation"
++              viewBox="0 0 24 24"
++              width="20"
++              xmlns="http://www.w3.org/2000/svg"
++            >
++              <path
++                d="M15.5 19l-7-7 7-7"
++                stroke-linecap="round"
++                stroke-linejoin="round"
++                stroke-width="1.5"
++              />
++            </svg>
++          </div>
++        </div>
++      </div>
++      <div
++        class="nextui-c-dJMBOt nextui-c-dJMBOt-ielLSBX-css"
++      >
++        <div
++          class="nextui-expand-content"
++        >
++          <div
++            aria-labelledby="react-aria9260875313-9"
++            class="nextui-c-fMAxGR nextui-collapse-content"
++            id="react-aria9260875313-10"
++            role="region"
++            tabindex="-1"
++          >
++            content1
++          </div>
++        </div>
++      </div>
++    </div>
++    <div
++      class="nextui-c-hPzDAx nextui-c-huiNHE nextui-c-hPzDAx-eLdNZT-borderWeight-light nextui-c-hPzDAx-jBQhgJ-divider-true nextui-c-hPzDAx-kMkCGX-animated-true nextui-c-hPzDAx-TDdeu-visible-false nextui-collapse nextui-collapse--closed"
++      data-state="closed"
++      tabindex="-1"
++    >
++      <div
++        aria-controls="react-aria9260875313-12"
++        aria-disabled="false"
++        aria-expanded="false"
++        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        data-state="closed"
++        id="react-aria9260875313-11"
++        role="button"
++        tabindex="0"
++      >
++        <div
++          class="nextui-collapse-title-container"
++        >
++          <div
++            class="nextui-collapse-title-content"
++          >
++            <h3
++              class="nextui-collapse-title"
++            >
++              title2
++            </h3>
++          </div>
++          <div
++            class="nextui-collapse-title-content-right"
++          >
++            <svg
++              class="nextui-c-fUXRSc nextui-collapse-icon"
++              fill="none"
++              focusable="false"
++              height="20"
++              role="presentation"
++              viewBox="0 0 24 24"
++              width="20"
++              xmlns="http://www.w3.org/2000/svg"
++            >
++              <path
++                d="M15.5 19l-7-7 7-7"
++                stroke-linecap="round"
++                stroke-linejoin="round"
++                stroke-width="1.5"
++              />
++            </svg>
++          </div>
++        </div>
++      </div>
++      <div
++        class="nextui-c-dJMBOt nextui-c-dJMBOt-ielLSBX-css"
++      >
++        <div
++          class="nextui-expand-content"
++        >
++          <div
++            aria-labelledby="react-aria9260875313-11"
++            class="nextui-c-fMAxGR nextui-collapse-content"
++            id="react-aria9260875313-12"
++            role="region"
++            tabindex="-1"
++          >
++            content2
++          </div>
++        </div>
++      </div>
++    </div>
++  </div>,
++  "_root": LoadedCheerio {
++    "0": Document {
++      "children": Array [
++        <html>
++          <head />
++          <body />
++        </html>,
++      ],
++      "endIndex": null,
++      "next": null,
++      "parent": null,
++      "prev": null,
++      "startIndex": null,
++      "type": "root",
++      "x-mode": "quirks",
++    },
++    "_root": [Circular],
++    "length": 1,
++    "options": Object {
++      "decodeEntities": true,
++      "xml": false,
++    },
++  },
++  "length": 1,
++  "options": Object {
++    "decodeEntities": true,
++    "xml": false,
++  },
++}
++`;
++
++exports[`Collapse Group should work without accordion 1`] = `
++LoadedCheerio {
++  "0": <div
++    class="nextui-c-dWWWSv nextui-c-dWWWSv-eaqZHc-borderWeight-light"
++  >
++    <div
++      class="nextui-c-hPzDAx nextui-c-huiNHE nextui-c-hPzDAx-eLdNZT-borderWeight-light nextui-c-hPzDAx-jBQhgJ-divider-true nextui-c-hPzDAx-kMkCGX-animated-true nextui-c-hPzDAx-TDdeu-visible-false nextui-collapse nextui-collapse--closed"
++      data-state="closed"
++      tabindex="-1"
++    >
++      <div
++        aria-controls="react-aria9260875313-6"
++        aria-disabled="false"
++        aria-expanded="false"
++        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        data-state="closed"
++        id="react-aria9260875313-5"
++        role="button"
++        tabindex="0"
++      >
++        <div
++          class="nextui-collapse-title-container"
++        >
++          <div
++            class="nextui-collapse-title-content"
++          >
++            <h3
++              class="nextui-collapse-title"
++            >
++              title1
++            </h3>
++          </div>
++          <div
++            class="nextui-collapse-title-content-right"
++          >
++            <svg
++              class="nextui-c-fUXRSc nextui-collapse-icon"
++              fill="none"
++              focusable="false"
++              height="20"
++              role="presentation"
++              viewBox="0 0 24 24"
++              width="20"
++              xmlns="http://www.w3.org/2000/svg"
++            >
++              <path
++                d="M15.5 19l-7-7 7-7"
++                stroke-linecap="round"
++                stroke-linejoin="round"
++                stroke-width="1.5"
++              />
++            </svg>
++          </div>
++        </div>
++      </div>
++      <div
++        class="nextui-c-dJMBOt nextui-c-dJMBOt-ielLSBX-css"
++      >
++        <div
++          class="nextui-expand-content"
++        >
++          <div
++            aria-labelledby="react-aria9260875313-5"
++            class="nextui-c-fMAxGR nextui-collapse-content"
++            id="react-aria9260875313-6"
++            role="region"
++            tabindex="-1"
++          >
++            content1
++          </div>
++        </div>
++      </div>
++    </div>
++    <div
++      class="nextui-c-hPzDAx nextui-c-huiNHE nextui-c-hPzDAx-eLdNZT-borderWeight-light nextui-c-hPzDAx-jBQhgJ-divider-true nextui-c-hPzDAx-kMkCGX-animated-true nextui-c-hPzDAx-TDdeu-visible-false nextui-collapse nextui-collapse--closed"
++      data-state="closed"
++      tabindex="-1"
++    >
++      <div
++        aria-controls="react-aria9260875313-8"
++        aria-disabled="false"
++        aria-expanded="false"
++        class="nextui-c-lfcDHB nextui-c-PJLV nextui-c-PJLV-gulvcB-isFocusVisible-false nextui-collapse-view"
++        data-state="closed"
++        id="react-aria9260875313-7"
++        role="button"
++        tabindex="0"
++      >
++        <div
++          class="nextui-collapse-title-container"
++        >
++          <div
++            class="nextui-collapse-title-content"
++          >
++            <h3
++              class="nextui-collapse-title"
++            >
++              title2
++            </h3>
++          </div>
++          <div
++            class="nextui-collapse-title-content-right"
++          >
++            <svg
++              class="nextui-c-fUXRSc nextui-collapse-icon"
++              fill="none"
++              focusable="false"
++              height="20"
++              role="presentation"
++              viewBox="0 0 24 24"
++              width="20"
++              xmlns="http://www.w3.org/2000/svg"
++            >
++              <path
++                d="M15.5 19l-7-7 7-7"
++                stroke-linecap="round"
++                stroke-linejoin="round"
++                stroke-width="1.5"
++              />
++            </svg>
++          </div>
++        </div>
++      </div>
++      <div
++        class="nextui-c-dJMBOt nextui-c-dJMBOt-ielLSBX-css"
++      >
++        <div
++          class="nextui-expand-content"
++        >
++          <div
++            aria-labelledby="react-aria9260875313-7"
++            class="nextui-c-fMAxGR nextui-collapse-content"
++            id="react-aria9260875313-8"
++            role="region"
++            tabindex="-1"
++          >
++            content2
++          </div>
++        </div>
++      </div>
++    </div>
++  </div>,
++  "_root": LoadedCheerio {
++    "0": Document {
++      "children": Array [
++        <html>
++          <head />
++          <body />
++        </html>,
++      ],
++      "endIndex": null,
++      "next": null,
++      "parent": null,
++      "prev": null,
++      "startIndex": null,
++      "type": "root",
++      "x-mode": "quirks",
++    },
++    "_root": [Circular],
++    "length": 1,
++    "options": Object {
++      "decodeEntities": true,
++      "xml": false,
++    },
++  },
++  "length": 1,
++  "options": Object {
++    "decodeEntities": true,
++    "xml": false,
++  },
++}
++`;\n- packages/react/src/collapse/__tests__/__snapshots__/index.test.tsx.snap (added, 4439 changes)\n  Patch: No patch available\n- packages/react/src/input/__tests__/__snapshots__/index.test.tsx.snap (modified, 8 changes)\n  Patch: @@ -1,9 +1,9 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`Input should be work with content 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-input-content nextui-input-content--left\\"><span>test-icon</span></span><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVyrVm-hasLeftContent-true nextui-input nextui-input-left-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-25\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVsTEo-hasRightContent-true nextui-input nextui-input-nextui-input-right-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-27\\" value=\\"\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-input-content nextui-input-content--right\\"><span>test-icon</span></span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Input should be work with content 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-input-content nextui-input-content--left\\"><span>test-icon</span></span><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVyrVm-hasLeftContent-true nextui-input nextui-input-left-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-25\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVsTEo-hasRightContent-true nextui-input nextui-input-nextui-input-right-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-27\\" value=\\"\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-input-content nextui-input-content--right\\"><span>test-icon</span></span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
+ 
+-exports[`Input should be work with label 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><label class=\\"nextui-c-hzQjrs nextui-input-block-label\\" for=\\"react-aria4390296999-19\\" id=\\"react-aria4390296999-20\\">label</label><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><div class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-19\\" aria-labelledby=\\"react-aria4390296999-20\\" value=\\"\\"></div></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-21\\" value=\\"\\"><span class=\\"nextui-c-gieWTI nextui-c-gieWTI-bPbUHf-isRight-true nextui-c-gieWTI-bzgJTZ-cv nextui-input-label--right\\">label</span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-gieWTI nextui-c-gieWTI-ceZkzL-isRight-false nextui-c-gieWTI-bzgJTZ-cv nextui-input-label--left\\">label</span><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-23\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Input should be work with label 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><label class=\\"nextui-c-hzQjrs nextui-input-block-label\\" for=\\"react-aria5953064628-19\\" id=\\"react-aria5953064628-20\\">label</label><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><div class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-19\\" aria-labelledby=\\"react-aria5953064628-20\\" value=\\"\\"></div></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-21\\" value=\\"\\"><span class=\\"nextui-c-gieWTI nextui-c-gieWTI-bPbUHf-isRight-true nextui-c-gieWTI-bzgJTZ-cv nextui-input-label--right\\">label</span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-gieWTI nextui-c-gieWTI-ceZkzL-isRight-false nextui-c-gieWTI-bzgJTZ-cv nextui-input-label--left\\">label</span><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-23\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
+ 
+-exports[`Input should work with different sizes 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-jwvDph-size-xs nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-3\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-iUdBCG-size-sm nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-5\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-bkiCag-size-lg nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-7\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gNajeV-size-xl nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-9\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-imosJd-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-11\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Input should work with different sizes 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-jwvDph-size-xs nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-3\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-iUdBCG-size-sm nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-5\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-bkiCag-size-lg nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-7\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gNajeV-size-xl nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-9\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-imosJd-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-11\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
+ 
+-exports[`Input should work with different status 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-kWLfoB-color-secondary nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-13\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-gzViYB-color-success nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-15\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jzFoKt-color-warning nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria4390296999-17\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Input should work with different status 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-kWLfoB-color-secondary nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-13\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-gzViYB-color-success nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-15\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jzFoKt-color-warning nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-input\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5953064628-17\\" value=\\"\\"></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;\n- packages/react/src/input/__tests__/__snapshots__/password.test.tsx.snap (modified, 2 changes)\n  Patch: @@ -1,3 +1,3 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`InputPassword should render correctly 1`] = `"<div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-ghxhhI nextui-c-ghxhhI-fjttfO-isTextarea-false nextui-c-ghxhhI-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input nextui-input-password\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVsTEo-hasRightContent-true nextui-input nextui-input-nextui-input-right-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"password\\" id=\\"react-aria3963845131-1\\" value=\\"\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-c-PJLV-hUwVy-clickable-true nextui-input-content nextui-input-content--right\\"><svg class=\\"nextui-input-password-icon\\" fill=\\"none\\" height=\\"16\\" shape-rendering=\\"geometricPrecision\\" stroke=\\"currentColor\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" stroke-width=\\"1.5\\" style=\\"color: currentColor;\\" viewBox=\\"0 0 24 24\\" width=\\"16\\"><path d=\\"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\\"></path><circle cx=\\"12\\" cy=\\"12\\" r=\\"3\\"></circle></svg></span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div>"`;
+\ No newline at end of file
++exports[`InputPassword should render correctly 1`] = `"<div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-fjttfO-isTextarea-false nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--input nextui-input-password\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-lkBNdM-isTextarea-false nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><input aria-multiline=\\"false\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-bVsTEo-hasRightContent-true nextui-input nextui-input-nextui-input-right-content\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"password\\" id=\\"react-aria4819393953-1\\" value=\\"\\"><span class=\\"nextui-c-PJLV nextui-c-PJLV-dBGXHd-applyStyles-true nextui-c-PJLV-hUwVy-clickable-true nextui-input-content nextui-input-content--right\\"><svg class=\\"nextui-input-password-icon\\" fill=\\"none\\" height=\\"16\\" shape-rendering=\\"geometricPrecision\\" stroke=\\"currentColor\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" stroke-width=\\"1.5\\" style=\\"color: currentColor;\\" viewBox=\\"0 0 24 24\\" width=\\"16\\"><path d=\\"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\\"></path><circle cx=\\"12\\" cy=\\"12\\" r=\\"3\\"></circle></svg></span></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div>"`;\n- packages/react/src/table/__tests__/index.test.tsx (modified, 63 changes)\n  Patch: @@ -377,4 +377,67 @@ describe("Table", () => {
+     expect(thirdColumnHeader.text()).toBe("DATE MODIFIED");
+     expect(thirdColumnHeader.props()["aria-sort"]).toBe("none");
+   });
++
++  it("should update the pagination when items change", async () => {
++    const TableWithPagination = () => {
++      const [rows, setRows] = React.useState(items);
++
++      return (
++        <div>
++          <Table aria-label="Test pagination update">
++            <Table.Header columns={columns}>
++              {(column) => <Table.Column>{column.name}</Table.Column>}
++            </Table.Header>
++            <Table.Body items={rows}>
++              {(item: any) => (
++                <Table.Row key={item.test}>
++                  <Table.Cell>{item.test}</Table.Cell>
++                  <Table.Cell>{item.foo}</Table.Cell>
++                  <Table.Cell>{item.bar}</Table.Cell>
++                </Table.Row>
++              )}
++            </Table.Body>
++            <Table.Pagination rowsPerPage={2} />
++          </Table>
++          <button
++            id="add-item"
++            onClick={() =>
++              setRows([
++                ...rows,
++                {
++                  test: `Test ${items.length + 1}`,
++                  foo: `Foo ${items.length + 1}`,
++                  bar: `Bar ${items.length + 1}`,
++                  yay: `Yay ${items.length + 1}`,
++                  baz: `Baz ${items.length + 1}`,
++                },
++              ])
++            }
++          >
++            Add item
++          </button>
++        </div>
++      );
++    };
++    const wrapper = mount(<TableWithPagination />);
++
++    const table = wrapper.find('[role="grid"]').at(0);
++
++    expect(table.props()["aria-label"]).toBe("Test pagination update");
++
++    const pagination = table.find(".nextui-table-pagination");
++
++    //pagination should contain left and right navigation button and one page
++    expect(pagination.find("button").length).toBe(3);
++
++    const button = wrapper.find("#add-item");
++
++    button.simulate("click");
++    // three rows on two pages
++    expect(wrapper.find('[role="grid"] .nextui-table-pagination button').length).toBe(4);
++
++    button.simulate("click");
++    // four rows still on two pages
++    expect(wrapper.find('[role="grid"] .nextui-table-pagination button').length).toBe(4);
++  });
+ });\n- packages/react/src/table/table-body.tsx (modified, 13 changes)\n  Patch: @@ -47,10 +47,21 @@ const TableBody: React.FC<TableBodyProps> = ({
+   isStatic,
+   ...props
+ }) => {
+-  const {currentPage, rowsPerPage} = useTableContext();
++  const {
++    currentPage,
++    rowsPerPage,
++    collection: collectionContext,
++    setCollection,
++  } = useTableContext();
+ 
+   const infinityScroll = useMemo(() => isInfinityScroll(collection), [collection.body.props]);
+ 
++  React.useEffect(() => {
++    if (collection !== collectionContext) {
++      setCollection?.(collection);
++    }
++  }, [collection, collectionContext]);
++
+   const isLoading =
+     collection.body?.props?.loadingState === "loading" ||
+     collection.body?.props?.loadingState === "loadingMore";\n- packages/react/src/table/table.stories.tsx (modified, 66 changes)\n  Patch: @@ -344,6 +344,72 @@ export const Pagination = () => {
+   );
+ };
+ 
++export const AsyncPagination = () => {
++  let scopedColumns = [
++    {name: "Name", uid: "name"},
++    {name: "Height", uid: "height"},
++    {name: "Mass", uid: "mass"},
++    {name: "Birth Year", uid: "birth_year"},
++  ];
++
++  let list = useAsyncList({
++    async load({signal, cursor}) {
++      if (cursor) {
++        // write this /^http:\/\//i using RegExp
++        const regex = "/^http:///i";
++
++        cursor = cursor.replace(regex, "https://");
++      }
++
++      let res = await fetch(cursor || "https://swapi.py4e.com/api/people/?search=", {signal});
++      let json = await res.json();
++
++      return {
++        items: json.results,
++        cursor: json.next,
++      };
++    },
++  });
++
++  const rowsPerPage = 3;
++
++  return (
++    <Table
++      aria-label="Example table with asyncronosly loading dynamic content"
++      color="secondary"
++      css={{
++        minWidth: "620px",
++        height: "auto",
++        "@xsMax": {
++          minWidth: "100%",
++        },
++      }}
++      selectionMode="multiple"
++      shadow={false}
++    >
++      <Table.Header columns={scopedColumns}>
++        {(column) => <Table.Column key={column.uid}>{column.name}</Table.Column>}
++      </Table.Header>
++      <Table.Body items={list.items}>
++        {(item: any) => (
++          <Table.Row key={item.name}>{(key) => <Table.Cell>{item[key]}</Table.Cell>}</Table.Row>
++        )}
++      </Table.Body>
++      <Table.Pagination
++        noMargin
++        shadow
++        align="center"
++        rowsPerPage={rowsPerPage}
++        onPageChange={(page) => {
++          if (page >= list.items.length / rowsPerPage) {
++            list.loadMore();
++          }
++        }}
++      />
++    </Table>
++  );
++};
++
+ export const InfinityPagination = () => {
+   let scopedColumns = [
+     {name: "Name", uid: "name"},\n- packages/react/src/textarea/__tests__/__snapshots__/index.test.tsx.snap (modified, 4 changes)\n  Patch: @@ -1,5 +1,5 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
+-exports[`Textarea should render correctly 1`] = `"<div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-PJLV nextui-c-iFHsrU nextui-input-placeholder\\">placeholder</span><textarea aria-multiline=\\"true\\" aria-placeholder=\\"placeholder\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"placeholder\\" type=\\"text\\" id=\\"react-aria5519476091-1\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div>"`;
++exports[`Textarea should render correctly 1`] = `"<div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><span class=\\"nextui-c-PJLV nextui-c-iFHsrU nextui-input-placeholder\\">placeholder</span><textarea aria-multiline=\\"true\\" aria-placeholder=\\"placeholder\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"placeholder\\" type=\\"text\\" id=\\"react-aria1995823903-1\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div>"`;
+ 
+-exports[`Textarea should work with different styles 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-kWLfoB-color-secondary nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><textarea aria-multiline=\\"true\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5519476091-3\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-ikPZLca-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><textarea aria-multiline=\\"true\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria5519476091-5\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;
++exports[`Textarea should work with different styles 1`] = `"<div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-kWLfoB-color-secondary nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-iiIdOsz-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><textarea aria-multiline=\\"true\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1995823903-3\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div><div class=\\"nextui-c-iwmZdB nextui-c-iwmZdB-jTfqsF-helperColor-default nextui-c-iwmZdB-dpkacN-borderWeight-normal nextui-c-iwmZdB-gOvjVW-size-md nextui-c-iwmZdB-ikPZLca-css nextui-input-main-container nextui-input-main-container--normal\\" data-state=\\"normal\\"><div class=\\"nextui-c-boZsAS nextui-c-boZsAS-iNKybL-animated-true nextui-input-container nextui-input-container--normal nextui-input-container--textarea\\"><label class=\\"nextui-c-eXOOPO nextui-c-eXOOPO-iNKybL-shadow-true nextui-c-eXOOPO-ccrOPm-underlined-false nextui-c-eXOOPO-iLMmYc-isTextarea-true nextui-c-eXOOPO-dpaosk-cv nextui-input-wrapper nextui-input-wrapper--normal nextui-input-wrapper--shadow\\"><textarea aria-multiline=\\"true\\" aria-placeholder=\\"\\" aria-readonly=\\"false\\" aria-required=\\"false\\" autocomplete=\\"off\\" class=\\"nextui-c-jeuecp nextui-c-jeuecp-dYLnuG-isTextarea-true nextui-input-textarea\\" data-state=\\"normal\\" placeholder=\\"\\" type=\\"text\\" id=\\"react-aria1995823903-5\\"></textarea></label></div><div class=\\"nextui-c-gJvMas nextui-input-helper-text-container\\"></div></div></div>"`;\n

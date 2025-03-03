@@ -1,0 +1,1702 @@
+Pull Request Number: 3832
+Title: feat(file-upload)
+Base Branch: canary
+Head Branch: feat/file-upload_#3772
+Author: Arian94
+URL: https://github.com/nextui-org/nextui/pull/3832
+State: OPEN
+Created At: 2024-10-01T18:39:33Z
+Merged At: None
+Participants: Arian94, wingkwong
+
+Description:
+Closes #3772,
+📝 Description
+
+This will add the new long-awaited component called "File Upload".
+
+🚀 New behavior
+
+This adds a customizable and flexible component to upload files. It constitutes three sections:
+Top Bar: It is to display information regarding number of allowed files, file sizes etc.
+Items: A container for the files a user has selected from his/her device.
+Buttons: A container for the buttons such as the browse, add or reset button etc.
+
+Developers are allowed to customize all three sections. There are many props for modifications and/or using customizable parts in these sections.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced a new "File Upload" component, allowing users to upload multiple files with customizable buttons.
+Added new routes in the documentation for "File Upload" and several updated components.
+Comprehensive documentation for the File Upload component, including installation instructions and usage examples.
+
+
+
+Bug Fixes
+
+Updated sitemap to reflect new URLs and modifications for better navigation.
+
+
+
+Documentation
+
+New README file for the @nextui-org/file-upload package detailing functionality and installation.
+Added Storybook stories for the File Upload component to showcase various configurations.
+
+
+
+Tests
+
+Implemented unit tests for the File Upload component to ensure functionality and behavior under different conditions.
+
+Commits:
+- feat(file-upload): implement prototype\n- feat(file-upload): add addButton, resetButton and topBar comp props\n- fix(file-upload): fix add and reset button onClick prop\n- feat(file-upload): add files property to control files outside of the comp\n- refactor: move topbar to a separate file\n- feat: add buttons prop to impl. custom sect. for btns\n- feat: add mdx\n- Merge branch 'canary' of github.com:Arian94/nextui into feat/file-upload_#3772\n- fix: confs\n- feat(file-upload): add stories\n- feat(file-upload): add unit tests - fix bug in fileitem (found by tests)\n- fix(file-upload): fix coderabbitai reported bugs and markdown\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 7ca7d22fca57fd67c9bbfa22dbdbd4b10bb867ba
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/Arian94/nextui/new/feat/file-upload_#3772?filename=.changeset/gold-readers-kneel.md&value=---%0A%22%40fake-scope%2Ffake-pkg%22%3A%20patch%0A---%0A%0Afeat(file-upload)%0A)
+
+\n- vercel: @Arian94 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f1717eea25f897caa7142b1df7e1ab7e06b945f3%22%7D%2C%22id%22%3A%22Qma8arHxCgimjoY5vo2Dh6MH4t7o6DdBLHXgesbw5JETAF%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3832%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The pull request introduces a new file upload component to the NextUI framework, along with comprehensive documentation and testing. It adds several new routes to the documentation site, including a dedicated section for the file upload feature. The implementation includes multiple React components for file upload functionalities, such as handling multiple files, custom buttons, and a top bar. Additionally, the sitemap has been updated to reflect new URLs related to the file upload documentation, and a new README file has been created for the `@nextui-org/file-upload` package.
+
+## Changes
+
+| File Path                                         | Change Summary                                                                                     |
+|---------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| apps/docs/config/routes.json                       | Added new route for "File Upload" and marked several existing routes as updated.                   |
+| apps/docs/content/components/file-upload/controlled.ts | Introduced `App` component with a promise-based function for file handling.                       |
+| apps/docs/content/components/file-upload/file-item.ts | Added `App` component to display individual file items.                                          |
+| apps/docs/content/components/file-upload/index.ts   | Created an index file to aggregate file upload related modules.                                   |
+| apps/docs/content/components/file-upload/multiple.ts  | Introduced `App` component for multiple file uploads.                                            |
+| apps/docs/content/components/file-upload/topbar.ts    | Added `App` component for file upload with a top bar.                                            |
+| apps/docs/content/components/file-upload/usage.ts      | Created an example component demonstrating file upload usage.                                     |
+| apps/docs/content/docs/components/file-upload.mdx      | Added documentation for the File Upload component, including usage examples and API details.      |
+| apps/docs/public/sitemap-0.xml                       | Updated timestamps and added new URLs related to file upload documentation.                       |
+| packages/components/file-upload/README.md             | Created README for `@nextui-org/file-upload` package detailing installation and functionality.     |
+| packages/components/file-upload/__tests__/file-upload.test.tsx | Added unit tests for the `FileUpload` component covering rendering and state behaviors.           |
+| packages/components/file-upload/package.json          | Introduced `package.json` for the `@nextui-org/file-upload` package.                             |
+| packages/components/file-upload/src/file-upload-item.tsx | Added `FileUploadItem` component for displaying uploaded files.                                   |
+| packages/components/file-upload/src/file-upload-topbar.tsx | Created `FileUploadTopbar` component for managing upload constraints.                             |
+| packages/components/file-upload/src/file-upload.tsx    | Introduced `FileUpload` component for managing file uploads.                                      |
+| packages/components/file-upload/src/index.ts           | Aggregated exports for file upload components and types.                                          |
+| packages/components/file-upload/src/use-file-upload.ts  | Added `useFileUpload` custom hook for managing file uploads.                                      |
+| packages/components/file-upload/stories/file-upload.stories.tsx | Created Storybook stories for demonstrating `FileUpload` component variations.                    |
+| packages/components/file-upload/tsconfig.json          | Introduced TypeScript configuration for the file upload package.                                  |
+| packages/components/file-upload/tsup.config.ts         | Added build configuration for the file upload component.                                          |
+| packages/core/react/package.json                       | Updated to include `@nextui-org/file-upload` as a dependency.                                    |
+| packages/core/theme/src/components/file-upload.ts      | Introduced `fileUpload` component for Tailwind CSS styling.                                       |
+| packages/core/theme/src/components/index.ts            | Exported `file-upload` component for broader accessibility.                                       |
+| apps/docs/content/components/file-upload/buttonsContainer.ts | Added `buttonsContainer` component for file upload actions.                                       |
+| apps/docs/content/components/file-upload/customButtons.ts | Introduced `DeleteIcon` and custom button functionalities for file uploads.                        |
+
+## Assessment against linked issues
+
+| Objective                                         | Addressed | Explanation                                   |
+|---------------------------------------------------|-----------|-----------------------------------------------|
+| Ability to select the desired file format (3772) | ✅        |                                               |
+| Ability to upload single or multiple files (3772) | ✅        |                                               |
+
+## Possibly related PRs
+- **#3268**: Addresses issues related to the `input` component with `file` type, relevant to the new "File Upload" route added in this PR.
+
+<!-- walkthrough_end -->
+
+
+
+
+<!-- internal state start -->
+
+
+<!-- FAHghAtBAEAqAWBLAztF0CGA7TBXALgPYQDmAplmQE4b5kAm0AxoQLasX4Bc0ADldEIAjAFZkm+RADcyqIQE9mhetQxChifADoMiaFAB8wY+CjGAxOegAFAErQAyrnYYq84wjJ9cAGx/QqMgBHXFl8aEl8HwZoACIAMzJaAAp4xGiIXF4fQgx6AEpY6AB3DFQmQNoYhWhcZGpoAEEqRGwATgAWTCxGdEQVLEk06sV8eC8sZyEGgGYADhmAJi1oAElw3VZUIjRBqmVcJi8MaEpipVZeQkpB5gw/GNiAMXSvAFVs3PoinbGvADkyAAPfBvVbQHyIIQ0NwAGkw9HogWQyEQWBIEXGpzIMXihAEyEO8Gg8VwWAkiGu900ijK0CQJHgkMZdF6OBQhK85hmAHYecs4FiWJdrpw0KgVKiSJRGDtpsw6kRWIgAF5qaLdRjxaJAqHReEsLCo5CSdGCeKYwJeVi6HD1CnXZA8E6wQi8aAAIVcJPx0HoKGyGHkaIxaLxVBtkmumCEhAImD8hGKuNeqGwjFRKtk8OwazoWyUg1tDXDmK89WiEhT0WQOZ6mE9BCIRug9qjOFLGAdLchAGsvNCk6j0TnESH4b7kWR8KaMWkaysACJkGQ5XjUcq51jKRDxUbjeqt8Tt1B1EPQKSuSl1Pj7XjbQgRXQ5AR/C5XG7hX7jRACSgMZAVk8Gx7HoQhZFOQhwjRfB9noQ5jiwRRoSSXtzyYeBsHIQCLCsAB5URj2kCD4n2VhoAAGTRftGFWFFQmQDwsUhLAaPFTloG5PlFnhSJokYZ5XmgD4cjyWEijjKI0Qgt9/y1X0TnnLwslExhhQ/MVik0JAcDfQEQTBCEoRheQgKxfFEBINF7j4QgTXhG0VGgGo6gaZAmAwNDBBwPCJGEBpFgARnhRYAAZFhmeEyEuTDMxkrFEBFKh8GwI5zRJISVK+VA0WgbcVCoHBkyETBeGyRAPJPeEsCg88xloMsY3qckvEIC1CQwht1NFW5cv00FwXQE4pSwXcKuwcJIWVFL2zMrxAhCMJW3XJgxvirxJV/XEknwXBkXhNEmB8XB/TNN81HSGkIkfCtj2W8QxqYDKNXDSM03rN83Xba7ak+PJoDIbS3JDDVfVYXxJGyLwlMAwUNpQJg6lRaN7mQR8OEGSkW0NVECvPe46EK2hiNrVsiUwbYsUaW5lxG4S/rUtgNMGA6enG2cGxUG161LVFlR8b1SXJdtqXwRQtLGXK9OBAaSRoDhinxXstFw6AAGE2Ax/BUCcFw3GMVZdKFTXOFQNssfSt87HhZpWiwTp6TpFKSHIRhXIELT0V7RWRwCYIGI5v5fz9qREDIc42sajCsIgxyyDmwJMETmqEX9EX/GFLXUF9f13KRrHUH4WROFZ/1Kvx1tYN0Flw1KKhGfYMl2YtwISFcU6MTfQJQ/D29CCOFE5ouLW/e1Y80yUPw1HxYmZFK/hck678NpXMg1xHheB9JulbfaLp6jIXscqwXh41Ithuig8ZXySciOFYaZX0fChCUTt8QlF2kebJbtP8trEzjQBeBqESXx3w9XCNMcMXhNDijytQV2uxl55VtEoFQQgyjx2MIYEwkAYAUEYJHDABBiDkEoDQVkw9OA8H4IIQiFIZByEUCwAqagNDaF0PoCARhTAwAQH0d6eAiCkAoKoShmdqEBAwOcQketkLMOUKodQmgdB6BwbgswwAMBlWQAAejAkwPRho0gkF0fsAgsgtAiDRlgLgwBYgOOAJYJoqwRHkKqBmZwNo3DpWjuiWQTF4bxAtDBOCCEzarxoP4fKj1iaOh+m+AABuYuggFrHXESYWExe04kdlePCfgiUrw+EUHiRGw4MTRnOmOb6kdAEpIgumX69AqgPgBrqE055RSw0aNic4DSfQCEEiAhmRRYrORxDgPIKg3Y9AaG+WIGsRSfmQEUc21x4QS2JG+fsihElKUyAzRJvFNAamGe8UZdZGBlDRqtDx0BdmK3rj0mpWN7glPhPUGQUT2koA5g01AmE57TAoCgqgbE6RZBaayVmR0TrnliBRIMklYjwliIuVwvY8qKNRXEL09ByC4tiAAWWUPcIlDh+zRGbES2AahVlXLiK6QgPhIaxCHuiqoawT4ECJRiugNgKr9ioHyrltgY6CqYMK3FTTFn3AIa4Io3UVmOznqjR8IKcDeIhagQBVwTSkzRGXYmZ1xi0mTuHEpSCwlHEIQSSyo00geUGFa7uKAGBD0IN895lcqCHF2onSOXdJIQUCDaNE5RHR/JLiUbSkE/Rr2nAXQQAgbQiF9CaP1EgckZ0wv4tpb5gR/PPEgVQVAMKmUCdijQGoAVHm7H7cNLYf55tdvCQIKU0Tnk0IXN1cZI1YGyRQi2WzJLdFpK8+JYMdxOtyThYwTirCNFZWI5NyCVBHVcHO9KwIrjJRiL6U+QhIRPU4JoMOjFgAwEBP0kNqcGA8GANAfQ0BEkAG9Yi7NiDwBIrxDmqSJXxMg364jAIuQBtFjz8T0FWT+pS8IspiWcvsYo9QiW8FoPAEDsR9H9yMUzCBeiDmIfoFoVg9AgRErONYOy+AQOwVCAAX0yVLLEiyCMrLWURaMkdEnaPvLhwxujjGWTMSGtJNjElXugLYO92qYiQt4NCh90An0vvfZ+sg8hsMC3kCitFQHsNIr07ytFGGxjYcE0YxUbBVS5N0bpySZGKNEqhR4+jfqyDMd2I1RZNnlRqnbFxhtvH+N6IMfhwdomAVWMk2pmAGmv0/paeCiA+VgMGdOcBn9GLwXYpUOhzDlmIvCf83Z9s+jMVpcUc5yjaK3Osg80xljRsvB+ZNLZwLWNgu1ItHxnRVnhPXBMWJixEmMnxdfR+pLcQMEEoy3EQzP78WErM0Vn9g3lWm10XN8gtXXNKfczwBjXmWu+aWczbWPWLahYGyVkTpiYvpKwFJ59CXptaew/lclmWojZbiKSlpPhCsWY2/djj23vs+H2/Vw7jXjuee86xtrF3CPXZ431sLm3hvRfE7Fibb2puae0z+5AVLpzXEA1l7DlLE00rW6DuI2PlnbbJ3T64MO4gNYYE107PmFmo84/W3rr6sfg6i49vHz3XvqY+yTxb9Kqd/ew3SoQDK4jmaw2DvDQ2WeDD0SlNXnPYjc++Aj5r/O2OC9NujnAt2BPi5G09uLhPEufZ/UQFlbLfvRBV4QL3iBeAg610z8Hevta6M96ywPxvTe86R61uI1v9e2/Sv1h3OuHujdSfjl70nZNjbBTqvptkDV2Nd3L7DymIBolPnRn3/3OUCsNnX4PxXM8Q/15VugNeeXaHI3VuI1HaPx7OwLzvV3hc3cx3djvEvs+WOl5Nt38vYjV94EK6gSvfc5a5dYTfIqGch5w2Hy74WqgQA31K6gxvh8mlH5blHE/VlT4x6L2fQms/O4J7L4nVeL80D+KX4H7b6N78peDir+KSrSpH7t6f7P7d5kAQCAHkDAHX5UC37hw0b37m587I5J7P6p727hZz5O5S4u6/4zaxAeTRA9CKoN7YZqzyp0GH4a7rah4d7h5GLMEpaYHFDYF0a4EJ7naEGv524z4Z7wHz7f554OKxDYKaJi5z50CDC65n66LEYMxDZ7Asr8RaDax2JyGLouJuJiIxCyLeKKCRx+LYTGC9KAK2BJASDgKfinAYAcCMCJKNBlSZLjKarWoHC2qP7PReCJKGiwS6EerayJJmToBba9RJTayNSJJgagJ5CZLxHhDnzkRJIAAClAIIuAiAEA+Ij2Th+AmSkI0IrgX8jAKgaQlAE8C8yo9QEAGC9QWoP830+yqYTwZE3hiAmS9U4QyILKjCP0uYrgNAVhfWYGmSwgYgEgqAWy90q0wwjAWA7hjSH08g64sMwEXhPhLhYoXakg1IWYOUSRJoXKKxuY0UvAYsSc0xgyr6MMmSZ4ZoiSjhXY2grkDgM0ZAMR0AAA6tpLlCcIkq5AAKLBLHi+H+69gHThA0E+CoA9E1h9FsADHHIlBICdTc6UzlgAmxpjCNSjE+AyBaiphDyZF+xzJUCEmvqpFHLHEsx8A3J1RYjomyCZLXECp0gnALy8ArCNCTqbF+DyC8RcneG8AZET5wK7r4iUJ0gYbJTpQnD1HEKsrtJ7rhALF3TDEoL3iNSa6vo4YymxaUZDGPhJIylynh4qzGHLqEzbrrriACzDpToWiKn7p2reDHoVQAyYySABLSY3qskbCIgqaHGyk+ZhHXAREPCkbRFhm9zNHuptGYKdHCwWzTLRkwyYmsDYlxnhH7BJn6HIBSYwDLjxBanhA+nhCm48CJINkJq1kQzQBvrQBaA9mVDOHCHxk6HlkplGFXqKEf6RYqH4BqGEYaF/okZzkZCaDRQVmGGOLOKNCuJkJmGeJyK+Ktqhn2G9xKSvF/rLmsAVm+F0j+GhKBEMCbJ4nEgNkTzfHOG0mbEeGvp2mxGRrh61CSCQgXHJHMmqT2mXZywXx5EFG7TFGlFmLlGVHGQ1ErCgmSyJ4pGvBpH0A4knDlJKinnRDrDRRQnRBawsYShkANH3m4kVTEiBD0mMkfmtQWhvgkbVgwJTJ+jSAknEgnCBCygyyTz4gilinvKSmNQnnPmcyUV1l0KLFfiYTQTkjHSSgNg2hlRdIsXSlHG0nIKmmJLmllSWmxBAn8JmwMbZqJzvJDgvG2k6XylyheBJCoiuqUXUAUBBFNIECXRZhsiCB/ACCqlJFBpYj8Ynq5KOkbkrqekthumboxXZzelAi6kHqBW4ABmnrBkXrYLQDhm0l5n0DNl2lxkHLnmXmpnnANnNmakQzzH0LIkJm2jngGW6IWnWKUY8DFW5Tck175jlWjlQAQDGBKFSFTkzkrKLlIELlGrAirn2LrlLpbmiIULmFeI1H7kxyXpHnnAnmJIzVAiXmOxyCTIBHwRBH4Hp4kGjWcDjXbaaGgVcWBB+RuA/khFoCJERLerRIHA1h+wCyUI7AnkkYkhdFvKQhiyfIrSxISmvp1AYDkA4mJLgzR5QyI1EC8AYJUCI1KREWsCI14VsAehNiOiI1CDE1GgaxFjSRY2MqDmJn8RAnrBlg4BSXDQgxeA4wpRsnclYWU1Tk4nFCPlwK5j6nOGGnw0kCtytJliHiJQpWMD5S+CWKCjoCZr+p7THCJioYvGlHYCqgKZMBbw/SXgtD9oRnvTZm/zg0XoUy3KtCUIrFA0MzHxdScBRL60K3YDkKRVLrRWuk2lYgboenbqRwNmpX+knpBmRDZXSaU3XG3AFXNlKS80JmcBnaXXY6DA3WZFEbzlaH7X9WOJjlDVaITnaFjU52TX/pfC6LI2QzRBzVGEblLXuKUIWHrXWEHmXpmVcXBKnXhINiAK7V12B4N3RGYgNSs0yblERkJrbhGhVyBxYhw3kD/yhEgVfBgUQIQU5Fcn5EyxFElFUBlE/GIXVEvVwxflHFCwNq0noD1HST0APm0V0kFSMkYXRBYVb2uErFJIj2o19zugUDqjUXWWewYjuxtLA3/0vTUlNA4CJLXBqwHmZKry3B5r0DRACDoALyhwzLP2dRxF7T0VRC0h8ACxHDwAsoFQvEYMsSdzL0MzsX7FYgnnqo6lKmCKi0NVU2jRmgnDqUb5mghWhHFW6UB1eD6WGXCntUmU5ha3niljOWKCBCJD0VpS+gr0cX+XXzsnJSJWNRhXNwc6X1eqqB+C+rq2JyEhlScP5a+Dei0laM8XgnT0/HzzhWzQLpOl+0ngJKB3ulbp+Oh3JVKnh1HqR1nohmXrXq9z5VRmFVX2xndUwPxwpmxOVWhNqmJ2vp9kVFyV3ThFNWmrWj8aaVmmtVGWyPWlJPp2pPlXVkyUdmtmm4/SHQqVeBJJ5N1XyVxn1MjlF2DXDVl3hHZ0IH3U13o2Y2N0LUmHbkrW7mWEbX5pMT327ghI6FnWNIl67VTOuCHWGlT2vkNV/mlhO2qQg05lUjg2KAfEMMAgyyGRVEmRDxNoRnwgxk4ly12Mf1kBf2ahMmYUMyugY2uCZLZGvr72FGwXH3wWn0oVgnoXFU33thImv0bgNi/P/O6WKW7BwqqUQkb15AguY2ZK3GrFrSe26jgzkRgPsWtj63pSxCBTQDEoejspNCiUSlSnQxCQP2NGYvdMFNi24vqWMlSOVMyPIBWn+OiP2UOlALWTctoD1lZNJGSzZz1XyM5DgPJFiMOUarHCG2yAdE72NTIBQ3rHsljCOmqzOmrrxJxXB3BNJXy0poR2BlRMx0ZOz05OfNxl7MYHpPQBQlqsHr1X3qJPJIIWFidp8P3NGlCMYgtVtXSsgZdUIOBsNPQA1myUtNw7Rmtk1Xaldk9laB5PQADlZsDPyHF3DOSGTljNcFV0LlaMzPyHN2mELNkx7md2bWrMSjrP90DyD3HlCSGlFMRoNjHOz3AjuFQxz2OiL2cnKTIDw3MXAVAsPW0kQtQUH0wsn0SBn0vOX3+sosWx30UVUVP00WdT0Vv2buf0sn5X1jtMnTbGvpIMoMAwyDoPphYMvEnm3TdhDxoPhB0MNBENUAkNWqCkUNkBUM+A0Olh0MrtHiViUIwwiVpxg0fLdDCvhBMWeFCtxGVAwq3vEhismmYYVOpsyvIL+uZErAvDil4dvjFuqu6lr1vXCgaACtdMxvcPatJiKO+jKOYDGsoiyu1MRm2s+Mul+NOtBPJohNuuHrpWRNZWhk+vxMzLNmc1NBHHdUjWNuqGV0TN5C6JtvBvhmtl+tFtNMlvdm9kz0Dkmfl1NvqEWf0BWdrt7Y1sKEl3uejOqGn6znee1ZrkduLVdv3Lt0+J9srPADARD1CQ9Uka1aZK4P9AQQqCdr8R+j9zOCcC5K2VYhgb0wXO0lbL4H9SGSkRbFPLKx5gTJWQtjktAYAuSgVCB7fQTsem7j7gc0T4ADkqA571zNIBDvFWtp49QDJExiIALYaZjIR43mjDMExR4VA3yQ8BixXRY30b7qlEaKUU8R3C9WafjpYJt14hcXYvY67KCmx5ADJ8ItZq04NJqGI4nMEZAktpXMEj4C88l86wE+3I8kkLE8UVot4RSPiOdf19ygNmUztzZRL2FHzGPuNOF9YWLwLbopLKwUJXYxIl7Ca7kLQ0wflhMBYkcPa3gVA+qZAny5MdIucgYwYZoMM7aZARczUHMRq0g/QuANkJ555289Y2XHcDYgbLx7suwr0EVl9zj6yHYO0GtkaTkXMS7CVLxqTrYRwmxpthqyl8KZoJG54BvEvCGAFqoFcgbjKctpFZ6ZoBN5E4v+YXFFrumFtzk5N86opOH1zbHgdRXWspXu6AsU7b4hoRwDxviCZZZBXOdUUmxAZFv83bS3MT3Rcoc/aVqbFVJC4LXFrD0wwaYl46QIDrYOQSRpY7v5WWMrPnUTsWIbzxQNAZUDQTSNvALUP0kEotAJwtAsEUIhepYSSGP39Max3FcucIDGYAJjpwEjQ1g4IavCa+X4rd4fvYH63r4XJ0/WPW7XwOPtNGPJLYLsKKldUux2xdRsgPXDxyaSjpPmAM4VPFir1m/834xAp74QIOMCNDERR47lFqC8RUCrg3QGLHYJRUSAMI14tzO3lmCjgT4h4J5OPh02WJxoxY64NsqcVf6+hfmDgfWpkiaT49VIasAWCiCYqVk0+eaVaCU2YADdHiIjCMmN1qB+csEC6KKgpzXQSME08VEOq6zCZ+kImnrLTjE1yq9wIeJXb6EpCTp51VImXOMsF1TqhdOC6hKsjIPOC6doy0/OMlCxgpH1D2FRCqr6wSbo9T+eQHHkYOgqH04K3TCwfoKjaX9CeYLewfu1MFwsj2FgvASvGvbWDogpArMOnQi4D4dB4ZAIQQJlDBC/mDMagTcjoHhDlBXwTLvNVrZDNS6DbXRBIKYC6JUQ+YbRBAFChaAgQrAHwFFydIt0dyPbJZol1sLJdA6Q7VRhhwnjqQgBL8UAdzmk6JIih0UEoWUIqE+BwW+SOHt4nSCKA0QUgMYmhxiSzoRcSSEADQPwD5QDAQxRKGEHnYH9fknSM0G8FsAUQ/e1SYPuIRLyHDjhQ8PPndwiBbDrilwUmILRfrJhrG04H6IkjCiLAOgpQxYL8NgBhQuA3wrgB0AACsWgQKKFB5AAAtHEkCgHAnVAggYIIisVaaSAOADw40rxi+E/DIRpQnkACNChAjAoQItoFoDaBtAYR4LDNJEhshFp9hGIS4ab3xbzDUEAw97jiBvZNJbuZtOQYdwvbP4VgdhLlnhwN6AImRqqBEaClvJbMb2u6dMGhwGHqU2mZvJyCxCPg/Q1+4IVRuAIHgGgysXWaMCQCKKSh3u8scOErEK6IwI+qLLrrIAdRw9yQo9ZWil17hu0bax3d4EcLNhs80S8AGcPeC4C6JdEDgxAFoDgolZtExRHUeo1kDCZIQEAKMYjX9H4BAxwY0MeGNhYlZjROXeMYMUZRXwMWgQf6jEB2CN9DRUyHmOaKa6wwSenUcUUcITBowjqjUVpqsPyyxJvoymNPDiIgB4ioRhI4kaSPJGUjYRDkW0HG0VFbFmAB5OWP7A8ozE4gLSKYUUCaSFILIbAi0LEDKE8hVxjJekRzHdGWJjAeEL6j4B5YzjNqQZRgZ0yxBKjtEzkRQC/D2jdoRilFdoY1G3AmgFQ0HMUCFw2D1g1allDdm+GKjsieKDYMpDeGjB8iZouZesKMT2gjtixK4CaD9EgZyc+BDrWKoIKDrKcvSHDX0u63yFR1z02nYSI2L9YgA9oPgAwCsP7gGAUxaYkMfu0zGmJIxG+ZAm5VjFGIExUYkAA5gYkrCygaw5QAYF7H9iCRgIoKMOIpEwiBJqw9YSABsKUUFoBgZcSUgEkqTSIwQOieuJaBiwDAO4gSfpJpB0SrOVAWienXc75DCh55IYeUMqE6DLhkbZstRMsl0ScgTARiQGKdDpjWJEYnXFGK4lqMPKcY0MZfn2B4NqACkoSYpLEkSTQo+IwcTJMWBki5J0IhSSJKUnaS1JGk+QFpIPI6Sggek02gZPkBGStAPIEyWVLMkCSaJGwtQWXVsn3jeApQxyaMOkwuSqJDU+id5KYl+SWJ0LNiYNhzEqA8xsU7ycJJNDrDEpyU6SSSLSkjj5JDmbKWJOUlFS8pz4AqcJk2m6SQApkwycZLyG1TDJ9UjydZOakacKodk4oW1OGFOSuplEqwa+ncm0S+pPk1MYNIzFwVj0hAEgJNM8lrT6A4k8KLiKSkDiFpsk0cVlJmnrTcpuk/KYVJjjFTSplIcqZVOqknT0ZdUiyVZKam5CWp9k+6R1OcmNiFhYcKNm9M8kMSBpQYoaTBRGmJAPUIwwGdNNEkgy5pkMokalPSltAAAbJlNWlwyQZG0lGVtKmHIz/EqMg6adIqnHTDpFU86fjOM5XSMqt0wYSTJGFkyKIHY9Ym5N6leTPpzEn6bCxMQ2g2Z8UzmWDL7EQypJPMxaXzJWlWy6JCMkqUjN2niz9piszGTVJxlnS8ZjU1WYTOukFDWp7U7WU9N1kUzoy1Mj6XTP8nDTSils4GaDO+G2z5pDs6Gc7NTlizpZEszSZ7Pzney5Zvs7GRuKVmBzLpIc9WeHIemdSYALkmOVTMNm0zfJ9M02exMzwGj7MLAF8MgBTkiy054MzOUOKWkZTYZHM12XtPdnbSpZ5AGWT7IVmlzlZQchBjZNDkaz1KEcx6Y3PJkzpKZBsjyfHPbmJzGZgUz/D3IqwVAdoSBP4BwEHlTyuZ9sseU7KFkuy85C8guTtLdloyK5Zcn2avOrlXU9ERMu6TvIbkUTo5B82Oa3P6mnyGZRREafdivlYxSsHWVgBAFu4TQB5gkqaS7OfkpTHZy09+bnN/kezf5ss/2fLKql+z/5QCgmSAryGby65pMqOXrMPmvS4Fxs76QFKzHdyMFTfa4OgqVD60IA98sgI/Nmk2zJJRC7OaQqHmfzVJiMueUXK/klzqFACleVXMYWDYwFmsiBTrI4WwLj5RshOYgrDEXzrMgiisZVlSzpYpFCUmRXbLkXjyYZwsqeUotRkUKZ5f8jGcvM0UMLg5TC/RdvPrlGLm5R896WYoQWdzNsqC4RY5gICOLrZ6c2RVDLcU5zFF5C1RZQqXm0Ly5GMoJevLVknot5DkyOXvOgX+h9ZXC0xW3K+kdy+FXcy+TYvsxmNoOOXCACaHkA1gUlw8jOdzNfkkLJ5OU3xT4q9klSqF/8gJfQp0XBK9FLC4mYYvYWRK6l0ShpSbOaXxK2lFWCRf0sIUZK35oy+GeMtyW+Lpl/igpYAvmUlKa5ZS1hZUqgXGKW59S+BY0rPlIKrFGhasUrD0QiT9gBy5xaPN5kjKPFYyyZepPOWQrLlZk2ZUUtuXv57lN0x5bvOeVrLEkccmJR8osXIKdcDXBWH8oZnWIgVaSlxUcrBUfyclkstRcoqmX5KsZNyhqcAsWW1zll4S1ZTAteUbL3lWypOfwqEwEqLR4KPRGGkQBAhSVI8oZaConngrTlkKiZcXPpWlz4VuM5lbopKyhKKlaKpuVyqiU0zeVvC/lS0qIy/KRVuiUOHQElWDKX5Mq9xVSrOU0q8lKq65dovVULLNVSy8BRyqqUvL9VJ8nFXEuzEmiyA+ie0dKEimHRnRuCo2ezOkVkqQVxC2VQ6oVXQqlVfiuFa6sCWIqM6nqtld6rYW+qMVWKzZUavPkCq9EY00Nad3eS5JrV6SrOZkoUWeLqVhc51ZotVUBz3VdykJV6oMU+r0Veq9ZQap4VNLjVo0kNbohlH+osY9a8lY2uOVyrRZran+RcoZV0KEV3apFb2vzX9rC1g6mpZwsxXcLzFQanXFWuzwhg51ia+RScuXWOq21a6l1YyrdUXSNVOuLVVrJ1X7zD1JinlaOs+WWKK1uiC9VkAB4qBxFxAKQIsGvXSqk19qshQ+tXUwr11hStVW+o9Ufq+1YSthQNU0QYYpU67fDM22866JbAUJRoIuGJRQlnM1QztvMzi5rUEuFoFSd3SFBd1h2xwEvORso3Ua3qk/PehFLgrecsuD3ddkPB41UaoSggAgND0ZITdxSV0dgRj3eYUcEwOrObrAMfDTJ3WK3OeDDHl6bcdgw0agLtxa6ejj41xc7hbFO5Xdk0dzZyFfGgAABNVwJWI2K8BWA8If0E9Q5iQMVRVm/wG+AI2PdV6v9Y2C4B6Bol5Abm1ONAGMGOCzZaQ9Iu60SQnxyIegBLQexbZHJsO56EPuJTfCSa+NHlOMDQGwixsv+fjNcVFJy4Tx1R0nUsuPw5hVq5NKwJmuwz5LxQGowW/YL03QAnoX4MQMkDQzfDEpVgsAIyEb3qCbI40JwBrcgkG1GgNo4fTgJhN9r8DHWuEwJnr1U5iDiJoc0idExyrhlit0mzAWR1xDECstPgkTeyUI17ZMhgXYwCFqI23Uu8pGgAPqfbUk2sb7TlpUG/aKyQIOjTFwY1t0mNi41jQO17obMIiWzDoUzC6EgC549QPUhaCbhfgwguwqfjYOwqz0vJ9yC6q9uwjvaI8pG5AOWkyQ+bjw+IUyJfV+1phE4zvaKJwGG0VJGoAAKSWi/bFGZqrFPcGuAYgViM7WAGEHPBURz69O4CL9rJjLkgy6kG5BBC+TmNmABk8aP4AU2iwL0diYAIFBWAAAqA3Y4XpLngxdBqI3TwGAhpAGSWO78c+ORAT0FK69PHTP1uD3sMWLAX8RIDw7fI1oO/YuBAKIT+8ZwGyAFhhHEAajDSKcagPsAW79xEYAgeCC0At5YBtwZIWcI6QFBG7HCFoJ4PiDrgdxLdl9e0NcAErfiRMEYSmA1D4qUV2SKIUsYIMoGb1Z6cRfEL5qtS1x241FB3ZyR61YhVGcCGqIR18D+AMA8QQmOixT0kBHSMwQ3QbsXAoBF+jgYkh6AQ4YB8+VAYvTLqQD1wIgS0VCcdGlpvhpgQKdGdx2q7ADkiKARfWu2PQMAsud4OBGjva3IlxgUqavc7uQxDgBw5NOBAv3v3XIEJgwqdgAYK7j7J9kxGcPcXEQnosUgtUFLH3lJ9BOKYB8wsv2MAdB59RNUPTgH+JcoAAatSGhRYxt9rDJVvvu/F+6K+Tu9TSHubA4C0Kj7BIdu3lKuB4Yd+grggfQo36l9gBx/W6DgQnZX9U+xktVzjQG8yauBv3hHo/0Ax3+Uh5sJwK60r8sQjO/8j5VCLuwoSv7fJrzESgOM/N83JBKoG7Ckxe9pqfvcNz/Kn6N9jSVALumPDDb6SF4K8GbUNBnDSYQVCqA40smlIiuHOqpC0M4PoGqgPtJoL4wEGNQ8Ju20QURPU4ZUjt3rXKtpsiNbbojO2kQYRMoQJHNO0dCCK8NKZORWMazYJCrDw0l0SdcY8zslp85VHc8oOuZstUY29sWNXdOwiXkST1Hpcb1PwidWnVBEBNoRG7cJtqOiaHtLPC8BuAtifCtAZQ0KKZSQDjchIFmgGA3sxg2QOAKUaFMNF9HUcJjbhDgPCG+TIwsA3mp/i0Bf5h7iEYwfEPCCoYcAMM5AeEEtsPABDGUbzN2ooCuAwQ9uFx3rhbDL5rEbahpYLWJtXofdLoAJRktMny3ubG0XqGyJHAM3AdKELkLPoZoubGbtuu3KtIkigzPIxha8RmLwwngVINQXxtFN51xRwCsAN473iwG9Q1oaQQ8bkpWSeJBhdgxqVJLQeuBWokkucfJjTueqKBkAVDXwIwHlCeiaeWIKo7iVBQSCxTHqU9oqfgCU0TEvJS1iCdxZgmDjYpuMEhwmQesjotISTqiHv2qHQiSIuyJoDp28luMOAaXrl2nDPg0wsYeMG+DRhIThuQ5G/ubwTYxDkgVkfAPkABZvgXJyCa00ULp3yMhdEEz01qaejCmiAPiATTg3BPxxT2ZNEgOyeGCGnVjJwFyaWGtPJRu09EY8cAAcC0j/AlPXrkzsCGP0XiZNdIB3ANDRA9avsJpAEIgCyG0IzAqo36Zl6Zx0wuw5s0h3PArFYA9/BwM/wAlqR2z8bX6NEb+RVaLYeIJDjfhVM4gqAy4dcHMidE8kxCRkA1H7BCBbRGAVRz/XlEVBGma1SZBMELtxi3j0zExyGuXy54YhFdkge/VMYZJECBA0bU+h8zyYQAwIeNRlPgEVg6MGgdXcEJectOvoVAe5gYKtEPMUCoBu5ghB5QvT2mzDeLDpq4dNo3hYL920LQ/wTTQDPNYoKPE8LjRowOACaZC9hdjiYpG9XArwDWII3zRuJYU2GCxzEo5gwBsYrbkdCSBYBL8GZrJJZByQKCVjx8fFh6m8ZYS9eSnWI9kfCaHavW5E8MnKb9YjGktGQEjGSzjQnGZjyweY+nUvNk7c6hlrQt0biwVGXtGZ4jV51qOFDy0AOr4L1RXLawQdT2+jc0Yh2tHLxSXbam42cJa6M48pIjoCyfaqQ7BfR6UZswQgyneWGodLgzG8sXlfLixtvX+S7Dx8kiQpK9o2ZqC464rZ/fMNYF34tZCYH3SY88M6gywCEaJAABKwBiUFEWC9VbdC5mFIiF6QKgxd6DBrhu/fC++0xZKR5iLFe/rFcBJ1hP2WAMDI4W3AyAMi7yDBFKkuYNpQTnkbZr8x6Z3QBSUyY+gd3wCMoRaVx8Uq+l4MhH8dsYFlGJZ+ilkWUjURQ9cE4FoGl+YRqtLSQ90LcIS/oKQHKV4YVx3r8JlXT8gtbYAWGv+3Aw+VBRHRN8N7Mfi7FgFclrgy16KGY3Bag1ow4W0IlNYI5DxobLYDnrpgkqvBOBTFT5Iy1SD4hIwlCBzUkiV74AwMoQwEttfbD5AIL9/IeODc+t8GCuXW//dOGoDKgZQj46/cgFv2L8BDwpS+vlVRI3RpwE8cm5yaYovFnKYcJPWQGzNtcZ9MOlnTaIthOmyTFlANDEFKCjBHw6t0pKjwuYS8IJkVq6DsD01pXsw141KGh3OZgI/uVAeq+EftYqXttwgl1upfEGaWpBOVQ2HVa7DHAXpze2wVVZqtxkrLNR2y6pHcsFDvOWV4HToOTyRk9Oc1rCnYO6rp3xmblynTndqN52crT2utsAArskaq7Hl3O9W2laNHNysXIKw0LaP9tmhykAtsX0Ju12O7QIWqzam2YztIrs9GK0nfoBX8aaams2w2AV7+36rgHB22AhdvRMRDBVvnkVbvDUBomsQmIBdXcGgsqAPV+8LVeoD1Xpu7SFQjBlfTtXOr3V1O52AGvA2AYw17QJfSFIn2PRqo0IjaCBC416Br6MBxA7F0ghEa0D/MMgBIqs7Bg8DjAECGXQ6sGAHNtBxg61rYP9asDioh8zAeYOkwBDrMMg7IofMiAZ3YlOg7IfJh6AODmh1BHuD0O8HWD5h4Q5li49PCtD9hww/wfcPKHf9nCgo2545wXTrwEk0OlK7Int7/0TmjQBgiwxfro3VAP9YhD/TAyHhuE2JW96c9j4rN3Mu6a/1gODD5ESYA/AaD09EH446ls4DepxQILbD6JOg8sfOPGW7RA9InidMXnd+S4RzuEEvDHRGkbwrIr6DfB0AQQgDIBzJGfhGgNa8CDsyQFJD+A7bP7UFNwYVAYL99sT9AMPr7jRTSMit5Aw4bDbXJGSHHbI9x0Vr6gAWDPTJ5rdVrvDSw0waA7rf1v4xX2AwIYMY3ZA4AZ2y4KQMylRJB20jOEjI2HZU5xGcjaVRI1pekGx3778d1ySXYJ5X2b77J8u85esueXLO1dg5/QEg1X387sdNg4nYM6X3MaPAY5loCeBqwQANz1wNs7Xmvpm7rlzOzXSOft2PBQbaVjoNzbNM1W6zlsqC5qcvOsaadvZxnampaFfnY9/5+c8ctN3YXld754c7bu1HgdXd2od23i5Q72jg9t6hlcB2AvONE8Be27vCCbRpQV2gQEB0TQNomkOfcgCPBq6cUZ2RjcuCYx7q0log3qCrUklciGCqGhALFDsAg7OPoTjTrOjQDMOs9bGpZs0Ab19t5BYYHW41g8VQA8ibwxVwc+hB7k/nwbo5lDBUlHCtm/YaO2cIykt7c9UwOYZYmvDH3Zwrruwz3tFCn09Prk10d0NM3Ud/km0cbQRP7eusi2zmqYLgWh0hL1B8DdAeEhK9ZjnpziVtuNHtVGhnEfAYGSsqyehKwkj29IBEq2HkDkh4A+wUaEBQ1aVwbiuArkoQPuA5v5bebgtk265sWwCSjUMN2LyEgi2uzLQNGwDbtxXWbIiDLAMgxjjrW/Am1xEjRQ1DsMpwM4H2ysb7yuGwnbSaV4EETFjhmBa7BiwZq90d7K0JLv61hYW5IAoyeSDULXnjCJos4W9jUKieb4QSwOjsHoFgzaSbwTWPHLuiIdWP3xCAHtX+yg/r6Hp77DN1KK1Bf4BZckafV+H3vCCGQ73psJOK1CwCuUezTMCxIwByeUAt4yFU9oG3IF48ca+YKh2nUAZpgtagHPaAFVyeiKKx3HJJedaDLqhzw/mnYE6bLDBwkwOAf6+eByBWQmAjpKEtB19CoczQKBugADwBrA9u4YoH4smhydIG/yazO63B5fGWHGyxh/24p/iTsHnu67a5GVDvAtAqgJSGkvKSwHvsmE3r3d8y8w6Ovx0xTnLmpCQBId6KEF42BLg1qSmA+EzzbVM/Y6ZHw7YdSO4s+jvSYVnAdtZ/Z1Bcb21nGPbZ0/ZavCR6gSXsa2+gHKfPwurdmu5i+TKAuLn+Vq50u0VYVX/oAAXkGSF7c9IANfNIFxQZferBgZIMkANejxQzlXgwJ2TLaMZ8gll9Fy3YK/Z3jn5zmAIXeyPNkHO7ZbUhjwADcg3iYy5dy8jfEXBXlF4M3w1Devn8LrO0c4LoGF/LYOwK6tWCvQ6T3HGgY1xsAT1PtGXRnb6t728/OPLh39k+LRdhS0eTTSKSnq9/Jn5eI9/SXowHFcajixyPR8Oq8trpwWTjgRMwJZVbvVdSlMWHjnXiFf0T+FX+gOfwBYL2l74LMiNx4EDIgVokgfTXAyD76PlWsCKStE6B8bPVI2zxGtjxTu9W+HDPr4EvaZ+P2DP/Lc+4nkPeyAPwQ5+Ulh0vp3emxz8NVh0P8xFuk3sNdL67oYHe3mBu92kFXwFg/nI3GoEjCw1VoW3knYDXYbhTdqpvrkZp2yDBBeI+oofXEksYwCWfvcuwUJ77vIdRCQcPqPmQsYFVcDBUtKxwMqJ4yxjraIjgXgtAExmcESwvB2iL/kekFTn8BYX9HwzCZ9msYixznQQn6cqVPk/8V1n7fbT9aBjnWVzP7NaT8c/iW/z1PxC3T9/Or7Og1q8W/L+xuyAhgmv0X9cgQARNxX8Cs37b+E/a/Yxnv9vT79467B7f4v+eQLvylR/WP/H4X+L9EeG72QnLxNQp0eXO/EXI703RO+t0zvfdkK00OAitNdqm/nF+PWu8y+8noPhX639d369sA8NRRoo5fuuNuXgfgZyIb59UvU/CXtKIcxBBUvRJDfsurR5lWBufQQGmgl6UIi/ZJ3OJ2ShxKXvhAc0wLlngDT7DqF4o0SVRnxoaBZAH+AtiSBzZN2fcsRr5wbYD3vd2nc13HBU4agMXdbXAFntc5wOBmAgb/GxmR9rzFGlgZH3Bz3gkAnL1Dq01KcQDzQUAHIhtIB3V7kP8CjK/QM0DPVE1AYEmCcGJ9sbSkgQsW/NvzxscAbykAp1oKB20RtnIgzM99cd4jt5HiHYHqBVSLlE+gB3Cg0AdSzCCCB4PnVOwoFsFQYAgDGrXikThXIWUFtsxbCMGkg0BP8hiEmkHpRL4mae4hyB5ANElchFwPCGJRc9GpjZdbxLwBiDiUISzClcfVyGJRsbGpnUgLESuF6UIIHx0IQ/HWrRmRCLO2HCBbA0+yaRN0KTiYoh4DtD2gcAUJ1CBuOG/1WMVPcCneN3wbD3yCaweEBSC0glqDbMbkQ40mMDeJ92jAPIDDGZMIab/VQw4bZsHycWPJpGwArCOjzDRimDECqCL0R0kp904UPg9tsjCeBiFEkN4EV8sfRwgDQXsXnn55XeBNkaDCoCIFmt2BNQPv8FNDT2n1ng/ATXZEgR4gb5HQYrnj1/fOX2a5gIP/1CJzgu/yx9f/Kj2bFrvG9l44u0T4lT8ViBewMCKgpnwC9sJcPxXhI/FsD214jBZzyMyJZZ3ldN7P1ghCbAVO12dlvfZ3X8ChM/w29g2LPzBdWyGIShDmvAv1pCyLFbzX88vXziQIt/SsmkwngDQLZDQXBTXYsMeZIAsg2ue4G2ceATkLx1tnAbxhc6QuF2rosXRkNaJhQ0v3wE4vLjg5CLglgy+ArgpoKW9eQ+kIFCmQ57zyBC6LIW28NQjFztCfODrBaA4xCLndDdg3yzxce7ffw7p+7JLh7oalOHSnsJ4QBH+I6dB6yxQHsGSzXMonI/nv9Mic43y5zwP7xrdvvesDjC9eG7hQBReQClK4kAl0hA5L6cXk988PE1nWokLLCwPNmRW/jNBjmeECjC3AGMM4FEkLIJShiA5/DNZpYAyHBBnmAjyZpv/DI1m9OOJUheIWw+QBjC3zNYg/NGoTrhqCDWI01glQGHIDNAViF6yC16fIYygcIYZ0WI9PCW6zls0A3YOMAqzL6n31LgEsXrM1dW+W8DWwKhmKAPIQ8FDDwBEJyvAsjcq1NCUtJjlPYxda8KqBcbK5jtBTNewwbAfHF4n49mBcQ1JJirevVNYBSU6yzhWTJewAjAwBNxMMZPfayhdxHHVlE4BAARg8caWLx1QFHKClnWJWTNWH8wwMXGnQiSxanWxtLuaWifDnrA0SSDDHCmwUdr3exzncOIxJGoiMFHAwYN6IoCPU0bKXcLfZTjXxFl8yA5D31wXiDML08ewRAH7AaA/hnrBGAtbj2CRRQrS5JhIx0D5piwKgFEjMI1exOBrbH6C0dTXJsyoDOzHdxIBGUOgOf9+gr2ydFmBXTwYQlNEEL/C6xJ8jVYW+TANfRgXVlERp8fD5kEilQWiPzBEaSKMJoA+dn0SQDIimkapqaHEiBN/dMkjPdFGcUKaQanVwGNEs4T4IQ92LBbmdQ3fKYVbAJYTqA6dkwUFDfCSGKS2NE9efAinCYwkwxi8jgR0lPFzGc8UxBSjb0muIAyJU0R1LgZHVRBUdd4UjhvQkiETCXdLHxpcnfT7k0BXfBnl50NIx/nnpM0QHmaC3DG8HchgGE3mxCQ7aZ2dZZnCOxj8SQ47QsE2opvzVZpvUFwM4Qo/Jh5C3tTUIXIZomy1dCtAT6PG9dBFfWjC7o3UgeiuOAznn9Xo0nXeiEXFMwvQxvX6PrsfWW6IlcpvV9FbIDOOKNYBoo6KEtC3ol0K1C3QmGM9CcXeGKK9EYlM2nCgYpUhBiJw9GP8xkonZwQZV/O6irtCYr6Pxifo1mL+jwyJGKxQqqVGMeiyvemKMi0o9UKtCoY/b1Zi4YzmPrtUXJmI+03LbWAewGjY7yaM9/RZkDDJArahLws/Gc0uMeGOR1ksNQZIESRFYnHBn1pcUM0StBneHRStgiB72dDhvV0Op0toEU1eocwyPkACotCCMwQ4Aac1nMmo+MOjBCdZUnCAYiIvx7JdECONNiJcXPEWNQidSFeAqAPCHddcLb6AyiaDQ0hPJNbF8Kt4bzeUBxho0BOgqA7IHfkIB5KEQzR136HxzeBLJGplj5iGMUGTMYzcSN1ZizNeFnhrQH6m4s0YY6FmhOWM4QR9YEEcMFIaOQRgIjkifLk9gTnFwPHo7vbzRdjBeL8EEFBfC1jL1zwGqCcg7vQdl806dVk09FyBaDk5N047UysNfY9cF1jeud8ETjHwg0zZAFLOgwM0Lqau2did4nxC7N63OZAOpx6E8gBDLgavi8ZeBDbRxDpOGIyyNo/XI0kE4/E7THZ53RO2jiTEWONFjcYx2PxipMWWMe9+Qkb21gsgLQCVjt/WZm7twdAMOY1NYjo0AR3Yw2NCJsE4UjwT2TK2M415IQ/lHsCvGl1eogaFAR0DEkPn3VNLIYCIbRd2LkmoTxjMix+g0dJcxP0iiQ0woTg/Mpx88YqCiJPiv9SSDrwb4iUyNNRLbAGqBKKfECcoFDSRJRsCo1WxDY1YYlEaAL4hPjChAoNoEZQ2AuxljBSSJZHnpOdBwGgBkgJgGsRQzJpChITEsxP9jAcJWlcTZAVgFDNWbF5AHjlWE4E50N9DAHMTIEL2kg55LDphvZ3A1OGqcF40AQMpXIFgTDhBgWIEW8P+BcMEN2BIhJHt50O1kmdcQoQTOio/Sp0ujIE0kJyoeE5qKLDE7Gb1kpuEs2OSA30PrzVCIY6ozxiFyahNwSzYh0Oe00XZ0MCBfBacnstrgP0JKT6hDWIu8DiGZJex+NOaMhYhNWFiFY5TehLRFHwT0VHZzgGsP3MmAaXVYZdCETjd5ZxUoFQA44XXRgAwrY5JQtxYAUkTtYgfS1MRqTH9E4t47LgAN0TKWoBcMBTPnlrDULdkzV5HSf4EfBvfDhV5d2udyhQQnIZBAPFn/Yk3rD/TfYxESabX81ONzjWsyuscwAgCoYqAe4zYA+eddheMKoIbXhACTGDHHFcoL40t82SJ8wBgC3bWHe4nPVUwDiYqW4JtNyYxXgg9bRbM1QBLhT5FnMvDbc0YtQUi9EUCKLKVJOSzwklw6UfUICUttw9DQXR1kiFZMyRNg3KALiTQGNAJsaApYXIMdfTbnyo1bEFJOTj3cpLD8QEkL3OjwE4kPqTroxpiYtyQCdGLsDKD5OOdsMH5KOA/kgFL6T8MSZLyY8hDM1jjl/J0LFidEyPHGAOAUb3Fj0hfBOi5VYuoUJdlmJoTCt3yLYk8Jk6FknoSEQu2L1CQiW3h8o0OOlHSAp46AAxCcFIyCl03Y+UmHijwTVOQA6+XYRCD0wvaPu59Gbjih8Ooh+3GsZeRJB8c0af50RoJeCdJijaaU1yBI/I2vighhaFEAdQFMBRKegxEyOErSfAatLVgHAFxNqD6gNpC3CIQZFAIBIaZ307N6wfjCSBACLqNPZ801g3ytlbIdO2YZ4srlCJjw/g0zCGrIWhjkq4zBF5I6+TgQPSEnLk3ZguNL62/SLwfMLEpLPP8lsTe0mpxnjaLUkj2oZbIWwf02yOsjqhHwfZFRhASPLQOC9I2HgCFbw2fx/D6AWtNcCarR+2mDLbRkjfSdgiCFeCH0zekx8KMhwHbSBaIWkhATzHZC0wDGT03bSL+PHXNDCoLP24yX6JESnAFIruGnAmg74JAkuSVjJS0FNVkxUz8dO+m1g14EJAqc3WUsCyTcoGFKCpBM0Kg/84UkP2Dt/aU6PwkCQuZw0tY/BpOkxOwqhmuRSvBehCJ/mbqj1DpMVkMNCJwmIQx4qM/AF/8EGHzL4RZrfzLVJAsvHU4yoIBmIIpvolkMizWk0FxizLg+TPEz7+VIWZCRQmAFDZ5aamLVI30DTIHIfM9BImTQ1CRUTSECN7zmTTvdWJISlkloT7pL/Q5NqcutEeF3CyXFvTvp0KCu0mTqso50ro3vMYQboVaFALOEdSEc3NYpoljR7Dok6vi18xOSUMJ9q3OeJbiY3O7XEYjTLQKA8jMujxMzuOHl2V4oU6C1TQD5OFLaQUUs0Ckp1k1VOSd2BNhkTg7gkayUsgEk6OC98QgxidTjTJI20s3RUFyizwgA3TNZ2UX1PyTg0obEGz400NWGzasz+NGTG7dQSzozOAZK0JTXYWO9oU0moX9DGsolwHsQwodjayTgVLnStMc1KOxz3vXFmbSZ2Hdl9B+0tX2jdmBal1noBE4Y02SzBY9gI8DiZFnFDyeG+Q8RH7f63fpDBWCO2QuSVJnltWPQA2E5dWDj0fBoGfcIXYxfA4lnTAGOBD2zfKNiJsUOIsgOUivDUoM5JYeU12WxzXLwBzdxIOICD5/osDCtzZUFa1W5MHLQCKB50sgIG1qINiwZ4SfIiDVQG0CDioBmya4A9BzcxGmuAg+RKOuBHCNHUkzW+ZnSwBZhNiGU8sQGyIM8kba/FKdgIcnj+AWaWpJVJffdUiwyQXLjm4ZaDAs0TZx4sE1QzpGYyjrjtKWMiY53s0P2ATVLMBNqSIEzKigSXBS5y9SM2V9ApzeGG/GDZno2pybJ+YrjhqdS2FzncYByAfLjYh8kUNRcUciunRys7d3npj22XHPmSM0xoVDIic1rOSsR2UnN7g6c0X36sVAalBgRDQOV2k8VqS4iQRtNN6mBo/wg4mXBL81YENByKM+yqdIJDQJsgcWGvW1crias0o9DXT4nnBRhD5ggKH9D5jihkxQGBZBEaLSHoAxgRKM1814AWjjQkM+4AYgXiei0zMs8+UkeCWwXMAcACDAAHE/YV7Lgk38YL0vy0AQ0Foyo0E80jgDeTXBKtFzBnjFNtERCGM91wLdGGC+gtNzgjj7OwJ9FW+NEkzQJXTmwoEpC/sFBIUC+ABiJhRcJLw5j884EY5ynO8KFy1NLXM4Sxc0XzWzBNbwScEY2QcIvp+XeUmDdbQc2y5QDMphlKSAWVe0hsbIGyIMydPeV2UjnQeYMPBwbBa2BoyAw0kE9GKAgL7So3ciKL4FrHTT8KAWWvTETAi3FkOh8QPdGP0AES1EUA+fTwjfyxbD/IyRWTfVlU9zKK7l88foaVzVcX/P3k7dPTYkgKtoMEGHFhpAqN1kCHPRSxJdALQt1Ly29S7n9Q2LVsnsSJcuVljIKBbIroBci1ZNT4UEPs3uZaWDXxr53C7RmMzffUzID9yoCzKbyrMxTlDtqkuzIuiO8/7OkE8qHvOjInounDIAxillXFwV8lBIXJ18/zxs44mI4qjYDOPvNzVlCTzie98YkRXijpDbNgKz9tUvLHzwXCfOCdevafIkA3OEZg1TrQkb1uKfigLkbsBs0NTDSDvRHJxyArNWIWSms4l3B5icw/O2ZAEVsk6yxQbrLu0JfdnI2STC4+mETxNCbONTcyWbmSJts5cPlAD7ZdK18jCj9NRLczcYQoBGBeYS7jOBJnJqA5+B1zNSqubRAuhraZWjOyYU1jR+gbsn7ml93WaouKLA0EEOezJGGTJWCPoa+GOBk4dGEuzrMt8EE8KoKKDE8BACT0cj3WY9O1AkwSzIqT7U77J3R2851M7ynMn1js5UsrjlByIWd5M5yIcnGMhjY05Ete8uStBK28jAUADwQgyQhAtAbjUhAayqEQYB4AaAGREh0pbFhCUR2EVRC4QeEaMszhNAT7X6BkAT7TdRw4BgE+1riNUnUReEaAH5k2gRYH5kyAHkCEA5gJgEbLQoTsqEAeQQ2gwBFgdsviBAoGYCYAeQOYA6AmAegCYBOgGYEChBy/mR5BcyqMqgBoAHsowAeQegEWBFgeIA8hQRHkHiB6AecqnL1AWsk3L6AIQDPL6ADoCEBIRdQDmB5yjBEXKlymAALL8AIspgxSylcDDgmHT7QIRcyoAA== -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- Arian94: @wingkwong pls have a look.\n- vercel: [vc]: #R3+OeQ1wS2b6A9a2d+o004oC4FQxs0CwAoG3YaegfJE=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNnNoNjJVb0FSRmE2eUhVVGVZVFNCb29mRW9hTCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFyaWFuOTQtZmVhdC1maWwtZTBmNTA5LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFyaWFuOTQtZmVhdC1maWwtZTBmNTA5LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi81dzJxSGNkVFJZTkFxZEp3dml2cTRkc3RNbmtKIiwicHJldmlld1VybCI6IiIsIm5leHRDb21taXRTdGF0dXMiOiJGQUlMRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoiIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/5w2qHcdTRYNAqdJwvivq4dstMnkJ)) |  |  | Nov 10, 2024 3:47pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/6sh62UoARFa6yHUTeYTSBoofEoaL)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-arian94-feat-fil-e0f509-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-arian94-feat-fil-e0f509-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 10, 2024 3:47pm |
+
+
+\n
+
+Files Changed:
+- apps/docs/config/routes.json (modified, 7 changes)\n  Patch: @@ -254,6 +254,13 @@
+           "keywords": "dropdown, menu, selection, option list",
+           "path": "/docs/components/dropdown.mdx"
+         },
++        {
++          "key": "file-upload",
++          "title": "File Upload",
++          "keywords": "file, upload, browse",
++          "path": "/docs/components/file-upload.mdx",
++          "newPost": true
++        },
+         {
+           "key": "drawer",
+           "title": "Drawer",\n- apps/docs/content/components/file-upload/buttonsContainer.ts (added, 25 changes)\n  Patch: @@ -0,0 +1,25 @@
++const App = `
++import {FileUpload} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <FileUpload
++      multiple
++      buttons={(onBrowse, onAdd, onReset) => {
++        return <div>
++          <Button onClick={() => onBrowse()}>Browse Files</Button>
++          <Button onClick={() => onAdd()}>Add New File</Button>
++          <Button onClick={() => onReset()}>Remove All</Button>
++        </div>
++      }}
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/file-upload/controlled.ts (added, 32 changes)\n  Patch: @@ -0,0 +1,32 @@
++const App = `
++import React from "react";
++import {FileUpload} from "@nextui-org/react";
++import {filesFromApi} from "./filesFromApi";
++
++const filesFromApi= new Promise((res) => {
++  res([
++    new File(['dummy content'], "file1.jpg", {type: "image/jpeg"}),
++    new File(['dummy content'], "file2.jpg", {type: "image/jpeg"}),
++    new File(['dummy content'], "file3.jpg", {type: "image/jpeg"}),
++  ]);
++});
++
++export default function App() {
++  const [files, setFiles] = React.useState([]);
++
++  React.useEffect(() => {
++    filesFromApi.then(files => setFiles(files));
++  }, []);
++
++  return (
++    <FileUpload files={files} />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/file-upload/customButtons.ts (added, 58 changes)\n  Patch: @@ -0,0 +1,58 @@
++const DeleteIcon = `export const DeleteIcon = ({
++  fill = 'currentColor',
++  filled,
++  size,
++  height,
++  width,
++  label,
++  ...props
++}) => {
++  return (
++    <svg aria-hidden="true" fill="none" focusable="false" height="1em" role="presentation"
++      viewBox="0 0 20 20" width="1em">
++      <path
++        d="M17.5 4.98332C14.725 4.70832 11.9333 4.56665 9.15 4.56665C7.5 4.56665 5.85 4.64998 4.2 4.81665L2.5 4.98332"
++        stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"></path>
++      <path
++        d="M7.08331 4.14169L7.26665 3.05002C7.39998 2.25835 7.49998 1.66669 8.90831 1.66669H11.0916C12.5 1.66669 12.6083 2.29169 12.7333 3.05835L12.9166 4.14169"
++        stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"></path>
++      <path
++        d="M15.7084 7.61664L15.1667 16.0083C15.075 17.3166 15 18.3333 12.675 18.3333H7.32502C5.00002 18.3333 4.92502 17.3166 4.83335 16.0083L4.29169 7.61664"
++        stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"></path>
++      <path d="M8.60834 13.75H11.3833" stroke="currentColor" strokeLinecap="round"
++        strokeLinejoin="round" strokeWidth="1.5"></path>
++      <path d="M7.91669 10.4167H12.0834" stroke="currentColor" strokeLinecap="round"
++        strokeLinejoin="round" strokeWidth="1.5"></path>
++    </svg>
++  );
++};`;
++
++const App = `
++import React from "react";
++import {FileUpload} from "@nextui-org/react";
++import {Button} from "@nextui-org/react";
++import {DeleteIcon} from './DeleteIcon';
++
++export default function App() {
++  const [files, setFiles] = React.useState([]);
++
++  return (
++    <FileUpload
++      multiple
++      onChange={newFiles => setFiles(newFiles)}
++      browseButton={<Button>Search</Button>}
++      uploadButton={<Button onClick={() => console.log("Files to upload:\\n" + files.map(file => file.name).join("\\n"))}>Upload Files</Button>}
++      addButton={<Button>+</Button>}
++      resetButton={<Button><DeleteIcon /></Button>}
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++  "/DeleteIcon.jsx": DeleteIcon,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/file-upload/file-item.ts (added, 18 changes)\n  Patch: @@ -0,0 +1,18 @@
++const App = `
++import {FileUpload} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <FileUpload
++      fileItemElement={(file) => <div className="text-red-500">{file.name}</div>}
++    />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/file-upload/index.ts (added, 17 changes)\n  Patch: @@ -0,0 +1,17 @@
++import usage from "./usage";
++import multiple from "./multiple";
++import topbar from "./topbar";
++import fileItem from "./file-item";
++import customButtons from "./customButtons";
++import buttonsContainer from "./buttonsContainer";
++import controlled from "./controlled";
++
++export const fileUploadContent = {
++  usage,
++  multiple,
++  topbar,
++  fileItem,
++  customButtons,
++  buttonsContainer,
++  controlled,
++};\n- apps/docs/content/components/file-upload/multiple.ts (added, 15 changes)\n  Patch: @@ -0,0 +1,15 @@
++const App = `import {FileUpload} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <FileUpload multiple onChange={(files) => { /* handle files */}} />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/file-upload/topbar.ts (added, 15 changes)\n  Patch: @@ -0,0 +1,15 @@
++const App = `import {FileUpload, FileUploadTopbar} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <FileUpload topbar={<FileUploadTopbar maxAllowedSize="1 MB" />} />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/file-upload/usage.ts (added, 15 changes)\n  Patch: @@ -0,0 +1,15 @@
++const App = `import {FileUpload} from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <FileUpload onChange={(files) => { /* handle files */}} />
++  );
++}`;
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/docs/components/file-upload.mdx (added, 171 changes)\n  Patch: @@ -0,0 +1,171 @@
++---
++title: "File Upload"
++description: "File Upload adds/removes file(s) selected by user to upload on a server."
++---
++
++import {fileUploadContent} from "@/content/components/file-upload";
++
++# File Upload
++
++File Upload adds/removes file(s) selected by user to upload on a server.
++
++<ComponentLinks component="file-upload" />
++
++---
++
++
++## Installation
++
++<PackageManagers
++  showGlobalInstallWarning
++  commands={{
++    cli: "npx nextui-cli@latest add file-upload",
++    npm: "npm install @nextui-org/file-upload",
++    yarn: "yarn add @nextui-org/file-upload",
++    pnpm: "pnpm add @nextui-org/file-upload",
++    bun: "bun add @nextui-org/file-upload"
++  }}
++/>
++
++## Import
++
++NextUI exports 3 fileupload-related components:
++
++- **FileUpload**: The main component to display file(s) that is/are to be uploaded.
++- **FileUploadItem**: The item component to display a single file item.
++- **FileUploadTopbar**: The topbar component to display information like the number of files to upload, max file size, etc.
++
++<ImportTabs
++  commands={{
++    main: 'import {FileUpload, FileUploadItem, FileUploadTopbar} from "@nextui-org/react";',
++    individual: 'import {FileUpload, FileUploadItem, FileUploadTopbar} from "@nextui-org/file-upload";',
++  }}
++/>
++
++## Usage
++
++<CodeDemo title="Usage" files={fileUploadContent.usage} />
++
++### Upload Multiple Items
++
++If you set `multiple` to `true`, then the `FileUpload` will allow multiple files to select and upload.
++
++<CodeDemo title="Upload Multiple Items" files={fileUploadContent.multiple} />
++
++### With Topbar Section
++
++If you want to show some information for the user, you can use your custom component or use the predefined `FileUploadTopbar` component.
++
++<CodeDemo title="With Topbar Section" files={fileUploadContent.topbar} />
++
++### With Custom File Item
++
++There is a built-in component to display information regarding the selected files called `FileUploadItem`. You can implement your own
++
++<CodeDemo title="With Custom Upload, Browse, Add and Reset Buttons" files={fileUploadContent.fileItem} />
++
++### With Custom Upload, Browse, Add and Reset Buttons
++
++If you need to have your custom buttons for browsing, adding or reseting, you can implement one for each.
++In addition, there is an `uploadButton` prop for you in case uploading files prior to submitting the form is required.
++
++<CodeDemo title="With Custom Upload, Browse, Add and Reset Buttons" files={fileUploadContent.customButtons} />
++
++### With A Custom Container For Buttons Section
++
++You can replace all the buttons entirely with your custom buttons container using the `buttons` prop.
++It provides three handlers for adding a single file (`onAdd`), browsing (`onBrowse`) and removing all files (`onReset`).
++
++<CodeDemo title="With Custom Buttons" files={fileUploadContent.buttonsContainer} />
++
++### Controlled
++
++In case there are some files that were previously uploaded on a server and one wants to show them as uploaded files,
++the `files` prop can be set initially.
++
++<CodeDemo title="Controlled" files={fileUploadContent.controlled} />
++
++## Slots
++
++- **base**: The main wrapper for the fileupload component. Modify the fileupload base styles.
++- **items**: The class name of the fileupload items wrapper.
++- **buttons**: The class name of the fileupload buttons wrapper.
++
++## Data Attributes
++
++`FileUpload` has the following attributes on the `base` element:
++
++- **data-disabled**:
++  When the fileupload is disabled.
++
++<Spacer y={4} />
++
++## API
++
++### FileUpload Props
++
++| Attribute                 | Type                                            | Description                                                                                             | Default  |
++| ------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------- | -------- |
++| children                  | `ReactNode` \| `ReactNode[]`                    | The contents of the collection. Usually the array of `FileUploadItem`                                    |          |
++| multiple                  | `boolean`                                       | Whether multiple files can be selected from the device.                                                               |     false     |
++| isDisabled                | `boolean`                                       | Whether the FileUpload items and buttons are disabled.                                                               |     false     |
++| classNames                | `Record<"base"｜ "items"｜ "buttons", string>`   | Allows to set custom class names for the FileUpload slots.                                                                                                         | -         |
++| files                     | `File[]`                                        | Files as initial values or files to be controlled from outside of the FileUpload.                                                                                                         | -         |
++| browseButtonText          | `string`                                        | Custom text for the default Browse Button.                                                                                                         | -         |
++| browseButton              | `ReactElement<ButtonProps>`                     | Custom button for browsing files.                                                                                                         | -         |
++| addButton                 | `ReactElement<ButtonProps>`                     | Custom button for adding a single file.                                                                                                          | -         |
++| resetButton               | `ReactElement<ButtonProps>`                     | Custom button for reseting files to an empty array.                                                                                                         | -         |
++| uploadButton              | `ReactElement<ButtonProps>`                     | Custom button for uploading files to a server.                                                                                                         | -         |
++| topbar                    | `ReactElement<HTMLElement>`                     | Custom topbar to show information regarding files.                                                                                                         | -         |
++| buttons                   | `ReactElement<HTMLElement>`                     | Custom buttons for browsing, adding, .etc or any other ones that are needed for the user.                                                                                                         | -         |
++| fileItemElement           | `ReactElement<HTMLElement>`                     | Custom element for representing an item that is selected from the device.                                                                                                         | -         |
++
++### FileUpload Events
++
++| Attribute     | Type                           | Description                                                                                                     |
++| ------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------- |
++| onChange      | `(files: File[]) => void`          | Handler called when file(s) are selected from device or removed from the list (`onFileRemove` on an item should be called). |
++
++### FileUpload Item Props
++
++| Attribute                 | Type                                              | Description                                                                                                                  | Default |
++|---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|---------|
++| file          | `File`                               | A file that is selected from the device. |       |
++
++### FileUpload Item Events
++
++| Attribute     | Type                           | Description                                                                                                     |
++| ------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------- |
++| onFileRemove  | `(name: string) => void`       | Handler called when a file is removed from the list of items. |
++
++### FileUpload Topbar Props
++
++| Attribute                 | Type                                              | Description                                                                                                                  | Default |
++|---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|---------|
++|     maxItems                        | `number`                               | Max number of items.                                   |    1    |
++|     maxItemsText                    | `string`                               | Max number of items text.                              |       |
++|     maxItemsElement                 | `ReactElement`                         | Custom Element to show Max number of items.            |       |
++|     maxAllowedSize                  | `FileSize`                             | Max file size allowed.                                 |       |
++|     maxAllowedSizeText              | `string`                               | Max file size text.                                    |   "Max File Size"    |
++|     maxAllowedSizeElement           | `ReactElement`                         | Custom Element to show Max file size.                  |       |
++|     totalMaxAllowedSize             | `FileSize`                             | Total max size allowed for multiple files combined.    |       |
++|     totalMaxAllowedSizeText         | `string`                               | Total max file size text.                              |   "Total Max Files Size"    |
++|     totalMaxAllowedSizeElement      | `ReactElement`                         | Custom Element to show Total Max file size.            |       |
++
++### FileSize
++
++```ts
++export type FileSize = `${number} KB` | `${number} MB`;
++```
++
++---
++
++### FileUpload classNames
++
++```ts
++export type FileUploadClassnames = {
++  base?: string;
++  items?: string;
++  buttons?: string;
++};
++```\n- apps/docs/public/sitemap-0.xml (modified, 86 changes)\n  Patch: @@ -1,65 +1,27 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+-<url><loc>https://nextui.org/feed.xml</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/figma</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/accordion</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/autocomplete</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/avatar</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/badge</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/breadcrumbs</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/button</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/card</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/checkbox-group</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/checkbox</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/chip</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/circular-progress</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/code</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/divider</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/dropdown</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/image</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/input</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/kbd</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/link</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/listbox</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/modal</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/navbar</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/pagination</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/popover</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/progress</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/radio-group</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/scroll-shadow</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/select</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/skeleton</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/slider</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/snippet</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/spacer</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/spinner</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/switch</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/table</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/tabs</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/textarea</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/tooltip</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/components/user</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/frameworks/astro</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/frameworks/nextjs</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/frameworks/remix</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/frameworks/vite</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/guide/design-principles</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/guide/installation</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/guide/introduction</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/guide/routing</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/guide/upgrade-to-v2</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/customization/colors</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/customization/create-theme</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/customization/custom-variants</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/customization/customize-theme</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/customization/dark-mode</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/customization/layout</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/customization/override-styles</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/docs/customization/theme</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/blog/nextui-v2</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/blog/v2.1.0</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/blog/v2.2.0</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+-<url><loc>https://nextui.org/blog</loc><lastmod>2024-02-02T20:24:45.107Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/feed.xml</loc><lastmod>2024-10-07T20:21:29.996Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/figma</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/blog</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/api-references/cli-api</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/api-references/nextui-provider</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/customization/colors</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/customization/create-theme</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/customization/custom-variants</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/customization/customize-theme</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/customization/dark-mode</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/customization/layout</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/customization/override-styles</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/customization/theme</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/frameworks/astro</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/frameworks/nextjs</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/frameworks/remix</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/frameworks/vite</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/guide/cli</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/guide/design-principles</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/guide/installation</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/guide/introduction</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/guide/routing</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
++<url><loc>https://nextui.org/docs/guide/upgrade-to-v2</loc><lastmod>2024-10-07T20:21:29.997Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+ </urlset>
+\ No newline at end of file\n- packages/components/file-upload/README.md (added, 24 changes)\n  Patch: @@ -0,0 +1,24 @@
++# @nextui-org/file-upload
++
++FileUplaod adds/removes files selected by user to upload on a server.
++
++Please refer to the [documentation](https://nextui.org/docs/components/file-upload) for more information.
++
++## Installation
++
++```sh
++yarn add @nextui-org/file-upload
++# or
++npm i @nextui-org/file-upload
++```
++
++## Contribution
++
++Yes please! See the
++[contributing guidelines](https://github.com/nextui-org/nextui/blob/master/CONTRIBUTING.md)
++for details.
++
++## License
++
++This project is licensed under the terms of the
++[MIT license](https://github.com/nextui-org/nextui/blob/master/LICENSE).\n- packages/components/file-upload/__tests__/__snapshots__/file-upload.test.tsx.snap (added, 30 changes)\n  Patch: @@ -0,0 +1,30 @@
++// Jest Snapshot v1, https://goo.gl/fbAQLP
++
++exports[`FileUpload should render correctly 1`] = `
++<div>
++  <div
++    class="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2"
++  >
++    <input
++      class="hidden"
++      title="file upload"
++      type="file"
++    />
++    <input
++      class="hidden"
++      title="single file upload"
++      type="file"
++    />
++    <div
++      class="flex gap-3 p-3 w-full items-center overflow-hidden color-inherit subpixel-antialiased"
++    >
++      <button
++        class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground data-[hover=true]:opacity-hover"
++        type="button"
++      >
++        Browse
++      </button>
++    </div>
++  </div>
++</div>
++`;\n- packages/components/file-upload/__tests__/file-upload.test.tsx (added, 68 changes)\n  Patch: @@ -0,0 +1,68 @@
++import * as React from "react";
++import {render} from "@testing-library/react";
++import {Button} from "@nextui-org/button";
++import userEvent, {UserEvent} from "@testing-library/user-event";
++
++import {FileUpload} from "../src";
++
++describe("FileUpload", () => {
++  let user: UserEvent;
++
++  beforeEach(() => {
++    user = userEvent.setup();
++  });
++
++  afterEach(() => {
++    jest.clearAllMocks();
++  });
++
++  it("should render correctly", () => {
++    const wrapper = render(<FileUpload />);
++
++    expect(wrapper.getByRole("button")).toBeInTheDocument();
++    expect(wrapper.container).toMatchSnapshot();
++    expect(() => wrapper.unmount()).not.toThrow();
++  });
++
++  it("ref should be forwarded", () => {
++    const ref = React.createRef<HTMLDivElement>();
++
++    render(<FileUpload ref={ref} />);
++    expect(ref.current).not.toBeNull();
++  });
++
++  it("should not browse when isDisabled", async () => {
++    let renderResult = render(<FileUpload isDisabled />);
++    let browseButton = renderResult.container.querySelector("button");
++
++    expect(browseButton).toBeDisabled();
++
++    renderResult = render(<FileUpload isDisabled browseButton={<Button>Browse files</Button>} />);
++    browseButton = renderResult.container.querySelector("button");
++
++    browseButton && (await user.click(browseButton));
++
++    expect(browseButton).toBeDisabled();
++  });
++
++  it("buttons should be disabled when isDisabled", () => {
++    const {container} = render(
++      <FileUpload
++        isDisabled
++        multiple
++        addButton={<Button>Add file</Button>}
++        browseButton={<Button>Browse files</Button>}
++        files={[new File([], "file1", {type: "jpg"})]}
++        resetButton={<Button>Remove all files</Button>}
++      />,
++    );
++
++    const buttons = container.getElementsByTagName("button");
++
++    for (let index = 0; index < buttons.length; index++) {
++      const btn = buttons.item(index);
++
++      expect(btn).toBeDisabled();
++    }
++  });
++});\n- packages/components/file-upload/package.json (added, 56 changes)\n  Patch: @@ -0,0 +1,56 @@
++{
++  "name": "@nextui-org/file-upload",
++  "version": "2.0.0",
++  "description": "File Upload adds/removes file(s) selected by user to upload on a server.",
++  "keywords": [
++    "file-upload"
++  ],
++  "author": "Junior Garcia <jrgarciadev@gmail.com>",
++  "homepage": "https://nextui.org",
++  "license": "MIT",
++  "main": "src/index.ts",
++  "sideEffects": false,
++  "files": [
++    "dist"
++  ],
++  "publishConfig": {
++    "access": "public"
++  },
++  "repository": {
++    "type": "git",
++    "url": "git+https://github.com/nextui-org/nextui.git",
++    "directory": "packages/components/file-upload"
++  },
++  "bugs": {
++    "url": "https://github.com/nextui-org/nextui/issues"
++  },
++  "scripts": {
++    "build": "tsup src --dts",
++    "build:fast": "tsup src",
++    "dev": "pnpm build:fast --watch",
++    "clean": "rimraf dist .turbo",
++    "typecheck": "tsc --noEmit",
++    "prepack": "clean-package",
++    "postpack": "clean-package restore"
++  },
++  "peerDependencies": {
++    "react": ">=18",
++    "react-dom": ">=18",
++    "@nextui-org/theme": ">=2.0.0",
++    "@nextui-org/system": ">=2.0.0"
++  },
++  "dependencies": {
++    "@nextui-org/shared-utils": "workspace:*",
++    "@nextui-org/react-utils": "workspace:*",
++    "@nextui-org/button": "workspace:*",
++    "@nextui-org/shared-icons": "workspace:*"
++  },
++  "devDependencies": {
++    "@nextui-org/theme": "workspace:*",
++    "@nextui-org/system": "workspace:*",
++    "clean-package": "2.2.0",
++    "react": "^18.0.0",
++    "react-dom": "^18.0.0"
++  },
++  "clean-package": "../../../clean-package.config.json"
++}\n- packages/components/file-upload/src/file-upload-item.tsx (added, 45 changes)\n  Patch: @@ -0,0 +1,45 @@
++import {Button} from "@nextui-org/button";
++import {HTMLNextUIProps} from "@nextui-org/system";
++import {CloseIcon} from "@nextui-org/shared-icons";
++
++export interface FileUploadItemProps extends HTMLNextUIProps<"div"> {
++  file: File;
++  onFileRemove: (file: File) => void;
++  isDisabled?: boolean;
++}
++
++const formatFileSize = (bytes: number) => {
++  if (bytes === 0) return "0 Bytes";
++  const k = 1024;
++  const sizes = ["Bytes", "KB", "MB", "GB"];
++  const i = Math.floor(Math.log(bytes) / Math.log(k));
++
++  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
++};
++
++const FileUploadItem: React.FC<FileUploadItemProps> = ({
++  file,
++  onFileRemove,
++  isDisabled,
++  ...otherProps
++}) => {
++  return (
++    <div {...otherProps}>
++      <Button
++        aria-label={`Remove ${file.name}`}
++        isDisabled={isDisabled}
++        role="listitem"
++        onClick={() => onFileRemove(file)}
++      >
++        <CloseIcon />
++      </Button>
++      <span>{file.name}</span>
++      <span>{formatFileSize(file.size)}</span>
++      <span>{file.type.split("/").at(1)?.toUpperCase()}</span>
++    </div>
++  );
++};
++
++FileUploadItem.displayName = "NextUI.FileUploadItem";
++
++export default FileUploadItem;\n- packages/components/file-upload/src/file-upload-topbar.tsx (added, 94 changes)\n  Patch: @@ -0,0 +1,94 @@
++import {clsx} from "@nextui-org/shared-utils";
++import {HTMLNextUIProps} from "@nextui-org/system";
++import {ReactElement} from "react";
++
++type FileSize = `${number} KB` | `${number} MB` | `${number}KB` | `${number}MB`;
++
++export interface FileUploadTopbarProps extends HTMLNextUIProps<"div"> {
++  /**
++   * Max number of items.
++   * @default 1
++   */
++  maxItems?: number;
++  /**
++   * Max number of items text.
++   * @default  "Max number of items"
++   */
++  maxItemsText?: string;
++  /**
++   * Custom Element to show Max number of items.
++   */
++  maxItemsElement?: ReactElement;
++  /**
++   * Max file size allowed.
++   */
++  maxAllowedSize?: FileSize;
++  /**
++   * Max file size text.
++   * @default "Max File Size"
++   */
++  maxAllowedSizeText?: string;
++  /**
++   * Custom Element to show Max file size.
++   */
++  maxAllowedSizeElement?: ReactElement;
++  /**
++   * Total max size allowed for multiple files combined.
++   */
++  totalMaxAllowedSize?: FileSize;
++  /**
++   * Total max file size text.
++   * @default "Total Max Files Size"
++   */
++  totalMaxAllowedSizeText?: string;
++  /**
++   * Custom Element to show Total Max file size.
++   */
++  totalMaxAllowedSizeElement?: ReactElement;
++}
++
++const FileUploadTopbar: React.FC<FileUploadTopbarProps> = ({
++  maxItemsText = "Max number of items",
++  maxAllowedSizeText = "Max File Size",
++  totalMaxAllowedSizeText = "Total Max Files Size",
++  maxItems = 1,
++  maxItemsElement,
++  maxAllowedSize,
++  maxAllowedSizeElement,
++  totalMaxAllowedSize,
++  totalMaxAllowedSizeElement,
++  className,
++  ...otherProps
++}) => {
++  return (
++    <div
++      aria-label="File upload constraints"
++      className={clsx("flex gap-2 text-sm text-default-500", className)}
++      role="region"
++      {...otherProps}
++    >
++      {maxItems > 1 &&
++        (maxItemsElement ?? (
++          <span aria-label={`${maxItemsText}: ${maxItems}`}>
++            {maxItemsText}: {maxItems}
++          </span>
++        ))}
++      {maxAllowedSize &&
++        (maxAllowedSizeElement ?? (
++          <span aria-label={`${maxAllowedSizeText}: ${maxAllowedSize}`}>
++            {maxAllowedSizeText}: {maxAllowedSize}
++          </span>
++        ))}
++      {totalMaxAllowedSize &&
++        (totalMaxAllowedSizeElement ?? (
++          <span aria-label={`${totalMaxAllowedSizeText}: ${totalMaxAllowedSize}`}>
++            {totalMaxAllowedSizeText}: {totalMaxAllowedSize}
++          </span>
++        ))}
++    </div>
++  );
++};
++
++FileUploadTopbar.displayName = "NextUI.FileUploadTopbar";
++
++export default FileUploadTopbar;\n- packages/components/file-upload/src/file-upload.tsx (added, 262 changes)\n  Patch: @@ -0,0 +1,262 @@
++import {forwardRef} from "@nextui-org/system";
++import {Button} from "@nextui-org/button";
++import {cloneElement, useCallback, useEffect, useMemo, useRef, useState} from "react";
++import {clsx} from "@nextui-org/shared-utils";
++
++import {UseFileUploadProps, useFileUpload} from "./use-file-upload";
++import FileUploadItem from "./file-upload-item";
++
++export interface FileUploadProps extends UseFileUploadProps {}
++
++const FileUpload = forwardRef<"div", FileUploadProps>((props, ref) => {
++  const {
++    Component,
++    domRef,
++    children,
++    files: initialFiles,
++    styles,
++    className,
++    classNames,
++    multiple,
++    accept,
++    browseButton,
++    browseButtonText,
++    addButton,
++    resetButton,
++    uploadButton,
++    buttons,
++    fileItemElement,
++    topbar,
++    onChange,
++    ...otherProps
++  } = useFileUpload({...props, ref});
++
++  const inputFileRef = useRef<HTMLInputElement>(null);
++  const singleInputFileRef = useRef<HTMLInputElement>(null);
++  const [files, setFiles] = useState<File[]>(initialFiles ?? []);
++
++  useEffect(() => {
++    initialFiles && setFiles(initialFiles);
++  }, [initialFiles]);
++
++  const updateFiles = useCallback(
++    (files: File[]) => {
++      setFiles(files);
++      onChange?.(files);
++      // Setting input values to "" in order to ignore previously-selected file(s).
++      // This will fix some bugs when "removing" and re-adding "the exact same" file(s) (e.g. removing foo.txt and adding foo.txt again).
++      if (inputFileRef.current) inputFileRef.current.value = "";
++      if (singleInputFileRef.current) singleInputFileRef.current.value = "";
++    },
++    [setFiles, onChange],
++  );
++
++  const topbarElement = useMemo(() => {
++    if (topbar) {
++      return cloneElement(topbar, {
++        className: styles.topbar({class: clsx(classNames?.topbar, topbar?.props.className)}),
++      });
++    }
++  }, [styles, classNames, topbar]);
++
++  const items = useMemo(
++    () =>
++      files.map((file) => {
++        if (!fileItemElement) {
++          return (
++            <FileUploadItem
++              key={`${file.name}-${file.lastModified}-${file.size}`}
++              className={styles.item()}
++              file={file}
++              isDisabled={props.isDisabled}
++              onFileRemove={(fileToRemove) => {
++                if (props.isDisabled) return;
++                const newFiles = files.filter((file) => {
++                  const fileInfo = `${file.name}-${file.lastModified}-${file.size}`;
++                  const fileToRemoveInfo = `${fileToRemove.name}-${fileToRemove.lastModified}-${fileToRemove.size}`;
++
++                  return fileInfo !== fileToRemoveInfo;
++                });
++
++                updateFiles(newFiles);
++              }}
++            />
++          );
++        }
++
++        const customFileElm = fileItemElement(file);
++
++        return cloneElement(customFileElm, {
++          key: file.name,
++          className: styles.item({class: clsx(classNames?.item, customFileElm.props.className)}),
++        });
++      }),
++    [styles, classNames, files, fileItemElement, updateFiles],
++  );
++
++  const onBrowse = useCallback(() => {
++    if (props.isDisabled) return;
++    inputFileRef.current?.click();
++  }, [props.isDisabled]);
++
++  const onAdd = useCallback(() => {
++    if (props.isDisabled) return;
++    singleInputFileRef.current?.click();
++  }, [props.isDisabled]);
++
++  const onReset = useCallback(() => {
++    if (props.isDisabled) return;
++    updateFiles([]);
++  }, [props.isDisabled]);
++
++  const browseButtonElement = useMemo(
++    () =>
++      browseButton ? (
++        cloneElement(browseButton, {
++          disabled: props.isDisabled,
++          onClick: (ev) => {
++            onBrowse();
++            browseButton.props.onClick?.(ev);
++          },
++        })
++      ) : (
++        <Button disabled={props.isDisabled} onClick={() => onBrowse()}>
++          {browseButtonText}
++        </Button>
++      ),
++    [browseButton, browseButtonText, onBrowse, props.isDisabled],
++  );
++
++  const addButtonElement = useMemo(
++    () =>
++      addButton ? (
++        cloneElement(addButton, {
++          disabled: props.isDisabled,
++          onClick: (ev) => {
++            onAdd();
++            addButton.props.onClick?.(ev);
++          },
++        })
++      ) : (
++        <Button color="secondary" disabled={props.isDisabled} onClick={() => onAdd()}>
++          Add
++        </Button>
++      ),
++    [addButton, onAdd],
++  );
++
++  const resetButtonElement = useMemo(
++    () =>
++      resetButton ? (
++        cloneElement(resetButton, {
++          disabled: props.isDisabled,
++          onClick: (ev) => {
++            onReset();
++            resetButton.props.onClick?.(ev);
++          },
++        })
++      ) : (
++        <Button
++          color="warning"
++          disabled={props.isDisabled}
++          onClick={() => {
++            onReset();
++          }}
++        >
++          Reset
++        </Button>
++      ),
++    [resetButton, onReset],
++  );
++
++  const buttonsElement = useMemo(() => {
++    if (!buttons) {
++      const uploadButtonElement =
++        uploadButton && cloneElement(uploadButton, {disabled: props.isDisabled});
++
++      return (
++        <div className={styles.buttons()}>
++          {multiple && files.length !== 0 && addButtonElement}
++          {files.length !== 0 && resetButtonElement}
++          {browseButtonElement}
++          {uploadButtonElement}
++        </div>
++      );
++    }
++
++    const customButtonsElement = buttons(onBrowse, onAdd, onReset);
++
++    return cloneElement(customButtonsElement, {
++      className: styles.buttons({
++        class: clsx(classNames?.buttons, customButtonsElement.props.className),
++      }),
++    });
++  }, [
++    onBrowse,
++    onAdd,
++    onReset,
++    styles,
++    multiple,
++    files,
++    browseButtonElement,
++    addButtonElement,
++    resetButtonElement,
++    uploadButton,
++  ]);
++
++  const baseStyles = styles.base({class: clsx(classNames?.base, className)});
++
++  return (
++    <Component ref={domRef} className={baseStyles} {...otherProps}>
++      <input
++        ref={inputFileRef}
++        accept={accept}
++        className="hidden"
++        multiple={multiple}
++        title="file upload"
++        type="file"
++        onChange={(ev) => {
++          if (!ev.target.files?.length) return;
++          const newFiles: File[] = [];
++
++          for (let index = 0; index < ev.target.files.length; index++) {
++            const file = ev.target.files.item(index);
++
++            file && newFiles.push(file);
++          }
++          updateFiles(newFiles);
++        }}
++      />
++
++      <input
++        ref={singleInputFileRef}
++        accept={accept}
++        className="hidden"
++        title="single file upload"
++        type="file"
++        onChange={(ev) => {
++          const singleFile = ev.target.files?.item(0);
++
++          if (!singleFile) return;
++          if (files.find((file) => file.name === singleFile.name)) return;
++          updateFiles([...files, singleFile]);
++        }}
++      />
++
++      {topbarElement}
++
++      {(files.length || children) && (
++        <div className={styles.items()}>
++          {children}
++          {items}
++        </div>
++      )}
++
++      {buttonsElement}
++    </Component>
++  );
++});
++
++FileUpload.displayName = "NextUI.FileUpload";
++
++export default FileUpload;\n- packages/components/file-upload/src/index.ts (added, 14 changes)\n  Patch: @@ -0,0 +1,14 @@
++import FileUpload from "./file-upload";
++import FileUploadItem from "./file-upload-item";
++import FileUploadTopbar from "./file-upload-topbar";
++
++// export types
++export type {FileUploadProps} from "./file-upload";
++export type {FileUploadItemProps} from "./file-upload-item";
++export type {FileUploadTopbarProps} from "./file-upload-topbar";
++
++// export hooks
++export {useFileUpload} from "./use-file-upload";
++
++// export component
++export {FileUpload, FileUploadItem, FileUploadTopbar};\n- packages/components/file-upload/src/use-file-upload.ts (added, 102 changes)\n  Patch: @@ -0,0 +1,102 @@
++import type {FileUploadSlots, FileUploadVariantProps, SlotsToClasses} from "@nextui-org/theme";
++
++import {HTMLNextUIProps, mapPropsVariants} from "@nextui-org/system";
++import {fileUpload} from "@nextui-org/theme";
++import {ReactRef, useDOMRef} from "@nextui-org/react-utils";
++import {objectToDeps} from "@nextui-org/shared-utils";
++import {ReactElement, useMemo} from "react";
++import {ButtonProps} from "@nextui-org/button";
++
++interface Props extends Omit<HTMLNextUIProps<"div">, "onChange"> {
++  /**
++   * Ref to the DOM node.
++   */
++  ref?: ReactRef<HTMLElement | null>;
++  classNames?: SlotsToClasses<FileUploadSlots>;
++  /**
++   * A property to set initial files (which might be fetched) or to control files from outside of the component.
++   */
++  files?: File[];
++  /**
++   * Custom Browse Button.
++   */
++  browseButton?: ReactElement<ButtonProps>;
++  /**
++   * A different text for the browse button.
++   */
++  browseButtonText?: string;
++  /**
++   * Custom Add Button.
++   */
++  addButton?: ReactElement<ButtonProps>;
++  /**
++   * Custom Reset Button.
++   */
++  resetButton?: ReactElement<ButtonProps>;
++  /**
++   * Custom Upload Button.
++   */
++  uploadButton?: ReactElement<ButtonProps>;
++  /**
++   * Custom element to display buttons such as the browse button in customized design and order.
++   */
++  buttons?: (
++    onBrowse: () => void,
++    onAdd: () => void,
++    onReset: () => void,
++  ) => ReactElement<HTMLElement>;
++  /**
++   * If set to true, multiple files can be selected from the device.
++   * @default false
++   */
++  multiple?: boolean;
++  /**
++   * Accept certain file format(s).
++   */
++  accept?: string;
++  /**
++   * Custom Element for an Upload File Item.
++   */
++  fileItemElement?: (file: File) => ReactElement<HTMLElement>;
++  /**
++   * Custom Element for topbar of the component.
++   */
++  topbar?: ReactElement<HTMLElement>;
++  /**
++   * Triggered when file(s) selected, added or removed.
++   */
++  onChange?: (files: File[]) => void;
++}
++
++export type UseFileUploadProps = Props & FileUploadVariantProps;
++
++export function useFileUpload(originalProps: UseFileUploadProps) {
++  const [props, variantProps] = mapPropsVariants(originalProps, fileUpload.variantKeys);
++
++  const {ref, as, className, multiple = false, browseButtonText = "Browse", ...otherProps} = props;
++
++  const Component = as || "div";
++
++  const domRef = useDOMRef(ref);
++
++  const styles = useMemo(
++    () =>
++      fileUpload({
++        ...variantProps,
++        className,
++      }),
++    [objectToDeps(variantProps), className],
++  );
++
++  return {
++    Component,
++    styles,
++    domRef,
++    className,
++    multiple,
++    browseButtonText,
++    ...otherProps,
++  };
++}
++
++export type UseFileUploadReturn = ReturnType<typeof useFileUpload>;\n- packages/components/file-upload/stories/file-upload.stories.tsx (added, 109 changes)\n  Patch: @@ -0,0 +1,109 @@
++import React from "react";
++import {Meta} from "@storybook/react";
++import {fileUpload} from "@nextui-org/theme";
++import {Button} from "@nextui-org/button";
++
++import {FileUpload, FileUploadProps, FileUploadTopbar, FileUploadTopbarProps} from "../src";
++
++export default {
++  title: "Components/FileUpload",
++  component: FileUpload,
++  argTypes: {
++    multiple: {
++      control: {
++        type: "boolean",
++      },
++    },
++    isDisabled: {
++      control: {
++        type: "boolean",
++      },
++    },
++  },
++} as Meta<typeof FileUpload>;
++
++const defaultProps = {
++  multiple: false,
++  accept: "*",
++  ...fileUpload.defaultVariants,
++};
++
++const Template = (args: FileUploadProps) => <FileUpload {...args} />;
++
++const TopbarTemplate = ({
++  totalMaxAllowedSize,
++  ...args
++}: FileUploadProps & FileUploadTopbarProps) => (
++  <FileUpload {...args} topbar={<FileUploadTopbar totalMaxAllowedSize={totalMaxAllowedSize} />} />
++);
++
++const CustomFileItemTemplate = (args: FileUploadProps) => (
++  <FileUpload {...args} fileItemElement={(file) => <div>File Name: {file.name}</div>} />
++);
++
++const CustomButtonsTemplate = (args: FileUploadProps) => {
++  return (
++    <FileUpload
++      {...args}
++      addButton={<Button>Custom add button</Button>}
++      browseButton={<Button>Custom browse button</Button>}
++      resetButton={<Button>Custom reset button</Button>}
++      uploadButton={<Button>Upload</Button>}
++    />
++  );
++};
++
++const ButtonsContainerTemplate = (args: FileUploadProps) => {
++  return (
++    <FileUpload
++      {...args}
++      buttons={(onBrowse, onAdd, onReset) => {
++        return (
++          <div>
++            <Button onClick={onBrowse}>Browse Files</Button>
++            <Button onClick={onReset}>Remove All</Button>
++            <Button onClick={onAdd}>Add New File</Button>
++          </div>
++        );
++      }}
++    />
++  );
++};
++
++export const Default = {
++  render: Template,
++  args: {
++    ...defaultProps,
++  },
++};
++
++export const Topbar = {
++  render: TopbarTemplate,
++  args: {
++    ...defaultProps,
++    totalMaxAllowedSize: "5 MB",
++  },
++};
++
++export const CustomFileItem = {
++  render: CustomFileItemTemplate,
++  args: {
++    ...defaultProps,
++  },
++};
++
++export const CustomButtons = {
++  render: CustomButtonsTemplate,
++  args: {
++    ...defaultProps,
++    multiple: true,
++  },
++};
++
++export const ButtonsContainer = {
++  render: ButtonsContainerTemplate,
++  args: {
++    ...defaultProps,
++    multiple: true,
++  },
++};\n- packages/components/file-upload/tsconfig.json (added, 11 changes)\n  Patch: @@ -0,0 +1,11 @@
++{
++  "extends": "../../../tsconfig.json",
++  "compilerOptions": {
++    "forceConsistentCasingInFileNames": true,
++    "baseUrl": ".",
++    "paths": {
++      "tailwind-variants": ["../../../node_modules/tailwind-variants"]
++    },
++  },
++  "include": ["src", "index.ts"]
++}\n- packages/components/file-upload/tsup.config.ts (added, 8 changes)\n  Patch: @@ -0,0 +1,8 @@
++import {defineConfig} from "tsup";
++
++export default defineConfig({
++  clean: true,
++  target: "es2019",
++  format: ["cjs", "esm"],
++  banner: {js: '"use client";'},
++});\n- packages/core/react/package.json (modified, 1 changes)\n  Patch: @@ -85,6 +85,7 @@
+     "@nextui-org/date-picker": "workspace:*",
+     "@nextui-org/alert": "workspace:*",
+     "@nextui-org/framer-utils": "workspace:*",
++    "@nextui-org/file-upload": "workspace:*",
+     "@nextui-org/drawer": "workspace:*",
+     "@react-aria/visually-hidden": "3.8.15"
+   },\n- packages/core/react/src/index.ts (modified, 1 changes)\n  Patch: @@ -45,6 +45,7 @@ export * from "@nextui-org/date-input";
+ export * from "@nextui-org/date-picker";
+ export * from "@nextui-org/alert";
+ export * from "@nextui-org/drawer";
++export * from "@nextui-org/file-upload";
+ 
+ /**
+  * React Aria - Exports\n- packages/core/theme/src/components/file-upload.ts (added, 76 changes)\n  Patch: @@ -0,0 +1,76 @@
++import type {VariantProps} from "tailwind-variants";
++
++import {tv} from "../utils/tv";
++import {dataFocusVisibleClasses} from "../utils";
++
++/**
++ * Card **Tailwind Variants** component
++ *
++ * @example
++ * ```js
++ * const {base, topbar, items, item, buttons} = fileUpload({...})
++ *
++ * <div className={base()}>
++ *     <div className={topbar()}>Topbar</div>
++ *     <div className={items()}>
++ *         <div className={item()}>
++ *             Item
++ *         </div>
++ *     </div>
++ *    <div className={buttons()}>Buttons</div>
++ * </div>
++ * ```
++ */
++const fileUpload = tv({
++  slots: {
++    base: [
++      "flex",
++      "flex-col",
++      "relative",
++      "overflow-hidden",
++      "h-auto",
++      "outline-none",
++      "text-foreground",
++      "box-border",
++      "bg-content1",
++      ...dataFocusVisibleClasses,
++    ],
++    topbar: ["flex", "gap-3"],
++    items: [
++      "relative",
++      "p-3",
++      "break-words",
++      "text-start",
++      "overflow-y-auto",
++      "subpixel-antialiased",
++    ],
++    item: ["flex", "gap-4", "my-4"],
++    buttons: [
++      "flex",
++      "gap-3",
++      "p-3",
++      "w-full",
++      "items-center",
++      "overflow-hidden",
++      "color-inherit",
++      "subpixel-antialiased",
++    ],
++  },
++  variants: {
++    isDisabled: {
++      true: {
++        base: "opacity-disabled cursor-not-allowed",
++      },
++    },
++  },
++  compoundVariants: [],
++  defaultVariants: {
++    isDisabled: false,
++  },
++});
++
++export type FileUploadVariantProps = VariantProps<typeof fileUpload>;
++export type FileUploadSlots = keyof ReturnType<typeof fileUpload>;
++export type FileUploadReturnType = ReturnType<typeof fileUpload>;
++
++export {fileUpload};\n- packages/core/theme/src/components/index.ts (modified, 1 changes)\n  Patch: @@ -38,5 +38,6 @@ export * from "./autocomplete";
+ export * from "./calendar";
+ export * from "./date-input";
+ export * from "./date-picker";
++export * from "./file-upload";
+ export * from "./alert";
+ export * from "./drawer";\n- pnpm-lock.yaml (modified, 67 changes)\n  Patch: @@ -1576,6 +1576,37 @@ importers:
+         specifier: ^18.2.0
+         version: 18.3.1(react@18.3.1)
+ 
++  packages/components/file-upload:
++    dependencies:
++      '@nextui-org/button':
++        specifier: workspace:*
++        version: link:../button
++      '@nextui-org/react-utils':
++        specifier: workspace:*
++        version: link:../../utilities/react-utils
++      '@nextui-org/shared-icons':
++        specifier: workspace:*
++        version: link:../../utilities/shared-icons
++      '@nextui-org/shared-utils':
++        specifier: workspace:*
++        version: link:../../utilities/shared-utils
++    devDependencies:
++      '@nextui-org/system':
++        specifier: workspace:*
++        version: link:../../core/system
++      '@nextui-org/theme':
++        specifier: workspace:*
++        version: link:../../core/theme
++      clean-package:
++        specifier: 2.2.0
++        version: 2.2.0
++      react:
++        specifier: ^18.2.0
++        version: 18.3.1
++      react-dom:
++        specifier: ^18.2.0
++        version: 18.3.1(react@18.3.1)
++
+   packages/components/image:
+     dependencies:
+       '@nextui-org/react-utils':
+@@ -2986,6 +3017,9 @@ importers:
+       '@nextui-org/dropdown':
+         specifier: workspace:*
+         version: link:../../components/dropdown
++      '@nextui-org/file-upload':
++        specifier: workspace:*
++        version: link:../../components/file-upload
+       '@nextui-org/framer-utils':
+         specifier: workspace:*
+         version: link:../../utilities/framer-utils
+@@ -23833,7 +23867,7 @@ snapshots:
+       eslint: 7.32.0
+       eslint-import-resolver-node: 0.3.9
+       eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@7.32.0)
+-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0)(eslint@7.32.0))(eslint@7.32.0)
++      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1)(eslint@7.32.0)
+       eslint-plugin-jsx-a11y: 6.10.2(eslint@7.32.0)
+       eslint-plugin-react: 7.37.2(eslint@7.32.0)
+       eslint-plugin-react-hooks: 4.6.2(eslint@7.32.0)
+@@ -23903,7 +23937,7 @@ snapshots:
+       is-bun-module: 1.2.1
+       is-glob: 4.0.3
+     optionalDependencies:
+-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0)(eslint@7.32.0))(eslint@7.32.0)
++      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1)(eslint@7.32.0)
+     transitivePeerDependencies:
+       - '@typescript-eslint/parser'
+       - eslint-import-resolver-node
+@@ -23954,35 +23988,6 @@ snapshots:
+       lodash: 4.17.21
+       string-natural-compare: 3.0.1
+ 
+-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0)(eslint@7.32.0))(eslint@7.32.0):
+-    dependencies:
+-      '@rtsao/scc': 1.1.0
+-      array-includes: 3.1.8
+-      array.prototype.findlastindex: 1.2.5
+-      array.prototype.flat: 1.3.2
+-      array.prototype.flatmap: 1.3.2
+-      debug: 3.2.7
+-      doctrine: 2.1.0
+-      eslint: 7.32.0
+-      eslint-import-resolver-node: 0.3.9
+-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@7.32.0))(eslint@7.32.0)
+-      hasown: 2.0.2
+-      is-core-module: 2.15.1
+-      is-glob: 4.0.3
+-      minimatch: 3.1.2
+-      object.fromentries: 2.0.8
+-      object.groupby: 1.0.3
+-      object.values: 1.2.0
+-      semver: 6.3.1
+-      string.prototype.trimend: 1.0.8
+-      tsconfig-paths: 3.15.0
+-    optionalDependencies:
+-      '@typescript-eslint/parser': 5.62.0(eslint@7.32.0)(typescript@4.9.5)
+-    transitivePeerDependencies:
+-      - eslint-import-resolver-typescript
+-      - eslint-import-resolver-webpack
+-      - supports-color
+-
+   eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-typescript@2.7.1)(eslint@7.32.0):
+     dependencies:
+       '@rtsao/scc': 1.1.0\n

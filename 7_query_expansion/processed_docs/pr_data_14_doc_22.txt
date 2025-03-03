@@ -1,0 +1,212 @@
+Pull Request Number: 2589
+Title: fix(hooks): handle numeric selectedKeys in Select 
+Base Branch: main
+Head Branch: fix/eng-564
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2589
+State: MERGED
+Created At: 2024-03-26T10:23:26Z
+Merged At: 2024-04-02T11:45:09Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes #2587
+📝 Description
+In collection, the key of the map is always string no matter the inputted key is numeric or string. Therefore, handle such case when we get the item from the collection.
+⛳️ Current behavior (updates)
+
+🚀 New behavior
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+Bug Fixes
+
+Improved handling of numeric keys in the multi-select component to ensure consistent behavior.
+
+Commits:
+- fix(hooks): set key to string for collection\n- feat(changeset): handle numeric selectedKeys in Select\n- refactor(hooks): use template literals instead\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 2c412b356b88ed3036a921b2240d91059d0bec4f
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                             | Type  |
+| -------------------------------- | ----- |
+| @nextui-org/use-aria-multiselect | Patch |
+| @nextui-org/select               | Patch |
+| @nextui-org/react                | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/wingkwong/nextui/new/fix/eng-564?filename=.changeset/curvy-tomatoes-warn.md&value=---%0A%22%40nextui-org%2Fuse-aria-multiselect%22%3A%20patch%0A---%0A%0Afix(hooks)%3A%20handle%20numeric%20selectedKeys%20in%20Select%20%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The patch addresses an issue in the "@nextui-org/use-aria-multiselect" library, specifically enhancing the handling of numeric keys in the Select component. It ensures that keys, whether numeric or string, are treated uniformly by converting them to strings for consistent processing within the collection management functions. This change directly targets and resolves a bug where numeric `selectedKeys` were not correctly recognized, thereby improving the component's versatility and reliability in controlled mode scenarios.
+
+## Changes
+
+| File Path                                               | Change Summary                                                                                      |
+|---------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `.changeset/hot-rivers-move.md`                         | Introduces a patch for numeric `selectedKeys` handling in Select.                                   |
+| `packages/hooks/use-aria-multiselect/src/use-multiselect-list-state.ts`        | Modifies key handling by coercing to strings for consistent access in collection management.       |
+
+## Assessment against linked issues
+
+| Objective                                                                                     | Addressed | Explanation |
+|----------------------------------------------------------------------------------------------|-----------|-------------|
+| Support React.Key (string \| number) in `<Select />` controlled mode [#2587]                 | ✅         |             |
+| Correct handling of numeric `selectedKeys` in `<Select />` to prevent undefined items [#2587]| ✅         |             |
+
+## Related issues
+
+- nextui-org/nextui#2563: This issue could potentially be linked to the PR as it discusses a related problem with controlled components and key handling, specifically within the AutoComplete component. The underlying cause might be similar, suggesting an examination of the AutoComplete component might be beneficial, considering the changes made to the Select component.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+packages/hooks/use-aria-multiselect/src/use-multiselect-list-state.ts: In the `useMultiSelectListState` function of `use-multiselect-list-state.ts`, the change involves modifying how keys are handled within filters and mappings. Specifically, keys are now coerced to strings before being used to access items in the collection, ensuring consistent key type handling throughout the function.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+This Pull Request (PR) aims to address a bug in the NextUI library's Select component related to the handling of numeric keys. The bug, documented in issue #2587, reveals an issue where the Select component in controlled mode does not properly support numeric keys, leading to unexpected behavior like the initial select option not being default selected. The root cause lies in how the library treats keys within collections, always converting them to strings regardless of their original type. This discrepancy causes failures when retrieving items using numeric keys, as demonstrated in the bug reproduction steps and user-provided examples.
+
+The proposed solution involves updating the `useMultiSelectListState` function in the `use-aria-multiselect` package to ensure keys are consistently treated as strings. By coercing keys to strings before accessing collection items, the fix aligns the internal key handling with the expected behavior of supporting both numeric and string keys in the Select component.
+
+The PR includes a detailed description of the current behavior, illustrated with screenshots, and presents the expected behavior post-fix, supported by visual evidence. It is confirmed that this fix does not introduce any breaking changes to the library.
+
+Additionally, a changeset file named `hot-rivers-move.md` is introduced, outlining the modifications for the `@nextui-org/use-aria-multiselect` package, emphasizing the focus on addressing the handling of numeric selectedKeys in the Select component.
+
+### AI-generated Summary of Generated Summaries
+
+This PR targets a bug in the NextUI library's Select component, where numeric keys are not properly supported in controlled mode, leading to issues like the initial select option not being default selected. By adjusting the `useMultiSelectListState` function in the `use-aria-multiselect` package to coerce keys to strings before accessing collection items, the fix ensures consistent support for both numeric and string keys. The changeset file `hot-rivers-move.md` documents these modifications, emphasizing the resolution of numeric selectedKeys handling. The fix is non-breaking, enhancing the Select component's functionality without disrupting existing implementations.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 690381228d5e63fd76f811b9354d95de12331ac5 -->
+<!-- 2c412b356b88ed3036a921b2240d91059d0bec4f -->
+
+<!-- commit_ids_reviewed_end --><!-- tweet_start -->
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<!-- tweet_end --><!-- tips_start -->
+
+---
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with CodeRabbit:
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- The JSON schema for the configuration file is available [here](https://coderabbit.ai/integrations/coderabbit-overrides.v2.json).
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/coderabbit-overrides.v2.json`
+
+### CodeRabbit Discord Community
+
+Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #yEF6U2JT5y+RYSLtLJTzBV+Cvy5vPdoAnlQWrdFxPL8=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRTRnMXhLVXBhZW1jNVNBNmF5b256dTRkTHk3UyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtZW5nLTU2NC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay13aW5na3dvbmctZml4LWVuZy01NjQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/E4g1xKUpaemc5SA6ayonzu4dLy7S)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-564-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-564-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 1, 2024 2:34am |
+
+\n- vercel: @wingkwong is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22e5fdff337586cd5d10269e36849d1c35a2144c31%22%7D%2C%22id%22%3A%22QmXnws7hvmHAfRXWYUjvvwxDrG6bLaZPBLQvPKjwnKKMaB%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2589%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/hot-rivers-move.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/use-aria-multiselect": patch
++---
++
++Handle numeric selectedKeys in Select\n- packages/hooks/use-aria-multiselect/src/use-multiselect-list-state.ts (modified, 4 changes)\n  Patch: @@ -29,7 +29,7 @@ export function useMultiSelectListState<T extends object>(
+     if (selectedKeys.size !== 0) {
+       return Array.from(selectedKeys)
+         .filter(Boolean)
+-        .filter((key) => !collection.getItem(key));
++        .filter((key) => !collection.getItem(`${key}`));
+     }
+ 
+     return [];
+@@ -39,7 +39,7 @@ export function useMultiSelectListState<T extends object>(
+     selectedKeys.size !== 0
+       ? Array.from(selectedKeys)
+           .map((key) => {
+-            return collection.getItem(key);
++            return collection.getItem(`${key}`);
+           })
+           // Remove undefined values when some keys are not present in the collection
+           .filter(Boolean)\n

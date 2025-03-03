@@ -1,0 +1,158 @@
+Pull Request Number: 2416
+Title: docs(components): type error on tab components
+Base Branch: main
+Head Branch: docs/components/type-error-on-tab-components
+Author: kuri-sun
+URL: https://github.com/nextui-org/nextui/pull/2416
+State: MERGED
+Created At: 2024-02-28T02:19:38Z
+Merged At: 2024-02-29T14:44:30Z
+Participants: kuri-sun, jrgarciadev
+
+Description:
+Closes #2411
+📝 Description
+Tabs component in the docs has TypeError in TypeScript.
+⛳️ Current behavior (updates)
+TypeError for TypeScript.
+🚀 New behavior
+Created an example for TS as well.
+
+  
+    
+    
+
+    demo.mov
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+
+Commits:
+- docs(components): type error on tab components\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 5f891deffe9d05d566655d97b0d67515873d2de5
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/kuri-sun/nextui/new/docs/components/type-error-on-tab-components?filename=.changeset/serious-eggs-promise.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Adocs(components)%3A%20type%20error%20on%20tab%20components%0A)
+
+\n- vercel: @kuri-sun is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%225f891deffe9d05d566655d97b0d67515873d2de5%22%7D%2C%22id%22%3A%22QmU1YCPoDDA52CsJ7LiBWZDeJEWDmmM1QVcyBJsRBTUL9T%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2416%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #dWh6v0R8BemcUpIdysXIogSmcQZpVFIX5UBDmoPrvMY=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRnlHVUsxNGFZVXplRlFhaG55dnR5ZnptakVwNSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWt1cmktc3VuLWRvY3MtY28tZTYwZDVhLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWt1cmktc3VuLWRvY3MtY28tZTYwZDVhLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/FyGUK14aYUzeFQahnyvtyfzmjEp5)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-kuri-sun-docs-co-e60d5a-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-kuri-sun-docs-co-e60d5a-nextui-org.vercel.app?via=pr-comment-feedback-link) | Feb 28, 2024 2:22am |
+
+\n
+
+Files Changed:
+- apps/docs/content/components/tabs/form.ts (modified, 73 changes)\n  Patch: @@ -66,10 +66,83 @@ export default function App() {
+   );
+ }`;
+ 
++const AppTs = `import {Tabs, Tab, Input, Link, Button, Card, CardBody, CardHeader} from "@nextui-org/react";
++
++export default function App() {
++  const [selected, setSelected] = React.useState<string | number>("login");
++
++  return (
++    <div className="flex flex-col w-full">
++      <Card className="max-w-full w-[340px] h-[400px]">
++        <CardBody className="overflow-hidden">
++          <Tabs
++            fullWidth
++            size="md"
++            aria-label="Tabs form"
++            selectedKey={selected}
++            onSelectionChange={setSelected}
++          >
++            <Tab key="login" title="Login">
++              <form className="flex flex-col gap-4">
++                <Input isRequired label="Email" placeholder="Enter your email" type="email" />
++                <Input
++                  isRequired
++                  label="Password"
++                  placeholder="Enter your password"
++                  type="password"
++                />
++                <p className="text-center text-small">
++                  Need to create an account?{" "}
++                  <Link size="sm" onPress={() => setSelected("sign-up")}>
++                    Sign up
++                  </Link>
++                </p>
++                <div className="flex gap-2 justify-end">
++                  <Button fullWidth color="primary">
++                    Login
++                  </Button>
++                </div>
++              </form>
++            </Tab>
++            <Tab key="sign-up" title="Sign up">
++              <form className="flex flex-col gap-4 h-[300px]">
++                <Input isRequired label="Name" placeholder="Enter your name" type="password" />
++                <Input isRequired label="Email" placeholder="Enter your email" type="email" />
++                <Input
++                  isRequired
++                  label="Password"
++                  placeholder="Enter your password"
++                  type="password"
++                />
++                <p className="text-center text-small">
++                  Already have an account?{" "}
++                  <Link size="sm" onPress={() => setSelected("login")}>
++                    Login
++                  </Link>
++                </p>
++                <div className="flex gap-2 justify-end">
++                  <Button fullWidth color="primary">
++                    Sign up
++                  </Button>
++                </div>
++              </form>
++            </Tab>
++          </Tabs>
++        </CardBody>
++      </Card>
++    </div>
++  );
++}`;
++
+ const react = {
+   "/App.jsx": App,
+ };
+ 
++const reactTs = {
++  "/App.tsx": AppTs,
++};
++
+ export default {
+   ...react,
++  ...reactTs,
+ };\n

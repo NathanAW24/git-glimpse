@@ -1,0 +1,318 @@
+Pull Request Number: 1269
+Title: fix(docs): navbar examples
+Base Branch: main
+Head Branch: fix/navbar
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/1269
+State: MERGED
+Created At: 2023-08-04T17:31:39Z
+Merged At: 2023-08-04T17:41:55Z
+Participants: tianenpang, jrgarciadev
+
+Description:
+Closes #1240
+📝 Description
+
+Avatar rendered as a button.
+Remove NavbarItem to get cleaner dom.
+NavbarContent rendered as a div since its child are not list items.
+
+
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+
+Sync example and code for controlled menu section.
+Update navbar's stories.
+
+Commits:
+- fix(navbar): use button tag and correctly pass props with child\n- chore(navbar): sync example and code snippet\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 1317463b57df68546ba486e3f2c7ff565075ef8d
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/tianenpang/nextui/new/fix/navbar?filename=.changeset/great-wombats-pump.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fnavbar%22%3A%20patch%0A---%0A%0Afix(docs)%3A%20navbar%20examples%0A)
+
+\n- vercel: @tianenpang is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%221317463b57df68546ba486e3f2c7ff565075ef8d%22%7D%2C%22id%22%3A%22QmXAGjScC1YS1vHSZeWs9ECuPBk72H5bcpgBqSnj3TQmAf%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1269%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #3IbbQlmMsNyNfcoiEoRFlFMHYkJO3jOFECsBY6DbqAQ=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYxIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjEvbkxoQnN0NHhZMjNpS2VBaGFWR1B3eHo3bTVleiIsInByZXZpZXdVcmwiOiIiLCJuZXh0Q29tbWl0U3RhdHVzIjoiRkFJTEVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6IiJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v1** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v1/nLhBst4xY23iKeAhaVGPwxz7m5ez)) |  |  | Aug 4, 2023 5:38pm |
+
+\n
+
+Files Changed:
+- apps/docs/app/examples/navbar/controlled-menu/page.tsx (modified, 17 changes)\n  Patch: @@ -8,7 +8,7 @@ import {
+   NavbarMenu,
+   NavbarMenuItem,
+   NavbarMenuToggle,
+-  Avatar,
++  Button,
+   Link as NextUiLink,
+   LinkProps,
+ } from "@nextui-org/react";
+@@ -79,16 +79,13 @@ export default function Page() {
+       </NavbarContent>
+ 
+       <NavbarContent justify="end">
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
++        </NavbarItem>
+         <NavbarItem>
+-          <Avatar
+-            isBordered
+-            as="button"
+-            className="transition-transform"
+-            color="warning"
+-            name="Jane Lee"
+-            size="sm"
+-            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+-          />
++          <Button as={Link} color="warning" href="#" variant="flat">
++            Sign Up
++          </Button>
+         </NavbarItem>
+       </NavbarContent>
+ \n- apps/docs/app/examples/navbar/with-avatar/page.tsx (modified, 27 changes)\n  Patch: @@ -51,22 +51,19 @@ export default function Page() {
+           </Link>
+         </NavbarItem>
+       </NavbarContent>
+-      <NavbarContent justify="end">
++      <NavbarContent as="div" justify="end">
+         <Dropdown placement="bottom-end">
+-          <NavbarItem>
+-            <DropdownTrigger>
+-              <Avatar
+-                isBordered
+-                as={Link}
+-                className="transition-transform"
+-                color="secondary"
+-                href="#"
+-                name="Jason Hughes"
+-                size="sm"
+-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+-              />
+-            </DropdownTrigger>
+-          </NavbarItem>
++          <DropdownTrigger>
++            <Avatar
++              isBordered
++              as="button"
++              className="transition-transform"
++              color="secondary"
++              name="Jason Hughes"
++              size="sm"
++              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
++            />
++          </DropdownTrigger>
+           <DropdownMenu aria-label="Profile Actions" variant="flat">
+             <DropdownItem key="profile" className="h-14 gap-2">
+               <p className="font-semibold">Signed in as</p>\n- apps/docs/app/examples/navbar/with-search-input/page.tsx (modified, 5 changes)\n  Patch: @@ -56,7 +56,7 @@ export default function Page() {
+           </NavbarItem>
+         </NavbarContent>
+       </NavbarContent>
+-      <NavbarContent className="items-center" justify="end">
++      <NavbarContent as="div" className="items-center" justify="end">
+         <Input
+           classNames={{
+             base: "max-w-full sm:max-w-[10rem] h-10",
+@@ -72,10 +72,9 @@ export default function Page() {
+             <DropdownTrigger>
+               <Avatar
+                 isBordered
+-                as={Link}
++                as="button"
+                 className="transition-transform"
+                 color="secondary"
+-                href="#"
+                 name="Jason Hughes"
+                 size="sm"
+                 src="https://i.pravatar.cc/150?u=a042581f4e29026704d"\n- apps/docs/content/components/navbar/with-avatar.ts (modified, 29 changes)\n  Patch: @@ -19,6 +19,7 @@ export default function App() {
+         <AcmeLogo />
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
++
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+         <NavbarItem>
+           <Link color="foreground" href="#">
+@@ -36,22 +37,20 @@ export default function App() {
+           </Link>
+         </NavbarItem>
+       </NavbarContent>
+-      <NavbarContent justify="end">
++
++      <NavbarContent as="div" justify="end">
+         <Dropdown placement="bottom-end">
+-          <NavbarItem>
+-            <DropdownTrigger>
+-              <Avatar
+-                isBordered
+-                as={Link}
+-                href="#"
+-                className="transition-transform"
+-                color="secondary"
+-                name="Jason Hughes"
+-                size="sm"
+-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+-              />
+-            </DropdownTrigger>
+-          </NavbarItem>
++          <DropdownTrigger>
++            <Avatar
++              isBordered
++              as="button"
++              className="transition-transform"
++              color="secondary"
++              name="Jason Hughes"
++              size="sm"
++              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
++            />
++          </DropdownTrigger>
+           <DropdownMenu aria-label="Profile Actions" variant="flat">
+             <DropdownItem key="profile" className="h-14 gap-2">
+               <p className="font-semibold">Signed in as</p>\n- apps/docs/content/components/navbar/with-search-input.ts (modified, 28 changes)\n  Patch: @@ -74,7 +74,8 @@ export default function App() {
+           </NavbarItem>
+         </NavbarContent>
+       </NavbarContent>
+-      <NavbarContent className="items-center" justify="end">
++
++      <NavbarContent as="div" className="items-center" justify="end">
+         <Input
+           classNames={{
+             base: "max-w-full sm:max-w-[10rem] h-10",
+@@ -87,20 +88,17 @@ export default function App() {
+           type="search"
+         />
+         <Dropdown placement="bottom-end">
+-          <NavbarItem>
+-            <DropdownTrigger>
+-              <Avatar
+-                isBordered
+-                as={Link}
+-                href="#"
+-                className="transition-transform"
+-                color="secondary"
+-                name="Jason Hughes"
+-                size="sm"
+-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+-              />
+-            </DropdownTrigger>
+-          </NavbarItem>
++          <DropdownTrigger>
++            <Avatar
++              isBordered
++              as="button"
++              className="transition-transform"
++              color="secondary"
++              name="Jason Hughes"
++              size="sm"
++              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
++            />
++          </DropdownTrigger>
+           <DropdownMenu aria-label="Profile Actions" variant="flat">
+             <DropdownItem key="profile" className="h-14 gap-2">
+               <p className="font-semibold">Signed in as</p>\n- packages/components/navbar/stories/navbar.stories.tsx (modified, 67 changes)\n  Patch: @@ -410,19 +410,17 @@ const WithAvatarUserTemplate = (args: NavbarProps) => {
+             </Link>
+           </NavbarItem>
+         </NavbarContent>
+-        <NavbarContent justify="end">
++        <NavbarContent as="div" justify="end">
+           <Dropdown placement="bottom-end">
+             <DropdownTrigger>
+-              <NavbarItem>
+-                <Avatar
+-                  isBordered
+-                  as="button"
+-                  className="transition-transform"
+-                  color="secondary"
+-                  size="sm"
+-                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+-                />
+-              </NavbarItem>
++              <Avatar
++                isBordered
++                as="button"
++                className="transition-transform"
++                color="secondary"
++                size="sm"
++                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
++              />
+             </DropdownTrigger>
+             <DropdownMenu aria-label="Profile Actions" color="secondary">
+               <DropdownItem key="profile" className="h-14 gap-2">
+@@ -511,33 +509,30 @@ const WithSearchInputTemplate = (args: NavbarProps) => {
+             </Link>
+           </NavbarItem>
+         </NavbarContent>
+-        <NavbarContent justify="end">
+-          <NavbarItem className="hidden md:flex">
+-            <Input
+-              classNames={{
+-                input: "text-base",
+-              }}
+-              placeholder="Search..."
+-              size="sm"
+-              startContent={<SearchIcon className="text-base pointer-events-none flex-shrink-0" />}
+-              onClear={() => {
+-                // eslint-disable-next-line no-console
+-                console.log("clear");
+-              }}
+-            />
+-          </NavbarItem>
++        <NavbarContent as="div" justify="end">
++          <Input
++            className="w-fit"
++            classNames={{
++              input: "text-base",
++            }}
++            placeholder="Search..."
++            size="sm"
++            startContent={<SearchIcon className="text-base pointer-events-none flex-shrink-0" />}
++            onClear={() => {
++              // eslint-disable-next-line no-console
++              console.log("clear");
++            }}
++          />
+           <Dropdown placement="bottom-end">
+             <DropdownTrigger>
+-              <NavbarItem>
+-                <Avatar
+-                  isBordered
+-                  as="button"
+-                  className="transition-transform"
+-                  color="secondary"
+-                  size="sm"
+-                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+-                />
+-              </NavbarItem>
++              <Avatar
++                isBordered
++                as="button"
++                className="transition-transform"
++                color="secondary"
++                size="sm"
++                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
++              />
+             </DropdownTrigger>
+             <DropdownMenu aria-label="Profile Actions" color="secondary">
+               <DropdownItem key="profile" className="h-14 gap-2">\n

@@ -1,0 +1,110 @@
+Pull Request Number: 1173
+Title: feat: added locale select to storybook toolbar
+Base Branch: feat/v2
+Head Branch: feat/added-locale-select-to-storybook-toolbar
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1173
+State: MERGED
+Created At: 2023-06-21T16:50:15Z
+Merged At: 2023-06-22T01:53:07Z
+Participants: jguddas, jrgarciadev
+
+Description:
+simplescreenrecorder-2023-06-11_15.06.16.mp4
+
+Commits:
+- feat: added locale select to storybook toolbar\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2218b3f056ef70222769767f86df2937c6aea1a27b%22%7D%2C%22id%22%3A%22QmQBch68xHs8puVLUHJC1dxajSM3XtJKTnrWXZGX6MLR4X%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1173%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Thank you! @jguddas 🙌🏻 \n
+
+Files Changed:
+- packages/storybook/.storybook/preview.js (modified, 71 changes)\n  Patch: @@ -4,14 +4,19 @@ import {NextUIProvider} from "@nextui-org/react";
+ import Style from "./style";
+ 
+ export const decorators = [
+-  (Story) => (
+-    <NextUIProvider>
+-      <div className="bg-dark">
+-        <Style />
+-        <Story />
+-      </div>
+-    </NextUIProvider>
+-  ),
++  (Story, {globals: {locale}}) => {
++    const direction =
++      locale && new Intl.Locale(locale)?.textInfo?.direction === "rtl" ? "rtl" : undefined;
++
++    return (
++      <NextUIProvider locale={locale}>
++        <div className="bg-dark" lang={locale} dir={direction}>
++          <Style />
++          <Story />
++        </div>
++      </NextUIProvider>
++    );
++  },
+ ];
+ 
+ export const parameters = {
+@@ -48,3 +53,53 @@ export const parameters = {
+     },
+   },
+ };
++
++const locales = [
++  "ar-AE",
++  "bg-BG",
++  "cs-CZ",
++  "da-DK",
++  "de-DE",
++  "el-GR",
++  "en-US",
++  "es-ES",
++  "et-EE",
++  "fi-FI",
++  "fr-FR",
++  "he-IL",
++  "hr-HR",
++  "hu-HU",
++  "it-IT",
++  "ja-JP",
++  "ko-KR",
++  "lt-LT",
++  "lv-LV",
++  "nb-NO",
++  "nl-NL",
++  "pl-PL",
++  "pt-BR",
++  "pt-PT",
++  "ro-RO",
++  "ru-RU",
++  "sk-SK",
++  "sl-SI",
++  "sr-SP",
++  "sv-SE",
++  "tr-TR",
++  "uk-UA",
++  "zh-CN",
++  "zh-TW",
++];
++
++export const globalTypes = {
++  locale: {
++    toolbar: {
++      icon: "globe",
++      items: locales.map((locale) => ({
++        value: locale,
++        title: new Intl.DisplayNames(undefined, {type: "language"}).of(locale),
++        right: new Intl.Locale(locale)?.textInfo?.direction === "rtl" ? "Right to Left" : undefined,
++      })),
++    },
++  },
++};\n

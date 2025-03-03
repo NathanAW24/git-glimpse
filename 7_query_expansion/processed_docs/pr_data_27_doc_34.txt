@@ -1,0 +1,88 @@
+Pull Request Number: 536
+Title: fix(storybook):can't resolve '@nextui-org/react'
+Base Branch: main
+Head Branch: main
+Author: TIMMLOPK
+URL: https://github.com/nextui-org/nextui/pull/536
+State: CLOSED
+Created At: 2022-06-10T08:18:03Z
+Merged At: None
+Participants: TIMMLOPK, codecov-commenter
+
+Description:
+📝 Description
+fix storybook issues
+⛳️ Current behavior (updates)
+If you use yarn start:sb or yarn sb ,you can't run storybook and get Module not found: Error: Can't resolve '@nextui-org/react' in 'C:\Users\user\Downloads\nextui-main\nextui-main\packages\storybook\.storybook'
+🚀 New behavior
+storybook runs as normal
+💣 Is this a breaking change (Yes/No):No
+
+📝 Additional Information
+
+Commits:
+- fix(storybook):can't resolve story book\n- Update package.json\n- chore(deps):clean unused dependencies\n- rollback package.json\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/536?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#536](https://codecov.io/gh/nextui-org/nextui/pull/536?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (67af9eb) into [main](https://codecov.io/gh/nextui-org/nextui/commit/c54c84c50d2c60494debd27d98760dd7861f3184?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (c54c84c) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+```diff
+@@           Coverage Diff           @@
+##             main     #536   +/-   ##
+=======================================
+  Coverage   74.82%   74.82%           
+=======================================
+  Files         200      200           
+  Lines        3098     3098           
+  Branches      956      956           
+=======================================
+  Hits         2318     2318           
+  Misses        765      765           
+  Partials       15       15           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/536?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/536?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [c54c84c...67af9eb](https://codecov.io/gh/nextui-org/nextui/pull/536?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- packages/storybook/.storybook/main.js (modified, 11 changes)\n  Patch: @@ -1,3 +1,5 @@
++const path = require('path');
++
+ module.exports = {
+   core: {
+     builder: 'webpack5'
+@@ -9,5 +11,12 @@ module.exports = {
+   addons: ['@storybook/addon-a11y', 'storybook-dark-mode'],
+   typescript: {
+     reactDocgen: 'none'
+-  }
++  },
++  webpackFinal: async config => {
++    config.resolve.alias = {
++      ...config.resolve.alias,
++      '@nextui-org/react': path.resolve(__dirname, '../../react/src'),
++    };
++    return config;
++  } 
+ };\n- packages/storybook/package.json (modified, 3 changes)\n  Patch: @@ -3,9 +3,6 @@
+   "version": "1.0.0",
+   "main": "index.js",
+   "license": "MIT",
+-  "dependencies": {
+-    "@nextui-org/react": "1.0.0-beta.9"
+-  },
+   "devDependencies": {
+     "@babel/core": "^7.16.7",
+     "@storybook/addon-a11y": "^6.5.3",\n

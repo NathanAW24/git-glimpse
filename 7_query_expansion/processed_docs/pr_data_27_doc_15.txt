@@ -1,0 +1,76 @@
+Pull Request Number: 594
+Title: fix(react-card): box shadow applied intead of box shadow filter on sa…
+Base Branch: next
+Head Branch: fix_578/safari-card-shadow
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/594
+State: MERGED
+Created At: 2022-07-02T21:36:22Z
+Merged At: 2022-07-02T21:37:20Z
+Participants: jrgarciadev
+
+Description:
+Closes #578
+🚀 New behavior
+Card's shadows are working on safari, it looks like safari doesn't support really well the drop-shadow filter, we use it because it's useful to not lose the outline of the card when in pressed/navigated by the keyboard
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(react-card): box shadow applied intead of box shadow filter on safari\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/react/src/card/card.stories.tsx (modified, 8 changes)\n  Patch: @@ -24,6 +24,14 @@ export const Default = () => (
+   </Card>
+ );
+ 
++export const Hoverable = () => (
++  <Card isHoverable css={{w: "400px"}} variant="bordered">
++    <Card.Body css={{py: "$lg"}}>
++      <Text>A basic card</Text>
++    </Card.Body>
++  </Card>
++);
++
+ export const Variants = () => (
+   <Grid.Container gap={2}>
+     <Grid xs={4}>\n- packages/react/src/card/card.styles.ts (modified, 12 changes)\n  Patch: @@ -55,6 +55,10 @@ export const StyledCard = styled(
+         },
+         shadow: {
+           dropShadow: "$lg",
++          "@safari": {
++            boxShadow: "$lg",
++            dropShadow: "none",
++          },
+         },
+         bordered: {
+           borderStyle: "solid",
+@@ -99,6 +103,10 @@ export const StyledCard = styled(
+       isHovered: {
+         true: {
+           dropShadow: "$lg",
++          "@safari": {
++            boxShadow: "$lg",
++            dropShadow: "none",
++          },
+         },
+       },
+     },
+@@ -125,6 +133,10 @@ export const StyledCard = styled(
+         variant: "shadow",
+         css: {
+           dropShadow: "$xl",
++          "@safari": {
++            boxShadow: "$xl",
++            dropShadow: "none",
++          },
+         },
+       },
+     ],\n

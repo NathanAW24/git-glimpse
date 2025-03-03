@@ -1,0 +1,345 @@
+Pull Request Number: 3728
+Title: feat: add warning option prop which allows to disable `aria-label` warning
+Base Branch: canary
+Head Branch: adding_warningOptions
+Author: abhinav700
+URL: https://github.com/nextui-org/nextui/pull/3728
+State: CLOSED
+Created At: 2024-09-08T14:42:45Z
+Merged At: None
+Participants: abhinav700, ryo-manba
+
+Description:
+Closes #2586 
+📝 Description
+I have added warningOptions prop which has showAriaWarning  property. It allows us to disable aria-label warning
+💣 Is this a breaking change (Yes/No):
+I don't know
+
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced configurable warning options for accessibility messages in the ProviderContext and NextUIProvider, allowing users to control the visibility of ARIA-related warnings.
+Enhanced the useMenu hook to check global context settings for ARIA warnings, improving accessibility checks.
+
+
+
+Chores
+
+Added a new dependency on @nextui-org/system to enhance component styling and functionality.
+
+Commits:
+- feat: added warningOptions prop\n- Merge branch 'nextui-org:canary' into adding_warningOptions\n- Merge branch 'nextui-org:canary' into adding_warningOptions\n- chore: revising documentation to follow consistent convention\n
+
+Labels:
+
+
+Comments:
+- vercel: @abhinav700 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%227f5fbc62c00218aac7f8355b40dd9b2c833802c7%22%7D%2C%22id%22%3A%22QmeJH2xTowLjXt5YDJUi9iKKNVjwHWMGKz9a1oxvhxNAVq%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3728%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: b7084ca553bd2eb797364c827bfd1b2f1705f626
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/abhinav700/nextui/new/adding_warningOptions?filename=.changeset/curly-falcons-dress.md&value=---%0A%22%40nextui-org%2Fsystem%22%3A%20patch%0A%22%40nextui-org%2Fuse-aria-menu%22%3A%20patch%0A---%0A%0Afeat%3A%20add%20warning%20option%20prop%20which%20allows%20to%20disable%20%60aria-label%60%20warning%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The pull request introduces a new optional property, `warningOptions`, to enhance configurability in the `ProviderContextProps` and `NextUIProviderProps` types. This property allows developers to control the visibility of specific warnings, particularly those related to ARIA properties, by including a boolean option `showAriaWarning`. Additionally, the `useMenu` hook is updated to utilize this global context setting for improved accessibility checks.
+
+## Changes
+
+| Files                                      | Change Summary                                                                                     |
+|--------------------------------------------|---------------------------------------------------------------------------------------------------|
+| `packages/core/system/src/provider-context.ts`, `packages/core/system/src/provider.tsx` | Added `warningOptions?: { showAriaWarning?: boolean; }` to `ProviderContextProps` and `NextUIProviderProps`. Modified `NextUIProvider` to handle `warningOptions`. |
+| `packages/hooks/use-aria-menu/package.json` | Added `@nextui-org/system` to `devDependencies`.                                                |
+| `packages/hooks/use-aria-menu/src/use-menu.ts` | Imported `useProviderContext` and updated `useMenu` to check `globalContext?.warningOptions?.showAriaWarning`. |
+
+## Sequence Diagram(s)
+
+```mermaid
+sequenceDiagram
+    participant Developer
+    participant NextUIProvider
+    participant useMenu
+    participant Console
+
+    Developer->>NextUIProvider: Pass warningOptions
+    NextUIProvider->>useMenu: Provide warningOptions
+    useMenu->>Console: Check for ARIA props
+    alt showAriaWarning is true
+        useMenu->>Console: Log warning if ARIA props are missing
+    end
+```
+
+## Assessment against linked issues
+
+| Objective                                          | Addressed | Explanation                                      |
+|---------------------------------------------------|-----------|--------------------------------------------------|
+| Control visibility of ARIA warnings (#2586)       | ✅        |                                                  |
+
+## Possibly related PRs
+
+- **#2854**: Modifications to `useMenu` that integrate global context settings for accessibility warnings.
+- **#3726**: Enhancements to keyboard navigation highlighting in the `AutocompleteSection`, improving accessibility.
+
+## Suggested labels
+
+`📋 Scope : Docs`
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+packages/core/system/src/provider-context.ts: ## AI-generated summary of changes
+
+The diff introduces a new optional property, `warningOptions`, to the `ProviderContextProps` type in the `provider-context.ts` file. This property is designed to encapsulate various options related to warnings that are displayed via `console.warn`. Specifically, it includes a sub-property, `showAriaWarning`, which is also optional and is a boolean that determines whether warnings related to ARIA properties should be shown. The default value for `showAriaWarning` is set to `true`. This change enhances the configurability of warning messages, allowing developers to control the visibility of specific warnings, particularly those concerning accessibility.
+
+## Alterations to the declarations of exported or public entities
+
+- Added: `warningOptions?: { showAriaWarning?: boolean; }` in type `ProviderContextProps` in `packages/core/system/src/provider-context.ts`
+
+---
+
+packages/core/system/src/provider.tsx: ## AI-generated summary of changes
+
+The diff introduces a new optional property, `warningOptions`, to the `NextUIProviderProps` interface in the `provider.tsx` file. This property encapsulates options related to warnings displayed using `console.warn`, specifically including a boolean option, `showAriaWarning`, which defaults to `true` and controls the visibility of warnings related to ARIA properties.
+
+In the `NextUIProvider` component, the `warningOptions` parameter is destructured from the props with a default value of `{ showAriaWarning: true }`. This ensures that if no `warningOptions` are provided, the component retains the default behavior of showing ARIA warnings. The `warningOptions` variable is included in the dependencies array of a `useEffect` hook, indicating that changes to this property will trigger the effect, allowing for dynamic updates based on the provided options.
+
+These changes enhance the configurability of the `NextUIProvider`, enabling consumers of the component to control warning behavior related to accessibility, thereby improving the usability and flexibility of the component.
+
+## Alterations to the declarations of exported or public entities
+
+- Added: `warningOptions?: { showAriaWarning?: boolean; }` in interface `NextUIProviderProps` in `packages/core/system/src/provider.tsx`  
+- Modified: `NextUIProvider` component to include `warningOptions` as a parameter with a default value in `packages/core/system/src/provider.tsx`
+
+---
+
+packages/hooks/use-aria-menu/package.json: ## AI-generated summary of changes
+
+The diff introduces a new dependency to the `devDependencies` section of the `package.json` file for the `packages/hooks/use-aria-menu` package. Specifically, the package `@nextui-org/system` is added with a version specification of `workspace:*`. This change indicates that the project is now utilizing the `@nextui-org/system` package, which may provide additional styling or component functionality relevant to the NextUI framework. The existing dependency on `react` remains unchanged, maintaining compatibility with React version 18.0.0. Overall, this modification enhances the package's capabilities by integrating a new library, potentially affecting how components are styled or structured within the application.
+
+## Alterations to the declarations of exported or public entities
+
+- Added: `"@nextui-org/system": "workspace:*"` in `devDependencies` in `packages/hooks/use-aria-menu/package.json`
+
+---
+
+packages/hooks/use-aria-menu/src/use-menu.ts: ## AI-generated summary of changes
+
+The diff introduces a new import statement for `useProviderContext` from the `@nextui-org/system` package, which is utilized within the `useMenu` function. This function now retrieves the `globalContext` using `useProviderContext()`, allowing it to access the `warningOptions` property. The conditional check for the presence of `aria-label` or `aria-labelledby` props has been modified to include a check for `globalContext?.warningOptions?.showAriaWarning`. If this condition is met and neither of the ARIA props is provided, a warning is logged to the console regarding the necessity of these props for accessibility. This change enhances the accessibility checks by integrating global context settings, thereby improving the overall functionality of the `useMenu` hook.
+
+## Alterations to the declarations of exported or public entities
+
+- Added: `import {useProviderContext} from "@nextui-org/system"` in `src/use-menu.ts`
+- Modified: `export function useMenu<T>(...)` in `src/use-menu.ts` to include a check for `globalContext?.warningOptions?.showAriaWarning` in the accessibility warning logic.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "feat: add warning option prop which allows to disable `aria-label` warning" introduces a new prop named `warningOptions` to the NextUI library. This prop contains a property called `showAriaWarning`, which allows developers to disable console warnings related to missing `aria-label` attributes. The motivation for this addition is to provide users with the ability to suppress warnings that may be considered unnecessary in specific contexts. This PR addresses issue #2586, where users expressed frustration over frequent console warnings regarding accessibility requirements for `aria-label` or `aria-labelledby` attributes. The author is uncertain whether this change is a breaking change for existing users and seeks feedback on its potential impact.
+
+## Objectives from Linked Issues
+
+The linked issue #2586 presents a feature request from a user who finds the `aria-label` warning messages in the console to be disruptive. The user, who has recently started using NextUI, is looking for a way to silence these warnings, as they are not standard HTML warnings but specific to the NextUI framework. The user suggests implementing a configuration option that would allow developers to control the visibility of these warnings, similar to the warning suppression feature available in SvelteKit. They propose two potential solutions: one involving a custom warning handler that ignores warnings starting with "a11y-" and another suggesting a configuration object that includes an `ariaWarning` property to disable the warnings when using the `NextUIProvider`. The overall objective is to improve user experience by providing an option to manage accessibility-related warnings effectively.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 7f5fbc62c00218aac7f8355b40dd9b2c833802c7 -->
+<!-- b7084ca553bd2eb797364c827bfd1b2f1705f626 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+
+
+<!-- tips_end -->\n- ryo-manba: The warning indicates there is an accessibility issue. I'm unsure if the library should provide a feature to hide the warning. This functionality is actually [part of React Aria](https://react-spectrum.adobe.com/react-aria/accessibility.html#labeling), but there is no option in React Aria to disable this warning. If necessary, there are plugins for Vite, SWC, and others that can remove console warnings.
+
+I’d like to gather opinions from the team on this.
+
+\n- ryo-manba: @abhinav700 
+We can’t prevent React Aria warnings since we don’t control its internal code. Please make a request to the React Aria team! I’ll close this PR now, but feel free to share any further feedback. Thanks for the PR!\n
+
+Files Changed:
+- packages/core/system/src/provider-context.ts (modified, 8 changes)\n  Patch: @@ -79,6 +79,14 @@ export type ProviderContextProps = {
+    * @default all calendars
+    */
+   createCalendar?: (calendar: SupportedCalendars) => Calendar | null;
++  /**
++   * options related to warnings which are displayed using console.warn
++   *
++   * @property {boolean} [showAriaWarning=true] - Controls whether warnings related to ARIA properties are shown.
++   */
++  warningOptions?: {
++    showAriaWarning?: boolean;
++  };
+ };
+ 
+ export const [ProviderContext, useProviderContext] = createContext<ProviderContextProps>({\n- packages/core/system/src/provider.tsx (modified, 13 changes)\n  Patch: @@ -31,6 +31,14 @@ export interface NextUIProviderProps
+    * Link, Menu, Tabs, Table, etc.
+    */
+   navigate?: (path: string) => void;
++  /**
++   * options related to warnings which are displayed using console.warn
++   *
++   * @property {boolean} [showAriaWarning=true] - Controls whether warnings related to ARIA properties are shown.
++   */
++  warningOptions?: {
++    showAriaWarning?: boolean;
++  };
+ }
+ 
+ export const NextUIProvider: React.FC<NextUIProviderProps> = ({
+@@ -45,6 +53,9 @@ export const NextUIProvider: React.FC<NextUIProviderProps> = ({
+   // then they will be set in `use-date-input.ts` or `use-calendar-base.ts`
+   defaultDates,
+   createCalendar,
++  warningOptions = {
++    showAriaWarning: true,
++  },
+   ...otherProps
+ }) => {
+   let contents = children;
+@@ -64,6 +75,7 @@ export const NextUIProvider: React.FC<NextUIProviderProps> = ({
+       disableAnimation,
+       disableRipple,
+       validationBehavior,
++      warningOptions,
+     };
+   }, [
+     createCalendar,
+@@ -72,6 +84,7 @@ export const NextUIProvider: React.FC<NextUIProviderProps> = ({
+     disableAnimation,
+     disableRipple,
+     validationBehavior,
++    warningOptions,
+   ]);
+ 
+   return (\n- packages/hooks/use-aria-menu/package.json (modified, 3 changes)\n  Patch: @@ -50,7 +50,8 @@
+   },
+   "devDependencies": {
+     "clean-package": "2.2.0",
+-    "react": "^18.0.0"
++    "react": "^18.0.0",
++    "@nextui-org/system": "workspace:*"
+   },
+   "clean-package": "../../../clean-package.config.json",
+   "tsup": {\n- packages/hooks/use-aria-menu/src/use-menu.ts (modified, 9 changes)\n  Patch: @@ -5,6 +5,7 @@ import {filterDOMProps, mergeProps} from "@react-aria/utils";
+ import {RefObject, KeyboardEvent as ReactKeyboardEvent} from "react";
+ import {TreeState} from "@react-stately/tree";
+ import {useSelectableList} from "@react-aria/selection";
++import {useProviderContext} from "@nextui-org/system";
+ 
+ export interface MenuAria {
+   /** Props for the menu element. */
+@@ -42,7 +43,13 @@ export function useMenu<T>(
+ ): MenuAria {
+   let {shouldFocusWrap = true, onKeyDown, onKeyUp, ...otherProps} = props;
+ 
+-  if (!props["aria-label"] && !props["aria-labelledby"]) {
++  const globalContext = useProviderContext();
++
++  if (
++    globalContext?.warningOptions?.showAriaWarning &&
++    !props["aria-label"] &&
++    !props["aria-labelledby"]
++  ) {
+     console.warn("An aria-label or aria-labelledby prop is required for accessibility.");
+   }
+ \n- pnpm-lock.yaml (modified, 3 changes)\n  Patch: @@ -3239,6 +3239,9 @@ importers:
+         specifier: ^18.2.0
+         version: 18.2.0(react@18.2.0)
+     devDependencies:
++      '@nextui-org/system':
++        specifier: workspace:*
++        version: link:../../core/system
+       clean-package:
+         specifier: 2.2.0
+         version: 2.2.0\n

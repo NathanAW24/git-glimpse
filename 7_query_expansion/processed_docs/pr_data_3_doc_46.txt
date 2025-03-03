@@ -1,0 +1,303 @@
+Pull Request Number: 3984
+Title: fix(select): prevent default browser error UI from appearing
+Base Branch: beta/release-next
+Head Branch: fix/3913
+Author: chirokas
+URL: https://github.com/nextui-org/nextui/pull/3984
+State: CLOSED
+Created At: 2024-11-04T15:21:27Z
+Merged At: None
+Participants: chirokas, jrgarciadev, wingkwong
+
+Description:
+Closes #3913
+📝 Description
+See #3913 (comment)
+⛳️ Current behavior (updates)
+
+🚀 New behavior
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Improved error handling for the select component, preventing default browser error messages.
+Enhanced functionality of the hidden select component, including better management of required fields and selected values.
+
+
+
+Bug Fixes
+
+Fixed the onChange handler to properly update the selected keys in the state.
+
+
+
+Tests
+
+Added a new test suite to validate required field behavior in the select component.
+
+Commits:
+- fix(select): prevent default browser error UI from appearing\n- Merge branch 'canary' of https://github.com/nextui-org/nextui into fix/3913\n- fix(select): improve form submit\n- chore: cleanup\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 5bf7332a4a8326bd61443f3c0cee69b349d5c7bd
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                             | Type  |
+| -------------------------------- | ----- |
+| @nextui-org/select               | Patch |
+| @nextui-org/use-aria-multiselect | Patch |
+| @nextui-org/react                | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/chirokas/nextui/new/fix/3913?filename=.changeset/fluffy-keys-love.md&value=---%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Fuse-aria-multiselect%22%3A%20patch%0A---%0A%0Afix(select)%3A%20prevent%20default%20browser%20error%20UI%20from%20appearing%0A)
+
+\n- vercel: @chirokas is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%227d6a1aa12ea62bca067ab1ee7478abf5aab828f8%22%7D%2C%22id%22%3A%22QmUmfsfe6Uw2Q5RKzizHq4SsURwZ8eedMaupT3psXqb2hn%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3984%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This pull request introduces patches for the `@nextui-org/select` and `@nextui-org/use-aria-multiselect` packages to enhance error handling by preventing the default browser error UI from appearing. It modifies the `useHiddenSelect` function and the `HiddenSelect` component to improve the handling of the `required` attribute and the management of the `value` property for the hidden `<select>` element. Additionally, a new test suite is added to validate the behavior of the `Select` component when marked as required.
+
+## Changes
+
+| File Path                                   | Change Summary                                                                                      |
+|---------------------------------------------|----------------------------------------------------------------------------------------------------|
+| `.changeset/quick-buses-kick.md`           | Added patches for the `@nextui-org/select` and `@nextui-org/use-aria-multiselect` packages to improve error handling.      |
+| `packages/components/select/src/hidden-select.tsx` | Modified `useHiddenSelect` and `HiddenSelect` to better manage the `required` attribute and `value` property. |
+| `packages/components/select/__tests__/select.test.tsx` | Introduced a new test suite and test case to validate the required field behavior in the `Select` component. |
+
+## Assessment against linked issues
+
+| Objective                                           | Addressed | Explanation                                       |
+|----------------------------------------------------|-----------|---------------------------------------------------|
+| Ensure consistent validation behavior between Input and Select components (#3913) | ✅         |                                                   |
+
+## Possibly related PRs
+- **#2987**: The changes in this PR involve switching the default validation behavior to ARIA, which relates to the error handling and validation aspects of the `@nextui-org/select` and `@nextui-org/use-aria-multiselect` packages in the main PR.
+- **#3533**: This PR addresses synchronization issues in the input component, which is relevant to the changes made in the main PR regarding the handling of input properties and error states.
+- **#3643**: This PR ensures that the clear button is not focusable when the input is disabled, which aligns with the main PR's focus on improving error handling and user experience in input components.
+- **#3853**: The changes in this PR regarding label placement in the Select component are directly related to the modifications made in the main PR, which also involves enhancing the Select component's functionality.
+- **#3966**: This PR addresses a sliding issue caused by the helper wrapper in input components, which is relevant to the main PR's focus on improving the user interface and error handling in the input and select components.
+
+## Suggested labels
+`👀 Status: In Review`, `📋 Scope : Docs`
+
+## Suggested reviewers
+- wingkwong
+- jrgarciadev
+
+<!-- walkthrough_end -->
+
+
+
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- jrgarciadev: @wingkwong please review\n- vercel: [vc]: #jtkC07Gx/NQ7Si/O8f7SEBztqoZzxSKiiLSvszx7N5g=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi82VlRjWDJvenVza1dXeVhnZ1htN2tod1ZUVUVyIiwicHJldmlld1VybCI6IiIsIm5leHRDb21taXRTdGF0dXMiOiJGQUlMRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoiIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi85c0tkNENVbVFNV3ZvSFEyMVhvVW5ibjdDTFNuIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstY2hpcm9rYXMtZml4LTM5MTMtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstY2hpcm9rYXMtZml4LTM5MTMtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/6VTcX2ozuskWWyXggXm7khwVTUEr)) |  |  | Nov 10, 2024 3:42pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/9sKd4CUmQMWvoHQ21XoUnbn7CLSn)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-chirokas-fix-3913-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-chirokas-fix-3913-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 10, 2024 3:42pm |
+
+
+\n- chirokas: @wingkwong Select doesn't support the `validationBehavior` prop.
+https://github.com/nextui-org/nextui/blob/c6326d169dd37790952645ebe3196596f0ae274b/packages/hooks/use-aria-multiselect/src/use-multiselect-state.ts#L77-L83
+https://github.com/nextui-org/nextui/issues/3913#issuecomment-2459740356
+\n- chirokas: Opening a new one - #4281\n
+
+Files Changed:
+- .changeset/quick-buses-kick.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/select": patch
++"@nextui-org/use-aria-multiselect": patch
++---
++
++Prevent default browser error UI from appearing (#3913).\n- packages/components/select/__tests__/select.test.tsx (modified, 55 changes)\n  Patch: @@ -882,3 +882,58 @@ describe("Select with React Hook Form", () => {
+     expect(onSubmit).toHaveBeenCalledTimes(1);
+   });
+ });
++
++describe("validationBehavior=native", () => {
++  let user: UserEvent;
++
++  beforeEach(() => {
++    user = userEvent.setup();
++  });
++
++  it("supports server validation", async () => {
++    const onSubmit = jest.fn();
++
++    const {getByTestId} = render(
++      <form onSubmit={onSubmit}>
++        <Select
++          isRequired
++          data-testid="select"
++          label="Test"
++          name="select"
++          // validationBehavior="native"
++        >
++          <SelectItem key="one">One</SelectItem>
++          <SelectItem key="two">Two</SelectItem>
++          <SelectItem key="three">Three</SelectItem>
++        </Select>
++        <button data-testid="button" type="submit">
++          Submit
++        </button>
++      </form>,
++    );
++
++    const button = getByTestId("button");
++    const select = getByTestId("select");
++    const input = document.querySelector("[name=select]");
++
++    expect(input).toHaveAttribute("required");
++    expect(select).not.toHaveAttribute("aria-describedby");
++
++    await user.click(button);
++
++    expect(select).toHaveAttribute("aria-describedby");
++    expect(input.validity.valid).toBe(false);
++    expect(onSubmit).toHaveBeenCalledTimes(0);
++
++    expect(document.activeElement).toBe(select);
++
++    await user.keyboard("[ArrowRight]");
++
++    expect(select).not.toHaveAttribute("aria-describedby");
++    expect(input.validity.valid).toBe(true);
++
++    await user.click(button);
++
++    expect(onSubmit).toHaveBeenCalledTimes(1);
++  });
++});\n- packages/components/select/src/hidden-select.tsx (modified, 8 changes)\n  Patch: @@ -92,24 +92,18 @@ export function useHiddenSelect<T>(
+     inputProps: {
+       type: "text",
+       tabIndex: modality == null || state.isFocused || state.isOpen ? -1 : 0,
+-      autoComplete,
+-      value: [...state.selectedKeys].join(",") ?? "",
+-      required: isRequired,
+       style: {fontSize: 16},
+       onFocus: () => triggerRef.current?.focus(),
+       disabled: isDisabled,
+-      // The onChange is handled by the `select` element. This avoids the `form` with input `value`
+-      // and no `onChange` warning.
+-      onChange: () => {},
+     },
+     selectProps: {
+       name,
+       tabIndex: -1,
+       autoComplete,
+       // TODO: Address validation for cases where an option is selected and then deselected.
+       // required: validationBehavior === "native" && isRequired,
++      required: isRequired,
+       disabled: isDisabled,
+-      size: state.collection.size,
+       value:
+         selectionMode === "multiple"
+           ? [...state.selectedKeys].map((k) => String(k))\n- packages/hooks/use-aria-multiselect/src/use-multiselect-state.ts (modified, 3 changes)\n  Patch: @@ -71,6 +71,8 @@ export function useMultiSelectState<T extends {}>(props: MultiSelectProps<T>): M
+       if (props.selectionMode === "single") {
+         triggerState.close();
+       }
++
++      validationState.commitValidation();
+     },
+   });
+ 
+@@ -101,7 +103,6 @@ export function useMultiSelectState<T extends {}>(props: MultiSelectProps<T>): M
+       if (listState.collection.size !== 0) {
+         setFocusStrategy(focusStrategy);
+         triggerState.toggle();
+-        validationState.commitValidation();
+       }
+     },
+     isFocused,\n

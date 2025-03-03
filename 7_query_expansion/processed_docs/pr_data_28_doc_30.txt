@@ -1,0 +1,56 @@
+Pull Request Number: 446
+Title: fix(react-link): wrap it into a single child
+Base Branch: next
+Head Branch: fix/link-children
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/446
+State: MERGED
+Created At: 2022-05-02T01:36:06Z
+Merged At: 2022-05-02T01:36:35Z
+Participants: jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+Due to next/link doesn't support multiple children we have to wrap the NextUI children into a fragment
+⛳️ Current behavior (updates)
+It's not possible to use the NextUI link as a next/link thought the as prop
+🚀 New behaviour
+NextUI children were wrapped into a React Fragment in order to support next/link, NextUI will be able to use it as follows:
+import NextLink from "next/link";
+import { Link } from "@nextui-org/react"
+
+export default function App() {
+  return (
+    <Link href="#" as={NextLink}>
+      "First solve the problem. Then, write the code." - Jon Johnson.
+    </Link>
+  );
+}
+
+
+💣 Is this a breaking change (Yes/No): No
+
+Commits:
+- fix(react-link): wrap it into a single child\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/react/src/link/link.tsx (modified, 6 changes)\n  Patch: @@ -24,8 +24,10 @@ export type LinkProps = Props &
+ const Link = React.forwardRef<React.ElementRef<typeof StyledLink>, LinkProps>(
+   ({ children, icon, ...props }, forwardedRef) => (
+     <StyledLink {...props} ref={forwardedRef}>
+-      {children}
+-      {icon && <LinkIcon />}
++      <>
++        {children}
++        {icon && <LinkIcon />}
++      </>
+     </StyledLink>
+   )
+ );\n

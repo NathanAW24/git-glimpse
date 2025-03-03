@@ -1,0 +1,108 @@
+Pull Request Number: 535
+Title: fix(react-modal): animation for backdrop
+Base Branch: next
+Head Branch: modal-animation
+Author: cyanxiao
+URL: https://github.com/nextui-org/nextui/pull/535
+State: MERGED
+Created At: 2022-06-10T04:10:25Z
+Merged At: 2022-11-06T18:39:53Z
+Participants: cyanxiao, jrgarciadev
+
+Description:
+📝 Description
+
+Add a brief description
+
+Original backdrop didn't perform transition or animation when it shows up. I did find that there are some transition codes in StyledBackdropLayer but they didn't come into effect because there was no change in opacity after backdrop had been rendered.
+
+Please describe the current behavior that you are modifying
+
+Modal is set to invisible for illustration purpose.
+Before:
+
+After:
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+Add fade-in effect for backdrop. It applies to opacity & backdrop filter.
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix: animation for backdrop\n- fix: modal set to visible\n- fix: remove blur opacity transition\n- fix: animate backdropFilter\n- Merge branch 'next' into modal-animation\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Hey @imchell sorry for the delay, could you fix the conflicts please?
+\n- cyanxiao: @jrgarciadev I will fix this in a week\n- vercel: @jrgarciadev is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%221ea02cca1a247d81523ed19f20c2faeed4354680%22%7D%2C%22id%22%3A%22QmXZuh2mJGUriLbh7GTk8dFkzXvWwnyfxev4fG2iYHg9o5%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A535%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/9zCtwQLbescWDJ36GPBcmugqzAdC)) | [Visit Preview](https://nextui-storybook-git-fork-imchell-modal-animation-nextui-org.vercel.app) | Nov 6, 2022 at 6:39PM (UTC) |
+
+\n
+
+Files Changed:
+- packages/react/src/backdrop/backdrop.styles.ts (modified, 27 changes)\n  Patch: @@ -12,6 +12,21 @@ const appearanceIn = keyframes({
+   },
+ });
+ 
++/**
++ * animate StyledBackdropLayer when it shows up
++ */
++const opacityFadeIn = keyframes({
++  "0%": {
++    opacity: 0,
++  },
++});
++
++const filterFadeIn = keyframes({
++  "0%": {
++    backdropFilter: "saturate(0%) blur(0)",
++  },
++});
++
+ export const StyledBackdropContent = styled("div", {
+   position: "relative",
+   display: "inline-block",
+@@ -58,21 +73,27 @@ export const StyledBackdropLayer = styled("div", {
+       true: {
+         bg: "$black",
+         opacity: "$$backdropOpacity",
+-        transition: "opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+         "@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none))": {
+           opacity: 1,
+-          transition: "background 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+           backdropFilter: "saturate(180%) blur(20px)",
++          animationName: `${filterFadeIn}, ${opacityFadeIn}`,
+           bg: "rgba(0, 0, 0, 0.1)",
+         },
+       },
+       false: {
+         bg: "$black",
+         opacity: "$$backdropOpacity",
+-        transition: "opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
++        animationName: `${opacityFadeIn}`,
++        animationDuration: "0.2s",
++        animationTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+       },
+     },
+     animated: {
++      true: {
++        animationName: `${opacityFadeIn}`,
++        animationDuration: "0.2s",
++        animationTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
++      },
+       false: {
+         transition: "none",
+       },\n

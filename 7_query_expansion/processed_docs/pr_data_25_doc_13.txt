@@ -1,0 +1,166 @@
+Pull Request Number: 962
+Title: fix(docs-playground): dynamic live font styles
+Base Branch: main
+Head Branch: fix/dynamic-live-font
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/962
+State: MERGED
+Created At: 2022-12-22T16:25:25Z
+Merged At: 2023-01-02T02:12:17Z
+Participants: tianenpang, codecov-commenter, jrgarciadev
+
+Description:
+📝 Description
+The theme of sandpack makes DynamicLive applied $sm font-size and line-height, which is the font-size and line-height of LiveCode.
+As the live preview is not the $base font-size and $md line-height, it causes some content shift.
+
+  
+    
+      nextui/apps/docs/src/components/sandpack/themes.ts
+    
+    
+        Lines 29 to 34
+      in
+      66153ec
+    
+  
+  
+    
+
+        
+          
+           typography: { 
+        
+
+        
+          
+             bodyFont: "var(--nextui-fonts-sans)", 
+        
+
+        
+          
+             monoFont: "var(--nextui-fonts-mono)", 
+        
+
+        
+          
+             fontSize: "var(--nextui-fontSizes-sm)", 
+        
+
+        
+          
+             lineHeight: "var(--nextui-lineHeights-sm)", 
+        
+
+        
+          
+           }, 
+        
+    
+  
+
+
+⛳️ Current behavior (updates)
+Reapply the right font-size and line-height to InView.
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+Before:
+
+  
+    
+    
+
+    before.webm
+    
+  
+
+  
+
+  
+
+
+After:
+
+  
+    
+    
+
+    after.webm
+
+Commits:
+- fix(docs-playground): dynamic live font styles\n
+
+Labels:
+
+
+Comments:
+- vercel: @tianenpang is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2244867993149667e3136513b087ea1fabc3231380%22%7D%2C%22id%22%3A%22QmSERtjz47G5tvBUfBdP5y4Cveps4cdvkcNeL2PsMrrEQN%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A962%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/Dij5qsc2nLhFC1GnFgQoTTHQ6NyA)) | [Visit Preview](https://nextui-docs-git-fork-tianenpang-fix-dynamic-l-9b8cd6-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-docs-git-fork-tianenpang-fix-dynamic-l-9b8cd6-nextui-org.vercel.app) | Jan 2, 2023 at 2:11AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/8gWgUALrT9rtMcGX7E7khTS2yZ2Q)) | [Visit Preview](https://nextui-storybook-git-fork-tianenpang-fix-dyna-9761c2-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-tianenpang-fix-dyna-9761c2-nextui-org.vercel.app) | Jan 2, 2023 at 2:11AM (UTC) |
+
+
+\n- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/962?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#962](https://codecov.io/gh/nextui-org/nextui/pull/962?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (4486799) into [main](https://codecov.io/gh/nextui-org/nextui/commit/66153ecb82e4f4b838d41763e4f83c6f8ac95c2e?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (66153ec) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+```diff
+@@           Coverage Diff           @@
+##             main     #962   +/-   ##
+=======================================
+  Coverage   75.85%   75.85%           
+=======================================
+  Files         223      223           
+  Lines        3528     3528           
+  Branches     1116     1116           
+=======================================
+  Hits         2676     2676           
+  Misses        841      841           
+  Partials       11       11           
+```
+
+
+
+Help us with your feedback. Take ten seconds to tell us [how you rate us](https://about.codecov.io/nps?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Have a feature suggestion? [Share it here.](https://app.codecov.io/gh/feedback/?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+\n
+
+Files Changed:
+- apps/docs/src/components/playground/dynamic-live.tsx (modified, 10 changes)\n  Patch: @@ -189,6 +189,12 @@ const LiveContainer = Components.styled(Box, {
+   },
+ });
+ 
++const StyledInView = Components.styled(InView, {
++  fontSize: "$base",
++  lineHeight: "$md",
++  fontFamily: "$sans",
++});
++
+ export const scope = {
+   ...Components,
+   ...Icons,
+@@ -239,7 +245,7 @@ const DynamicLive: React.FC<Props & {css?: Components.CSS}> = ({
+ 
+   return (
+     <LiveProvider code={code} noInline={noInline} scope={scope} theme={codeTheme}>
+-      <InView className="inview-section" triggerOnce={isProd} onChange={setIsVisible}>
++      <StyledInView className="inview-section" triggerOnce={isProd} onChange={setIsVisible}>
+         <LiveContainer
+           className="dynamic-live-container"
+           css={{
+@@ -322,7 +328,7 @@ const DynamicLive: React.FC<Props & {css?: Components.CSS}> = ({
+           )}
+           {showEditor && <Editor code={code} initialOpen={initialEditorOpen} />}
+         </LiveContainer>
+-      </InView>
++      </StyledInView>
+     </LiveProvider>
+   );
+ };\n

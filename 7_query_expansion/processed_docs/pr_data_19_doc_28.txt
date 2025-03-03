@@ -1,0 +1,72 @@
+Pull Request Number: 1716
+Title: fix: Select `children` typing error
+Base Branch: main
+Head Branch: main
+Author: Innei
+URL: https://github.com/nextui-org/nextui/pull/1716
+State: CLOSED
+Created At: 2023-09-29T16:03:11Z
+Merged At: None
+Participants: Innei, jguddas
+
+Description:
+Closes #1715 
+📝 Description
+fix: Select children typing error
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+make ts happy
+🚀 New behavior
+N/A
+💣 Is this a breaking change (Yes/No):
+NO
+📝 Additional Information
+
+Commits:
+- fix: children typing error\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: b5b1abea8479a0c131c08d33f87b7af9daf3bd25
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/Innei/nextui/new/main?filename=.changeset/nervous-months-occur.md&value=---%0A%22%40nextui-org%2Fuse-aria-multiselect%22%3A%20patch%0A---%0A%0Afix%3A%20Select%20%60children%60%20typing%20error%0A)
+
+\n- vercel: [vc]: #m0MG84xmcRLTCxKXg9Za8TTeN/oeZzLuJz3Nz0Rd//Y=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNEhHclptTm9iZFVraHlaMUx5UWJFZVRHblVMbSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWlubmVpLW1haW4tbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstaW5uZWktbWFpbi1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/4HGrZmNobdUkhyZ1LyQbEeTGnULm)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-innei-main-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-innei-main-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 29, 2023 4:05pm |
+
+\n- vercel: @Innei is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22b5b1abea8479a0c131c08d33f87b7af9daf3bd25%22%7D%2C%22id%22%3A%22QmWQXWC8yuFtuyyTEAgb4tbjhYAk1Umvvd4mDybFsrjbdR%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1716%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jguddas: Please add a changset to the PR.\n- Innei: It seems that it is not such an easy problem to solve. I need to spend some time to adjust it again. The type of `children` is a little complicated\n
+
+Files Changed:
+- packages/hooks/use-aria-multiselect/src/use-multiselect-state.ts (modified, 2 changes)\n  Patch: @@ -18,7 +18,7 @@ import {useState} from "react";
+ import {MultiSelectListState, useMultiSelectListState} from "./use-multiselect-list-state";
+ 
+ export interface MultiSelectProps<T>
+-  extends CollectionBase<T>,
++  extends Omit<CollectionBase<T>, "children">,
+     AsyncLoadable,
+     Omit<InputBase, "isReadOnly">,
+     DOMProps,\n
