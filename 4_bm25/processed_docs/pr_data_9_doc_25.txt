@@ -1,0 +1,299 @@
+Pull Request Number: 3247
+Title: fix: re-attached scroll event behavior in `useScrollPosition`
+Base Branch: canary
+Head Branch: fix/use-scroll-position
+Author: kurateh
+URL: https://github.com/nextui-org/nextui/pull/3247
+State: MERGED
+Created At: 2024-06-13T08:33:23Z
+Merged At: 2024-09-12T14:09:12Z
+Participants: kurateh, wingkwong
+
+Description:
+📝 Description
+
+Initialize throttleTimeout in the cleanup function to ensure that handler() runs properly after the scroll listener is re-attached.
+
+⛳️ Current behavior (updates)
+If the scroll listener is removed while throttleTimeout is still pending, handler() is prevented from running by clearTimeout(throttleTimeout.current).
+However, even after the scroll listener is re-attached, throttleTimeout.current is not null because clearTimeout() does not change the value of its parameter. As a result, handler() does not run indefinitely.
+This behavior does not appear to be intended.
+🚀 New behavior
+By initializing throttleTimeout.current with clearTimeout(throttleTimeout.current), ensure that handler() runs properly after the scroll listener is re-attached.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced the useScrollPosition hook to re-attach scroll event behavior, improving dynamic response to user scrolling.
+
+
+
+Bug Fixes
+
+Fixed an issue by ensuring the scroll position is accurately captured and updated during user interactions.
+
+Commits:
+- fix: initialize throttleTimeout in cleanup function\n- Merge branch 'canary' into pr/3247\n- chore(changeset): add changeset\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: b54848567b169b8b3ad5c9bd4d8d9d8d9b5f8ce8
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                            | Type  |
+| ------------------------------- | ----- |
+| @nextui-org/use-scroll-position | Patch |
+| @nextui-org/navbar              | Patch |
+| @nextui-org/react               | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/vetan2/nextui/new/fix/use-scroll-position?filename=.changeset/khaki-turkeys-behave.md&value=---%0A%22%40nextui-org%2Fuse-scroll-position%22%3A%20patch%0A---%0A%0Afix%3A%20re-attached%20scroll%20event%20behavior%20in%20%60useScrollPosition%60%0A)
+
+\n- vercel: [vc]: #SzIqQ/mrLhXNi1Ar2szWeYJwuOF7djq7Ztts2EEpZGc=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvOFNHcUtiNU5oQXV6NDJXaHNuRlJyM3QxWXU3ZCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXZldGFuMi1maXgtdXNlLXMtY2RlZjEzLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXZldGFuMi1maXgtdXNlLXMtY2RlZjEzLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/8SGqKb5NhAuz42WhsnFRr3t1Yu7d)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-vetan2-fix-use-s-cdef13-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-vetan2-fix-use-s-cdef13-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jun 13, 2024 8:36am |
+
+\n- vercel: @vetan2 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22c975d700a1e5f764cd32eccbae7017c98c8771b5%22%7D%2C%22id%22%3A%22QmWdnjgUVSWtKhxV6ZNX1ZRhEg4sLUi1wjAoYUjQekewTg%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3247%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The `useScrollPosition` hook has been updated to re-attach the scroll event behavior, ensuring that it listens correctly for scroll events. Additionally, a line was added to set `throttleTimeout.current` to `null` when clearing the timeout, which aids in proper cleanup.
+
+## Changes
+
+| File                                                 | Change Summary                                           |
+|------------------------------------------------------|----------------------------------------------------------|
+| `packages/hooks/use-scroll-position/src/index.ts`    | Added `throttleTimeout.current = null;` after clearing the timeout; re-attached scroll event behavior in `useScrollPosition`. |
+| `.changeset/fast-students-promise.md`                | Introduced a patch for the `@nextui-org/use-scroll-position` package to enhance scroll event handling. |
+
+## Sequence Diagram(s)
+
+No sequence diagrams are required since the change is minor and does not introduce new features or significantly alter the control flow.
+
+## Possibly related PRs
+
+- #3049: This PR optimizes the `useScrollPosition` hook by implementing `useCallback` and `useRef`, which directly relates to the changes made in the main PR regarding the management of `throttleTimeout`.
+- #3315: This PR addresses the clearing of `throttleTimeout` in the `useScrollPosition` function, which is directly connected to the addition of `throttleTimeout.current = null;` in the main PR.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+<existing_changesets>
+# Existing changesets
+
+packages/hooks/use-scroll-position/src/index.ts: ## Short Summary
+
+In the `useScrollPosition` function in `index.ts`, a line was added to set `throttleTimeout.current` to `null` when clearing the timeout.
+
+## Alterations to the declarations of exported or public entities
+
+- `export const useScrollPosition = (props: UseScrollPositionOptions): ScrollValue` in `packages/hooks/use-scroll-position/src/index.ts`
+- Added line: `throttleTimeout.current = null;`
+</existing_changesets>
+
+
+<new_changesets>
+# New changesets
+
+.changeset/fast-students-promise.md: ## AI-generated summary of changes
+
+The new file introduces a patch for the `@nextui-org/use-scroll-position` package, specifically re-attaching the scroll event behavior in the `useScrollPosition` hook. This enhancement ensures that the hook correctly listens for scroll events, allowing components that utilize this hook to respond dynamically to user scrolling actions. The re-attachment of the scroll event behavior likely improves the performance and reliability of scroll position tracking within applications that depend on this functionality, ensuring that the scroll position is accurately captured and updated as the user interacts with the page.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- Added: Patch for scroll event behavior in `useScrollPosition` in `@nextui-org/use-scroll-position`
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR summary
+
+**Title**: Fix re-attached scroll event behavior in `useScrollPosition`
+
+**Description**: This pull request addresses an issue with the `useScrollPosition` hook where the scroll event handler does not execute properly after the scroll listener is re-attached. The problem occurs when the scroll listener is removed while `throttleTimeout` is still pending, leading to `handler()` being prevented from running due to `clearTimeout(throttleTimeout.current)`. Since `clearTimeout()` does not modify the value of its parameter, `throttleTimeout.current` remains non-null even after re-attaching the scroll listener, resulting in `handler()` not executing indefinitely. The proposed solution involves initializing `throttleTimeout.current` in the cleanup function to ensure that `handler()` runs correctly after the scroll listener is re-attached. This change does not introduce any breaking changes.
+
+### Existing objectives summary to be updated
+
+
+## PR summary
+
+**Title**: Fix re-attached scroll event behavior in `useScrollPosition`
+
+**Description**: This pull request addresses an issue with the `useScrollPosition` hook where the scroll event handler does not run properly after the scroll listener is re-attached. The problem arises because `clearTimeout(throttleTimeout.current)` does not set `throttleTimeout.current` to null, causing `handler()` to not run indefinitely. The proposed change initializes `throttleTimeout` in the cleanup function to ensure `handler()` runs correctly after the scroll listener is re-attached. This change is not a breaking change.
+
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- c975d700a1e5f764cd32eccbae7017c98c8771b5 -->
+<!-- b54848567b169b8b3ad5c9bd4d8d9d8d9b5f8ce8 -->
+
+<!-- commit_ids_reviewed_end -->
+
+---
+
+<details>
+<summary>Recent review details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>Commits</summary>
+
+Files that changed from the base of the PR and between c975d700a1e5f764cd32eccbae7017c98c8771b5 and b54848567b169b8b3ad5c9bd4d8d9d8d9b5f8ce8.
+
+</details>
+
+
+<details>
+<summary>Files selected for processing (1)</summary>
+
+* .changeset/fast-students-promise.md (1 hunks)
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<details>
+<summary>Additional comments not posted (2)</summary><blockquote>
+
+<details>
+<summary>.changeset/fast-students-promise.md (2)</summary><blockquote>
+
+`1-5`: **The changeset file is correctly formatted and the message aligns with the PR objectives.**
+
+The changeset file follows the correct format by specifying the package name, version bump type (patch), and a brief description of the changes. The message also aligns with the PR objectives and the AI-generated summary, indicating that the scroll event behavior has been fixed in the `useScrollPosition` hook.
+
+---
+
+`1-5`: **Please provide the code changes for a thorough review.**
+
+While the changeset file provides a high-level overview of the changes, it does not contain the actual code modifications. To perform a comprehensive review and ensure the correctness and completeness of the fix, please provide the relevant code changes in the `useScrollPosition` hook.
+
+</blockquote></details>
+
+</blockquote></details>
+
+</details><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/fast-students-promise.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/use-scroll-position": patch
++---
++
++re-attach scroll event behavior in `useScrollPosition`\n- packages/hooks/use-scroll-position/src/index.ts (modified, 1 changes)\n  Patch: @@ -77,6 +77,7 @@ export const useScrollPosition = (props: UseScrollPositionOptions): ScrollValue
+       target.removeEventListener("scroll", handleScroll);
+       if (throttleTimeout.current) {
+         clearTimeout(throttleTimeout.current);
++        throttleTimeout.current = null;
+       }
+     };
+   }, [elementRef?.current, delay, handler, isEnabled]);\n

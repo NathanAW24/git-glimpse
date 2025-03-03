@@ -1,0 +1,137 @@
+Pull Request Number: 929
+Title: Added eslint import/no-duplicates
+Base Branch: next
+Head Branch: chore/added-eslint-import-no-duplicates
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/929
+State: MERGED
+Created At: 2022-12-01T16:53:13Z
+Merged At: 2023-01-07T01:29:22Z
+Participants: jguddas, jrgarciadev, gauravkrp, tianenpang
+
+Description:
+chore: added eslint import/no-duplicates
+chore: unified duplicate import
+
+
+Closes # 
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- chore: added eslint import/no-duplicates\n- chore: unified duplicate import\n- Merge branch 'next' into chore/added-eslint-import-no-duplicates\n- fix: removed duplicate CSS import\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%221be0751030eab7c9ef01a5394caf624457b97c39%22%7D%2C%22id%22%3A%22QmNhQ8cA8PpDCHUXuiHpcZ8SXipfEHujCCGJAemarXBwEd%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A929%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/3x4G1HHowbRz4mExruh5LncfwZPz)) | [Visit Preview](https://nextui-storybook-git-fork-jguddas-chore-added-0f74af-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-jguddas-chore-added-0f74af-nextui-org.vercel.app) | Jan 4, 2023 at 11:49AM (UTC) |
+
+\n- jguddas: @gauravkrp what do you think?\n- jrgarciadev: Huge thanks @jguddas! 🚀 \n
+
+Files Changed:
+- .eslintrc.json (modified, 1 changes)\n  Patch: @@ -76,6 +76,7 @@
+         "newlines-between": "always"
+       }
+     ],
++    "import/no-duplicates": "warn",
+     "react/self-closing-comp": "warn",
+     "react/jsx-sort-props": [
+       "warn",\n- apps/docs/src/components/playground/dynamic-live.tsx (modified, 3 changes)\n  Patch: @@ -2,14 +2,13 @@ import React, {useRef, useState, useEffect} from "react";
+ import {LivePreview, LiveProvider, LiveError} from "react-live";
+ import NextLink from "next/link";
+ import {useMediaQuery} from "@hooks/use-media-query";
+-import {validateEmail} from "@utils/index";
++import {validateEmail, isProd} from "@utils/index";
+ import withDefaults from "@utils/with-defaults";
+ import {motion, useTransform, useMotionValue} from "framer-motion";
+ import {InView} from "react-intersection-observer";
+ import {Box} from "@primitives";
+ import * as Components from "@nextui-org/react";
+ import {WindowActions} from "@components";
+-import {isProd} from "@utils/index";
+ 
+ import * as TemplateComponents from "../templates";
+ import Palette from "../palette";\n- apps/docs/src/layouts/docs.tsx (modified, 3 changes)\n  Patch: @@ -1,8 +1,7 @@
+ import React, {useState, useEffect} from "react";
+-import {Container, Row, Col} from "@nextui-org/react";
++import {Container, Row, Col, Link} from "@nextui-org/react";
+ import NextLink from "next/link";
+ import {Route} from "@lib/docs/page";
+-import {Link} from "@nextui-org/react";
+ import {Heading, getHeadings} from "@utils/get-headings";
+ import {MetaProps} from "@lib/docs/meta";
+ import Header from "@layouts/header";\n- packages/react/src/card/use-card.ts (modified, 3 changes)\n  Patch: @@ -6,8 +6,7 @@ import type {NormalWeights, CardVariants} from "./../utils/prop-types";
+ import React, {useCallback} from "react";
+ import {useFocusRing} from "@react-aria/focus";
+ import {mergeProps} from "@react-aria/utils";
+-import {usePress} from "@react-aria/interactions";
+-import {useHover} from "@react-aria/interactions";
++import {usePress, useHover} from "@react-aria/interactions";
+ 
+ import useDrip from "../use-drip";
+ import {useDOMRef} from "../utils/dom";\n- packages/react/src/checkbox/checkbox.tsx (modified, 3 changes)\n  Patch: @@ -6,8 +6,7 @@ import type {CSS} from "../theme/stitches.config";
+ import React, {useMemo} from "react";
+ import {mergeProps} from "@react-aria/utils";
+ import {useFocusRing} from "@react-aria/focus";
+-import {useHover} from "@react-aria/interactions";
+-import {usePress} from "@react-aria/interactions";
++import {useHover, usePress} from "@react-aria/interactions";
+ import {VisuallyHidden} from "@react-aria/visually-hidden";
+ 
+ import clsx from "../utils/clsx";\n- packages/react/src/modal/modal.tsx (modified, 3 changes)\n  Patch: @@ -8,12 +8,11 @@ import useCurrentState from "../use-current-state";
+ import useKeyboard, {KeyCode} from "../use-keyboard";
+ import {__DEV__} from "../utils/assertion";
+ 
+-import ModalWrapper from "./modal-wrapper";
++import ModalWrapper, {ModalWrapperProps} from "./modal-wrapper";
+ import ModalBody from "./modal-body";
+ import ModalHeader from "./modal-header";
+ import ModalFooter from "./modal-footer";
+ import {ModalConfig, ModalContext} from "./modal-context";
+-import {ModalWrapperProps} from "./modal-wrapper";
+ 
+ interface Props {
+   open?: boolean;\n- packages/react/src/navbar/navbar-item.tsx (modified, 3 changes)\n  Patch: @@ -1,7 +1,6 @@
+ import React, {useMemo, useEffect} from "react";
+ import {useHover} from "@react-aria/interactions";
+-import {mergeProps} from "@react-aria/utils";
+-import {useId} from "@react-aria/utils";
++import {mergeProps, useId} from "@react-aria/utils";
+ 
+ import {HTMLNextUIProps, forwardRef} from "../utils/system";
+ import {useDOMRef} from "../utils/dom";\n- packages/react/src/tooltip/tooltip.tsx (modified, 6 changes)\n  Patch: @@ -4,11 +4,9 @@ import React, {useEffect, useRef, useState} from "react";
+ 
+ import withDefaults from "../utils/with-defaults";
+ import useClickAway from "../use-click-away";
+-import {Placement} from "../utils/prop-types";
+-import {TriggerTypes} from "../utils/prop-types";
++import {Placement, TriggerTypes} from "../utils/prop-types";
+ 
+-import TooltipContent from "./tooltip-content";
+-import {TooltipContentProps} from "./tooltip-content";
++import TooltipContent, {TooltipContentProps} from "./tooltip-content";
+ import {StyledTooltipTrigger, TooltipContentVariantsProps} from "./tooltip.styles";
+ 
+ export type TooltipOnVisibleChange = (visible: boolean) => void;\n

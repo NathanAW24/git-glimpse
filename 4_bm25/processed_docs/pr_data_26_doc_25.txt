@@ -1,0 +1,147 @@
+Pull Request Number: 722
+Title: fix(docs-navbar): navbar position changed from sticky to fixed
+Base Branch: main
+Head Branch: fix_640/docs-search-page-scrolls-up
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/722
+State: MERGED
+Created At: 2022-08-31T01:22:59Z
+Merged At: 2022-08-31T01:23:48Z
+Participants: jrgarciadev
+
+Description:
+Closes #640
+⛳️ Current behaviour (updates)
+The docs website scrolls up when writing characters to the documentations search bar
+🚀 New behaviour
+The docs website is no longer scrolling up when writing characters to the documentations search bar
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(docs-navbar): navbar position changed from sticky to fixed\n
+
+Labels:
+
+
+Comments:
+- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-docs/2UKgzE6FFjdF6sRs1kEc6WKpS7Sv)) |  | Aug 31, 2022 at 1:23AM (UTC) |
+| **nextui-storybook** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-storybook/9wUAatNYFYmGbgzzgfHLLABeepYR)) |  | Aug 31, 2022 at 1:23AM (UTC) |
+
+
+\n
+
+Files Changed:
+- apps/docs/src/components/notify-banner/styles.ts (modified, 2 changes)\n  Patch: @@ -9,7 +9,7 @@ export const StyledNotifyBanner = styled(StyledCardBlur, {
+   br: 0,
+   position: "relative",
+   zIndex: "$1",
+-  height: "40px",
++  height: "$$notifyBannerHeight",
+   color: "$text",
+   width: "100%",
+   border: "1.5px solid $border",\n- apps/docs/src/layouts/docs.tsx (modified, 1 changes)\n  Patch: @@ -96,6 +96,7 @@ const DocsLayout: React.FC<React.PropsWithChildren<Props>> = ({
+               zIndex: "$10",
+               maxWidth: "100%",
+               overflow: "auto",
++              mt: "$$navbarHeight",
+               "@xsMax": {
+                 p: 0,
+               },\n- apps/docs/src/layouts/navbar.tsx (modified, 12 changes)\n  Patch: @@ -36,7 +36,7 @@ const Navbar: React.FC<Props> = ({isHome, hasNotify, routes}) => {
+   const [, setBodyHidden] = useBodyScroll(null, {scrollLayer: true});
+   const [scrollPosition, setScrollPosition] = useState(0);
+ 
+-  const detached = hasNotify ? scrollPosition > 30 : scrollPosition > 0;
++  const isDetached = hasNotify ? scrollPosition > 30 : scrollPosition > 0;
+ 
+   useEffect(() => {
+     setScrollPosition((typeof window !== "undefined" && window.pageYOffset) || 0);
+@@ -65,11 +65,11 @@ const Navbar: React.FC<Props> = ({isHome, hasNotify, routes}) => {
+     isMobile && setBodyHidden(!expanded);
+   };
+ 
+-  const showBlur = !!expanded || !!detached || isHome;
++  const showBlur = !!expanded || !!isDetached || isHome;
+ 
+   return (
+-    <StyledNavMainContainer id="navbar-container">
+-      <StyledNavContainer detached={detached} showBlur={showBlur}>
++    <StyledNavMainContainer hasNotify={hasNotify} id="navbar-container" isDetached={isDetached}>
++      <StyledNavContainer isDetached={isDetached} showBlur={showBlur}>
+         <Container alignItems="center" as="nav" display="flex" lg={true} wrap="nowrap">
+           <Col
+             className="navbar__logo-container"
+@@ -259,7 +259,7 @@ const Navbar: React.FC<Props> = ({isHome, hasNotify, routes}) => {
+                   }}
+                 />
+               </Row>
+-              <SearchInput offsetTop={detached ? 0 : 30} />
++              <SearchInput offsetTop={isDetached ? 0 : 30} />
+               <Spacer x={0.5} />
+               <Button
+                 auto
+@@ -327,7 +327,7 @@ const Navbar: React.FC<Props> = ({isHome, hasNotify, routes}) => {
+             </Box>
+           </Col>
+           <MobileNavigation
+-            detached={detached}
++            detached={isDetached}
+             hasNotify={hasNotify}
+             opened={expanded}
+             routes={routes}\n- apps/docs/src/layouts/styles.ts (modified, 28 changes)\n  Patch: @@ -2,10 +2,32 @@ import {styled} from "@nextui-org/react";
+ 
+ export const StyledNavMainContainer = styled("nav", {
+   top: 0,
+-  height: "76px",
+-  position: "sticky",
++  height: "$$navbarHeight",
++  width: "100%",
++  position: "fixed",
+   background: "transparent",
+   zIndex: "$max",
++  variants: {
++    hasNotify: {
++      true: {
++        top: "$$notifyBannerHeight",
++        transition: "top 0.2s ease",
++      },
++    },
++    isDetached: {
++      true: {},
++    },
++  },
++  compoundVariants: [
++    // isDetached && hasNotify
++    {
++      isDetached: true,
++      hasNotify: true,
++      css: {
++        top: 0,
++      },
++    },
++  ],
+ });
+ 
+ export const StyledNavContainer = styled("div", {
+@@ -24,7 +46,7 @@ export const StyledNavContainer = styled("div", {
+         },
+       },
+     },
+-    detached: {
++    isDetached: {
+       true: {
+         backdropFilter: "saturate(180%) blur(10px)",
+         boxShadow: "0px 5px 20px -5px rgba(2, 1, 1, 0.1)",\n- apps/docs/src/styles/globalStyles.ts (modified, 2 changes)\n  Patch: @@ -2,6 +2,8 @@ import {globalCss} from "@nextui-org/react";
+ 
+ export default globalCss({
+   html: {
++    $$notifyBannerHeight: "40px",
++    $$navbarHeight: "76px",
+     scrollPaddingTop: "80px",
+     "&.dragging-ew": {
+       userSelect: "none !important",\n

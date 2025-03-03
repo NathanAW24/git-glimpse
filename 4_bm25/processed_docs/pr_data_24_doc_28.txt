@@ -1,0 +1,76 @@
+Pull Request Number: 1111
+Title: Chore(Link): Remove code redundancies
+Base Branch: feat/v2
+Head Branch: patch-3
+Author: camcam2605
+URL: https://github.com/nextui-org/nextui/pull/1111
+State: MERGED
+Created At: 2023-04-29T23:42:05Z
+Merged At: 2023-05-25T02:58:12Z
+Participants: camcam2605, jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- Chore(Link): Remove code redundancies\n
+
+Labels:
+
+
+Comments:
+- vercel: @camcam2605 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22ffdd66efc99ab98da48832896acb045169bb6385%22%7D%2C%22id%22%3A%22QmcySBfrkGzQKb9PADe2vE84Cw2s8XfUc53v7JGbyeFnQC%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1111%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #DfrMFMxfjjMbJEmTpMBS1CzxDY7blOLEAPqIUwTM9dw=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZvcmstY2FtY2FtMjYwNS1wYXRjaC0zLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi80NGVrY3F0VExxZkh0b2RGV1RIQnF0emdTdDZoIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLWNhbWNhbTI2MDUtcGF0Y2gtMy1uZXh0dWktb3JnLnZlcmNlbC5hcHAifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/44ekcqtTLqfHtodFWTHBqtzgSt6h)) | [Visit Preview](https://nextui-docs-v2-git-fork-camcam2605-patch-3-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-camcam2605-patch-3-nextui-org.vercel.app) | Apr 29, 2023 11:45pm |
+
+\n
+
+Files Changed:
+- packages/components/link/src/use-link.ts (modified, 12 changes)\n  Patch: @@ -64,9 +64,13 @@ export function useLink(originalProps: UseLinkProps) {
+     otherProps.target = otherProps.target ?? "_blank";
+   }
+ 
+-  if (as !== "a") {
+-    otherProps.role = "link";
+-  }
++  /**  
++   *  if (as !== "a") {
++   *    otherProps.role = "link";
++   *  }
++   *  This logic handled by @react-aria/link.
++   *  See: https://github.com/adobe/react-spectrum/blob/5a3315f560071087cacf846bd2a86d8f47692446/packages/%40react-aria/link/src/useLink.ts#L55
++   */
+ 
+   const classNames = useMemo(
+     () =>
+@@ -87,7 +91,7 @@ export function useLink(originalProps: UseLinkProps) {
+     };
+   };
+ 
+-  return {Component, children, anchorIcon, linkProps, showAnchorIcon, getLinkProps};
++  return {Component, children, anchorIcon, showAnchorIcon, getLinkProps};
+ }
+ 
+ export type UseLinkReturn = ReturnType<typeof useLink>;\n

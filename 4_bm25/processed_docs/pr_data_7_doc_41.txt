@@ -1,0 +1,710 @@
+Pull Request Number: 3444
+Title: fix(use-image): cached image flashing
+Base Branch: canary
+Head Branch: fix/avatar-flashing
+Author: rkkautsar
+URL: https://github.com/nextui-org/nextui/pull/3444
+State: CLOSED
+Created At: 2024-07-11T07:42:32Z
+Merged At: None
+Participants: rkkautsar, wingkwong, jrgarciadev
+
+Description:
+Closes #3437  
+📝 Description
+As mentioned in #3437, avatars may flicker even if its already cached. The fix was to check the image loading status immediately after creating the image to see if it's instantly loaded (when the image is cached), and use it to initialize the state. This will affect Avatar, AvatarGroup, and Image components.
+Also added test for use-image too since it doesn't exist before.
+
+
+
+Before
+After
+
+
+
+
+
+
+
+
+
+⛳️ Current behavior (updates)
+Image flickers due to use-image initializes with pending and only updated the status in useLayoutEffect.
+🚀 New behavior
+Initialize image loading status with loaded if possible.
+💣 Is this a breaking change (Yes/No):  No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Resolved issue where cached images were flashing due to improper initialization of the image's loaded state.
+
+
+
+Tests
+
+Added comprehensive tests for the useImage hook covering scenarios like missing source, loading, errors, and cached images.
+
+
+
+Chores
+
+Updated use-image package devDependencies to include @nextui-org/test-utils.
+
+
+
+Refactor
+
+Refined image loading logic in the useImage function to improve the image initialization and status determination process.
+
+Commits:
+- fix(use-image): cached image flashing\n
+
+Labels:
+🚥 Status: On Hold
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 431a5e0dc375817be78235ceaf2fbd01f1275601
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 6 packages</summary>
+
+  | Name                   | Type  |
+| ---------------------- | ----- |
+| @nextui-org/use-image  | Patch |
+| @nextui-org/test-utils | Patch |
+| @nextui-org/avatar     | Patch |
+| @nextui-org/image      | Patch |
+| @nextui-org/user       | Patch |
+| @nextui-org/react      | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/rkkautsar/nextui/new/fix/avatar-flashing?filename=.changeset/quick-flowers-remain.md&value=---%0A%22%40nextui-org%2Fuse-image%22%3A%20patch%0A%22%40nextui-org%2Ftest-utils%22%3A%20patch%0A---%0A%0Afix(use-image)%3A%20cached%20image%20flashing%0A)
+
+\n- vercel: [vc]: #K1UqWmwy1iHvQRLlzJKSs+KB2NAi6SShM7QMY8PBcDE=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvQ0pRaGsxanlNdHY2YXhpTXdqNjRydkhvSGVtVSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXJra2F1dHNhci1maXgtYXYtNTNjOWFjLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXJra2F1dHNhci1maXgtYXYtNTNjOWFjLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/CJQhk1jyMtv6axiMwj64rvHoHemU)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-rkkautsar-fix-av-53c9ac-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-rkkautsar-fix-av-53c9ac-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jul 11, 2024 7:45am |
+
+\n- vercel: @rkkautsar is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22431a5e0dc375817be78235ceaf2fbd01f1275601%22%7D%2C%22id%22%3A%22QmNgPYc82NYU5GftGX9tYqNbCexmV1V8TFyvW3NwhGYsAt%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3444%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The changes address an issue with cached images flashing in the `use-image` package. The updates ensure the image loading state is initialized correctly, eliminating flicker. The `useImage` hook logic has been refactored to improve handling of image loading and error statuses. New tests were introduced to cover various scenarios, including cached images. Additionally, a mock image utility was enhanced to support better testing.
+
+## Changes
+
+| Files                                              | Change Summary                                                                                     |
+|----------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| `.changeset/pink-beans-sit.md`                     | Added a summary of the changes and their impacts.                                                  |
+| `packages/hooks/use-image/__tests__/use-image.test.tsx` | Introduced tests for the `useImage` hook functionality.                                            |
+| `packages/hooks/use-image/package.json`            | Added `"@nextui-org/test-utils": "workspace:*"` to `devDependencies` and updated dependencies.      |
+| `packages/hooks/use-image/src/index.ts`            | Refactored `useImage` function to handle image loading and error statuses more effectively.        |
+| `packages/utilities/test-utils/src/mocks/image.ts` | Enhanced `mockImage` function with `naturalWidth` property and `complete` getter for status checks.|
+
+## Assessment against linked issues
+
+| Objective                                                                                     | Addressed | Explanation |
+|-----------------------------------------------------------------------------------------------|-----------|-------------|
+| Fix flashing when image is already cached (#3437)                                             | ✅         |             |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+.changeset/pink-beans-sit.md: ## Short summary
+
+The new file introduces a fix related to cached image flashing caused by the `use-image` package, ensuring the image's loaded state is properly initialized to prevent flashing.
+
+## Alterations to the declarations of exported or public entities
+
+No alterations were made to the declarations of exported or public entities in this change.
+
+---
+
+packages/hooks/use-image/__tests__/use-image.test.tsx: ## Summary
+
+The new file `use-image.test.tsx` introduces tests for the `useImage` hook functionality. It includes tests for handling missing source, loading images, error images, and cached images.
+
+---
+
+packages/hooks/use-image/package.json: ## Short Summary
+
+The change in `package.json` for the `use-image` package includes adding `"@nextui-org/test-utils": "workspace:*"` as a devDependency alongside `"react": "^18.0.0"`.
+
+## Alterations to the declarations of exported or public entities
+
+- `devDependencies` in `package.json`:
+  - Added `"@nextui-org/test-utils": "workspace:*"` alongside `"react": "^18.0.0"`
+
+---
+
+packages/hooks/use-image/src/index.ts: ### Summary:
+In the `use-image` module, the `useImage` function has undergone significant changes. The logic for handling image loading and status updates has been refactored. The initialization of the image status now includes a more detailed check based on the image properties. The use of `useState`, `useEffect`, and `useSafeLayoutEffect` has been adjusted to accommodate these changes, focusing on the image loading process and error handling.
+
+### Alterations to the declarations of exported or public entities:
+- `import type {ImgHTMLAttributes, SyntheticEvent} from "react";` in `use-image/src/index.ts` →
+  `import type {ImgHTMLAttributes, MutableRefObject, SyntheticEvent} from "react";`
+- Removed `useCallback` from dependencies in `useEffect`.
+- Removed `useState` initialization in `useEffect`.
+- Modified the initialization of `imageRef` to include `firstMount` and `setStatus`.
+- Updated the dependencies in `useEffect` related to image loading and error handling.
+- Added a new function `setImageAndGetInitialStatus` to handle image initialization and status determination.
+
+---
+
+packages/utilities/test-utils/src/mocks/image.ts: ## Short Summary
+
+In the `mockImage` function in `image.ts`, a `naturalWidth` property and a `complete` getter were added, where `complete` returns `status === "loaded"`. 
+
+## Alterations to the declarations of exported or public entities
+
+- `export function mockImage()` in `packages/utilities/test-utils/src/mocks/image.ts`
+  - Added:
+    - `naturalWidth = 100`
+    - `get complete()`
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR summary
+
+**Title:** fix(use-image): cached image flashing  
+**User:** rkkautsar  
+**Number:** 3444  
+**URL:** [https://github.com/nextui-org/nextui/pull/3444](https://github.com/nextui-org/nextui/pull/3444)  
+
+**Description:**  
+Closes issue #3437. The PR addresses a problem where avatars flicker even if they are already cached. The issue arises because the `use-image` hook initializes with a `pending` state and updates the status in `useLayoutEffect`. The proposed fix involves checking the image loading status upon creation to determine if it is already loaded, and using that status to initialize the state. This change aims to prevent the flickering by setting the image loading status to loaded if it is already cached.
+
+**Current behavior:**  
+Images flicker because the `use-image` hook initializes with a `pending` state and updates the status only in `useLayoutEffect`.
+
+**New behavior:**  
+The image loading status is initialized as loaded if the image is already cached, preventing flickering.
+
+**Breaking change:**  
+No.
+
+## Objectives from linked issues
+
+**Linked Issue:** #3437  
+**Title:** [Avatar] Fix flashing when image is already cached  
+**NextUI Version:** 2.4.2  
+
+**Description:**  
+Avatars flicker and animate when they should be rendered instantly if the image is cached. The issue was reported with a reference to a similar fix in Radix UI primitives: [https://github.com/radix-ui/primitives/pull/3008](https://github.com/radix-ui/primitives/pull/3008).
+
+**Steps to Reproduce the Bug or Issue:**  
+1. Use the Avatar component.
+2. The image should render immediately without a loading animation or flicker if it is cached.
+
+**Expected behavior:**  
+The Avatar component should render instantly without any loading animation or flicker when the image is cached.
+
+**Operating System Version:**  
+macOS
+
+**Browser:**  
+Chrome
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 431a5e0dc375817be78235ceaf2fbd01f1275601 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- rkkautsar: @wingkwong yes, I think it had to do with the actual image caching behaviour of each browser. I used chrome, and from what I can see the caching seems to be size limited, if I were to guess it's because there is a few level of caching, the one that is instant is memory-cached, while the other one that still flashes is disk-cached.
+
+If I show a big image (like in `<Image/>` component) it can only cache one image at a time, so switching between different image will flash. But switching components that is showing the same image won't flash.
+
+Conversely, for small image like in avatars (and avatar groups), it seems that most of the small images is cached in memory so it always never flash (unless you load a big image and come back, the big image will replace the memory cache I think)\n- wingkwong: will revisit this PR after the one in Radix is merged. May check if those comments can be applied here or not.\n- jrgarciadev: Hey @rkkautsar thanks for you great contribution, we had to create the PR internally to move things a bit faster https://github.com/nextui-org/nextui/pull/3987 but do not worry we will add you to the contributors list, thanks 🙏🏻\n
+
+Files Changed:
+- .changeset/pink-beans-sit.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/use-image": patch
++"@nextui-org/test-utils": patch
++---
++
++fix cached image flashing due to use-image always returning pending initially. The fix was to check if the image is loaded instantly through HTMLImageElement.complete attribute and use that to initialize the state.\n- packages/hooks/use-image/__tests__/use-image.test.tsx (added, 44 changes)\n  Patch: @@ -0,0 +1,44 @@
++import {renderHook} from "@testing-library/react-hooks";
++import {mocks} from "@nextui-org/test-utils";
++
++import {useImage} from "../src";
++
++describe("use-image hook", () => {
++  let mockImage: {restore: any; simulate: (value: "loaded" | "error") => void};
++
++  beforeEach(() => {
++    mockImage = mocks.image();
++  });
++  afterEach(() => {
++    mockImage.restore();
++  });
++
++  it("can handle missing src", () => {
++    const rendered = renderHook(() => useImage({}));
++
++    expect(rendered.result.current).toEqual("pending");
++  });
++
++  it("can handle loading image", async () => {
++    const rendered = renderHook(() => useImage({src: "/test.png"}));
++
++    expect(rendered.result.current).toEqual("loading");
++    mockImage.simulate("loaded");
++    await rendered.waitForValueToChange(() => rendered.result.current === "loaded");
++  });
++
++  it("can handle error image", async () => {
++    mockImage.simulate("error");
++    const rendered = renderHook(() => useImage({src: "/test.png"}));
++
++    expect(rendered.result.current).toEqual("loading");
++    await rendered.waitForValueToChange(() => rendered.result.current === "failed");
++  });
++
++  it("can handle cached image", async () => {
++    mockImage.simulate("loaded");
++    const rendered = renderHook(() => useImage({src: "/test.png"}));
++
++    expect(rendered.result.current).toEqual("loaded");
++  });
++});\n- packages/hooks/use-image/package.json (modified, 5 changes)\n  Patch: @@ -41,7 +41,8 @@
+   },
+   "devDependencies": {
+     "clean-package": "2.2.0",
+-    "react": "^18.0.0"
++    "react": "^18.0.0",
++    "@nextui-org/test-utils": "workspace:*"
+   },
+   "clean-package": "../../../clean-package.config.json",
+   "tsup": {
+@@ -52,4 +53,4 @@
+       "esm"
+     ]
+   }
+-}
+\ No newline at end of file
++}\n- packages/hooks/use-image/src/index.ts (modified, 82 changes)\n  Patch: @@ -1,9 +1,9 @@
+ /**
+  * Part of this code is taken from @chakra-ui/react package ❤️
+  */
+-import type {ImgHTMLAttributes, SyntheticEvent} from "react";
++import type {ImgHTMLAttributes, MutableRefObject, SyntheticEvent} from "react";
+ 
+-import {useCallback, useEffect, useRef, useState} from "react";
++import {useEffect, useRef, useState} from "react";
+ import {useSafeLayoutEffect} from "@nextui-org/use-safe-layout-effect";
+ 
+ type NativeImageProps = ImgHTMLAttributes<HTMLImageElement>;
+@@ -66,40 +66,37 @@ type ImageEvent = SyntheticEvent<HTMLImageElement, Event>;
+ export function useImage(props: UseImageProps = {}) {
+   const {loading, src, srcSet, onLoad, onError, crossOrigin, sizes, ignoreFallback} = props;
+ 
+-  const [status, setStatus] = useState<Status>("pending");
+-
+-  useEffect(() => {
+-    setStatus(src ? "loading" : "pending");
+-  }, [src]);
+-
+   const imageRef = useRef<HTMLImageElement | null>();
++  const firstMount = useRef<boolean>(true);
++  const [status, setStatus] = useState<Status>(() => setImageAndGetInitialStatus(props, imageRef));
+ 
+-  const load = useCallback(() => {
+-    if (!src) return;
++  useSafeLayoutEffect(() => {
++    if (firstMount.current) {
++      firstMount.current = false;
+ 
+-    flush();
++      return;
++    }
+ 
+-    const img = new Image();
++    setStatus(setImageAndGetInitialStatus(props, imageRef));
+ 
+-    img.src = src;
+-    if (crossOrigin) img.crossOrigin = crossOrigin;
+-    if (srcSet) img.srcset = srcSet;
+-    if (sizes) img.sizes = sizes;
+-    if (loading) img.loading = loading;
++    return () => {
++      flush();
++    };
++  }, [src, crossOrigin, srcSet, sizes, loading]);
+ 
+-    img.onload = (event) => {
++  useEffect(() => {
++    if (!imageRef.current) return;
++    imageRef.current.onload = (event) => {
+       flush();
+       setStatus("loaded");
+       onLoad?.(event as unknown as ImageEvent);
+     };
+-    img.onerror = (error) => {
++    imageRef.current.onerror = (error) => {
+       flush();
+       setStatus("failed");
+       onError?.(error as any);
+     };
+-
+-    imageRef.current = img;
+-  }, [src, crossOrigin, srcSet, sizes, onLoad, onError, loading]);
++  }, [imageRef.current]);
+ 
+   const flush = () => {
+     if (imageRef.current) {
+@@ -109,29 +106,38 @@ export function useImage(props: UseImageProps = {}) {
+     }
+   };
+ 
+-  useSafeLayoutEffect(() => {
+-    /**
+-     * If user opts out of the fallback/placeholder
+-     * logic, let's bail out.
+-     */
+-    if (ignoreFallback) return undefined;
+-
+-    if (status === "loading") {
+-      load();
+-    }
+-
+-    return () => {
+-      flush();
+-    };
+-  }, [status, load, ignoreFallback]);
+-
+   /**
+    * If user opts out of the fallback/placeholder
+    * logic, let's just return 'loaded'
+    */
+   return ignoreFallback ? "loaded" : status;
+ }
+ 
++function setImageAndGetInitialStatus(
++  props: UseImageProps,
++  imageRef: MutableRefObject<HTMLImageElement | null | undefined>,
++): Status {
++  const {loading, src, srcSet, crossOrigin, sizes, ignoreFallback} = props;
++
++  if (!src) return "pending";
++  if (ignoreFallback) return "loaded";
++
++  const img = new Image();
++
++  img.src = src;
++  if (crossOrigin) img.crossOrigin = crossOrigin;
++  if (srcSet) img.srcset = srcSet;
++  if (sizes) img.sizes = sizes;
++  if (loading) img.loading = loading;
++
++  imageRef.current = img;
++  if (img.complete && img.naturalWidth) {
++    return "loaded";
++  }
++
++  return "loading";
++}
++
+ export const shouldShowFallbackImage = (status: Status, fallbackStrategy: FallbackStrategy) =>
+   (status !== "loaded" && fallbackStrategy === "beforeLoadOrError") ||
+   (status === "failed" && fallbackStrategy === "onError");\n- packages/utilities/test-utils/src/mocks/image.ts (modified, 4 changes)\n  Patch: @@ -14,6 +14,10 @@ export function mockImage() {
+     onerror: VoidFunction = () => {};
+     src = "";
+     alt = "";
++    naturalWidth = 100;
++    get complete() {
++      return status === "loaded";
++    }
+     hasAttribute(name: string) {
+       return name in this;
+     }\n- pnpm-lock.yaml (modified, 31 changes)\n  Patch: @@ -3417,6 +3417,9 @@ importers:
+         specifier: workspace:*
+         version: link:../use-safe-layout-effect
+     devDependencies:
++      '@nextui-org/test-utils':
++        specifier: workspace:*
++        version: link:../../utilities/test-utils
+       clean-package:
+         specifier: 2.2.0
+         version: 2.2.0
+@@ -5979,6 +5982,10 @@ packages:
+     peerDependencies:
+       '@effect-ts/otel-node': '*'
+     peerDependenciesMeta:
++      '@effect-ts/core':
++        optional: true
++      '@effect-ts/otel':
++        optional: true
+       '@effect-ts/otel-node':
+         optional: true
+     dependencies:
+@@ -7384,6 +7391,7 @@ packages:
+     engines: {node: '>= 10'}
+     cpu: [arm64]
+     os: [linux]
++    libc: [glibc]
+     requiresBuild: true
+     optional: true
+ 
+@@ -7392,6 +7400,7 @@ packages:
+     engines: {node: '>= 10'}
+     cpu: [arm64]
+     os: [linux]
++    libc: [musl]
+     requiresBuild: true
+     optional: true
+ 
+@@ -7400,6 +7409,7 @@ packages:
+     engines: {node: '>= 10'}
+     cpu: [x64]
+     os: [linux]
++    libc: [glibc]
+     requiresBuild: true
+     optional: true
+ 
+@@ -7408,6 +7418,7 @@ packages:
+     engines: {node: '>= 10'}
+     cpu: [x64]
+     os: [linux]
++    libc: [musl]
+     requiresBuild: true
+     optional: true
+ 
+@@ -7500,6 +7511,7 @@ packages:
+     engines: {node: '>= 12'}
+     cpu: [arm64]
+     os: [linux]
++    libc: [glibc]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -7509,6 +7521,7 @@ packages:
+     engines: {node: '>= 12'}
+     cpu: [arm64]
+     os: [linux]
++    libc: [musl]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -7518,6 +7531,7 @@ packages:
+     engines: {node: '>= 12'}
+     cpu: [x64]
+     os: [linux]
++    libc: [glibc]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -7527,6 +7541,7 @@ packages:
+     engines: {node: '>= 12'}
+     cpu: [x64]
+     os: [linux]
++    libc: [musl]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -8650,6 +8665,7 @@ packages:
+     engines: {node: '>= 10.0.0'}
+     cpu: [arm]
+     os: [linux]
++    libc: [glibc]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -8659,6 +8675,7 @@ packages:
+     engines: {node: '>= 10.0.0'}
+     cpu: [arm64]
+     os: [linux]
++    libc: [glibc]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -8668,6 +8685,7 @@ packages:
+     engines: {node: '>= 10.0.0'}
+     cpu: [arm64]
+     os: [linux]
++    libc: [musl]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -8677,6 +8695,7 @@ packages:
+     engines: {node: '>= 10.0.0'}
+     cpu: [x64]
+     os: [linux]
++    libc: [glibc]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -8686,6 +8705,7 @@ packages:
+     engines: {node: '>= 10.0.0'}
+     cpu: [x64]
+     os: [linux]
++    libc: [musl]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -11611,6 +11631,7 @@ packages:
+     engines: {node: '>=10'}
+     cpu: [arm64]
+     os: [linux]
++    libc: [glibc]
+     requiresBuild: true
+     optional: true
+ 
+@@ -11619,6 +11640,7 @@ packages:
+     engines: {node: '>=10'}
+     cpu: [arm64]
+     os: [linux]
++    libc: [musl]
+     requiresBuild: true
+     optional: true
+ 
+@@ -11627,6 +11649,7 @@ packages:
+     engines: {node: '>=10'}
+     cpu: [x64]
+     os: [linux]
++    libc: [glibc]
+     requiresBuild: true
+     optional: true
+ 
+@@ -11635,6 +11658,7 @@ packages:
+     engines: {node: '>=10'}
+     cpu: [x64]
+     os: [linux]
++    libc: [musl]
+     requiresBuild: true
+     optional: true
+ 
+@@ -20032,6 +20056,7 @@ packages:
+     engines: {node: '>= 12.0.0'}
+     cpu: [arm64]
+     os: [linux]
++    libc: [glibc]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -20041,6 +20066,7 @@ packages:
+     engines: {node: '>= 12.0.0'}
+     cpu: [arm64]
+     os: [linux]
++    libc: [musl]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -20050,6 +20076,7 @@ packages:
+     engines: {node: '>= 12.0.0'}
+     cpu: [x64]
+     os: [linux]
++    libc: [glibc]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -20059,6 +20086,7 @@ packages:
+     engines: {node: '>= 12.0.0'}
+     cpu: [x64]
+     os: [linux]
++    libc: [musl]
+     requiresBuild: true
+     dev: true
+     optional: true
+@@ -22450,6 +22478,9 @@ packages:
+     resolution: {integrity: sha512-W+gxAq7aQ9dJIg/XLKGcRT0cvnStFAQHPaI0pvD0U2l6IVLueUAm3nwN7lkY62zZNmlvNx6jNtE4wlbS+CyqSg==}
+     engines: {node: '>= 12.0.0'}
+     hasBin: true
++    peerDependenciesMeta:
++      '@parcel/core':
++        optional: true
+     dependencies:
+       '@parcel/config-default': 2.12.0(@parcel/core@2.12.0)(typescript@4.9.5)
+       '@parcel/core': 2.12.0\n

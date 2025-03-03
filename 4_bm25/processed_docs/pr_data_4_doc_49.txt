@@ -1,0 +1,221 @@
+Pull Request Number: 3826
+Title: fix(date-picker): resolve override of calendarProps className
+Base Branch: canary
+Head Branch: fix/date-picker-calendar-props
+Author: alexbeno
+URL: https://github.com/nextui-org/nextui/pull/3826
+State: CLOSED
+Created At: 2024-09-30T15:30:30Z
+Merged At: None
+Participants: alexbeno, wingkwong
+
+Description:
+📝 Description
+This PR fixes an issue where the classNames property in the date-picker's calendarProps was being overridden, preventing custom styles from being applied.
+⛳️ Current behavior (updates)
+Currently, any custom styles set for the date-picker's calendar are ignored due to the classNames being overridden.
+🚀 New behavior
+With this change, the classNames property in calendarProps is now respected, allowing developers to apply custom styles as intended.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced class name handling for the date-picker component, allowing custom styles to be applied effectively.
+
+
+
+Bug Fixes
+
+Resolved an issue where custom styles for the calendar were being overridden, ensuring proper rendering of user-defined styles.
+
+Commits:
+- fix(date-picker): resolve override of calendarProps className\n
+
+Labels:
+
+
+Comments:
+- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The changes introduce a significant update to the `@nextui-org/date-picker` package, specifically addressing an issue where the `className` property in the `calendarProps` was being overridden. The update ensures that custom styles are respected and rendered correctly. Additionally, the `getCalendarProps` function in `use-date-picker.ts` has been modified to merge class names from `calendarProps.classNames` and `classNames` using a new utility function, improving class name handling without altering the overall structure of the `useDatePicker` function.
+
+## Changes
+
+| File                                   | Change Summary                                                                 |
+|----------------------------------------|--------------------------------------------------------------------------------|
+| .changeset/hungry-kangaroos-kick.md  | Major update to `@nextui-org/date-picker`; fixed `className` overriding issue; updated `getCalendarProps` to merge class names using `cn`. |
+
+## Possibly related PRs
+- **#3054**: Modifies the `inert` attribute in the DatePicker component, related to property handling.
+- **#3146**: Introduces support for applying styles to the DateInput in the DatePicker, aligning with class name enhancements.
+- **#3258**: Updates `classNames` handling in the `useDateRangePicker`, directly related to class name merging changes.
+- **#3416**: Addresses width issues in the DatePicker, potentially related to styling improvements.
+- **#3505**: Fixes calendar content width based on visible months, relevant to rendering improvements.
+
+## Suggested reviewers
+- wingkwong
+- jrgarciadev
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+.changeset/hungry-kangaroos-kick.md:
+
+"""
+## AI-generated summary of changes
+
+The changes introduce a major update to the `@nextui-org/date-picker` package. A specific issue has been fixed where the `className` property within the `calendarProps` of the date-picker was being overridden. This fix ensures that any custom styles applied to the calendar are now properly respected and rendered as intended. Additionally, the `getCalendarProps` function in `use-date-picker.ts` has been updated to merge class names from `calendarProps.classNames` and `classNames` using the new utility function `cn` from `@nextui-org/theme`, enhancing the way class names are combined for the calendar component. The overall structure and logic of the `useDatePicker` function remain intact, with no significant alterations to the control flow or state management.
+
+## Alterations to the declarations of exported or public entities
+
+- Method signature updated: `getCalendarProps` in `use-date-picker.ts` has been modified to merge class names using `cn` for improved class name handling.
+- No alterations to the declarations of exported or public entities were made in this diff.
+"""
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(date-picker): resolve override of calendarProps className" was created by the user alexbeno and is identified by the number 3826. The main objective of this PR is to address an issue where the `classNames` property within the `calendarProps` of the date-picker component was being overridden. This behavior resulted in any custom styles intended for the date-picker's calendar being ignored.
+
+Prior to this fix, developers faced challenges in applying their desired custom styles due to the overriding of the `classNames` property. The current behavior prevented the intended customization, leading to a lack of flexibility in styling the date-picker component.
+
+With the proposed changes in this PR, the `classNames` property in `calendarProps` will now be respected, enabling developers to apply custom styles as they intended. This enhancement improves the usability of the date-picker component by allowing for greater customization without compromising the functionality.
+
+The author has confirmed that this change is not a breaking change, ensuring that existing implementations will not be adversely affected. Additional information regarding the PR is not provided. The pull request can be found at the following URL: [https://github.com/nextui-org/nextui/pull/3826](https://github.com/nextui-org/nextui/pull/3826).
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 952d6dcc93e7068ae7a9c991ce501cd4c8fde8d7 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 952d6dcc93e7068ae7a9c991ce501cd4c8fde8d7
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                    | Type  |
+| ----------------------- | ----- |
+| @nextui-org/date-picker | Major |
+| @nextui-org/react       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/alexbeno/nextui/new/fix/date-picker-calendar-props?filename=.changeset/fresh-cats-count.md&value=---%0A%22%40nextui-org%2Fdate-picker%22%3A%20patch%0A---%0A%0Afix(date-picker)%3A%20resolve%20override%20of%20calendarProps%20className%0A)
+
+\n- vercel: @alexbeno is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22952d6dcc93e7068ae7a9c991ce501cd4c8fde8d7%22%7D%2C%22id%22%3A%22QmdJ4S2bbuYeYgbRU6jj9ftS4czZsskhByFyYzjN6gn7Cr%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3826%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- wingkwong: handled in https://github.com/nextui-org/nextui/pull/3773 already.\n
+
+Files Changed:
+- .changeset/hungry-kangaroos-kick.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/date-picker": major
++---
++
++Fixed: Resolved an issue where the className property in the date-picker's calendarProps was being overridden. This ensures that custom styles applied to the calendar are now respected and correctly rendered.\n- packages/components/date-picker/src/use-date-picker.ts (modified, 9 changes)\n  Patch: @@ -10,7 +10,7 @@ import type {DatePickerSlots, SlotsToClasses} from "@nextui-org/theme";
+ 
+ import {useProviderContext} from "@nextui-org/system";
+ import {useMemo, useRef} from "react";
+-import {datePicker} from "@nextui-org/theme";
++import {datePicker, cn} from "@nextui-org/theme";
+ import {useDatePickerState} from "@react-stately/datepicker";
+ import {AriaDatePickerProps, useDatePicker as useAriaDatePicker} from "@react-aria/datepicker";
+ import {clsx, dataAttr, objectToDeps} from "@nextui-org/shared-utils";
+@@ -204,8 +204,11 @@ export function useDatePicker<T extends DateValue>({
+       ...ariaCalendarProps,
+       ...calendarProps,
+       classNames: {
+-        base: slots.calendar({class: classNames?.calendar}),
+-        content: slots.calendarContent({class: classNames?.calendarContent}),
++        ...calendarProps.classNames,
++        base: slots.calendar({class: cn(calendarProps?.classNames?.base, classNames?.calendar)}),
++        content: slots.calendarContent({
++          class: cn(calendarProps?.classNames?.content, classNames?.calendarContent),
++        }),
+       },
+     };
+   };\n

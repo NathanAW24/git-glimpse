@@ -1,0 +1,899 @@
+Pull Request Number: 390
+Title: Refactor/checkbox migration to react aria
+Base Branch: next
+Head Branch: refactor/checkbox-migration-to-react-aria
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/390
+State: MERGED
+Created At: 2022-04-05T15:10:00Z
+Merged At: 2022-04-05T17:37:09Z
+Participants: jrgarciadev
+
+Description:
+[react]/[checkbox]
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+The Checkbox component functionality was migrated to @react-aria/checkbox in order to provide better state management and accessibility
+Link transitions performance improved
+Card transitions performance improved
+Table checkboxes improved
+Checkbox group docs separated from checkbox docs
+Events/Props/Accessibility separated on docs for checkbox and checkbox group
+
+
+
+
+Screenshots - Animations
+
+Commits:
+- refactor(react-checbox): specific transitions applied\n- feat(react-checkbox): autofocus added\n- fix(react-checkbox): hover border transition\n- feat(react-checkbox): useCheckbox from react-aria implemented for a single checkbox\n- feat(react-checkbox-group): migrated to @react-aria/checkbox\n- feat(docs-checkbox): checkbox group updated\n- Merge branch 'next' of github.com:nextui-org/nextui into refactor/checkbox-migration-to-react-aria\n- feat(react-checkbox): tests passed ✅\n- feat(docs-checkbox): checkbox-group separated from checkbox\n- fix(react-checkbox): checkbox native input hidden by styles\n- refactor(react): card and link specific transitions applied\n
+
+Labels:
+🧱 Type: Refactoring
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/content/components/checkbox-group/column.ts (added, 24 changes)\n  Patch: @@ -0,0 +1,24 @@
++const App = `import { Checkbox } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Checkbox.Group
++      color="secondary"
++      defaultValue={["buenos-aires"]}
++      label="Select cities"
++    >
++      <Checkbox value="buenos-aires">Buenos Aires</Checkbox>
++      <Checkbox value="sydney">Sydney</Checkbox>
++      <Checkbox value="london">London</Checkbox>
++      <Checkbox value="tokyo">Tokyo</Checkbox>
++    </Checkbox.Group>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/checkbox-group/controlled-vs-uncontrolled.ts (added, 41 changes)\n  Patch: @@ -0,0 +1,41 @@
++const App = `import React from 'react'
++import { Checkbox, Grid } from "@nextui-org/react";
++
++export default function App() {
++  const [selected, setSelected] = React.useState(['buenos-aires', 'sydney']);
++
++  return (
++    <Grid.Container gap={2}>
++      <Grid>
++        <Checkbox.Group
++          label="Select cities (uncontrolled)"
++          defaultValue={['buenos-aires', 'auckland']}
++        >
++          <Checkbox value="buenos-aires">Buenos Aires</Checkbox>
++          <Checkbox value="auckland">Auckland</Checkbox>
++          <Checkbox value="sydney">Sydney</Checkbox>
++        </Checkbox.Group>
++      </Grid>
++      <Grid>
++        <Checkbox.Group
++          label="Select cities (controlled)"
++          color="secondary"
++          value={selected}
++          onChange={setSelected}
++        >
++          <Checkbox value="buenos-aires">Buenos Aires</Checkbox>
++          <Checkbox value="auckland">Auckland</Checkbox>
++          <Checkbox value="sydney">Sydney</Checkbox>
++        </Checkbox.Group>
++      </Grid>
++    </Grid.Container>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/checkbox-group/events.ts (added, 30 changes)\n  Patch: @@ -0,0 +1,30 @@
++const App = `import React from 'react'
++import { Checkbox, Text, Spacer } from "@nextui-org/react";
++
++export default function App() {
++  const [selected, setSelected] = React.useState([]);
++
++  return (
++    <>
++      <Checkbox.Group
++        label="Select cities"
++        value={selected}
++        onChange={setSelected}
++      >
++        <Checkbox value="buenos-aires">Buenos Aires</Checkbox>
++        <Checkbox value="auckland">Auckland</Checkbox>
++        <Checkbox value="sydney">Sydney</Checkbox>
++      </Checkbox.Group>
++      <Spacer y={1} />
++      <Text>You're going to visit: {selected.join(', ')}</Text>
++    </>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/checkbox-group/index.ts (added, 11 changes)\n  Patch: @@ -0,0 +1,11 @@
++import column from './column';
++import row from './row';
++import controlledVsUncontrolled from './controlled-vs-uncontrolled';
++import events from './events';
++
++export default {
++  column,
++  row,
++  events,
++  controlledVsUncontrolled
++};\n- apps/docs/content/components/checkbox-group/row.ts (added, 25 changes)\n  Patch: @@ -0,0 +1,25 @@
++const App = `import { Checkbox } from "@nextui-org/react";
++
++export default function App() {
++  return (
++    <Checkbox.Group
++      row
++      label="Select cities"
++      color="secondary"
++      defaultValue={["buenos-aires"]}
++    >
++      <Checkbox value="buenos-aires">Buenos Aires</Checkbox>
++      <Checkbox value="sydney">Sydney</Checkbox>
++      <Checkbox value="london">London</Checkbox>
++      <Checkbox value="tokyo">Tokyo</Checkbox>
++    </Checkbox.Group>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/checkbox/checkbox-group.ts (removed, 28 changes)\n  Patch: @@ -1,28 +0,0 @@
+-const App = `import { Checkbox } from "@nextui-org/react";
+-
+-export default function App() {
+-  return (
+-    <Checkbox.Group color="secondary" value={["buenos-aires"]}>
+-      <Checkbox value="buenos-aires">
+-        Buenos Aires
+-      </Checkbox>
+-      <Checkbox value="sydney">
+-        Sydney
+-      </Checkbox>
+-      <Checkbox value="london">
+-        London
+-      </Checkbox>
+-      <Checkbox value="tokyo">
+-        Tokyo
+-      </Checkbox>
+-    </Checkbox.Group>
+-  );
+-}`;
+-
+-const react = {
+-  '/App.js': App
+-};
+-
+-export default {
+-  ...react
+-};\n- apps/docs/content/components/checkbox/color.ts (modified, 12 changes)\n  Patch: @@ -2,27 +2,27 @@ const App = `import { Checkbox, Spacer } from "@nextui-org/react";
+ export default function App() {
+   return (
+     <>
+-      <Checkbox color="primary" checked={true}>
++      <Checkbox color="primary" initialChecked={true}>
+         Primary
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="secondary" checked={true}>
++      <Checkbox color="secondary" initialChecked={true}>
+         Secondary
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="success" checked={true}>
++      <Checkbox color="success" initialChecked={true}>
+         Success
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="warning" checked={true}>
++      <Checkbox color="warning" initialChecked={true}>
+         Warning
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="error" checked={true}>
++      <Checkbox color="error" initialChecked={true}>
+         Error
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="gradient" checked={true}>
++      <Checkbox color="gradient" initialChecked={true}>
+         Gradient
+       </Checkbox>
+     </>\n- apps/docs/content/components/checkbox/controlled-vs-uncontrolled.ts (added, 24 changes)\n  Patch: @@ -0,0 +1,24 @@
++const App = `import React from 'react'
++import { Checkbox, Spacer } from "@nextui-org/react";
++
++export default function App() {
++  const [selected, setSelected] = React.useState(true);
++
++  return (
++    <>
++      <Checkbox initialChecked color="success">Subscribe (uncontrolled)</Checkbox>
++      <Spacer x={1} />
++      <Checkbox checked={selected} color="success" onChange={setSelected} >
++        Subscribe (controlled)
++      </Checkbox>
++    </>
++  );
++}`;
++
++const react = {
++  '/App.js': App
++};
++
++export default {
++  ...react
++};\n- apps/docs/content/components/checkbox/default.ts (modified, 2 changes)\n  Patch: @@ -1,7 +1,7 @@
+ const App = `import { Checkbox } from "@nextui-org/react";
+ 
+ export default function App() {
+-  return <Checkbox checked={true}>Option</Checkbox>;
++  return <Checkbox initialChecked={true}>Option</Checkbox>;
+ }`;
+ 
+ const react = {\n- apps/docs/content/components/checkbox/disabled.ts (modified, 2 changes)\n  Patch: @@ -2,7 +2,7 @@ const App = `import { Checkbox } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+-    <Checkbox disabled checked={true}>
++    <Checkbox disabled initialChecked={true}>
+       Default
+     </Checkbox>
+   );\n- apps/docs/content/components/checkbox/index.ts (modified, 8 changes)\n  Patch: @@ -6,9 +6,8 @@ import labelColor from './label-color';
+ import rounded from './rounded';
+ import interminate from './interminate';
+ import noAnimation from './no-animated';
+-import checkboxGroup from './checkbox-group';
+ import lineThrough from './line-through';
+-import rowGroup from './row-group';
++import controlledVsUncontrolled from './controlled-vs-uncontrolled';
+ 
+ export default {
+   default_checkbox,
+@@ -19,7 +18,6 @@ export default {
+   rounded,
+   interminate,
+   noAnimation,
+-  checkboxGroup,
+-  rowGroup,
+-  lineThrough
++  lineThrough,
++  controlledVsUncontrolled
+ };\n- apps/docs/content/components/checkbox/interminate.ts (modified, 2 changes)\n  Patch: @@ -2,7 +2,7 @@ const App = `import { Checkbox } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+-    <Checkbox indeterminate checked={true}>
++    <Checkbox indeterminate initialChecked={true}>
+       Option
+     </Checkbox>
+   );\n- apps/docs/content/components/checkbox/label-color.ts (modified, 10 changes)\n  Patch: @@ -3,23 +3,23 @@ const App = `import { Checkbox, Spacer } from "@nextui-org/react";
+ export default function App() {
+   return (
+     <>
+-      <Checkbox color="primary" labelColor="primary" checked={true}>
++      <Checkbox color="primary" labelColor="primary" initialChecked={true}>
+         Primary
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="secondary" labelColor="secondary" checked={true}>
++      <Checkbox color="secondary" labelColor="secondary" initialChecked={true}>
+         Secondary
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="success" labelColor="success" checked={true}>
++      <Checkbox color="success" labelColor="success" initialChecked={true}>
+         Success
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="warning" labelColor="warning" checked={true}>
++      <Checkbox color="warning" labelColor="warning" initialChecked={true}>
+         Warning
+       </Checkbox>
+       <Spacer />
+-      <Checkbox color="error" labelColor="error" checked={true}>
++      <Checkbox color="error" labelColor="error" initialChecked={true}>
+         Error
+       </Checkbox>
+     </>\n- apps/docs/content/components/checkbox/line-through.ts (modified, 2 changes)\n  Patch: @@ -2,7 +2,7 @@ const App = `import { Checkbox } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+-    <Checkbox line checked={true}>
++    <Checkbox line initialChecked={true}>
+       Option
+     </Checkbox>
+   );\n- apps/docs/content/components/checkbox/no-animated.ts (modified, 2 changes)\n  Patch: @@ -2,7 +2,7 @@ const App = `import { Checkbox } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+-    <Checkbox line animated={false} checked={true}>
++    <Checkbox line animated={false} initialChecked={true}>
+       Option
+     </Checkbox>
+   );\n- apps/docs/content/components/checkbox/rounded.ts (modified, 2 changes)\n  Patch: @@ -2,7 +2,7 @@ const App = `import { Checkbox } from "@nextui-org/react";
+ 
+ export default function App() {
+   return (
+-    <Checkbox rounded color="primary" checked={true}>
++    <Checkbox rounded color="primary" initialChecked={true}>
+       Rounded option
+     </Checkbox>
+   );\n- apps/docs/content/components/checkbox/row-group.ts (removed, 28 changes)\n  Patch: @@ -1,28 +0,0 @@
+-const App = `import { Checkbox } from "@nextui-org/react";
+-
+-export default function App() {
+-  return (
+-    <Checkbox.Group color="secondary" value={["buenos-aires"]}>
+-      <Checkbox value="buenos-aires">
+-        Buenos Aires
+-      </Checkbox>
+-      <Checkbox value="sydney">
+-        Sydney
+-      </Checkbox>
+-      <Checkbox value="london">
+-        London
+-      </Checkbox>
+-      <Checkbox value="tokyo">
+-        Tokyo
+-      </Checkbox>
+-    </Checkbox.Group>
+-  );
+-}`;
+-
+-const react = {
+-  '/App.js': App
+-};
+-
+-export default {
+-  ...react
+-};\n- apps/docs/content/components/checkbox/size.ts (modified, 10 changes)\n  Patch: @@ -3,23 +3,23 @@ const App = `import { Checkbox, Spacer } from "@nextui-org/react";
+ export default function App() {
+   return (
+     <>
+-      <Checkbox checked={true} size="xs">
++      <Checkbox initialChecked={true} size="xs">
+         mini
+       </Checkbox>
+       <Spacer />
+-      <Checkbox checked={true} size="sm">
++      <Checkbox initialChecked={true} size="sm">
+         small
+       </Checkbox>
+       <Spacer />
+-      <Checkbox checked={true} size="md">
++      <Checkbox initialChecked={true} size="md">
+         medium
+       </Checkbox>
+       <Spacer />
+-      <Checkbox checked={true} size="lg">
++      <Checkbox initialChecked={true} size="lg">
+         large
+       </Checkbox>
+       <Spacer />
+-      <Checkbox checked={true} size="xl">
++      <Checkbox initialChecked={true} size="xl">
+         xlarge
+       </Checkbox>
+     </>\n- apps/docs/content/components/index.ts (modified, 2 changes)\n  Patch: @@ -10,6 +10,7 @@ import collapseContent from './collapse';
+ import inputContent from './input';
+ import textareaContent from './textarea';
+ import checkboxContent from './checkbox';
++import checkboxGroupContent from './checkbox-group';
+ import radioContent from './radio';
+ import progressContent from './progress';
+ import tooltipContent from './tooltip';
+@@ -35,6 +36,7 @@ export default {
+   inputContent,
+   textareaContent,
+   checkboxContent,
++  checkboxGroupContent,
+   radioContent,
+   progressContent,
+   tooltipContent,\n- apps/docs/content/docs/components/checkbox-group.mdx (added, 133 changes)\n  Patch: @@ -0,0 +1,133 @@
++---
++title: 'Checkbox Group'
++description: 'A CheckboxGroup allows users to select one or more items from a list of choices.'
++url: https://nextui.org/docs/components/checkbox-group
++---
++
++# Checkbox Group
++
++A CheckboxGroup allows users to select one or more items from a list of choices. CheckboxGrup implementation is based on <a href="https://react-spectrum.adobe.com/react-aria/useCheckboxGroup.html" rel="noreferrer" target="_blank">
++@react-aria/checkbox</a>
++
++```jsx
++import { Checkbox } from '@nextui-org/react';
++```
++
++<CarbonAd />
++
++<Playground
++  title="Default"
++  desc=" `Checkbox.Group` accepts multiple `Checkbox` elements as children. Each `Checkbox` represents an option that can be selected, labeled by its children."
++  files={checkboxGroupContent.column}
++/>
++
++<Playground
++  title="Row Group"
++  desc="You can change the `Checkbox.Group` direction with the `row` prop."
++  files={checkboxGroupContent.row}
++/>
++
++<Playground
++  title="Controlled vs Uncontrolled"
++  desc="An initial, **uncontrolled** value can be provided to the `Checkbox.Group` using the defaultValue prop. Alternatively, a **controlled** value can be provided using the value prop. Both of these props accept an array of selected items, which map to the value prop on each item."
++  files={checkboxGroupContent.controlledVsUncontrolled}
++/>
++
++> Note: See React's documentation on [uncontrolled components](https://reactjs.org/docs/uncontrolled-components.html) for more info.
++
++<Playground
++  title="Events"
++  desc="`Checkbox.Group` accepts an `onChange` prop, which is triggered when a user adds or removes an item from the selection. The example below uses `onChange` to log how the user is interacting with the component."
++  files={checkboxGroupContent.events}
++/>
++
++> Accessibility: If a visible label isn't specified for a `Checkbox.Group`, an aria-label must be provided for accessibility. If the field is labeled by a separate element, an aria-labelledby prop must be provided using the id of the labeling element instead. Checkbox elements within a group should always have a visible label.
++
++<Spacer y={3} />
++
++### APIs
++
++<Spacer y={2} />
++
++#### Checkbox Group Props
++
++| Attribute        | Type                                              | Description                                                        | Default   |
++| ---------------- | ------------------------------------------------- | ------------------------------------------------------------------ | --------- |
++| **children\***   | [CheckboxGroupChildren](#checkbox-group-children) | The Checkboxes contained within the checkbox group.                | -         |
++| **label**        | `ReactNode`                                       | The content to display as the label.                               | -         |
++| **value**        | `string[]`                                        | The current value (controlled).                                    | -         |
++| **defaultValue** | `string[]`                                        | The current value (uncontrolled).                                  | -         |
++| **name**         | `string`                                          | The name of the checkbox group, used when submitting an HTML form. | -         |
++| **row**          | `boolean`                                         | Whether the checkbox group is horizontal                           | `false`   |
++| **size**         | [NormalSizes](#normal-sizes)                      | The size of the component                                          | `medium`  |
++| **color**        | [NormalColors](#normal-colors)                    | The color of the component                                         | `default` |
++| **labelColor**   | [SimpleColors](#simple-colors)                    | The color of the label                                             | `default` |
++| **disabled**     | `boolean`                                         | Whether the checkbox group is disabled                             | `false`   |
++| **readOnly**     | `boolean`                                         | Whether the input can be selected but not changed by the user.     | `false`   |
++| **css**          | `Stitches.CSS`                                    | Override Default CSS style                                         | -         |
++| **as**           | `keyof JSX.IntrinsicElements`                     | Changes which tag component outputs                                | `div`     |
++| ...              | `HTMLDivAttributes`                               | Native element props                                               | -         |
++
++<Spacer y={1} />
++
++#### Checkbox Group Events
++
++| Attribute    | Type                 | Description                                   | Default |
++| ------------ | -------------------- | --------------------------------------------- | ------- |
++| **onChange** | `(value: T) => void` | Handler that is called when the value changes | -       |
++
++<Spacer y={1} />
++
++#### Checkbox Group Accessibility Props
++
++| Attribute             | Type     | Description                                                                                                        | Default |
++| --------------------- | -------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
++| **id**                | `string` | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) | -       |
++| **aria-label**        | `string` | Defines a string value that labels the current element                                                             | -       |
++| **aria-labelledby**   | `string` | Identifies the element (or elements) that labels the current element                                               | -       |
++| **aria-describedby**  | `string` | Identifies the element (or elements) that describes the object.                                                    | -       |
++| **aria-details**      | `string` | Identifies the element (or elements) that provide a detailed, extended description for the object.                 | -       |
++| **aria-errormessage** | `string` | Identifies the element that provides an error message for the object.                                              | -       |
++
++<Spacer y={2} />
++
++### Checkbox Group types
++
++<Spacer y={1} />
++
++#### Checkbox Group Children
++
++```ts
++type ReactElement<CheckboxProps> | ReactElement<CheckboxProps>[]
++```
++
++#### Normal Colors
++
++```ts
++type NormalColors =
++  | 'default'
++  | 'primary'
++  | 'secondary'
++  | 'success'
++  | 'warning'
++  | 'error'
++  | 'gradient';
++```
++
++#### Simple Colors
++
++```ts
++type SimpleColors =
++  | 'default'
++  | 'primary'
++  | 'secondary'
++  | 'success'
++  | 'warning'
++  | 'error';
++```
++
++#### Normal Sizes
++
++```ts
++type NormalSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
++```\n- apps/docs/content/docs/components/checkbox.mdx (modified, 115 changes)\n  Patch: @@ -1,12 +1,13 @@
+ ---
+ title: 'Checkbox'
+-description: 'Checkboxes allow the user to select one or more items from a set of options.'
++description: 'Checkboxes allow users to select multiple items from a list of individual items, or to mark one individual item as selected.'
+ url: https://nextui.org/docs/components/checkbox
+ ---
+ 
+ # Checkbox
+ 
+-the `Checkbox` component allow the user to select one or more items from a set of options.
++Checkboxes allow users to select multiple items from a list of individual items, or to mark one individual item as selected. Checkbox implementation is based on <a href="https://react-spectrum.adobe.com/react-aria/useCheckbox.html" rel="noreferrer" target="_blank">
++@react-aria/checkbox</a>
+ 
+ ```jsx
+ import { Checkbox } from '@nextui-org/react';
+@@ -18,7 +19,7 @@ import { Checkbox } from '@nextui-org/react';
+ 
+ <Playground
+   title="Default"
+-  desc="You can change the state with `checked` prop"
++  desc="Checkboxes accept children, which are rendered as the label."
+   files={checkboxContent.default_checkbox}
+ />
+ 
+@@ -54,7 +55,7 @@ import { Checkbox } from '@nextui-org/react';
+ 
+ <Playground
+   title="Indeterminate"
+-  desc="You can add the `indeterminate` property to add a different style to the `Checkbox`"
++  desc="A `Checkbox` can be in an indeterminate state, controlled using the `interminate` prop."
+   files={checkboxContent.interminate}
+ />
+ 
+@@ -65,21 +66,17 @@ import { Checkbox } from '@nextui-org/react';
+ />
+ 
+ <Playground
+-  title="No Animated"
+-  desc="You can disable the animation of the entire `Checkbox` with the property `animated={false}`."
+-  files={checkboxContent.noAnimation}
++  title="Controlled vs Uncontrolled"
++  desc="Checkboxes are not selected by default. The `initialChecked` prop can be used to set the default state (uncontrolled). Alternatively, the `checked` prop can be used to make the selected state controlled."
++  files={checkboxContent.controlledVsUncontrolled}
+ />
+ 
+-<Playground
+-  title="Group"
+-  desc="You can manage a set of `Checkbox` with `Checkbox.Group`."
+-  files={checkboxContent.checkboxGroup}
+-/>
++> Note: See React's documentation on [uncontrolled components](https://reactjs.org/docs/uncontrolled-components.html) for more info.
+ 
+ <Playground
+-  title="Row Group"
+-  desc="You can change the `Checkbox.Group` direction with `row` prop."
+-  files={checkboxContent.rowGroup}
++  title="No Animated"
++  desc="You can disable the animation of the entire `Checkbox` with the property `animated={false}`."
++  files={checkboxContent.noAnimation}
+ />
+ 
+ <Spacer y={3} />
+@@ -90,42 +87,56 @@ import { Checkbox } from '@nextui-org/react';
+ 
+ #### Checkbox Props
+ 
+-| Attribute          | Type                          | Accepted values                | Description                                                               | Default   |
+-| ------------------ | ----------------------------- | ------------------------------ | ------------------------------------------------------------------------- | --------- |
+-| **value**          | `string`                      | -                              | Unique identification value (only in group)                               | -         |
+-| **label**          | `string`                      | -                              | Checkbox label                                                            | -         |
+-| **color**          | `NormalColors`                | [NormalColors](#normal-colors) | Change checkbox color                                                     | `default` |
+-| **labelColor**     | `SimpleColors`                | [SimpleColors](#simple-colors) | Change checkbox label color                                               | `default` |
+-| **size**           | `NormalSizes`                 | [NormalSizes](#normal-sizes)   | Checkbox size                                                             | `md`      |
+-| **checked**        | `boolean`                     | `true/false`                   | Determine the value of the checkbox                                       | `false`   |
+-| **initialChecked** | `boolean`                     | `true/false`                   | Determine the initial value of the checkbox                               | `false`   |
+-| **animated**       | `boolean`                     | `true/false`                   | Display checkbox animations                                               | `true`    |
+-| **disabled**       | `boolean`                     | `true/false`                   | Disable checkbox                                                          | `false`   |
+-| **indeterminate**  | `boolean`                     | `true/false`                   | Indeterminate checkbox                                                    | `false`   |
+-| **preventDefault** | `boolean`                     | `true/false`                   | Prevent default event on when is selected through the `Space, Enter` keys | `true`    |
+-| **rounded**        | `boolean`                     | `true/false`                   | Rounded checkbox                                                          | `false`   |
+-| **line**           | `boolean`                     | `true/false`                   | Line in the middle of the label when the `Checkbox` is checked            | -         |
+-| **onChange**       | `CheckboxEvent`               | -                              | The callback invoked when the checked state of the `Checkbox` changes.    | -         |
+-| **css**            | `Stitches.CSS`                | -                              | Override Default CSS style                                                | -         |
+-| **as**             | `keyof JSX.IntrinsicElements` | -                              | Changes which tag component outputs                                       | `label`   |
+-| ...                | `LabelHTMLAttributes`         | `'form', 'className', ...`     | Native checkbox props                                                     | -         |
++| Attribute          | Type                           | Description                                                                                                                                                    | Default   |
++| ------------------ | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
++| **children**       | `ReactNode`                    | The label for the element                                                                                                                                      | -         |
++| **value**          | `string`                       | The value of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefvalue) | -         |
++| **label**          | `string`                       | The label for the element                                                                                                                                      | -         |
++| **name**           | `string`                       | The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)   | -         |
++| **color**          | [NormalColors](#normal-colors) | The color of the component                                                                                                                                     | `default` |
++| **labelColor**     | [SimpleColors](#simple-colors) | The color of the label                                                                                                                                         | `default` |
++| **size**           | [NormalSizes](#normal-sizes)   | The size of the component                                                                                                                                      | `md`      |
++| **checked**        | `boolean`                      | Whether the element should be checked (controlled)                                                                                                             | `false`   |
++| **initialChecked** | `boolean`                      | Whether the element should be checked (uncontrolled)                                                                                                           | `false`   |
++| **animated**       | `boolean`                      | Whether the checkbox has animations                                                                                                                            | `true`    |
++| **disabled**       | `boolean`                      | Whether the input is disabled                                                                                                                                  | `false`   |
++| **indeterminate**  | `boolean`                      | Indeterminism is presentational only. The indeterminate visual representation remains regardless of user interaction.                                          | `false`   |
++| **rounded**        | `boolean`                      | Whether the checkbox is rounded                                                                                                                                | `false`   |
++| **line**           | `boolean`                      | Line in the middle of the label when the `Checkbox` is checked                                                                                                 | -         |
++| **readOnly**       | `boolean`                      | Whether the input can be selected but not changed by the user.                                                                                                 | `false`   |
++| **required**       | `boolean`                      | Whether user input is required on the input before form submission.                                                                                            | `false`   |
++| **autoFocus**      | `boolean`                      | Whether the element should receive focus on render                                                                                                             |
++| **css**            | `Stitches.CSS`                 | Override Default CSS style                                                                                                                                     | -         |
++| **as**             | `keyof JSX.IntrinsicElements`  | Changes which tag component outputs                                                                                                                            | `label`   |
++| ...                | `HTMLLabelElement`             | Native element props                                                                                                                                           | -         |
+ 
+-<Spacer y={2} />
++<Spacer y={1} />
+ 
+-#### Checkbox Group Props
+-
+-| Attribute      | Type                          | Accepted values                | Description                         | Default   |
+-| -------------- | ----------------------------- | ------------------------------ | ----------------------------------- | --------- |
+-| **value**      | `string[]`                    | -                              | List of checked checkbox            | `[]`      |
+-| **row**        | `boolean`                     | `true/false`                   | Change the checkbox group direction | `false`   |
+-| **size**       | `NormalSizes`                 | [NormalSizes](#normal-sizes)   | Size of all checkboxes in the group | `medium`  |
+-| **color**      | `NormalColors`                | [NormalColors](#normal-colors) | Change checkbox group color         | `default` |
+-| **labelColor** | `SimpleColors`                | [SimpleColors](#simple-colors) | Change checkbox group label color   | `default` |
+-| **disabled**   | `boolean`                     | `true/false`                   | Disable checkbox group              | `false`   |
+-| **onChange**   | `(values: string[]) => void`  | -                              | Checkbox group event handler        | -         |
+-| **css**        | `Stitches.CSS`                | -                              | Override Default CSS style          | -         |
+-| **as**         | `keyof JSX.IntrinsicElements` | -                              | Changes which tag component outputs | `div`     |
+-| ...            | `HTMLAttributes`              | `'id', 'className', ...`       | Native props                        | -         |
++#### Checkbox Events
++
++| Attribute         | Type                                                                                                | Description                                                       | Default |
++| ----------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ------- |
++| **onChange**      | `(checked: boolean) => void`                                                                        | Handler that is called when the element's selection state changes | -       |
++| **onFocus**       | <Code>(e: [FocusEvent](https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent)) => void</Code> | Handler that is called when the element receives focus            | -       |
++| **onBlur**        | <Code>(e: [FocusEvent](https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent)) => void</Code> | Handler that is called when the element loses focus               | -       |
++| **onFocusChange** | `(focused: boolean) => void`                                                                        | Handler that is called when the element's focus status changes    | -       |
++| **onKeyDown**     | <Code>(e: [KeyboardEvent](#keyboard-event)) => void</Code>                                          | Handler that is called when a key is pressed                      | -       |
++| **onKeyUp**       | <Code>(e: [KeyboardEvent](#keyboard-event)) => void</Code>                                          | Handler that is called when a key is released                     | -       |
++
++<Spacer y={1} />
++
++#### Checkbox Accessibility Props
++
++| Attribute               | Type      | Description                                                                                                                                                                                                                                                                                   | Default |
++| ----------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
++| **id**                  | `string`  | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)                                                                                                                                                                            | -       |
++| **excludeFromTabOrder** | `boolean` | Whether to exclude the element from the sequential tab order. If true, the element will not be focusable via the keyboard by tabbing. This should be avoided except in rare scenarios where an alternative means of accessing the element or its functionality via the keyboard is available. | -       |
++| **aria-controls**       | `string`  | Identifies the element (or elements) whose contents or presence are controlled by the current element.                                                                                                                                                                                        | -       |
++| **aria-label**          | `string`  | Defines a string value that labels the current element                                                                                                                                                                                                                                        | -       |
++| **aria-labelledby**     | `string`  | Identifies the element (or elements) that labels the current element                                                                                                                                                                                                                          | -       |
++| **aria-describedby**    | `string`  | Identifies the element (or elements) that describes the object.                                                                                                                                                                                                                               | -       |
++| **aria-details**        | `string`  | Identifies the element (or elements) that provide a detailed, extended description for the object.                                                                                                                                                                                            | -       |
++| **aria-errormessage**   | `string`  | Identifies the element that provides an error message for the object.                                                                                                                                                                                                                         | -       |
+ 
+ <Spacer y={2} />
+ 
+@@ -163,3 +174,9 @@ type SimpleColors =
+ ```ts
+ type NormalSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+ ```
++
++#### Keyboard event
++
++```ts
++type BaseEvent<ReactKeyboardEvent<any>>
++```\n- apps/docs/content/docs/components/textarea.mdx (modified, 76 changes)\n  Patch: @@ -57,12 +57,12 @@ import { Textarea } from '@nextui-org/react';
+ 
+ <Playground
+   title="Controlled vs Uncontrolled"
+-  desc="As well as the `Input` component, `Textarea` component can be controlled or uncontrolled. If you want to deep in this topic
+-  you can go to the official React documentation for [Controlled Components](https://reactjs.org/docs/forms.html#controlled-components)
+-  and [Uncontrolled Components](https://reactjs.org/docs/uncontrolled-components.html). The controlled Textarea example is using the hook [useInput](#useinput)"
++  desc="As well as the `Input` component, `Textarea` component can be controlled or uncontrolled. The controlled Textarea example is using the hook [useInput](#useinput)"
+   files={textareaContent.controlledUncontrolled}
+ />
+ 
++> Note: See React's documentation on [uncontrolled components](https://reactjs.org/docs/uncontrolled-components.html) for more info.
++
+ <Spacer y={3} />
+ 
+ ### APIs
+@@ -71,41 +71,41 @@ import { Textarea } from '@nextui-org/react';
+ 
+ #### Textarea Props
+ 
+-| Attribute             | Type                                                  | Accepted values                  | Description                                                               | Default      |
+-| --------------------- | ----------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------- | ------------ |
+-| **value**             | `string`                                              | -                                | Textarea value                                                            | -            |
+-| **initialValue**      | `string`                                              | -                                | Textarea default value                                                    | -            |
+-| **placeholder**       | `string`                                              | -                                | The short hint displayed in the textarea                                  | -            |
+-| **size**              | `NormalSizes`                                         | [NormalSizes](#normal-sizes)     | Change textarea size                                                      | `medium`     |
+-| **color**             | `SimpleColors`                                        | [SimpleColors](#simple-colors)   | Change textarea text, border and label color                              | `default`    |
+-| **status**            | `SimpleColors`                                        | [SimpleColors](#simple-colors)   | Change textarea status color                                              | `default`    |
+-| **rows**              | `number`                                              | -                                | Textarea rows count                                                       | -            |
+-| **minRows**           | `number`                                              | -                                | Minimum number of rows to show for textarea                               | `3`          |
+-| **maxRows**           | `number`                                              | -                                | Maximum number of rows up to which the textarea can grow                  | `6`          |
+-| **cacheMeasurements** | `boolean`                                             | -                                | Reuse previously computed measurements when computing height of textarea. | `true`       |
+-| **helperColor**       | `SimpleColors`                                        | [SimpleColors](#simple-colors)   | Change helper text color                                                  | `default`    |
+-| **required**          | `boolean`                                             | `true/false`                     | Required textarea prop                                                    | `false`      |
+-| **readOnly**          | `boolean`                                             | `true/false`                     | It prevents the user from changing the value of the field                 | `false`      |
+-| **disabled**          | `boolean`                                             | `true/false`                     | Disable textarea                                                          | `false`      |
+-| **bordered**          | `boolean`                                             | `true/false`                     | Bordered textarea                                                         | `false`      |
+-| **underlined**        | `boolean`                                             | `true/false`                     | Underlined textarea                                                       | `false`      |
+-| **shadow**            | `boolean`                                             | `true/false`                     | Enable or disable the textarea shadow                                     | `true`       |
+-| **animated**          | `boolean`                                             | `true/false`                     | Enable or disable the textarea animation                                  | `true`       |
+-| **autoComplete**      | `string`                                              | -                                | HTML textarea autocomplete attribute                                      | `off`        |
+-| **borderWeight**      | `NormalWeights`                                       | [NormalWeights](#normal-weights) | Border weight for `bordered` textarea                                     | `normal`     |
+-| **fullWidth**         | `boolean`                                             | -                                | If `true`, the textarea will take up the full width of its container.     | `false`      |
+-| **width**             | `string`                                              | -                                | Textarea width                                                            | `initial`    |
+-| **label**             | `string`                                              | -                                | Text label for textarea                                                   | -            |
+-| **labelPlaceholder**  | `string`                                              | -                                | The placeholder becomes a label                                           | -            |
+-| **helperText**        | `string`                                              | -                                | Add a helper text to textarea                                             | -            |
+-| **onHeightChange**    | `(height: number, meta: {rowHeight: number}) => void` | -                                | Callback fired whenthe textarea height change                             | -            |
+-| **onChange**          | `(e: React.ChangeEvent<HTMLTextAreaElement>) => void` | -                                | Callback fired when the value is changed                                  | -            |
+-| **onFocus**           | `(e: React.FocusEvent<HTMLTextAreaElement>) => void`  | -                                | Callback fired when the textarea is focused.                              | -            |
+-| **onBlur**            | `(e: React.FocusEvent<HTMLTextAreaElement>) => void`  | -                                | Callback fired when the textarea is blurred.                              | -            |
+-| **ref**               | <Code>Ref<HTMLTextAreaElement &#124; null></Code>     | -                                | forwardRef                                                                | -            |
+-| **css**               | `Stitches.CSS`                                        | -                                | Override Default CSS style                                                | -            |
+-| **as**                | `keyof JSX.IntrinsicElements`                         | -                                | Changes which tag component outputs                                       | `input`      |
+-| ...                   | `TextareaHTMLAttributes`                              | `'className', ...`               | Textarea native props                                                     | -            |
++| Attribute             | Type                                                  | Accepted values                  | Description                                                               | Default   |
++| --------------------- | ----------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------- | --------- |
++| **value**             | `string`                                              | -                                | Textarea value                                                            | -         |
++| **initialValue**      | `string`                                              | -                                | Textarea default value                                                    | -         |
++| **placeholder**       | `string`                                              | -                                | The short hint displayed in the textarea                                  | -         |
++| **size**              | `NormalSizes`                                         | [NormalSizes](#normal-sizes)     | Change textarea size                                                      | `medium`  |
++| **color**             | `SimpleColors`                                        | [SimpleColors](#simple-colors)   | Change textarea text, border and label color                              | `default` |
++| **status**            | `SimpleColors`                                        | [SimpleColors](#simple-colors)   | Change textarea status color                                              | `default` |
++| **rows**              | `number`                                              | -                                | Textarea rows count                                                       | -         |
++| **minRows**           | `number`                                              | -                                | Minimum number of rows to show for textarea                               | `3`       |
++| **maxRows**           | `number`                                              | -                                | Maximum number of rows up to which the textarea can grow                  | `6`       |
++| **cacheMeasurements** | `boolean`                                             | -                                | Reuse previously computed measurements when computing height of textarea. | `true`    |
++| **helperColor**       | `SimpleColors`                                        | [SimpleColors](#simple-colors)   | Change helper text color                                                  | `default` |
++| **required**          | `boolean`                                             | `true/false`                     | Required textarea prop                                                    | `false`   |
++| **readOnly**          | `boolean`                                             | `true/false`                     | It prevents the user from changing the value of the field                 | `false`   |
++| **disabled**          | `boolean`                                             | `true/false`                     | Disable textarea                                                          | `false`   |
++| **bordered**          | `boolean`                                             | `true/false`                     | Bordered textarea                                                         | `false`   |
++| **underlined**        | `boolean`                                             | `true/false`                     | Underlined textarea                                                       | `false`   |
++| **shadow**            | `boolean`                                             | `true/false`                     | Enable or disable the textarea shadow                                     | `true`    |
++| **animated**          | `boolean`                                             | `true/false`                     | Enable or disable the textarea animation                                  | `true`    |
++| **autoComplete**      | `string`                                              | -                                | HTML textarea autocomplete attribute                                      | `off`     |
++| **borderWeight**      | `NormalWeights`                                       | [NormalWeights](#normal-weights) | Border weight for `bordered` textarea                                     | `normal`  |
++| **fullWidth**         | `boolean`                                             | -                                | If `true`, the textarea will take up the full width of its container.     | `false`   |
++| **width**             | `string`                                              | -                                | Textarea width                                                            | `initial` |
++| **label**             | `string`                                              | -                                | Text label for textarea                                                   | -         |
++| **labelPlaceholder**  | `string`                                              | -                                | The placeholder becomes a label                                           | -         |
++| **helperText**        | `string`                                              | -                                | Add a helper text to textarea                                             | -         |
++| **onHeightChange**    | `(height: number, meta: {rowHeight: number}) => void` | -                                | Callback fired whenthe textarea height change                             | -         |
++| **onChange**          | `(e: React.ChangeEvent<HTMLTextAreaElement>) => void` | -                                | Callback fired when the value is changed                                  | -         |
++| **onFocus**           | `(e: React.FocusEvent<HTMLTextAreaElement>) => void`  | -                                | Callback fired when the textarea is focused.                              | -         |
++| **onBlur**            | `(e: React.FocusEvent<HTMLTextAreaElement>) => void`  | -                                | Callback fired when the textarea is blurred.                              | -         |
++| **ref**               | <Code>Ref<HTMLTextAreaElement &#124; null></Code>     | -                                | forwardRef                                                                | -         |
++| **css**               | `Stitches.CSS`                                        | -                                | Override Default CSS style                                                | -         |
++| **as**                | `keyof JSX.IntrinsicElements`                         | -                                | Changes which tag component outputs                                       | `input`   |
++| ...                   | `TextareaHTMLAttributes`                              | `'className', ...`               | Textarea native props                                                     | -         |
+ 
+ <Spacer y={2} />
+ \n- apps/docs/content/docs/guide/getting-started.mdx (modified, 4 changes)\n  Patch: @@ -9,8 +9,8 @@ url: https://nextui.org/docs/getting-started
+ Welcome to the NextUI documentation!
+ 
+ NextUI allows you to make beautiful, modern, and fast websites/applications regardless of your design experience, created with <a href="https://reactjs.org/" rel="noreferrer" target="_blank">React.js</a> and <a href="https://stitches.dev/" rel="noreferrer" target="_blank">
+-Stitches</a>, based on <a href="https://geist-ui.dev" rel="noreferrer" target="_blank">
+-GeistUI</a> and inspired by <a href="https://vuesax.com/" rel="noreferrer" target="_blank">Vuesax</a>.
++Stitches</a>, based on <a href="https://react-spectrum.adobe.com/react-aria/index.html" rel="noreferrer" target="_blank">
++React Aria</a> and inspired by <a href="https://vuesax.com/" rel="noreferrer" target="_blank">Vuesax</a>.
+ 
+ <CarbonAd />
+ \n- apps/docs/content/docs/manifest.json (modified, 6 changes)\n  Patch: @@ -143,9 +143,15 @@
+                         },
+                         {
+                             "title": "Checkbox",
++                            "updated": true,
+                             "keywords": "check, radio, selectable, checkbox, box",
+                             "path": "/docs/components/checkbox.mdx"
+                         },
++                        {
++                          "title": "Checkbox Group",
++                          "keywords": "check, radio, selectable, checkbox, box, group, items",
++                          "path": "/docs/components/checkbox-group.mdx"
++                        },
+                         {
+                             "title": "Radio",
+                             "keywords": "check, radio, select",\n- apps/docs/src/components/nav-link/index.tsx (modified, 3 changes)\n  Patch: @@ -9,6 +9,7 @@ export interface Props {
+   title: string;
+   selected: boolean;
+   newPost?: boolean;
++  updated?: boolean;
+   comingSoon?: boolean;
+   color?: string;
+ }
+@@ -90,7 +91,7 @@ const NavLink: React.FC<NavLinkProps> = ({
+         href={pathname}
+         selected={selected}
+         disabled={comingSoon}
+-        onClick={(e) => !comingSoon && onClick && onClick(e)}
++        onClick={(e: any) => !comingSoon && onClick && onClick(e)}
+         css={{
+           color: color ? color : 'inherit'
+         }}\n- apps/docs/src/components/sidebar/index.tsx (modified, 1 changes)\n  Patch: @@ -107,6 +107,7 @@ const Sidebar: React.FC<SidebarProps> = ({
+             pathname,
+             selected,
+             comingSoon,
++            updated,
+             newPost
+           } as NavLinkProps;
+ \n- apps/docs/src/components/sidebar/post.tsx (modified, 5 changes)\n  Patch: @@ -63,6 +63,11 @@ const Post: React.FC<React.PropsWithChildren<PostProps>> = ({
+           New
+         </Badge>
+       )}
++      {route?.updated && (
++        <Badge className="post__new-badge" type="secondary">
++          Updated
++        </Badge>
++      )}
+       {route?.comingSoon && (
+         <Badge className="post__coming-soon-badge" type="disabled">
+           Coming soon\n- packages/react/package.json (modified, 1 changes)\n  Patch: @@ -69,6 +69,7 @@
+     "@react-stately/table": "3.1.1",
+     "@react-stately/toggle": "3.2.4",
+     "@react-types/button": "^3.4.4",
++    "@react-types/checkbox": "3.2.6",
+     "@react-types/grid": "3.0.1",
+     "@react-types/shared": "3.11.0",
+     "@stitches/react": "1.2.7"\n- packages/react/src/button/__tests__/index.test.tsx (modified, 1 changes)\n  Patch: @@ -2,7 +2,6 @@ import React from 'react';
+ import { mount } from 'enzyme';
+ import Button from '../index';
+ import userEvent from '@testing-library/user-event';
+-import { FocusableRef } from '@react-types/shared';
+ 
+ describe('Button', () => {
+   it('should render correctly', () => {\n- packages/react/src/card/card.styles.ts (modified, 2 changes)\n  Patch: @@ -116,7 +116,7 @@ export const StyledCard = styled('div', {
+     },
+     animated: {
+       true: {
+-        transition: '$default'
++        transition: '$card'
+       },
+       false: {
+         transition: 'none'\n

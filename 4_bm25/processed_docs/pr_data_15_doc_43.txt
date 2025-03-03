@@ -1,0 +1,80 @@
+Pull Request Number: 2410
+Title: fix(components): incorrect strokeWidth
+Base Branch: main
+Head Branch: fix/eng-134
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2410
+State: MERGED
+Created At: 2024-02-26T12:04:07Z
+Merged At: 2024-02-27T14:31:38Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+Closes #1790
+📝 Description
+the logic for setting strokeWidth is incorrect in circular progress
+⛳️ Current behavior (updates)
+if we set the top one with strokeWidth={2} and the bottom one with strokeWidth={3}, the width is same due to the incorrect logic.
+
+🚀 New behavior
+Here's the expected width.
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- fix(components): incorrect strokeWidth\n- feat(changeset): incorrect strokeWidth in circular progress\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: f16cb5c2e868162b667c2838790befc69e4d3d12
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                 | Type  |
+| -------------------- | ----- |
+| @nextui-org/progress | Patch |
+| @nextui-org/react    | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/wingkwong/nextui/new/fix/eng-134?filename=.changeset/chilled-moons-juggle.md&value=---%0A%22%40nextui-org%2Fprogress%22%3A%20patch%0A---%0A%0Afix(components)%3A%20incorrect%20strokeWidth%0A)
+
+\n- vercel: [vc]: #ZzRuPpjVvHC4LB/ddNKq3nvdNYuN0KO54AzmXY1nW6Y=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvSExzQTlYS3dhaHhWb1p0eU5kUlVNeDhoeDFzeiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXdpbmdrd29uZy1maXgtZW5nLTEzNC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZm9yay13aW5na3dvbmctZml4LWVuZy0xMzQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/HLsA9XKwahxVoZtyNdRUMx8hx1sz)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-134-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-wingkwong-fix-eng-134-nextui-org.vercel.app?via=pr-comment-feedback-link) | Feb 26, 2024 0:06am |
+
+\n- vercel: @wingkwong is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f16cb5c2e868162b667c2838790befc69e4d3d12%22%7D%2C%22id%22%3A%22QmYvnAFr5T5VyoXfRPYWntF4soZqzLwhi9jqayqwaDyw1j%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2410%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/tricky-moons-obey.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/progress": patch
++---
++
++fix incorrect strokeWidth in circular progress (#1790)\n- packages/components/progress/src/use-circular-progress.ts (modified, 3 changes)\n  Patch: @@ -112,7 +112,8 @@ export function useCircularProgress(originalProps: UseCircularProgressProps) {
+   const selfMounted = originalProps.disableAnimation ? true : isMounted;
+ 
+   const center = 16;
+-  const strokeWidth = strokeWidthProp || originalProps.size === "sm" ? 2 : 3;
++  const strokeWidth = strokeWidthProp || (originalProps.size === "sm" ? 2 : 3);
++
+   const radius = 16 - strokeWidth;
+   const circumference = 2 * radius * Math.PI;
+ \n

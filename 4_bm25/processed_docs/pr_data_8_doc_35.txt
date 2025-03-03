@@ -1,0 +1,395 @@
+Pull Request Number: 3330
+Title: fix(table): resolve double fetch issue in useInfiniteScroll hook (fix #3251)
+Base Branch: canary
+Head Branch: fix/table-infinite-scroll
+Author: abhisektomar1
+URL: https://github.com/nextui-org/nextui/pull/3330
+State: CLOSED
+Created At: 2024-06-26T09:23:25Z
+Merged At: None
+Participants: abhisektomar1
+
+Description:
+Summary
+Resolved the issue where the useInfiniteScroll hook was fetching data twice on initial render. This fix ensures that data is fetched only once during initial render and additional data is fetched upon scrolling.
+Issue
+This pull request addresses issue #3251.
+Changes
+
+Updated useInfiniteScroll hook to prevent double fetching.
+Verified the fix by testing the component and ensuring only one initial fetch.
+
+
+Closes # 
+📝 Description
+I use isLoadingRef to prevent concurrent load calls, implements a debounced loadMore function with useCallback, and simplifies the IntersectionObserver logic. The hook now handles both loader-based and scroll-based detection more efficiently, using debounce for scroll events.
+I also improved cleanup for the IntersectionObserver and better TypeScript typing. These changes collectively make the hook more robust, reducing issues like multiple simultaneous loads and excessive re-renders, while providing a smoother infinite scrolling experience.
+⛳️ Current behavior (updates)
+Table useInfiniteScroll hook fetches twice
+🚀 New behavior
+Updated useInfiniteScroll hook to prevent double fetching.
+💣 Is this a breaking change (Yes/No):
+No
+
+Summary by CodeRabbit
+
+New Features
+
+Improved infinite scroll functionality with enhanced loading mechanics and a debounce mechanism to prevent multiple triggers.
+
+Commits:
+- fix(table): resolve double fetch issue in useInfiniteScroll hook (fix #3251)\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 31bcda33760d2ec8263933749947e5d156058023
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/abhisektomar1/nextui/new/fix/table-infinite-scroll?filename=.changeset/tidy-socks-rush.md&value=---%0A%22%40nextui-org%2Fuse-infinite-scroll%22%3A%20patch%0A---%0A%0Afix(table)%3A%20resolve%20double%20fetch%20issue%20in%20useInfiniteScroll%20hook%20(fix%20%233251)%0A)
+
+\n- vercel: [vc]: #o/Xba1iK/T7EaF/Cqfnx/Nx+bbKJvs5yAAtn/if+L1k=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvSER2QlJYcTZLYW5FVTZuWHg4Z29qTFRDY1d3OSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFiaGlzZWt0b21hcjEtZmktZGQzMmU1LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFiaGlzZWt0b21hcjEtZmktZGQzMmU1LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/HDvBRXq6KanEU6nXx8gojLTCcWw9)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-abhisektomar1-fi-dd32e5-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-abhisektomar1-fi-dd32e5-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jun 26, 2024 9:26am |
+
+\n- vercel: @abhisektomar1 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2231bcda33760d2ec8263933749947e5d156058023%22%7D%2C%22id%22%3A%22QmQQfs67dSLoxxkq9e3RgfYCTbirxSwbGwnvv9XXhtV8eM%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3330%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The `useInfiniteScroll` function in `packages/hooks/use-infinite-scroll/src/index.ts` has been enhanced to include a `loadMore` function using `useCallback` for optimized state handling. The updates involve refactoring content loading logic and introducing a debounce mechanism via `isLoadingRef` to prevent multiple simultaneous calls, ensuring efficient infinite scrolling.
+
+## Changes
+
+| File                                                 | Change Summary                                             |
+|------------------------------------------------------|------------------------------------------------------------|
+| `.../use-infinite-scroll/src/index.ts`               | Introduced `useCallback` for `loadMore` function, added `isLoadingRef`, changed `useRef` and `useLayoutEffect` logic, defaulted `hasMore` to `true`. |
+
+## Sequence Diagram(s)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant ScrollComponent
+    participant useInfiniteScroll
+    participant useCallback
+    participant IntersectionObserver
+
+    User ->> ScrollComponent: Scrolls down
+    ScrollComponent ->> useInfiniteScroll: call to check conditions
+    useInfiniteScroll -> useCallback: Executes loadMore
+    useCallback -> useInfiniteScroll: Updates state, triggers onLoadMore
+    useInfiniteScroll -> IntersectionObserver: Loads additional content
+    IntersectionObserver -> User: Renders new content
+```
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant OldUseInfiniteScroll
+    participant NewUseInfiniteScroll
+
+    User ->> OldUseInfiniteScroll: Scrolls down
+    OldUseInfiniteScroll ->> OldUseInfiniteScroll: Directly loads content
+    OldUseInfiniteScroll ->> User: Renders new content
+
+    User ->> NewUseInfiniteScroll: Scrolls down
+    NewUseInfiniteScroll ->> NewUseInfiniteScroll: Checks debounce status
+    NewUseInfiniteScroll ->> NewUseInfiniteScroll: Uses useCallback for loadMore
+    NewUseInfiniteScroll ->> User: Renders new content, prevents multiple calls
+```
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+packages/hooks/use-infinite-scroll/src/index.ts: ### Summary
+
+The `useInfiniteScroll` function in `packages/hooks/use-infinite-scroll/src/index.ts` has been updated to include a `loadMore` function using `useCallback` that handles loading more content when certain conditions are met. The changes involve refactoring the logic for loading more content and incorporating a debounce mechanism to prevent multiple calls.
+
+### Alterations to the declarations of exported or public entities
+
+- `import {useLayoutEffect, useRef}` in `packages/hooks/use-infinite-scroll/src/index.ts` → `import {useLayoutEffect, useRef, useCallback}` in `packages/hooks/use-infinite-scroll/src/index.ts`
+- `const {hasMore, distance = 250, isEnabled = true, shouldUseLoader = true, onLoadMore}` in `packages/hooks/use-infinite-scroll/src/index.ts` → `const {hasMore = true, distance = 250, isEnabled = true, shouldUseLoader = true, onLoadMore}` in `packages/hooks/use-infinite-scroll/src/index.ts`
+- `const previousY = useRef<number>()` in `packages/hooks/use-infinite-scroll/src/index.ts` → `const observerRef = useRef<IntersectionObserver | null>(null)` in `packages/hooks/use-infinite-scroll/src/index.ts`
+- Addition of `const isLoadingRef = useRef(false)` in `packages/hooks/use-infinite-scroll/src/index.ts`
+- Addition of `const loadMore = useCallback(() => { ... })` in `packages/hooks/use-infinite-scroll/src/index.ts`
+- Modification of logic within `useLayoutEffect` in `packages/hooks/use-infinite-scroll/src/index.ts`
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+**Title**: fix(table): resolve double fetch issue in useInfiniteScroll hook (fix #3251)
+
+**User**: abhisektomar1
+
+**Number**: 3330
+
+**Description**:
+This pull request resolves the issue where the `useInfiniteScroll` hook was fetching data twice on initial render. The fix ensures that data is fetched only once during the initial render and additional data is fetched upon scrolling. 
+
+**Changes**:
+- Updated `useInfiniteScroll` hook to prevent double fetching.
+- Verified the fix by testing the component to ensure only one initial fetch.
+- Utilized `isLoadingRef` to prevent concurrent load calls.
+- Implemented a debounced `loadMore` function with `useCallback`.
+- Simplified the `IntersectionObserver` logic.
+- Improved cleanup for the `IntersectionObserver`.
+- Enhanced TypeScript typing.
+
+**Current behavior**: Table `useInfiniteScroll` hook fetches twice on initial render.
+
+**New behavior**: Updated `useInfiniteScroll` hook to prevent double fetching on initial render.
+
+**Breaking change**: No
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+### AI-generated summary of generated summaries
+
+The `useInfiniteScroll` function in `packages/hooks/use-infinite-scroll/src/index.ts` has been enhanced with a new `loadMore` function implemented using `useCallback`. This function manages loading additional content when specific conditions are met, incorporating a debounce mechanism to avoid multiple calls. The refactoring includes:
+
+1. Importing `useCallback` in addition to `useLayoutEffect` and `useRef`.
+2. Setting default values for `hasMore` in the function parameters.
+3. Replacing the `previousY` reference with an `observerRef` to handle the Intersection Observer.
+4. Introducing an `isLoadingRef` to track the loading state.
+5. Modifying the logic within `useLayoutEffect` to integrate the new `loadMore` function and debounce mechanism.
+
+### Alterations to the declarations of exported or public entities
+
+- **Imports:**
+  - Before: `import {useLayoutEffect, useRef}`
+  - After: `import {useLayoutEffect, useRef, useCallback}`
+
+- **Function Parameters:**
+  - Before: `const {hasMore, distance = 250, isEnabled = true, shouldUseLoader = true, onLoadMore}`
+  - After: `const {hasMore = true, distance = 250, isEnabled = true, shouldUseLoader = true, onLoadMore}`
+
+- **References:**
+  - Before: `const previousY = useRef<number>()`
+  - After: `const observerRef = useRef<IntersectionObserver | null>(null)`
+
+- **New Additions:**
+  - `const isLoadingRef = useRef(false)`
+  - `const loadMore = useCallback(() => { ... })`
+
+- **Logic Modifications:**
+  - `useLayoutEffect` logic updated to incorporate the new `loadMore` function and debounce mechanism.
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 31bcda33760d2ec8263933749947e5d156058023 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- packages/hooks/use-infinite-scroll/src/index.ts (modified, 71 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import debounce from "lodash.debounce";
+-import {useLayoutEffect, useRef} from "react";
++import {useLayoutEffect, useRef, useCallback} from "react";
+ 
+ export interface UseInfiniteScrollProps {
+   /**
+@@ -27,13 +27,28 @@ export interface UseInfiniteScrollProps {
+ }
+ 
+ export function useInfiniteScroll(props: UseInfiniteScrollProps = {}) {
+-  const {hasMore, distance = 250, isEnabled = true, shouldUseLoader = true, onLoadMore} = props;
++  const {
++    hasMore = true,
++    distance = 250,
++    isEnabled = true,
++    shouldUseLoader = true,
++    onLoadMore,
++  } = props;
+ 
+   const scrollContainerRef = useRef<HTMLElement>(null);
+   const loaderRef = useRef<HTMLElement>(null);
+-
+-  const previousY = useRef<number>();
+-  const previousRatio = useRef<number>(0);
++  const observerRef = useRef<IntersectionObserver | null>(null);
++  const isLoadingRef = useRef(false);
++
++  const loadMore = useCallback(() => {
++    if (!isLoadingRef.current && hasMore && onLoadMore) {
++      isLoadingRef.current = true;
++      onLoadMore();
++      setTimeout(() => {
++        isLoadingRef.current = false;
++      }, 100); // Debounce time to prevent multiple calls
++    }
++  }, [hasMore, onLoadMore]);
+ 
+   useLayoutEffect(() => {
+     const scrollContainerNode = scrollContainerRef.current;
+@@ -48,50 +63,44 @@ export function useInfiniteScroll(props: UseInfiniteScrollProps = {}) {
+       const options = {
+         root: scrollContainerNode,
+         rootMargin: `0px 0px ${distance}px 0px`,
++        threshold: 0.1,
+       };
+ 
+-      const listener = (entries: IntersectionObserverEntry[]) => {
+-        entries.forEach(({isIntersecting, intersectionRatio, boundingClientRect = {}}) => {
+-          const y = boundingClientRect.y || 0;
+-
+-          if (
+-            isIntersecting &&
+-            intersectionRatio >= previousRatio.current &&
+-            (!previousY.current || y < previousY.current)
+-          ) {
+-            onLoadMore?.();
+-          }
+-          previousY.current = y;
+-          previousRatio.current = intersectionRatio;
+-        });
+-      };
++      const observer = new IntersectionObserver((entries) => {
++        const [entry] = entries;
+ 
+-      const observer = new IntersectionObserver(listener, options);
++        if (entry.isIntersecting) {
++          loadMore();
++        }
++      }, options);
+ 
+       observer.observe(loaderNode);
++      observerRef.current = observer;
+ 
+-      return () => observer.disconnect();
++      return () => {
++        if (observerRef.current) {
++          observerRef.current.disconnect();
++        }
++      };
+     } else {
+-      const debouncedOnLoadMore = onLoadMore ? debounce(onLoadMore, 200) : undefined;
+-
+-      const checkIfNearBottom = () => {
++      const debouncedCheckIfNearBottom = debounce(() => {
+         if (
+           scrollContainerNode.scrollHeight - scrollContainerNode.scrollTop <=
+           scrollContainerNode.clientHeight + distance
+         ) {
+-          debouncedOnLoadMore?.();
++          loadMore();
+         }
+-      };
++      }, 100);
+ 
+-      scrollContainerNode.addEventListener("scroll", checkIfNearBottom);
++      scrollContainerNode.addEventListener("scroll", debouncedCheckIfNearBottom);
+ 
+       return () => {
+-        scrollContainerNode.removeEventListener("scroll", checkIfNearBottom);
++        scrollContainerNode.removeEventListener("scroll", debouncedCheckIfNearBottom);
+       };
+     }
+-  }, [hasMore, distance, isEnabled, onLoadMore, shouldUseLoader]);
++  }, [hasMore, distance, isEnabled, shouldUseLoader, loadMore]);
+ 
+-  return [loaderRef, scrollContainerRef];
++  return [loaderRef, scrollContainerRef] as const;
+ }
+ 
+ export type UseInfiniteScrollReturn = ReturnType<typeof useInfiniteScroll>;\n- pnpm-lock.yaml (modified, 26212 changes)\n  Patch: No patch available\n

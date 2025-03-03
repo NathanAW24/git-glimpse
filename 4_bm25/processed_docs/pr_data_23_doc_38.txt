@@ -1,0 +1,1292 @@
+Pull Request Number: 1199
+Title: fix: fixed navbar link problems in docs
+Base Branch: feat/v2
+Head Branch: fix/fixed-navbar-link-problems-in-docs
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1199
+State: MERGED
+Created At: 2023-07-15T21:09:47Z
+Merged At: 2023-07-16T14:36:40Z
+Participants: jguddas, jrgarciadev
+
+Description:
+fixes the structure so it is now ul > li > a rather than just ul > a
+adds aria-current="page"
+fixes the issue that the page jumps when you click on a link that is inside an iframe
+
+Commits:
+- fix: fixed navbar link problems in docs\n- fix: fixed navbar link problems in docs\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f549c67e73b8fc049d8ce0685505157461fd7776%22%7D%2C%22id%22%3A%22QmWzgSCP1DBjLr3ZsVGygXqBQZjb21fL3aqhGxofTUe1dG%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1199%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- apps/docs/app/examples/navbar/bordered/page.tsx (modified, 34 changes)\n  Patch: @@ -1,6 +1,16 @@
+ "use client";
+ 
+-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
++import {
++  Navbar,
++  NavbarBrand,
++  NavbarContent,
++  NavbarItem,
++  Link as NextUiLink,
++  LinkProps,
++  Button,
++} from "@nextui-org/react";
++
++const Link = (props: LinkProps) => <NextUiLink {...props} onClick={(e) => e.preventDefault()} />;
+ 
+ const AcmeLogo = () => (
+   <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+@@ -21,19 +31,25 @@ export default function Page() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link aria-current="page" href="#">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/app/examples/navbar/controlled-menu/page.tsx (modified, 23 changes)\n  Patch: @@ -5,14 +5,17 @@ import {
+   NavbarBrand,
+   NavbarContent,
+   NavbarItem,
+-  Link,
+   NavbarMenu,
+   NavbarMenuItem,
+   NavbarMenuToggle,
+   Avatar,
++  Link as NextUiLink,
++  LinkProps,
+ } from "@nextui-org/react";
+ import React from "react";
+ 
++const Link = (props: LinkProps) => <NextUiLink {...props} onClick={(e) => e.preventDefault()} />;
++
+ const AcmeLogo = () => (
+   <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+     <path
+@@ -58,14 +61,20 @@ export default function Page() {
+           <AcmeLogo />
+           <p className="font-bold text-inherit">ACME</p>
+         </NavbarBrand>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} color="warning" href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link aria-current="page" color="warning" href="#">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+ \n- apps/docs/app/examples/navbar/custom-active-item/page.tsx (modified, 34 changes)\n  Patch: @@ -1,6 +1,16 @@
+ "use client";
+ 
+-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
++import {
++  Navbar,
++  NavbarBrand,
++  NavbarContent,
++  NavbarItem,
++  Link as NextUiLink,
++  LinkProps,
++  Button,
++} from "@nextui-org/react";
++
++const Link = (props: LinkProps) => <NextUiLink {...props} onClick={(e) => e.preventDefault()} />;
+ 
+ const AcmeLogo = () => (
+   <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+@@ -38,19 +48,25 @@ export default function Page() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link aria-current="page" href="#">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/app/examples/navbar/disable-menu-animation/page.tsx (modified, 27 changes)\n  Patch: @@ -5,14 +5,17 @@ import {
+   NavbarBrand,
+   NavbarContent,
+   NavbarItem,
+-  Link,
+   Button,
++  Link as NextUiLink,
++  LinkProps,
+   NavbarMenu,
+   NavbarMenuItem,
+   NavbarMenuToggle,
+ } from "@nextui-org/react";
+ import React from "react";
+ 
++const Link = (props: LinkProps) => <NextUiLink {...props} onClick={(e) => e.preventDefault()} />;
++
+ const AcmeLogo = () => (
+   <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+     <path
+@@ -56,20 +59,26 @@ export default function Page() {
+           <AcmeLogo />
+           <p className="font-bold text-inherit">ACME</p>
+         </NavbarBrand>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} color="warning" href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link aria-current="page" color="warning" href="#">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+ 
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden md:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="warning" href="#" variant="flat">\n- apps/docs/app/examples/navbar/disabled-blur/page.tsx (modified, 34 changes)\n  Patch: @@ -1,6 +1,16 @@
+ "use client";
+ 
+-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
++import {
++  Navbar,
++  NavbarBrand,
++  NavbarContent,
++  NavbarItem,
++  Link as NextUiLink,
++  LinkProps,
++  Button,
++} from "@nextui-org/react";
++
++const Link = (props: LinkProps) => <NextUiLink {...props} onClick={(e) => e.preventDefault()} />;
+ 
+ const AcmeLogo = () => (
+   <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+@@ -21,19 +31,25 @@ export default function Page() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link aria-current="page" href="#">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/app/examples/navbar/hide-on-scroll/page.tsx (modified, 34 changes)\n  Patch: @@ -1,6 +1,16 @@
+ "use client";
+ 
+-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
++import {
++  Navbar,
++  NavbarBrand,
++  NavbarContent,
++  NavbarItem,
++  Link as NextUiLink,
++  LinkProps,
++  Button,
++} from "@nextui-org/react";
++
++const Link = (props: LinkProps) => <NextUiLink {...props} onClick={(e) => e.preventDefault()} />;
+ 
+ const AcmeLogo = () => (
+   <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+@@ -21,19 +31,25 @@ export default function Page() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link aria-current="page" href="#">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/app/examples/navbar/static/page.tsx (modified, 34 changes)\n  Patch: @@ -1,6 +1,16 @@
+ "use client";
+ 
+-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
++import {
++  Navbar,
++  NavbarBrand,
++  NavbarContent,
++  NavbarItem,
++  Link as NextUiLink,
++  LinkProps,
++  Button,
++} from "@nextui-org/react";
++
++const Link = (props: LinkProps) => <NextUiLink {...props} onClick={(e) => e.preventDefault()} />;
+ 
+ const AcmeLogo = () => (
+   <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+@@ -21,19 +31,25 @@ export default function Page() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link aria-current="page" href="#">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/app/examples/navbar/usage/page.tsx (modified, 34 changes)\n  Patch: @@ -1,6 +1,16 @@
+ "use client";
+ 
+-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
++import {
++  Navbar,
++  NavbarBrand,
++  NavbarContent,
++  NavbarItem,
++  Link as NextUiLink,
++  LinkProps,
++  Button,
++} from "@nextui-org/react";
++
++const Link = (props: LinkProps) => <NextUiLink {...props} onClick={(e) => e.preventDefault()} />;
+ 
+ const AcmeLogo = () => (
+   <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+@@ -21,19 +31,25 @@ export default function Page() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link aria-current="page" href="#">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/app/examples/navbar/with-avatar/page.tsx (modified, 28 changes)\n  Patch: @@ -5,14 +5,17 @@ import {
+   NavbarBrand,
+   NavbarContent,
+   NavbarItem,
+-  Link,
++  Link as NextUiLink,
++  LinkProps,
+   DropdownItem,
+   DropdownTrigger,
+   Dropdown,
+   DropdownMenu,
+   Avatar,
+ } from "@nextui-org/react";
+ 
++const Link = (props: LinkProps) => <NextUiLink {...props} onClick={(e) => e.preventDefault()} />;
++
+ const AcmeLogo = () => (
+   <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+     <path
+@@ -32,25 +35,32 @@ export default function Page() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} color="secondary" href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link aria-current="page" color="secondary" href="#">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+         <Dropdown placement="bottom-end">
+-          <NavbarItem as={Link} href="#">
++          <NavbarItem>
+             <DropdownTrigger>
+               <Avatar
+                 isBordered
+-                as="button"
++                as={Link}
+                 className="transition-transform"
+                 color="secondary"
++                href="#"
+                 name="Jason Hughes"
+                 size="sm"
+                 src="https://i.pravatar.cc/150?u=a042581f4e29026704d"\n- apps/docs/app/examples/navbar/with-dropdown-menu/page.tsx (modified, 21 changes)\n  Patch: @@ -5,7 +5,8 @@ import {
+   NavbarBrand,
+   NavbarContent,
+   NavbarItem,
+-  Link,
++  Link as NextUiLink,
++  LinkProps,
+   Button,
+   DropdownItem,
+   DropdownTrigger,
+@@ -14,6 +15,8 @@ import {
+ } from "@nextui-org/react";
+ import {ChevronDown, Lock, Activity, Flash, Server, TagUser, Scale} from "@nextui-org/shared-icons";
+ 
++const Link = (props: LinkProps) => <NextUiLink {...props} onClick={(e) => e.preventDefault()} />;
++
+ const AcmeLogo = () => (
+   <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+     <path
+@@ -101,16 +104,20 @@ export default function Page() {
+             </DropdownItem>
+           </DropdownMenu>
+         </Dropdown>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link aria-current="page" href="#">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/app/examples/navbar/with-menu/page.tsx (modified, 27 changes)\n  Patch: @@ -5,14 +5,17 @@ import {
+   NavbarBrand,
+   NavbarContent,
+   NavbarItem,
+-  Link,
++  Link as NextUiLink,
++  LinkProps,
+   Button,
+   NavbarMenuToggle,
+   NavbarMenu,
+   NavbarMenuItem,
+ } from "@nextui-org/react";
+ import React from "react";
+ 
++const Link = (props: LinkProps) => <NextUiLink {...props} onClick={(e) => e.preventDefault()} />;
++
+ const AcmeLogo = () => (
+   <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+     <path
+@@ -54,19 +57,25 @@ export default function Page() {
+       </NavbarContent>
+ 
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link aria-current="page" href="#">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/app/examples/navbar/with-search-input/page.tsx (modified, 28 changes)\n  Patch: @@ -5,7 +5,8 @@ import {
+   NavbarBrand,
+   NavbarContent,
+   NavbarItem,
+-  Link,
++  Link as NextUiLink,
++  LinkProps,
+   Input,
+   DropdownItem,
+   DropdownTrigger,
+@@ -14,6 +15,8 @@ import {
+   Avatar,
+ } from "@nextui-org/react";
+ 
++const Link = (props: LinkProps) => <NextUiLink {...props} onClick={(e) => e.preventDefault()} />;
++
+ import {SearchLinearIcon} from "@/components/icons";
+ 
+ const AcmeLogo = () => (
+@@ -36,14 +39,20 @@ export default function Page() {
+           <p className="hidden sm:block font-bold text-inherit">ACME</p>
+         </NavbarBrand>
+         <NavbarContent className="hidden sm:flex gap-3">
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Features
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Features
++            </Link>
+           </NavbarItem>
+-          <NavbarItem isActive as={Link} color="secondary" href="#">
+-            Customers
++          <NavbarItem isActive>
++            <Link aria-current="page" color="secondary" href="#">
++              Customers
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Integrations
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Integrations
++            </Link>
+           </NavbarItem>
+         </NavbarContent>
+       </NavbarContent>
+@@ -60,13 +69,14 @@ export default function Page() {
+           type="search"
+         />
+         <Dropdown placement="bottom-end">
+-          <NavbarItem as={Link} href="#">
++          <NavbarItem>
+             <DropdownTrigger>
+               <Avatar
+                 isBordered
+-                as="button"
++                as={Link}
+                 className="transition-transform"
+                 color="secondary"
++                href="#"
+                 name="Jason Hughes"
+                 size="sm"
+                 src="https://i.pravatar.cc/150?u=a042581f4e29026704d"\n- apps/docs/content/components/navbar/bordered.ts (modified, 22 changes)\n  Patch: @@ -20,19 +20,25 @@ export default function App() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link href="#" aria-current="page">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/content/components/navbar/controlled-menu.ts (modified, 28 changes)\n  Patch: @@ -29,9 +29,9 @@ export default function App() {
+   ];
+ 
+   return (
+-    <Navbar 
+-      isBordered 
+-      isMenuOpen={isMenuOpen} 
++    <Navbar
++      isBordered
++      isMenuOpen={isMenuOpen}
+       onMenuOpenChange={setIsMenuOpen}
+     >
+       <NavbarContent className="sm:hidden" justify="start">
+@@ -50,20 +50,26 @@ export default function App() {
+           <AcmeLogo />
+           <p className="font-bold text-inherit">ACME</p>
+         </NavbarBrand>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} color="warning" href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link href="#" aria-current="page">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+ 
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden md:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="warning" href="#" variant="flat">\n- apps/docs/content/components/navbar/custom-active-item.ts (modified, 24 changes)\n  Patch: @@ -30,26 +30,32 @@ export default function App() {
+           "data-[active=true]:after:rounded-[2px]",
+           "data-[active=true]:after:bg-primary",
+         ],
+-      }}  
++      }}
+     >
+       <NavbarBrand>
+         <AcmeLogo />
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link href="#" aria-current="page">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/content/components/navbar/disable-menu-animation.ts (modified, 22 changes)\n  Patch: @@ -44,20 +44,26 @@ export default function App() {
+           <AcmeLogo />
+           <p className="font-bold text-inherit">ACME</p>
+         </NavbarBrand>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} color="warning" href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link href="#" aria-current="page" color="warning">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+ 
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden md:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="warning" href="#" variant="flat">\n- apps/docs/content/components/navbar/disabled-blur.ts (modified, 22 changes)\n  Patch: @@ -20,19 +20,25 @@ export default function App() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link href="#" aria-current="page">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/content/components/navbar/hide-on-scroll.ts (modified, 22 changes)\n  Patch: @@ -20,19 +20,25 @@ export default function App() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link href="#" aria-current="page">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/content/components/navbar/static.ts (modified, 22 changes)\n  Patch: @@ -20,19 +20,25 @@ export default function App() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link href="#" aria-current="page">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/content/components/navbar/usage.ts (modified, 22 changes)\n  Patch: @@ -20,19 +20,25 @@ export default function App() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link href="#" aria-current="page">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/content/components/navbar/with-avatar.ts (modified, 23 changes)\n  Patch: @@ -20,23 +20,30 @@ export default function App() {
+         <p className="font-bold text-inherit">ACME</p>
+       </NavbarBrand>
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-          <NavbarItem as={Link} color="foreground" href="#">
++        <NavbarItem>
++          <Link color="foreground" href="#">
+             Features
+-          </NavbarItem>
+-          <NavbarItem isActive as={Link} color="secondary" href="#">
++          </Link>
++        </NavbarItem>
++        <NavbarItem isActive>
++          <Link href="#" aria-current="page" color="secondary">
+             Customers
+-          </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
++          </Link>
++        </NavbarItem>
++        <NavbarItem>
++          <Link color="foreground" href="#">
+             Integrations
+-          </NavbarItem>
++          </Link>
++        </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+         <Dropdown placement="bottom-end">
+-          <NavbarItem as={Link} href="#">
++          <NavbarItem>
+             <DropdownTrigger>
+               <Avatar
+                 isBordered
+-                as="button"
++                as={Link}
++                href="#"
+                 className="transition-transform"
+                 color="secondary"
+                 name="Jason Hughes"\n- apps/docs/content/components/navbar/with-dropdown-menu.ts (modified, 16 changes)\n  Patch: @@ -308,16 +308,20 @@ export default function App() {
+             </DropdownItem>
+           </DropdownMenu>
+         </Dropdown>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link href="#" aria-current="page">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/content/components/navbar/with-menu.ts (modified, 22 changes)\n  Patch: @@ -42,19 +42,25 @@ export default function App() {
+       </NavbarContent>
+ 
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Features
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Features
++          </Link>
+         </NavbarItem>
+-        <NavbarItem isActive as={Link} href="#">
+-          Customers
++        <NavbarItem isActive>
++          <Link href="#" aria-current="page">
++            Customers
++          </Link>
+         </NavbarItem>
+-        <NavbarItem as={Link} color="foreground" href="#">
+-          Integrations
++        <NavbarItem>
++          <Link color="foreground" href="#">
++            Integrations
++          </Link>
+         </NavbarItem>
+       </NavbarContent>
+       <NavbarContent justify="end">
+-        <NavbarItem as={Link} className="hidden lg:flex" href="#">
+-          Login
++        <NavbarItem className="hidden lg:flex">
++          <Link href="#">Login</Link>
+         </NavbarItem>
+         <NavbarItem>
+           <Button as={Link} color="primary" href="#" variant="flat">\n- apps/docs/content/components/navbar/with-search-input.ts (modified, 23 changes)\n  Patch: @@ -57,14 +57,20 @@ export default function App() {
+           <p className="hidden sm:block font-bold text-inherit">ACME</p>
+         </NavbarBrand>
+         <NavbarContent className="hidden sm:flex gap-3">
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Features
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Features
++            </Link>
+           </NavbarItem>
+-          <NavbarItem isActive as={Link} color="secondary" href="#">
+-            Customers
++          <NavbarItem isActive>
++            <Link href="#" aria-current="page" color="secondary">
++              Customers
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Integrations
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Integrations
++            </Link>
+           </NavbarItem>
+         </NavbarContent>
+       </NavbarContent>
+@@ -81,11 +87,12 @@ export default function App() {
+           type="search"
+         />
+         <Dropdown placement="bottom-end">
+-          <NavbarItem as={Link} href="#">
++          <NavbarItem>
+             <DropdownTrigger>
+               <Avatar
+                 isBordered
+-                as="button"
++                as={Link}
++                href="#"
+                 className="transition-transform"
+                 color="secondary"
+                 name="Jason Hughes"\n- packages/components/navbar/stories/navbar.stories.tsx (modified, 152 changes)\n  Patch: @@ -106,25 +106,33 @@ const Template: ComponentStory<typeof Navbar> = (args: NavbarProps) => {
+           <p className="font-bold hidden sm:block text-inherit">ACME</p>
+         </NavbarBrand>
+         <NavbarContent className="hidden md:flex">
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Features
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Features
++            </Link>
+           </NavbarItem>
+-          <NavbarItem isActive as={Link} href="#">
+-            Customers
++          <NavbarItem isActive>
++            <Link href="#">Customers</Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Integrations
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Integrations
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Pricing
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Pricing
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} className="hidden lg:block" color="foreground" href="#">
+-            Company
++          <NavbarItem className="hidden lg:block">
++            <Link color="foreground" href="#">
++              Company
++            </Link>
+           </NavbarItem>
+         </NavbarContent>
+         <NavbarContent justify="end">
+-          <NavbarItem as={Link} href="#">
+-            Login
++          <NavbarItem>
++            <Link href="#">Login</Link>
+           </NavbarItem>
+           <NavbarItem>
+             <Button as={Link} color="primary" href="#" variant="flat">
+@@ -169,25 +177,33 @@ const WithMenuTemplate: ComponentStory<typeof Navbar> = (args: NavbarProps) => {
+           </NavbarBrand>
+         </NavbarContent>
+         <NavbarContent className="hidden sm:flex">
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Features
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Features
++            </Link>
+           </NavbarItem>
+-          <NavbarItem isActive as={Link} href="#">
+-            Customers
++          <NavbarItem isActive>
++            <Link href="#">Customers</Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Integrations
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Integrations
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Pricing
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Pricing
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} className="hidden lg:block" color="foreground" href="#">
+-            Company
++          <NavbarItem className="hidden lg:block">
++            <Link color="foreground" href="#">
++              Company
++            </Link>
+           </NavbarItem>
+         </NavbarContent>
+         <NavbarContent justify="end">
+-          <NavbarItem as={Link} href="#">
+-            Login
++          <NavbarItem>
++            <Link href="#">Login</Link>
+           </NavbarItem>
+           <NavbarItem>
+             <Button as={Link} color="primary" href="#" variant="flat">
+@@ -294,22 +310,30 @@ const WithDropdownTemplate: ComponentStory<typeof Navbar> = (args: NavbarProps)
+               </DropdownItem>
+             </DropdownMenu>
+           </Dropdown>
+-          <NavbarItem isActive as={Link} className="px-4" href="#">
+-            Customers
++          <NavbarItem isActive>
++            <Link className="px-4" href="#">
++              Customers
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} className="px-4" color="foreground" href="#">
+-            Integrations
++          <NavbarItem>
++            <Link className="px-4" color="foreground" href="#">
++              Integrations
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} className="px-4" color="foreground" href="#">
+-            Pricing
++          <NavbarItem>
++            <Link className="px-4" color="foreground" href="#">
++              Pricing
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} className="hidden px-4 lg:block" color="foreground" href="#">
+-            Company
++          <NavbarItem className="hidden px-4 lg:block">
++            <Link color="foreground" href="#">
++              Company
++            </Link>
+           </NavbarItem>
+         </NavbarContent>
+         <NavbarContent justify="end">
+-          <NavbarItem as={Link} href="#">
+-            Login
++          <NavbarItem>
++            <Link href="#">Login</Link>
+           </NavbarItem>
+           <NavbarItem>
+             <Button as={Link} color="primary" href="#" variant="flat">
+@@ -360,20 +384,30 @@ const WithAvatarUserTemplate: ComponentStory<typeof Navbar> = (args: NavbarProps
+           <p className="font-bold text-inherit">ACME</p>
+         </NavbarBrand>
+         <NavbarContent className="hidden gap-3 md:flex">
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Dashboard
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Dashboard
++            </Link>
+           </NavbarItem>
+-          <NavbarItem isActive as={Link} color="secondary" href="#">
+-            Team
++          <NavbarItem isActive>
++            <Link color="secondary" href="#">
++              Team
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Deployments
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Deployments
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Activity
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Activity
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Settings
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Settings
++            </Link>
+           </NavbarItem>
+         </NavbarContent>
+         <NavbarContent justify="end">
+@@ -451,20 +485,30 @@ const WithSearchInputTemplate: ComponentStory<typeof Navbar> = (args: NavbarProp
+             <AcmeLogo />
+             <p className="font-bold text-inherit">ACME</p>
+           </NavbarBrand>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Dashboard
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Dashboard
++            </Link>
+           </NavbarItem>
+-          <NavbarItem isActive as={Link} color="secondary" href="#">
+-            Team
++          <NavbarItem isActive>
++            <Link color="secondary" href="#">
++              Team
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Deployments
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Deployments
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Activity
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Activity
++            </Link>
+           </NavbarItem>
+-          <NavbarItem as={Link} color="foreground" href="#">
+-            Settings
++          <NavbarItem>
++            <Link color="foreground" href="#">
++              Settings
++            </Link>
+           </NavbarItem>
+         </NavbarContent>
+         <NavbarContent justify="end">\n

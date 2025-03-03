@@ -1,0 +1,120 @@
+Pull Request Number: 2472
+Title: fix: add RTL support to the Table component
+Base Branch: main
+Head Branch: fix/table
+Author: mrbadri
+URL: https://github.com/nextui-org/nextui/pull/2472
+State: MERGED
+Created At: 2024-03-08T09:35:44Z
+Merged At: 2024-03-08T14:30:16Z
+Participants: mrbadri, jrgarciadev
+
+Description:
+Closes #2471
+📝 Description
+Add RTL support to the table component.
+⛳️ Current behavior (updates)
+The table component currently lacks support for right-to-left (RTL) direction.
+🚀 New behavior
+This PR addresses the RTL support issue in the switch component, ensuring correct rendering in RTL environments.
+💣 Is this a breaking change (Yes/No):
+📝 Additional Information
+
+Commits:
+- fix: add RTL support to the modal component\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: b0dae69ffeb58e74d84ac2d80cc9a9cc029b2605
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name              | Type  |
+| ----------------- | ----- |
+| @nextui-org/table | Patch |
+| @nextui-org/react | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/mrbadri/nextui/new/fix/table?filename=.changeset/ninety-apples-sin.md&value=---%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix%3A%20add%20RTL%20support%20to%20the%20Table%20component%0A)
+
+\n- vercel: [vc]: #fRgCjxzF04przvmb2PfvOzgyUr4eYbJ8Ozetqeuudxg=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRkxvTTRDU3hqY0s3N0xVMndTQWpMWWZSZHZzbSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1yYmFkcmktZml4LXRhYmxlLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1yYmFkcmktZml4LXRhYmxlLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/FLoM4CSxjcK77LU2wSAjLYfRdvsm)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-mrbadri-fix-table-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-mrbadri-fix-table-nextui-org.vercel.app?via=pr-comment-feedback-link) | Mar 8, 2024 9:37am |
+
+\n- vercel: @mrbadri is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22b0dae69ffeb58e74d84ac2d80cc9a9cc029b2605%22%7D%2C%22id%22%3A%22QmfA8BZfqZmXB5j3QfMSyWX1kN6dwhSmetAkqnoyAeMpjQ%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2472%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/famous-owls-kick.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/table": patch
++---
++
++Add RTL support to the table component.\n- packages/core/theme/src/components/table.ts (modified, 22 changes)\n  Patch: @@ -62,14 +62,19 @@ const table = tv({
+       "px-3",
+       "h-10",
+       "text-left",
++      "rtl:text-right",
+       "align-middle",
+       "bg-default-100",
+       "whitespace-nowrap",
+       "text-foreground-500",
+       "text-tiny",
+       "font-semibold",
+       "first:rounded-l-lg",
++      "rtl:first:rounded-r-lg",
++      "rtl:first:rounded-l-[unset]",
+       "last:rounded-r-lg",
++      "rtl:last:rounded-l-lg",
++      "rtl:last:rounded-r-[unset]",
+       "outline-none",
+       "data-[sortable=true]:transition-colors",
+       "data-[sortable=true]:cursor-pointer",
+@@ -208,16 +213,31 @@ const table = tv({
+         td: [
+           // first
+           "group-data-[first=true]:first:before:rounded-tl-lg",
++          "group-data-[first=true]:rtl:first:before:rounded-tr-lg",
++          "group-data-[first=true]:rtl:first:before:rounded-tl-[unset]",
+           "group-data-[first=true]:last:before:rounded-tr-lg",
++          "group-data-[first=true]:rtl:last:before:rounded-tl-lg",
++          "group-data-[first=true]:rtl:last:before:rounded-tr-[unset]",
+           // middle
+           "group-data-[middle=true]:before:rounded-none",
+           // last
+           "group-data-[last=true]:first:before:rounded-bl-lg",
++          "group-data-[last=true]:rtl:first:before:rounded-br-lg",
++          "group-data-[last=true]:rtl:first:before:rounded-bl-[unset]",
+           "group-data-[last=true]:last:before:rounded-br-lg",
++          "group-data-[last=true]:rtl:last:before:rounded-bl-lg",
++          "group-data-[last=true]:rtl:last:before:rounded-br-[unset]",
+         ],
+       },
+       false: {
+-        td: ["first:before:rounded-l-lg", "last:before:rounded-r-lg"],
++        td: [
++          "first:before:rounded-l-lg",
++          "rtl:first:before:rounded-r-lg",
++          "rtl:first:before:rounded-l-[unset]",
++          "last:before:rounded-r-lg",
++          "rtl:last:before:rounded-l-lg",
++          "rtl:last:before:rounded-r-[unset]",
++        ],
+       },
+     },
+     fullWidth: {\n

@@ -1,0 +1,256 @@
+Pull Request Number: 3582
+Title: doc(sandpack): improved logic for react import
+Base Branch: canary
+Head Branch: docs/react-import-code-demo
+Author: awesome-pro
+URL: https://github.com/nextui-org/nextui/pull/3582
+State: MERGED
+Created At: 2024-07-31T06:09:52Z
+Merged At: 2024-08-29T02:27:40Z
+Participants: awesome-pro, wingkwong, jrgarciadev
+
+Description:
+📝 Description
+Improved the logic to add reactImport for .jsx and .tsx files only
+⛳️ Current behavior (updates)
+
+  
+    
+    
+
+    previos-sandpack.mov
+    
+  
+
+  
+
+  
+
+
+🚀 New behavior
+
+  
+    
+    
+
+    new-sandpack.mov
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No): NO
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced a utility function to check for React file types, improving handling of React imports within the application.
+
+
+
+Improvements
+
+Enhanced logic for adding React import statements, ensuring they are only included for relevant files.
+
+
+
+Type Annotations
+
+Updated type annotations to improve clarity and maintainability.
+
+Commits:
+- fix(navbar): fixed the height when style h-full\n- fix(navbar): fixed the height when style h-full\n- Merge branch 'nextui-org:canary' into canary\n- Merge branch 'nextui-org:canary' into canary\n- docs(sandpack): improved logic for react imoprt\n- Delete .changeset/brown-days-applaud.md\n- Update use-sandpack.ts\n- refactor(docs): skip adding import react if not required\n
+
+Labels:
+📋 Scope : Docs
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 8fa9740a3d933d8b3717f6f0b13a295ab40fcbec
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/awesome-pro/nextui/new/docs/react-import-code-demo?filename=.changeset/hip-shirts-cheat.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Adoc(sandpack)%3A%20improved%20logic%20for%20react%20import%0A)
+
+\n- vercel: @awesome-pro is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22e4d51555e2536bbf234db67130d1448174025987%22%7D%2C%22id%22%3A%22QmSv2TBpvVLNKfdN7wXf8LJ2op9k3JXFbk4BEwfmPetokP%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3582%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent changes introduce a utility function, `isReactFile`, to the `useSandpack` hook, enhancing its ability to identify React files accurately. This addition refines the logic for including React import statements, ensuring they are only added when necessary based on file content. The updates improve both functionality and maintainability by encapsulating file type checks and refining type annotations.
+
+## Changes
+
+| Files                                     | Change Summary                                                                                                                                      |
+|-------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `apps/docs/components/sandpack/use-sandpack.ts` | Introduced the `isReactFile` function to check for `.jsx` and `.tsx` extensions, refined the import logic to include React only when needed, and made minor type annotation adjustments. |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+apps/docs/components/sandpack/use-sandpack.ts: ## AI-generated summary of changes
+
+The changes in the `use-sandpack.ts` file introduce a new utility function, `isReactFile`, which checks whether a given filename ends with `.jsx` or `.tsx`. This function enhances the logic within the `useSandpack` hook by determining if the current file being processed is a React file. The logic for handling React imports has been modified to utilize this new function. Specifically, the condition that checks whether to add the React import statement has been updated to first verify if the file is a React file using `isReactFile`. This ensures that the import statement is only added for relevant files, improving the specificity of the logic. Additionally, minor adjustments were made to type annotations, particularly for the `match` variable, which is now explicitly typed as `RegExpExecArray | null`. Overall, these changes enhance the functionality and maintainability of the code by encapsulating the file type check and refining the import logic.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- `function isReactFile(key: string)` in `apps/docs/components/sandpack/use-sandpack.ts` → `function isReactFile(key: string)` in `apps/docs/components/sandpack/use-sandpack.ts` (new function added)
+
+
+# New changesets
+
+apps/docs/components/sandpack/use-sandpack.ts: ## AI-generated summary of changes
+
+The changes in the `use-sandpack.ts` file modify the logic for handling React import statements within the `useSandpack` hook. The condition to check whether to add a React import has been refined to ensure that it only applies to files that contain React components. Specifically, the check now verifies if the file content includes `React.` before determining whether to prepend the React import statement. This change enhances the specificity of the import logic, ensuring that unnecessary imports are avoided. Additionally, the type annotation for the `match` variable has been updated to `RegExpExecArray | null`, improving type safety. Overall, these modifications enhance the clarity and maintainability of the code by ensuring that React imports are only added where appropriate.
+
+## Alterations to the declarations of exported or public entities
+
+- `let match: RegExpExecArray | null` in `apps/docs/components/sandpack/use-sandpack.ts` → `let match: RegExpExecArray | null` in `apps/docs/components/sandpack/use-sandpack.ts` (type annotation updated)
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "doc(sandpack): improved logic for react import" was created by the user awesome-pro and is numbered 3582. The primary objective of this PR is to enhance the logic for adding `reactImport` specifically for `.jsx` and `.tsx` files.
+
+The description indicates that the improvement ensures the `reactImport` is applied only to the appropriate file types, which contributes to cleaner and more efficient code. The current behavior before this change is illustrated through a linked asset, showcasing how the logic functioned prior to the update. In contrast, the new behavior, also demonstrated through a linked asset, highlights the refined implementation following the changes.
+
+The author has confirmed that this update does not introduce any breaking changes, meaning existing NextUI users will not experience any disruptions due to this modification. The PR aims to streamline the import process for React in the specified file formats, thereby promoting better coding practices within the NextUI framework.
+
+No additional information has been provided in the PR description.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 4f9edff3abd97a1faf749c9dd28f1dbac1f45582 -->
+<!-- 8fa9740a3d933d8b3717f6f0b13a295ab40fcbec -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #cvxzKHv8sDvk+RV2Ke2j84uXRxboYq8Y1cbFaX6oWaI=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi81Slk5eVo5Mm42NzZNSzNhVDVyVEYxNnNKdVlaIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLWF3ZXNvbWUtcHJvLWRvY3MtcmVhYy04YWUxZmQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLWF3ZXNvbWUtcHJvLWRvY3MtcmVhYy04YWUxZmQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/5JY9yZ92n676MK3aT5rTF16sJuYZ)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-awesome-pro-docs-reac-8ae1fd-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-awesome-pro-docs-reac-8ae1fd-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 1, 2024 1:35pm |
+
+\n
+
+Files Changed:
+- apps/docs/components/sandpack/use-sandpack.ts (modified, 8 changes)\n  Patch: @@ -100,13 +100,17 @@ export const useSandpack = ({
+       let fileContent = files[key] as string;
+ 
+       // Check if the file content includes 'React' import statements, if not, add it
+-      if (!fileContent.includes("from 'react'") && !fileContent.includes('from "react"')) {
++      if (
++        fileContent.includes("React.") &&
++        !fileContent.includes("from 'react'") &&
++        !fileContent.includes('from "react"')
++      ) {
+         fileContent = `${importReact}\n${fileContent}\n`;
+       }
+ 
+       // Check if file content includes any other dependencies, if yes, add it to dependencies
+       const importRegex = /import .* from ["'](.*)["']/g;
+-      let match;
++      let match: RegExpExecArray | null;
+ 
+       while ((match = importRegex.exec(fileContent)) !== null) {
+         const dependencyName = match[1];\n

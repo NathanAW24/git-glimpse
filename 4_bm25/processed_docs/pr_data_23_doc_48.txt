@@ -1,0 +1,127 @@
+Pull Request Number: 1175
+Title: fix: fix image loading status
+Base Branch: feat/v2
+Head Branch: fix/image-load
+Author: Khanhtran47
+URL: https://github.com/nextui-org/nextui/pull/1175
+State: MERGED
+Created At: 2023-06-22T19:44:38Z
+Merged At: 2023-06-22T20:12:46Z
+Participants: Khanhtran47, jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+This PR fixes skeleton loading for the Image component
+⛳️ Current behavior (updates)
+
+Skeleton animation not showing when the image is loading
+Missing return loading prop in getImgProps
+
+🚀 New behavior
+
+Fix 2 issues above
+Add srcSet, sizes, crossOrigin for useImageBase
+
+💣 Is this a breaking change (Yes/No):
+
+No
+📝 Additional Information
+
+Commits:
+- fix: fix image loading status\n
+
+Labels:
+
+
+Comments:
+- vercel: @Khanhtran47 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f3deaebe1d21eaaf970872161eac26dbf8874174%22%7D%2C%22id%22%3A%22QmP1YtFvNQDrbEEipXhbRAjvPAMvcuK4BQwP7n2JHKU6di%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1175%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/image/src/use-image.ts (modified, 10 changes)\n  Patch: @@ -86,6 +86,9 @@ export function useImage(originalProps: UseImageProps) {
+     removeWrapper = false,
+     onError,
+     onLoad,
++    srcSet,
++    sizes,
++    crossOrigin,
+     ...otherProps
+   } = props;
+ 
+@@ -95,6 +98,9 @@ export function useImage(originalProps: UseImageProps) {
+     onError,
+     onLoad,
+     ignoreFallback: false,
++    srcSet,
++    sizes,
++    crossOrigin,
+   });
+ 
+   const isImgLoaded = imageStatus === "loaded" && !isLoadingProp;
+@@ -137,6 +143,10 @@ export function useImage(originalProps: UseImageProps) {
+       ref: domRef,
+       "data-loaded": dataAttr(isImgLoaded),
+       className: slots.img({class: imgStyles}),
++      loading,
++      srcSet,
++      sizes,
++      crossOrigin,
+       ...otherProps,
+     };
+   };\n- packages/core/theme/src/components/image.ts (modified, 18 changes)\n  Patch: @@ -52,35 +52,35 @@ const image = tv({
+     },
+     shadow: {
+       none: {
+-        base: "shadow-none",
++        wrapper: "shadow-none",
+         img: "shadow-none",
+       },
+       sm: {
+-        base: "shadow-sm",
++        wrapper: "shadow-sm",
+         img: "shadow-sm",
+       },
+       base: {
+-        base: "shadow",
++        wrapper: "shadow",
+         img: "shadow",
+       },
+       md: {
+-        base: "shadow-md",
++        wrapper: "shadow-md",
+         img: "shadow-md",
+       },
+       lg: {
+-        base: "shadow-lg",
++        wrapper: "shadow-lg",
+         img: "shadow-lg",
+       },
+       xl: {
+-        base: "shadow-xl",
++        wrapper: "shadow-xl",
+         img: "shadow-xl",
+       },
+       "2xl": {
+-        base: "shadow-2xl",
++        wrapper: "shadow-2xl",
+         img: "shadow-2xl",
+       },
+       inner: {
+-        base: "shadow-inner",
++        wrapper: "shadow-inner",
+         img: "shadow-inner",
+       },
+     },
+@@ -91,7 +91,7 @@ const image = tv({
+     },
+     showSkeleton: {
+       true: {
+-        base: [
++        wrapper: [
+           "group",
+           "relative",
+           "overflow-hidden",\n

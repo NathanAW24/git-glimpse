@@ -1,0 +1,527 @@
+Pull Request Number: 4098
+Title: types(core): allow Promise<void> for provider navigate prop
+Base Branch: beta/release-next
+Head Branch: patch-2
+Author: CanRau
+URL: https://github.com/nextui-org/nextui/pull/4098
+State: CLOSED
+Created At: 2024-11-16T19:28:37Z
+Merged At: None
+Participants: CanRau, jrgarciadev, wingkwong
+
+Description:
+📝 Description
+At least TanStack Router's router.navigate returns Promise<void> so if this PR won't break anything would be nice to support both return types ❤️
+⛳️ Current behavior (updates)
+
+Type '(to: any, options: any) => Promise<void>' is not assignable to type '(path: string) => void'.
+
+The to: any, options: any is another topic I think
+🚀 New behavior
+No type errors
+💣 Is this a breaking change (Yes/No):
+Shouldn't break anything I think 🤔
+
+Summary by CodeRabbit
+
+New Features
+
+Enhanced the navigate function to support asynchronous operations by allowing it to return a promise.
+
+
+
+This change improves flexibility in navigation handling within the application.
+
+Commits:
+- chore(docs): update sponsor (#3904)
+
+* chore(docs): remove Scrumbuiss
+
+* chore(docs): remove Scrumbuiss logo\n- types(core): allow Promise<void> for provider navigate prop\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- vercel: @CanRau is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228ffb7b885c346ef002cb30677d4c96579b84107b%22%7D%2C%22id%22%3A%22QmRgYs1pgYhJC7xL3hKzKb77Vf9hFyoSpCT786en2WtT9L%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A4098%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 8ffb7b885c346ef002cb30677d4c96579b84107b
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/CanRau/nextui/new/patch-2?filename=.changeset/beige-poets-mix.md&value=---%0A%22%40nextui-org%2Fsystem%22%3A%20patch%0A---%0A%0Atypes(core)%3A%20allow%20Promise%3Cvoid%3E%20for%20provider%20navigate%20prop%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The pull request modifies the `NextUIProviderProps` interface in the `provider.tsx` file. The `navigate` property is updated to accept a return type of either `void` or `Promise<void>`, allowing for asynchronous navigation handling. No other significant changes to the component's logic or structure are made, maintaining the overall functionality of the `NextUIProvider`.
+
+## Changes
+
+| File                                          | Change Summary                                                                                          |
+|-----------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| packages/core/system/src/provider.tsx        | Updated `navigate` property in `NextUIProviderProps` interface to allow return type of `void | Promise<void>`. |
+
+## Possibly related PRs
+- #3601: The changes in the `NextUIProviderProps` interface regarding the `navigate` property may relate to the overall flexibility and robustness of component properties, similar to how the navbar's height property was modified to accept different types.
+
+<!-- walkthrough_end -->
+
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- jrgarciadev: @wingkwong please review\n- CanRau: Oh wow didn't realize, just made this change here in the GitHub editor, I'll have a look a little later\n- wingkwong: @CanRau I think the reason is your `patch-2` branch was branched out from our `main` branch. Currently we haven't synced that to `canary`. 
+
+also please create a changeset.\n- CanRau: Alright, sorry for the delay I'll look into it tomorrow (Monday)\n- CanRau: Redid the PR cause it was quicker 😇 
+https://github.com/nextui-org/nextui/pull/4112\n
+
+Files Changed:
+- apps/docs/components/icons/sponsors.tsx (modified, 316 changes)\n  Patch: @@ -89,319 +89,3 @@ export const CodeRabbitLogo = () => (
+     />
+   </svg>
+ );
+-
+-export const ScrumbuissLogo = () => (
+-  <svg
+-    height="35px"
+-    version="1.1"
+-    viewBox="307 646 1434 262"
+-    width="200px"
+-    xmlns="http://www.w3.org/2000/svg"
+-  >
+-    <path
+-      d="m0 0 4 2 12 10 11 9 8 8 8 7 15 13 27 27 5 4 7 8 13 15 9 10 13 17 18 27 8 14 10 19 8 19 9 27 2 9v7l-4 6-5 3-2 1h-6l-11-7-14-12-8-7-12-11-10-8-11-10-8-7-10-9-11-9-10-9-8-6v-2l-3-1-3-3-9-7-11-9-19-14-8-7h-2l9 22 10 18 5 10 12 18 10 14 4 6v7l-8 7h-7l-11-9-10-8-22-14-22-10-27-11-22-7 4 18 9 17 4 9-1 2-10-13-8-14-5-13v-10l4-6h9l19 4 34 11 13 4 2 1-13-23-8-16-12-27-4-11 1-8 5-6 10-4 13 1 13 5 15 9 12 8 16 12 13 10 10 9 10 8 11 9 10 9 8 7 14 13 8 7 12 11 5 5-3-9-4-9-10-20-10-17-11-17-12-18-10-13-14-18-11-13-9-11-12-13-7-8-12-14-18-20v-2l-3-1z"
+-      fill="#E87246"
+-      transform="translate(391,646)"
+-    />
+-    <path
+-      d="m0 0h28l1 1v72h2l2-4 9-9 10-6 7-2h22l8 3 11 7 8 10 4 8 2 7 1 9v14l-2 15-6 12-9 10-8 8-12 6-10 3-13 1-14-3-5-2 4-1 11 3h10l8-3 7-3 9-7 8-14 3-8 1-6v-30l-4-13-6-10-8-7-7-3-5-1h-8l-10 3-10 6-8 9-1 2-1 79-10 7-9 2h-8l2-4 6-7v-143l-3-5v-2l-6-2z"
+-      fill="#E8764A"
+-      transform="translate(1287,696)"
+-    />
+-    <path
+-      d="m0 0h37l-6 7-3 4v73l3 11 6 8 6 4 3 1h15l10-4 7-7 3-5 1-4 1-72-2-8-4-5-3-3h38l-6 7-3 4-1 32v45l1 15 3 5 8 5v1h-12l-8-3-8-7-4-9-5 8-5 4-10 5-5 1h-19l-12-5-7-7-6-9-3-10-1-7-1-65-5-6-3-2z"
+-      fill="#E87649"
+-      transform="translate(1412,747)"
+-    />
+-    <path
+-      d="m0 0 13 1 10 5 11 10 4 9 2 2 1 75 3 5 6 4 1 3h-39l2-4 6-4 1-2v-77l-3-10-5-6-10-5h-13l-14 6-9 6-1 66v13l1 10 6 2 3 2v3h-37v-3l7-6 1-2v-66h-2l-2 4-12 13-7 8v-3l12-14 9-10h2l2-4 6-7 11-9 9-6 16-8z"
+-      fill="#E87347"
+-      transform="translate(1150,747)"
+-    />
+-    <path
+-      d="m0 0 16 1 13 4 9 7 8 8 4 6-1 2-11-13-10-7-6-3-11-2h-12l-12 2-6 3-7 6-5 8-2 6v12l4 9 5 5 10 7 19 8 22 9 16 12 7 8 3 6 2 11v9l-2 13-5 10-11 12-12 6-16 4h-10l-16-4-12-6-8-8-7-13-2-10 1-4 2 3 3 12 4 8 10 10 15 6 7 2 15 1 13-5 9-6h2l2-4 4-5 4-11v-8l-4-11-5-6-11-7-26-12-16-7-12-9-8-9-4-9-1-4v-19l4-12 8-10 8-7 13-4z"
+-      fill="#E87246"
+-      transform="translate(702,694)"
+-    />
+-    <path
+-      d="m0 0h38l-3 4h-2l-4 8v70l3 13 4 6 6 5 6 2h12l11-4 10-9 5-5 8-11 10-12 5-5-2 4-3 4-1 11v22l5 5 6 4v2h-10l-9-3-6-5-4-9v-2l-3 3-6 7-14 7-4 1h-19l-10-4-8-6-8-15-2-8-1-9-1-60-9-10z"
+-      fill="#E87246"
+-      transform="translate(964,747)"
+-    />
+-    <path
+-      d="m0 0 14 1 10 5 9 8 5 10 3 13 1 61 2 10 5 2 4 4h-39l2-4 5-4 1-6v-63l-1-13-4-10-7-6-6-2h-14l-12 6-7 8-3 6-1-4 5-8 8-8 10-5z"
+-      fill="#E87447"
+-      transform="translate(1223,747)"
+-    />
+-    <path
+-      d="m0 0h13l16 1-1 25v74l2 7 8 5v2h-38l2-4 5-5 1-3v-90l-4-6-4-5z"
+-      fill="#E87246"
+-      transform="translate(882,747)"
+-    />
+-    <path
+-      d="m0 0 5 2 5 5 3 6v9l-4 11-7 13-1 4-1 60v18l1 16 5 4 7 4v2h-41l2-4 6-4 2-4 1-8v-81l-3-5-6-6 1-2 5 1h12l8-3 7-9 3-6v-11l-4-6-6-5z"
+-      fill="#E87145"
+-      transform="translate(1567,707)"
+-    />
+-    <path
+-      d="m0 0h9l10 2 13 7 12 11 7 11-1 3-7-11-5-6-10-7-11-5-13-2-10 3-11 6-5 4-6 9-6 15-1 5v20l5 15 6 12 9 10 8 5 13 4h11l10-3 8-4 3-3h2v-2h2l2-4 7-10 2 1-8 12-8 8-17 8-7 2h-16l-16-5-12-6-8-8-7-10-5-15-1-6v-19l5-16 6-9 8-9 14-8 12-4z"
+-      fill="#E87347"
+-      transform="translate(817,747)"
+-    />
+-    <path
+-      d="m0 0h37l-6 7-3 4v73l3 11 6 8 2 3v3h-6l-6-3-7-6-1-5h-2l-6-8-2-12-1-65-5-6-3-2z"
+-      fill="#E8774A"
+-      transform="translate(1412,747)"
+-    />
+-    <path
+-      d="m0 0 15 1-3 2-12 1-16 8-8 5-1 66v13l1 10 6 2 3 2v3h-37v-3l7-6 1-2v-66h-2l-2 4-12 13-7 8v-3l12-14 9-10h2l2-4 6-7 11-9 9-6z"
+-      fill="#E87549"
+-      transform="translate(1141,748)"
+-    />
+-    <path
+-      d="m0 0h22l8 3 11 7 8 10 4 8 2 7 1 9v14l-2 15-6 12-9 10-8 8-12 6-10 3-13 1-14-3-5-2 4-1 11 3h10l8-3 7-3 9-7 8-14 3-8 1-6v-30l-4-13-6-10-8-7-7-3-5-1h-8l-10 3-10 6-7 8-3-1h2l2-4 9-9 10-6z"
+-      fill="#E8764A"
+-      transform="translate(1346,748)"
+-    />
+-    <path
+-      d="m0 0h12l10 4 10 8 7 9 8 16 10 31-1 4-8-24-5-13-6-11-6-8-1-3-4-2-9-6-4-2h-13l-12 6-6 7-1 3v10l4 6 8 6 11 5 12 4 19 9 7 6 5 9 1 2v13l-3 8-9 10-9 4-4 1h-19l-11-4-7-8-3-6 1-2 7 11 8 5 5 1h18l10-3 5-5 3-8v-7l-4-6-9-6-24-10-17-9-8-8-3-7-1-15 2-9 4-6 10-7z"
+-      fill="#EFB382"
+-      transform="translate(1613,747)"
+-    />
+-    <path
+-      d="m0 0h14l12 4 14 8 4 5-5-2-14-8-10-4-11-1-16 8-5 5-1 3v12l6 7 12 7 19 7 17 8 8 8 5 10v10l-4 10-6 8-5 4-9 3h-22l-7-3-6-4-7-11-4-13-1-9 2 4 6 16 6 10 6 5 7 2h19l10-4 4-5 2-4v-11l-4-6-10-6-22-9-16-8-7-6-6-12-1-4v-9l4-11 5-6 10-6z"
+-      fill="#F0B585"
+-      transform="translate(1692,747)"
+-    />
+-    <path
+-      d="m0 0h38l-10 10-1 3-1 52-7 8-8 11-2 1-1-74-7-8z"
+-      fill="#E87246"
+-      transform="translate(1040,747)"
+-    />
+-    <path
+-      d="m0 0 5 3 7 7 9 11 10 11 13 17 18 27 8 14 10 19 8 19 9 27 2 9v7l-4 6-5 3-2 1h-6l-11-7-14-12-8-7-2-3 4 1v2l4 1v2l4 1 7 6v2l3 1 2 2 5 2 6 3 5-1 5-8-1-8-2-10-3-10-4-10-4-14-4-10-5-9v-2h-2l-4-9-3-4-5-10-14-20-2-2-3-5-5-4-12-16-9-11-10-10z"
+-      fill="#F0BA8A"
+-      transform="translate(479,727)"
+-    />
+-    <path
+-      d="m0 0 4 2 1 3 11 3 14 6 3 2v2l12 2 6 3 10 10 4 5-5 3-10-4-4-3-16-7-9-4-8-3-6-4-4-5-3-5z"
+-      fill="#E87145"
+-      transform="translate(1590,782)"
+-    />
+-    <path
+-      d="m0 0v3l-4 5-1 11v22l5 5 6 4v2h-10l-9-3-6-5-4-9v-2l-3 1 1-4 5-5 7-9z"
+-      fill="#E87549"
+-      transform="translate(1072,809)"
+-    />
+-    <path
+-      d="m0 0h12l10 4 10 8 7 9 8 16 10 31-1 4-8-24-5-13-6-11-6-8-1-3-4-2-9-6-4-2h-13l-12 6-6 7-1 3v10l4 6 8 6 5 3-2 1-7-2-7-3-5-5-2 4-1-14 2-9 4-6 10-7z"
+-      fill="#EFAF7F"
+-      transform="translate(1613,747)"
+-    />
+-    <path
+-      d="m0 0 5 2 10 6 1 4 9 3 10 4 4 1 1 2 5 3 3 2 1 6-4 1-10-6-11-5-12-5-4-1v-2l-6-2-4-4v-8z"
+-      fill="#E87145"
+-      transform="translate(1678,786)"
+-    />
+-    <path
+-      d="m0 0 5 2 5 5 3 6v9l-4 11-7 13-1 4-1 60v34l-2-1-2-10v-20l1-44 1-21-2-4 1-1-5-1 4-2 6-4 7-11 1-2v-11l-4-6-6-5z"
+-      fill="#F1BE8D"
+-      transform="translate(1567,707)"
+-    />
+-    <path
+-      d="m0 0 27 1v8l-5 5-11 10-2-3-1-9-4-6-4-4z"
+-      fill="#E87549"
+-      transform="translate(1089,747)"
+-    />
+-    <path
+-      d="m0 0h6l4 4 2 4-1 7-5 5-3 2-6-1-6-7v-7l7-6z"
+-      fill="#E87549"
+-      transform="translate(1557,707)"
+-    />
+-    <path
+-      d="m0 0h15l6 3 2 2v7l-6 5-5-1-7-8-3-2h-10l-3 1h-9v-1l13-3z"
+-      fill="#E8794C"
+-      transform="translate(933,748)"
+-    />
+-    <path
+-      d="m0 0 3 3v2h2l3 6 6 5 7 2h3l-1-2 6 1 3 1h15l10-4 7-7 3-5 2 1-5 9-6 5-10 5-5 1h-19l-12-5-7-7-6-10z"
+-      fill="#EFAE7E"
+-      transform="translate(1426,837)"
+-    />
+-    <path
+-      d="m0 0 5 3 7 7 9 11 10 11 13 17 18 27 3 7-5-2-2-5-4-7-8-12-5-7-2-2-3-5-5-4-12-16-9-11-10-10z"
+-      fill="#F0B887"
+-      transform="translate(479,727)"
+-    />
+-    <path
+-      d="m0 0 3 3 3 12 4 8 10 10 15 6 7 2 15 1 8-2-1 3-9 2h-10l-16-4-12-6-8-8-7-13-2-10z"
+-      fill="#E9794D"
+-      transform="translate(656,818)"
+-    />
+-    <path
+-      d="m0 0h12l10 4 10 8 7 9 8 16 10 31-1 4-8-24-5-13-6-11-6-8-1-3-4-2-9-6-4-2h-13l-3 1-1-3z"
+-      fill="#EFB483"
+-      transform="translate(1613,747)"
+-    />
+-    <path
+-      d="m0 0 5 2 5 5 3 6v9l-4 11-7 13-2 11h-2v-9l-2-4 1-1-5-1 4-2 6-4 7-11 1-2v-11l-4-6-6-5z"
+-      fill="#EEA878"
+-      transform="translate(1567,707)"
+-    />
+-    <path
+-      d="m0 0h22l4 2h-11l-2 1 2 1v2l-7-1h-8l-10 3-10 6-7 8-3-1h2l2-4 9-9 10-6z"
+-      fill="#EFB383"
+-      transform="translate(1346,748)"
+-    />
+-    <path
+-      d="m0 0 16 1 13 4 9 7 8 8 4 6-1 2-11-13-10-7-6-3-11-2h-12l-12 2-5 2-4-1 2-2 11-3z"
+-      fill="#EA8658"
+-      transform="translate(702,694)"
+-    />
+-    <path
+-      d="m0 0 4 2 8 7 28 28h-4l-12-12-4-1v-3l-7-7-4-1-7-7z"
+-      fill="#ED9F70"
+-      transform="translate(439,688)"
+-    />
+-    <path
+-      d="m0 0 2 4 6 16 6 10 6 5 7 2 17 1v2h-19l-7-3-6-4-7-11-4-13z"
+-      fill="#ED9F70"
+-      transform="translate(1670,819)"
+-    />
+-    <path
+-      d="m0 0h9l10 2 13 7 12 11 7 11-1 3-7-11-5-6-10-7-11-5-13-2-4-1z"
+-      fill="#EC9465"
+-      transform="translate(817,747)"
+-    />
+-    <path
+-      d="m0 0h9l6 1-1 2h-14v2l-12 6-7 8-3 6-1-4 5-8 8-8z"
+-      fill="#EFB383"
+-      transform="translate(1213,748)"
+-    />
+-    <path
+-      d="m0 0 15 1-3 2-12 1-16 8-12 7 2-4 5-4 16-9z"
+-      fill="#EEA777"
+-      transform="translate(1141,748)"
+-    />
+-    <path
+-      d="m0 0 4 2 12 10 8 7 2 4-4-2h-4l-11-11-4-5v-2l-3-1z"
+-      fill="#EEA676"
+-      transform="translate(391,646)"
+-    />
+-    <path
+-      d="m0 0 2 1-3 3v2h-2l-1 8 9 1 6-2-1 5-5 3-6-1-6-7v-7z"
+-      fill="#F0BA89"
+-      transform="translate(1555,708)"
+-    />
+-    <path
+-      d="m0 0 4 2 12 10 8 7 9 7 5 5 10 9-2 2-12-11-15-14-10-8-9-8z"
+-      fill="#EFB282"
+-      transform="translate(459,783)"
+-    />
+-    <path
+-      d="m0 0h12l10 4 10 8 1 4-3-1v-2l-4-2-9-6-4-2h-13l-3 1-1-3z"
+-      fill="#F0BA8B"
+-      transform="translate(1613,747)"
+-    />
+-    <path
+-      d="m0 0 4 2 12 19 10 15-1 3-4-5-11-18-10-15z"
+-      fill="#EFB181"
+-      transform="translate(493,769)"
+-    />
+-    <path d="m0 0 5 2 6 4v1h-12l-8-3v-2l2-1h6z" fill="#EFAD7D" transform="translate(1515,854)" />
+-    <path
+-      d="m0 0h3l9 16 5 10v2l-3-1-8-15v-2h-2l-4-9z"
+-      fill="#F0BD8C"
+-      transform="translate(542,810)"
+-    />
+-    <path
+-      d="m0 0 17 2v1l-9 1v2l3 5v33h-1l-1-31-3-5-6-6z"
+-      fill="#F0BA89"
+-      transform="translate(1541,747)"
+-    />
+-    <path
+-      d="m0 0 7 1 8 2h10l9-3 3 1-1 3-12 2-12-1-12-4z"
+-      fill="#EC9566"
+-      transform="translate(1323,855)"
+-    />
+-    <path
+-      d="m0 0 8 1 11 4 13 8 3 4-5-2-14-8-10-4-6-2z"
+-      fill="#F1BE8D"
+-      transform="translate(1701,747)"
+-    />
+-    <path
+-      d="m0 0 3 1 4 2-10 3-10 6-7 8-3-1h2l2-4 9-9z"
+-      fill="#EFB181"
+-      transform="translate(1339,750)"
+-    />
+-    <path
+-      d="m0 0 10 3 9 7 8 8 4 6-1 2-11-13-10-7-10-5z"
+-      fill="#EC9365"
+-      transform="translate(721,696)"
+-    />
+-    <path d="m0 0 11 7 2 1v2h-28v-1h18z" fill="#F0B887" transform="translate(1567,851)" />
+-    <path
+-      d="m0 0h9v1l-10 3-11 6-6 5 2-4 3-3-1-2 7-4z"
+-      fill="#ED9F72"
+-      transform="translate(1692,747)"
+-    />
+-    <path d="m0 0h2l-2 6 3 3-1 3h-12l2-4 6-4z" fill="#EFB584" transform="translate(1549,849)" />
+-    <path d="m0 0h4l-2 4-6 5-11 4h-9v-1l16-4 5-3z" fill="#F0B989" transform="translate(1651,846)" />
+-    <path
+-      d="m0 0 2 1-8 12-8 8-8 4h-2v-2l8-4 3-3h2v-2h2l2-4z"
+-      fill="#EB8C5E"
+-      transform="translate(868,832)"
+-    />
+-    <path
+-      d="m0 0 2 2-7 11-14 14-6 3 1-3 6-4 10-10 7-10z"
+-      fill="#F0BC8B"
+-      transform="translate(1396,824)"
+-    />
+-    <path d="m0 0 9 6 7 7 7 11-1 3-7-11-5-6-10-7z" fill="#EC9B6C" transform="translate(845,754)" />
+-    <path d="m0 0 2 2-2 3-1 32h-1l-1-10v-21z" fill="#F0BB8A" transform="translate(1515,753)" />
+-    <path
+-      d="m0 0 4 1 11 7 8 10 3 6-2 1-6-10-7-7-11-7z"
+-      fill="#F0B685"
+-      transform="translate(1372,750)"
+-    />
+-    <path d="m0 0 2 4 6 16 3 7-4-1-5-13-2-8z" fill="#F0B585" transform="translate(1670,819)" />
+-    <path d="m0 0 1 3-7 7-9 11-6 5 2-4 11-13z" fill="#EFB080" transform="translate(1094,783)" />
+-    <path d="m0 0 2 2 10 21 1 5h-2l-9-20-3-7z" fill="#EFB383" transform="translate(524,817)" />
+-    <path d="m0 0 8 6 15 14-1 2-12-11-10-9z" fill="#EEAC7C" transform="translate(508,825)" />
+-    <path
+-      d="m0 0 5 2 5 5 3 6v9l-3 3v-13l-4-6-6-5z"
+-      fill="#EFB080"
+-      transform="translate(1567,707)"
+-    />
+-    <path
+-      d="m0 0 4 2 6 5v3l10 10-1 2-12-12-4-5v-2l-3-1z"
+-      fill="#E87145"
+-      transform="translate(391,646)"
+-    />
+-    <path d="m0 0 3 3 3 12 3 7h-3l-4-8-2-10z" fill="#E97D51" transform="translate(656,818)" />
+-    <path d="m0 0 2 1-5 9-6 5h-2l2-4 8-9z" fill="#EEAA7A" transform="translate(1493,839)" />
+-    <path d="m0 0 15 1-3 2-15 1v-3z" fill="#F0B887" transform="translate(1141,748)" />
+-    <path d="m0 0 4 2 8 10v2l-4-2-6-7z" fill="#EFAD7D" transform="translate(439,688)" />
+-    <path d="m0 0 3 3v2h2l3 6 6 5v2l-4-2-8-9-3-6z" fill="#EFB282" transform="translate(1426,837)" />
+-    <path
+-      d="m0 0m-1 1m-1 1m-1 1 1 3-7 8-3 6-1-4 5-8z"
+-      fill="#EEA777"
+-      transform="translate(1203,753)"
+-    />
+-    <path d="m0 0 3 1 4 2-10 3-4 1 2-4z" fill="#EEA475" transform="translate(1339,750)" />
+-    <path d="m0 0 8 1 11 4-1 2-18-6z" fill="#EFB383" transform="translate(1701,747)" />
+-    <path d="m0 0 4 1 7 7 4 6-1 2-11-13z" fill="#ED9F70" transform="translate(737,706)" />
+-    <path d="m0 0h3l6 7 4 3-6-1-5-5z" fill="#EEA575" transform="translate(1679,846)" />
+-    <path d="m0 0 4 1 7 6v3l-3-1v-2l-4-2-4-3z" fill="#F3C49F" transform="translate(1635,753)" />
+-    <path d="m0 0h6l1 3-8-1zm4 3 3 2h-17v-1z" fill="#EA875A" transform="translate(1223,747)" />
+-    <path d="m0 0m-1 1 3 2-12 7 2-4 5-4z" fill="#EDA273" transform="translate(1123,757)" />
+-    <path d="m0 0 5 4 7 9-2 2-8-10z" fill="#EFB483" transform="translate(446,707)" />
+-    <path d="m0 0 1 2-4 9h-3v-3z" fill="#ED9F70" transform="translate(1578,731)" />
+-    <path d="m0 0h10l-1 2-9 1-3 1-1-3z" fill="#F3CBA5" transform="translate(1613,747)" />
+-    <path d="m0 0h9l-2 4 1 4-7-6z" fill="#F0B887" transform="translate(1486,747)" />
+-    <path d="m0 0h4l-2 4-4 4h-2l2-5z" fill="#EC9A6B" transform="translate(1651,846)" />
+-    <path d="m0 0 4 2 6 5-4 1-3-3v-2l-3-1z" fill="#EA8255" transform="translate(391,646)" />
+-    <path d="m0 0 5 1-4 1z" fill="#F1BE8D" transform="translate(1318,853)" />
+-    <path d="m0 0" fill="#F1BE8D" transform="translate(1316,852)" />
+-  </svg>
+-);\n- apps/docs/components/marketing/sponsors.tsx (modified, 7 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import {Button, Link} from "@nextui-org/react";
+ 
+ import {sectionWrapper} from "@/components/primitives";
+-import {Story2DesignLogo, CodeRabbitLogo, ScrumbuissLogo} from "@/components/icons/sponsors";
++import {Story2DesignLogo, CodeRabbitLogo} from "@/components/icons/sponsors";
+ import {HeartFilledIcon} from "@/components/icons";
+ import {siteConfig} from "@/config/site";
+ import {Sponsor, SponsorItem} from "@/components/marketing/sponsor-item";
+@@ -17,11 +17,6 @@ const sponsors: Sponsor[] = [
+     href: "https://coderabbit.ai/?utm_source=nextui&utm_marketing=oss",
+     logo: <CodeRabbitLogo />,
+   },
+-  {
+-    name: "Scrumbuiss",
+-    href: "https://www.scrumbuiss.com/?utm_source=nextui&utm_marketing=oss",
+-    logo: <ScrumbuissLogo />,
+-  },
+ ];
+ 
+ export const Sponsors = () => {\n- apps/docs/public/sponsors/000000.webp (removed, 0 changes)\n  Patch: No patch available\n- apps/docs/utils/get-all-sponsors.ts (modified, 16 changes)\n  Patch: @@ -6,19 +6,7 @@ import fs from "fs";
+  */
+ export function getAllSponsors() {
+   const sponsorsRcPath = path.resolve(".sponsorsrc");
+-  const openCollectiveSponsors = JSON.parse(fs.readFileSync(sponsorsRcPath, "utf-8"));
+-  const patreonSponsors = [
+-    {
+-      MemberId: "000000",
+-      tier: "Gold Sponsor 🥇",
+-      currency: "USD",
+-      lastTransactionAt: "2024-07-14 00:00",
+-      lastTransactionAmount: 100,
+-      name: "Scrumbuiss",
+-      image: "/sponsors/000000.webp",
+-      website: "https://www.scrumbuiss.com",
+-    },
+-  ];
++  const sponsors = JSON.parse(fs.readFileSync(sponsorsRcPath, "utf-8"));
+ 
+-  return [...openCollectiveSponsors, ...patreonSponsors];
++  return sponsors;
+ }\n- packages/core/system/src/provider.tsx (modified, 2 changes)\n  Patch: @@ -31,7 +31,7 @@ export interface NextUIProviderProps
+    * Provides a client side router to all nested components such as
+    * Link, Menu, Tabs, Table, etc.
+    */
+-  navigate?: (path: string) => void;
++  navigate?: (path: string) => void | Promise<void>;
+   /**
+    * Convert an `href` provided to a link component to a native `href`
+    * For example, a router might accept hrefs relative to a base path,\n

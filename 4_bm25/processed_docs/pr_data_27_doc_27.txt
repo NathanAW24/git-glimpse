@@ -1,0 +1,593 @@
+Pull Request Number: 558
+Title: [Feature] Additional  sizes and fontSizes, better eslint/prettier configuration
+Base Branch: next
+Head Branch: feat/add-more-xl-tokens
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/558
+State: MERGED
+Created At: 2022-06-20T00:07:50Z
+Merged At: 2022-06-20T00:26:29Z
+Participants: jrgarciadev
+
+Description:
+📝 Description
+More space units were added, and to make the codebase more readable some fontSizes and lineHeights were renamed from xl2...xl9 to  2xl...9xl, besides a new eslint config was implemented
+🚀 New behavior
+
+New space units were added to the common theme 2xl...9xl, min: "min-content", max: "max-content", fit: "fit-content", screen: "100vw", full: "100%"
+Text component now supports any value from fontSizes (e.g. "3xl") theme in addition to number (e.g. 14) and string (e.g. "20px")
+
+e.g.
+import {Text} from "@nextui-org/react";
+
+
+function App({ Component }) {
+  return (
+    <Text size="4xl">Hello World</Text> 
+  );
+}
+
+All files were updated to match with new eslint rules.
+Default .vscode settings were updated to match with new eslint rules and help new contributors to get started.
+Better eslint configuration for the project.
+Better prettier configuration for the project.
+
+💣 Is this a breaking change (Yes/No): Yes
+
+The margin prop removed from the Text component
+Some fontSizes were renamed from xl2...xl9 to  2xl...9xl
+Some lineHeights were renamed from xl2...xl9 to  2xl...9xl
+
+📝 Additional Information
+The idea is to implement the same Text size behavior in the future in other components like Grid, Row etc. to take advantage of the theme tokens
+
+Commits:
+- refactor(react-theme): new sizes added, some fontSizes/linHeights renamed, text component now partially support fontsize tokens\n- refactor(root): eslint config and files changed\n- chore(react-hooks): use warning removed\n- refactor(root): new eslint config implemented on react package\n- refactor(docs-root): new eslint config implemented\n- refactor(docs-content): eslint rules applied\n- feat(react-text): now users can use any of the fontSizes theme tokens on the size prop\n- fix(react-config): 'React' is declared but its value is never read"\n- feat(docs-text): font size updated\n- chore(react-root): test passing\n
+
+Labels:
+💥 Type: Breaking Change
+
+Comments:
+No comments.
+
+Files Changed:
+- .editorconfig (modified, 25 changes)\n  Patch: @@ -1,28 +1,9 @@
+ root = true
+ 
+-[*.js]
+-[*.jsx]
+-[*.ts]
+-[*.tsx]
+-indent_style = space
+-indent_size = 2
+-end_of_line = lf
+-charset = utf-8
+-trim_trailing_whitespace = true
++[*]
+ insert_final_newline = true
+-
+-[*.json]
+-indent_style = space
+-indent_size = 2
+-end_of_line = lf
+ charset = utf-8
+-trim_trailing_whitespace = true
+-insert_final_newline = false
+-
+-[*.md]
+ indent_style = space
+ indent_size = 2
+-end_of_line = lf
+-charset = utf-8
+-trim_trailing_whitespace = false
+-insert_final_newline = false
++trim_trailing_whitespace = true
++max_line_length = 80\n- .eslintignore (modified, 2 changes)\n  Patch: @@ -1,9 +1,11 @@
+ .now/*
+ .next/*
++*.css
+ examples/*
+ dist/*
+ esm/*
+ public/*
+ scripts/*
+ tests/*
+ *.config.js
++.DS_Store\n- .eslintrc.json (modified, 119 changes)\n  Patch: @@ -1,88 +1,99 @@
+ {
+-  "plugins": ["prettier", "@typescript-eslint", "jsx-a11y"],
+-  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier", "plugin:jsx-a11y/recommended"],
+-  "parser": "@typescript-eslint/parser",
+-  "globals": {
+-    "JSX": true
+-  },
+   "env": {
+-    "browser": true,
+-    "amd": true,
+-    "node": true,
+-    "jest": true
++    "browser": false,
++    "es2021": true,
++    "node": true
+   },
++  "extends": [
++    "plugin:react/recommended",
++    "plugin:prettier/recommended",
++    "plugin:react-hooks/recommended",
++    "plugin:jsx-a11y/recommended"
++  ],
++  "plugins": ["react", "prettier", "import", "@typescript-eslint", "jsx-a11y"],
++  "parser": "@typescript-eslint/parser",
+   "parserOptions": {
+     "ecmaFeatures": {
+       "jsx": true
+-    }
++    },
++    "ecmaVersion": 12,
++    "sourceType": "module"
+   },
+   "settings": {
+     "react": {
+-      "pragma": "React",
+       "version": "detect"
+-    },
+-    "import/resolver": {
+-      "typescript": {
+-        "alwaysTryTypes": true
+-      }
+     }
+   },
+   "rules": {
+-    "object-curly-spacing": ["warn", "always"],
+-    "no-unused-vars": [
++    "no-console": "warn",
++    "react/prop-types": "off",
++    "react/jsx-uses-react": "off",
++    "react/react-in-jsx-scope": "off",
++    "react-hooks/exhaustive-deps": "off",
++    "jsx-a11y/click-events-have-key-events": "warn",
++    "jsx-a11y/interactive-supports-focus": "warn",
++    "prettier/prettier": [
+       "warn",
+       {
+-        "vars": "all",
+-        "args": "none"
++        "printWidth": 100,
++        "trailingComma": "all",
++        "tabWidth": 2,
++        "semi": true,
++        "singleQuote": false,
++        "bracketSpacing": false,
++        "arrowParens": "always",
++        "endOfLine": "auto"
+       }
+     ],
+-    "jsx-a11y/no-static-element-interactions": ["warn"],
+-    "jsx-a11y/click-events-have-key-events": ["warn"],
+     "@typescript-eslint/no-unused-vars": [
+       "warn",
+       {
+-        "vars": "all",
+-        "args": "none"
++        "args": "after-used",
++        "ignoreRestSiblings": false,
++        "argsIgnorePattern": "^_.*?$"
+       }
+     ],
+-    "@typescript-eslint/no-explicit-any": [
++    "import/order": [
+       "warn",
+       {
+-        "ignoreRestArgs": true
++        "groups": [
++          "type",
++          "builtin",
++          "object",
++          "external",
++          "internal",
++          "parent",
++          "sibling",
++          "index"
++        ],
++        "pathGroups": [
++          {
++            "pattern": "~/**",
++            "group": "external",
++            "position": "after"
++          }
++        ],
++        "newlines-between": "always"
+       }
+     ],
+-    "max-len": [
++    "react/self-closing-comp": "warn",
++    "react/jsx-sort-props": [
+       "warn",
+       {
+-        "code": 80,
+-        "ignoreStrings": true,
+-        "ignoreTemplateLiterals": true,
+-        "ignoreComments": true
+-      }
+-    ],
+-    "no-plusplus": [
+-      "error",
+-      {
+-        "allowForLoopAfterthoughts": true
++        "callbacksLast": true,
++        "shorthandFirst": true,
++        "noSortAlphabetically": false,
++        "reservedFirst": true
+       }
+     ],
+-    "react/jsx-key": "error",
+-    "react/jsx-props-no-spreading": "off",
+-    "import/prefer-default-export": "off",
+-    "react/jsx-boolean-value": "off",
+-    "react/prop-types": "off",
+-    "react/no-unescaped-entities": "off",
+-    "react/jsx-one-expression-per-line": "off",
+-    "react/jsx-wrap-multilines": "off",
+-    "react/destructuring-assignment": "off",
+-    "@typescript-eslint/comma-dangle": [
+-      "error",
++    "padding-line-between-statements": [
++      "warn",
++      { "blankLine": "always", "prev": "*", "next": "return" },
++      { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
+       {
+-        "arrays": "only-multiline",
+-        "objects": "only-multiline",
+-        "imports": "only-multiline",
+-        "exports": "only-multiline",
+-        "functions": "never"
++        "blankLine": "any",
++        "prev": ["const", "let", "var"],
++        "next": ["const", "let", "var"]
+       }
+     ]
+   }\n- .prettierignore (removed, 12 changes)\n  Patch: @@ -1,12 +0,0 @@
+-.github
+-.next
+-.now
+-.circleci
+-dist
+-coverage
+-public
+-esm
+-*.json
+-*.d.ts
+-*.yml
+-*.snap\n- .prettierrc (removed, 6 changes)\n  Patch: @@ -1,6 +0,0 @@
+-{
+-  "printWidth": 80,
+-  "singleQuote": true,
+-  "trailingComma": "none",
+-  "tabWidth": 2
+-}\n- .vscode/settings.json (modified, 12 changes)\n  Patch: @@ -1,6 +1,14 @@
+ {
+-  "eslint.workingDirectories": ["./apps/docs", "./packages/react", "./packages/storybook"],
++  "eslint.workingDirectories": [
++    "./apps/docs",
++    "./packages/react",
++    "./packages/storybook"
++  ],
+   "editor.tabSize": 2,
+   "editor.insertSpaces": true,
+-  "typescript.tsdk": "node_modules/typescript/lib"
++  "typescript.tsdk": "node_modules/typescript/lib",
++  "editor.formatOnSave": false,
++  "editor.codeActionsOnSave": {
++    "source.fixAll.eslint": true
++  }
+ }\n- apps/docs/content/components/avatar/bordered.ts (modified, 4 changes)\n  Patch: @@ -56,9 +56,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/avatar/color.ts (modified, 4 changes)\n  Patch: @@ -44,9 +44,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/avatar/default.ts (modified, 4 changes)\n  Patch: @@ -38,9 +38,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/avatar/group.ts (modified, 4 changes)\n  Patch: @@ -38,9 +38,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/avatar/icon.ts (modified, 14 changes)\n  Patch: @@ -260,14 +260,14 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/SunIcon.js': SunIcon,
+-  '/MoonIcon.js': MoonIcon,
+-  '/VideoIcon.js': VideoIcon,
+-  '/VolumeUpIcon.js': VolumeUpIcon,
+-  '/MicrophoneIcon.js': MicrophoneIcon,
+-  '/App.js': AppJs
++  "/SunIcon.js": SunIcon,
++  "/MoonIcon.js": MoonIcon,
++  "/VideoIcon.js": VideoIcon,
++  "/VolumeUpIcon.js": VolumeUpIcon,
++  "/MicrophoneIcon.js": MicrophoneIcon,
++  "/App.js": AppJs,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/avatar/index.ts (modified, 18 changes)\n  Patch: @@ -1,11 +1,11 @@
+-import default_avatar from './default';
+-import size from './size';
+-import color from './color'; 
+-import bordered from './bordered';
+-import zoomed from './zoomed';
+-import squared from './squared';
+-import icon from './icon';
+-import group from './group';
++import default_avatar from "./default";
++import size from "./size";
++import color from "./color";
++import bordered from "./bordered";
++import zoomed from "./zoomed";
++import squared from "./squared";
++import icon from "./icon";
++import group from "./group";
+ 
+ export default {
+   default_avatar,
+@@ -15,5 +15,5 @@ export default {
+   zoomed,
+   squared,
+   icon,
+-  group
++  group,
+ };\n- apps/docs/content/components/avatar/size.ts (modified, 4 changes)\n  Patch: @@ -35,9 +35,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/avatar/squared.ts (modified, 4 changes)\n  Patch: @@ -62,9 +62,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/avatar/zoomed.ts (modified, 4 changes)\n  Patch: @@ -57,9 +57,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button-group/default.ts (modified, 4 changes)\n  Patch: @@ -11,9 +11,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button-group/disabled.ts (modified, 4 changes)\n  Patch: @@ -11,9 +11,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button-group/index.ts (modified, 14 changes)\n  Patch: @@ -1,15 +1,15 @@
+-import defaultButtonGroup from './default';
+-import disabledButtonGroup from './disabled';
+-import loading from './loading';
+-import sizes from './sizes';
+-import vertical from './vertical';
+-import variants from './variants';
++import defaultButtonGroup from "./default";
++import disabledButtonGroup from "./disabled";
++import loading from "./loading";
++import sizes from "./sizes";
++import vertical from "./vertical";
++import variants from "./variants";
+ 
+ export default {
+   defaultButtonGroup,
+   disabledButtonGroup,
+   loading,
+   sizes,
+   vertical,
+-  variants
++  variants,
+ };\n- apps/docs/content/components/button-group/loading.ts (modified, 4 changes)\n  Patch: @@ -19,9 +19,9 @@ export default function App() {
+ `;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button-group/sizes.ts (modified, 4 changes)\n  Patch: @@ -44,9 +44,9 @@ export default function App() {
+ `;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button-group/variants.ts (modified, 4 changes)\n  Patch: @@ -44,9 +44,9 @@ export default function App() {
+ `;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button-group/vertical.ts (modified, 4 changes)\n  Patch: @@ -39,9 +39,9 @@ export default function App() {
+ `;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button/bordered.ts (modified, 4 changes)\n  Patch: @@ -38,9 +38,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button/color.ts (modified, 4 changes)\n  Patch: @@ -38,9 +38,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button/default.ts (modified, 4 changes)\n  Patch: @@ -5,9 +5,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button/disabled.ts (modified, 4 changes)\n  Patch: @@ -5,9 +5,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button/flat.ts (modified, 4 changes)\n  Patch: @@ -33,9 +33,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button/ghost.ts (modified, 4 changes)\n  Patch: @@ -38,9 +38,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button/icon.ts (modified, 14 changes)\n  Patch: @@ -212,14 +212,14 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/HeartIcon.js': HeartIcon,
+-  '/CameraIcon.js': CameraIcon,
+-  '/LockIcon.js': LockIcon,
+-  '/NotificationIcon.js': NotificationIcon,
+-  '/UserIcon.js': UserIcon,
+-  '/App.js': AppJs
++  "/HeartIcon.js": HeartIcon,
++  "/CameraIcon.js": CameraIcon,
++  "/LockIcon.js": LockIcon,
++  "/NotificationIcon.js": NotificationIcon,
++  "/UserIcon.js": UserIcon,
++  "/App.js": AppJs,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n- apps/docs/content/components/button/light.ts (modified, 4 changes)\n  Patch: @@ -33,9 +33,9 @@ export default function App() {
+ }`;
+ 
+ const react = {
+-  '/App.js': App
++  "/App.js": App,
+ };
+ 
+ export default {
+-  ...react
++  ...react,
+ };\n

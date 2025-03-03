@@ -1,0 +1,117 @@
+Pull Request Number: 21
+Title: refactor: avoid stop multiples github actions when is a PR event, ign…
+Base Branch: main
+Head Branch: refactor/pipeline
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/21
+State: MERGED
+Created At: 2021-08-14T20:40:10Z
+Merged At: 2021-08-14T21:17:16Z
+Participants: jrgarciadev, codecov-commenter
+
+Description:
+…ore trigger actions on readme changes
+[LEVEL]/[COMPONENT]
+TASK: 
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Pipeline changes
+
+
+
+Screenshots - Animations
+
+Commits:
+- refactor: avoid stop multiples github actions when is a PR event, ignore trigger actions on readme changes\n- fix: push events\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/21?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#21](https://codecov.io/gh/nextui-org/nextui/pull/21?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (3073fd0) into [main](https://codecov.io/gh/nextui-org/nextui/commit/97dc61413c8ede87b2f5372a2f6414b9a41c8e76?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (97dc614) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/21/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/21?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main      #21   +/-   ##
+=======================================
+  Coverage   96.08%   96.08%           
+=======================================
+  Files          52       52           
+  Lines         741      741           
+  Branches      243      243           
+=======================================
+  Hits          712      712           
+  Misses         27       27           
+  Partials        2        2           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/21?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/21?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [97dc614...3073fd0](https://codecov.io/gh/nextui-org/nextui/pull/21?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- .github/workflows/main.yaml (modified, 7 changes)\n  Patch: @@ -3,13 +3,16 @@ name: CI/CD
+ on:
+   push:
+     branches: [main]
++    paths-ignore: ['**/README.md']
+   pull_request:
+     branches: [main]
+     types: [opened, synchronize]
++    paths-ignore: ['**/README.md']
+ 
+ jobs:
+   avoid_reduncy:
+     runs-on: ubuntu-18.04
++    if: ${{ github.event_name == 'push' }}
+     steps:
+       - name: Cancel Previous Redundant Builds
+         uses: styfle/cancel-workflow-action@0.9.1
+@@ -68,6 +71,7 @@ jobs:
+   publish:
+     needs: [build, tests]
+     runs-on: ubuntu-18.04
++    if: ${{ github.event_name == 'push' }}
+     steps:
+       - uses: actions/checkout@v2
+       - uses: actions/setup-node@v2
+@@ -77,7 +81,6 @@ jobs:
+       - name: Install dependencies
+         run: yarn install --frozen-lockfile
+       - uses: JS-DevTools/npm-publish@v1
+-        if: ${{ github.event_name == 'push' }}
+         with:
+           token: ${{ secrets.NPM_TOKEN }}
+           package: './packages/nextui/package.json'
+@@ -90,12 +93,12 @@ jobs:
+   deploy:
+     needs: [publish]
+     runs-on: ubuntu-18.04
++    if: ${{ github.event_name == 'push' }}
+     steps:
+       - uses: actions/checkout@v2
+         with:
+           fetch-depth: 0
+       - name: Deploy to Vercel
+-        if: ${{ github.event_name == 'push' }}
+         uses: amondnet/vercel-action@v20
+         with:
+           vercel-token: ${{ secrets.VERCEL_TOKEN }} \n

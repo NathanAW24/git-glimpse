@@ -1,0 +1,72 @@
+Pull Request Number: 749
+Title: Progress never full prop
+Base Branch: main
+Head Branch: progress-neverfull
+Author: onlycs
+URL: https://github.com/nextui-org/nextui/pull/749
+State: CLOSED
+Created At: 2022-09-07T22:27:47Z
+Merged At: None
+Participants: onlycs, jrgarciadev
+
+Description:
+📝 Description
+
+Added a prop that makes the progress bar never full. A use case would be when you set the max value to a really low number (say, 3), and you want to avoid the "why is it loading at 100%" response from users.
+
+💣 Is this a breaking change (Yes/No): No
+
+Commits:
+- update element\n- update docs\n
+
+Labels:
+
+
+Comments:
+- vercel: @TheAlphaReturns is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22a5e02cc3d417ed53496b61a3c8f541f815595c43%22%7D%2C%22id%22%3A%22QmYeNvXjS4pyCx6Q1vrVpAFzDXNCTvjNFmDKFkzaQux7tg%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A749%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/7Tf8MxfJRjgngsmjcEExmFcrVDhv)) | [Visit Preview](https://nextui-storybook-git-fork-thealphareturns-pro-a4b259-nextui-org.vercel.app) | Sep 7, 2022 at 10:27PM (UTC) |
+
+\n- jrgarciadev: Hey @OnlyCS thanks for contributing, unfortunately, I'll close this PR due to this can be handled by the developer outside the component\n
+
+Files Changed:
+- apps/docs/content/docs/components/progress.mdx (modified, 1 changes)\n  Patch: @@ -91,6 +91,7 @@ import { Progress } from '@nextui-org/react';
+ | **shadow**         | `boolean`                       | `true/false`                   | Display shadow effect                           | `false`    |
+ | **squared**        | `boolean`                       | `true/false`                   | Squared progress                                | `false`    | 
+ | **animated**       | `boolean`                       | `true/false`                   | Enable or disable the progress animation        | `true`     |
++| **neverFull**      | `boolean`                       | `true/false`                   | Make percent max out at 98                      | `false`    |
+ | **css**            | `Stitches.CSS`                  | -                              | Override Default CSS style                      | -          |
+ | **as**             | `keyof JSX.IntrinsicElements`   | -                              | Changes which tag component outputs             | `div`      |
+ | ...                | `ProgressHTMLAttributes`        | `'id', 'className', ...`       | Progress native props                           | -          |\n- packages/react/src/progress/progress.tsx (modified, 6 changes)\n  Patch: @@ -18,6 +18,7 @@ interface Props {
+   max?: number;
+   min?: number;
+   css?: CSS;
++  neverFull?: boolean;
+   as?: keyof JSX.IntrinsicElements;
+ }
+ 
+@@ -49,14 +50,17 @@ const Progress: React.FC<ProgressProps> = ({
+   shadow,
+   indeterminated,
+   css,
++  neverFull,
+   ...props
+ }) => {
+   const value = useMemo(
+     () => (valueProp > max ? max : valueProp < min ? min : valueProp),
+     [valueProp, min, max],
+   );
+ 
+-  const percent = useMemo(() => valueToPercent(value, min, max), [value, min, max]);
++  let percent = useMemo(() => valueToPercent(value, min, max), [value, min, max]);
++  if (neverFull && percent == 100) percent = 98
++    
+ 
+   return (
+     <StyledProgress\n

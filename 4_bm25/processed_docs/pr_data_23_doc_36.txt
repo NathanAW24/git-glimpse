@@ -1,0 +1,66 @@
+Pull Request Number: 1203
+Title: fix: added alt fallback to avatar component
+Base Branch: feat/v2
+Head Branch: fix/added-alt-fallback-to-avatar-component
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1203
+State: MERGED
+Created At: 2023-07-16T14:22:56Z
+Merged At: 2023-07-16T14:40:58Z
+Participants: jguddas, jrgarciadev
+
+Description:
+https://storiesv2.nextui.org/?path=/story/components-avatar--with-image did not have an alt tag, now the alt tag falls back to "avatar" when name and alt is not defined.
+
+Commits:
+- fix: added alt fallback to avatar component\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22820e63cf4528168f17869ce435208997d0d8a2a0%22%7D%2C%22id%22%3A%22QmSrrK8qzzrRtbtuX31QFH1UxcCcjoLhG9Na72RM8NoeEF%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1203%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- packages/components/avatar/src/avatar.tsx (modified, 12 changes)\n  Patch: @@ -29,26 +29,20 @@ const Avatar = forwardRef<AvatarProps, "span">((props, ref) => {
+   const fallback = useMemo(() => {
+     if (!showFallback && src) return null;
+ 
+-    const ariaLabel = alt || name || "avatar";
+-
+     if (fallbackComponent) {
+       return (
+-        <div
+-          aria-label={ariaLabel}
+-          className={slots.fallback({class: classNames?.fallback})}
+-          role="img"
+-        >
++        <div aria-label={alt} className={slots.fallback({class: classNames?.fallback})} role="img">
+           {fallbackComponent}
+         </div>
+       );
+     }
+ 
+     return name ? (
+-      <span aria-label={ariaLabel} className={slots.name({class: classNames?.name})} role="img">
++      <span aria-label={alt} className={slots.name({class: classNames?.name})} role="img">
+         {getInitials(name)}
+       </span>
+     ) : (
+-      <span aria-label={ariaLabel} className={slots.icon({class: classNames?.icon})} role="img">
++      <span aria-label={alt} className={slots.icon({class: classNames?.icon})} role="img">
+         {icon}
+       </span>
+     );\n- packages/components/avatar/src/use-avatar.ts (modified, 2 changes)\n  Patch: @@ -109,7 +109,7 @@ export function useAvatar(props: UseAvatarProps = {}) {
+     icon,
+     classNames,
+     fallback,
+-    alt = name,
++    alt = name || "avatar",
+     imgRef: imgRefProp,
+     color = groupContext?.color ?? "default",
+     radius = groupContext?.radius ?? "full",\n

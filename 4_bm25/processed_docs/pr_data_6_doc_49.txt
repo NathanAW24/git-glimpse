@@ -1,0 +1,395 @@
+Pull Request Number: 3533
+Title: fix(input): sync ref value to internal value
+Base Branch: canary
+Head Branch: fix/sync-ref-value-to-internal-value
+Author: AnthonyPaulO
+URL: https://github.com/nextui-org/nextui/pull/3533
+State: MERGED
+Created At: 2024-07-23T03:27:39Z
+Merged At: 2024-08-29T02:24:45Z
+Participants: AnthonyPaulO, chirokas, wingkwong, jrgarciadev
+
+Description:
+Closes #3024
+Closes #3436
+Closes #3678
+📝 Description
+Fixed issue where setting the ref value doesn't sync the internal state, causing ref value changes not to persist and reverting back to the internal (state) value.
+⛳️ Current behavior (updates)
+Ref value changes do not persist as they do not update the internal (state) value.
+🚀 New behavior
+Ref value changes will now update the internal (state) value.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+Video of fix:
+https://github.com/user-attachments/assets/1406b00f-7c5f-42ee-9f3e-37a3a0fb9f78
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced input component to synchronize its internal state with reference values, improving real-time data binding and responsiveness.
+
+
+
+Bug Fixes
+
+Added a test case to ensure that changes to the reference value are accurately reflected in the input component’s internal state.
+
+
+
+Refactor
+
+Improved the useInput hook for better control and handling of the input element's internal reference, increasing its flexibility and usability.
+
+Commits:
+- fix: sync ref value to internal value #3024 #3436\n- feat: changeset - added changeset\n- chore: remove comment\n- Merge branch 'canary' into pr/3533\n- chore(changeset): add issue numbers\n- refactor(input): revise typing\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: e6c9c902830f249298be5b689e56c34d33c0bc55
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/input        | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/react        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/AnthonyPaulO/nextui/new/fix/sync-ref-value-to-internal-value?filename=.changeset/fast-roses-roll.md&value=---%0A%22%40nextui-org%2Finput%22%3A%20patch%0A---%0A%0Afix(input)%3A%20sync%20ref%20value%20to%20internal%20value%0A)
+
+\n- vercel: Someone is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2275aeba5b407978a79f4d4979660d195c59ff7efd%22%7D%2C%22id%22%3A%22QmbjAHWXBM7kgbjPPZyB1QaU3qzrDgRxmMWJsxk8P1BkmB%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3533%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+The recent updates enhance the `@nextui-org/input` package by implementing a synchronization mechanism between a reference value and an internal state within the `Input` component. This ensures changes to the reference are reflected in the internal state, improving data consistency and responsiveness. A new test case has also been added to validate this functionality, and the `useInput` hook has been refined for better control over the input element's reference and state management.
+
+## Changes
+
+| File                                             | Change Summary                                                                                  |
+|--------------------------------------------------|------------------------------------------------------------------------------------------------|
+| .changeset/long-ducks-do.md                     | Introduces a patch for synchronization between reference and internal state in `Input`.        |
+| packages/components/input/__tests__/input.test.tsx | Adds test to verify synchronization between ref and internal value in `Input`.                |
+| packages/components/input/src/use-input.ts       | Enhances `useInput` hook to use `useRef`, improving control over DOM reference and state updates. |
+
+## Sequence Diagram(s)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Input
+    participant useInput Hook
+
+    User->>Input: Set reference value
+    Input->>useInput Hook: Sync internal state
+    useInput Hook->>Input: Update displayed value
+    Input-->>User: Reflect updated value
+```
+
+## Assessment against linked issues
+
+| Objective                                                                | Addressed | Explanation                                   |
+|--------------------------------------------------------------------------|-----------|-----------------------------------------------|
+| Input component unresponsive to updates to value via `ref` (#3024)      | ✅        |                                               |
+| Setting ref value (i.e., uncontrolled) not supported by NextUI components (#3436) | ✅        |                                               |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+# Existing changesets
+
+```
+.changeset/long-ducks-do.md: ## AI-generated summary of changes
+
+The new file introduces a patch for the `@nextui-org/input` package, which implements synchronization between a reference value and an internal state value. This functionality ensures that any changes made to the reference value are reflected in the internal state, maintaining consistency and reliability within the component's data handling. The control flow is designed to monitor changes to the reference, triggering updates to the internal state as necessary, thereby enhancing the responsiveness of the input component. This improvement is crucial for applications that rely on real-time data binding and user interactions.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made.
+
+---
+
+packages/components/input/__tests__/input.test.tsx: ## AI-generated summary of changes
+
+The diff introduces a new test case within the existing test suite for the `Input` component. Specifically, it adds a test titled "setting ref should sync the internal value," which verifies that the internal value of the input field correctly synchronizes with the value set on the ref. The test creates a reference to an HTML input element, renders the `Input` component with this ref, and subsequently modifies the ref's value. It then checks if the internal value of the input matches the ref's value after focusing on the input. This addition enhances the test coverage for the `Input` component, ensuring that the ref correctly reflects changes made to the input's value.
+
+## Alterations to the declarations of exported or public entities
+
+- No changes to the declarations of exported or public entities were made in this diff.
+
+---
+
+packages/components/input/src/use-input.ts: ## AI-generated summary of changes
+
+The diff introduces significant enhancements to the `useInput` hook in the `use-input.ts` file. The primary change is the integration of the `useImperativeHandle` and `useRef` hooks, which refines how the component exposes its internal reference to parent components. Previously, the hook utilized `useDOMRef` for managing the DOM reference, but this has been replaced with `useRef`, allowing for a more controlled proxy object to be created.
+
+A new `proxy` variable is introduced to wrap the `domRef.current` object. This proxy facilitates custom behavior for property access and assignment. Specifically, when properties are accessed, methods are bound to the target, ensuring that the context remains intact. Furthermore, when the `value` property is set, it triggers an update to the internal state `setInputValue`, enhancing the synchronization between the input's displayed value and its internal state.
+
+Overall, these changes improve the functionality of the `useInput` hook by allowing for more flexible and controlled interactions with the input element, thereby enhancing the component's usability in various scenarios.
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML` in `packages/components/input/src/use-input.ts` → No change in signature.
+```
+
+
+# New changesets
+
+.changeset/long-ducks-do.md: ## AI-generated summary of changes
+
+This diff introduces a new file that implements a patch for the `@nextui-org/input` library. The primary functionality added is the synchronization of changes to a reference value with an internal state value. This enhancement is likely aimed at improving the responsiveness and consistency of the input component's behavior, ensuring that any updates to the reference value are reflected in the internal state seamlessly. The control flow now includes mechanisms to monitor changes to the reference value and trigger updates to the internal state accordingly, which enhances the overall reliability and user experience of the input component.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were found in the provided diff.
+
+
+# New changesets
+
+packages/components/input/src/use-input.ts: ## AI-generated summary of changes
+
+The changes made to the `use-input.ts` file introduce significant modifications to the `useInput` hook's functionality. The most notable alteration is the replacement of the `useDOMRef` hook with a `useRef` hook for managing the DOM reference of the input element. This change is accompanied by the introduction of the `useImperativeHandle` hook, which allows the hook to expose a proxy object to parent components. This proxy intercepts property access and modification on the DOM element, enabling custom behavior when properties such as `value` are set. Specifically, when the `value` property is modified, it updates the internal state of the input value using `setInputValue`.
+
+Additionally, the proxy pattern ensures that methods bound to the target element can be accessed correctly, preserving the context of `this`. This enhancement improves the control over the input element's properties and methods, providing a more robust interface for parent components to interact with the input's state.
+
+Overall, these changes enhance the flexibility and functionality of the `useInput` hook, allowing for more complex interactions and better state management.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- `export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTMLInputElement>(...)` in `packages/components/input/src/use-input.ts` → No changes to the function signature itself.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(input): sync ref value to internal value" by AnthonyPaulO addresses synchronization issues between ref values and internal state values in the NextUI library. This update resolves problems identified in issues #3024 and #3436.
+
+The primary focus of this update is to fix a bug where changes made to the ref value were not reflected in the internal state, causing ref value modifications to revert to the previous internal state value. This inconsistency could lead to unexpected behavior for users relying on ref values, particularly in scenarios involving uncontrolled components.
+
+With this update, changes to the ref value will now correctly update the internal state value, ensuring that both remain in sync. The author confirms that this change does not introduce any breaking changes to the existing functionality of the library. Additionally, a video demonstrating the fix has been provided, showcasing the resolved issue and the updated behavior.
+
+## Objectives from Linked Issues
+
+The linked issues #3024 and #3436 highlight specific bugs related to the handling of input components in the NextUI library when using ref values. 
+
+### Issue #3024
+This issue describes a scenario where the Input component does not respond to updates made via its ref. When using libraries like `react-hook-form`, which utilize imperative methods to set values, the input fails to reflect these changes. The user expects the input value to track the form state, but instead, it remains unchanged despite the underlying state being updated.
+
+### Issue #3436
+This issue similarly addresses the problem of setting ref values in NextUI components, such as Autocomplete or Input. Users reported that while they could retrieve the value using a ref, assigning a new value would only show temporarily before disappearing upon interaction, indicating a failure to persist the new value. Users expect that values assigned via refs should behave consistently, similar to standard HTML elements.
+
+Both issues emphasize the need for improved synchronization between ref values and internal state to ensure expected behavior in form handling and component interactions.
+
+## Comments Summary
+
+In the comments section of the pull request, AnthonyPaulO requests a review from another contributor, @jrgarciadev, expressing a desire to see the changes incorporated into the next release. This indicates a collaborative approach to the development process and a focus on ensuring the quality of the code before merging.
+
+The pull request is aimed at addressing critical bugs that affect user experience, particularly for developers using NextUI in conjunction with form libraries like `react-hook-form`. By fixing the synchronization issue, the author aims to enhance the reliability of input components, making them more compatible with uncontrolled form handling.
+
+The author has provided a video link to demonstrate the fix, which serves as a visual aid for reviewers to understand the changes made and their impact on component behavior. This transparency is beneficial for the review process, allowing others to see the practical implications of the code changes.
+
+Overall, the comments reflect a constructive atmosphere, with the author actively seeking feedback and collaboration to ensure the fix is robust and ready for deployment. The focus remains on improving the library's functionality and addressing the concerns raised in the linked issues.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 75aeba5b407978a79f4d4979660d195c59ff7efd -->
+<!-- e3f2fa24454a7dcba7bf636ec211fefe296064c2 -->
+<!-- e6c9c902830f249298be5b689e56c34d33c0bc55 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #WOeaZ5/3MTGrV//Je6a4VaOTekv9okP966h4ysdsQqA=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRlhZQmo1Um83azhXVkJEeUpqSlFzTml5cTc2eSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFudGhvbnlwYXVsby1maXgtZWUwZmZlLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFudGhvbnlwYXVsby1maXgtZWUwZmZlLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9CM2RxZ0ZzekJkcTRzVDkydG5OOWg4b3JhSDMyIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLWFudGhvbnlwYXVsby1maXgtc3luYy03MTc0YjItbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLWFudGhvbnlwYXVsby1maXgtc3luYy03MTc0YjItbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/B3dqgFszBdq4sT92tnN9h8oraH32)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-anthonypaulo-fix-sync-7174b2-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-anthonypaulo-fix-sync-7174b2-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jul 23, 2024 1:21pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/FXYBj5Ro7k8WVBDyJjJQsNiyq76y)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-anthonypaulo-fix-ee0ffe-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-anthonypaulo-fix-ee0ffe-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jul 23, 2024 1:21pm |
+
+
+\n- AnthonyPaulO: @jrgarciadev When you have a chance, would you review this? I'd love to see this in the next release.\n- chirokas: @wingkwong
+https://github.com/user-attachments/assets/e6ff7bee-d9b1-4498-8c74-e127a8c315e3
+\n- wingkwong: @chirokas can u help take a look at this issue?\n
+
+Files Changed:
+- .changeset/long-ducks-do.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/input": patch
++---
++
++syncs changes to ref value to internal (state) value (#3024, #3436)\n- packages/components/input/__tests__/input.test.tsx (modified, 20 changes)\n  Patch: @@ -126,6 +126,26 @@ describe("Input", () => {
+     expect(ref.current?.value)?.toBe(value);
+   });
+ 
++  it("setting ref should sync the internal value", () => {
++    const ref = React.createRef<HTMLInputElement>();
++
++    const {container} = render(<Input ref={ref} type="text" />);
++
++    if (!ref.current) {
++      throw new Error("ref is null");
++    }
++
++    ref.current!.value = "value";
++
++    const input = container.querySelector("input")!;
++
++    input.focus();
++
++    const internalValue = input.value;
++
++    expect(ref.current?.value)?.toBe(internalValue);
++  });
++
+   it("should clear the value and onClear is triggered", async () => {
+     const onClear = jest.fn();
+ \n- packages/components/input/src/use-input.ts (modified, 38 changes)\n  Patch: @@ -15,7 +15,7 @@ import {useDOMRef, filterDOMProps} from "@nextui-org/react-utils";
+ import {useFocusWithin, useHover, usePress} from "@react-aria/interactions";
+ import {clsx, dataAttr, isEmpty, objectToDeps, safeAriaLabel, warn} from "@nextui-org/shared-utils";
+ import {useControlledState} from "@react-stately/utils";
+-import {useMemo, Ref, useCallback, useState} from "react";
++import {useMemo, Ref, useCallback, useState, useImperativeHandle, useRef} from "react";
+ import {chain, mergeProps} from "@react-aria/utils";
+ import {useTextField} from "@react-aria/textfield";
+ 
+@@ -131,7 +131,41 @@ export function useInput<T extends HTMLInputElement | HTMLTextAreaElement = HTML
+   const disableAnimation =
+     originalProps.disableAnimation ?? globalContext?.disableAnimation ?? false;
+ 
+-  const domRef = useDOMRef<T>(ref);
++  const domRef = useRef<T>(null);
++
++  let proxy: T | undefined = undefined;
++
++  useImperativeHandle(
++    ref,
++    () => {
++      if (proxy === undefined) {
++        proxy = new Proxy(domRef.current!, {
++          get(target, prop) {
++            const value = target[prop];
++
++            if (value instanceof Function) {
++              return value.bind(target);
++            }
++
++            return value;
++          },
++          set(target, prop, value) {
++            target[prop] = value;
++
++            if (prop === "value") {
++              setInputValue(value);
++            }
++
++            return true;
++          },
++        });
++      }
++
++      return proxy;
++    },
++    [domRef.current],
++  );
++
+   const baseDomRef = useDOMRef<HTMLDivElement>(baseRef);
+   const inputWrapperRef = useDOMRef<HTMLDivElement>(wrapperRef);
+   const innerWrapperRef = useDOMRef<HTMLDivElement>(innerWrapperRefProp);\n

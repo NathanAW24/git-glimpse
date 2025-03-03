@@ -1,0 +1,300 @@
+Pull Request Number: 3656
+Title: fix(calendar): arrows changing order when html has dir="rtl"
+Base Branch: canary
+Head Branch: fix/calendar-rtl
+Author: ameybh
+URL: https://github.com/nextui-org/nextui/pull/3656
+State: MERGED
+Created At: 2024-08-13T21:04:39Z
+Merged At: 2024-08-30T16:43:05Z
+Participants: ameybh, wingkwong, jrgarciadev
+
+Description:
+Closes #3641
+Closes #3642
+📝 Description
+⛳️ Current behavior (updates)
+As described in #3641,  currently, if the html has dir attribute equal to rtl, the arrow keys look incorrect.
+🚀 New behavior
+Added  order to prevButton, nextButton and header . Added rtl:flex-row-reverse to headerWrapper.
+The prev button should always be a left arrow and the next button should always be a right arrow, hence removed condition that changed arrow type based on locale direction.
+Calendar with dir="rtl"
+
+Date Picker with dir="rtl"
+
+Date picker in Arabic
+
+💣 Is this a breaking change (Yes/No):
+No.
+
+Summary by CodeRabbit
+
+
+New Features
+
+Improved keyboard navigation for RTL (right-to-left) layouts in the calendar component for enhanced accessibility.
+
+
+
+Bug Fixes
+
+Resolved issues with arrow key navigation order in RTL environments.
+
+
+
+Style
+
+Updated visual order of calendar navigation elements to improve user experience in RTL layouts.
+
+Commits:
+- fix(calendar): #3641,#3642 add order and row-reverse to arrows for rtl layout support\n- chore(changeset): patch @nextui-org/calendar\n- chore(changeset): add missing package and revise changeset message\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 4b34d6cbd21fcbaddf66f7cceb9d451f20069488
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 4 packages</summary>
+
+  | Name                    | Type  |
+| ----------------------- | ----- |
+| @nextui-org/calendar    | Patch |
+| @nextui-org/theme       | Patch |
+| @nextui-org/date-picker | Patch |
+| @nextui-org/react       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/ameybh/nextui/new/fix/calendar-rtl?filename=.changeset/pink-mangos-add.md&value=---%0A%22%40nextui-org%2Fcalendar%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(calendar)%3A%20arrows%20changing%20order%20when%20html%20has%20dir%3D%22rtl%22%0A)
+
+\n- vercel: @ameybh is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228162066e39ba2647429f7c3cd9adc535cf5017f0%22%7D%2C%22id%22%3A%22QmResuHV1vNVpmNUhEYRNnFq19XXEZXwGzxCj3V7sRGtYD%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3656%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update enhances the `@nextui-org/calendar` package by addressing keyboard navigation for right-to-left (RTL) layouts and simplifying the rendering of navigation icons. It ensures that arrow keys function intuitively in RTL contexts, improving accessibility. Additionally, the internal logic has been streamlined by removing unnecessary hooks, and the visual arrangement of calendar navigation buttons has been adjusted for better compatibility with RTL layouts.
+
+## Changes
+
+| Files                                           | Change Summary                                                                                                                                                      |
+|-------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| .changeset/slow-forks-nail.md                  | Introduced patch for RTL keyboard navigation in `@nextui-org/calendar`.                                                                                         |
+| `calendar-base.tsx`                             | Removed `useLocale` hook; static rendering for `ChevronLeftIcon` and `ChevronRightIcon`.                                                                         |
+| `packages/core/theme/src/components/calendar.ts` | Added ordering classes for buttons and header; modified `headerWrapper` for RTL layout with `rtl:flex-row-reverse`.                                              |
+
+## Assessment against linked issues
+
+| Objective                                       | Addressed | Explanation                                       |
+|------------------------------------------------|-----------|--------------------------------------------------|
+| Fix RTL navigation issues in Calendar (3641)   | ✅        |                                                  |
+| Ensure correct display of navigation icons (3641)| ✅        |                                                  |
+| Simplify component logic related to navigation   | ✅        |                                                  |
+| Improve accessibility for RTL layouts            | ✅        |                                                  |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+```
+.changeset/slow-forks-nail.md: ## AI-generated summary of changes
+
+This update introduces a patch for the `@nextui-org/calendar` package, specifically addressing an issue with the keyboard navigation order when the HTML direction is set to "rtl" (right-to-left). The change ensures that the arrow keys function correctly in this context, enhancing accessibility and usability for users who rely on keyboard navigation in RTL layouts. The fix modifies the internal logic governing key event handling, ensuring that the navigation flow aligns with user expectations in RTL environments. This improvement is crucial for applications that cater to multilingual users or those using RTL languages, providing a more intuitive interaction model.
+
+Additionally, the changes made to the `CalendarBase` component in `calendar-base.tsx` involve the removal of the `useLocale` hook and its associated logic, simplifying the rendering of navigation icons to a static display. The left button now always shows the `ChevronLeftIcon`, and the right button always shows the `ChevronRightIcon`, regardless of text direction. This change streamlines the component's logic and reduces complexity in rendering.
+
+Modifications to the styling and layout of a calendar component in `packages/core/theme/src/components/calendar.ts` include the addition of specific ordering classes to the `prevButton`, `nextButton`, and `header` elements, altering their visual arrangement. The `prevButton` is assigned an "order-1" class, the `header` receives an "order-2" class, and the `nextButton` gets an "order-3" class. The `headerWrapper` class has been modified to accommodate right-to-left layouts by adding the `rtl:flex-row-reverse` class, enhancing responsiveness to different text directions.
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made.
+```
+
+
+# New changesets
+
+.changeset/slow-forks-nail.md: ## AI-generated summary of changes
+
+This update introduces a patch for the `@nextui-org/calendar` package, specifically addressing an issue with the keyboard navigation order when the HTML direction is set to "rtl" (right-to-left). The change ensures that the arrow keys function correctly in this context, enhancing accessibility and usability for users who rely on keyboard navigation in RTL layouts. The fix modifies the internal logic governing key event handling, ensuring that the navigation flow aligns with user expectations in RTL environments. This improvement is crucial for applications that cater to multilingual users or those using RTL languages, providing a more intuitive interaction model.
+
+
+
+## Alterations to the declarations of exported or public entities
+
+- No alterations to the declarations of exported or public entities were made.
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(calendar): arrows changing order when html has dir='rtl'" addresses a bug related to the display of arrow keys in the Calendar and Date Picker components when the HTML direction is set to right-to-left (RTL). The issue was identified in linked issues #3641 and #3642, where it was noted that the arrow keys appeared incorrect under RTL conditions. The changes made in this PR include adding CSS `order` properties to the previous and next buttons, as well as the header, to ensure that the previous button consistently displays as a left arrow and the next button as a right arrow. Additionally, the `rtl:flex-row-reverse` class was applied to the header wrapper to maintain the correct layout. The PR includes visual examples demonstrating the corrected appearance of the Calendar and Date Picker components when the `dir` attribute is set to RTL. Importantly, this update is not a breaking change.
+
+## Objectives from Linked Issues
+
+The objectives outlined in the linked issues, specifically issue #3641, focus on addressing the lack of RTL support in the Calendar component of the NextUI library. Users reported that when the HTML `dir` attribute is set to RTL, the arrows in both the Calendar and Date Picker do not display correctly, leading to a confusing user experience. The primary goal is to ensure that the arrow keys are visually appropriate for RTL layouts, with the expectation that the previous arrow should always point left and the next arrow should always point right, regardless of the locale direction. The issues also provided steps to reproduce the problem and highlighted the need for a fix to improve accessibility and usability for RTL language users.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 8162066e39ba2647429f7c3cd9adc535cf5017f0 -->
+<!-- 4b34d6cbd21fcbaddf66f7cceb9d451f20069488 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #6KfzuFaaxsTRHD+UMXLcq5ZRU/yRpwsOzyM8UtrD9GQ=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNmRBNE5IYUdVZkxxcHM5emU1aEp0MVoxU1ZnViIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFtZXliaC1maXgtY2FsZW5kYXItcnRsLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWFtZXliaC1maXgtY2FsZW5kYXItcnRsLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/6dA4NHaGUfLqps9ze5hJt1Z1SVgV)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-ameybh-fix-calendar-rtl-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-ameybh-fix-calendar-rtl-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 14, 2024 4:40pm |
+
+\n
+
+Files Changed:
+- .changeset/slow-forks-nail.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/calendar": patch
++"@nextui-org/theme": patch
++---
++
++fixed arrow keys order when html has dir="rtl" (#3641, #3642)\n- packages/components/calendar/src/calendar-base.tsx (modified, 7 changes)\n  Patch: @@ -5,7 +5,6 @@ import type {HTMLAttributes, ReactNode, RefObject} from "react";
+ 
+ import {Fragment} from "react";
+ import {useState} from "react";
+-import {useLocale} from "@react-aria/i18n";
+ import {VisuallyHidden} from "@react-aria/visually-hidden";
+ import {Button} from "@nextui-org/button";
+ import {chain, mergeProps} from "@react-aria/utils";
+@@ -55,8 +54,6 @@ export function CalendarBase(props: CalendarBaseProps) {
+ 
+   const [direction, setDirection] = useState<number>(0);
+ 
+-  const {direction: rtlDirection} = useLocale();
+-
+   const currentMonth = state.visibleRange.start;
+ 
+   const headers: React.ReactNode[] = [];
+@@ -72,7 +69,7 @@ export function CalendarBase(props: CalendarBaseProps) {
+             {...prevButtonProps}
+             onPress={chain(prevButtonProps.onPress, () => setDirection(-1))}
+           >
+-            {rtlDirection === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
++            <ChevronLeftIcon />
+           </Button>
+         )}
+         <CalendarHeader
+@@ -86,7 +83,7 @@ export function CalendarBase(props: CalendarBaseProps) {
+             {...nextButtonProps}
+             onPress={chain(nextButtonProps.onPress, () => setDirection(1))}
+           >
+-            {rtlDirection === "rtl" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
++            <ChevronRightIcon />
+           </Button>
+         )}
+       </Fragment>,\n- packages/core/theme/src/components/calendar.ts (modified, 8 changes)\n  Patch: @@ -10,18 +10,18 @@ const calendar = tv({
+       "rounded-large overflow-x-auto bg-default-50 dark:bg-background",
+       "w-[calc(var(--visible-months)_*_var(--calendar-width))]",
+     ],
+-    prevButton: [],
+-    nextButton: [],
++    prevButton: ["order-1"],
++    nextButton: ["order-3"],
+     headerWrapper: [
+-      "px-4 py-2 flex items-center justify-between gap-2 bg-content1 overflow-hidden",
++      "px-4 py-2 flex items-center justify-between gap-2 bg-content1 overflow-hidden rtl:flex-row-reverse",
+       "[&_.chevron-icon]:flex-none",
+       // month/year picker wrapper
+       "after:content-['']",
+       "after:bg-content1 origin-top",
+       "after:w-full after:h-0",
+       "after:absolute after:top-0 after:left-0",
+     ],
+-    header: "flex w-full items-center justify-center gap-2 z-10",
++    header: "flex w-full items-center justify-center gap-2 z-10 order-2",
+     title: "text-default-500 text-small font-medium",
+     content: "w-[calc(var(--visible-months)_*_var(--calendar-width))]",
+     gridWrapper: "flex max-w-full overflow-hidden pb-2 h-auto relative",\n

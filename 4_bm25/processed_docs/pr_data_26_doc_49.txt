@@ -1,0 +1,136 @@
+Pull Request Number: 638
+Title: Fix: isRequired radio component support
+Base Branch: main
+Head Branch: fix/isRequired_radio_support
+Author: richtone
+URL: https://github.com/nextui-org/nextui/pull/638
+State: CLOSED
+Created At: 2022-07-26T21:16:19Z
+Merged At: None
+Participants: richtone, codecov-commenter, jrgarciadev
+
+Description:
+📝 Description
+Support for isRequired parameter in Radio.Group
+⛳️ Current behavior (updates)
+Currently isRequired does not work as intended, as it does not create "required" props for inner  radio tags
+🚀 New behavior
+Adds expected behavior for isRequired prop.
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- initial\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/638?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#638](https://codecov.io/gh/nextui-org/nextui/pull/638?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (989e97b) into [main](https://codecov.io/gh/nextui-org/nextui/commit/c64c96af9bb28b7a3d01ca33f160d1888faab87d?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (c64c96a) will **increase** coverage by `0.01%`.
+> The diff coverage is `100.00%`.
+
+```diff
+@@            Coverage Diff             @@
+##             main     #638      +/-   ##
+==========================================
++ Coverage   74.82%   74.83%   +0.01%     
+==========================================
+  Files         200      200              
+  Lines        3098     3100       +2     
+  Branches      956      957       +1     
+==========================================
++ Hits         2318     2320       +2     
+  Misses        765      765              
+  Partials       15       15              
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/638?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/react/src/radio/radio.tsx](https://codecov.io/gh/nextui-org/nextui/pull/638/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3JhZGlvL3JhZGlvLnRzeA==) | `100.00% <ø> (ø)` | |
+| [packages/react/src/radio/use-radio.ts](https://codecov.io/gh/nextui-org/nextui/pull/638/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3JhZGlvL3VzZS1yYWRpby50cw==) | `100.00% <100.00%> (ø)` | |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/638?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/638?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [3c48528...989e97b](https://codecov.io/gh/nextui-org/nextui/pull/638?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n- jrgarciadev: Hey @richtone I appreciate your contribution to the project 🙏🏻, however, we decided to implement this by ourselves, apologies \n
+
+Files Changed:
+- packages/react/src/radio/radio.stories.tsx (modified, 19 changes)\n  Patch: @@ -1,7 +1,12 @@
+-import React from 'react';
++import React, { FormEvent } from 'react';
+ import { Meta } from '@storybook/react';
+ import Radio from './index';
+ 
++const handleSubmit = (e: FormEvent) => {
++  e.preventDefault()
++  alert('Submitted!')
++}
++
+ export default {
+   title: 'Inputs/Radio',
+   component: Radio,
+@@ -17,6 +22,18 @@ export const Default = () => (
+   </Radio.Group>
+ );
+ 
++export const Required = () => (
++  <form onSubmit={handleSubmit}>
++    <Radio.Group label="Options" isRequired>
++      <Radio value="A">Option A</Radio>
++      <Radio value="B">Option B</Radio>
++      <Radio value="C">Option C</Radio>
++      <Radio value="D">Option D</Radio>
++    </Radio.Group>
++    <button type='submit'>Submit</button>
++  </form>
++)
++
+ export const Disabled = () => (
+   <Radio.Group label="Options" defaultValue="A" isDisabled>
+     <Radio value="A" description="Description for Option A">\n- packages/react/src/radio/radio.tsx (modified, 5 changes)\n  Patch: @@ -51,9 +51,11 @@ export const Radio = React.forwardRef(
+       autoFocus,
+       disableAnimation,
+       hoverProps,
+-      inputProps
++      inputProps,
++      required,
+     } = useRadio({ ...otherProps, children: children ?? label });
+ 
++
+     const domRef = useFocusableRef<HTMLLabelElement>(
+       ref as FocusableRef<HTMLLabelElement>,
+       inputRef
+@@ -100,6 +102,7 @@ export const Radio = React.forwardRef(
+               <input
+                 ref={inputRef}
+                 className="nextui-radio-input"
++                required={required}
+                 {...mergeProps(inputProps, focusProps)}
+               />
+             </VisuallyHidden>\n- packages/react/src/radio/use-radio.ts (modified, 8 changes)\n  Patch: @@ -67,6 +67,11 @@ export const useRadio = (props: UseRadioProps) => {
+     [groupContext.validationState]
+   );
+ 
++  const required = useMemo(
++    ()=> groupContext.isRequired ?? false,
++    [groupContext.isRequired]
++  )
++
+   return {
+     size,
+     color,
+@@ -79,7 +84,8 @@ export const useRadio = (props: UseRadioProps) => {
+     isSquared,
+     disableAnimation,
+     inputProps,
+-    hoverProps
++    hoverProps,
++    required
+   };
+ };
+ \n

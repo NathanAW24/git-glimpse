@@ -1,0 +1,91 @@
+Pull Request Number: 1126
+Title: Fix: Add Sun Icon to Theme Switcher in Docs Page
+Base Branch: v1
+Head Branch: fix/add-sunicon-to-themeswitcher-in-docs
+Author: Envoy-VC
+URL: https://github.com/nextui-org/nextui/pull/1126
+State: CLOSED
+Created At: 2023-05-10T21:13:33Z
+Merged At: None
+Participants: Envoy-VC, jrgarciadev, rizkiandrianto
+
+Description:
+Closes #1124
+📝 Description
+Added two new props for Switch component iconOn and iconOff  to show different icons on different themes.
+⛳️ Current behavior (updates)
+Currently there is only moon icon on both light and dark theme
+
+  
+    
+    
+
+    before.mp4
+    
+  
+
+  
+
+  
+
+
+🚀 New behavior
+Now the icon changes as the theme changes from light to dark and vice versa.
+
+  
+    
+    
+
+    after.mp4
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Commits:
+- Fix: Add Sun Icon to ThemeSwitcher in Docs Page\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #2xK9QdkUYyipgob/Quf/S2ujd7j8yx16Nnst6QdG50M=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLWVudm95LXZjLWZpeC1hZGQtc3UtOWIxNzZkLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLzluaVZiRG5HczhvRzk3WXYyU0tIODhSQXJBNWQiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay1naXQtZm9yay1lbnZveS12Yy1maXgtYWRkLXN1LTliMTc2ZC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/9niVbDnGs8oG97Yv2SKH88RArA5d)) | [Visit Preview](https://nextui-storybook-git-fork-envoy-vc-fix-add-su-9b176d-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-envoy-vc-fix-add-su-9b176d-nextui-org.vercel.app) | May 10, 2023 9:15pm |
+
+\n- vercel: @Envoy-VC is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f2ee3d9a79de72019eb6c898faf109f683522227%22%7D%2C%22id%22%3A%22QmcDQoXgATzhSR3v9e3jBJRGhsvUYreRn3obQRa25yhDDs%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1126%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- Envoy-VC: @jrgarciadev can you look into this it's a small change rather a quality of life fix.\n- jrgarciadev: Closing this since v1 will not receive more updates. Thanks for contributing @Envoy-VC 🙏🏻 \n
+
+Files Changed:
+- apps/docs/src/components/theme-switch/index.tsx (modified, 5 changes)\n  Patch: @@ -2,7 +2,7 @@ import React from "react";
+ import {Switch, SwitchProps, useTheme} from "@nextui-org/react";
+ import {useTheme as useNextTheme} from "next-themes";
+ 
+-import {Moon} from "../icons";
++import {Moon, Sun} from "../icons";
+ 
+ export const ThemeToggle: React.FC<Partial<SwitchProps>> = ({...props}) => {
+   const [isSelfDark, setIsSelfDark] = React.useState(false);
+@@ -20,7 +20,8 @@ export const ThemeToggle: React.FC<Partial<SwitchProps>> = ({...props}) => {
+   return (
+     <Switch
+       checked={isSelfDark || isDark}
+-      icon={<Moon filled />}
++      iconOff={<Moon filled />}
++      iconOn={<Sun filled />}
+       size="xl"
+       onChange={handleToggleTheme}
+       {...props}\n

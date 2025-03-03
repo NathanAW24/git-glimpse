@@ -1,0 +1,683 @@
+Pull Request Number: 843
+Title: Add Table.Button component
+Base Branch: main
+Head Branch: feat/add-button-to-table
+Author: Hdanzo
+URL: https://github.com/nextui-org/nextui/pull/843
+State: CLOSED
+Created At: 2022-10-26T21:11:19Z
+Merged At: None
+Participants: Hdanzo, jrgarciadev, sun0day
+
+Description:
+Add documentation for new component
+Add test for new component
+Fix some warnings in table test file
+Closes #548
+📝 Description
+Added the possibility to add a button to the end of a table.
+🚀 New behavior
+
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- Add Table.Button component
+Add documentation for new component
+Add test for new component
+Fix some warnings in table test file\n
+
+Labels:
+
+
+Comments:
+- vercel: Someone is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%225b467b4a6e25191cfa147aecd6d68d55417ed636%22%7D%2C%22id%22%3A%22QmPnRaGamdu6vti6XKV18XmVSJPxHYPgbkL1PcNvuoG3sN%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A843%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/8UQXdYLz8hSJTYVTzR1gxzmgwRDW)) | [Visit Preview](https://nextui-storybook-git-fork-hdanzo-feat-add-but-d012a4-nextui-org.vercel.app) | Oct 26, 2022 at 9:11PM (UTC) |
+
+\n- jrgarciadev: Hey @Hdanzo I appreciate you effort in sending this PR, however, the UI changes are made only by the `core` team since we discuss  the design and other stuff, sorry but I'll close it \n
+
+Files Changed:
+- apps/docs/content/components/table/button.ts (added, 63 changes)\n  Patch: @@ -0,0 +1,63 @@
++const App = `import React from 'react';
++import { Table, useAsyncList } from "@nextui-org/react";
++
++export default function App() {
++  const [showButton, setShowButton] = React.useState(true);
++  const columns = [
++    { name: "Name", uid: "name" },
++    { name: "Height", uid: "height" },
++    { name: "Mass", uid: "mass" },
++    { name: "Birth Year", uid: "birth_year" },
++  ];
++  async function load({ signal, cursor }) {
++    // If no cursor is available, then we're loading the first page.
++    // Otherwise, the cursor is the next URL to load, as returned from the previous page.
++    const res = await fetch(
++      cursor || "https://swapi.py4e.com/api/people/?search=",
++      { signal }
++    );
++    const json = await res.json();
++    setShowButton(!!json.next);
++    return {
++      items: json.results,
++      cursor: json.next,
++    };
++  }
++  const list = useAsyncList({ load });
++  return (
++    <Table
++      bordered
++      shadow={false}
++      aria-label="Example table with dynamic content & button"
++      css={{ minWidth: "100%", height: "calc($space$14 * 10)" }}
++      color="secondary"
++    >
++      <Table.Header columns={columns}>
++        {(column) => (
++          <Table.Column key={column.uid}>{column.name}</Table.Column>
++        )}
++      </Table.Header>
++      <Table.Body
++        items={list.items}
++        loadingState={list.loadingState}
++      >
++        {(item) => (
++          <Table.Row key={item.name}>
++            {(key) => <Table.Cell>{item[key]}</Table.Cell>}
++          </Table.Row>
++        )}
++      </Table.Body>
++      <Table.Button show={showButton} onPress={list.loadMore}>
++        Load More
++      </Table.Button>
++    </Table>
++  );
++}`;
++
++const react = {
++  "/App.js": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/table/index.ts (modified, 2 changes)\n  Patch: @@ -15,6 +15,7 @@ import sortableTable from "./sortable";
+ import disabledKeysTable from "./disabled-keys";
+ import disallowEmptySelectionTable from "./disallow-empty-selection";
+ import noAnimatedTable from "./no-animated";
++import buttonTable from "./button";
+ 
+ export default {
+   staticTable,
+@@ -34,4 +35,5 @@ export default {
+   disabledKeysTable,
+   disallowEmptySelectionTable,
+   noAnimatedTable,
++  buttonTable,
+ };\n- apps/docs/content/docs/components/table.mdx (modified, 20 changes)\n  Patch: @@ -26,6 +26,7 @@ import { Table } from '@nextui-org/react';
+ - **Table.Body**: The body of the table and wrapper for the table's rows. Table body can be configured to display a loading indicator while data is being fetched.
+ - **Table.Row**: Table rows can be navigated to using the arrow keys. Table rows support selection via mouse, touch, or keyboard. Clicking, tapping, or pressing the <kbd>Space</kbd> key anywhere in the row selects it.
+ - **Table.Pagination**: Table pagination is used to navigate between pages of data.
++- **Table.Button**: Table button is used to display a button as the last row of the table.
+ 
+ <Spacer y={2} />
+ 
+@@ -113,7 +114,7 @@ import { Table } from '@nextui-org/react';
+ 
+ <Playground
+   title="Infinity Pagination"
+-  desc="Table supports loading data asynchronously, and will display a progress loading set by the loadingState prop. 
++  desc="Table supports loading data asynchronously, and will display a progress loading set by the loadingState prop.
+   It also supports infinite scrolling to load more data on demand as the user scrolls, via the `onLoadMore` prop."
+   highlightedLines="38-40"
+   files={tableContent.infinityPaginationTable}
+@@ -155,6 +156,13 @@ import { Table } from '@nextui-org/react';
+   files={tableContent.noAnimatedTable}
+ />
+ 
++<Playground
++  title="Button"
++  desc="You can add a button to the `Table` by using `Table.Button`."
++  highlightedLines="11"
++  files={tableContent.buttonTable}
++/>
++
+ <Spacer y={3} />
+ 
+ ### APIs
+@@ -268,6 +276,16 @@ import { Table } from '@nextui-org/react';
+ 
+ <Spacer y={2} />
+ 
++#### Table Button Props
++
++| Attribute            | Type           | Description                                              | Default |
++| -------------------- | -------------- | -------------------------------------------------------- | ------- |
++| **children**         | `ReactNode`    | The content of the button                                | -       |
++| **show**             | `boolean`      | Display the button                                       | true    |
++| ...                  | `ButtonProps`  | Button component props                                   | -       |
++
++<Spacer y={2} />
++
+ ### Table types
+ 
+ #### Table children\n- packages/react/src/table/__tests__/index.test.tsx (modified, 102 changes)\n  Patch: @@ -1,5 +1,7 @@
+ import React from "react";
+ import {mount} from "enzyme";
++import {render, screen} from "@testing-library/react";
++import userEvent from "@testing-library/user-event";
+ 
+ import Table from "../index";
+ 
+@@ -73,11 +75,11 @@ describe("Table", () => {
+       expect(header.props()["aria-describedby"]).toBeFalsy();
+     });
+ 
+-    expect(headers.at(0 * STITCHES_FACTOR).text()).toBe("Foo");
+-    expect(headers.at(1 * STITCHES_FACTOR).text()).toBe("Bar");
++    expect(headers.at(0).text()).toBe("Foo");
++    expect(headers.at(STITCHES_FACTOR).text()).toBe("Bar");
+     expect(headers.at(2 * STITCHES_FACTOR).text()).toBe("Baz");
+ 
+-    const bodyRowGroup = table.find('[role="rowgroup"]').at(1 * STITCHES_FACTOR);
++    const bodyRowGroup = table.find('[role="rowgroup"]').at(STITCHES_FACTOR);
+ 
+     // get all rows
+     const rows = bodyRowGroup.find('[role="row"]');
+@@ -118,7 +120,7 @@ describe("Table", () => {
+     expect(table.props()["aria-label"]).toBe("Table with selection");
+     expect(table.props()["aria-multiselectable"]).toBe("true");
+ 
+-    const bodyRowGroup = table.find('[role="rowgroup"]').at(1 * STITCHES_FACTOR);
++    const bodyRowGroup = table.find('[role="rowgroup"]').at(STITCHES_FACTOR);
+ 
+     // select all checkbox
+     let checkbox = table.find('[type="checkbox"]').at(0);
+@@ -128,7 +130,7 @@ describe("Table", () => {
+     // get all rows
+     const rows = bodyRowGroup.find('[role="row"]');
+ 
+-    expect(rows.length).toBe(1 * STITCHES_FACTOR);
++    expect(rows.length).toBe(STITCHES_FACTOR);
+ 
+     // get body first cell (rowheader)
+     const bodyFirstCell = rows.at(0).find('[role="rowheader"]').at(0);
+@@ -162,7 +164,7 @@ describe("Table", () => {
+ 
+     expect(table.props()["aria-label"]).toBe("Dynamic Table");
+ 
+-    const bodyRowGroup = table.find('[role="rowgroup"]').at(1 * STITCHES_FACTOR);
++    const bodyRowGroup = table.find('[role="rowgroup"]').at(STITCHES_FACTOR);
+ 
+     // get all rows
+     const rows = bodyRowGroup.find('[role="row"]');
+@@ -203,7 +205,7 @@ describe("Table", () => {
+     expect(table.props()["aria-label"]).toBe("Dynamic Table with selection");
+     expect(table.props()["aria-multiselectable"]).toBe("true");
+ 
+-    const bodyRowGroup = table.find('[role="rowgroup"]').at(1 * STITCHES_FACTOR);
++    const bodyRowGroup = table.find('[role="rowgroup"]').at(STITCHES_FACTOR);
+ 
+     // select all checkbox
+     let checkbox = table.find('[type="checkbox"]').at(0);
+@@ -253,13 +255,13 @@ describe("Table", () => {
+     expect(columnHeaders.length).toBe(3 * STITCHES_FACTOR);
+ 
+     // check first column header
+-    const firstColumnHeader = columnHeaders.at(0 * STITCHES_FACTOR);
++    const firstColumnHeader = columnHeaders.at(0);
+ 
+     expect(firstColumnHeader.text()).toBe("NAME");
+     expect(firstColumnHeader.props()["aria-sort"]).toBeFalsy();
+ 
+     // check second column header
+-    const secondColumnHeader = columnHeaders.at(1 * STITCHES_FACTOR);
++    const secondColumnHeader = columnHeaders.at(STITCHES_FACTOR);
+ 
+     expect(secondColumnHeader.text()).toBe("TYPE");
+     expect(secondColumnHeader.props()["aria-sort"]).toBe("none");
+@@ -309,13 +311,13 @@ describe("Table", () => {
+     expect(columnHeaders.length).toBe(3 * STITCHES_FACTOR);
+ 
+     // check first column header
+-    const firstColumnHeader = columnHeaders.at(0 * STITCHES_FACTOR);
++    const firstColumnHeader = columnHeaders.at(0);
+ 
+     expect(firstColumnHeader.text()).toBe("NAME");
+     expect(firstColumnHeader.props()["aria-sort"]).toBeFalsy();
+ 
+     // check second column header
+-    const secondColumnHeader = columnHeaders.at(1 * STITCHES_FACTOR);
++    const secondColumnHeader = columnHeaders.at(STITCHES_FACTOR);
+ 
+     expect(secondColumnHeader.text()).toBe("TYPE");
+     expect(secondColumnHeader.props()["aria-sort"]).toBe("ascending");
+@@ -362,13 +364,13 @@ describe("Table", () => {
+     expect(columnHeaders.length).toBe(3 * STITCHES_FACTOR);
+ 
+     // check first column header
+-    const firstColumnHeader = columnHeaders.at(0 * STITCHES_FACTOR);
++    const firstColumnHeader = columnHeaders.at(0);
+ 
+     expect(firstColumnHeader.text()).toBe("NAME");
+     expect(firstColumnHeader.props()["aria-sort"]).toBeFalsy();
+ 
+     // check second column header
+-    const secondColumnHeader = columnHeaders.at(1 * STITCHES_FACTOR);
++    const secondColumnHeader = columnHeaders.at(STITCHES_FACTOR);
+ 
+     expect(secondColumnHeader.text()).toBe("TYPE");
+     expect(secondColumnHeader.props()["aria-sort"]).toBe("descending");
+@@ -379,4 +381,78 @@ describe("Table", () => {
+     expect(thirdColumnHeader.text()).toBe("DATE MODIFIED");
+     expect(thirdColumnHeader.props()["aria-sort"]).toBe("none");
+   });
++
++  it("should render a button", () => {
++    render(
++      <Table>
++        <Table.Header>
++          <Table.Column>NAME</Table.Column>
++          <Table.Column>TYPE</Table.Column>
++          <Table.Column>DATE MODIFIED</Table.Column>
++        </Table.Header>
++        <Table.Body>
++          <Table.Row>
++            <Table.Cell>Games</Table.Cell>
++            <Table.Cell>File folder</Table.Cell>
++            <Table.Cell>6/7/2020</Table.Cell>
++          </Table.Row>
++        </Table.Body>
++        <Table.Button>A Button</Table.Button>
++      </Table>,
++    );
++
++    const button = screen.getByRole("button", {name: /a button/i});
++
++    expect(button).toBeTruthy();
++  });
++
++  it("should execute the button's onPress function once", async () => {
++    const handleClick = jest.fn();
++
++    render(
++      <Table>
++        <Table.Header>
++          <Table.Column>NAME</Table.Column>
++          <Table.Column>TYPE</Table.Column>
++          <Table.Column>DATE MODIFIED</Table.Column>
++        </Table.Header>
++        <Table.Body>
++          <Table.Row>
++            <Table.Cell>Games</Table.Cell>
++            <Table.Cell>File folder</Table.Cell>
++            <Table.Cell>6/7/2020</Table.Cell>
++          </Table.Row>
++        </Table.Body>
++        <Table.Button onPress={handleClick}>A Button</Table.Button>
++      </Table>,
++    );
++
++    const button = screen.getByRole("button", {name: /a button/i});
++
++    userEvent.click(button);
++
++    expect(handleClick).toHaveBeenCalledTimes(1);
++  });
++
++  it('should not render the button if props "show" equals false', () => {
++    render(
++      <Table>
++        <Table.Header>
++          <Table.Column>NAME</Table.Column>
++          <Table.Column>TYPE</Table.Column>
++          <Table.Column>DATE MODIFIED</Table.Column>
++        </Table.Header>
++        <Table.Body>
++          <Table.Row>
++            <Table.Cell>Games</Table.Cell>
++            <Table.Cell>File folder</Table.Cell>
++            <Table.Cell>6/7/2020</Table.Cell>
++          </Table.Row>
++        </Table.Body>
++        <Table.Button show={false}>A Button</Table.Button>
++      </Table>,
++    );
++
++    expect(screen.queryByRole("button", {name: /a button/i})).toBeNull();
++  });
+ });\n- packages/react/src/table/index.ts (modified, 3 changes)\n  Patch: @@ -1,5 +1,6 @@
+ import Table from "./table";
+ import TablePagination from "./table-pagination";
++import TableButton from "./table-button";
+ import {TableBody, TableColumn, TableRow, TableCell, TableHeader} from "./base";
+ 
+ export type {SortDescriptor} from "@react-types/shared";
+@@ -21,12 +22,14 @@ export type {TableHeaderRowProps} from "./table-header-row";
+ export type {TableRowProps} from "./table-row";
+ export type {TableCellProps} from "./table-cell";
+ export type {TableFooterProps} from "./table-footer";
++export type {TableButtonProps} from "./table-button";
+ 
+ Table.Cell = TableCell;
+ Table.Column = TableColumn;
+ Table.Header = TableHeader;
+ Table.Row = TableRow;
+ Table.Body = TableBody;
+ Table.Pagination = TablePagination;
++Table.Button = TableButton;
+ 
+ export default Table;\n- packages/react/src/table/table-body.tsx (modified, 30 changes)\n  Patch: @@ -7,7 +7,12 @@ import {CSS} from "../theme/stitches.config";
+ import {Loading, LoadingProps} from "../index";
+ import clsx from "../utils/clsx";
+ 
+-import {TableVariantsProps, StyledBaseTableCell, StyledTableLoadingRow} from "./table.styles";
++import {
++  TableVariantsProps,
++  StyledBaseTableCell,
++  StyledTableLoadingRow,
++  StyledTableButtonRow,
++} from "./table.styles";
+ import TableRowGroup from "./table-row-group";
+ import TableRow from "./table-row";
+ import TableCell from "./table-cell";
+@@ -23,6 +28,7 @@ interface Props<T> {
+   hasPagination?: boolean;
+   color?: TableVariantsProps["color"];
+   as?: keyof JSX.IntrinsicElements;
++  button?: React.ReactNode;
+ }
+ 
+ type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props<any>>;
+@@ -40,11 +46,13 @@ const TableBody: React.FC<React.PropsWithChildren<TableBodyProps>> = ({
+   color,
+   hasPagination,
+   hideLoading,
++  button,
+   ...props
+ }) => {
+   const {currentPage, rowsPerPage} = useTableContext();
+ 
+   const infinityScroll = useMemo(() => isInfinityScroll(collection), [collection.body.props]);
++  const hasButton = useMemo(() => React.isValidElement(button), [button]);
+ 
+   const isLoading =
+     collection.body?.props?.loadingState === "loading" ||
+@@ -63,7 +71,7 @@ const TableBody: React.FC<React.PropsWithChildren<TableBodyProps>> = ({
+   const completeSpaces = useMemo(() => {
+     const rowsCount = rows.length;
+ 
+-    if (rowsCount >= rowsPerPage && !infinityScroll) {
++    if (rowsCount >= rowsPerPage && !(infinityScroll || hasButton)) {
+       return null;
+     }
+ 
+@@ -77,9 +85,10 @@ const TableBody: React.FC<React.PropsWithChildren<TableBodyProps>> = ({
+           }}
+           style={mergeProps(
+             {
+-              "--nextui--tableBodyEmptySpaceHeight": infinityScroll
+-                ? "var(--nextui-space-10)"
+-                : `calc(${rowsPerPage - rowsCount} * var(--nextui-space-14))`,
++              "--nextui--tableBodyEmptySpaceHeight":
++                infinityScroll || hasButton
++                  ? "var(--nextui-space-10)"
++                  : `calc(${rowsPerPage - rowsCount} * var(--nextui-space-14))`,
+             },
+             props?.style || {},
+           )}
+@@ -90,7 +99,7 @@ const TableBody: React.FC<React.PropsWithChildren<TableBodyProps>> = ({
+ 
+   // handle scroll and call next page on infinity scroll
+   const handleScroll = (e: React.BaseSyntheticEvent) => {
+-    if (!infinityScroll) {
++    if (!infinityScroll || hasButton) {
+       return;
+     }
+     const element = e.target;
+@@ -112,7 +121,7 @@ const TableBody: React.FC<React.PropsWithChildren<TableBodyProps>> = ({
+         ...(props.css as any),
+         ...(collection.body?.props?.css as any),
+       }}
+-      isInfinityScroll={infinityScroll}
++      isInfinityScroll={infinityScroll || hasButton}
+       onScroll={handleScroll}
+       {...props}
+     >
+@@ -144,7 +153,7 @@ const TableBody: React.FC<React.PropsWithChildren<TableBodyProps>> = ({
+         <StyledTableLoadingRow
+           aria-hidden="true"
+           className="nextui-table-hidden-row"
+-          isAbsolute={!infinityScroll}
++          isAbsolute={!infinityScroll && !hasButton}
+           isAtEnd={rows.length > 0}
+           role="row"
+         >
+@@ -153,6 +162,11 @@ const TableBody: React.FC<React.PropsWithChildren<TableBodyProps>> = ({
+           </StyledBaseTableCell>
+         </StyledTableLoadingRow>
+       )}
++      {React.isValidElement(button) && button.props.show && !isLoading && (
++        <StyledTableButtonRow role="row">
++          <StyledBaseTableCell colSpan={collection.columnCount}>{button}</StyledBaseTableCell>
++        </StyledTableButtonRow>
++      )}
+       {completeSpaces}
+     </TableRowGroup>
+   );\n- packages/react/src/table/table-button.tsx (added, 48 changes)\n  Patch: @@ -0,0 +1,48 @@
++import React, {forwardRef} from "react";
++
++import {CSS} from "../theme/stitches.config";
++import {Button, ButtonProps} from "../index";
++import clsx from "../utils/clsx";
++import {useDOMRef} from "../utils/dom";
++import withDefaults from "../utils/with-defaults";
++
++import {useTableContext} from "./table-context";
++
++interface Props {
++  show?: boolean;
++}
++
++const defaultProps = {
++  show: true,
++};
++
++type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props | "color">;
++
++export type TableButtonProps = Props & NativeAttrs & ButtonProps & {css?: CSS};
++
++const TableButton: React.FC<TableButtonProps> = forwardRef(
++  ({onPress, children, show: _, ...props}, ref: React.Ref<HTMLButtonElement | null>) => {
++    const {color, animated} = useTableContext();
++
++    const buttonRef = useDOMRef(ref);
++
++    return (
++      <Button
++        ref={buttonRef}
++        animated={animated}
++        className={clsx("nextui-table-button", props.className)}
++        color={color as ButtonProps["color"]}
++        onPress={onPress}
++        {...props}
++      >
++        {children}
++      </Button>
++    );
++  },
++);
++
++TableButton.displayName = "NextUI.TableButton";
++
++TableButton.toString = () => ".nextui-table-button";
++
++export default withDefaults(TableButton, defaultProps);\n- packages/react/src/table/table.stories.tsx (modified, 68 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import React from "react";
++import React, {useState} from "react";
+ import {Meta} from "@storybook/react";
+ 
+ import {getKeyValue} from "../utils/object";
+@@ -279,8 +279,8 @@ export const Sortable = () => {
+     async sort({items, sortDescriptor}: {items: any[]; sortDescriptor: SortDescriptor}) {
+       return {
+         items: items.sort((a, b) => {
+-          let first = a[sortDescriptor.column];
+-          let second = b[sortDescriptor.column];
++          let first = a[sortDescriptor.column!];
++          let second = b[sortDescriptor.column!];
+           let cmp = collator.compare(first, second);
+ 
+           if (sortDescriptor.direction === "descending") {
+@@ -366,14 +366,14 @@ export const Pagination = () => {
+   );
+ };
+ 
+-export const InfinityPagination = () => {
+-  let scopedColumns = [
+-    {name: "Name", uid: "name"},
+-    {name: "Height", uid: "height"},
+-    {name: "Mass", uid: "mass"},
+-    {name: "Birth Year", uid: "birth_year"},
+-  ];
++const apiColumns = [
++  {name: "Name", uid: "name"},
++  {name: "Height", uid: "height"},
++  {name: "Mass", uid: "mass"},
++  {name: "Birth Year", uid: "birth_year"},
++];
+ 
++export const InfinityPagination = () => {
+   // // fetch people from swapi
+   // const [people, setPeople] = React.useState([]);
+   // const [page, setPage] = React.useState(1);
+@@ -422,14 +422,60 @@ export const InfinityPagination = () => {
+       css={{width: "640px", height: "calc($space$14 * 10)"}}
+       shadow={false}
+     >
+-      <Table.Header columns={scopedColumns}>
++      <Table.Header columns={apiColumns}>
++        {(column) => <Table.Column key={column.uid}>{column.name}</Table.Column>}
++      </Table.Header>
++      <Table.Body items={list.items} loadingState={list.loadingState} onLoadMore={list.loadMore}>
++        {(item: any) => (
++          <Table.Row key={item.name}>{(key) => <Table.Cell>{item[key]}</Table.Cell>}</Table.Row>
++        )}
++      </Table.Body>
++    </Table>
++  );
++};
++
++export const WithButton = () => {
++  const [showButton, setShowButton] = useState(true);
++  let list = useAsyncList({
++    async load({signal, cursor}) {
++      if (cursor) {
++        // write this /^http:\/\//i using RegExp
++        const regex = "/^http:///i";
++
++        cursor = cursor.replace(regex, "https://");
++      }
++
++      let res = await fetch(cursor || "https://swapi.py4e.com/api/people/?search=", {signal});
++      let json = await res.json();
++
++      setShowButton(!!json.next);
++
++      return {
++        items: json.results,
++        cursor: json.next,
++      };
++    },
++  });
++
++  return (
++    <Table
++      bordered
++      aria-label="Example table with dynamic content & button"
++      color="primary"
++      css={{width: "640px", height: "calc($space$14 * 10)"}}
++      shadow={false}
++    >
++      <Table.Header columns={apiColumns}>
+         {(column) => <Table.Column key={column.uid}>{column.name}</Table.Column>}
+       </Table.Header>
+       <Table.Body items={list.items} loadingState={list.loadingState} onLoadMore={list.loadMore}>
+         {(item: any) => (
+           <Table.Row key={item.name}>{(key) => <Table.Cell>{item[key]}</Table.Cell>}</Table.Row>
+         )}
+       </Table.Body>
++      <Table.Button show={showButton} onPress={list.loadMore}>
++        Load More
++      </Table.Button>
+     </Table>
+   );
+ };\n- packages/react/src/table/table.styles.ts (modified, 8 changes)\n  Patch: @@ -223,6 +223,14 @@ export const StyledTableLoadingRow = styled("tr", {
+   },
+ });
+ 
++export const StyledTableButtonRow = styled("tr", {
++  width: "100%",
++  display: "flex",
++  alignItems: "center",
++  justifyContent: "center",
++  height: "$space$18",
++});
++
+ export const StyledTable = styled("table", {
+   borderCollapse: "separate",
+   borderSpacing: 0,\n- packages/react/src/table/table.tsx (modified, 12 changes)\n  Patch: @@ -21,6 +21,7 @@ import {
+   TableHeader as TableHeaderBase,
+ } from "./base";
+ import TablePagination from "./table-pagination";
++import TableButton from "./table-button";
+ import TableFooter from "./table-footer";
+ import TableBody from "./table-body";
+ import {
+@@ -79,9 +80,14 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+ 
+     const {hasPagination, rowsPerPage} = hasPaginationChild(children, TablePagination);
+ 
++    const [withoutButtonChildren, buttonChildren] = pickSingleChild<CollectionChildren<any>>(
++      withoutPaginationChildren,
++      TableButton,
++    );
++
+     const state = useTableState({
+       ...tableProps,
+-      children: withoutPaginationChildren,
++      children: withoutButtonChildren,
+       showSelectionCheckboxes:
+         tableProps.showSelectionCheckboxes !== undefined
+           ? tableProps.showSelectionCheckboxes
+@@ -129,7 +135,7 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+             shadow={shadow}
+             {...gridProps}
+           >
+-            <TableRowGroup as="thead" isFixed={isInfinityScroll(collection)}>
++            <TableRowGroup as="thead" isFixed={isInfinityScroll(collection) || !!buttonChildren}>
+               {collection.headerRows.map((headerRow) => (
+                 <TableHeaderRow key={headerRow?.key} item={headerRow} state={state}>
+                   {[...headerRow.childNodes].map((column) =>
+@@ -156,6 +162,7 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
+             </TableRowGroup>
+             <TableBody
+               animated={animated}
++              button={buttonChildren}
+               collection={collection}
+               color={color}
+               hasPagination={hasPagination}
+@@ -189,6 +196,7 @@ type TableComponent<T, P = {}> = React.ForwardRefExoticComponent<
+   Header: typeof TableHeaderBase;
+   Body: typeof TableBodyBase;
+   Pagination: typeof TablePagination;
++  Button: typeof TableButton;
+ };
+ 
+ Table.displayName = "NextUI.Table";\n

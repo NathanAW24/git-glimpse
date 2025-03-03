@@ -1,0 +1,451 @@
+Pull Request Number: 2669
+Title: feat(avatar): support slots in AvatarGroup
+Base Branch: v.2.3.0
+Head Branch: fix/eng-615
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2669
+State: MERGED
+Created At: 2024-04-08T13:27:49Z
+Merged At: 2024-04-08T13:57:04Z
+Participants: wingkwong, jrgarciadev, winchesHe
+
+Description:
+Closes #2662
+📝 Description
+
+add slots (base & count) in avatar group so that people can change the styles in group count
+
+⛳️ Current behavior (updates)
+
+🚀 New behavior
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Added support for custom class names in the AvatarGroup component, enhancing flexibility in styling.
+Introduced a count slot to the AvatarGroup for more customized rendering.
+Showcased new custom avatar group configurations with the addition of a CustomSlotsTemplate.
+
+
+
+Refactor
+
+Improved the AvatarGroup component's count rendering logic for better performance and flexibility.
+
+
+
+Documentation
+
+Updated documentation to reflect the new features and changes in the AvatarGroup component.
+
+Commits:
+- feat: rename newPost to new (#2665)\n- fix(avatar): spread getAvatarGroupCountProps in avatar count\n- feat(avatar): support slots in avatarGroup\n- feat(avatar): support classNames and add getAvatarGroupCountProps\n- feat(docs): add classNames to avatar group\n- feat(avatar): add CustomSlots in avatar group\n- feat(changeset): support slots in avatar group\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-615/[bug]-avatargroup-max-count-avatar-doesnt-match-the-style-of-other">ENG-615 [BUG] - AvatarGroup max count avatar doesn't match the style of other avatars</a></p>\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update introduces enhancements to the `AvatarGroup` component, specifically adding support for custom class names through a new `classNames` prop, and refining the count display logic for consistency in style. The changes span across documentation, component logic, and story demonstration, aiming to provide more flexibility in styling and to address a bug where the max count avatar did not match the style of other avatars in the group.
+
+## Changes
+
+| Files | Summary |
+|-------|---------|
+| `.changeset/forty-ants-promise.md`, `packages/core/theme/.../avatar.ts` | Added support for slots in `AvatarGroup` and defined `AvatarGroupSlots`. |
+| `apps/docs/content/docs/components/avatar.mdx`, `packages/components/avatar/src/use-avatar-group.ts` | Introduced `classNames` prop for custom styling. |
+| `packages/components/avatar/src/avatar-group.tsx` | Modified `renderCount` to use `getAvatarGroupCountProps`. |
+| `packages/components/avatar/stories/avatar-group.stories.tsx` | Added `CustomSlotsTemplate` to demonstrate custom styling. |
+
+## Assessment against linked issues
+
+| Objective | Addressed | Explanation |
+|-----------|-----------|-------------|
+| Ensure the max count avatar matches the style of other avatars in the `AvatarGroup` component (#2662) | ✅ |  |
+| Allow custom class names for avatars within the `AvatarGroup` (#2662) | ✅ |  |
+| Provide a consistent design and size for all avatars in the group, including the generated count avatar (#2662) | ❓ | While the changes allow for custom styling through class names, it's unclear if the default styling of the "+3" count avatar now matches other avatars without custom classes. |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/forty-ants-promise.md: Added support for slots in `AvatarGroup` component by patching `@nextui-org/avatar` and `@nextui-org/theme` packages.
+
+---
+
+apps/docs/content/docs/components/avatar.mdx: ## Short summary
+
+The change in functionality for the `Avatar Group` component involves the addition of a new `classNames` prop that allows setting custom class names for the avatar group slots. This enhancement provides more flexibility in styling the avatar group.
+
+---
+
+packages/components/avatar/src/avatar-group.tsx: ## Short Summary
+
+In the `AvatarGroup` component, the `renderCount` function has been modified to use `getAvatarGroupCountProps` instead of directly passing props. This change likely affects how the count is rendered within the `AvatarGroup`.
+
+---
+
+packages/components/avatar/src/use-avatar-group.ts: ## Short summary
+
+In this change, the `useAvatarGroup` function in `use-avatar-group.ts` now accepts a new `classNames` prop to customize the classNames of the avatar group. The `classNames` prop allows for specifying base and count classes for styling. Additionally, the function now returns `getAvatarGroupCountProps` to retrieve count-related props.
+
+---
+
+packages/components/avatar/stories/avatar-group.stories.tsx: ## Short summary
+
+Added a new `CustomSlotsTemplate` function in `avatar-group.stories.tsx` to demonstrate custom avatars with different border colors and sources. Also added a new story `CustomSlots` to showcase this custom avatar group with specific arguments.
+
+---
+
+packages/core/theme/src/components/avatar.ts: ### Short Summary
+- Added a `count` slot to the `avatarGroup` component in the `avatar.ts` file.
+- Defined `AvatarGroupSlots` as the keys of the return type of `avatarGroup`.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+This Pull Request (PR) introduces a feature enhancement to the `AvatarGroup` component within the NextUI library, specifically addressing the issue raised in #2662. The core objective of this PR is to add support for slots (`base` & `count`) in the `AvatarGroup` component, enabling users to customize the styles of the group count more flexibly. This enhancement comes as a response to feedback regarding the inconsistency in styling between the avatars displayed in the group and the generated avatar indicating the count of additional, non-displayed avatars (e.g., "+3").
+
+The problem, as detailed in the linked issue, revolves around the `max` property of the `<AvatarGroup/>` component, which limits the number of avatars shown and generates an additional avatar to indicate the number of avatars not displayed. The generated avatar did not inherit the styling (such as `size`, `radius`, and `classNames`) applied to the other avatars within the group, leading to a lack of consistency in the group's appearance.
+
+The PR aims to resolve this inconsistency by allowing users to directly style the generated count avatar through the newly introduced slots. This approach provides a more flexible solution, enabling the generated avatar to seamlessly integrate with the rest of the group in terms of styling. The enhancement is designed to be non-breaking, ensuring that existing implementations of the `AvatarGroup` component remain unaffected.
+
+### AI-generated Summary of Generated Summaries
+
+This Pull Request introduces a significant enhancement to the `AvatarGroup` component of the NextUI library by adding support for customizable slots (`base` & `count`). This feature addresses a previously identified inconsistency in styling between displayed avatars and the generated avatar used to indicate the count of additional, non-displayed avatars within the group. The main changes include:
+
+- The introduction of a `classNames` prop within the `AvatarGroup` component, allowing for the customization of class names for the avatar group slots. This change is documented in the `avatar.mdx` file and is aimed at providing users with greater flexibility in styling the avatar group.
+- Modifications to the `AvatarGroup` component's `renderCount` function to utilize `getAvatarGroupCountProps` for passing props, which likely affects the rendering of the count within the group.
+- The `useAvatarGroup` function now accepts a new `classNames` prop, enabling the customization of class names for styling purposes. This function also returns `getAvatarGroupCountProps` to facilitate the retrieval of count-related props.
+- A new `CustomSlotsTemplate` function and a corresponding `CustomSlots` story have been added to `avatar-group.stories.tsx` to demonstrate the use of custom avatars with different border colors and sources, showcasing the enhanced flexibility in styling.
+- The theme component for the avatar (`avatar.ts`) has been updated to include a `count` slot within the `avatarGroup` component, with `AvatarGroupSlots` defined as the keys of the return type of `avatarGroup`.
+
+These changes collectively enhance the `AvatarGroup` component by enabling more detailed and flexible styling options for the count avatar, addressing the issue of styling inconsistency and improving the overall user experience with the component.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- fdd9074cfafa6f8f1ad171d50e6f0d533fa33547 -->
+
+<!-- commit_ids_reviewed_end --><!-- tweet_start -->
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<!-- tweet_end --><!-- tips_start -->
+
+---
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: fdd9074cfafa6f8f1ad171d50e6f0d533fa33547
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 4 packages</summary>
+
+  | Name               | Type  |
+| ------------------ | ----- |
+| @nextui-org/avatar | Patch |
+| @nextui-org/theme  | Patch |
+| @nextui-org/user   | Patch |
+| @nextui-org/react  | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/eng-615?filename=.changeset/mighty-bananas-brush.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Favatar%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afeat(avatar)%3A%20support%20slots%20in%20AvatarGroup%0A)
+
+\n- vercel: [vc]: #8So1h0j/hcOAlUSI/jPRTEqrWGU9FDLn7SbaIdilZ6g=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi8yeGgzamhUN29Ga3ZNM01WbmVjNFgyN0JlMUZuIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTYxNS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZpeC1lbmctNjE1LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNzR5VTRRZmsyNVJaR1dweEdBVEdGVm9odzd1ZCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1maXgtZW5nLTYxNS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZml4LWVuZy02MTUtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/2xh3jhT7oFkvM3MVnec4X27Be1Fn)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-615-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-615-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 8, 2024 1:49pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/74yU4Qfk25RZGWpxGATGFVohw7ud)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-615-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-615-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 8, 2024 1:49pm |
+
+
+\n
+
+Files Changed:
+- .changeset/forty-ants-promise.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/avatar": patch
++"@nextui-org/theme": patch
++---
++
++Support slots in AvatarGroup\n- apps/docs/content/docs/components/avatar.mdx (modified, 23 changes)\n  Patch: @@ -174,14 +174,15 @@ You can customize any part of the avatar by using the `classNames` prop, each `s
+ 
+ ### Avatar Group Props
+ 
+-| Attribute   | Type                           | Description                                         | Default |
+-| ----------- | ------------------------------ | --------------------------------------------------- | ------- |
+-| max         | `number`                       | The maximum number of visible avatars               | `5`     |
+-| total       | `number`                       | Control the number of avatar not visible            | -       |
+-| size        | `AvatarProps['size']`          | Size of the avatars                                 | -       |
+-| color       | `AvatarProps['color']`         | Color of the avatars                                | -       |
+-| radius      | `AvatarProps['radius']`        | Radius of the avatars                               | -       |
+-| isGrid      | `boolean`                      | Whether the avatars should be displayed in a grid   | `false` |
+-| isDisabled  | `boolean`                      | Whether the avatars are disabled                    | -       |
+-| isBordered  | `boolean`                      | Whether the avatars have a border                   | -       |
+-| renderCount | `(count: number) => ReactNode` | This allows you to render a custom count component. | -       |
++| Attribute   | Type                               | Description                                         | Default |
++| ----------- | ---------------------------------- | --------------------------------------------------- | ------- |
++| max         | `number`                           | The maximum number of visible avatars               | `5`     |
++| total       | `number`                           | Control the number of avatar not visible            | -       |
++| size        | `AvatarProps['size']`              | Size of the avatars                                 | -       |
++| color       | `AvatarProps['color']`             | Color of the avatars                                | -       |
++| radius      | `AvatarProps['radius']`            | Radius of the avatars                               | -       |
++| isGrid      | `boolean`                          | Whether the avatars should be displayed in a grid   | `false` |
++| isDisabled  | `boolean`                          | Whether the avatars are disabled                    | -       |
++| isBordered  | `boolean`                          | Whether the avatars have a border                   | -       |
++| renderCount | `(count: number) => ReactNode`     | This allows you to render a custom count component. | -       |
++| classNames  | `Record<"base"｜ "count", string>` | Allows to set custom class names for the avatar group slots. | -  |\n- packages/components/avatar/src/avatar-group.tsx (modified, 3 changes)\n  Patch: @@ -12,8 +12,9 @@ const AvatarGroup = forwardRef<"div", AvatarGroupProps>((props, ref) => {
+     clones,
+     context,
+     remainingCount,
+-    renderCount = (count) => <Avatar className="hover:-translate-x-0" name={`+${count}`} />,
++    getAvatarGroupCountProps,
+     getAvatarGroupProps,
++    renderCount = (count) => <Avatar {...getAvatarGroupCountProps()} name={`+${count}`} />,
+   } = useAvatarGroup({
+     ...props,
+     ref,\n- packages/components/avatar/src/use-avatar-group.ts (modified, 31 changes)\n  Patch: @@ -1,4 +1,5 @@
+ import type {ReactNode} from "react";
++import type {SlotsToClasses, AvatarGroupSlots, AvatarGroupVariantProps} from "@nextui-org/theme";
+ 
+ import {avatarGroup} from "@nextui-org/theme";
+ import {HTMLNextUIProps, PropGetter} from "@nextui-org/system";
+@@ -31,9 +32,23 @@ interface Props extends HTMLNextUIProps<"div"> {
+    * This allows you to render a custom count component.
+    */
+   renderCount?: (count: number) => ReactNode;
++  /**
++   * Classname or List of classes to change the classNames of the avatar group.
++   * if `className` is passed, it will be added to the base slot.
++   *
++   * @example
++   * ```ts
++   * <AvatarGroup classNames={{
++   *    base: "base-classes",
++   *    count: "count-classes"
++   * }} />
++   * ```
++   */
++  classNames?: SlotsToClasses<AvatarGroupSlots>;
+ }
+ 
+ export type UseAvatarGroupProps = Props &
++  Omit<AvatarGroupVariantProps, "children" | "isGrid"> &
+   Partial<Pick<AvatarProps, "size" | "color" | "radius" | "isDisabled" | "isBordered">>;
+ 
+ export type ContextType = {
+@@ -60,6 +75,7 @@ export function useAvatarGroup(props: UseAvatarGroupProps = {}) {
+     isGrid,
+     renderCount,
+     className,
++    classNames,
+     ...otherProps
+   } = props;
+ 
+@@ -78,7 +94,7 @@ export function useAvatarGroup(props: UseAvatarGroupProps = {}) {
+     }),
+     [size, color, radius, isGrid, isBordered, isDisabled],
+   );
+-  const classNames = useMemo(() => avatarGroup({className, isGrid}), [className, isGrid]);
++  const slots = useMemo(() => avatarGroup({className, isGrid}), [className, isGrid]);
+ 
+   const validChildren = getValidChildren(children);
+   const childrenWithinMax = max ? validChildren.slice(0, max) : validChildren;
+@@ -102,19 +118,30 @@ export function useAvatarGroup(props: UseAvatarGroupProps = {}) {
+   const getAvatarGroupProps: PropGetter = () => {
+     return {
+       ref: domRef,
+-      className: classNames,
++      className: slots.base({
++        class: clsx(classNames?.base, className),
++      }),
+       role: "group",
+       ...otherProps,
+     };
+   };
+ 
++  const getAvatarGroupCountProps = () => {
++    return {
++      className: slots.count({
++        class: classNames?.count,
++      }),
++    } as AvatarProps;
++  };
++
+   return {
+     Component,
+     context,
+     remainingCount,
+     clones,
+     renderCount,
+     getAvatarGroupProps,
++    getAvatarGroupCountProps,
+   };
+ }
+ \n- packages/components/avatar/stories/avatar-group.stories.tsx (modified, 52 changes)\n  Patch: @@ -42,6 +42,47 @@ const Template = (args: AvatarGroupProps) => (
+   </AvatarGroup>
+ );
+ 
++const CustomSlotsTemplate = (args: AvatarGroupProps) => (
++  <AvatarGroup {...args}>
++    <Avatar
++      classNames={{base: "border-2 border-yellow-400"}}
++      radius="sm"
++      size="sm"
++      src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
++    />
++    <Avatar
++      classNames={{base: "border-2 border-yellow-500"}}
++      radius="sm"
++      size="sm"
++      src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
++    />
++    <Avatar
++      classNames={{base: "border-2 border-yellow-600"}}
++      radius="sm"
++      size="sm"
++      src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
++    />
++    <Avatar
++      classNames={{base: "border-2 border-yellow-700"}}
++      radius="sm"
++      size="sm"
++      src="https://i.pravatar.cc/150?u=a04258114e29026302d"
++    />
++    <Avatar
++      classNames={{base: "border-2 border-yellow-500"}}
++      radius="sm"
++      size="sm"
++      src="https://i.pravatar.cc/150?u=a04258114e29026702d"
++    />
++    <Avatar
++      classNames={{base: "border-2 border-yellow-500"}}
++      radius="sm"
++      size="sm"
++      src="https://i.pravatar.cc/150?u=a04258114e29026708c"
++    />
++  </AvatarGroup>
++);
++
+ export const Default = {
+   render: Template,
+ 
+@@ -106,3 +147,14 @@ export const CustomCount = {
+     ),
+   },
+ };
++
++export const CustomSlots = {
++  render: CustomSlotsTemplate,
++
++  args: {
++    classNames: {count: "border-2 border-yellow-400"},
++    max: 3,
++    radius: "sm",
++    size: "sm",
++  },
++};\n- packages/core/react/src/scripts/postbuild.js (modified, 2 changes)\n  Patch: @@ -52,7 +52,7 @@ function generateComponents() {
+             version: componentVersion,
+             docs: componentDocs,
+             description: componentDesc,
+-            status: (routeComponent.updated && 'updated') || (routeComponent.newPost && 'newPost') || 'stable',
++            status: (routeComponent.updated && 'updated') || (routeComponent.newPost && 'new') || 'stable',
+             style: style || '',
+         }
+ \n- packages/core/theme/src/components/avatar.ts (modified, 6 changes)\n  Patch: @@ -187,7 +187,10 @@ const avatar = tv({
+  * </div>
+  */
+ const avatarGroup = tv({
+-  base: "flex items-center justify-center h-auto w-max-content",
++  slots: {
++    base: "flex items-center justify-center h-auto w-max-content",
++    count: "hover:-translate-x-0",
++  },
+   variants: {
+     isGrid: {
+       true: "inline-grid grid-cols-4 gap-3",
+@@ -200,6 +203,7 @@ const avatarGroup = tv({
+ // -ms-2 hover:-translate-x-0 ms-0
+ 
+ export type AvatarGroupVariantProps = VariantProps<typeof avatarGroup>;
++export type AvatarGroupSlots = keyof ReturnType<typeof avatarGroup>;
+ export type AvatarVariantProps = VariantProps<typeof avatar>;
+ export type AvatarSlots = keyof ReturnType<typeof avatar>;
+ \n

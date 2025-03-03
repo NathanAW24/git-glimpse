@@ -1,0 +1,54 @@
+Pull Request Number: 98
+Title: fix/docs
+Base Branch: main
+Head Branch: fix/manifest-local
+Author: yuriwithowsky
+URL: https://github.com/nextui-org/nextui/pull/98
+State: MERGED
+Created At: 2021-10-26T17:31:38Z
+Merged At: 2021-10-27T00:27:05Z
+Participants: yuriwithowsky, jrgarciadev
+
+Description:
+[fix]/[docs]
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Getting local manifest.json when running locally
+Screenshots - Animations
+
+Commits:
+- fix(docs): get manifest from local\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- packages/docs/src/lib/docs/page.ts (modified, 4 changes)\n  Patch: @@ -2,6 +2,8 @@ import { TAG, FORCE_TAG, CONTENT_PATH, ASSETS_PATH } from './config';
+ import { getLatestTag } from '@lib/github/api';
+ import { getRawFileFromRepo, getRawAssetFromRepo } from '@lib/github/raw';
+ import { removeFromLast } from '@utils/index';
++import localManifest from '../../../content/docs/manifest.json';
++import { isProd } from '@utils/index';
+ 
+ export interface Route {
+   title: string;
+@@ -42,6 +44,8 @@ export async function fetchRawDoc(doc: string, tag: string) {
+ }
+ 
+ export async function fetchDocsManifest(tag: string) {
++  if(!isProd) return localManifest;
++
+   const res = await getRawFileFromRepo(
+     `${CONTENT_PATH}/docs/manifest.json`,
+     tag\n

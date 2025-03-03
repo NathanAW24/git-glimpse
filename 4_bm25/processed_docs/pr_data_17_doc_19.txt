@@ -1,0 +1,96 @@
+Pull Request Number: 2100
+Title: fix(use-autocomplete): overwrite `onKeyDown` to prevent meaningless error msg
+Base Branch: main
+Head Branch: fix/use-autocomplete
+Author: black197
+URL: https://github.com/nextui-org/nextui/pull/2100
+State: MERGED
+Created At: 2023-12-06T04:38:25Z
+Merged At: 2024-04-15T14:20:03Z
+Participants: black197, jrgarciadev, wingkwong
+
+Description:
+Closes: #1909
+Closes: #2460
+
+📝 Description
+Inside useAutocomplete, useComboBox().inputProps.onKeyDown causes following error message when user presses key:
+
+stopPropagation is now the default behavior for events in React Spectrum. You can use continuePropagation() to revert this behavior.
+
+Since useComboBox is imported from third-party dependency and has nothing to do with NextUI users, we can hide the error message by overwriting inputProps.onKeyDown.
+⛳️ Current behavior (updates)
+When focus Autocomplete and press keys, error messages appear in the console.
+🚀 New behavior
+Can't see such error messages anymore.
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix(use-autocomplete): overwrite `onKeyDown` to prevent meaningless error msg (#1909)\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 729b714b8ee4b6313f6680389c6ea53a712ebc2e
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/react        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/black197/nextui/new/fix/use-autocomplete?filename=.changeset/late-fans-repeat.md&value=---%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A---%0A%0Afix(use-autocomplete)%3A%20overwrite%20%60onKeyDown%60%20to%20prevent%20meaningless%20error%20msg%0A)
+
+\n- vercel: [vc]: #3g4VCRfHGst6/wyjPmNRn4JSOdjiIOH2FeWMlJrUvC0=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvR1FWRFhtNm93TFA5dExpSFlwdjZnV2EyNDI2VSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWJsYWNrMTk3LWZpeC11c2UtNWY1M2JmLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWJsYWNrMTk3LWZpeC11c2UtNWY1M2JmLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/GQVDXm6owLP9tLiHYpv6gWa2426U)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-black197-fix-use-5f53bf-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-black197-fix-use-5f53bf-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 6, 2023 4:40am |
+
+\n- vercel: @black197 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22729b714b8ee4b6313f6680389c6ea53a712ebc2e%22%7D%2C%22id%22%3A%22QmPSSZdLUftWbRD3kj6eBYjwgp9RXW1yMSRJTXboHzGbpw%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2100%2C%22repo%22%3A%22nextui%22%7D).
+
+\n
+
+Files Changed:
+- .changeset/poor-years-help.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/autocomplete": patch
++---
++
++Fix #1909 overwrite `onKeyDown` to prevent meaningless error msg\n- packages/components/autocomplete/src/use-autocomplete.ts (modified, 15 changes)\n  Patch: @@ -291,6 +291,21 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     state,
+   );
+ 
++  // to prevent the error message:
++  // stopPropagation is now the default behavior for events in React Spectrum.
++  // You can use continuePropagation() to revert this behavior.
++  if (inputProps.onKeyDown) {
++    const originalOnKeyDown = inputProps.onKeyDown;
++
++    inputProps.onKeyDown = (e) => {
++      if ("continuePropagation" in e) {
++        e.stopPropagation = () => {};
++      }
++
++      return originalOnKeyDown(e);
++    };
++  }
++
+   const Component = as || "div";
+ 
+   const slots = useMemo(\n

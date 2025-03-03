@@ -1,0 +1,76 @@
+Pull Request Number: 1439
+Title: fix: fixed list box on click not working with sr click
+Base Branch: feat/select-component
+Head Branch: fix/fixed-list-box-on-click-not-working-with-sr-click
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1439
+State: MERGED
+Created At: 2023-08-19T15:07:48Z
+Merged At: 2023-08-19T15:38:58Z
+Participants: jguddas, jrgarciadev
+
+Description:
+
+
+Commits:
+- fix: fixed list box on click not working with sr click\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: ba3356baf7ff1b197237de71255099730cdcb4c4
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/jguddas/nextui/new/fix/fixed-list-box-on-click-not-working-with-sr-click?filename=.changeset/tricky-elephants-call.md&value=---%0A%22%40nextui-org%2Flistbox%22%3A%20patch%0A---%0A%0Afix%3A%20fixed%20list%20box%20on%20click%20not%20working%20with%20sr%20click%0A)
+
+\n- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22ba3356baf7ff1b197237de71255099730cdcb4c4%22%7D%2C%22id%22%3A%22QmawayPWDbohqjY1m6mLQUr8xVFen878K92v93Z5FJXWoU%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1439%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #BcMatXEGnPCccmhNnO2fnSGDDIBxHXr5yOduSYM3Nmk=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRVM4dkR1YTNQamt4ZTVkVEI0dnNWejk4bmt0eiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWpndWRkYXMtZml4LWZpeGUtYjVjMjdlLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWpndWRkYXMtZml4LWZpeGUtYjVjMjdlLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/ES8vDua3Pjkxe5dTB4vsVz98nktz)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jguddas-fix-fixe-b5c27e-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-jguddas-fix-fixe-b5c27e-nextui-org.vercel.app?via=pr-comment-feedback-link) | Aug 19, 2023 3:09pm |
+
+\n
+
+Files Changed:
+- packages/components/listbox/src/use-listbox-item.ts (modified, 4 changes)\n  Patch: @@ -8,7 +8,7 @@ import {Node} from "@react-types/shared";
+ import {filterDOMProps} from "@nextui-org/react-utils";
+ import {clsx, dataAttr, removeEvents} from "@nextui-org/shared-utils";
+ import {useOption} from "@react-aria/listbox";
+-import {chain, mergeProps} from "@react-aria/utils";
++import {mergeProps} from "@react-aria/utils";
+ import {useHover, usePress} from "@react-aria/interactions";
+ import {useIsMobile} from "@nextui-org/use-is-mobile";
+ import {ListState} from "@react-stately/list";
+@@ -102,6 +102,7 @@ export function useListboxItem<T extends object>(originalProps: UseListboxItemPr
+   const getItemProps: PropGetter = (props = {}) => ({
+     ref: domRef,
+     ...mergeProps(
++      {onClick},
+       itemProps,
+       isReadOnly ? {} : mergeProps(focusProps, pressProps),
+       hoverProps,
+@@ -118,7 +119,6 @@ export function useListboxItem<T extends object>(originalProps: UseListboxItemPr
+     "data-pressed": dataAttr(isPressed),
+     "data-focus-visible": dataAttr(isFocusVisible),
+     className: slots.base({class: clsx(baseStyles, props.className)}),
+-    onClick: chain(pressProps.onClick, onClick),
+   });
+ 
+   const getLabelProps: PropGetter = (props = {}) => ({\n
