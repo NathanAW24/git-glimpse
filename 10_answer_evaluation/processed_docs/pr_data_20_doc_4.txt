@@ -1,0 +1,388 @@
+Pull Request Number: 1637
+Title: fix: resolved border collapse issue #1626 when border variants are mixed in button group
+Base Branch: main
+Head Branch: fix_1626/button-groups
+Author: chongruei
+URL: https://github.com/nextui-org/nextui/pull/1637
+State: MERGED
+Created At: 2023-09-16T15:40:41Z
+Merged At: 2023-10-04T19:54:16Z
+Participants: chongruei, jguddas, Digoler, jrgarciadev
+
+Description:
+Closes #1626
+📝 Description
+The radius property does not work on the 'buttonGroup' component. The variant="bordered" option does not display the correct borders.
+⛳️ Current behavior (updates)
+The radius is always the same as md.
+The border-left is covered by  margin-left ml-[calc(theme(borderWidth.medium)*-1)].
+  <ButtonGroup color="success" radius="lg" variant="flat">
+    <Button>One</Button>
+    <Button>Two</Button>
+    <Button variant="bordered">Three</Button>
+    <Button>Four</Button>
+    <Button>Five</Button>
+    <Button>Six</Button>
+  </ButtonGroup>
+🚀 New behavior
+The radius now works, and the border is displayed correctly in the buttonGroup.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+Please kindly let me know if any suggestions.
+
+Commits:
+- fix(button-group): radius not work\n- fix(button): not show the correct borders\n- fix(changeset): button issue\n- fix(changeset): fix typo\n- fix(changeset): tweak changeset message\n- fix(button-groups): add miss undefined radius\n- fix: make changeset clearly\n- test(button-group): add variant button\n- refactor: button-group variant handling in button-group.stories.tsx\n- test: update button variant to 'bordered'\n- refactor: rename isIsolate to isIsolated\n- Revert "fix(button-group): radius not work"
+
+This reverts commit 6233690d8acd96664c48d4f721c481bcb4095be4.\n- fix: remove isIsolate because using a negative value for the margin will always cover the neighbor\n- fix(changeset): remove radius part for another PR\n- test: add multiple variant buttons on storybook\n- fix: remove unused attribute\n- feat: use adjacent selector to remove doubles border\n- test: make variantButtons theme consistency\n- refactor: use collapseAdjacentVariantBorders to wrap an adjacent selector\n- Added RTL support.\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: f89b7c93e955d63f28587abd6b39291eeb26eb29
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 36 packages</summary>
+
+  | Name                      | Type  |
+| ------------------------- | ----- |
+| @nextui-org/button        | Patch |
+| @nextui-org/theme         | Patch |
+| @nextui-org/card          | Patch |
+| @nextui-org/dropdown      | Patch |
+| @nextui-org/modal         | Patch |
+| @nextui-org/navbar        | Patch |
+| @nextui-org/popover       | Patch |
+| @nextui-org/radio         | Patch |
+| @nextui-org/snippet       | Patch |
+| @nextui-org/table         | Patch |
+| @nextui-org/tabs          | Patch |
+| @nextui-org/tooltip       | Patch |
+| @nextui-org/react         | Patch |
+| @nextui-org/accordion     | Patch |
+| @nextui-org/avatar        | Patch |
+| @nextui-org/badge         | Patch |
+| @nextui-org/checkbox      | Patch |
+| @nextui-org/chip          | Patch |
+| @nextui-org/code          | Patch |
+| @nextui-org/divider       | Patch |
+| @nextui-org/image         | Patch |
+| @nextui-org/input         | Patch |
+| @nextui-org/kbd           | Patch |
+| @nextui-org/link          | Patch |
+| @nextui-org/listbox       | Patch |
+| @nextui-org/menu          | Patch |
+| @nextui-org/pagination    | Patch |
+| @nextui-org/progress      | Patch |
+| @nextui-org/ripple        | Patch |
+| @nextui-org/scroll-shadow | Patch |
+| @nextui-org/select        | Patch |
+| @nextui-org/skeleton      | Patch |
+| @nextui-org/spacer        | Patch |
+| @nextui-org/spinner       | Patch |
+| @nextui-org/switch        | Patch |
+| @nextui-org/user          | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/chongruei/nextui/new/fix_1626/button-groups?filename=.changeset/plenty-geckos-develop.md&value=---%0A%22%40nextui-org%2Fbutton%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0AFix%2F1626%0A)
+
+\n- vercel: [vc]: #kWHHmdWtfxT3HSPRP4edHefoNdx5co3CVG9BplJOvVM=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvWDc2UTh3TTFFdzN6Qkg5dFdIUkhGVllhdmdWYyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWNob25ncnVlaS1maXgxNjItZjAzMGY5LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWNob25ncnVlaS1maXgxNjItZjAzMGY5LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/X76Q8wM1Ew3zBH9tWHRHFVYavgVc)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-chongruei-fix162-f030f9-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-chongruei-fix162-f030f9-nextui-org.vercel.app?via=pr-comment-feedback-link) | Oct 1, 2023 3:29pm |
+
+\n- vercel: @chongruei is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228352f8f2d38bc58ccddf8d0b96d8f5d0f5c6844c%22%7D%2C%22id%22%3A%22QmfPTJmc5qo6GkRCEzNYc9bMRpGLnjHHyMJcBifNAVQ55n%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1637%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jguddas: Looks pretty broken:
+![image](https://github.com/nextui-org/nextui/assets/25524993/a9c6d2fc-52ca-481b-9492-47a225e807f2)
+
+https://nextui-storybook-v2-git-fork-chongruei-fix162-f030f9-nextui-org.vercel.app/?path=/story/components-buttongroup--default\n- Digoler: I am a new frontend developer who wants to improve programming skills through open source. I would like to know how you solved this problem. Could you please tell me the reasons and solutions for this problem?\n- jguddas: > I am a new frontend developer who wants to improve programming skills through open source. I would like to know how you solved this problem. Could you please tell me the reasons and solutions for this problem?
+
+It wasn't solved.\n- chongruei: Hi @jguddas 
+
+Sorry, I've missed radius as the default prop from theme.ts.  Could you check this again?
+
+\n- jguddas: Can you add something like this as a story?
+
+```
+  <ButtonGroup color="success" radius="lg" variant="flat">
+    <Button>One</Button>
+    <Button>Two</Button>
+    <Button variant="bordered">Three</Button>
+    <Button>Four</Button>
+    <Button>Five</Button>
+    <Button>Six</Button>
+  </ButtonGroup>
+```\n- Digoler: > Hi @jguddas
+> 
+> Sorry, I've missed radius as the default prop from theme.ts. Could you check this again?
+
+Can you tell me why you added an isIsolate attribute instead of directly taking the following approach?
+
+![image](https://github.com/nextui-org/nextui/assets/102582646/b81a437e-5e22-4d86-a340-873121b421e6)
+\n- Digoler: > > Hi @jguddas
+> > Sorry, I've missed radius as the default prop from theme.ts. Could you check this again?
+> 
+> Can you tell me why you added an isIsolate attribute instead of directly taking the following approach?
+> 
+> ![image](https://user-images.githubusercontent.com/102582646/268461486-b81a437e-5e22-4d86-a340-873121b421e6.png)
+
+This can also solve this problem.\n- chongruei: > > > Hi @jguddas
+> > > Sorry, I've missed radius as the default prop from theme.ts. Could you check this again?
+> > 
+> > 
+> > Can you tell me why you added an isIsolate attribute instead of directly taking the following approach?
+> > ![image](https://user-images.githubusercontent.com/102582646/268461486-b81a437e-5e22-4d86-a340-873121b421e6.png)
+> 
+> This can also solve this problem.
+
+Hi, @Digoler, it would be like without isIsolate
+
+![Screenshot 2023-09-17 at 1 26 04 AM](https://github.com/nextui-org/nextui/assets/19293733/3f82f4cc-d7e5-4c83-8378-4e5bdf3c7fed)
+
+After defining the isIsolate
+
+![Screenshot 2023-09-17 at 1 29 51 AM](https://github.com/nextui-org/nextui/assets/19293733/d945a92b-0de8-4df7-b649-82facb2f95b7)
+
+\n- Digoler: > > > > Hi @jguddas
+> > > > Sorry, I've missed radius as the default prop from theme.ts. Could you check this again?
+> > > 
+> > > 
+> > > Can you tell me why you added an isIsolate attribute instead of directly taking the following approach?
+> > > ![image](https://user-images.githubusercontent.com/102582646/268461486-b81a437e-5e22-4d86-a340-873121b421e6.png)
+> > 
+> > 
+> > This can also solve this problem.
+> 
+> Hi, @Digoler, it would be like without isIsolate
+> 
+> ![Screenshot 2023-09-17 at 1 26 04 AM](https://user-images.githubusercontent.com/19293733/268462028-3f82f4cc-d7e5-4c83-8378-4e5bdf3c7fed.png)
+> 
+> After defining the isIsolate
+> 
+> ![Screenshot 2023-09-17 at 1 29 51 AM](https://user-images.githubusercontent.com/19293733/268462184-d945a92b-0de8-4df7-b649-82facb2f95b7.png)
+
+Thank you, I have learned a lot.\n- jguddas: Another edge case for you
+
+```tsx
+  <ButtonGroup color="success" radius="lg" variant="flat">
+    <Button>One</Button>
+    <Button>Two</Button>
+    <Button variant="bordered">Three</Button>
+    <Button variant="bordered">Four</Button>
+    <Button variant="bordered">Five</Button>
+    <Button>Six</Button>
+  </ButtonGroup>
+```\n- jguddas: And another one where `ButtonGroup.variant` is `bordered`
+
+```tsx
+ <ButtonGroup color="success" radius="lg" variant="bordered">
+    <Button>One</Button>
+    <Button>Two</Button>
+    <Button variant="bordered">Three</Button>
+    <Button>Four</Button>
+    <Button>Five</Button>
+    <Button>Six</Button>
+  </ButtonGroup>
+```\n- chongruei: > And another one where `ButtonGroup.variant` is `bordered`
+> 
+> ```tsx
+>  <ButtonGroup color="success" radius="lg" variant="bordered">
+>     <Button>One</Button>
+>     <Button>Two</Button>
+>     <Button variant="bordered">Three</Button>
+>     <Button>Four</Button>
+>     <Button>Five</Button>
+>     <Button>Six</Button>
+>   </ButtonGroup>
+> ```
+
+Thank you! I will check for this.\n- jguddas: In case you are closing the PR, so it does not get accidentally merged:
+https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/changing-the-stage-of-a-pull-request#converting-a-pull-request-to-a-draft\n- chongruei: Hi! @jguddas 
+
+I finally removed the negative value for the margin because it always covered the neighbor.
+
+Like this 
+![Screenshot 2023-09-18 at 1 12 34 AM](https://github.com/nextui-org/nextui/assets/19293733/986bd834-e91d-4679-b07d-2fd02a63e833)
+
+It appears that removing the negative value for the margin has led to a situation where the border size doubles when the colors are the same. What are your thoughts on this issue?
+<img width="403" alt="Screenshot 2023-09-18 at 1 20 43 AM" src="https://github.com/nextui-org/nextui/assets/19293733/3def7043-4ad5-48dd-867d-f6d93a391c5b">
+
+\n- jguddas: > It appears that removing the negative value for the margin has led to a situation where the border size doubles when the colors are the same. What are your thoughts on this issue? <img alt="Screenshot 2023-09-18 at 1 20 43 AM" width="403" src="https://user-images.githubusercontent.com/19293733/268517724-3def7043-4ad5-48dd-867d-f6d93a391c5b.png">
+
+Yeah, not a great look.
+
+**My proposal:** keep the `isIsolated` but only have it be true when `groupContext.variant !== props.variant`.
+
+The edge cases have to be handled by the user, I don't see another way.
+
+\n- jguddas: **Another idea:**
+
+We could use `peer` and a `data-variant` attribute.
+
+https://play.tailwindcss.com/Dl8H3CEOfv
+
+Edit: `peer` uses `~`, we would need something like peer that uses `+` instead.
+
+We would have to copy this into the next plugin:
+
+https://github.com/tailwindlabs/tailwindcss/blob/42e75ba4b860ef75656cff3119aa56e70714d34c/src/corePlugins.js#L151-L202
+
+Than something like this would work:
+https://play.tailwindcss.com/mtNmipDgp4\n- chongruei: Hi @jguddas 
+
+Thank you for your suggestion, which has provided me with a lot of inspiration. I have finally used an adjacent selector to check if the color and variant are the same. If they are the same, I will add a margin-left effect. 
+
+This approach will cover all edge cases.\n- jguddas: Great work btw. This covers all the edge cases; I didn't think this would be achievable.\n
+
+Files Changed:
+- .changeset/chilly-trainers-type.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/button": patch
++"@nextui-org/theme": patch
++---
++
++Fix #1626 The 'border-left' is obscured by 'margin-left ml-[calc(theme(borderWidth.medium)*-1)]', and the border is not covered by its neighbor when the button is set to variant='bordered' in the ButtonGroup.
++\n- packages/components/button/stories/button-group.stories.tsx (modified, 42 changes)\n  Patch: @@ -63,10 +63,52 @@ const Template = (args: ButtonGroupProps) => (
+   </ButtonGroup>
+ );
+ 
++const VariantButtonTemplate = (args: ButtonGroupProps) => (
++  <ButtonGroup {...args}>
++    <Button>One</Button>
++    <Button>Two</Button>
++    <Button>Three</Button>
++    <Button variant="bordered">Four</Button>
++    <Button>Five</Button>
++    <Button>Six</Button>
++  </ButtonGroup>
++);
++
++const VariantButtonsTemplate = (args: ButtonGroupProps) => (
++  <ButtonGroup {...args}>
++    <Button color="success" variant="bordered">
++      One
++    </Button>
++    <Button color="success">Two</Button>
++    <Button variant="bordered">Three</Button>
++    <Button variant="bordered">Four</Button>
++    <Button variant="bordered">Five</Button>
++    <Button variant="bordered">Six</Button>
++  </ButtonGroup>
++);
++
+ export const Default = {
+   render: Template,
+ 
+   args: {
+     ...defaultProps,
+   },
+ };
++
++export const VariantButton = {
++  render: VariantButtonTemplate,
++
++  args: {
++    ...defaultProps,
++    variant: "solid",
++  },
++};
++
++export const VariantButtons = {
++  render: VariantButtonsTemplate,
++
++  args: {
++    ...defaultProps,
++    variant: "solid",
++  },
++};\n- packages/core/theme/src/components/button.ts (modified, 43 changes)\n  Patch: @@ -1,7 +1,7 @@
+ import type {VariantProps} from "tailwind-variants";
+ 
+ import {tv} from "../utils/tv";
+-import {colorVariants, dataFocusVisibleClasses} from "../utils";
++import {collapseAdjacentVariantBorders, colorVariants, dataFocusVisibleClasses} from "../utils";
+ 
+ /**
+  * Button wrapper **Tailwind Variants** component
+@@ -316,7 +316,11 @@ const button = tv({
+       color: "danger",
+       class: colorVariants.ghost.danger,
+     },
+-    // isInGroup / size
++    // isInGroup / radius
++    {
++      isInGroup: true,
++      class: "rounded-none first:rounded-l-medium last:rounded-r-medium",
++    },
+     {
+       isInGroup: true,
+       size: "sm",
+@@ -340,8 +344,39 @@ const button = tv({
+     // isInGroup / bordered / ghost
+     {
+       isInGroup: true,
+-      variant: ["bordered", "ghost"],
+-      class: "[&:not(:first-child)]:ml-[calc(theme(borderWidth.medium)*-1)]",
++      variant: ["ghost", "bordered"],
++      color: "default",
++      className: collapseAdjacentVariantBorders.default,
++    },
++    {
++      isInGroup: true,
++      variant: ["ghost", "bordered"],
++      color: "primary",
++      className: collapseAdjacentVariantBorders.primary,
++    },
++    {
++      isInGroup: true,
++      variant: ["ghost", "bordered"],
++      color: "secondary",
++      className: collapseAdjacentVariantBorders.secondary,
++    },
++    {
++      isInGroup: true,
++      variant: ["ghost", "bordered"],
++      color: "success",
++      className: collapseAdjacentVariantBorders.success,
++    },
++    {
++      isInGroup: true,
++      variant: ["ghost", "bordered"],
++      color: "warning",
++      className: collapseAdjacentVariantBorders.warning,
++    },
++    {
++      isInGroup: true,
++      variant: ["ghost", "bordered"],
++      color: "danger",
++      className: collapseAdjacentVariantBorders.danger,
+     },
+     {
+       isIconOnly: true,\n- packages/core/theme/src/utils/classes.ts (modified, 13 changes)\n  Patch: @@ -54,3 +54,16 @@ export const translateCenterClasses = [
+ ];
+ 
+ export const absoluteFullClasses = ["absolute", "inset-0"];
++
++/**
++ * This object defines CSS classes for collapsing adjacent variant borders.
++ * It includes classes for different variants like default, primary, secondary, etc.
++ */
++export const collapseAdjacentVariantBorders = {
++  default: ["[&+.border-medium.border-default]:ms-[calc(theme(borderWidth.medium)*-1)]"],
++  primary: ["[&+.border-medium.border-primary]:ms-[calc(theme(borderWidth.medium)*-1)]"],
++  secondary: ["[&+.border-medium.border-secondary]:ms-[calc(theme(borderWidth.medium)*-1)]"],
++  success: ["[&+.border-medium.border-success]:ms-[calc(theme(borderWidth.medium)*-1)]"],
++  warning: ["[&+.border-medium.border-warning]:ms-[calc(theme(borderWidth.medium)*-1)]"],
++  danger: ["[&+.border-medium.border-danger]:ms-[calc(theme(borderWidth.medium)*-1)]"],
++};\n

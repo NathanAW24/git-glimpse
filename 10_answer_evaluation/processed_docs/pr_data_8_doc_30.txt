@@ -1,0 +1,596 @@
+Pull Request Number: 3336
+Title: fix: onSelectionChange type incorrect
+Base Branch: canary
+Head Branch: bugfix-selection-type
+Author: winchesHe
+URL: https://github.com/nextui-org/nextui/pull/3336
+State: MERGED
+Created At: 2024-06-26T15:24:36Z
+Merged At: 2024-07-06T18:01:50Z
+Participants: winchesHe, jrgarciadev, wingkwong
+
+Description:
+Closes #2512
+📝 Description
+
+Complete the Selection type add addtional key like as shown in the picture below
+
+
+
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Improved selection management in dropdown and select components with enhanced onSelectionChange handling.
+
+
+
+Bug Fixes
+
+Updated types for various selection properties for more robust and flexible selection handling.
+
+
+
+Refactor
+
+Consolidated selection-related types and handlers for better maintainability and consistency across components.
+
+
+
+Documentation
+
+Updated documentation to reflect changes in selection properties and handlers for dropdown and select components.
+
+Commits:
+- fix: onSelectionChange type incorrect\n- Merge branch 'canary' into bugfix-selection-type\n- feat: export shardSelection\n- fix: typo\n- fix: review\n- Merge branch 'canary' into bugfix-selection-type\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 92f8703f2c7322f45a96c5442a9f8ea792f64b64
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 27 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/menu         | Patch |
+| @nextui-org/select       | Patch |
+| @nextui-org/system-rsc   | Patch |
+| @nextui-org/navbar       | Patch |
+| @nextui-org/react        | Patch |
+| @nextui-org/code         | Patch |
+| @nextui-org/divider      | Patch |
+| @nextui-org/kbd          | Patch |
+| @nextui-org/spacer       | Patch |
+| @nextui-org/spinner      | Patch |
+| @nextui-org/system       | Patch |
+| @nextui-org/accordion    | Patch |
+| @nextui-org/listbox      | Patch |
+| @nextui-org/table        | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/button       | Patch |
+| @nextui-org/calendar     | Patch |
+| @nextui-org/date-picker  | Patch |
+| @nextui-org/modal        | Patch |
+| @nextui-org/popover      | Patch |
+| @nextui-org/slider       | Patch |
+| @nextui-org/snippet      | Patch |
+| @nextui-org/tabs         | Patch |
+| @nextui-org/tooltip      | Patch |
+| @nextui-org/aria-utils   | Patch |
+| @nextui-org/framer-utils | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/bugfix-selection-type?filename=.changeset/ten-mayflies-jog.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fmenu%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Fsystem-rsc%22%3A%20patch%0A%22%40nextui-org%2Fsystem%22%3A%20patch%0A---%0A%0Afix%3A%20onSelectionChange%20type%20incorrect%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This change primarily updates the typing for selection-related properties in `dropdown`, `select`, and `menu` components to be more accurate and flexible, shifting from `React.Key[]` to `Iterable<React.Key>`. It also modifies the signature of the `onSelectionChange` callback functions to include additional key properties.
+
+## Changes
+
+| Files/Components                                           | Change Summary                                                                                           |
+|------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
+| `docs/components/dropdown.mdx`, `docs/components/select.mdx` | Change types of `selectedKeys`, `disabledKeys`, `defaultSelectedKeys` to `Iterable<React.Key>`. Update `onSelectionChange` callback signature.                                         |
+| `packages/components/menu/src/use-menu.ts`, `packages/components/select/src/use-select.ts` | Introduce `SharedSelection` type and update `Props` interfaces to include `onSelectionChange` handler accepting `SharedSelection`. |
+| `packages/core/system-rsc/src/index.ts`, `packages/core/system-rsc/src/types.ts`, `packages/core/system/src/index.ts` | Add and export `SharedSelection` type, extending `Selection` from `@react-types/shared` with `anchorKey` and `currentKey`.                          |
+
+## Sequence Diagram(s)
+
+(No significant new feature or control flow changes warranting a sequence diagram.)
+
+## Assessment against linked issues
+
+| Objective (Issue #2512)                                | Addressed | Explanation                                                                                                   |
+|------------------------------------------------------- |-----------|---------------------------------------------------------------------------------------------------------------|
+| Correct typing for `onSelectionChange` in `DropdownMenu` component | ✅         |                                                                                                                |
+| Ensure `selectedKeys` adheres to updated typing        | ✅         |                                                                                                                |
+
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+# Existing changesets
+
+```markdown
+apps/docs/content/docs/components/dropdown.mdx: ## Short Summary
+
+The diff in `dropdown.mdx` involves changes to the types of `selectedKeys`, `disabledKeys`, and `defaultSelectedKeys` from `React.Key[]` to `Iterable<React.Key>`, and the signature of `onSelectionChange` has been updated to include specific key types and additional properties.
+
+## Alterations to the declarations of exported or public entities
+
+- `selectedKeys` in `dropdown.mdx`: Changed type from `React.Key[]` to `Iterable<React.Key>`
+- `disabledKeys` in `dropdown.mdx`: Changed type from `React.Key[]` to `Iterable<React.Key>`
+- `defaultSelectedKeys` in `dropdown.mdx`: Changed type from `React.Key[]` to `Iterable<React.Key>`
+- `onSelectionChange` in `dropdown.mdx`: Updated signature to `(keys: "all" \| Set<React.Key> & {anchorKey?: string; currentKey?: string}) => void`
+
+---
+
+apps/docs/content/docs/components/select.mdx: ## Short Summary
+
+The changes in functionality for the `select` component include adjustments to the types of `selectedKeys`, `disabledKeys`, and `defaultSelectedKeys` from `React.Key[]` to `Iterable<React.Key>`. Additionally, the `onSelectionChange` callback now expects a more specific type for `keys`.
+
+## Alterations to the declarations of exported or public entities
+
+- `selectedKeys` in `select` component:
+  - Before: `selectedKeys: all \| React.Key[]`
+  - After: `selectedKeys: all \| Iterable<React.Key>`
+
+- `disabledKeys` in `select` component:
+  - Before: `disabledKeys: all \| React.Key[]`
+  - After: `disabledKeys: Iterable<React.Key>`
+
+- `defaultSelectedKeys` in `select` component:
+  - Before: `defaultSelectedKeys: all \| React.Key[]`
+  - After: `defaultSelectedKeys: all \| Iterable<React.Key>`
+
+- `onSelectionChange` callback in `select` component:
+  - Before: `(keys: React.Key[]) => void`
+  - After: `(keys: "all" \| Set<React.Key> & {anchorKey?: string; currentKey?: string}) => void`
+
+---
+
+packages/components/menu/src/use-menu.ts: ### Summary
+
+The change in `use-menu.ts` introduces a new type `SharedSelection` imported from `@nextui-org/system`. Additionally, a new `onSelectionChange` handler is added to the `Props` interface with a callback function that triggers when the selection changes. The `onSelectionChange` property is now included in `UseMenuProps` while being omitted from `AriaMenuProps`.
+
+### Alterations to the declarations of exported or public entities
+
+- `useProviderContext`, `HTMLNextUIProps`, `PropGetter` in `@nextui-org/system`:
+  - Added `SharedSelection`
+
+- `Props` interface in `use-menu.ts`:
+  - Added `onSelectionChange?: (keys: SharedSelection) => void`
+
+- `UseMenuProps` type in `use-menu.ts`:
+  - Omitted `"onSelectionChange"` from `AriaMenuProps<T>`
+  - Added `onSelectionChange?: (keys: SharedSelection) => void`
+
+- `useMenu` function in `use-menu.ts`:
+  - No direct changes to the function signature
+
+---
+
+packages/components/select/src/use-select.ts: ## Short Summary
+
+The change introduces a new `onSelectionChange` handler in the `Props` interface in `use-select.ts`, which takes `keys` of type `SharedSelection` and returns `void`.
+
+## Alterations to the declarations of exported or public entities
+
+- `interface Props<T>` in `use-select.ts`
+  - Added:
+    - `onSelectionChange?: (keys: SharedSelection) => void`
+
+- `export type UseSelectProps<T>` in `use-select.ts`
+  - Modified:
+    - Updated to exclude `onSelectionChange` from `MultiSelectProps<T>`
+
+---
+
+packages/core/system-rsc/src/index.ts: ### Short Summary
+Added the `SharedSelection` type to the list of exported types in `packages/core/system-rsc/src/index.ts`.
+
+### Alterations to the declarations of exported or public entities
+- Added `SharedSelection` to the list of exported types in `packages/core/system-rsc/src/index.ts`
+
+---
+
+packages/core/system-rsc/src/types.ts: ## Short Summary
+
+The `types.ts` file in `packages/core/system-rsc/src` has been updated to include an import statement for `Selection` from `@react-types/shared` and to extend the `SharedSelection` type with additional properties `anchorKey` and `currentKey`.
+
+## Alterations to the declarations of exported or public entities
+
+- Added `import {Selection as AriaSharedSelection} from "@react-types/shared";` in `types.ts`
+- Extended `SharedSelection` type with `anchorKey?: string;` and `currentKey?: string;`
+
+---
+
+packages/core/system/src/index.ts: ### Short Summary
+Added `SharedSelection` to the list of exported types from `"@nextui-org/system-rsc"` in `packages/core/system/src/index.ts`.
+
+### Alterations to the Declarations of Exported or Public Entities
+- Added `SharedSelection` to the list of exported types from `"@nextui-org/system-rsc"` in `packages/core/system/src/index.ts`.
+```
+
+
+# New changesets
+
+packages/components/select/src/use-select.ts: ## Short Summary
+The change in functionality introduces a new `onSelectionChange` handler in the `Props` interface in `use-select.ts` for handling selection changes.
+
+## Alterations to the declarations of exported or public entities
+- `interface Props<T>` in `use-select.ts`
+  - Added: 
+    - `onSelectionChange?: (keys: SharedSelection) => void`
+
+- `export type UseSelectProps<T>` in `use-select.ts`
+  - Modified:
+    - Removed `"onSelectionChange"` from the `MultiSelectProps<T>` properties
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR summary
+
+**Title**: fix: onSelectionChange type incorrect  
+**User**: winchesHe  
+**Number**: 3336  
+**URL**: [https://github.com/nextui-org/nextui/pull/3336](https://github.com/nextui-org/nextui/pull/3336)  
+
+**Description**:  
+The pull request addresses the issue described in #2512 regarding the incorrect type for the `onSelectionChange` prop in the `DropdownMenu` component of the NextUI library. The `Selection` type is updated to include additional keys, as shown in the provided images. The current behavior of the `onSelectionChange` callback does not match its TypeScript signature, leading to confusion. The actual type returned by the callback is an instance of a class from the `@react-stately/selection` package, which includes `anchorKey` and `currentKey`. The PR aims to correct this discrepancy.
+
+## Objectives from linked issues
+
+**Issue #2512: [BUG] - DropdownMenu component onSelectionChange type not correct**
+
+- **NextUI Version**: 2.2.9
+- **Bug Description**: The `DropdownMenu` component's `onSelectionChange` and `selectedKeys` props have a TypeScript signature that does not match the actual structure of the object passed to the `onSelectionChange` callback.
+- **Current Behavior**: The `onSelectionChange` callback receives an object with `anchorKey` and `currentKey`, which differs from the expected `Selection` type (`'all' | Set<Key>`).
+- **Expected Behavior**: The type of the parameter passed to the `onSelectionChange` callback should match the expected `Selection` type.
+- **Steps to Reproduce**: Use a `DropdownMenu` component with `onSelectionChange` and `selectedKeys` props and debug the value passed to the `onSelectionChange` callback.
+- **Possible Cause**: The `DropdownMenu` component might be using the `Selection` class from the `@react-stately/selection` package instead of the defined `Selection` type.
+
+## Comments summary
+
+1. **winchesHe**: 
+   - Noted a typo: "ShardSelection" should be "SharedSelection".
+   - Confirmed the typo was fixed with an emoji indicating the correction.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- This is an auto-generated comment: shorter summary by coderabbit.ai -->
+
+<!--
+
+## Summary of Generated Summaries
+
+The recent changes across multiple files primarily focus on updating the types and handling of selection keys in various components and hooks, specifically `dropdown`, `select`, and `menu`. The primary alteration involves changing the types of `selectedKeys`, `disabledKeys`, and `defaultSelectedKeys` from `React.Key[]` to `Iterable<React.Key>`. Additionally, the `onSelectionChange` callback signature has been updated to accept a more specific type, `SharedSelection`, which includes additional properties like `anchorKey` and `currentKey`.
+
+In the `dropdown.mdx` and `select.mdx` documentation files, the types for `selectedKeys`, `disabledKeys`, and `defaultSelectedKeys` were updated to `Iterable<React.Key>`. The `onSelectionChange` callback was also modified to handle a new signature that includes specific key types and additional properties.
+
+In the `use-menu.ts` file, a new type `SharedSelection` was introduced, and the `Props` interface was updated to include an `onSelectionChange` handler. This handler triggers when the selection changes and is now part of `UseMenuProps`, while being omitted from `AriaMenuProps`.
+
+Similarly, the `use-select.ts` file saw the addition of an `onSelectionChange` handler in the `Props` interface, which takes `keys` of type `SharedSelection`. The `UseSelectProps` type was modified to exclude `onSelectionChange` from `MultiSelectProps`.
+
+The `SharedSelection` type was added to the list of exported types in `packages/core/system-rsc/src/index.ts` and `packages/core/system/src/index.ts`. In `types.ts`, the `SharedSelection` type was extended with additional properties `anchorKey` and `currentKey`, and an import statement for `Selection` from `@react-types/shared` was added.
+
+Overall, these changes enhance the flexibility and specificity of selection handling across the components, aligning the types and callbacks to be more consistent and robust.
+
+## Alterations to the Declarations of Exported or Public Entities
+
+### `apps/docs/content/docs/components/dropdown.mdx`
+- `selectedKeys`: 
+  - Before: `React.Key[]`
+  - After: `Iterable<React.Key>`
+- `disabledKeys`: 
+  - Before: `React.Key[]`
+  - After: `Iterable<React.Key>`
+- `defaultSelectedKeys`: 
+  - Before: `React.Key[]`
+  - After: `Iterable<React.Key>`
+- `onSelectionChange`: 
+  - Before: `(keys: React.Key[]) => void`
+  - After: `(keys: "all" | Set<React.Key> & {anchorKey?: string; currentKey?: string}) => void`
+
+### `apps/docs/content/docs/components/select.mdx`
+- `selectedKeys`: 
+  - Before: `all | React.Key[]`
+  - After: `all | Iterable<React.Key>`
+- `disabledKeys`: 
+  - Before: `all | React.Key[]`
+  - After: `Iterable<React.Key>`
+- `defaultSelectedKeys`: 
+  - Before: `all | React.Key[]`
+  - After: `all | Iterable<React.Key>`
+- `onSelectionChange`: 
+  - Before: `(keys: React.Key[]) => void`
+  - After: `(keys: "all" | Set<React.Key> & {anchorKey?: string; currentKey?: string}) => void`
+
+### `packages/components/menu/src/use-menu.ts`
+- `Props` interface: 
+  - Added: `onSelectionChange?: (keys: SharedSelection) => void`
+- `UseMenuProps` type:
+  - Omitted: `"onSelectionChange"` from `AriaMenuProps<T>`
+  - Added: `onSelectionChange?: (keys: SharedSelection) => void`
+
+### `packages/components/select/src/use-select.ts`
+- `interface Props<T>`:
+  - Added: `onSelectionChange?: (keys: SharedSelection) => void`
+- `export type UseSelectProps<T>`:
+  - Modified: Removed `"onSelectionChange"` from `MultiSelectProps<T>`
+
+### `packages/core/system-rsc/src/index.ts`
+- Added: `SharedSelection` to the list of exported types
+
+### `packages/core/system-rsc/src/types.ts`
+- Added: `import {Selection as AriaSharedSelection} from "@react-types/shared";`
+- Extended `SharedSelection` type with:
+  - `anchorKey?: string;`
+  - `currentKey?: string;`
+
+### `packages/core/system/src/index.ts`
+- Added: `SharedSelection` to the list of exported types from `"@nextui-org/system-rsc"`
+
+-->
+
+<!-- end of auto-generated comment: shorter summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 40f93f03aeb8c71f57d6f317289f7016ad7e71a7 -->
+<!-- 8f263da0cc4923b99c7ccf6e9cc7cacd60eb76c8 -->
+<!-- 92f8703f2c7322f45a96c5442a9f8ea792f64b64 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #/DPN8x4hlP6jrG4Cg5J4cC8hLe/eLMUPml15xatoP4s=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1idWdmaXgtc2VsZWN0aW9uLXR5cGUtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn0sImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRUdXcE5MUG51OTRiTlZLQjRZYTY2NWtxN1JqWCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1idWdmaXgtc2VsZWN0aW9uLXR5cGUtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIn0seyJuYW1lIjoibmV4dHVpLWRvY3MtdjIiLCJyb290RGlyZWN0b3J5IjoiYXBwcy9kb2NzIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1idWdmaXgtc2VsZWN0aW9uLXR5cGUtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn0sImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1kb2NzLXYyLzJyQTJLSDNNY1pOYTh6N3V6b3J2Q2k1YjFIdTEiLCJwcmV2aWV3VXJsIjoibmV4dHVpLWRvY3MtdjItZ2l0LWJ1Z2ZpeC1zZWxlY3Rpb24tdHlwZS1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/2rA2KH3McZNa8z7uzorvCi5b1Hu1)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-bugfix-selection-type-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-bugfix-selection-type-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jul 6, 2024 2:49pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/EGWpNLPnu94bNVKB4Ya665kq7RjX)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-bugfix-selection-type-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-bugfix-selection-type-nextui-org.vercel.app?via=pr-comment-feedback-link) | Jul 6, 2024 2:49pm |
+
+
+\n- winchesHe: > > `ShardSelection`
+> 
+> Wondering if you mean `SharedSelection`?
+
+Fixed 🫰\n- winchesHe: fixed\n
+
+Files Changed:
+- .changeset/chilled-worms-develop.md (added, 8 changes)\n  Patch: @@ -0,0 +1,8 @@
++---
++"@nextui-org/dropdown": patch
++"@nextui-org/menu": patch
++"@nextui-org/select": patch
++"@nextui-org/system-rsc": patch
++---
++
++Fix onSelectionChange type incorrect (#2512)\n- apps/docs/content/docs/components/dropdown.mdx (modified, 8 changes)\n  Patch: @@ -322,9 +322,9 @@ you to customize each item individually.
+ | variant                | `solid` \| `bordered` \| `light` \| `flat` \| `faded` \| `shadow`                                      | The dropdown items appearance style.                                                                    | `solid`     |
+ | color                  | `default` \| `primary` \| `secondary` \| `success` \| `warning` \| `danger`                            | The dropdown items color theme.                                                                         | `default`   |
+ | selectionMode          | `none` \| `single` \| `multiple`                                                                       | The type of selection that is allowed in the collection.                                                | -           |
+-| selectedKeys           | `React.Key[]`                                                                                          | The currently selected keys in the collection (controlled).                                             | -           |
+-| disabledKeys           | `React.Key[]`                                                                                          | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with. | -           |
+-| defaultSelectedKeys    | `all` \| `React.Key[]`                                                                                 | The initial selected keys in the collection (uncontrolled).                                             | -           |
++| selectedKeys           | `all` \| `Iterable<React.Key>`                                                                                          | The currently selected keys in the collection (controlled).                                             | -           |
++| disabledKeys           | `Iterable<React.Key>`                                                                                          | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with. | -           |
++| defaultSelectedKeys    | `all` \| `Iterable<React.Key>`                                                                                 | The initial selected keys in the collection (uncontrolled).                                             | -           |
+ | disallowEmptySelection | `boolean`                                                                                              | Whether the collection allows empty selection.                                                          | `false`     |
+ | autoFocus              | `boolean` \| `first` \| `last`                                                                         | Where the focus should be set.                                                                          | `false`     |
+ | topContent             | `ReactNode`                                                                                            | The content to display above the listbox items.                                                         | -           |
+@@ -343,7 +343,7 @@ you to customize each item individually.
+ | Attribute         | Type                          | Description                                                                |
+ | ----------------- | ----------------------------- | -------------------------------------------------------------------------- |
+ | onAction          | `(key: React.Key) => void`    | Handler that is called when an item is selected.                           |
+-| onSelectionChange | `(keys: React.Key[]) => void` | Handler that is called when the selection changes.                         |
++| onSelectionChange | `(keys: "all" \| Set<React.Key> & {anchorKey?: string; currentKey?: string}) => void` | Handler that is called when the selection changes.                         |
+ | onClose           | `() => void`                  | Handler that is called when the menu should close after selecting an item. |
+ 
+ ---\n- apps/docs/content/docs/components/select.mdx (modified, 8 changes)\n  Patch: @@ -359,9 +359,9 @@ the popover and listbox components.
+ | children\*                  | `ReactNode[]`                                                                                                                                                                                                          | The children to render. Usually a list of `SelectItem` and `SelectSection` elements.                                   | -                  |
+ | items                       | [`Iterable<T>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)                                                                                                                 | Item objects in the select. (dynamic)                                                                                  | -                  |
+ | selectionMode               | `single` \| `multiple`                                                                                                                                                                                                 | The type of selection that is allowed in the collection.                                                               | -                  |
+-| selectedKeys                | `all` \| `React.Key[]`                                                                                                                                                                                                 | The currently selected keys in the collection (controlled).                                                            | -                  |
+-| disabledKeys                | `all` \| `React.Key[]`                                                                                                                                                                                                 | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with.                | -                  |
+-| defaultSelectedKeys         | `all` \| `React.Key[]`                                                                                                                                                                                                 | The initial selected keys in the collection (uncontrolled).                                                            | -                  |
++| selectedKeys                | `all` \| `Iterable<React.Key>`                                                                                                                                                                                                | The currently selected keys in the collection (controlled).                                                            | -                  |
++| disabledKeys                | `Iterable<React.Key>`                                                                                                                                                                                                | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with.                | -                  |
++| defaultSelectedKeys         | `all` \| `Iterable<React.Key>`                                                                                                                                                                                                 | The initial selected keys in the collection (uncontrolled).                                                            | -                  |
+ | variant                     | `flat` \| `bordered` \| `faded` \| `underlined`                                                                                                                                                                        | The variant of the select.                                                                                             | `flat`             |
+ | color                       | `default` \| `primary` \| `secondary` \| `success` \| `warning` \| `danger`                                                                                                                                            | The color of the select.                                                                                               | `default`          |
+ | size                        | `sm` \| `md` \| `lg`                                                                                                                                                                                                   | The size of the select.                                                                                                | `md`               |
+@@ -400,7 +400,7 @@ the popover and listbox components.
+ | ----------------- | --------------------------------------------- | ------------------------------------------------------------------------------------ |
+ | onClose           | `() => void`                                  | Callback fired when the select popover is closed.                                    |
+ | onOpenChange      | `(isOpen: boolean) => void`                   | Callback fired when the select popover is opened or closed.                          |
+-| onSelectionChange | `(keys: React.Key[]) => void`                 | Callback fired when the selected keys change.                                        |
++| onSelectionChange | `(keys: "all" \| Set<React.Key> & {anchorKey?: string; currentKey?: string}) => void`                 | Callback fired when the selected keys change.                                        |
+ | onChange          | `React.ChangeEvent<HTMLSelectElement>`        | Native select change event, fired when the selected value changes.                   |
+ | renderValue       | [RenderValueFunction](#render-value-function) | Function to render the value of the select. It renders the selected item by default. |
+ \n- packages/components/menu/src/use-menu.ts (modified, 8 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import type {HTMLNextUIProps, PropGetter} from "@nextui-org/system";
++import type {HTMLNextUIProps, PropGetter, SharedSelection} from "@nextui-org/system";
+ 
+ import {useProviderContext} from "@nextui-org/system";
+ import {AriaMenuProps} from "@react-types/menu";
+@@ -83,11 +83,15 @@ interface Props<T> {
+    * The menu items classNames.
+    */
+   itemClasses?: MenuItemProps["classNames"];
++  /**
++   * Handler that is called when the selection changes.
++   */
++  onSelectionChange?: (keys: SharedSelection) => void;
+ }
+ 
+ export type UseMenuProps<T = object> = Props<T> &
+   Omit<HTMLNextUIProps<"ul">, keyof AriaMenuProps<T>> &
+-  AriaMenuProps<T> &
++  Omit<AriaMenuProps<T>, "onSelectionChange"> &
+   MenuVariantProps;
+ 
+ export function useMenu<T extends object>(props: UseMenuProps<T>) {\n- packages/components/select/src/use-select.ts (modified, 12 changes)\n  Patch: @@ -6,6 +6,7 @@ import {
+   HTMLNextUIProps,
+   mapPropsVariants,
+   PropGetter,
++  SharedSelection,
+   useProviderContext,
+ } from "@nextui-org/system";
+ import {select} from "@nextui-org/theme";
+@@ -128,6 +129,10 @@ interface Props<T> extends Omit<HTMLNextUIProps<"select">, keyof SelectVariantPr
+    * Classes object to style the select and its children.
+    */
+   classNames?: SlotsToClasses<SelectSlots>;
++  /**
++   * Handler that is called when the selection changes.
++   */
++  onSelectionChange?: (keys: SharedSelection) => void;
+ }
+ 
+ interface SelectData {
+@@ -139,8 +144,11 @@ interface SelectData {
+ 
+ export const selectData = new WeakMap<MultiSelectState<any>, SelectData>();
+ 
+-export type UseSelectProps<T> = Omit<Props<T>, keyof MultiSelectProps<T>> &
+-  MultiSelectProps<T> &
++export type UseSelectProps<T> = Omit<
++  Props<T>,
++  keyof Omit<MultiSelectProps<T>, "onSelectionChange">
++> &
++  Omit<MultiSelectProps<T>, "onSelectionChange"> &
+   SelectVariantProps;
+ 
+ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {\n- packages/core/system-rsc/src/index.ts (modified, 1 changes)\n  Patch: @@ -12,6 +12,7 @@ export type {
+   Merge,
+   HTMLNextUIProps,
+   PropGetter,
++  SharedSelection,
+ } from "./types";
+ 
+ export {\n- packages/core/system-rsc/src/types.ts (modified, 7 changes)\n  Patch: @@ -2,6 +2,8 @@
+  * Part of this code is taken from @chakra-ui/system ❤️
+  */
+ 
++import {Selection as AriaSharedSelection} from "@react-types/shared";
++
+ export type As<Props = any> = React.ElementType<Props>;
+ export type DOMElements = keyof JSX.IntrinsicElements;
+ export type CapitalizedDOMElements = Capitalize<DOMElements>;
+@@ -79,3 +81,8 @@ export type PropGetter<P = Record<string, unknown>, R = DOMAttributes> = (
+   props?: Merge<DOMAttributes, P>,
+   ref?: React.Ref<any>,
+ ) => R & React.RefAttributes<any>;
++
++export type SharedSelection = AriaSharedSelection & {
++  anchorKey?: string;
++  currentKey?: string;
++};\n- packages/core/system/src/index.ts (modified, 1 changes)\n  Patch: @@ -15,6 +15,7 @@ export type {
+   ExtendVariantProps,
+   ExtendVariantWithSlotsProps,
+   ExtendVariants,
++  SharedSelection,
+ } from "@nextui-org/system-rsc";
+ 
+ export {\n

@@ -1,0 +1,109 @@
+Pull Request Number: 411
+Title: Remove dynamic import
+Base Branch: main
+Head Branch: main
+Author: TIMMLOPK
+URL: https://github.com/nextui-org/nextui/pull/411
+State: MERGED
+Created At: 2022-04-16T04:19:50Z
+Merged At: 2022-04-17T17:42:17Z
+Participants: TIMMLOPK, codecov-commenter, jrgarciadev
+
+Description:
+[LEVEL]/[DOCS]
+Types of changes
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+Screenshots - Animations
+
+Commits:
+- Remove dynamic\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/411?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#411](https://codecov.io/gh/nextui-org/nextui/pull/411?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (54b98f6) into [main](https://codecov.io/gh/nextui-org/nextui/commit/a682eb69716471a3f523721d8cab6a3018e3c39c?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (a682eb6) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+```diff
+@@           Coverage Diff           @@
+##             main     #411   +/-   ##
+=======================================
+  Coverage   75.01%   75.01%           
+=======================================
+  Files         163      163           
+  Lines        2598     2598           
+  Branches      760      760           
+=======================================
+  Hits         1949     1949           
+  Misses        640      640           
+  Partials        9        9           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/411?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/411?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [a682eb6...54b98f6](https://codecov.io/gh/nextui-org/nextui/pull/411?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- apps/docs/src/components/home/custom-themes.tsx (modified, 15 changes)\n  Patch: @@ -1,13 +1,12 @@
+ /* eslint-disable no-unused-vars */
+ import React, { useState } from 'react';
+ import NextLink from 'next/link';
+-import dynamic from 'next/dynamic';
+ import { Box, Section, Title, Subtitle, BlockLink } from '@primitives';
+ import { InView } from 'react-intersection-observer';
+ import { Grid, Row, Col, Spacer } from '@nextui-org/react';
+ import { darkTheme } from '@theme/shared';
+ import landingContent from '@content/landing';
+-import { Blockholder } from '@components';
++import { Blockholder, ShopCard, CodeDemo } from '@components';
+ import { useTheme } from 'next-themes';
+ import { get } from 'lodash';
+ 
+@@ -25,14 +24,6 @@ const darkCodeHighlights = {
+   retro: '109-124'
+ };
+ 
+-const DynamicShopCard = dynamic(() => import('../templates/shop-card'), {
+-  ssr: true
+-});
+-
+-const DynamicCodeDemo = dynamic(() => import('../code-demo/code-demo'), {
+-  ssr: true
+-});
+-
+ const CustomThemesSection = () => {
+   const [activeHighlight, setActiveHighlight] = useState('nextui');
+   const [isVisible, setIsVisible] = useState(false);
+@@ -89,7 +80,7 @@ const CustomThemesSection = () => {
+             }}
+           >
+             <Col>
+-              <DynamicShopCard onChangeTheme={setActiveHighlight} />
++              <ShopCard onChangeTheme={setActiveHighlight} />
+               <NextLink href="/docs/theme/customize-theme">
+                 <BlockLink color="blue">Learn more</BlockLink>
+               </NextLink>
+@@ -114,7 +105,7 @@ const CustomThemesSection = () => {
+               }}
+             >
+               {isVisible ? (
+-                <DynamicCodeDemo
++                <CodeDemo
+                   showWindowIcons
+                   line={get(
+                     isDark ? darkCodeHighlights : codeHighlights,\n

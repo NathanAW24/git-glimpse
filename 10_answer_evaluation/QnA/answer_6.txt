@@ -1,0 +1,62 @@
+Investigation / Analysis
+
+Contextual Review: The Popover component currently lacks a feature that allows developers to control whether it should close when the user scrolls. This behavior is crucial for certain use cases where popovers should remain open during scroll events. The request is to implement a property, shouldCloseOnScroll, to address this requirement.
+
+Inspection of Existing Code and Behavior:
+
+Relevant Files to Review:
+popover.tsx: The core file handling the Popover component logic.
+use-aria-popover.ts: Manages ARIA attributes and accessibility for the popover.
+use-popover.ts: Contains the core logic for popover behavior, such as event handling and state management.
+popover.stories.tsx: Provides examples and documentation in Storybook.
+popover.test.tsx: Contains existing tests for the Popover component.
+Error and Performance Analysis:
+
+Currently, the Popover component automatically closes on scroll without any configurability. The root issue lies in the lack of a condition to check whether this behavior should be triggered. Event listeners for scroll are hardcoded and do not account for a developer-specified preference.
+Proposed Solution / Implementation Steps
+
+Files to Create or Add:
+
+No new files need to be created.
+High-Level Changes:
+
+Introduce a new property, shouldCloseOnScroll, to the Popover component API. This property will allow developers to specify whether the popover should close on scroll events. Update the hooks managing the popover's behavior to respect this property.
+Specific Technical Steps:
+
+Enhance Hook Logic:
+
+In use-aria-popover.ts and use-popover.ts, add a new property, shouldCloseOnScroll, and default it to true.
+Modify the event listener for scroll events to respect the value of shouldCloseOnScroll.
+Refactor Component:
+
+Update popover.tsx to pass the shouldCloseOnScroll property down to the hooks.
+Ensure backward compatibility by defaulting the behavior to close on scroll if the property is not specified.
+Update Documentation:
+
+In docs/components/popover.mdx, add a section detailing the new shouldCloseOnScroll property with examples.
+Testing:
+
+Add unit tests in popover.test.tsx to verify that:
+The popover closes on scroll when shouldCloseOnScroll is true.
+The popover remains open on scroll when shouldCloseOnScroll is false.
+Examples:
+
+Add new stories in popover.stories.tsx showcasing the functionality of shouldCloseOnScroll.
+Post-Fix / Post-Implementation Checks
+
+Testing and Verification:
+
+Run unit tests to ensure the shouldCloseOnScroll functionality works as intended.
+Conduct user interaction tests to validate proper behavior in different scenarios (e.g., scrolling while popover is open).
+Performance and Reliability:
+
+Verify that adding this property does not introduce performance regressions or unexpected behavior in the Popover component.
+Documentation and Communication
+
+Update Documentation:
+
+Add the shouldCloseOnScroll property to the component API documentation in docs/components/popover.mdx.
+Provide code examples demonstrating usage scenarios.
+Add Release Notes:
+
+Mention the new shouldCloseOnScroll property in the CHANGELOG with a brief description of its purpose and usage.

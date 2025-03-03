@@ -1,0 +1,69 @@
+Pull Request Number: 930
+Title: fix: fixed a11y role issue in progress bar component
+Base Branch: next
+Head Branch: fix/fixed-a11y-role-issue-in-progress-bar-component
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/930
+State: MERGED
+Created At: 2022-12-01T18:56:42Z
+Merged At: 2023-01-04T01:43:14Z
+Participants: jguddas, jrgarciadev
+
+Description:
+Resolves the following violations:
+
+Elements must only use allowed ARIA attributes
+ARIA progressbar nodes must have an accessible name
+
+Commits:
+- fix: navbar link does not respect parent size\n- Merge pull request #805 from yuriwithowsky/fix/navbar-link
+
+fix: navbar link does not respect parent size\n- fix: fixed a11y role issue in progress bar component\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228bbcea4b3ffae9f6b4adac660528dcdb6313bca3%22%7D%2C%22id%22%3A%22QmV494kYdMdfrKkVABnHvJ3nt5h9wxhFdbj6ue95DYBvXA%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A930%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/875Eci2iiKUcA22pKa8mMPC75BXh)) | [Visit Preview](https://nextui-docs-git-fork-jguddas-fix-fixed-a11y-r-b52d90-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-docs-git-fork-jguddas-fix-fixed-a11y-r-b52d90-nextui-org.vercel.app) | Jan 4, 2023 at 1:17AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/3wnPuviHFtbuqGymKHsFmVzCP97n)) | [Visit Preview](https://nextui-storybook-git-fork-jguddas-fix-fixed-a-33b8bb-nextui-org.vercel.app) |  | Jan 4, 2023 at 1:17AM (UTC) |
+
+
+\n
+
+Files Changed:
+- packages/react/src/navbar/navbar-link.tsx (modified, 1 changes)\n  Patch: @@ -46,6 +46,7 @@ const NavbarLink = forwardRef<NavbarLinkProps, "a">((props, ref) => {
+     return {
+       color: "inherit",
+       height: "100%",
++      width: "fit-content",
+       ...css,
+     };
+   }, [color, css]);\n- packages/react/src/progress/progress.tsx (modified, 7 changes)\n  Patch: @@ -60,6 +60,10 @@ const Progress: React.FC<ProgressProps> = ({
+ 
+   return (
+     <StyledProgress
++      aria-label="progress"
++      aria-valuemax={max}
++      aria-valuemin={min}
++      aria-valuenow={value}
+       css={{
+         "nextui-progress-wrapper-enter": {
+           opacity: 0,
+@@ -83,9 +87,6 @@ const Progress: React.FC<ProgressProps> = ({
+       >
+         <StyledProgressBar
+           animated={animated}
+-          aria-valuemax={max}
+-          aria-valuemin={min}
+-          aria-valuenow={value}
+           className={clsx(`${preClass}-bar`, {
+             [`${preClass}-striped`]: striped,
+             [`${preClass}-indeterminated`]: indeterminated,\n

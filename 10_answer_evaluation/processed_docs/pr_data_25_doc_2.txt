@@ -1,0 +1,209 @@
+Pull Request Number: 1007
+Title: [FEATURE] Points Loader - points-shib
+Base Branch: main
+Head Branch: feat/points-loader
+Author: alphaxek
+URL: https://github.com/nextui-org/nextui/pull/1007
+State: CLOSED
+Created At: 2023-01-13T14:18:19Z
+Merged At: None
+Participants: alphaxek, cliffordfajardo, jrgarciadev
+
+Description:
+📝 Description
+
+Added new type of loader with points.
+
+It can be added with a label.
+It can be added in a button.
+
+
+🚀 New behavior
+
+Please refer below previews of new loader:
+
+Different sizes in Dark Mode.
+
+
+
+
+
+Different sizes in Light Mode.
+
+
+
+
+
+In a button
+
+
+
+💣 Is this a breaking change (Yes/No):
+
+No Impact on users.
+
+📝 Additional Information
+Note: Reverted the default loader in Loading > Sizes
+
+Commits:
+- [FEATURE] Points Loader - points-shib\n
+
+Labels:
+
+
+Comments:
+- vercel: @alphaxek is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2249681e2b55837d2f6916252b65a135d813ee1d5c%22%7D%2C%22id%22%3A%22QmPa65diQcuz3XwxGd4ydQ1AHbrLfS4X8A9zKMwwkje1Wn%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1007%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: [vc]: #fgm4Y7aUGGZfGPUk45/dBwMmcWd1drVmnYzYM8wliB4=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLWdpdC1mb3JrLWFscGhheGVrLWZlYXQtcG9pbnQtN2EyN2M2LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9LCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rL0RyRFBnOGNjaFlNTENIZkpCeDVzTkh4Z1M1WFoiLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay1naXQtZm9yay1hbHBoYXhlay1mZWF0LXBvaW50LTdhMjdjNi1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQifV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/DrDPg8cchYMLCHfJBx5sNHxgS5XZ)) | [Visit Preview](https://nextui-storybook-git-fork-alphaxek-feat-point-7a27c6-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-storybook-git-fork-alphaxek-feat-point-7a27c6-nextui-org.vercel.app) | Jan 13, 2023 at 2:19PM (UTC) |
+
+\n- cliffordfajardo: changes look good overall 
+
+
+@jrgarciadev - is more familiar with this area of the codebase , so ill default to his opinions 
+i haven't kept up with the codebase like @jrgarciadev has\n- alphaxek: > changes look good overall
+> 
+> @jrgarciadev - is more familiar with this area of the codebase , so ill default to his opinions i haven't kept up with the codebase like @jrgarciadev has
+
+@cliffordfajardo thank you so much for your review, will wait for @jrgarciadevs review\n- jrgarciadev: Hi @alphaxek I appreciate you took the time to send this PR, however, we decided to simplify the loaders on v2 so it doesn't make sense to add more to the v1
+
+Thank you anyways! 🙏🏻 \n- alphaxek: > Hi @alphaxek I appreciate you took the time to send this PR, however, we decided to simplify the loaders on v2 so it doesn't make sense to add more to the v1
+> 
+> Thank you anyways! 🙏🏻
+
+Thank you so much @jrgarciadev for your reply\n
+
+Files Changed:
+- packages/react/src/button/button.stories.tsx (modified, 2 changes)\n  Patch: @@ -70,7 +70,7 @@ export const Loadings = () => (
+     </Grid>
+     <Grid>
+       <Button auto color="error" css={{px: "$13"}}>
+-        <Loading color="currentColor" size="sm" type="spinner" />
++        <Loading color="currentColor" size="sm" type="points-shib" />
+       </Button>
+     </Grid>
+   </Grid.Container>\n- packages/react/src/loading/loading.stories.tsx (modified, 4 changes)\n  Patch: @@ -112,5 +112,9 @@ export const Types = () => (
+     <Loading style={{marginLeft: "-0.5rem"}} type="gradient">
+       gradient
+     </Loading>
++    <Spacer y={2} />
++    <Loading style={{marginLeft: "-0.5rem"}} type="points-shib">
++      points-shib
++    </Loading>
+   </Container>
+ );\n- packages/react/src/loading/loading.styles.ts (modified, 74 changes)\n  Patch: @@ -42,6 +42,18 @@ const spinner = keyframes({
+   },
+ });
+ 
++const pointsShib = keyframes({
++  "0%": {
++    transform: "translateX(calc($$loadingSize * -1.1))",
++  },
++  "50%": {
++    transform: "translateX(calc($$loadingSize * 1.1))",
++  },
++  "100%": {
++    transform: "translateX(calc($$loadingSize * -1.1))",
++  },
++});
++
+ export const StyledLoadingContainer = styled("div", {
+   d: "inline-flex",
+   fd: "column",
+@@ -329,6 +341,28 @@ export const StyledLoading = styled("span", {
+           display: "none",
+         },
+       },
++      "points-shib": {
++        d: "flex",
++        br: "$rounded",
++        position: "relative",
++        size: "$$loadingSize",
++        i: {
++          position: "absolute",
++          top: "0px",
++          size: "100%",
++          br: "inherit",
++          bg: "$$loadingColor",
++          animation: `${pointsShib} 1.5s infinite`,
++        },
++        "._2": {
++          animationDelay: "0.12s",
++          opacity: "0.25",
++        },
++        "._3": {
++          animationDelay: "0.06s",
++          opacity: "0.5",
++        },
++      },
+     },
+   },
+   compoundVariants: [
+@@ -412,6 +446,46 @@ export const StyledLoading = styled("span", {
+         $$loadingSize: "$space$5",
+       },
+     },
++    // points-shib & xs size
++    {
++      size: "xs",
++      type: "points-shib",
++      css: {
++        $$loadingSize: "$space$6",
++      },
++    },
++    // points-shib & sm size
++    {
++      size: "sm",
++      type: "points-shib",
++      css: {
++        $$loadingSize: "$space$7",
++      },
++    },
++    // points-shib & md size
++    {
++      size: "md",
++      type: "points-shib",
++      css: {
++        $$loadingSize: "$space$8",
++      },
++    },
++    // points-shib & lg size
++    {
++      size: "lg",
++      type: "points-shib",
++      css: {
++        $$loadingSize: "$space$9",
++      },
++    },
++    // points-shib & xl size
++    {
++      size: "xl",
++      type: "points-shib",
++      css: {
++        $$loadingSize: "$space$10",
++      },
++    },
+   ],
+   defaultVariants: {
+     type: "default",\n- packages/react/src/utils/prop-types.ts (modified, 9 changes)\n  Patch: @@ -53,7 +53,14 @@ export const extraColors = tuple(
+   "cyan",
+ );
+ 
+-export const normalLoaders = tuple("default", "points", "points-opacity", "gradient", "spinner");
++export const normalLoaders = tuple(
++  "default",
++  "points",
++  "points-opacity",
++  "gradient",
++  "spinner",
++  "points-shib",
++);
+ 
+ export const normalWeights = tuple("light", "normal", "bold", "extrabold", "black");
+ \n

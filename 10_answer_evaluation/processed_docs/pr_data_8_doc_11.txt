@@ -1,0 +1,735 @@
+Pull Request Number: 3375
+Title: fix(autocomplete): return value instead of label in form submission
+Base Branch: beta/release-next
+Head Branch: fix/eng-1067
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/3375
+State: CLOSED
+Created At: 2024-06-30T13:09:15Z
+Merged At: None
+Participants: wingkwong, ehsanrezaeee, ryo-manba, jrgarciadev
+
+Description:
+📝 Description
+Similar to Select, use a hidden input to hold the actual value.
+
+Closes: #3353
+Closes: #3343
+
+⛳️ Current behavior (updates)
+The value in Input is actually label. In form submission, users need the value instead of the label.
+const animals = [
+  {label: "Big Cat", value: "cat"},
+  {label: "Big Dog", value: "dog"},
+];
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const value = e.target.animal.value;
+
+  console.log(value); // showing `Big Cat` while `cat` is expected
+};
+
+return (
+  <form onSubmit={handleSubmit}>
+    <Autocomplete
+      defaultItems={animals}
+      defaultSelectedKey="cat"
+      label="Favorite Animal"
+      name="animal"
+    >
+      {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
+    </Autocomplete>
+
+    <Button type="submit">Submit</Button>
+  </form>
+);
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+Yes. Existing form values will be different after this change.
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced form submission process for autocomplete, returning actual values instead of labels.
+Introduced a new WithFormTemplate for submitting selected values, displaying alerts upon submission.
+
+
+
+Bug Fixes
+
+Improved handling of required fields and validation in the autocomplete component.
+
+
+
+Tests
+
+Expanded test coverage for the Autocomplete component, ensuring accurate form value retrieval and validation.
+
+
+
+Documentation
+
+Updated stories to include new templates demonstrating form integration with the autocomplete feature.
+
+Commits:
+- feat(autocomplete): exclude name in input and add getHiddenInputProps\n- Merge branch 'canary' into fix/eng-1067\n- fix(autocomplete): revise getInputProps logic\n- feat(autocomplete): hidden input\n- feat(autocomplete): include HiddenInput in autocomplete\n- feat(changeset): add changeset\n- fix(autocomplete): set empty string by default for value\n- fix(autocomplete): avoid passing custom attribute to DOM\n- fix(autocomplete): props comments\n- feat(autocomplete): include @react-aria/form\n- feat(autocomplete): add inputData map for hidden input\n- feat(autocomplete): useHiddenInput\n- chore(deps): pnpm-lock.yaml\n- Merge branch 'canary' into fix/eng-1067\n- fix(autocomplete): add missing import\n- feat(autocomplete): add WithFormTemplate\n- Merge branch 'canary' into fix/eng-1067\n- Merge branch 'canary' into fix/eng-1067\n- fix(autocomplete): include onSelectionChange logic and add missing onChange\n- chore(autocomplete): remove duplicate dependency\n- refactor(autocomplete): remove props\n- Merge branch 'canary' into fix/eng-1067\n- feat(autocomplete): include hiddenInputRef\n- feat(autocomplete): include hiddenInputRef logic\n- feat(autocomplete): add test case\n- fix(autocomplete): typing on onSelectionChange\n- fix(autocomplete): handle allowsCustomValue\n- chore(autocomplete): add default values\n- fix(autocomplete): pr comments\n- refactor(autocomplete): add hiddenInputRef.current check\n- Merge branch 'beta/release-next' into fix/eng-1067\n- Update .changeset/purple-pillows-beg.md\n- Merge branch 'beta/release-next' into fix/eng-1067\n
+
+Labels:
+💥 Type: Breaking Change, 📞 Status: Internal Discussion
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-1067/[bug]-autocomplete-component-return-the-label-instead-the-value">ENG-1067 [BUG] - Autocomplete component return the Label instead the Value</a></p>\n- vercel: [vc]: #mwzO2gPskvCdkZmM12MX1pUhJ0PRApQyXsPiSqrSy/4=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi8zZkpmalBKSDk1bnNKOWZVdjlUWWVDTlE4QWNFIiwicHJldmlld1VybCI6IiIsIm5leHRDb21taXRTdGF0dXMiOiJGQUlMRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoiIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi9EVVVnajFXakJSM1BINFZjVmpadXh1UHE5SnBtIiwicHJldmlld1VybCI6IiIsIm5leHRDb21taXRTdGF0dXMiOiJGQUlMRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoiIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/3fJfjPJH95nsJ9fUv9TYeCNQ8AcE)) |  |  | Nov 18, 2024 6:02am |
+| **nextui-storybook-v2** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/DUUgj1WjBR3PH4VcVjZuxuPq9Jpm)) |  |  | Nov 18, 2024 6:02am |
+
+
+\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 09bcf2bcc330213b28f748b2af2c2a0bf00bcbff
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/react        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/eng-1067?filename=.changeset/rude-walls-fry.md&value=---%0A%22%40nextui-org%2Fautocomplete%22%3A%20patch%0A---%0A%0Afix(autocomplete)%3A%20return%20value%20instead%20of%20label%20in%20form%20submission%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- This is an auto-generated comment: skip review by coderabbit.ai -->
+
+> [!IMPORTANT]
+> ## Review skipped
+> 
+> Auto reviews are disabled on base/target branches other than the default branch.
+> 
+> <details>
+> <summary>🗂️ Base branches to auto review (5)</summary>
+> 
+> * main
+> * canary
+> * fix/.*
+> * chore/.*
+> * feat/.*
+> 
+> </details>
+> 
+> Please check the settings in the CodeRabbit UI or the `.coderabbit.yaml` file in this repository. To trigger a single review, invoke the `@coderabbitai review` command.
+> 
+> You can disable this status message by setting the `reviews.review_status` to `false` in the CodeRabbit configuration file.
+
+<!-- end of auto-generated comment: skip review by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The changes in this pull request modify the behavior of the autocomplete component to return the actual value of the selected option instead of its label during form submission. This adjustment addresses issues #3353 and #3343. Additionally, the `@react-aria/form` dependency has been added to enhance form handling capabilities. The test suite for the autocomplete component has been updated to improve coverage and validation of form interactions. New functionality for managing hidden inputs has also been introduced, along with a new story template for demonstrating form submissions.
+
+## Changes
+
+| File                                                                 | Change Summary                                                                                      |
+|----------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| .changeset/purple-pillows-beg.md                                    | Updated form submission to return actual value from autocomplete; added dependency on `@react-aria/form`. |
+| packages/components/autocomplete/__tests__/autocomplete.test.tsx    | Enhanced tests for `Autocomplete` component; added validation for form handling and required fields. |
+| packages/components/autocomplete/src/autocomplete.tsx               | Integrated `HiddenInput` component; modified `Autocomplete` to include hidden input properties.   |
+| packages/components/autocomplete/src/hidden-input.tsx               | Introduced `HiddenInput` component with hooks for managing hidden inputs in autocomplete context.   |
+| packages/components/autocomplete/src/use-autocomplete.ts             | Updated `useAutocomplete` hook to include `onSelectionChange` callback; improved input state management. |
+| packages/components/autocomplete/stories/autocomplete.stories.tsx   | Added `WithFormTemplate` for demonstrating form submissions with autocomplete selections.          |
+
+## Assessment against linked issues
+
+| Objective                                                                 | Addressed | Explanation                                   |
+|---------------------------------------------------------------------------|-----------|-----------------------------------------------|
+| Return the actual value instead of the label on form submission (3353)   | ✅        |                                               |
+| Capture the correct ID value instead of the label in dynamic data (3343) | ✅        |                                               |
+
+## Possibly related PRs
+- **#3175**: Addresses the "Maximum update depth exceeded" issue in the Autocomplete component, related to state management changes.
+- **#3788**: Ensures the dropdown remains open after clicking the clear button, directly related to autocomplete functionality.
+- **#3726**: Enhances keyboard navigation in the AutocompleteSection, aligning with usability improvements in the main PR.
+
+## Suggested reviewers
+- jrgarciadev
+- ryo-manba
+
+<!-- walkthrough_end -->
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- ehsanrezaeee: is there any progress on this issue? please merge so i can use the autocomplete component\n- ehsanrezaeee: Thanks. really appreciate it 🙌👌\n- ryo-manba: @wingkwong @jrgarciadev 
+I don't think this behavior is a bug.
+Autocomplete works as an input, not a select. So, it makes sense to send the label (the displayed text) on form submission.
+
+For example, if the key is a sent as the value, the [Custom value](https://nextui.org/docs/components/autocomplete#custom-value) feature will send the key instead of the user's input. This would not be useful.
+\n- wingkwong: let's have an internal discussion.\n- ryo-manba: As mentioned in [this comment](https://github.com/nextui-org/nextui/pull/3375#issuecomment-2483421983), autocomplete is not a select, so the label is submitted.
+If you want to submit a value other the label, please use a [Select](https://nextui.org/docs/components/select) or handle it as a controlled component.\n
+
+Files Changed:
+- .changeset/purple-pillows-beg.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/autocomplete": patch
++---
++
++return autocomplete value instead of label in form submission (#3353, #3343)\n- packages/components/autocomplete/__tests__/autocomplete.test.tsx (modified, 26 changes)\n  Patch: @@ -729,6 +729,7 @@ describe("Autocomplete with React Hook Form", () => {
+   let submitButton: HTMLButtonElement;
+   let wrapper: any;
+   let onSubmit: () => void;
++  let getReactHookFormValues: (key: string) => any;
+ 
+   beforeEach(() => {
+     const {result} = renderHook(() =>
+@@ -745,10 +746,13 @@ describe("Autocomplete with React Hook Form", () => {
+       handleSubmit,
+       register,
+       formState: {errors},
++      getValues,
+     } = result.current;
+ 
+     onSubmit = jest.fn();
+ 
++    getReactHookFormValues = getValues;
++
+     wrapper = render(
+       <form className="flex w-full max-w-xs flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+         <Autocomplete
+@@ -822,4 +826,26 @@ describe("Autocomplete with React Hook Form", () => {
+ 
+     expect(onSubmit).toHaveBeenCalledTimes(1);
+   });
++
++  it("should have correct form values", async () => {
++    const user = userEvent.setup();
++
++    await user.click(autocomplete3);
++
++    expect(autocomplete3).toHaveAttribute("aria-expanded", "true");
++
++    let listboxItems = wrapper.getAllByRole("option");
++
++    await user.click(listboxItems[1]);
++
++    expect(autocomplete3).toHaveValue("Dog");
++
++    await user.click(submitButton);
++
++    expect(onSubmit).toHaveBeenCalledTimes(1);
++
++    expect(getReactHookFormValues("withDefaultValue")).toEqual("cat");
++    expect(getReactHookFormValues("withoutDefaultValue")).toEqual("");
++    expect(getReactHookFormValues("requiredField")).toEqual("dog");
++  });
+ });\n- packages/components/autocomplete/package.json (modified, 1 changes)\n  Patch: @@ -55,6 +55,7 @@
+     "@nextui-org/use-safe-layout-effect": "workspace:*",
+     "@react-aria/combobox": "3.10.3",
+     "@react-aria/focus": "3.18.2",
++    "@react-aria/form": "3.0.5",
+     "@react-aria/i18n": "3.12.2",
+     "@react-aria/interactions": "3.22.2",
+     "@react-aria/utils": "3.25.2",\n- packages/components/autocomplete/src/autocomplete.tsx (modified, 3 changes)\n  Patch: @@ -9,6 +9,7 @@ import {ForwardedRef, ReactElement, Ref} from "react";
+ import {AnimatePresence} from "framer-motion";
+ 
+ import {UseAutocompleteProps, useAutocomplete} from "./use-autocomplete";
++import {HiddenInput} from "./hidden-input";
+ 
+ interface Props<T> extends UseAutocompleteProps<T> {}
+ 
+@@ -29,6 +30,7 @@ function Autocomplete<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLI
+     getClearButtonProps,
+     getListBoxWrapperProps,
+     getEndContentWrapperProps,
++    getHiddenInputProps,
+   } = useAutocomplete<T>({...props, ref});
+ 
+   const listboxProps = getListBoxProps();
+@@ -45,6 +47,7 @@ function Autocomplete<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLI
+ 
+   return (
+     <Component {...getBaseProps()}>
++      <HiddenInput {...getHiddenInputProps()} />
+       <Input
+         {...getInputProps()}
+         endContent={\n- packages/components/autocomplete/src/hidden-input.tsx (added, 85 changes)\n  Patch: @@ -0,0 +1,85 @@
++import type {ComboBoxState} from "@react-stately/combobox";
++
++import React, {ReactNode, RefObject} from "react";
++import {useFormReset} from "@react-aria/utils";
++import {useFormValidation} from "@react-aria/form";
++
++import {inputData} from "./use-autocomplete";
++
++export interface AriaHiddenInputProps {
++  /**
++   * Describes the type of autocomplete functionality the input should provide if any.
++   * See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefautocomplete).
++   */
++  autoComplete?: string;
++  /** The text label for the input. */
++  label?: ReactNode;
++  /** HTML form input name. */
++  name?: string;
++  /** Sets the disabled state of the input. */
++  isDisabled?: boolean;
++  /** Whether the input is required. */
++  isRequired?: boolean;
++}
++
++type NativeHTMLInputProps = Omit<
++  React.InputHTMLAttributes<HTMLInputElement>,
++  keyof AriaHiddenInputProps
++>;
++
++type CombinedAriaInputProps = NativeHTMLInputProps & AriaHiddenInputProps;
++
++export interface HiddenInputProps<T> extends CombinedAriaInputProps {
++  /** State for the input. */
++  state: ComboBoxState<T>;
++  /** A ref to the hidden `<input>` element. */
++  hiddenInputRef?: RefObject<HTMLInputElement>;
++  /** A ref to the `<input>` element. */
++  inputRef?: RefObject<HTMLInputElement>;
++}
++
++export function useHiddenInput<T>(props: HiddenInputProps<T>) {
++  const data = inputData.get(props.state) || {};
++
++  const {
++    state,
++    autoComplete,
++    name = data.name,
++    isDisabled = data.isDisabled,
++    hiddenInputRef,
++    inputRef,
++    onChange,
++  } = props;
++
++  const {validationBehavior, isRequired} = data;
++
++  useFormReset(inputRef!, state.selectedKey, state.setSelectedKey);
++  useFormValidation(
++    {
++      validationBehavior,
++      focus: () => inputRef?.current?.focus(),
++    },
++    state,
++    inputRef,
++  );
++
++  return {
++    name,
++    ref: hiddenInputRef,
++    type: "hidden",
++    disabled: isDisabled,
++    required: isRequired,
++    autoComplete,
++    value: state.selectedKey ?? inputRef?.current?.value ?? "",
++    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
++      state.setSelectedKey(e.target.value);
++      onChange?.(e);
++    },
++  };
++}
++
++export function HiddenInput<T>(props: HiddenInputProps<T>) {
++  const inputProps = useHiddenInput(props);
++
++  return <input {...inputProps} />;
++}\n- packages/components/autocomplete/src/use-autocomplete.ts (modified, 132 changes)\n  Patch: @@ -5,9 +5,9 @@ import {mapPropsVariants, useProviderContext} from "@nextui-org/system";
+ import {useSafeLayoutEffect} from "@nextui-org/use-safe-layout-effect";
+ import {autocomplete} from "@nextui-org/theme";
+ import {useFilter} from "@react-aria/i18n";
+-import {FilterFn, useComboBoxState} from "@react-stately/combobox";
++import {ComboBoxState, FilterFn, useComboBoxState} from "@react-stately/combobox";
+ import {ReactRef, useDOMRef} from "@nextui-org/react-utils";
+-import {ReactNode, useEffect, useMemo, useRef} from "react";
++import {ReactNode, useCallback, useEffect, useMemo, useRef} from "react";
+ import {ComboBoxProps} from "@react-types/combobox";
+ import {PopoverProps} from "@nextui-org/popover";
+ import {ListboxProps} from "@nextui-org/listbox";
+@@ -102,6 +102,12 @@ interface Props<T> extends Omit<HTMLNextUIProps<"input">, keyof ComboBoxProps<T>
+    * Classes object to style the autocomplete and its children.
+    */
+   classNames?: SlotsToClasses<AutocompleteSlots>;
++  /**
++   * Whether to enable virtualization of the listbox items.
++   * By default, virtualization is automatically enabled when the number of items is greater than 50.
++   * @default undefined
++   */
++  isVirtualized?: boolean;
+   /**
+    * The filter function used to determine if a option should be included in the autocomplete list.
+    * */
+@@ -111,15 +117,24 @@ interface Props<T> extends Omit<HTMLNextUIProps<"input">, keyof ComboBoxProps<T>
+    */
+   onClose?: () => void;
+   /**
+-   * Whether to enable virtualization of the listbox items.
+-   * By default, virtualization is automatically enabled when the number of items is greater than 50.
+-   * @default undefined
++   * Handler that is called when the selection changes.
+    */
+-  isVirtualized?: boolean;
++  onSelectionChange?: (keys: React.Key | null) => void;
++}
++interface InputData {
++  isDisabled?: boolean;
++  isRequired?: boolean;
++  name?: string;
++  validationBehavior?: "aria" | "native";
+ }
+ 
++export const inputData = new WeakMap<ComboBoxState<any>, InputData>();
++
+ export type UseAutocompleteProps<T> = Props<T> &
+-  Omit<InputProps, "children" | "value" | "isClearable" | "defaultValue" | "classNames"> &
++  Omit<
++    InputProps,
++    "children" | "value" | "isClearable" | "defaultValue" | "classNames" | "onSelectionChange"
++  > &
+   ComboBoxProps<T> &
+   AsyncLoadable &
+   AutocompleteVariantProps & {
+@@ -183,14 +198,25 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     classNames,
+     errorMessage,
+     onOpenChange,
++    onChange,
+     onClose,
++    onSelectionChange,
+     isReadOnly = false,
+     ...otherProps
+   } = props;
+ 
+   // Setup filter function and state.
+   const {contains} = useFilter(filterOptions);
+ 
++  // Setup refs and get props for child elements.
++  const buttonRef = useRef<HTMLButtonElement>(null);
++  const inputWrapperRef = useRef<HTMLDivElement>(null);
++  const listBoxRef = useRef<HTMLUListElement>(null);
++  const popoverRef = useRef<HTMLDivElement>(null);
++  const hiddenInputRef = useDOMRef<HTMLInputElement>(ref);
++  const inputRef = useRef<HTMLInputElement>(null);
++  const scrollShadowRef = useDOMRef<HTMLElement>(scrollRefProp);
++
+   let state = useComboBoxState({
+     ...originalProps,
+     children,
+@@ -205,6 +231,17 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+         onClose?.();
+       }
+     },
++    onSelectionChange: (keys) => {
++      onSelectionChange?.(keys);
++      if (onChange && typeof onChange === "function") {
++        onChange({
++          target: {
++            name: hiddenInputRef?.current?.name,
++            value: keys,
++          },
++        } as React.ChangeEvent<HTMLInputElement>);
++      }
++    },
+   });
+ 
+   state = {
+@@ -214,14 +251,6 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     }),
+   };
+ 
+-  // Setup refs and get props for child elements.
+-  const buttonRef = useRef<HTMLButtonElement>(null);
+-  const inputWrapperRef = useRef<HTMLDivElement>(null);
+-  const listBoxRef = useRef<HTMLUListElement>(null);
+-  const popoverRef = useRef<HTMLDivElement>(null);
+-  const inputRef = useDOMRef<HTMLInputElement>(ref);
+-  const scrollShadowRef = useDOMRef<HTMLElement>(scrollRefProp);
+-
+   const {
+     buttonProps,
+     inputProps,
+@@ -326,16 +355,21 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+   // i.e. setting ref.current.value to something which is uncontrolled
+   // hence, sync the state with `ref.current.value`
+   useSafeLayoutEffect(() => {
+-    if (!inputRef.current) return;
++    if (!hiddenInputRef.current) return;
+ 
+-    const key = inputRef.current.value;
++    const key = hiddenInputRef.current.value;
+     const item = state.collection.getItem(key);
+ 
+     if (item && state.inputValue !== item.textValue) {
+       state.setSelectedKey(key);
+       state.setInputValue(item.textValue);
+     }
+-  }, [inputRef.current]);
++
++    if (inputRef.current && hiddenInputRef.current) {
++      // sync the value from ref to inputRef for initial display
++      inputRef.current.value = hiddenInputRef.current.value;
++    }
++  }, [hiddenInputRef.current]);
+ 
+   // focus first non-disabled item
+   useEffect(() => {
+@@ -360,6 +394,17 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     }
+   }, [isOpen]);
+ 
++  useEffect(() => {
++    if (allowsCustomValue && hiddenInputRef.current) {
++      onChange?.({
++        target: {
++          name: hiddenInputRef?.current?.name,
++          value: hiddenInputRef?.current?.value,
++        },
++      } as React.ChangeEvent<HTMLInputElement>);
++    }
++  }, [state, allowsCustomValue, inputRef?.current?.value, hiddenInputRef?.current?.value]);
++
+   // to prevent the error message:
+   // stopPropagation is now the default behavior for events in React Spectrum.
+   // You can use continuePropagation() to revert this behavior.
+@@ -431,19 +476,25 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+       }),
+     } as ButtonProps);
+ 
+-  const getInputProps = () =>
+-    ({
+-      ...otherProps,
+-      ...inputProps,
+-      ...slotsProps.inputProps,
++  const getInputProps = () => {
++    const props = mergeProps(otherProps, inputProps, slotsProps.inputProps);
++
++    // `name` will be in the hidden input
++    // so that users can get the value of the input instead of label in form
++    // eslint-disable-next-line @typescript-eslint/no-unused-vars
++    const {name, ...restProps} = props;
++
++    return {
++      ...restProps,
+       isInvalid,
+       validationBehavior,
+       errorMessage:
+         typeof errorMessage === "function"
+           ? errorMessage({isInvalid, validationErrors, validationDetails})
+           : errorMessage || validationErrors?.join(" "),
+       onClick: chain(slotsProps.inputProps.onClick, otherProps.onClick),
+-    } as unknown as InputProps);
++    } as InputProps;
++  };
+ 
+   const getListBoxProps = () => {
+     // Use isVirtualized prop if defined, otherwise fallback to default behavior
+@@ -534,6 +585,38 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     }),
+   });
+ 
++  const getHiddenInputProps = useCallback(
++    (props = {}) => ({
++      state,
++      inputRef,
++      hiddenInputRef,
++      name: originalProps?.name,
++      isRequired: originalProps?.isRequired ?? false,
++      autoComplete: originalProps?.autoComplete ?? "on",
++      isDisabled: originalProps?.isDisabled ?? false,
++      onChange,
++      ...props,
++    }),
++    [
++      state,
++      originalProps?.name,
++      originalProps?.autoComplete,
++      originalProps?.isDisabled,
++      originalProps?.isRequired,
++      inputRef,
++      hiddenInputRef,
++    ],
++  );
++
++  // store the data to be used in useHiddenInput
++  inputData.set(state, {
++    isDisabled: originalProps?.isDisabled ?? false,
++    isRequired: originalProps?.isRequired ?? false,
++    name: originalProps?.name,
++    // TODO: Future enhancement to support "aria" validation behavior.
++    validationBehavior: "native",
++  });
++
+   return {
+     Component,
+     inputRef,
+@@ -558,6 +641,7 @@ export function useAutocomplete<T extends object>(originalProps: UseAutocomplete
+     getSelectorButtonProps,
+     getListBoxWrapperProps,
+     getEndContentWrapperProps,
++    getHiddenInputProps,
+   };
+ }
+ \n- packages/components/autocomplete/stories/autocomplete.stories.tsx (modified, 30 changes)\n  Patch: @@ -816,6 +816,28 @@ const CustomStylesWithCustomItemsTemplate = ({color, ...args}: AutocompleteProps
+   );
+ };
+ 
++const WithFormTemplate = (args: AutocompleteProps) => {
++  const handleSubmit = (e) => {
++    e.preventDefault();
++    const name = e.target.animal.value;
++
++    // eslint-disable-next-line no-console
++    console.log(name);
++    alert("Submitted value: " + name);
++  };
++
++  return (
++    <form className="flex w-full max-w-xs flex-col gap-2" onSubmit={handleSubmit}>
++      <Autocomplete defaultSelectedKey="cat" label="Favorite Animal" name="animal" {...args}>
++        <AutocompleteItem key="cat">Big Cat</AutocompleteItem>
++        <AutocompleteItem key="dog">Big Dog</AutocompleteItem>
++      </Autocomplete>
++
++      <Button type="submit">Submit</Button>
++    </form>
++  );
++};
++
+ const WithReactHookFormTemplate = (args: AutocompleteProps) => {
+   const {
+     register,
+@@ -1056,6 +1078,14 @@ export const WithAriaLabel = {
+   },
+ };
+ 
++export const WithForm = {
++  render: WithFormTemplate,
++
++  args: {
++    ...defaultProps,
++  },
++};
++
+ export const WithReactHookForm = {
+   render: WithReactHookFormTemplate,
+ \n- pnpm-lock.yaml (modified, 17 changes)\n  Patch: @@ -756,6 +756,9 @@ importers:
+       '@react-aria/focus':
+         specifier: 3.18.2
+         version: 3.18.2(react@18.3.1)
++      '@react-aria/form':
++        specifier: 3.0.5
++        version: 3.0.5(react@18.3.1)
+       '@react-aria/i18n':
+         specifier: 3.12.2
+         version: 3.12.2(react@18.3.1)
+@@ -6622,6 +6625,11 @@ packages:
+     peerDependencies:
+       react: ^18.2.0
+ 
++  '@react-aria/form@3.0.5':
++    resolution: {integrity: sha512-n290jRwrrRXO3fS82MyWR+OKN7yznVesy5Q10IclSTVYHHI3VI53xtAPr/WzNjJR1um8aLhOcDNFKwnNIUUCsQ==}
++    peerDependencies:
++      react: ^18.2.0
++
+   '@react-aria/form@3.0.8':
+     resolution: {integrity: sha512-8S2QiyUdAgK43M3flohI0R+2rTyzH088EmgeRArA8euvJTL16cj/oSOKMEgWVihjotJ9n6awPb43ZhKboyNsMg==}
+     peerDependencies:
+@@ -19517,6 +19525,15 @@ snapshots:
+       clsx: 2.1.1
+       react: 18.3.1
+ 
++  '@react-aria/form@3.0.5(react@18.3.1)':
++    dependencies:
++      '@react-aria/interactions': 3.22.2(react@18.3.1)
++      '@react-aria/utils': 3.25.2(react@18.3.1)
++      '@react-stately/form': 3.0.5(react@18.3.1)
++      '@react-types/shared': 3.24.1(react@18.3.1)
++      '@swc/helpers': 0.5.13
++      react: 18.3.1
++
+   '@react-aria/form@3.0.8(react@18.3.1)':
+     dependencies:
+       '@react-aria/interactions': 3.22.2(react@18.3.1)\n

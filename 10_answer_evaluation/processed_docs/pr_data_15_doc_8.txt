@@ -1,0 +1,136 @@
+Pull Request Number: 2487
+Title: fix(breadcrumbs): add RTL support to the breadcrumbs component (#2486)
+Base Branch: canary
+Head Branch: fix/breadcrumbs
+Author: mrbadri
+URL: https://github.com/nextui-org/nextui/pull/2487
+State: CLOSED
+Created At: 2024-03-09T14:32:54Z
+Merged At: None
+Participants: mrbadri, alphaxek, tareq96, wingkwong, jrgarciadev
+
+Description:
+Closes #2486
+📝 Description
+Add RTL support to the breadcrumbs component.
+⛳️ Current behavior (updates)
+he breadcrumbs component currently lacks support for right-to-left (RTL) direction.
+🚀 New behavior
+This PR addresses the RTL support issue in the breadcrumbs component, ensuring correct rendering in RTL environments.
+💣 Is this a breaking change (Yes/No):
+📝 Additional Information
+
+Commits:
+- fix(breadcrumbs): add RTL support to the breadcrumbs component (#2486)\n- fix: handle direction in Storybook for active direction effect on modal and tooltip\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: e120f30678aaeb62db492311bba1ebca53418f89
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 2 packages</summary>
+
+  | Name                    | Type  |
+| ----------------------- | ----- |
+| @nextui-org/breadcrumbs | Patch |
+| @nextui-org/react       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/mrbadri/nextui/new/fix/breadcrumbs?filename=.changeset/brown-rings-knock.md&value=---%0A%22%40nextui-org%2Fbreadcrumbs%22%3A%20patch%0A%22%40nextui-org%2Fstorybook%22%3A%20patch%0A---%0A%0Afix(breadcrumbs)%3A%20add%20RTL%20support%20to%20the%20breadcrumbs%20component%20(%232486)%0A)
+
+\n- vercel: [vc]: #ZAYS6eUQ/ZSfWnUoJ+v2C9GEtNbo+aYpXWwL3czj388=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRHUxUXBFUzR4VGZoWEJuVW0yRGNkN1JjeE04cSIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1yYmFkcmktZml4LWJyZWFkY3J1bWJzLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLW1yYmFkcmktZml4LWJyZWFkY3J1bWJzLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/Du1QpES4xTfhXBnUm2Dcd7RcxM8q)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-mrbadri-fix-breadcrumbs-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-mrbadri-fix-breadcrumbs-nextui-org.vercel.app?via=pr-comment-feedback-link) | Mar 10, 2024 10:07am |
+
+\n- vercel: @mrbadri is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%228f107dbe8e44139ff9184494bcc123cc4d6fe1e2%22%7D%2C%22id%22%3A%22QmZLnoe54Yde5vUufEfYiNYpQD3MZNkMnzjRBs1RRD7Xvq%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A2487%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- mrbadri: > @mrbadri this looks fine. is it possible to fix tooltip as well, in case of rtl tooltip still shows on the left side.
+> 
+
+Hi [alphaxek](https://github.com/alphaxek),
+
+I have resolved this issue with commit e120f30678aaeb62db492311bba1ebca53418f89.
+
+```typescript
+return (
+  <NextUIProvider locale={locale}>
+    <div className="bg-dark" lang={locale} dir={direction}>
+      <Story />
+    </div>
+  </NextUIProvider>
+  // Modal component renders here
+  // Tooltips component renders here
+);
+```
+The direction in the root div does not affect the tooltip and modal, so we must change the direction in the body CSS.
+
+
+\n- alphaxek: @mrbadri thanks! 
+As per my analysis tooltip's div gets generated outside root div.
+
+Ref:
+![image](https://github.com/nextui-org/nextui/assets/116849110/f6bea8d4-ce1c-42f4-bba0-575d013a78e5)
+\n- tareq96: @wingkwong any update on this? when it's expected to go live?\n- wingkwong: Closing - inactivity.\n
+
+Files Changed:
+- .changeset/red-terms-rule.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/breadcrumbs": patch
++---
++
++Add RTL support to the breadcrumbs component\n- packages/components/breadcrumbs/src/breadcrumbs.tsx (modified, 6 changes)\n  Patch: @@ -14,7 +14,11 @@ const Breadcrumbs = forwardRef<"div", BreadcrumbsProps>((props, ref) => {
+     children,
+     childCount,
+     itemProps,
+-    separator = <ChevronRightIcon />,
++    separator = (
++      <div className="rtl:transform rtl:rotate-180">
++        <ChevronRightIcon />
++      </div>
++    ),
+     maxItems,
+     itemsBeforeCollapse,
+     itemsAfterCollapse,\n- packages/storybook/.storybook/preview.tsx (modified, 6 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import React from "react";
++import React  , { useEffect }from "react";
+ import {themes} from "@storybook/theming";
+ import {NextUIProvider} from "@nextui-org/system/src/provider";
+ import type {Preview} from "@storybook/react";
+@@ -10,6 +10,10 @@ const decorators: Preview["decorators"] = [
+     const direction =
+       // @ts-ignore
+       locale && new Intl.Locale(locale)?.textInfo?.direction === "rtl" ? "rtl" : undefined;
++      
++    useEffect(() => {
++      document.documentElement.style.setProperty("--direction", direction || "ltr");
++    }, [direction]);
+ 
+     return (
+       <NextUIProvider locale={locale}>\n- packages/storybook/.storybook/style.css (modified, 8 changes)\n  Patch: @@ -2,6 +2,14 @@
+ @tailwind components;
+ @tailwind utilities;
+ 
++:root {
++  --direction: ltr;
++}
++
++body {
++  direction: var(--direction);
++}
++
+ h1 {
+   @apply text-4xl font-bold !text-foreground;
+ }\n

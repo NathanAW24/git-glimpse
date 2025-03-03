@@ -1,0 +1,89 @@
+Pull Request Number: 152
+Title: Fix #141
+Base Branch: main
+Head Branch: mobile-sidebar
+Author: mariusflorescu
+URL: https://github.com/nextui-org/nextui/pull/152
+State: MERGED
+Created At: 2022-01-23T00:07:34Z
+Merged At: 2022-01-23T13:24:42Z
+Participants: mariusflorescu, jrgarciadev, codecov-commenter
+
+Description:
+Docs/navbar
+TASK: Mobile navigation does not close when changing routes
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+Closing the drawer automatically when the route changes (if it is already expanded).
+
+This change would be nice because when navigating on mobile is kinda annoying to keep closing manually the drawer.
+
+To reproduce: check the issue.
+Screenshots - Animations
+
+
+  
+    
+    
+
+    fix.mp4
+
+Commits:
+- automatically close nav when route changes\n- modify onClick\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Thanks! @mariusflorescu \n- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/152?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#152](https://codecov.io/gh/nextui-org/nextui/pull/152?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (5d52e69) into [main](https://codecov.io/gh/nextui-org/nextui/commit/3b941f103f47df4742a7365f47dca6f0c16fbe07?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (3b941f1) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/152/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/152?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main     #152   +/-   ##
+=======================================
+  Coverage   76.01%   76.01%           
+=======================================
+  Files         140      140           
+  Lines        2264     2264           
+  Branches      680      680           
+=======================================
+  Hits         1721     1721           
+  Misses        538      538           
+  Partials        5        5           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/152?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/152?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [3b941f1...5d52e69](https://codecov.io/gh/nextui-org/nextui/pull/152?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- apps/docs/src/components/nav-link/index.tsx (modified, 4 changes)\n  Patch: @@ -47,7 +47,9 @@ const NavLink: React.FC<NavLinkProps> = ({
+           </Link>
+         ) : (
+           <NextLink href={pathname || href}>
+-            <Link onClick={() => !comingSoon && onClick}>{title}</Link>
++            <Link onClick={(e) => !comingSoon && onClick && onClick(e)}>
++              {title}
++            </Link>
+           </NextLink>
+         )
+       }\n

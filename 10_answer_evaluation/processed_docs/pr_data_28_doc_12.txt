@@ -1,0 +1,150 @@
+Pull Request Number: 475
+Title: feat(avatar): allow to pass custom ref to img
+Base Branch: next
+Head Branch: feat/avatar-img-ref
+Author: jansedlon
+URL: https://github.com/nextui-org/nextui/pull/475
+State: CLOSED
+Created At: 2022-05-16T16:12:43Z
+Merged At: None
+Participants: jansedlon, jrgarciadev, danielsimao
+
+Description:
+Closes #476  
+📝 Description
+I have a use case where I need access to the underlying img element. At the moment, it's not possible to send own ref object.
+⛳️ Current behavior (updates)
+There is no way to use own ref to get access to the img element.
+🚀 New behavior
+I used useForkRef hook from @mui/utils that allows to combine two refs into one. That enables components to use internal ref as well as ref passed from props.
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- feat(avatar): allow to pass custom ref to img\n- Update index.test.tsx\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- jrgarciadev: Hey @jansedlon we have a function similar to `useForkRef` you can use instead, it's here https://github.com/nextui-org/nextui/blob/next/packages/react/src/utils/refs.ts#L38-L42, thanks a lot for contributing 🙏🏻 \n- jrgarciadev: Hey @jansedlon really appreciate you sending this PR, however, we will take this one https://github.com/nextui-org/nextui/pull/562, thanks a lot 🙏🏻  \n
+
+Files Changed:
+- packages/react/src/avatar/__tests__/index.test.tsx (modified, 14 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import React from 'react';
++import React, { createRef } from 'react';
+ import { mount, render, shallow } from 'enzyme';
+ import Avatar from '../index';
+ 
+@@ -94,4 +94,16 @@ describe('Avatar', () => {
+     const avatar = render(<Avatar css={{ size: 20 }} />);
+     expect(avatar).toMatchSnapshot();
+   });
++
++  it('should populate imgRef', () => {
++    const imgRef = createRef<HTMLImageElement>();
++    const wrapper = mount(
++      <Avatar
++        imgRef={imgRef}
++        src="https://i.pravatar.cc/300?u=a042581f4e29026705d"
++      />
++    );
++    expect(imgRef.current).not.toBeNull();
++    expect(() => wrapper.unmount()).not.toThrow();
++  });
+ });\n- packages/react/src/avatar/avatar.tsx (modified, 18 changes)\n  Patch: @@ -6,13 +6,15 @@ import { useDOMRef } from '../utils/dom';
+ import { __DEV__ } from '../utils/assertion';
+ import StyledAvatar, { AvatarVariantsProps } from './avatar.styles';
+ import clsx from '../utils/clsx';
++import useForkRef from '../use-fork-ref';
+ 
+ interface Props {
+   text?: string;
+   src?: string;
+   icon?: React.ReactNode;
+   alt?: string;
+   className?: string;
++  imgRef?: ReactRef<HTMLImageElement>;
+   as?: keyof JSX.IntrinsicElements;
+ }
+ 
+@@ -32,14 +34,26 @@ const safeText = (text: string): string => {
+ 
+ export const Avatar = React.forwardRef(
+   (props: AvatarProps, ref: ReactRef<HTMLSpanElement>) => {
+-    const { src, text, icon, alt, className, ...otherProps } = props;
++    const {
++      src,
++      text,
++      icon,
++      alt,
++      className,
++      imgRef: imgRefProp,
++      ...otherProps
++    } = props;
+ 
+     const domRef = useDOMRef(ref);
+ 
+     const showText = !src;
+     const [ready, setReady] = useState(false);
+ 
+     const imgRef = useRef<HTMLImageElement>(null);
++    const handleImgRef = useForkRef<HTMLImageElement, HTMLImageElement>(
++      imgRefProp,
++      imgRef
++    );
+ 
+     useEffect(() => {
+       imgRef?.current?.complete && setReady(true);
+@@ -64,7 +78,7 @@ export const Avatar = React.forwardRef(
+         <span className="nextui-avatar-bg" />
+         {!showText && (
+           <img
+-            ref={imgRef}
++            ref={handleImgRef}
+             className={clsx('nextui-avatar-img', `nextui-avatar--${getState}`, {
+               'nextui-avatar-ready': ready
+             })}\n- packages/react/src/use-fork-ref/index.ts (added, 3 changes)\n  Patch: @@ -0,0 +1,3 @@
++import useForkRef from './use-fork-ref';
++
++export default useForkRef;\n- packages/react/src/use-fork-ref/use-fork-ref.ts (added, 40 changes)\n  Patch: @@ -0,0 +1,40 @@
++import { useMemo } from 'react';
++import type { Ref, MutableRefObject } from 'react';
++
++const setRef = <T>(
++  ref:
++    | MutableRefObject<T | null>
++    | ((instance: T | null) => void)
++    | null
++    | undefined,
++  value: T | null
++): void => {
++  if (typeof ref === 'function') {
++    ref(value);
++  } else if (ref) {
++    ref.current = value;
++  }
++};
++
++const useForkRef = <InstanceA, InstanceB>(
++  refA: Ref<InstanceA> | null | undefined,
++  refB: Ref<InstanceB> | null | undefined
++): Ref<InstanceA & InstanceB> | null => {
++  /**
++   * This will create a new function if the ref props change and are defined.
++   * This means react will call the old forkRef with `null` and the new forkRef
++   * with the ref. Cleanup naturally emerges from this behavior.
++   */
++  return useMemo(() => {
++    if (refA == null && refB == null) {
++      return null;
++    }
++
++    return (refValue) => {
++      setRef(refA, refValue);
++      setRef(refB, refValue);
++    };
++  }, [refA, refB]);
++};
++
++export default useForkRef;\n

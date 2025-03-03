@@ -1,0 +1,683 @@
+Pull Request Number: 2784
+Title: fix(popover): trigger disabled prop warning
+Base Branch: main
+Head Branch: fix/popover-trigger-non-react-props
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/2784
+State: MERGED
+Created At: 2024-04-18T15:20:31Z
+Merged At: 2024-04-18T16:22:31Z
+Participants: jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+Fix isDisabled prop warning on NextUI components that don't support this propterty, it is also fixed for non-NextUI components.
+⛳️ Current behavior (updates)
+isDisabled react warning
+🚀 New behavior
+Warning fixed
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+Bug Fixes
+
+Resolved warning issues with the isDisabled prop across various components.
+Enhanced prop handling and element cloning logic in the PopoverTrigger component.
+
+
+
+New Features
+
+Added isDisabled property to the dropdown component for improved accessibility and functionality, including a custom HTML trigger option.
+
+
+
+Refactor
+
+Updated properties and control flows in popover and dropdown components to enhance consistency and performance.
+
+Commits:
+- fix(popover): trigger disabled prop warning\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 1a9f6da97d31f5b1db358ab1c424df0825450337
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 7 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/popover      | Patch |
+| @nextui-org/theme        | Patch |
+| @nextui-org/react        | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/date-picker  | Patch |
+| @nextui-org/select       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/popover-trigger-non-react-props?filename=.changeset/new-islands-hunt.md&value=---%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A%22%40nextui-org%2Fpopover%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0Afix(popover)%3A%20trigger%20disabled%20prop%20warning%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update focuses on refining the handling of the `isDisabled` property across various components in the NextUI library. Changes include better integration of the `isDisabled` property in dropdown and popover components, enhancing prop management, and improving the user interface by adjusting control settings in storybook files. These adjustments ensure more consistent behavior and clearer warnings across both NextUI and non-NextUI components.
+
+## Changes
+
+| File Path                                      | Change Summary                                                                                      |
+|------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `.changeset/five-lemons-admire.md`             | Introduced patches for multiple NextUI packages to fix `isDisabled` prop warnings.                  |
+| `.../dropdown/src/use-dropdown.ts`             | Moved `isDisabled` property for better parameter organization in `useDropdown`.                     |
+| `.../dropdown/stories/dropdown.stories.tsx`    | Added `isDisabled` control and a custom trigger component in dropdown stories.                      |
+| `.../popover/src/popover-trigger.tsx`          | Adjusted prop handling and element cloning in `PopoverTrigger`; refined `isDisabled` management.    |
+| `.../popover/src/use-popover.ts`, `.../theme/src/components/popover.ts` | Enhanced `isDisabled` handling in `usePopover` and renamed related property in theme settings.      |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/five-lemons-admire.md: The new file introduces patches for `@nextui-org/dropdown`, `@nextui-org/popover`, and `@nextui-org/theme` packages to fix the `isDisabled` prop warning on NextUI components and non-NextUI components.
+
+---
+
+packages/components/dropdown/src/use-dropdown.ts: In the `useDropdown` function in `use-dropdown.ts`, the `isDisabled` property has been moved above the `type` property in the function parameters.
+
+---
+
+packages/components/dropdown/stories/dropdown.stories.tsx: Added a new `isDisabled` property to the dropdown component with corresponding control settings and default value. Introduced a `CustomHTMLTrigger` component for custom dropdown trigger rendering.
+
+---
+
+packages/components/popover/src/popover-trigger.tsx: The `PopoverTrigger` component in `popover-trigger.tsx` underwent changes related to the handling of props and button elements. The modifications include adjusting the props passed to `useAriaButton`, managing `isDisabled` prop, and refining the element cloning logic.
+
+---
+
+packages/components/popover/src/use-popover.ts: In the `usePopover` function in `use-popover.ts`, the `getTriggerProps` function now extracts `isDisabled` from `props` and uses `otherProps` to merge properties, updates the `isDropdownDisabled` to `isTriggerDisabled`, and includes `isDisabled` in the returned props.
+
+---
+
+packages/core/theme/src/components/popover.ts: The change in functionality involves renaming the property `isDropdownDisabled` to `isTriggerDisabled` within the `popover` component, affecting the control flow related to disabling the trigger element.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+The pull request titled "fix(popover): trigger disabled prop warning" with number 2784 aims to address issues related to the `isDisabled` property in various components within the NextUI library. The primary focus is to ensure that warnings related to the disabled state of components are appropriately triggered and handled. This involves modifications across several packages including `@nextui-org/dropdown`, `@nextui-org/popover`, and `@nextui-org/theme`.
+
+The description provided in the PR does not detail the specific current behaviors being modified or the exact new behaviors introduced. However, it mentions that the changes involve updates to the handling of the `isDisabled` property in different components. The PR does not specify if these changes are breaking, but it asks for consideration of the impact on existing users of NextUI.
+
+The changes are encapsulated in various files across the library, indicating a broad impact on the components related to dropdowns and popovers. The PR also includes updates to story files, suggesting enhancements in the documentation or examples provided to the users.
+
+### AI-Generated Summary of Generated Summaries
+
+The pull request introduces several key changes across the NextUI library to enhance the handling and functionality of the `isDisabled` property in components. Specifically, the changes are focused on the `@nextui-org/dropdown`, `@nextui-org/popover`, and `@nextui-org/theme` packages.
+
+1. **Dropdown Component Enhancements**:
+   - The `useDropdown` function has been updated to prioritize the `isDisabled` property over the `type` property in its parameters.
+   - The dropdown stories have been enriched with a new `isDisabled` property, complete with control settings and a default value. Additionally, a `CustomHTMLTrigger` component has been introduced for more flexible dropdown trigger rendering.
+
+2. **Popover Component Adjustments**:
+   - In the `PopoverTrigger` component, there are significant modifications concerning prop handling and button element management. This includes adjustments to the props passed to `useAriaButton`, better management of the `isDisabled` prop, and refined logic for cloning elements.
+   - The `usePopover` function now more effectively extracts and utilizes the `isDisabled` property, ensuring it is included in the returned props and renaming `isDropdownDisabled` to `isTriggerDisabled` to better reflect its usage.
+
+3. **Theme Consistency Updates**:
+   - The theme settings for the popover component have been updated to rename `isDropdownDisabled` to `isTriggerDisabled`, aligning the terminology across the library and ensuring consistent behavior regarding the disabling of trigger elements.
+
+These updates collectively enhance the functionality and user experience of the NextUI library by ensuring more robust and consistent handling of disabled states across components.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai -->
+
+---
+
+<details>
+
+<summary>Recent Review Details</summary>
+
+**Configuration used: .coderabbit.yaml**
+
+<details>
+<summary>Commits</summary>
+Files that changed from the base of the PR and between a644544dfbf6e429f12c3a0ea3f778714df7b77c and 1a9f6da97d31f5b1db358ab1c424df0825450337.
+</details>
+
+
+<details>
+<summary>Files selected for processing (6)</summary>
+
+* .changeset/five-lemons-admire.md (1 hunks)
+* packages/components/dropdown/src/use-dropdown.ts (1 hunks)
+* packages/components/dropdown/stories/dropdown.stories.tsx (4 hunks)
+* packages/components/popover/src/popover-trigger.tsx (2 hunks)
+* packages/components/popover/src/use-popover.ts (1 hunks)
+* packages/core/theme/src/components/popover.ts (1 hunks)
+
+</details>
+
+
+
+
+
+
+<details>
+<summary>Additional Context Used</summary>
+
+<details><summary>LanguageTool (4)</summary><blockquote>
+
+<details><summary>.changeset/five-lemons-admire.md (4)</summary><blockquote>
+
+Near line 7: Possible spelling mistake found.
+Context: ...tch "@nextui-org/theme": patch ---  Fix `isDisabled` prop warning on NextUI components that...
+
+---
+
+Near line 7: Possible spelling mistake found.
+Context: ...h ---  Fix `isDisabled` prop warning on NextUI components that don't support this prop...
+
+---
+
+Near line 7: Possible spelling mistake found.
+Context: ...xtUI components that don't support this propterty, it is also fixed for non-NextUI compon...
+
+---
+
+Near line 7: Possible spelling mistake found.
+Context: ...rt this propterty, it is also fixed for non-NextUI components. 
+
+</blockquote></details>
+
+</blockquote></details>
+
+</details>
+<details><summary>Additional comments not posted (9)</summary><blockquote>
+<details><summary>packages/components/popover/src/popover-trigger.tsx (3)</summary><blockquote>
+
+`32-32`: Ensure that the destructuring of `isDisabled` from `getTriggerProps` is correctly utilized in the component logic.
+
+<details>
+<summary>Verification successful</summary>
+
+
+
+---
+
+<!--Monologue:
+[task item_1/1] The task is to verify if the `isDisabled` prop is correctly utilized within the `PopoverTrigger` component.
+[observations] The output from the latest script shows that `isDisabled` is used in several places within the component. It is destructured from `useMemo` and passed to `useAriaButton` and conditionally merged into `restProps`.
+[decomposition] Analyze the usage of `isDisabled` in the context of the component to determine if it is being utilized appropriately.
+[analysis] The usage of `isDisabled` in `useAriaButton` and its conditional inclusion in `restProps` suggests that it is actively used to manage button properties and behavior based on the disabled state. This aligns with typical patterns of using such a prop in component logic.
+[actions] Conclude that the `isDisabled` prop is utilized correctly within the component logic based on the evidence from the script outputs.
+-->
+
+The verification process has confirmed that the `isDisabled` prop is utilized correctly within the `PopoverTrigger` component. It is appropriately passed to the `useAriaButton` function and conditionally merged into `restProps`, ensuring that the disabled state is managed effectively across the component.
+
+- The prop is passed to `useAriaButton` to manage button-specific attributes based on the disabled state.
+- It is also conditionally included in `restProps` which are passed to the button component, further ensuring that the disabled state influences the button's behavior.
+
+
+
+</details>
+
+<details>
+<summary>Scripts Executed</summary>
+
+The following scripts were executed for the analysis:
+
+
+
+---
+
+Script:
+```shell
+#!/bin/bash
+# Verify that `isDisabled` is used appropriately within the component.
+ast-grep --lang javascript --pattern $'const {onPress, isDisabled, ...restProps} = useMemo(() => {
+  return getTriggerProps($_, $_);
+}, $$$)'
+
+```
+
+Length of output: 142
+
+---
+
+
+
+---
+
+Script:
+```shell
+#!/bin/bash
+# Search for any usage of `isDisabled` within the PopoverTrigger component
+rg "isDisabled" packages/components/popover/src/popover-trigger.tsx
+
+```
+
+Length of output: 285
+
+</details>
+
+---
+
+`39-39`: Verify that `useAriaButton` correctly handles the `isDisabled` prop.
+
+---
+
+`47-47`: Ensure that the merging of props handles the `isDisabled` state correctly when a NextUI Button is present.
+
+<details>
+<summary>Verification successful</summary>
+
+
+
+---
+
+<!--Monologue:
+[task item_1/1] Verify the merging of props in the presence of a NextUI Button.
+[observations] The new script output confirms the presence of the `mergeProps` function in the `popover-trigger.tsx` file. It shows two usages: one in the context of `getTriggerProps` and another directly in the line of interest where it handles the `hasNextUIButton` condition.
+[decomposition] The task now focuses on verifying if the `mergeProps` usage under the `hasNextUIButton` condition correctly handles the `isDisabled` state.
+[analysis] The line from the script output `mergeProps(restProps, hasNextUIButton ? {onPress, isDisabled} : buttonProps),` matches the pattern we are interested in. It shows that when `hasNextUIButton` is true, `onPress` and `isDisabled` are explicitly passed, which suggests that the `isDisabled` state is being handled as intended when a NextUI Button is present.
+[actions] Based on the script output, it appears that the `mergeProps` function is used correctly to handle the `isDisabled` state when a NextUI Button is present. This confirms the functionality as described in the review comment.
+-->
+
+The verification process confirms that the `mergeProps` function is used correctly in the `popover-trigger.tsx` file to handle the `isDisabled` state when a NextUI Button is present. The specific line of code:
+
+```javascript
+mergeProps(restProps, hasNextUIButton ? {onPress, isDisabled} : buttonProps),
+```
+
+shows that when `hasNextUIButton` is true, both `onPress` and `isDisabled` are included in the properties, which aligns with the intended functionality.
+
+- File: `packages/components/popover/src/popover-trigger.tsx`
+- Line: 47
+
+
+
+</details>
+
+<details>
+<summary>Scripts Executed</summary>
+
+The following scripts were executed for the analysis:
+
+
+
+---
+
+Script:
+```shell
+#!/bin/bash
+# Ensure correct merging of props in the presence of a NextUI Button.
+ast-grep --lang javascript --pattern $'return cloneElement($_, mergeProps(restProps, hasNextUIButton ? {onPress, isDisabled} : buttonProps))'
+
+```
+
+Length of output: 142
+
+---
+
+
+
+---
+
+Script:
+```shell
+#!/bin/bash
+# Broaden the search to find any usage of `mergeProps` in the file `popover-trigger.tsx`.
+rg "mergeProps" packages/components/popover/src/popover-trigger.tsx
+
+```
+
+Length of output: 271
+
+</details>
+
+</blockquote></details>
+<details><summary>packages/components/dropdown/src/use-dropdown.ts (1)</summary><blockquote>
+
+`50-50`: Confirm that the reordering of `isDisabled` above `type` in the destructuring does not affect the logic negatively.
+
+</blockquote></details>
+<details><summary>packages/core/theme/src/components/popover.ts (1)</summary><blockquote>
+
+`165-165`: Ensure that the renaming of `isDropdownDisabled` to `isTriggerDisabled` is consistently applied across the entire codebase.
+
+<details>
+<summary>Verification successful</summary>
+
+
+
+---
+
+The search for the term `isDropdownDisabled` across JavaScript files using `rg` did not yield any results. This suggests that the renaming of `isDropdownDisabled` to `isTriggerDisabled` has been consistently applied across the codebase, as no instances of the old property name were found.
+
+**Conclusion:**
+The renaming of `isDropdownDisabled` to `isTriggerDisabled` appears to have been successfully and consistently applied across the entire codebase. No instances of the old property name were detected in JavaScript files.
+
+- 
+
+</details>
+
+<details>
+<summary>Scripts Executed</summary>
+
+The following scripts were executed for the analysis:
+
+
+
+---
+
+Script:
+```shell
+#!/bin/bash
+# Search for any remaining instances of `isDropdownDisabled` that should be renamed.
+rg --type javascript 'isDropdownDisabled'
+
+```
+
+Length of output: 76
+
+---
+
+
+
+---
+
+Script:
+```shell
+#!/bin/bash
+# Search for any remaining instances of `isDropdownDisabled` that should be renamed, using the correct file type.
+rg --type js --type jsx 'isDropdownDisabled'
+
+```
+
+Length of output: 72
+
+---
+
+
+
+---
+
+Script:
+```shell
+#!/bin/bash
+# Search for any remaining instances of `isDropdownDisabled` that should be renamed, using the correct recognized file type.
+rg --type js 'isDropdownDisabled'
+
+```
+
+Length of output: 33
+
+</details>
+
+</blockquote></details>
+<details><summary>packages/components/popover/src/use-popover.ts (2)</summary><blockquote>
+
+`256-256`: Verify that the extraction and usage of `isDisabled` in `getTriggerProps` function are correctly implemented.
+
+---
+
+`268-268`: Ensure that the `isTriggerDisabled` property is correctly applied to the trigger element.
+
+</blockquote></details>
+<details><summary>packages/components/dropdown/stories/dropdown.stories.tsx (2)</summary><blockquote>
+
+`87-91`: Ensure that the `isDisabled` property is correctly documented and implemented in the storybook controls.
+
+---
+
+`578-594`: Review the implementation of the `CustomHTMLTrigger` component to ensure it meets the intended functionality and adheres to accessibility standards.
+
+</blockquote></details></blockquote></details>
+
+
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- 1a9f6da97d31f5b1db358ab1c424df0825450337 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #e9mNlq7EV51Ogv7KdluJ64397W/ScFO2UJHGh1/k990=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9CQXZiRVU2aVR5UXUzVWpvNVd2RzdITnZjdjhaIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtcG9wb3Zlci10cmlnZ2VyLW5vbi1yZS1kNWMwMjEtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtcG9wb3Zlci10cmlnZ2VyLW5vbi1yZS1kNWMwMjEtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi81MnVuRjdwMTd1czk3N0NSMXF4a29lVUQ5eDl6IiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC1wb3BvdmVyLXRyaWdnZXItbi0xMjA5NmItbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC1wb3BvdmVyLXRyaWdnZXItbi0xMjA5NmItbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/BAvbEU6iTyQu3Ujo5WvG7HNvcv8Z)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-popover-trigger-non-re-d5c021-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-popover-trigger-non-re-d5c021-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 18, 2024 3:25pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/52unF7p17us977CR1qxkoeUD9x9z)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-popover-trigger-n-12096b-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-popover-trigger-n-12096b-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 18, 2024 3:25pm |
+
+
+\n
+
+Files Changed:
+- .changeset/five-lemons-admire.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/dropdown": patch
++"@nextui-org/popover": patch
++"@nextui-org/theme": patch
++---
++
++Fix `isDisabled` prop warning on NextUI components that don't support this propterty, it is also fixed for non-NextUI components.\n- packages/components/dropdown/src/use-dropdown.ts (modified, 2 changes)\n  Patch: @@ -47,10 +47,10 @@ export function useDropdown(props: UseDropdownProps) {
+     isOpen,
+     defaultOpen,
+     onOpenChange,
++    isDisabled,
+     type = "menu",
+     trigger = "press",
+     placement = "bottom",
+-    isDisabled = false,
+     closeOnSelect = true,
+     shouldBlockScroll = true,
+     classNames: classNamesProp,\n- packages/components/dropdown/stories/dropdown.stories.tsx (modified, 34 changes)\n  Patch: @@ -84,6 +84,11 @@ export default {
+         type: "boolean",
+       },
+     },
++    isDisabled: {
++      control: {
++        type: "boolean",
++      },
++    },
+     disableAnimation: {
+       control: {
+         type: "boolean",
+@@ -109,6 +114,7 @@ const defaultProps = {
+   ...dropdown.defaultVariants,
+   placement: "bottom",
+   offset: 7,
++  isDisabled: false,
+   defaultOpen: false,
+   disableAnimation: false,
+ };
+@@ -569,6 +575,24 @@ const CustomTriggerTemplate = ({variant, ...args}) => {
+   );
+ };
+ 
++const CustomHTMLTrigger = ({variant, ...args}) => {
++  return (
++    <Dropdown {...args}>
++      <DropdownTrigger>
++        <span className="flex items-center gap-2">Profile</span>
++      </DropdownTrigger>
++      <DropdownMenu aria-label="Actions" variant={variant}>
++        <DropdownItem key="new">New file</DropdownItem>
++        <DropdownItem key="copy">Copy link</DropdownItem>
++        <DropdownItem key="edit">Edit file</DropdownItem>
++        <DropdownItem key="delete" className="text-danger" color="danger">
++          Delete file
++        </DropdownItem>
++      </DropdownMenu>
++    </Dropdown>
++  );
++};
++
+ export const Default = {
+   render: Template,
+ 
+@@ -695,6 +719,16 @@ export const WithCustomTrigger = {
+   },
+ };
+ 
++export const WithCustomHTMLTrigger = {
++  render: CustomHTMLTrigger,
++
++  args: {
++    ...defaultProps,
++    variant: "flat",
++    offset: 14,
++  },
++};
++
+ export const DisableAnimation = {
+   render: WithStartContentTemplate,
+ \n- packages/components/popover/src/popover-trigger.tsx (modified, 18 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import React, {Children, cloneElement, useMemo} from "react";
+-import {forwardRef, isNextUIEl} from "@nextui-org/system";
++import {forwardRef} from "@nextui-org/system";
+ import {pickChildren} from "@nextui-org/react-utils";
+ import {useAriaButton} from "@nextui-org/use-aria-button";
+ import {Button} from "@nextui-org/button";
+@@ -29,27 +29,23 @@ const PopoverTrigger = forwardRef<"button", PopoverTriggerProps>((props, _) => {
+     };
+   }, [children]);
+ 
+-  const {onPress, ...restProps} = useMemo(() => {
++  const {onPress, isDisabled, ...restProps} = useMemo(() => {
+     return getTriggerProps(mergeProps(otherProps, child.props), child.ref);
+   }, [getTriggerProps, child.props, otherProps, child.ref]);
+ 
+   // validates if contains a NextUI Button as a child
+   const [, triggerChildren] = pickChildren(children, Button);
+ 
+-  const {buttonProps} = useAriaButton({onPress}, triggerRef);
++  const {buttonProps} = useAriaButton({onPress, isDisabled}, triggerRef);
+ 
+   const hasNextUIButton = useMemo<boolean>(() => {
+     return triggerChildren?.[0] !== undefined;
+   }, [triggerChildren]);
+ 
+-  const isNextUIElement = isNextUIEl(child);
+-
+-  // `isDisabled` is added in `getMenuTriggerProps()` in `use-dropdown.ts`.
+-  // if we include `isDisabled` prop in a DOM element, react will fail to recognize it on a DOM element.
+-  // hence, apply filterDOMProps for such case
+-  if (!isNextUIElement) delete restProps["isDisabled"];
+-
+-  return cloneElement(child, mergeProps(restProps, hasNextUIButton ? {onPress} : buttonProps));
++  return cloneElement(
++    child,
++    mergeProps(restProps, hasNextUIButton ? {onPress, isDisabled} : buttonProps),
++  );
+ });
+ 
+ PopoverTrigger.displayName = "NextUI.PopoverTrigger";\n- packages/components/popover/src/use-popover.ts (modified, 7 changes)\n  Patch: @@ -253,16 +253,19 @@ export function usePopover(originalProps: UsePopoverProps) {
+ 
+   const getTriggerProps = useCallback<PropGetter>(
+     (props = {}, _ref: Ref<any> | null | undefined = null) => {
++      const {isDisabled, ...otherProps} = props;
++
+       return {
+         "data-slot": "trigger",
+         "aria-haspopup": "dialog",
+-        ...mergeProps(triggerProps, props),
++        ...mergeProps(triggerProps, otherProps),
+         onPress,
++        isDisabled,
+         className: slots.trigger({
+           class: clsx(classNames?.trigger, props.className),
+           // apply isDisabled class names to make the trigger child disabled
+           // e.g. for elements like div or NextUI elements that don't have `isDisabled` prop
+-          isDropdownDisabled: !!props?.isDisabled,
++          isTriggerDisabled: isDisabled,
+         }),
+         ref: mergeRefs(_ref, triggerRef),
+       };\n- packages/core/theme/src/components/popover.ts (modified, 2 changes)\n  Patch: @@ -162,7 +162,7 @@ const popover = tv({
+         base: "animate-none",
+       },
+     },
+-    isDropdownDisabled: {
++    isTriggerDisabled: {
+       true: {
+         trigger: "opacity-disabled pointer-events-none",
+       },\n

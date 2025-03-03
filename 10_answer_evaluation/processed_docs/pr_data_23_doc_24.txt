@@ -1,0 +1,677 @@
+Pull Request Number: 1225
+Title: Fix/props suggestions
+Base Branch: feat/v2
+Head Branch: fix/props-suggestions
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/1225
+State: MERGED
+Created At: 2023-07-28T20:59:52Z
+Merged At: 2023-07-28T21:00:18Z
+Participants: jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- refactor(core): new forwardRef types created, stories modified, important changes implemented\n- feat(docs): custom variants api added, components ref fixed\n- fix(components): omit ref removed\n
+
+Labels:
+
+
+Comments:
+- vercel: [vc]: #x7EuvevtCEZ/evwhGzHwK3A6KrKl640Q4tDSaeLXI14=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2svNmVmdVM3bVFjcjRHeWpDQ2Y3TmpoMzE0MXlRTCIsIm5leHRDb21taXRTdGF0dXMiOiJGQUlMRUQiLCJwcmV2aWV3VXJsIjoiIn0seyJuYW1lIjoibmV4dHVpLWRvY3MiLCJyb290RGlyZWN0b3J5IjoiYXBwcy9kb2NzIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLWRvY3MvNTM0UkJIUFEzeVVkczc2V3FkMXJhaFpjNWFOdCIsIm5leHRDb21taXRTdGF0dXMiOiJQRU5ESU5HIn0seyJuYW1lIjoibmV4dHVpLWRvY3MtdjIiLCJyb290RGlyZWN0b3J5IjoiYXBwcy9kb2NzIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLWRvY3MtdjIvRVN0R3FIZ3hVYllHc2J5VHBMTFBpWmY2NTJhViIsIm5leHRDb21taXRTdGF0dXMiOiJQRU5ESU5HIn1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated (UTC) |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-docs/534RBHPQ3yUds76Wqd1rahZc5aNt)) |  | Jul 28, 2023 8:59pm |
+| **nextui-docs-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/EStGqHgxUbYGsbyTpLLPiZf652aV)) |  | Jul 28, 2023 8:59pm |
+| **nextui-storybook** | ❌ Failed ([Inspect](https://vercel.com/nextui-org/nextui-storybook/6efuS7mQcr4GyjCCf7Njh3141yQL)) |  | Jul 28, 2023 8:59pm |
+
+
+
+\n
+
+Files Changed:
+- apps/docs/app/examples/perf/page.tsx (modified, 4 changes)\n  Patch: @@ -235,9 +235,7 @@ export default function NextUIPerf() {
+ 
+       <Button>Click Me!</Button>
+ 
+-      <MyButton2 disableRipple color="foreground">
+-        Press Me!
+-      </MyButton2>
++      <MyButton2 color="foreground">Press Me!</MyButton2>
+     </div>
+   );
+ }\n- apps/docs/components/navbar.tsx (modified, 2 changes)\n  Patch: @@ -54,7 +54,7 @@ export const Navbar: FC<NavbarProps> = ({children, routes, slug, tag}) => {
+   const [isMenuOpen, setIsMenuOpen] = useState<boolean | undefined>(false);
+   const [commandKey, setCommandKey] = useState<"ctrl" | "command">("command");
+ 
+-  const ref = useRef(null);
++  const ref = useRef<HTMLElement>(null);
+   const isMounted = useIsMounted();
+ 
+   const pathname = usePathname();\n- apps/docs/content/docs/customization/custom-variants.mdx (modified, 49 changes)\n  Patch: @@ -213,4 +213,51 @@ import customVariantsSlots from "@/content/customization/custom-variants/slots-c
+   All NextUI components have the `Styles source` link on top of the page. This link will take you to
+   the styles source code of the component. You can use this as a reference when creating your own
+   custom component.
+-</Blockquote>
+\ No newline at end of file
++</Blockquote>
++
++
++### Types
++
++### Main Function
++
++```jsx
++const Component = extendVariants(BaseComponent, options, config)
++
++/**
++ * BaseComponent -> NextUI component to extend
++ * options -> the variants to add/modify
++ * config -> config to extend the component
++ */
++
++```
++
++### Options
++
++```ts
++type ExtendVariantsOptions = {
++  variants?: Record<string, Record<string, ClassValue>>,
++  defaultVariants?: Record<string, ClassValue>,
++  compoundVariants?: Array<Record<string, string> & ClassProp>
++}
++
++```
++
++### Config
++
++```ts
++  /**
++   * Whether to merge the class names with `tailwind-merge` library.
++   * It's avoid to have duplicate tailwind classes. (Recommended)
++   * @see https://github.com/dcastil/tailwind-merge/blob/v1.8.1/README.md
++   * @default true
++   */
++  twMerge?: boolean;
++  /**
++   * The config object for `tailwind-merge` library.
++   * @see https://github.com/dcastil/tailwind-merge/blob/v1.8.1/docs/configuration.md
++   */
++  twMergeConfig?: TWMergeConfig;
++ ``` 
++
++> **Note**: See the [Tailwind Merge Config](https://github.com/dcastil/tailwind-merge/blob/v1.8.1/docs/configuration.md) to learn more about it.
++\n- packages/components/accordion/package.json (modified, 2 changes)\n  Patch: @@ -1,6 +1,6 @@
+ {
+   "name": "@nextui-org/accordion",
+-  "version": "0.0.0-dev-v2-20230728014036",
++  "version": "0.0.0-dev-v2-20230728201112",
+   "description": "Collapse display a list of high-level options that can expand/collapse to reveal more information.",
+   "keywords": [
+     "react",\n- packages/components/accordion/src/accordion-item.tsx (modified, 8 changes)\n  Patch: @@ -1,14 +1,14 @@
+-import {forwardRef} from "react";
++import {forwardRef} from "@nextui-org/system";
+ import {useMemo, ReactNode} from "react";
+ import {ChevronIcon} from "@nextui-org/shared-icons";
+ import {AnimatePresence, motion, useWillChange} from "framer-motion";
+ import {TRANSITION_VARIANTS} from "@nextui-org/framer-transitions";
+ 
+ import {UseAccordionItemProps, useAccordionItem} from "./use-accordion-item";
+ 
+-export interface AccordionItemProps extends Omit<UseAccordionItemProps, "ref"> {}
++export interface AccordionItemProps extends UseAccordionItemProps {}
+ 
+-const AccordionItem = forwardRef<HTMLButtonElement, AccordionItemProps>((props, ref) => {
++const AccordionItem = forwardRef<"button", AccordionItemProps>((props, ref) => {
+   const {
+     Component,
+     classNames,
+@@ -30,7 +30,7 @@ const AccordionItem = forwardRef<HTMLButtonElement, AccordionItemProps>((props,
+     getSubtitleProps,
+     getContentProps,
+     getIndicatorProps,
+-  } = useAccordionItem({ref, ...props});
++  } = useAccordionItem({...props, ref});
+ 
+   const willChange = useWillChange();
+ \n- packages/components/accordion/src/accordion.tsx (modified, 8 changes)\n  Patch: @@ -1,14 +1,14 @@
+-import {forwardRef} from "react";
++import {forwardRef} from "@nextui-org/system";
+ import {LayoutGroup} from "framer-motion";
+ import {Divider} from "@nextui-org/divider";
+ import {Fragment, Key, useCallback, useMemo} from "react";
+ 
+ import {UseAccordionProps, useAccordion} from "./use-accordion";
+ import AccordionItem from "./accordion-item";
+ 
+-export interface AccordionProps extends Omit<UseAccordionProps, "ref"> {}
++export interface AccordionProps extends UseAccordionProps {}
+ 
+-const AccordionGroup = forwardRef<HTMLDivElement, AccordionProps>((props, ref) => {
++const AccordionGroup = forwardRef<"div", AccordionProps>((props, ref) => {
+   const {
+     Component,
+     values,
+@@ -20,8 +20,8 @@ const AccordionGroup = forwardRef<HTMLDivElement, AccordionProps>((props, ref) =
+     handleFocusChanged: handleFocusChangedProps,
+     itemClasses,
+   } = useAccordion({
+-    ref,
+     ...props,
++    ref,
+   });
+   const handleFocusChanged = useCallback(
+     (isFocused: boolean, key: Key) => handleFocusChangedProps(isFocused, key),\n- packages/components/accordion/stories/accordion.stories.tsx (modified, 16 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import React from "react";
+-import {ComponentStory, ComponentMeta} from "@storybook/react";
++import {ComponentMeta} from "@storybook/react";
+ import {accordionItem} from "@nextui-org/theme";
+ import {
+   AnchorIcon,
+@@ -52,7 +52,7 @@ const defaultProps = {
+ const defaultContent =
+   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+ 
+-const Template: ComponentStory<typeof Accordion> = (args: AccordionProps) => (
++const Template = (args: AccordionProps) => (
+   <Accordion {...args}>
+     <AccordionItem key="1" aria-label="Accordion 1" title="Accordion 1">
+       {defaultContent}
+@@ -66,7 +66,7 @@ const Template: ComponentStory<typeof Accordion> = (args: AccordionProps) => (
+   </Accordion>
+ );
+ 
+-const TemplateWithSubtitle: ComponentStory<typeof Accordion> = (args: AccordionProps) => (
++const TemplateWithSubtitle = (args: AccordionProps) => (
+   <Accordion {...args}>
+     <AccordionItem key="1" aria-label="Accordion 1" subtitle="Press to expand" title="Accordion 1">
+       {defaultContent}
+@@ -89,7 +89,7 @@ const TemplateWithSubtitle: ComponentStory<typeof Accordion> = (args: AccordionP
+   </Accordion>
+ );
+ 
+-const TemplateWithStartContent: ComponentStory<typeof Accordion> = (args: AccordionProps) => (
++const TemplateWithStartContent = (args: AccordionProps) => (
+   <Accordion {...args} variant="shadow">
+     <AccordionItem
+       key="1"
+@@ -146,7 +146,7 @@ const TemplateWithStartContent: ComponentStory<typeof Accordion> = (args: Accord
+   </Accordion>
+ );
+ 
+-const VariantsTemplate: ComponentStory<typeof Accordion> = (args: AccordionProps) => (
++const VariantsTemplate = (args: AccordionProps) => (
+   <div className="flex flex-col gap-8 mb-24">
+     <div className="flex flex-col gap-4">
+       <h3>Default</h3>
+@@ -207,7 +207,7 @@ const VariantsTemplate: ComponentStory<typeof Accordion> = (args: AccordionProps
+   </div>
+ );
+ 
+-const CustomInidicatorTemplate: ComponentStory<typeof Accordion> = (args: AccordionProps) => (
++const CustomInidicatorTemplate = (args: AccordionProps) => (
+   <Accordion {...args}>
+     <AccordionItem key="anchor" aria-label="Anchor" indicator={<AnchorIcon />} title="Anchor">
+       {defaultContent}
+@@ -221,7 +221,7 @@ const CustomInidicatorTemplate: ComponentStory<typeof Accordion> = (args: Accord
+   </Accordion>
+ );
+ 
+-const ControlledTemplate: ComponentStory<typeof Accordion> = (args: AccordionProps) => {
++const ControlledTemplate = (args: AccordionProps) => {
+   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set(["1"]));
+ 
+   // eslint-disable-next-line no-console
+@@ -242,7 +242,7 @@ const ControlledTemplate: ComponentStory<typeof Accordion> = (args: AccordionPro
+   );
+ };
+ 
+-const CustomWithClassNamesTemplate: ComponentStory<typeof Accordion> = (args: AccordionProps) => {
++const CustomWithClassNamesTemplate = (args: AccordionProps) => {
+   const itemClasses: AccordionItemProps["classNames"] = {
+     base: "py-0 w-full",
+     title: "font-normal text-base",\n- packages/components/avatar/package.json (modified, 2 changes)\n  Patch: @@ -1,6 +1,6 @@
+ {
+   "name": "@nextui-org/avatar",
+-  "version": "0.0.0-dev-v2-20230728014036",
++  "version": "0.0.0-dev-v2-20230728201112",
+   "description": "The Avatar component is used to represent a user, and displays the profile picture, initials or fallback icon.",
+   "keywords": [
+     "avatar"\n- packages/components/avatar/src/avatar-group.tsx (modified, 8 changes)\n  Patch: @@ -1,12 +1,12 @@
+-import {forwardRef} from "react";
++import {forwardRef} from "@nextui-org/system";
+ 
+ import {AvatarGroupProvider} from "./avatar-group-context";
+ import {useAvatarGroup, UseAvatarGroupProps} from "./use-avatar-group";
+ import Avatar from "./avatar";
+ 
+-export interface AvatarGroupProps extends Omit<UseAvatarGroupProps, "ref"> {}
++export interface AvatarGroupProps extends UseAvatarGroupProps {}
+ 
+-const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>((props, ref) => {
++const AvatarGroup = forwardRef<"div", AvatarGroupProps>((props, ref) => {
+   const {
+     Component,
+     clones,
+@@ -15,8 +15,8 @@ const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>((props, ref) =>
+     renderCount = (count) => <Avatar className="hover:-translate-x-0" name={`+${count}`} />,
+     getAvatarGroupProps,
+   } = useAvatarGroup({
+-    ref,
+     ...props,
++    ref,
+   });
+ 
+   return (\n- packages/components/avatar/src/avatar.tsx (modified, 9 changes)\n  Patch: @@ -1,11 +1,12 @@
+-import {useMemo, forwardRef} from "react";
++import {useMemo} from "react";
++import {forwardRef} from "@nextui-org/system";
+ 
+ import {AvatarIcon} from "./avatar-icon";
+ import {useAvatar, UseAvatarProps} from "./use-avatar";
+ 
+-export interface AvatarProps extends Omit<UseAvatarProps, "ref"> {}
++export interface AvatarProps extends UseAvatarProps {}
+ 
+-const Avatar = forwardRef<HTMLSpanElement, AvatarProps>((props, ref) => {
++const Avatar = forwardRef<"span", AvatarProps>((props, ref) => {
+   const {
+     Component,
+     ImgComponent,
+@@ -21,8 +22,8 @@ const Avatar = forwardRef<HTMLSpanElement, AvatarProps>((props, ref) => {
+     getAvatarProps,
+     getImageProps,
+   } = useAvatar({
+-    ref,
+     ...props,
++    ref,
+   });
+ 
+   const fallback = useMemo(() => {\n- packages/components/avatar/src/use-avatar.ts (modified, 11 changes)\n  Patch: @@ -1,4 +1,4 @@
+-import type {AvatarVariantProps, AvatarSlots, SlotsToClasses} from "@nextui-org/theme";
++import type {AvatarSlots, AvatarVariantProps, SlotsToClasses} from "@nextui-org/theme";
+ 
+ import {avatar} from "@nextui-org/theme";
+ import {HTMLNextUIProps, PropGetter} from "@nextui-org/system";
+@@ -13,11 +13,7 @@ import {useHover} from "@react-aria/interactions";
+ 
+ import {useAvatarGroupContext} from "./avatar-group-context";
+ 
+-export interface UseAvatarProps
+-  extends Omit<
+-    HTMLNextUIProps<"span", AvatarVariantProps>,
+-    "children" | "isInGroup" | "isInGridGroup"
+-  > {
++interface Props extends HTMLNextUIProps<"span"> {
+   /**
+    * Ref to the DOM node.
+    */
+@@ -97,6 +93,9 @@ export interface UseAvatarProps
+   classNames?: SlotsToClasses<AvatarSlots>;
+ }
+ 
++export type UseAvatarProps = Props &
++  Omit<AvatarVariantProps, "children" | "isInGroup" | "isInGridGroup">;
++
+ export function useAvatar(props: UseAvatarProps = {}) {
+   const groupContext = useAvatarGroupContext();
+   const isInGroup = !!groupContext;\n- packages/components/avatar/stories/avatar-group.stories.tsx (modified, 4 changes)\n  Patch: @@ -1,6 +1,6 @@
+ /* eslint-disable react/display-name */
+ import React from "react";
+-import {ComponentStory, ComponentMeta} from "@storybook/react";
++import {ComponentMeta} from "@storybook/react";
+ 
+ import {Avatar, AvatarGroup, AvatarGroupProps} from "../src";
+ 
+@@ -34,7 +34,7 @@ export default {
+   },
+ } as ComponentMeta<typeof AvatarGroup>;
+ 
+-const Template: ComponentStory<typeof AvatarGroup> = (args: AvatarGroupProps) => (
++const Template = (args: AvatarGroupProps) => (
+   <AvatarGroup {...args}>
+     <Avatar src="https://i.pravatar.cc/300?u=a042581f4e29026705d" />
+     <Avatar src="https://i.pravatar.cc/300?u=a042581f4e29026706d" />\n- packages/components/avatar/stories/avatar.stories.tsx (modified, 4 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import React from "react";
+-import {ComponentStory, ComponentMeta} from "@storybook/react";
++import {ComponentMeta} from "@storybook/react";
+ import {Activity, Camera} from "@nextui-org/shared-icons";
+ import {avatar} from "@nextui-org/theme";
+ 
+@@ -30,7 +30,7 @@ export default {
+   },
+ } as ComponentMeta<typeof Avatar>;
+ 
+-const Template: ComponentStory<typeof Avatar> = (args: AvatarProps) => <Avatar {...args} />;
++const Template = (args: AvatarProps) => <Avatar {...args} />;
+ 
+ const defaultProps = {
+   ...avatar.defaultVariants,\n- packages/components/badge/package.json (modified, 2 changes)\n  Patch: @@ -1,6 +1,6 @@
+ {
+   "name": "@nextui-org/badge",
+-  "version": "0.0.0-dev-v2-20230728014036",
++  "version": "0.0.0-dev-v2-20230728201112",
+   "description": "Badges are used as a small numerical value or status descriptor for UI elements.",
+   "keywords": [
+     "badge"\n- packages/components/badge/src/badge.tsx (modified, 8 changes)\n  Patch: @@ -1,17 +1,17 @@
+ import type {ReactNode} from "react";
+ 
+-import {forwardRef} from "react";
++import {forwardRef} from "@nextui-org/system";
+ 
+ import {UseBadgeProps, useBadge} from "./use-badge";
+ 
+-export interface BadgeProps extends Omit<UseBadgeProps, "ref"> {
++export interface BadgeProps extends UseBadgeProps {
+   children: ReactNode;
+ }
+ 
+-const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
++const Badge = forwardRef<"span", BadgeProps>((props, ref) => {
+   const {Component, children, content, slots, classNames, getBadgeProps} = useBadge({
+-    ref,
+     ...props,
++    ref,
+   });
+ 
+   return (\n- packages/components/badge/src/use-badge.ts (modified, 2 changes)\n  Patch: @@ -8,7 +8,7 @@ import {clsx} from "@nextui-org/shared-utils";
+ import {ReactRef} from "@nextui-org/react-utils";
+ import {useMemo} from "react";
+ 
+-export interface Props extends Omit<HTMLNextUIProps<"span">, "content"> {
++interface Props extends HTMLNextUIProps<"span", "content"> {
+   /**
+    * Ref to the DOM node.
+    */\n- packages/components/badge/stories/badge.stories.tsx (modified, 8 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import React from "react";
+-import {ComponentStory, ComponentMeta} from "@storybook/react";
++import {ComponentMeta} from "@storybook/react";
+ import {badge} from "@nextui-org/theme";
+ import {Avatar} from "@nextui-org/avatar";
+ import {CheckIcon} from "@nextui-org/shared-icons";
+@@ -65,7 +65,7 @@ const defaultProps = {
+   content: 5,
+ };
+ 
+-const Template: ComponentStory<typeof Badge> = (args: BadgeProps) => (
++const Template = (args: BadgeProps) => (
+   <Badge {...args}>
+     <Avatar
+       isBordered={args.classNames?.badge?.includes("bottom")}
+@@ -75,7 +75,7 @@ const Template: ComponentStory<typeof Badge> = (args: BadgeProps) => (
+   </Badge>
+ );
+ 
+-const ShapesTemplate: ComponentStory<typeof Badge> = (args: BadgeProps) => (
++const ShapesTemplate = (args: BadgeProps) => (
+   <div className="flex gap-4 items-center">
+     <Badge {...args} shape="rectangle">
+       <Avatar isBordered radius="lg" src="https://i.pravatar.cc/150?u=a042f81f4e29026024d" />
+@@ -86,7 +86,7 @@ const ShapesTemplate: ComponentStory<typeof Badge> = (args: BadgeProps) => (
+   </div>
+ );
+ 
+-const InvisibleTemplate: ComponentStory<typeof Badge> = (args: BadgeProps) => {
++const InvisibleTemplate = (args: BadgeProps) => {
+   const [isInvisible, setIsInvisible] = React.useState(false);
+ 
+   return (\n- packages/components/button/package.json (modified, 2 changes)\n  Patch: @@ -1,6 +1,6 @@
+ {
+   "name": "@nextui-org/button",
+-  "version": "0.0.0-dev-v2-20230728014036",
++  "version": "0.0.0-dev-v2-20230728201112",
+   "description": "Buttons allow users to perform actions and choose with a single tap.",
+   "keywords": [
+     "button"\n- packages/components/button/src/button-group.tsx (modified, 8 changes)\n  Patch: @@ -1,14 +1,14 @@
+-import {forwardRef} from "react";
++import {forwardRef} from "@nextui-org/system";
+ 
+ import {ButtonGroupProvider} from "./button-group-context";
+ import {UseButtonGroupProps, useButtonGroup} from "./use-button-group";
+ 
+-export interface ButtonGroupProps extends Omit<UseButtonGroupProps, "ref"> {}
++export interface ButtonGroupProps extends UseButtonGroupProps {}
+ 
+-const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>((props, ref) => {
++const ButtonGroup = forwardRef<"div", ButtonGroupProps>((props, ref) => {
+   const {Component, domRef, context, children, classNames, getButtonGroupProps} = useButtonGroup({
+-    ref,
+     ...props,
++    ref,
+   });
+ 
+   return (\n- packages/components/button/src/button.tsx (modified, 8 changes)\n  Patch: @@ -1,12 +1,12 @@
+ import {Spinner} from "@nextui-org/spinner";
+ import {Ripple} from "@nextui-org/ripple";
+-import {forwardRef} from "react";
++import {forwardRef} from "@nextui-org/system";
+ 
+ import {UseButtonProps, useButton} from "./use-button";
+ 
+-export interface ButtonProps extends Omit<UseButtonProps, "ref"> {}
++export interface ButtonProps extends UseButtonProps {}
+ 
+-const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
++const Button = forwardRef<"button", ButtonProps>((props, ref) => {
+   const {
+     Component,
+     domRef,
+@@ -22,8 +22,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+     disableRipple,
+     getButtonProps,
+   } = useButton({
+-    ref,
+     ...props,
++    ref,
+   });
+ 
+   return (\n- packages/components/button/src/use-button-group.ts (modified, 2 changes)\n  Patch: @@ -6,7 +6,7 @@ import {buttonGroup} from "@nextui-org/theme";
+ import {HTMLNextUIProps, PropGetter, mapPropsVariants} from "@nextui-org/system";
+ import {useDOMRef} from "@nextui-org/react-utils";
+ import {useMemo, useCallback} from "react";
+-interface Props extends HTMLNextUIProps<"div">, ButtonGroupVariantProps {
++interface Props extends HTMLNextUIProps, ButtonGroupVariantProps {
+   /**
+    * Ref to the DOM node.
+    */\n- packages/components/button/stories/button-group.stories.tsx (modified, 4 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import React from "react";
+-import {ComponentStory, ComponentMeta} from "@storybook/react";
++import {ComponentMeta} from "@storybook/react";
+ import {button, buttonGroup} from "@nextui-org/theme";
+ 
+ import {Button, ButtonGroup, ButtonGroupProps} from "../src";
+@@ -55,7 +55,7 @@ const defaultProps = {
+   ...buttonGroup.defaultVariants,
+ };
+ 
+-const Template: ComponentStory<typeof ButtonGroup> = (args: ButtonGroupProps) => (
++const Template = (args: ButtonGroupProps) => (
+   <ButtonGroup {...args}>
+     <Button>One</Button>
+     <Button>Two</Button>\n- packages/components/button/stories/button.stories.tsx (modified, 6 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import React from "react";
+-import {ComponentStory, ComponentMeta} from "@storybook/react";
++import {ComponentMeta} from "@storybook/react";
+ import {button} from "@nextui-org/theme";
+ import {Camera, HeadphonesIcon, Notification} from "@nextui-org/shared-icons";
+ 
+@@ -68,9 +68,9 @@ const defaultProps = {
+   ...button.defaultVariants,
+ };
+ 
+-const Template: ComponentStory<typeof Button> = (args: ButtonProps) => <Button {...args} />;
++const Template = (args: ButtonProps) => <Button {...args} />;
+ 
+-const StateTemplate: ComponentStory<typeof Button> = (args: ButtonProps) => {
++const StateTemplate = (args: ButtonProps) => {
+   const [isOpen, setIsOpen] = React.useState(false);
+ 
+   const handleClick = () => {\n- packages/components/card/package.json (modified, 2 changes)\n  Patch: @@ -1,6 +1,6 @@
+ {
+   "name": "@nextui-org/card",
+-  "version": "0.0.0-dev-v2-20230728014036",
++  "version": "0.0.0-dev-v2-20230728201112",
+   "description": "Card is a container for text, photos, and actions in the context of a single subject.",
+   "keywords": [
+     "card"\n- packages/components/card/src/card-body.tsx (modified, 2 changes)\n  Patch: @@ -4,7 +4,7 @@ import {clsx} from "@nextui-org/shared-utils";
+ 
+ import {useCardContext} from "./card-context";
+ 
+-const CardBody = forwardRef<HTMLNextUIProps, "div">((props, ref) => {
++const CardBody = forwardRef<"div", HTMLNextUIProps<"div">>((props, ref) => {
+   const {as, className, children, ...otherProps} = props;
+ 
+   const Component = as || "div";\n- packages/components/card/src/card-footer.tsx (modified, 2 changes)\n  Patch: @@ -6,7 +6,7 @@ import {useCardContext} from "./card-context";
+ 
+ export interface CardFooterProps extends HTMLNextUIProps<"div"> {}
+ 
+-const CardFooter = forwardRef<CardFooterProps, "div">((props, ref) => {
++const CardFooter = forwardRef<"div", CardFooterProps>((props, ref) => {
+   const {as, className, children, ...otherProps} = props;
+ 
+   const Component = as || "div";\n- packages/components/card/src/card-header.tsx (modified, 2 changes)\n  Patch: @@ -4,7 +4,7 @@ import {clsx} from "@nextui-org/shared-utils";
+ 
+ import {useCardContext} from "./card-context";
+ 
+-const CardHeader = forwardRef<HTMLNextUIProps, "div">((props, ref) => {
++const CardHeader = forwardRef<"div", HTMLNextUIProps<"div">>((props, ref) => {
+   const {as, className, children, ...otherProps} = props;
+   const Component = as || "div";
+ \n- packages/components/card/src/card.tsx (modified, 8 changes)\n  Patch: @@ -1,12 +1,12 @@
+-import {forwardRef} from "react";
++import {forwardRef} from "@nextui-org/system";
+ import {Ripple} from "@nextui-org/ripple";
+ 
+ import {CardProvider} from "./card-context";
+ import {useCard, UseCardProps} from "./use-card";
+ 
+-export interface CardProps extends Omit<UseCardProps, "ref"> {}
++export interface CardProps extends UseCardProps {}
+ 
+-const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
++const Card = forwardRef<"div", CardProps>((props, ref) => {
+   const {
+     children,
+     context,
+@@ -17,8 +17,8 @@ const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
+     disableRipple,
+     getCardProps,
+   } = useCard({
+-    ref,
+     ...props,
++    ref,
+   });
+ 
+   return (\n- packages/components/card/stories/card.stories.tsx (modified, 20 changes)\n  Patch: @@ -1,5 +1,5 @@
+ import React from "react";
+-import {ComponentStory, ComponentMeta} from "@storybook/react";
++import {ComponentMeta} from "@storybook/react";
+ import {card} from "@nextui-org/theme";
+ import {Link} from "@nextui-org/link";
+ import {Button} from "@nextui-org/button";
+@@ -74,15 +74,15 @@ const defaultProps = {
+   disableRipple: false,
+ };
+ 
+-const Template: ComponentStory<typeof Card> = (args: CardProps) => (
++const Template = (args: CardProps) => (
+   <Card {...args} className="max-w-md">
+     <CardBody>
+       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed</p>
+     </CardBody>
+   </Card>
+ );
+ 
+-const WithDividerTemplate: ComponentStory<typeof Card> = (args: CardProps) => (
++const WithDividerTemplate = (args: CardProps) => (
+   <Card {...args} className="max-w-md">
+     <CardHeader className="border-b border-divider dark:border-divider-dark">
+       <strong>Description</strong>
+@@ -99,7 +99,7 @@ const WithDividerTemplate: ComponentStory<typeof Card> = (args: CardProps) => (
+   </Card>
+ );
+ 
+-const WithFooterTemplate: ComponentStory<typeof Card> = (args: CardProps) => (
++const WithFooterTemplate = (args: CardProps) => (
+   <Card {...args} className="p-4 max-w-md">
+     <CardHeader className="flex gap-3">
+       <Image
+@@ -125,7 +125,7 @@ const WithFooterTemplate: ComponentStory<typeof Card> = (args: CardProps) => (
+   </Card>
+ );
+ 
+-const WithAbsImageHeaderTemplate: ComponentStory<typeof Card> = (args: CardProps) => (
++const WithAbsImageHeaderTemplate = (args: CardProps) => (
+   <Card {...args} className="max-w-[330px]">
+     <CardHeader className="absolute top-2 z-20">
+       <div className="flex flex-col">
+@@ -143,7 +143,7 @@ const WithAbsImageHeaderTemplate: ComponentStory<typeof Card> = (args: CardProps
+   </Card>
+ );
+ 
+-const WithAbsImgHeaderFooterTemplate: ComponentStory<typeof Card> = (args: CardProps) => (
++const WithAbsImgHeaderFooterTemplate = (args: CardProps) => (
+   <Card className="w-[330px] bg-zinc-100 dark:bg-zinc-100" {...args}>
+     <CardHeader className="absolute top-2 z-10">
+       <div className="flex flex-col gap-2">
+@@ -174,7 +174,7 @@ const WithAbsImgHeaderFooterTemplate: ComponentStory<typeof Card> = (args: CardP
+   </Card>
+ );
+ 
+-const CoverImgTemplate: ComponentStory<typeof Card> = (args: CardProps) => (
++const CoverImgTemplate = (args: CardProps) => (
+   <div className="max-w-[900px] gap-2 grid grid-cols-12 grid-rows-2 px-8">
+     <Card {...args} className="col-span-12 sm:col-span-4">
+       <CardHeader className="absolute z-10 top-1 flex-col !items-start">
+@@ -257,7 +257,7 @@ const CoverImgTemplate: ComponentStory<typeof Card> = (args: CardProps) => (
+   </div>
+ );
+ 
+-const CenterImgTemplate: ComponentStory<typeof Card> = (args: CardProps) => (
++const CenterImgTemplate = (args: CardProps) => (
+   <Card {...args} className="max-w-fit py-4 px-0">
+     <CardHeader className="pb-0 pt-2 px-4 flex-col !items-start">
+       <p className="text-xs uppercase font-bold">Daily Mix</p>
+@@ -275,7 +275,7 @@ const CenterImgTemplate: ComponentStory<typeof Card> = (args: CardProps) => (
+   </Card>
+ );
+ 
+-const PrimaryActionTemplate: ComponentStory<typeof Card> = (args: CardProps) => {
++const PrimaryActionTemplate = (args: CardProps) => {
+   const list = [
+     {
+       title: "Orange",
+@@ -348,7 +348,7 @@ const PrimaryActionTemplate: ComponentStory<typeof Card> = (args: CardProps) =>
+   );
+ };
+ 
+-const CenterImgWithHeaderTemplate: ComponentStory<typeof Card> = (args: CardProps) => {
++const CenterImgWithHeaderTemplate = (args: CardProps) => {
+   const list = [
+     {
+       title: "Mac",\n- packages/components/checkbox/package.json (modified, 2 changes)\n  Patch: @@ -1,6 +1,6 @@
+ {
+   "name": "@nextui-org/checkbox",
+-  "version": "0.0.0-dev-v2-20230728014036",
++  "version": "0.0.0-dev-v2-20230728201112",
+   "description": "Checkboxes allow users to select multiple items from a list of individual items, or to mark one individual item as selected.",
+   "keywords": [
+     "checkbox"\n

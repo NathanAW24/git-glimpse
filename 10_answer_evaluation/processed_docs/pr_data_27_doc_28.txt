@@ -1,0 +1,229 @@
+Pull Request Number: 553
+Title: fix: Switch Animation In Safari
+Base Branch: next
+Head Branch: main
+Author: Unknown
+URL: https://github.com/nextui-org/nextui/pull/553
+State: MERGED
+Created At: 2022-06-18T18:26:47Z
+Merged At: 2022-07-15T18:09:20Z
+Participants: jrgarciadev, codecov-commenter
+
+Description:
+Closes #525
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+Switch circle is shaking when we off switch
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+Shaking bug is solved but there is some lag because width animation is very heavy.
+It's fine at Chrome but it seems Safari cannot process this kind of animation well.
+Option1:
+So I would like to suggest to remove width animation in active state.
+Option2:
+Or if you want to maintain current interaction.
+We can change prop checked to css &:checked + .circle.
+
+Commits:
+- fix: Switch Animation In Safari\n- fix: variants -> css selector\n- Merge remote-tracking branch 'upstream/main'\n- Merge remote-tracking branch 'upstream/main'\n- Merge branch 'next' into main\n- fix: lint\n- Merge branch 'next' into main\n- fix: active transform based on animated\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Hey @TroyTae thank you so much, I'll check this out as soon as possible 🙏🏻 \n- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/553?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#553](https://codecov.io/gh/nextui-org/nextui/pull/553?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (f71e7f4) into [main](https://codecov.io/gh/nextui-org/nextui/commit/8eff522748f8c9c17d90e9bf9341503b9439c74b?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (8eff522) will **not change** coverage.
+> The diff coverage is `100.00%`.
+
+```diff
+@@           Coverage Diff           @@
+##             main     #553   +/-   ##
+=======================================
+  Coverage   74.82%   74.82%           
+=======================================
+  Files         200      200           
+  Lines        3098     3098           
+  Branches      956      956           
+=======================================
+  Hits         2318     2318           
+  Misses        765      765           
+  Partials       15       15           
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/553?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/react/src/switch/switch.tsx](https://codecov.io/gh/nextui-org/nextui/pull/553/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3N3aXRjaC9zd2l0Y2gudHN4) | `93.93% <ø> (ø)` | |
+| [packages/react/src/switch/switch.styles.ts](https://codecov.io/gh/nextui-org/nextui/pull/553/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3N3aXRjaC9zd2l0Y2guc3R5bGVzLnRz) | `100.00% <100.00%> (ø)` | |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/553?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/553?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [8eff522...f71e7f4](https://codecov.io/gh/nextui-org/nextui/pull/553?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n- jrgarciadev: Hey @TroyTae 🙌🏼, could you please fix the conflicts and format the code with the new eslint rules? \n- jrgarciadev: Hey @TroyTae thank you, I going to check it out, regarding which branch you should use before sending a PR, it depends on the change, if your changes don't include `package/react` changes, you can send the PR based on the `main` branch otherwise you should use the `next` branch because is the branch that we use for the `next` release \n- jrgarciadev: Hey, @TroyTae sorry, I updated the `next` branch with the latest `main` changes, could you please update the PR?\n- jrgarciadev: Hey @TroyTae could you please remove the `circle` translation on the non-animated `Switch`?
+
+Here's the issue:
+https://user-images.githubusercontent.com/30373425/179251376-c1e0b8c3-9ada-426e-a596-4b214f4732f4.mov
+
+\n
+
+Files Changed:
+- packages/react/src/switch/switch.styles.ts (modified, 90 changes)\n  Patch: @@ -119,18 +119,15 @@ export const StyledSwitchContainer = styled("label", {
+   },
+ });
+ 
+-export const StyledSwitchInput = styled("input", {}, sharedVisuallyHidden);
+-
+ export const StyledSwitchCircle = styled("span", {
+   position: "absolute",
+   display: "flex",
+   size: "calc($$switchHeight * 0.7)",
+   jc: "center",
+   ai: "center",
+-  top: "50%",
+-  transform: "translateY(-50%)",
+-  left: "calc($$switchWidth / 15)",
+-  transition: "left 0.25s ease, width 0.2s ease",
++  top: "calc(50% - $$switchHeight * 0.35)",
++  left: "0",
++  transition: "transform 0.25s ease, width 0.2s ease",
+   bg: "$background",
+   br: "$pill",
+   "& svg": {
+@@ -161,9 +158,6 @@ export const StyledSwitch = styled(
+       checked: {
+         true: {
+           bg: "$$switchColor",
+-          [`& ${StyledSwitchCircle}`]: {
+-            left: "calc(100% - ($$switchWidth / 15) - $$switchHeight * 0.7)",
+-          },
+           "&:hover:not(&:active)": {
+             bg: "$$switchColorHover",
+           },
+@@ -177,7 +171,6 @@ export const StyledSwitch = styled(
+             borderColor: "$$switchColor",
+           },
+           [`& ${StyledSwitchCircle}`]: {
+-            left: "calc(($$switchWidth / 15) - ($$switchBorderW / 2))",
+             bg: "$accents2",
+           },
+         },
+@@ -241,30 +234,6 @@ export const StyledSwitch = styled(
+           normalShadowVar: "$$switchColorShadow",
+         },
+       },
+-      // animated && !checked
+-      {
+-        animated: true,
+-        checked: false,
+-        css: {
+-          "&:active": {
+-            [`& ${StyledSwitchCircle}`]: {
+-              left: "calc($$switchWidth / 7.5)",
+-            },
+-          },
+-        },
+-      },
+-      // animated && checked
+-      {
+-        animated: true,
+-        checked: true,
+-        css: {
+-          "&:active": {
+-            [`& ${StyledSwitchCircle}`]: {
+-              left: "calc(100% - ($$switchWidth / 5) - $$switchHeight * 0.7)",
+-            },
+-          },
+-        },
+-      },
+       // checked && bordered
+       {
+         checked: true,
+@@ -276,7 +245,6 @@ export const StyledSwitch = styled(
+             borderColor: "transparent",
+           },
+           [`& ${StyledSwitchCircle}`]: {
+-            left: "calc(100% - ($$switchWidth / 15) - $$switchHeight * 0.7 + ($$switchBorderW / 2))",
+             bg: "$background",
+           },
+         },
+@@ -286,6 +254,58 @@ export const StyledSwitch = styled(
+   sharedFocus,
+ );
+ 
++export const StyledSwitchInput = styled(
++  "input",
++  {
++    [`& + ${StyledSwitch} > ${StyledSwitchCircle}`]: {
++      transform: "translateX(calc($$switchWidth / 15))",
++    },
++    [`&:checked + ${StyledSwitch} > ${StyledSwitchCircle}`]: {
++      transform: "translateX(calc($$switchWidth - $$switchWidth / 15 - $$switchHeight * 0.7))",
++    },
++    variants: {
++      animated: {
++        true: {
++          [`& + ${StyledSwitch}:active > ${StyledSwitchCircle}`]: {
++            transform: "translateX(calc($$switchWidth / 7.5))",
++          },
++          [`&:checked + ${StyledSwitch}:active > ${StyledSwitchCircle}`]: {
++            transform:
++              "translateX(calc($$switchWidth - $$switchWidth / 7.5 - $$switchWidth / 10 - $$switchHeight * 0.7))",
++          },
++        },
++      },
++      bordered: {
++        true: {
++          [`& + ${StyledSwitch} > ${StyledSwitchCircle}`]: {
++            transform: "translateX(calc($$switchWidth / 15 - $$switchBorderW / 2))",
++          },
++          [`&:checked + ${StyledSwitch} > ${StyledSwitchCircle}`]: {
++            transform:
++              "translateX(calc($$switchWidth - $$switchWidth / 15 - $$switchBorderW * 1.5 - $$switchHeight * 0.7))",
++          },
++        },
++      },
++    },
++    compoundVariants: [
++      {
++        animated: true,
++        bordered: true,
++        css: {
++          [`& + ${StyledSwitch}:active > ${StyledSwitchCircle}`]: {
++            transform: "translateX(calc($$switchWidth / 7.5 - $$switchBorderW / 2))",
++          },
++          [`&:checked + ${StyledSwitch}:active > ${StyledSwitchCircle}`]: {
++            transform:
++              "translateX(calc($$switchWidth - $$switchWidth / 7.5 - $$switchWidth / 10 - $$switchBorderW * 1.5 - $$switchHeight * 0.7))",
++          },
++        },
++      },
++    ],
++  },
++  sharedVisuallyHidden,
++);
++
+ // types
+ export type SwitchVariantsProps = VariantProps<typeof StyledSwitch>;
+ export type SwitchContainerVariantsProps = VariantProps<typeof StyledSwitchContainer>;\n- packages/react/src/switch/switch.tsx (modified, 2 changes)\n  Patch: @@ -134,6 +134,8 @@ const Switch: React.FC<SwitchProps> = ({
+   return (
+     <StyledSwitchContainer animated={animated} data-state={getState} disabled={disabled} {...props}>
+       <StyledSwitchInput
++        animated={animated}
++        bordered={bordered}
+         checked={selfChecked}
+         className={clsx(`${preClass}-input`)}
+         data-state={getState}\n

@@ -1,0 +1,467 @@
+Pull Request Number: 4219
+Title: fix(select): hideEmptyContent API
+Base Branch: canary
+Head Branch: fix/select-hide-empty-content
+Author: Peterl561
+URL: https://github.com/nextui-org/nextui/pull/4219
+State: MERGED
+Created At: 2024-12-04T04:07:22Z
+Merged At: 2024-12-04T22:20:19Z
+Participants: Peterl561, jrgarciadev, wingkwong
+
+Description:
+Closes #2422
+📝 Description
+
+added hideEmptyContent to Select, which toggles whether to show dropdown when there is no content
+note that it defaults to false in useSelect, which is different from current behavior
+added Select storybook for hideEmptyContent
+
+⛳️ Current behavior (updates)
+see video below
+🚀 New behavior
+old on the left, new on the right
+
+  
+    
+    
+
+    hideEmptyContent.mp4
+    
+  
+
+  
+
+  
+
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+N/A
+
+Summary by CodeRabbit
+
+
+New Features
+
+Introduced hideEmptyContent property in the Select component, allowing users to control the visibility of empty content in the dropdown.
+Added examples in the storybook demonstrating the behavior of the Select component with empty content scenarios.
+
+
+
+Documentation
+
+Enhanced documentation for the Select component, detailing the new hideEmptyContent property and updating existing property descriptions for clarity.
+
+
+
+Tests
+
+Added new test cases to verify the behavior of the Select component when using the hideEmptyContent property.
+
+Commits:
+- fix(select): hideEmptyContent API\n- test(select): hideEmptyContent tests\n- docs(select): hideEmptyContent API\n- chore(select): hideEmptyContent storybook\n- chore(changeset): add hideEmptyContent API to select\n- refactor(select): hideEmptyContent nitpick\n- test(select): hideEmptyContent UI assertions\n- fix(select): hideEmptyContent default false\n- docs(select): hideEmptyContent default false\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 92fd1f421e14e7da49a085d7dbe89ff4734e7d2f
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                             | Type  |
+| -------------------------------- | ----- |
+| @nextui-org/use-aria-multiselect | Patch |
+| @nextui-org/select               | Patch |
+| @nextui-org/react                | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/Peterl561/nextui/new/fix/select-hide-empty-content?filename=.changeset/tidy-pans-study.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Fuse-aria-multiselect%22%3A%20patch%0A---%0A%0Afix(select)%3A%20hideEmptyContent%20API%0A)
+
+\n- vercel: @Peterl561 is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22d6a4e707cfdec92f26597f6ef57b59b0a39be9bc%22%7D%2C%22id%22%3A%22QmT4jF7dfHe3pZoWocNa2jUfHAqwa2YirtvvUaU3VvBGTi%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A4219%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This pull request introduces a new API feature called `hideEmptyContent` to the `Select` component, allowing users to control the visibility of the dropdown when there are no items. The implementation includes updates to the component's logic, documentation, and tests to ensure proper functionality. Additionally, it modifies the control flow in related hooks and components to integrate this new property effectively.
+
+## Changes
+
+| File Path                                             | Change Summary                                                                                       |
+|------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `.changeset/rotten-jobs-pull.md`                    | Added `hideEmptyContent` method to `select` component.                                             |
+| `apps/docs/content/docs/components/select.mdx`      | Updated documentation to include `hideEmptyContent` property and revised existing property formats.  |
+| `packages/components/select/__tests__/select.test.tsx` | Added tests for `hideEmptyContent` behavior in `Select` component.                                 |
+| `packages/components/select/src/use-select.ts`      | Introduced `hideEmptyContent` property to `UseSelectProps` type and updated `useSelect` logic.      |
+| `packages/components/select/stories/select.stories.tsx` | Added `EmptyTemplate` to demonstrate `Select` behavior with `hideEmptyContent`.                     |
+| `packages/hooks/use-aria-multiselect/src/use-multiselect-state.ts` | Added `hideEmptyContent` property to `MultiSelectProps` and updated logic in `useMultiSelectState`. |
+
+## Assessment against linked issues
+
+| Objective                                                                                       | Addressed | Explanation                                      |
+|-------------------------------------------------------------------------------------------------|-----------|-------------------------------------------------|
+| Control clicking behavior of the select component when the list is empty (#2422)              | ✅        |                                                 |
+
+## Possibly related PRs
+- **#2041**: This PR improves RTL support for the select component, which may relate to the overall functionality of the select component but does not directly connect to the `hideEmptyContent` API introduced in the main PR.
+- **#3568**: This PR adds test cases for the `Select` component, specifically addressing the behavior of the dropdown when the `hideEmptyContent` prop is set. This is directly related to the changes in the main PR that introduced the `hideEmptyContent` API.
+- **#3598**: This PR introduces changes to the `Select` component's event handling, which may indirectly relate to the overall functionality of the select component but does not specifically connect to the `hideEmptyContent` API.
+- **#3663**: This PR modifies the styling of the select component, which may relate to the overall appearance but does not directly connect to the `hideEmptyContent` API.
+- **#3853**: This PR addresses label placement discrepancies in the `Select` component, which may relate to the overall functionality of the select component but does not directly connect to the `hideEmptyContent` API.
+- **#3881**: This PR focuses on making the styles of the select component consistent with the input component, which may relate to the overall functionality but does not directly connect to the `hideEmptyContent` API.
+- **#4082**: This PR addresses the controlled `isInvalid` prop in the `Select` component, which may relate to the overall functionality of the select component but does not directly connect to the `hideEmptyContent` API.
+
+## Suggested labels
+`📋 Scope : Docs`, `👀 Status: To Review`
+
+## Suggested reviewers
+- wingkwong
+- jrgarciadev
+
+<!-- walkthrough_end -->
+
+
+
+
+
+---
+
+<details>
+<summary>📜 Recent review details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>📥 Commits</summary>
+
+Reviewing files that changed from the base of the PR and between 32c60ba3889613a20da32117815e4cdd8c959200 and 92fd1f421e14e7da49a085d7dbe89ff4734e7d2f.
+
+</details>
+
+<details>
+<summary>📒 Files selected for processing (3)</summary>
+
+* `apps/docs/content/docs/components/select.mdx` (3 hunks)
+* `packages/components/select/__tests__/select.test.tsx` (1 hunks)
+* `packages/components/select/src/use-select.ts` (3 hunks)
+
+</details>
+
+<details>
+<summary>🚧 Files skipped from review as they are similar to previous changes (3)</summary>
+
+* packages/components/select/src/use-select.ts
+* packages/components/select/__tests__/select.test.tsx
+* apps/docs/content/docs/components/select.mdx
+
+</details>
+
+</details>
+<!-- internal state start -->
+
+
+<!-- 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= -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- Peterl561: Not sure if the doc changes need to be a separate PR or not, as recommended by the PR template. Let me know and I'll open another PR for it.\n- vercel: [vc]: #pL2KVdXh454s4sKVjjqHVvh9rdFg7ykfo/34f2AVUkU=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvQ0hNSGU3dDVVYVhyNXVXZ3JWNGtUR25raGlEZCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXBldGVybDU2MS1maXgtc2UtYmNiZTJhLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXBldGVybDU2MS1maXgtc2UtYmNiZTJhLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi82MVgyVlkxWGZOVnBDRjFSdVM1WThOYWZjcGd1IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLXBldGVybDU2MS1maXgtc2VsZWN0LTk5NDUxYy1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLWRvY3MtdjItZ2l0LWZvcmstcGV0ZXJsNTYxLWZpeC1zZWxlY3QtOTk0NTFjLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/61X2VY1XfNVpCF1RuS5Y8Nafcpgu)) | [Visit Preview](https://nextui-docs-v2-git-fork-peterl561-fix-select-99451c-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-peterl561-fix-select-99451c-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 4, 2024 7:58pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/CHMHe7t5UaXr5uWgrV4kTGnkhiDd)) | [Visit Preview](https://nextui-storybook-v2-git-fork-peterl561-fix-se-bcbe2a-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-peterl561-fix-se-bcbe2a-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 4, 2024 7:58pm |
+
+
+\n
+
+Files Changed:
+- .changeset/rotten-jobs-pull.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/use-aria-multiselect": patch
++"@nextui-org/select": patch
++---
++
++add hideEmptyContent API to select\n- apps/docs/content/docs/components/select.mdx (modified, 10 changes)\n  Patch: @@ -485,7 +485,7 @@ the popover and listbox components.
+     },
+     {
+       attribute: "endContent",
+-      type: "ReactNode", 
++      type: "ReactNode",
+       description: "Element to be rendered in the right side of the select.",
+       default: "-"
+     },
+@@ -515,7 +515,7 @@ the popover and listbox components.
+     },
+     {
+       attribute: "itemHeight",
+-      type: "number", 
++      type: "number",
+       description: "The fixed height of each item in pixels. Required when using virtualization.",
+       default: "32"
+     },
+@@ -603,6 +603,12 @@ the popover and listbox components.
+       description: "Whether the select should disable the rotation of the selector icon.",
+       default: "false"
+     },
++    {
++      attribute: "hideEmptyContent",
++      type: "boolean",
++      description: "Whether the listbox will be prevented from opening when there are no items.",
++      default: "false"
++    },
+     {
+       attribute: "popoverProps",
+       type: "PopoverProps",\n- packages/components/select/__tests__/select.test.tsx (modified, 51 changes)\n  Patch: @@ -828,6 +828,57 @@ describe("Select", () => {
+       "Invalid value",
+     );
+   });
++
++  it("should not open dropdown when hideEmptyContent is true", async () => {
++    const wrapper = render(
++      <Select
++        hideEmptyContent
++        aria-label="Favorite Animal"
++        data-testid="hide-empty-content-true-test"
++        label="Favorite Animal"
++      >
++        {[]}
++      </Select>,
++    );
++
++    const select = wrapper.getByTestId("hide-empty-content-true-test");
++
++    // open the select dropdown
++    await user.click(select);
++
++    // assert that the select is not open
++    expect(select).not.toHaveAttribute("aria-expanded", "true");
++    // assert that the listbox is not rendered
++    expect(wrapper.queryByRole("listbox")).not.toBeInTheDocument();
++  });
++
++  it("should open dropdown when hideEmptyContent is false", async () => {
++    const wrapper = render(
++      <Select
++        aria-label="Favorite Animal"
++        data-testid="hide-empty-content-false-test"
++        hideEmptyContent={false}
++        label="Favorite Animal"
++      >
++        {[]}
++      </Select>,
++    );
++
++    const select = wrapper.getByTestId("hide-empty-content-false-test");
++
++    // open the select dropdown
++    await user.click(select);
++
++    // assert that the select is open
++    expect(select).toHaveAttribute("aria-expanded", "true");
++
++    const listbox = wrapper.getByRole("listbox");
++
++    // assert that the listbox is rendered
++    expect(listbox).toBeInTheDocument();
++    // assert that the listbox items are not rendered
++    expect(wrapper.queryByRole("option")).not.toBeInTheDocument();
++  });
+ });
+ 
+ describe("Select virtualization tests", () => {\n- packages/components/select/src/use-select.ts (modified, 7 changes)\n  Patch: @@ -166,6 +166,11 @@ export type UseSelectProps<T> = Omit<
+      * @default undefined
+      */
+     isVirtualized?: boolean;
++    /**
++     * Whether the listbox will be prevented from opening when there are no items.
++     * @default false
++     */
++    hideEmptyContent?: boolean;
+   };
+ 
+ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+@@ -209,6 +214,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+     onClose,
+     className,
+     classNames,
++    hideEmptyContent = false,
+     ...otherProps
+   } = props;
+ 
+@@ -263,6 +269,7 @@ export function useSelect<T extends object>(originalProps: UseSelectProps<T>) {
+     isDisabled: originalProps.isDisabled,
+     isInvalid: originalProps.isInvalid,
+     defaultOpen,
++    hideEmptyContent,
+     onOpenChange: (open) => {
+       onOpenChange?.(open);
+       if (!open) {\n- packages/components/select/stories/select.stories.tsx (modified, 33 changes)\n  Patch: @@ -411,6 +411,31 @@ const StartContentTemplate = ({color, variant, ...args}: SelectProps) => (
+   </Select>
+ );
+ 
++const EmptyTemplate = ({color, variant, ...args}: SelectProps) => (
++  <div className="w-full justify-center flex gap-2">
++    <Select
++      hideEmptyContent
++      className="max-w-xs"
++      color={color}
++      label="Hide empty content"
++      variant={variant}
++      {...args}
++    >
++      {[]}
++    </Select>
++    <Select
++      className="max-w-xs"
++      color={color}
++      hideEmptyContent={false}
++      label="Show empty content"
++      variant={variant}
++      {...args}
++    >
++      {[]}
++    </Select>
++  </div>
++);
++
+ const CustomItemsTemplate = ({color, variant, ...args}: SelectProps<User>) => (
+   <div className="w-full justify-center flex gap-2">
+     <Select
+@@ -864,6 +889,14 @@ export const StartContent = {
+   },
+ };
+ 
++export const EmptyContent = {
++  render: EmptyTemplate,
++
++  args: {
++    ...defaultProps,
++  },
++};
++
+ export const WithDescription = {
+   render: MirrorTemplate,
+ \n- packages/hooks/use-aria-multiselect/src/use-multiselect-state.ts (modified, 25 changes)\n  Patch: @@ -36,6 +36,10 @@ export interface MultiSelectProps<T>
+    * @default true
+    */
+   shouldFlip?: boolean;
++  /**
++   * Whether the menu should be hidden when there are no items.
++   */
++  hideEmptyContent?: boolean;
+ }
+ 
+ export interface MultiSelectState<T>
+@@ -82,6 +86,8 @@ export function useMultiSelectState<T extends {}>(props: MultiSelectProps<T>): M
+     value: listState.selectedKeys,
+   });
+ 
++  const shouldHideContent = listState.collection.size === 0 && props.hideEmptyContent;
++
+   return {
+     ...validationState,
+     ...listState,
+@@ -91,18 +97,17 @@ export function useMultiSelectState<T extends {}>(props: MultiSelectProps<T>): M
+       triggerState.close();
+     },
+     open(focusStrategy: FocusStrategy | null = null) {
+-      // Don't open if the collection is empty.
+-      if (listState.collection.size !== 0) {
+-        setFocusStrategy(focusStrategy);
+-        triggerState.open();
+-      }
++      if (shouldHideContent) return;
++
++      setFocusStrategy(focusStrategy);
++      triggerState.open();
+     },
+     toggle(focusStrategy: FocusStrategy | null = null) {
+-      if (listState.collection.size !== 0) {
+-        setFocusStrategy(focusStrategy);
+-        triggerState.toggle();
+-        validationState.commitValidation();
+-      }
++      if (shouldHideContent) return;
++
++      setFocusStrategy(focusStrategy);
++      triggerState.toggle();
++      validationState.commitValidation();
+     },
+     isFocused,
+     setFocused,\n

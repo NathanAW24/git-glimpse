@@ -1,0 +1,45 @@
+Pull Request Number: 626
+Title: fix(react-pagination): add active page to memoized callback deps
+Base Branch: next
+Head Branch: fix/pagination-onchange-619
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/626
+State: MERGED
+Created At: 2022-07-19T18:31:50Z
+Merged At: 2022-09-14T01:38:29Z
+Participants: tianenpang, piczi, jrgarciadev
+
+Description:
+Closes #619
+📝 Description
+Reading state in pagination's onChange will always return the initial value.
+⛳️ Current behavior (updates)
+Add activePage to the memoized callback deps.
+🚀 New behavior
+Update or changes if total, activePage (deps) has been changed.
+Read more: usecallback.
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+
+Note The branch based on next.
+
+Commits:
+- fix(react-pagination): add active page to memoized callback deps\n
+
+Labels:
+
+
+Comments:
+- piczi: onChange donot work when it receive a new value, and param page cannot bind a react state\n
+
+Files Changed:
+- packages/react/src/use-pagination/index.ts (modified, 2 changes)\n  Patch: @@ -46,7 +46,7 @@ const usePagination = ({
+         onChangeActivePage(pageNumber);
+       }
+     },
+-    [total],
++    [total, activePage],
+   );
+ 
+   const next = () => setPage(activePage + 1);\n

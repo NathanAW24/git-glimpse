@@ -1,0 +1,51 @@
+Pull Request Number: 505
+Title: fix(react-theme): inaccurate and incomplete custom theme tokens
+Base Branch: main
+Head Branch: fix/custom-theme
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/505
+State: CLOSED
+Created At: 2022-05-31T15:36:53Z
+Merged At: None
+Participants: tianenpang
+
+Description:
+📝 Description
+Fix inaccurate and incomplete custom theme tokens.
+⛳️ Current behavior (updates)
+Returns all tokens that are merged with the base theme.
+
+useTheme
+createTheme
+color-scheme
+
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+Pending update...
+
+Commits:
+- fix(react-theme): return complete custom theme tokens\n- Merge branch 'main' into fix/custom-theme\n
+
+Labels:
+
+
+Comments:
+- tianenpang: Close due to outdated.\n
+
+Files Changed:
+- packages/react/src/theme/stitches.config.ts (modified, 7 changes)\n  Patch: @@ -42,7 +42,12 @@ export const createTheme = ({ type, theme, className }: Theme) => {
+   }
+   return createThemeBase(
+     className || `${type}-theme`,
+-    deepMerge(type === 'dark' ? darkTheme : lightTheme, theme)
++    deepMerge(
++      type === 'dark'
++        ? getStitchesTheme(darkTheme)
++        : getStitchesTheme(lightTheme),
++      theme
++    )
+   );
+ };
+ \n

@@ -1,0 +1,95 @@
+Pull Request Number: 1219
+Title: docs (pagination): use onPress instead of onClick
+Base Branch: feat/v2
+Head Branch: patch-1
+Author: withden
+URL: https://github.com/nextui-org/nextui/pull/1219
+State: CLOSED
+Created At: 2023-07-23T05:18:58Z
+Merged At: None
+Participants: withden, jrgarciadev
+
+Description:
+Closes # 
+📝 Description
+
+In pagination docs, there are some button use onClick is deprecated. I change it to onPress
+
+⛳️ Current & New behavior (updates)
+
+There is no change in behavior
+
+💣 Is this a breaking change (Yes/No):
+
+No, It's not breaking anything
+
+Commits:
+- use `onPress` instead of `onClick`
+
+onClick is deprecated\n
+
+Labels:
+
+
+Comments:
+- vercel: @denishnavadiya123 is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2226a5ca0c23e0d715fce00b5a46607732cb8d76ac%22%7D%2C%22id%22%3A%22QmUgcb9mtjHEnUr5fAWHjzzbRYSs6bQjH116yqiVm4rij3%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1219%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Hi @denishnavadiya123 thanks for sending this PR, the `onPress` event is only available on NextUI components Button/Card etc, on this example we used the native `button` so it doesn't have the `onPress` event only the `onClick` which is fine because the idea is to give users a custom items example\n
+
+Files Changed:
+- apps/docs/content/components/pagination/custom-items.ts (modified, 12 changes)\n  Patch: @@ -61,15 +61,15 @@ export default function App() {
+   }: PaginationItemRenderProps<HTMLButtonElement>) => {
+     if (value === PaginationItemType.NEXT) {
+       return (
+-        <button className={cn(className, "bg-default-200/50 min-w-8 w-8 h-8")} onClick={onNext}>
++        <button className={cn(className, "bg-default-200/50 min-w-8 w-8 h-8")} onPress={onNext}>
+           <ChevronIcon className="rotate-180" />
+         </button>
+       );
+     }
+ 
+     if (value === PaginationItemType.PREV) {
+       return (
+-        <button className={cn(className, "bg-default-200/50 min-w-8 w-8 h-8")} onClick={onPrevious}>
++        <button className={cn(className, "bg-default-200/50 min-w-8 w-8 h-8")} onPress={onPrevious}>
+           <ChevronIcon />
+         </button>
+       );
+@@ -88,7 +88,7 @@ export default function App() {
+           isActive &&
+             "text-white bg-gradient-to-br from-indigo-500 to-pink-500 font-bold",
+         )}
+-        onClick={() => setPage(value)}
++        onPress={() => setPage(value)}
+       >
+         {value}
+       </button>
+@@ -124,15 +124,15 @@ export default function App() {
+   }) => {
+     if (value === PaginationItemType.NEXT) {
+       return (
+-        <button className={cn(className, "bg-default-200/50 min-w-8 w-8 h-8")} onClick={onNext}>
++        <button className={cn(className, "bg-default-200/50 min-w-8 w-8 h-8")} onPress={onNext}>
+           <ChevronIcon className="rotate-180" />
+         </button>
+       );
+     }
+ 
+     if (value === PaginationItemType.PREV) {
+       return (
+-        <button className={cn(className, "bg-default-200/50 min-w-8 w-8 h-8")} onClick={onPrevious}>
++        <button className={cn(className, "bg-default-200/50 min-w-8 w-8 h-8")} onPress={onPrevious}>
+           <ChevronIcon />
+         </button>
+       );
+@@ -151,7 +151,7 @@ export default function App() {
+           isActive &&
+           "text-white bg-gradient-to-br from-indigo-500 to-pink-500 font-bold",
+         )}
+-        onClick={() => setPage(value)}
++        onPress={() => setPage(value)}
+       >
+         {value}
+       </button>\n

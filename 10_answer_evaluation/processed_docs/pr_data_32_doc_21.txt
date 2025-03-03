@@ -1,0 +1,75 @@
+Pull Request Number: 37
+Title: Feat/gitpod
+Base Branch: main
+Head Branch: feat/gitpod
+Author: krystxf
+URL: https://github.com/nextui-org/nextui/pull/37
+State: CLOSED
+Created At: 2021-09-18T21:22:46Z
+Merged At: None
+Participants: krystxf, jrgarciadev
+
+Description:
+[LEVEL]/[COMPONENT]
+TASK: added .gitpod.yml
+Types of changes
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+Gitpod start script (starts storybook automatically on start)
+added storybook static files in gitignore
+
+Screenshots - Animations
+
+Commits:
+- gitpod.yml\n- gitignore for storybook & gitpod in readme\n
+
+Labels:
+
+
+Comments:
+- jrgarciadev: Hey, @krystofex thank you for adding this, however, there are some drawbacks in adding Gitpod to the project, here are some of them:
+
+1. It's a paid service
+2. The idea it's to work locally
+3.  storybook-static can't be ignore because it's the folder that it's uploaded to vercel after build
+
+Thanks!\n
+
+Files Changed:
+- .gitpod.yml (added, 12 changes)\n  Patch: @@ -0,0 +1,12 @@
++# Commands to start on workspace startup
++tasks:
++  - init: yarn install
++    command: >
++      yarn sb;
++
++
++# Ports to expose on workspace startup
++ports:
++  - port: 6006
++    onOpen: open-preview
++    visibility: public
+\ No newline at end of file\n- packages/nextui/.gitignore (modified, 4 changes)\n  Patch: @@ -31,3 +31,7 @@ esm
+ examples/**/yarn.lock
+ examples/**/out
+ examples/**/.next
++
++# storybook
++**/storybook-static/*
++*.DS_Store
+\ No newline at end of file\n- packages/nextui/README.md (modified, 2 changes)\n  Patch: @@ -59,6 +59,8 @@ const Component = () => <Button>Click me</Button>;
+ 
+ ## Contributing
+ 
++[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/nextui-org/nextui)
++
+ Contributions are always welcome!
+ 
+ See `CONTRIBUTING.md` for ways to get started.\n

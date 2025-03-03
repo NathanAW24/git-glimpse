@@ -1,0 +1,75 @@
+Pull Request Number: 1174
+Title: fix: fixed pagination problems
+Base Branch: feat/v2
+Head Branch: fix/fixed-pagination-problems
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/1174
+State: MERGED
+Created At: 2023-06-21T20:36:41Z
+Merged At: 2023-06-22T02:16:26Z
+Participants: jguddas, jrgarciadev
+
+Description:
+This PR:
+
+removes the padding from the top and bottom (elements should not be padded IMO).
+makes it so the focus ring is not cut off anymore.
+makes it so the focus does not get lost when elements move.
+
+Commits:
+- fix: fixed pagination problems\n- Merge branch 'feat/v2' into fix/fixed-pagination-problems\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%226127b7f818b515b2bec999342ef309b894c6ca1b%22%7D%2C%22id%22%3A%22QmP7R63jDEPbeR5B86qu7E5saCWBQBqvhSDkNjcn2nuAcw%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1174%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Hey @jguddas if you remove the padding the scale animation will be break since it needs some space to display it, I had to use it because the overflow need to be the scroll one \n
+
+Files Changed:
+- packages/components/pagination/src/use-pagination.ts (modified, 1 changes)\n  Patch: @@ -304,6 +304,7 @@ export function usePagination(originalProps: UsePaginationProps) {
+   const getItemProps: PropGetter = (props = {}) => {
+     return {
+       ...props,
++      key: props.value,
+       ref: (node) => getItemRef(node, props.value),
+       "data-slot": "item",
+       isActive: props.value === activePage,\n- packages/core/theme/src/components/pagination.ts (modified, 8 changes)\n  Patch: @@ -27,8 +27,8 @@ const pagination = tv({
+       "flex-nowrap",
+       "h-fit",
+       "max-w-fit",
+-      "py-2.5",
+-      "px-1",
++      "p-2.5",
++      "-m-2.5",
+       "relative",
+       "gap-1",
+       "items-center",
+@@ -46,6 +46,7 @@ const pagination = tv({
+       "justify-center",
+       "origin-center",
+       "left-0",
++      "z-20",
+     ],
+     forwardIcon: "hidden group-hover:block data-[before=true]:rotate-180",
+     ellipsis: "group-hover:hidden",
+@@ -196,7 +197,7 @@ const pagination = tv({
+       isCompact: true,
+       variant: "bordered",
+       class: {
+-        item: "[&:not(:first-of-type)]:border-l-0",
++        item: "[&:not(:first-of-type)]:ml-[calc(theme(borderWidth.2)*-1)]",
+       },
+     },
+     /**
+@@ -336,6 +337,7 @@ const pagination = tv({
+         "justify-center",
+         "text-default-foreground",
+         // focus ring
++        "data-[focus-visible=true]:z-10",
+         "data-[focus-visible=true]:outline-none",
+         "data-[focus-visible=true]:ring-2",
+         "data-[focus-visible=true]:ring-primary",\n

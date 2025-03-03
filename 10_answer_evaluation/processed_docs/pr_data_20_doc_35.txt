@@ -1,0 +1,202 @@
+Pull Request Number: 1554
+Title: Revert "fix: resolved cursor issues in pagination"
+Base Branch: main
+Head Branch: revert-1222-fix/resolved-cursor-issues-in-pagination
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/1554
+State: MERGED
+Created At: 2023-09-02T20:45:56Z
+Merged At: 2023-09-02T20:46:01Z
+Participants: jrgarciadev
+
+Description:
+Reverts #1222
+
+Commits:
+- Revert "fix: resolved cursor issues in pagination (#1222)"
+
+This reverts commit 28477447d3dc9d87fdc6dea666ae4ce76e7c5bfb.\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 9b9a68c68c2c59ae18be7c956429288a7aa3aa9c
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/revert-1222-fix/resolved-cursor-issues-in-pagination?filename=.changeset/five-apples-sniff.md&value=---%0A%22%40nextui-org%2Fpagination%22%3A%20patch%0A%22%40nextui-org%2Ftheme%22%3A%20patch%0A---%0A%0ARevert%20%22fix%3A%20resolved%20cursor%20issues%20in%20pagination%22%0A)
+
+\n- vercel: [vc]: #5OmHO19Feqe68DUIOCnDOH0iIp56faAZKlghH0zyAV0=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9FaDFBcFZLcHVuaUhXNDRaOWpFYzE1YUpyZVpNIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1yZXZlcnQtMTIyMi1maXgtcmVzb2x2ZWQtYy02ZGZlYzMtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IlBFTkRJTkcifSx7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvMkRzWldLVEw1Vk01TTJLVHpONGk0Y0Q3ZmFnRiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1yZXZlcnQtMTIyMi1maXgtcmVzb2wtYjgwNTZmLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJQRU5ESU5HIn1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated (UTC) |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/Eh1ApVKpuniHW44Z9jEc15aJreZM)) | [Visit Preview](https://nextui-docs-v2-git-revert-1222-fix-resolved-c-6dfec3-nextui-org.vercel.app) | Sep 2, 2023 8:46pm |
+| **nextui-storybook-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/2DsZWKTL5VM5M2KTzN4i4cD7fagF)) | [Visit Preview](https://nextui-storybook-v2-git-revert-1222-fix-resol-b8056f-nextui-org.vercel.app) | Sep 2, 2023 8:46pm |
+
+
+\n
+
+Files Changed:
+- packages/components/pagination/src/use-pagination.ts (modified, 67 changes)\n  Patch: @@ -175,47 +175,42 @@ export function usePagination(originalProps: UsePaginationProps) {
+     }
+   }
+ 
+-  function scrollTo(value: number, skipAnimation: boolean) {
++  function scrollTo(value: number) {
+     const map = getItemsRefMap();
+ 
+     const node = map.get(value);
+ 
+-    if (!node || !cursorRef.current) return;
+-
+     // clean up the previous cursor timer (if any)
+     cursorTimer.current && clearTimeout(cursorTimer.current);
+ 
+-    // scroll parent to the item
+-    scrollIntoView(node, {
+-      scrollMode: "always",
+-      behavior: "smooth",
+-      block: "start",
+-      inline: "start",
+-      boundary: domRef.current,
+-    });
+-
+-    // get position of the item
+-    const {offsetLeft} = node;
+-
+-    // only shows the animation when the page changes, not on intial render or layout shift
+-    if (skipAnimation) {
+-      cursorRef.current.setAttribute("data-moving", "false");
+-      cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1)`;
+-      return;
+-    }
+-
+-    // move the cursor to the item
+-    cursorRef.current.setAttribute("data-moving", "true");
+-    cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1.1)`;
+-
+-    cursorTimer.current = setTimeout(() => {
+-      // reset the scale of the cursor
++    if (node) {
++      // scroll parent to the item
++      scrollIntoView(node, {
++        scrollMode: "always",
++        behavior: "smooth",
++        block: "start",
++        inline: "start",
++        boundary: domRef.current,
++      });
++
++      // get position of the item
++      const {offsetLeft} = node;
++
++      // move the cursor to the item
+       if (cursorRef.current) {
+-        cursorRef.current.setAttribute("data-moving", "false");
+-        cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1)`;
++        cursorRef.current.setAttribute("data-moving", "true");
++        cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1.1)`;
+       }
+-      cursorTimer.current && clearTimeout(cursorTimer.current);
+-    }, CURSOR_TRANSITION_TIMEOUT);
++
++      cursorTimer.current = setTimeout(() => {
++        // reset the scale of the cursor
++        if (cursorRef.current) {
++          cursorRef.current.setAttribute("data-moving", "false");
++          cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1)`;
++        }
++        cursorTimer.current && clearTimeout(cursorTimer.current);
++      }, CURSOR_TRANSITION_TIMEOUT);
++    }
+   }
+ 
+   const {range, activePage, setPage, previous, next, first, last} = useBasePagination({
+@@ -228,19 +223,15 @@ export function usePagination(originalProps: UsePaginationProps) {
+     onChange,
+   });
+ 
+-  const activePageRef = useRef(activePage);
+   useEffect(() => {
+     if (activePage && !originalProps.disableAnimation) {
+-      scrollTo(activePage, activePage === activePageRef.current);
++      scrollTo(activePage);
+     }
+-    activePageRef.current = activePage;
+   }, [
+     activePage,
+     originalProps.disableAnimation,
+-    originalProps.disableCursorAnimation,
+-    originalProps.dotsJump,
+     originalProps.isCompact,
+-    originalProps.showControls,
++    originalProps.disableCursorAnimation,
+   ]);
+ 
+   const slots = useMemo(\n- packages/core/theme/src/components/pagination.ts (modified, 26 changes)\n  Patch: @@ -45,7 +45,6 @@ const pagination = tv({
+       "left-0",
+       "select-none",
+       "touch-none",
+-      "pointer-events-none",
+       "z-20",
+     ],
+     forwardIcon:
+@@ -136,13 +135,7 @@ const pagination = tv({
+       },
+       false: {
+         item: ["data-[pressed=true]:scale-[0.97]", "transition-transform-background"],
+-        cursor: [
+-          "data-[moving=true]:transition-transform",
+-          "!data-[moving=true]:duration-300",
+-          // this hides the cursor and only shows it once it has been moved to its initial position
+-          "opacity-0",
+-          "data-[moving]:opacity-100",
+-        ],
++        cursor: ["transition-transform", "!duration-300"],
+       },
+     },
+   },
+@@ -360,28 +353,17 @@ const pagination = tv({
+     {
+       slots: ["item", "prev", "next"],
+       variant: "flat",
+-      class: [
+-        "bg-default-100",
+-        "[&[data-hover=true]:not([data-active=true])]:bg-default-200",
+-        "active:bg-default-300",
+-      ],
++      class: ["bg-default-100", "data-[hover=true]:bg-default-200", "active:bg-default-300"],
+     },
+     {
+       slots: ["item", "prev", "next"],
+       variant: "faded",
+-      class: [
+-        "bg-default-50",
+-        "[&[data-hover=true]:not([data-active=true])]:bg-default-100",
+-        "active:bg-default-200",
+-      ],
++      class: ["bg-default-50", "data-[hover=true]:bg-default-100", "active:bg-default-200"],
+     },
+     {
+       slots: ["item", "prev", "next"],
+       variant: "light",
+-      class: [
+-        "[&[data-hover=true]:not([data-active=true])]:bg-default-100",
+-        "active:bg-default-200",
+-      ],
++      class: ["data-[hover=true]:bg-default-100", "active:bg-default-200"],
+     },
+     // size
+     {\n
