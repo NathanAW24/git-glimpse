@@ -1,0 +1,78 @@
+Pull Request Number: 1863
+Title: fix(docs): fixed select state component on docs page
+Base Branch: main
+Head Branch: fix/1762
+Author: renatoka
+URL: https://github.com/nextui-org/nextui/pull/1863
+State: CLOSED
+Created At: 2023-11-03T20:23:35Z
+Merged At: None
+Participants: renatoka
+
+Description:
+Closes #1762
+📝 Description
+
+Add a brief description
+
+Component on docs page was using onPress hook instead of needed onClick hook.
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+I am updating a controlled state component that currently only opens on click, but won't close no matter what.
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+Controlling the open state select component now functions properly (open and closes on each click) (https://nextui.org/docs/components/select#controlling-the-open-state)
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+Commits:
+- fix: fixed select component on docs page\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: f518bb7b8ca081c55a28bfcaa02301f54c9dc9cb
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/renatoka/nextui/new/fix/1762?filename=.changeset/quick-fishes-wash.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Afix(docs)%3A%20fixed%20select%20state%20component%20on%20docs%20page%0A)
+
+\n- vercel: [vc]: #q6ZhWfTvOqUZllENQpAR8MI+J6RpFJ/Op4lWhld+3xQ=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvNERDMUNEUFFCWFg5MjNTYUdVWE1xQTg2MUtMWCIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXJlbmF0b2thLWZpeC0xNzYyLW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXJlbmF0b2thLWZpeC0xNzYyLW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/4DC1CDPQBXX923SaGUXMqA861KLX)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-renatoka-fix-1762-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-renatoka-fix-1762-nextui-org.vercel.app?via=pr-comment-feedback-link) | Nov 3, 2023 8:25pm |
+
+\n- vercel: @renatoka is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f518bb7b8ca081c55a28bfcaa02301f54c9dc9cb%22%7D%2C%22id%22%3A%22QmcYwXThN4oX1tnAdaP1NG4Sn7psha3NAPLqWmYv4fuz4A%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1863%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- renatoka: Seems like this is not related to a `onPress` hook as I originally thought. Furthermore, when we click `Open` and our dropdown select opens, we are unable to click anything else in the docs page. Investigating futher.\n
+
+Files Changed:
+- apps/docs/content/components/select/open-state.ts (modified, 2 changes)\n  Patch: @@ -47,7 +47,7 @@ export default function App() {
+           </SelectItem>
+         ))}
+       </Select>
+-      <Button aria-label="Open" aria-pressed={isOpen} onPress={() => setIsOpen(!isOpen)}>
++      <Button aria-label="Open" aria-pressed={isOpen} onClick={() => setIsOpen(!isOpen)}>
+         {isOpen ? "Close" : "Open"}
+       </Button>
+     </div>\n

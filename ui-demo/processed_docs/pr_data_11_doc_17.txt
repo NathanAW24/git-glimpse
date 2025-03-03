@@ -1,0 +1,2031 @@
+Pull Request Number: 2937
+Title: fix(select): onSelectionChange can handle number
+Base Branch: canary
+Head Branch: fix/eng-2926
+Author: ryo-manba
+URL: https://github.com/nextui-org/nextui/pull/2937
+State: MERGED
+Created At: 2024-05-03T14:57:59Z
+Merged At: 2024-05-19T19:49:06Z
+Participants: ryo-manba, jrgarciadev, wingkwong
+
+Description:
+Closes #2926
+📝 Description
+Fixed an issue where specifying a number as the key for SelectItem resulted in onSelectionChange treating it as a string.
+⛳️ Current behavior (updates)
+When a number is specified as the key for SelectItem, a string is passed to onSelectionChange.
+🚀 New behavior
+Now, when a number is specified as the key for SelectItem, onSelectionChange will receive it as a number.
+💣 Is this a breaking change (Yes/No):
+
+No.
+📝 Additional Information
+This issue stems from React converting the key to a string.
+
+Note that if you do specify a custom key on each Item using the key prop, React will convert the provided key to a string. As a result, all the collection component's key-related event handlers and props (e.g. onSelectionChange, selectedKey(s)) will expect and return strings.
+
+See: https://react-spectrum.adobe.com/react-stately/collections.html#unique-keys
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced item selection structure in components for improved user experience.
+Updated documentation examples for better clarity and usability.
+
+
+
+Bug Fixes
+
+Corrected rendering logic in the Select component to ensure accurate display of selected items and end content.
+
+
+
+Documentation
+
+Aligned highlighted code section line numbers with current source code for accurate documentation examples.
+
+
+
+Refactor
+
+Streamlined key access in multi-select list state hook for enhanced performance and simplicity.
+
+Commits:
+- fix: onSelectionChange type for dynamic items in Select component\n- docs: remove unnecessary properties\n- docs: update highlightedLines\n- chore: add changeset\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: be805e45becd8eb1f7f7a2ed3577c8c65702bda6
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                             | Type  |
+| -------------------------------- | ----- |
+| @nextui-org/select               | Patch |
+| @nextui-org/use-aria-multiselect | Patch |
+| @nextui-org/react                | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/fix/eng-2926?filename=.changeset/twenty-flies-eat.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fselect%22%3A%20patch%0A%22%40nextui-org%2Fuse-aria-multiselect%22%3A%20patch%0A---%0A%0Afix(Select)%3A%20onSelectionChange%20can%20handle%20number%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The recent updates across multiple components and files primarily involve changing the structure of items from using a `value` property to a `key` property. These changes affect how items are managed and rendered in UI components, particularly in `Select` related functionalities. This modification ensures consistency and potentially addresses issues with handling numeric keys.
+
+## Changes
+
+| Files Affected | Change Summary |
+|----------------|----------------|
+| `colors.ts`, `custom-selector-icon.ts`, ... (17 files in total) | Changed `value` property to `key` in `animals` array and updated `SelectItem` component usage. |
+| `select.mdx` | Adjusted highlighted line numbers in code demos for better accuracy in documentation. |
+| `select.test.tsx` | Updated type definitions and test cases to reflect the change from `value` to `id`. |
+| `select.tsx` | Modified rendering logic for selected items and end content in `Select` component. |
+| `use-multiselect-list-state.ts` | Optimized key access in collection handling by removing unnecessary string interpolation. |
+
+## Assessment against linked issues
+
+| Objective | Addressed | Explanation |
+|-----------|-----------|-------------|
+| Handle numeric keys correctly in `Select` component (#2926) | ❌ | The changes primarily focus on renaming properties and do not address the core issue of handling numeric keys as numbers instead of converting them to strings. |
+
+## Possibly related issues
+
+- **nextui-org/nextui#2587**: The changes made in handling keys might indirectly affect how numeric keys are managed, potentially addressing the issue where numeric keys were not being handled correctly in controlled mode. Further investigation is needed to confirm this linkage.
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+```markdown
+apps/docs/content/components/select/colors.ts: ## Short Summary
+
+The functionality changes in `colors.ts`, `custom-selector-icon.ts`, `description.ts`, `disabled-items.ts`, `disabled.ts`, `dynamic.ts`, `error-message.ts`, `label-placements.ts`, `multiple-controlled-onchange.ts`, `multiple-controlled.ts`, `multiple.ts`, `open-state.ts`, `radius.ts`, `required.ts`, `single-controlled-onchange.ts`, `sizes.ts`, and `start-content.ts` involve updating the structure of the `animals` array by replacing the `value` property with a `key` property in each object. This change impacts how the `SelectItem` component is rendered within the respective components.
+
+## Alterations to the declarations of exported or public entities
+
+- `const animals = [...]` in affected files:
+  - Before: Each object had properties `label`, `value`, and `description`.
+  - After: Each object has properties `key` and `label`.
+
+- `SelectItem key={animal.value}` in affected files:
+  - After: Changed to `SelectItem key={animal.key}`.
+
+- `const animals = [...]` in `usage.ts`, `variants.ts`, and `without-scroll-shadow.ts`
+  - Before: `{label: "Cat", value: "cat", description: "The second most popular pet in the world"}`
+  - After: `{key: "cat", label: "Cat"}`
+  - Before: `{label: "Dog", value: "dog", description: "The most popular pet in the world"}`
+  - After: `{key: "dog", label: "Dog"}`
+  - Before: `{label: "Elephant", value: "elephant", description: "The largest land animal"}`
+  - After: `{key: "elephant", label: "Elephant"}`
+  - Before: `{label: "Lion", value: "lion", description: "The king of the jungle"}`
+  - After: `{key: "lion", label: "Lion"}`
+  - Before: `{label: "Tiger", value: "tiger", description: "The largest cat species"}`
+  - After: `{key: "tiger", label: "Tiger"}`
+  - Before: `{label: "Giraffe", value: "giraffe", description: "The tallest land animal"}`
+  - After: `{key: "giraffe", label: "Giraffe"}`
+  - Before: `{label: "Dolphin", value: "dolphin", description: "A widely distributed and diverse group of aquatic mammals"}`
+  - After: `{key: "dolphin", label: "Dolphin"}`
+  - Before: `{label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"}`
+  - After: `{key: "penguin", label: "Penguin"}`
+  - Before: `{label: "Zebra", value: "zebra", description: "A several species of African equids"}`
+  - After: `{key: "zebra", label: "Zebra"}`
+  - Before: `{label: "Shark", value: "shark", description: "A group of elasmobranch fish characterized by a cartilaginous skeleton"}`
+  - After: `{key: "shark", label: "Shark"}`
+  - Before: `{label: "Whale", value: "whale", description: "Diverse group of fully aquatic placental marine mammals"}`
+  - After: `{key: "whale", label: "Whale"}`
+  - Before: `{label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"}`
+  - After: `{key: "otter", label: "Otter"}`
+  - Before: `{label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"}`
+  - After: `{key: "crocodile", label: "Crocodile"}`
+
+---
+
+apps/docs/content/docs/components/select.mdx: ## Short Summary
+
+The changes in the `select.mdx` file involve adjusting the line numbers for highlighted code sections in various `CodeDemo` components, affecting the presentation of examples related to disabled items, sizes, label placements, start content, and end content.
+
+## Alterations to the declarations of exported or public entities
+
+- `<CodeDemo title="Disabled Items" highlightedLines="10" files={selectContent.disabledItems} />` → `<CodeDemo title="Disabled Items" highlightedLines="10" files={selectContent.disabledItems} />`
+- `<CodeDemo title="Sizes" highlightedLines="13,24" files={selectContent.sizes} />` → `<CodeDemo title="Sizes" highlightedLines="13,24" files={selectContent.sizes} />`
+- `<CodeDemo title="Label Placements" highlightedLines="19,37" files={selectContent.labelPlacements} />` → `<CodeDemo title="Label Placements" highlightedLines="19,37" files={selectContent.labelPlacements} />`
+- `<CodeDemo title="Start Content" highlightedLines="13" files={selectContent.startContent} />` → `<CodeDemo title="Start Content" highlightedLines="13" files={selectContent.startContent} />`
+
+---
+
+packages/components/select/__tests__/select.test.tsx: ## Short Summary
+The diff in `select.test.tsx` involves changing the `value` property to `id` in the `Item` type declaration and the corresponding data initialization. Additionally, the test cases have been updated to reflect these changes by modifying the `value` attributes to `id` in various `SelectItem` components.
+
+## Alterations to the declarations of exported or public entities
+- `type Item = { label: string; id: string; }` in `select.test.tsx` → `type Item = { label: string; id: string; }` in `select.test.tsx`
+
+---
+
+.changeset/great-singers-repeat.md: ## Summary:
+The file `great-singers-repeat.md` introduces updates to various NextUI components to prevent primitive values as items, addressing a type definition issue.
+
+## Alterations to the declarations of exported or public entities:
+- No alterations to exported or public entities.
+
+---
+
+packages/components/autocomplete/src/autocomplete.tsx: ## Short Summary
+The change in functionality involves updating the type declaration for `AutocompleteProps` in `autocomplete.tsx` to use a stricter type constraint for the generic parameter `T`.
+
+## Alterations to the declarations of exported or public entities
+- `export type AutocompleteProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};` in `packages/components/autocomplete/src/autocomplete.tsx` 
+  → 
+  `export default forwardRef(Autocomplete) as <T extends object>(`
+
+---
+
+packages/components/dropdown/src/dropdown-menu.tsx: ## Short Summary
+
+In the `dropdown-menu.tsx` file, the `DropdownMenuProps` type declaration has been updated to specify that the generic type `T` must extend `object` rather than defaulting to `object`. This change affects the type definition for `DropdownMenuProps` and the `forwardRef` function call.
+
+## Alterations to the declarations of exported or public entities
+
+- `export type DropdownMenuProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};` in `packages/components/dropdown/src/dropdown-menu.tsx` 
+  → 
+  `export default forwardRef(DropdownMenu) as <T extends object>(`
+
+---
+
+packages/components/listbox/src/listbox.tsx: ## Short Summary
+The change in functionality involves refining the type declaration for `ListboxProps` in `listbox.tsx`, specifying that the generic type `T` must extend `object` rather than defaulting to `object`. This change ensures stricter type checking for the `ListboxProps`.
+
+## Alterations to the Declarations of Exported or Public Entities
+- `export type ListboxProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};` in `listbox.tsx`
+  →
+  `export default forwardRef(Listbox) as <T extends object>(props: ListboxProps<T>) => ReactElement;`
+
+---
+
+packages/components/menu/src/menu.tsx: ## Short Summary
+
+The change in functionality involves updating the `MenuProps` type declaration in `menu.tsx` to use a more specific generic constraint `T extends object` instead of the generic default `T = object`. This change affects the type signature of the exported `Menu` component.
+
+## Alterations to the declarations of exported or public entities
+
+- `export type MenuProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};` in `menu.tsx`
+  changed to
+  `export default forwardRef(Menu) as <T extends object>(props: MenuProps<T>) => ReactElement;` in `menu.tsx`
+
+---
+
+packages/components/select/src/select.tsx: ## Short Summary
+
+In the `Select` component in `select.tsx`, the rendering logic for `renderSelectedItem` has been adjusted to be directly within the `<span>` element, and the comma `<VisuallyHidden>,</VisuallyHidden>` is now conditionally displayed based on the presence of `endContent` and `state.selectedItems`.
+
+## Alterations to the declarations of exported or public entities
+
+- `export type SelectProps<T = object> = Props<T> & {ref?: Ref<HTMLElement};` in `select.tsx`
+- `export default forwardRef(Select) as <T = object>(props: SelectProps<T>) => ReactElement;` in `select.tsx`
+
+---
+
+packages/components/tabs/src/tabs.tsx: ## Short Summary
+
+The change in functionality involves refining the type declaration for `TabsProps` in `tabs.tsx` to use a more specific type constraint `T extends object` instead of the generic `T = object`. This modification enhances type safety and clarity in the codebase.
+
+## Alterations to the declarations of exported or public entities
+
+- `export type TabsProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};` in `tabs.tsx`
+  changed to
+  `export default forwardRef(Tabs) as <T extends object>(props: TabsProps<T>) => ReactElement;`
+
+```
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+The pull request (PR) number 2937 titled "fix(Select): onSelectionChange can handle number" addresses a bug in the NextUI library, specifically in the `Select` component. The issue, documented in GitHub issue #2926, describes a problem where the `Select` component incorrectly handles number keys by converting them to strings. This behavior conflicts with the expected functionality, where numbers should be maintained in their original type in the `onSelectionChange` callback.
+
+The PR aims to correct this behavior by ensuring that when a number is specified as the `key` for `SelectItem`, it is correctly passed as a number to the `onSelectionChange` callback. This fix is crucial for maintaining type consistency and correctness in applications using the `Select` component with numeric keys.
+
+The description of the PR provides a detailed explanation of the current and new behaviors, confirming that the change does not introduce breaking changes for existing users of NextUI. The PR also references documentation from React Spectrum's React Stately collections, which explains that React converts keys to strings, thereby necessitating this fix in the NextUI library to handle number keys appropriately.
+
+### AI-Generated Summary of Generated Summaries
+
+The pull request introduces several changes across multiple files in the NextUI library to address an issue with the `Select` component, where numeric keys were being converted to strings. This was problematic as it led to inconsistencies in type handling within the `onSelectionChange` callback. The changes are primarily focused on ensuring that numeric keys remain as numbers when passed to event handlers and other components.
+
+1. **Documentation and Example Adjustments**: Several files under `apps/docs/content/components/select/` such as `colors.ts`, `custom-selector-icon.ts`, and others have been updated to replace the `value` property with a `key` property in the `animals` array used in examples. This change is consistent across multiple examples, indicating a shift in how keys are defined and used within the `Select` component examples.
+
+2. **Test Adjustments**: In `packages/components/select/__tests__/select.test.tsx`, the `Item` type declaration has been modified from having a `value` string property to an `id` string property. Corresponding changes in test cases reflect this modification, ensuring that the tests align with the new implementation of the `Select` component.
+
+3. **Component Logic Updates**: In `packages/components/select/src/select.tsx`, adjustments have been made to the rendering logic of `renderSelectedItem` and `endContent`. These changes ensure that selected items are displayed correctly and that additional content is conditionally rendered based on the presence of `endContent` and `state.selectedItems`.
+
+4. **Hook Logic Correction**: The `useMultiSelectListState` function in `packages/hooks/use-aria-multiselect/src/use-multiselect-list-state.ts` has been updated to remove unnecessary string interpolations when accessing keys. This change ensures that keys are accessed directly as their original types, supporting the overall goal of maintaining type integrity.
+
+These changes collectively enhance the robustness and correctness of the `Select` component in handling numeric keys, aligning with the expected functionality as documented in the type definitions of the library.
+
+### Alterations to the Declarations of Exported or Public Entities
+
+- **apps/docs/content/components/select various files**:
+  - Before: `const animals = [{ label: "Cat", value: "cat", description: "..." }, ...]`
+  - After: `const animals = [{ key: "cat", label: "Cat" }, ...]`
+  - Change: Replaced `value` with `key` in objects within the `animals` array.
+
+- **packages/components/select/__tests__/select.test.tsx**:
+  - Before: `type Item = { label: string; value: string; }`
+  - After: `type Item = { label: string; id: string; }`
+  - Change: Replaced `value` with `id` in the `Item` type declaration.
+
+- **packages/components/select/src/select.tsx**:
+  - Before: No specific changes detailed in the provided summaries.
+  - After: Adjustments in rendering logic for `renderSelectedItem` and `endContent`.
+
+- **packages/hooks/use-aria-multiselect/src/use-multiselect-list-state.ts**:
+  - Before: `.filter((key) => !collection.getItem(`${key}`));` and `.map((key) => { return collection.getItem(`${key}`);`
+  - After: `.filter((key) => !collection.getItem(key));` and `.map((key) => { return collection.getItem(key);`
+  - Change: Removed unnecessary string interpolation when accessing keys.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- be805e45becd8eb1f7f7a2ed3577c8c65702bda6 -->
+<!-- 5d035f60a8f1cd076103b280dc608af038b8ecb1 -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #7xAtJQXCqoDY37UgpwDBeVvHW+9DQH7kXCFy3mNd5CM=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9DRUNCOTNFTXAzM1VKN3JYWHlTdTlVSFBHMk5iIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTI5MjYtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1maXgtZW5nLTI5MjYtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi85NjdnNEdhWUFwREtFWHBTR2pnSGZEVVVGZTlGIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZpeC1lbmctMjkyNi1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtZml4LWVuZy0yOTI2LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fV19
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/CECB93EMp33UJ7rXXySu9UHPG2Nb)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-2926-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fix-eng-2926-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 5, 2024 7:31am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/967g4GaYApDKEXpSGjgHfDUUFe9F)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-2926-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fix-eng-2926-nextui-org.vercel.app?via=pr-comment-feedback-link) | May 5, 2024 7:31am |
+
+
+\n
+
+Files Changed:
+- .changeset/green-ravens-brake.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/select": patch
++"@nextui-org/use-aria-multiselect": patch
++---
++
++Fix onSelectionChange can handle number (#2926)\n- apps/docs/content/components/select/colors.ts (modified, 40 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -51,7 +39,7 @@ export default function App() {
+           className="max-w-xs"
+         >
+           {animals.map((animal) => (
+-            <SelectItem key={animal.value} value={animal.value}>
++            <SelectItem key={animal.key}>
+               {animal.label}
+             </SelectItem>
+           ))}\n- apps/docs/content/components/select/custom-selector-icon.ts (modified, 40 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const SelectorIcon = `export const SelectorIcon = (props) => (
+@@ -62,7 +50,7 @@ export default function App() {
+       selectorIcon={<SelectorIcon />}
+     >
+       {animals.map((animal) => (
+-        <SelectItem key={animal.value} value={animal.value}>
++        <SelectItem key={animal.key}>
+           {animal.label}
+         </SelectItem>
+       ))}\n- apps/docs/content/components/select/description.ts (modified, 40 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -39,7 +27,7 @@ export default function App() {
+       className="max-w-xs"
+     >
+       {animals.map((animal) => (
+-        <SelectItem key={animal.value} value={animal.value}>
++        <SelectItem key={animal.key}>
+           {animal.label}
+         </SelectItem>
+       ))}\n- apps/docs/content/components/select/disabled-items.ts (modified, 40 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -38,7 +26,7 @@ export default function App() {
+       className="max-w-xs"
+     >
+       {animals.map((animal) => (
+-        <SelectItem key={animal.value} value={animal.value}>
++        <SelectItem key={animal.key}>
+           {animal.label}
+         </SelectItem>
+       ))}\n- apps/docs/content/components/select/disabled.ts (modified, 40 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -39,7 +27,7 @@ export default function App() {
+       className="max-w-xs"
+     >
+       {animals.map((animal) => (
+-        <SelectItem key={animal.value} value={animal.value}>
++        <SelectItem key={animal.key}>
+           {animal.label}
+         </SelectItem>
+       ))}\n- apps/docs/content/components/select/dynamic.ts (modified, 40 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -37,7 +25,7 @@ export default function App() {
+       placeholder="Select an animal"
+       className="max-w-xs"
+     >
+-      {(animal) => <SelectItem key={animal.value}>{animal.label}</SelectItem>}
++      {(animal) => <SelectItem>{animal.label}</SelectItem>}
+     </Select>
+   );
+ }`;\n- apps/docs/content/components/select/error-message.ts (modified, 40 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -49,7 +37,7 @@ export default function App() {
+       onClose={() => setTouched(true)}
+     >
+       {animals.map((animal) => (
+-        <SelectItem key={animal.value} value={animal.value}>
++        <SelectItem key={animal.key}>
+           {animal.label}
+         </SelectItem>
+       ))}\n- apps/docs/content/components/select/label-placements.ts (modified, 42 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -48,7 +36,7 @@ export default function App() {
+               className="max-w-xs"
+             >
+               {animals.map((animal) => (
+-                <SelectItem key={animal.value} value={animal.value}>
++                <SelectItem key={animal.key}>
+                   {animal.label}
+                 </SelectItem>
+               ))}
+@@ -67,7 +55,7 @@ export default function App() {
+               className="max-w-xs"
+             >
+               {animals.map((animal) => (
+-                <SelectItem key={animal.value} value={animal.value}>
++                <SelectItem key={animal.key}>
+                   {animal.label}
+                 </SelectItem>
+               ))}\n- apps/docs/content/components/select/multiple-controlled-onchange.ts (modified, 42 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -47,7 +35,7 @@ export default function App() {
+         onChange={handleSelectionChange}
+       >
+         {animals.map((animal) => (
+-          <SelectItem key={animal.value} value={animal.value}>
++          <SelectItem key={animal.key}>
+             {animal.label}
+           </SelectItem>
+         ))}
+@@ -78,7 +66,7 @@ export default function App() {
+         onChange={handleSelectionChange}
+       >
+         {animals.map((animal) => (
+-          <SelectItem key={animal.value} value={animal.value}>
++          <SelectItem key={animal.key}>
+             {animal.label}
+           </SelectItem>
+         ))}\n- apps/docs/content/components/select/multiple-controlled.ts (modified, 42 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -43,7 +31,7 @@ export default function App() {
+         onSelectionChange={setValues}
+       >
+         {animals.map((animal) => (
+-          <SelectItem key={animal.value} value={animal.value}>
++          <SelectItem key={animal.key}>
+             {animal.label}
+           </SelectItem>
+         ))}
+@@ -70,7 +58,7 @@ export default function App() {
+         onSelectionChange={setValues}
+       >
+         {animals.map((animal) => (
+-          <SelectItem key={animal.value} value={animal.value}>
++          <SelectItem key={animal.key}>
+             {animal.label}
+           </SelectItem>
+         ))}\n- apps/docs/content/components/select/multiple.ts (modified, 40 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -38,7 +26,7 @@ export default function App() {
+       className="max-w-xs"
+     >
+       {animals.map((animal) => (
+-        <SelectItem key={animal.value} value={animal.value}>
++        <SelectItem key={animal.key}>
+           {animal.label}
+         </SelectItem>
+       ))}\n- apps/docs/content/components/select/open-state.ts (modified, 40 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem, Button} from "@nextui-org/react";
+@@ -43,7 +31,7 @@ export default function App() {
+         className="max-w-xs"
+       >
+         {animals.map((animal) => (
+-          <SelectItem key={animal.value} value={animal.value}>
++          <SelectItem key={animal.key}>
+             {animal.label}
+           </SelectItem>
+         ))}\n- apps/docs/content/components/select/radius.ts (modified, 40 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -50,7 +38,7 @@ export default function App() {
+           className="max-w-[45%]"
+         >
+           {animals.map((animal) => (
+-            <SelectItem key={animal.value} value={animal.value}>
++            <SelectItem key={animal.key}>
+               {animal.label}
+             </SelectItem>
+           ))}\n- apps/docs/content/components/select/required.ts (modified, 40 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -39,7 +27,7 @@ export default function App() {
+       className="max-w-xs"
+     >
+       {animals.map((animal) => (
+-        <SelectItem key={animal.value} value={animal.value}>
++        <SelectItem key={animal.key}>
+           {animal.label}
+         </SelectItem>
+       ))}\n- apps/docs/content/components/select/single-controlled-onchange.ts (modified, 42 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -47,7 +35,7 @@ export default function App() {
+         onChange={handleSelectionChange}
+       >
+         {animals.map((animal) => (
+-          <SelectItem key={animal.value} value={animal.value}>
++          <SelectItem key={animal.key}>
+             {animal.label}
+           </SelectItem>
+         ))}
+@@ -78,7 +66,7 @@ export default function App() {
+         onChange={handleSelectionChange}
+       >
+         {animals.map((animal) => (
+-          <SelectItem key={animal.value} value={animal.value}>
++          <SelectItem key={animal.key}>
+             {animal.label}
+           </SelectItem>
+         ))}\n- apps/docs/content/components/select/single-controlled.ts (modified, 42 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const AppTs = `import {Select, SelectItem, Selection} from "@nextui-org/react";
+@@ -43,7 +31,7 @@ export default function App() {
+         onSelectionChange={setValue}
+       >
+         {animals.map((animal) => (
+-          <SelectItem key={animal.value} value={animal.value}>
++          <SelectItem key={animal.key}>
+             {animal.label}
+           </SelectItem>
+         ))}
+@@ -70,7 +58,7 @@ export default function App() {
+         onSelectionChange={setValue}
+       >
+         {animals.map((animal) => (
+-          <SelectItem key={animal.value} value={animal.value}>
++          <SelectItem key={animal.key}>
+             {animal.label}
+           </SelectItem>
+         ))}\n- apps/docs/content/components/select/sizes.ts (modified, 42 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -42,7 +30,7 @@ export default function App() {
+             className="max-w-xs" 
+           >
+             {animals.map((animal) => (
+-              <SelectItem key={animal.value} value={animal.value}>
++              <SelectItem key={animal.key}>
+                 {animal.label}
+               </SelectItem>
+             ))}
+@@ -54,7 +42,7 @@ export default function App() {
+             className="max-w-xs"
+           >
+             {animals.map((animal) => (
+-              <SelectItem key={animal.value} value={animal.value}>
++              <SelectItem key={animal.key}>
+                 {animal.label}
+               </SelectItem>
+             ))}\n- apps/docs/content/components/select/start-content.ts (modified, 49 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const PetIcon = `export const PetIcon = (props) => (
+@@ -67,20 +55,19 @@ import {animals} from "./data";
+ export default function App() {
+   return (
+     <Select
++      className="max-w-xs"
++      defaultSelectedKeys={["cat"]}
+       label="Favorite Animal"
+       placeholder="Select an animal"
+       startContent={<PetIcon />}
+-      defaultSelectedKeys={["cat"]}
+-      className="max-w-xs"
+     >
+       {animals.map((animal) => (
+-        <SelectItem key={animal.value} value={animal.value}>
+-          {animal.label}
+-        </SelectItem>
++        <SelectItem key={animal.key}>{animal.label}</SelectItem>
+       ))}
+     </Select>
+   );
+-}`;
++}
++`;
+ 
+ const react = {
+   "/App.jsx": App,\n- apps/docs/content/components/select/usage.ts (modified, 42 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -37,7 +25,7 @@ export default function App() {
+         className="max-w-xs" 
+       >
+         {animals.map((animal) => (
+-          <SelectItem key={animal.value} value={animal.value}>
++          <SelectItem key={animal.key}>
+             {animal.label}
+           </SelectItem>
+         ))}
+@@ -48,7 +36,7 @@ export default function App() {
+         className="max-w-xs"
+       >
+         {animals.map((animal) => (
+-          <SelectItem key={animal.value} value={animal.value}>
++          <SelectItem key={animal.key}>
+             {animal.label}
+           </SelectItem>
+         ))}\n- apps/docs/content/components/select/variants.ts (modified, 42 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -42,7 +30,7 @@ export default function App() {
+             className="max-w-xs" 
+           >
+             {animals.map((animal) => (
+-              <SelectItem key={animal.value} value={animal.value}>
++              <SelectItem key={animal.key}>
+                 {animal.label}
+               </SelectItem>
+             ))}
+@@ -54,7 +42,7 @@ export default function App() {
+             className="max-w-xs"
+           >
+             {animals.map((animal) => (
+-              <SelectItem key={animal.value} value={animal.value}>
++              <SelectItem key={animal.key}>
+                 {animal.label}
+               </SelectItem>
+             ))}\n- apps/docs/content/components/select/without-scroll-shadow.ts (modified, 40 changes)\n  Patch: @@ -1,29 +1,17 @@
+ const data = `export const animals = [
+-  {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
+-  {label: "Dog", value: "dog", description: "The most popular pet in the world"},
+-  {label: "Elephant", value: "elephant", description: "The largest land animal"},
+-  {label: "Lion", value: "lion", description: "The king of the jungle"},
+-  {label: "Tiger", value: "tiger", description: "The largest cat species"},
+-  {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
+-  {
+-    label: "Dolphin",
+-    value: "dolphin",
+-    description: "A widely distributed and diverse group of aquatic mammals",
+-  },
+-  {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
+-  {label: "Zebra", value: "zebra", description: "A several species of African equids"},
+-  {
+-    label: "Shark",
+-    value: "shark",
+-    description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
+-  },
+-  {
+-    label: "Whale",
+-    value: "whale",
+-    description: "Diverse group of fully aquatic placental marine mammals",
+-  },
+-  {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
+-  {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
++  {key: "cat", label: "Cat"},
++  {key: "dog", label: "Dog"},
++  {key: "elephant", label: "Elephant"},
++  {key: "lion", label: "Lion"},
++  {key: "tiger", label: "Tiger"},
++  {key: "giraffe", label: "Giraffe"},
++  {key: "dolphin", label: "Dolphin"},
++  {key: "penguin", label: "Penguin"},
++  {key: "zebra", label: "Zebra"},
++  {key: "shark", label: "Shark"},
++  {key: "whale", label: "Whale"},
++  {key: "otter", label: "Otter"},
++  {key: "crocodile", label: "Crocodile"}
+ ];`;
+ 
+ const App = `import {Select, SelectItem} from "@nextui-org/react";
+@@ -41,7 +29,7 @@ export default function App() {
+       }}
+     >
+       {animals.map((animal) => (
+-        <SelectItem key={animal.value} value={animal.value}>
++        <SelectItem key={animal.key}>
+           {animal.label}
+         </SelectItem>
+       ))}\n- apps/docs/content/docs/components/select.mdx (modified, 8 changes)\n  Patch: @@ -70,7 +70,7 @@ You can use the `selectionMode="multiple"` property to allow multiple selection.
+ 
+ You can disable specific items by using the `disabledKeys` property.
+ 
+-<CodeDemo title="Disabled Items" highlightedLines="8" files={selectContent.disabledItems} />
++<CodeDemo title="Disabled Items" highlightedLines="10" files={selectContent.disabledItems} />
+ 
+ ### Required
+ 
+@@ -81,7 +81,7 @@ the end of the label and the select will be required.
+ 
+ ### Sizes
+ 
+-<CodeDemo title="Sizes" highlightedLines="13,26" files={selectContent.sizes} />
++<CodeDemo title="Sizes" highlightedLines="13,24" files={selectContent.sizes} />
+ 
+ ### Colors
+ 
+@@ -99,7 +99,7 @@ the end of the label and the select will be required.
+ 
+ You can change the position of the label by setting the `labelPlacement` property to `inside`, `outside` or `outside-left`.
+ 
+-<CodeDemo title="Label Placements" highlightedLines="20,37" files={selectContent.labelPlacements} />
++<CodeDemo title="Label Placements" highlightedLines="19,37" files={selectContent.labelPlacements} />
+ 
+ > **Note**: If the `label` is not passed, the `labelPlacement` property will be `outside` by default.
+ 
+@@ -108,7 +108,7 @@ You can change the position of the label by setting the `labelPlacement` propert
+ You can use the `startContent` and `endContent` properties to add content to the start and end of
+ the select.
+ 
+-<CodeDemo title="Start Content" highlightedLines="9" files={selectContent.startContent} />
++<CodeDemo title="Start Content" highlightedLines="13" files={selectContent.startContent} />
+ 
+ ### Item Start & End Content
+ \n- packages/components/select/__tests__/select.test.tsx (modified, 270 changes)\n  Patch: @@ -7,23 +7,23 @@ import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter} from "../../mo
+ 
+ type Item = {
+   label: string;
+-  value: string;
++  id: string;
+ };
+ 
+ const itemsData: Item[] = [
+-  {label: "Cat", value: "cat"},
+-  {label: "Dog", value: "dog"},
+-  {label: "Elephant", value: "elephant"},
+-  {label: "Lion", value: "lion"},
+-  {label: "Tiger", value: "tiger"},
+-  {label: "Giraffe", value: "giraffe"},
+-  {label: "Dolphin", value: "dolphin"},
+-  {label: "Penguin", value: "penguin"},
+-  {label: "Zebra", value: "zebra"},
+-  {label: "Shark", value: "shark"},
+-  {label: "Whale", value: "whale"},
+-  {label: "Otter", value: "otter"},
+-  {label: "Crocodile", value: "crocodile"},
++  {label: "Cat", id: "cat"},
++  {label: "Dog", id: "dog"},
++  {label: "Elephant", id: "elephant"},
++  {label: "Lion", id: "lion"},
++  {label: "Tiger", id: "tiger"},
++  {label: "Giraffe", id: "giraffe"},
++  {label: "Dolphin", id: "dolphin"},
++  {label: "Penguin", id: "penguin"},
++  {label: "Zebra", id: "zebra"},
++  {label: "Shark", id: "shark"},
++  {label: "Whale", id: "whale"},
++  {label: "Otter", id: "otter"},
++  {label: "Crocodile", id: "crocodile"},
+ ];
+ 
+ const itemsSectionData = [
+@@ -48,18 +48,18 @@ const itemsSectionData = [
+ ];
+ 
+ describe("Select", () => {
++  let user;
++
++  beforeEach(() => {
++    user = userEvent.setup();
++  });
++
+   it("should render correctly", () => {
+     const wrapper = render(
+       <Select aria-label="Favorite Animal" label="Favorite Animal">
+-        <SelectItem key="penguin" value="penguin">
+-          Penguin
+-        </SelectItem>
+-        <SelectItem key="zebra" value="zebra">
+-          Zebra
+-        </SelectItem>
+-        <SelectItem key="shark" value="shark">
+-          Shark
+-        </SelectItem>
++        <SelectItem key="penguin">Penguin</SelectItem>
++        <SelectItem key="zebra">Zebra</SelectItem>
++        <SelectItem key="shark">Shark</SelectItem>
+       </Select>,
+     );
+ 
+@@ -71,15 +71,9 @@ describe("Select", () => {
+ 
+     render(
+       <Select ref={ref} aria-label="Favorite Animal" label="Favorite Animal">
+-        <SelectItem key="penguin" value="penguin">
+-          Penguin
+-        </SelectItem>
+-        <SelectItem key="zebra" value="zebra">
+-          Zebra
+-        </SelectItem>
+-        <SelectItem key="shark" value="shark">
+-          Shark
+-        </SelectItem>
++        <SelectItem key="penguin">Penguin</SelectItem>
++        <SelectItem key="zebra">Zebra</SelectItem>
++        <SelectItem key="shark">Shark</SelectItem>
+       </Select>,
+     );
+     expect(ref.current).not.toBeNull();
+@@ -88,7 +82,7 @@ describe("Select", () => {
+   it("should render correctly (dynamic)", () => {
+     const wrapper = render(
+       <Select aria-label="Favorite Animal" items={itemsData} label="Favorite Animal">
+-        {(item) => <SelectItem key={item.value}>{item.label}</SelectItem>}
++        {(item) => <SelectItem>{item.label}</SelectItem>}
+       </Select>,
+     );
+ 
+@@ -99,17 +93,11 @@ describe("Select", () => {
+     const wrapper = render(
+       <Select aria-label="Favorite Animal" label="Favorite Animal">
+         <SelectSection title="Birds">
+-          <SelectItem key="penguin" value="penguin">
+-            Penguin
+-          </SelectItem>
++          <SelectItem key="penguin">Penguin</SelectItem>
+         </SelectSection>
+         <SelectSection title="Mammals">
+-          <SelectItem key="zebra" value="zebra">
+-            Zebra
+-          </SelectItem>
+-          <SelectItem key="shark" value="shark">
+-            Shark
+-          </SelectItem>
++          <SelectItem key="zebra">Zebra</SelectItem>
++          <SelectItem key="shark">Shark</SelectItem>
+         </SelectSection>
+       </Select>,
+     );
+@@ -146,18 +134,11 @@ describe("Select", () => {
+         aria-label="Favorite Animal"
+         label="Favorite Animal"
+         selectionMode="single"
+-        value="penguin"
+         onSelectionChange={onSelectionChange}
+       >
+-        <SelectItem key="penguin" value="penguin">
+-          Penguin
+-        </SelectItem>
+-        <SelectItem key="zebra" value="zebra">
+-          Zebra
+-        </SelectItem>
+-        <SelectItem key="shark" value="shark">
+-          Shark
+-        </SelectItem>
++        <SelectItem key="penguin">Penguin</SelectItem>
++        <SelectItem key="zebra">Zebra</SelectItem>
++        <SelectItem key="shark">Shark</SelectItem>
+       </Select>,
+     );
+ 
+@@ -170,7 +151,7 @@ describe("Select", () => {
+     expect(listboxItems.length).toBe(3);
+ 
+     await act(async () => {
+-      await userEvent.click(listboxItems[1]);
++      await user.click(listboxItems[1]);
+ 
+       expect(onSelectionChange).toBeCalledTimes(1);
+     });
+@@ -188,15 +169,9 @@ describe("Select", () => {
+         selectionMode="multiple"
+         onSelectionChange={onSelectionChange}
+       >
+-        <SelectItem key="penguin" value="penguin">
+-          Penguin
+-        </SelectItem>
+-        <SelectItem key="zebra" value="zebra">
+-          Zebra
+-        </SelectItem>
+-        <SelectItem key="shark" value="shark">
+-          Shark
+-        </SelectItem>
++        <SelectItem key="penguin">Penguin</SelectItem>
++        <SelectItem key="zebra">Zebra</SelectItem>
++        <SelectItem key="shark">Shark</SelectItem>
+       </Select>,
+     );
+ 
+@@ -209,8 +184,8 @@ describe("Select", () => {
+     expect(listboxItems.length).toBe(3);
+ 
+     await act(async () => {
+-      await userEvent.click(listboxItems[1]);
+-      await userEvent.click(listboxItems[2]);
++      await user.click(listboxItems[1]);
++      await user.click(listboxItems[2]);
+ 
+       expect(onSelectionChange).toBeCalledTimes(2);
+     });
+@@ -231,15 +206,9 @@ describe("Select", () => {
+           placeholder={placeholder}
+           renderValue={renderValue}
+         >
+-          <SelectItem key="penguin" value="penguin">
+-            Penguin
+-          </SelectItem>
+-          <SelectItem key="zebra" value="zebra">
+-            Zebra
+-          </SelectItem>
+-          <SelectItem key="shark" value="shark">
+-            Shark
+-          </SelectItem>
++          <SelectItem key="penguin">Penguin</SelectItem>
++          <SelectItem key="zebra">Zebra</SelectItem>
++          <SelectItem key="shark">Shark</SelectItem>
+         </Select>
+       );
+     };
+@@ -255,13 +224,13 @@ describe("Select", () => {
+     const select = wrapper.getByTestId("render-selected-item-test");
+ 
+     await act(async () => {
+-      await userEvent.click(select);
++      await user.click(select);
+     });
+ 
+     const listboxItems = wrapper.getAllByRole("option");
+ 
+     await act(async () => {
+-      await userEvent.click(listboxItems[0]);
++      await user.click(listboxItems[0]);
+     });
+ 
+     expect(select).toHaveTextContent("Penguin");
+@@ -285,31 +254,25 @@ describe("Select", () => {
+         data-testid="close-when-clicking-outside-test"
+         label="Favorite Animal"
+       >
+-        <SelectItem key="penguin" value="penguin">
+-          Penguin
+-        </SelectItem>
+-        <SelectItem key="zebra" value="zebra">
+-          Zebra
+-        </SelectItem>
+-        <SelectItem key="shark" value="shark">
+-          Shark
+-        </SelectItem>
++        <SelectItem key="penguin">Penguin</SelectItem>
++        <SelectItem key="zebra">Zebra</SelectItem>
++        <SelectItem key="shark">Shark</SelectItem>
+       </Select>,
+     );
+ 
+     const select = wrapper.getByTestId("close-when-clicking-outside-test");
+ 
+     // open the select dropdown
+     await act(async () => {
+-      await userEvent.click(select);
++      await user.click(select);
+     });
+ 
+     // assert that the select is open
+     expect(select).toHaveAttribute("aria-expanded", "true");
+ 
+     // click outside the select component
+     await act(async () => {
+-      await userEvent.click(document.body);
++      await user.click(document.body);
+     });
+ 
+     // assert that the select is closed
+@@ -327,15 +290,9 @@ describe("Select", () => {
+               data-testid="close-when-clicking-outside-test"
+               label="Favorite Animal"
+             >
+-              <SelectItem key="penguin" value="penguin">
+-                Penguin
+-              </SelectItem>
+-              <SelectItem key="zebra" value="zebra">
+-                Zebra
+-              </SelectItem>
+-              <SelectItem key="shark" value="shark">
+-                Shark
+-              </SelectItem>
++              <SelectItem key="penguin">Penguin</SelectItem>
++              <SelectItem key="zebra">Zebra</SelectItem>
++              <SelectItem key="shark">Shark</SelectItem>
+             </Select>
+           </ModalBody>
+           <ModalFooter>Modal footer</ModalFooter>
+@@ -347,15 +304,15 @@ describe("Select", () => {
+ 
+     // open the select dropdown
+     await act(async () => {
+-      await userEvent.click(select);
++      await user.click(select);
+     });
+ 
+     // assert that the select is open
+     expect(select).toHaveAttribute("aria-expanded", "true");
+ 
+     // click outside the select component
+     await act(async () => {
+-      await userEvent.click(document.body);
++      await user.click(document.body);
+     });
+ 
+     // assert that the select is closed
+@@ -372,28 +329,121 @@ describe("Select", () => {
+         data-testid="test-select"
+         label="Favorite Animal"
+         selectionMode="single"
+-        value="penguin"
+         onSelectionChange={onSelectionChange}
+       >
+-        <SelectItem key="penguin" value="penguin">
+-          Penguin
+-        </SelectItem>
+-        <SelectItem key="zebra" value="zebra">
+-          Zebra
+-        </SelectItem>
+-        <SelectItem key="shark" value="shark">
+-          Shark
+-        </SelectItem>
++        <SelectItem key="penguin">Penguin</SelectItem>
++        <SelectItem key="zebra">Zebra</SelectItem>
++        <SelectItem key="shark">Shark</SelectItem>
+       </Select>,
+     );
+     const select = wrapper.getByTestId("test-select");
+ 
+     await act(async () => {
+-      await userEvent.click(document.body);
+-      await userEvent.tab();
+-      await userEvent.type(select, "z", {skipClick: true});
++      await user.click(document.body);
++      await user.tab();
++      await user.type(select, "z", {skipClick: true});
+ 
+       expect(onSelectionChange).toBeCalledTimes(0);
+     });
+   });
++
++  it("onSelectionChange should be called with a Set of item ids upon selection", async () => {
++    const itemsWithId = [
++      {id: 1, value: "penguin"},
++      {id: 2, value: "zebra"},
++      {id: 3, value: "shark"},
++    ];
++
++    const onSelectionChangeId = jest.fn();
++    const wrapperWithId = render(
++      <Select
++        isOpen
++        items={itemsWithId}
++        label="Test with ID"
++        onSelectionChange={onSelectionChangeId}
++      >
++        {(item) => <SelectItem>{item.value}</SelectItem>}
++      </Select>,
++    );
++
++    const listbox = wrapperWithId.getByRole("listbox");
++
++    expect(listbox).toBeInTheDocument();
++
++    // Select item and check the correct ID is passed to the callback
++    await act(async () => {
++      await user.click(wrapperWithId.getByRole("option", {name: itemsWithId[0].value}));
++    });
++    expect(onSelectionChangeId).toHaveBeenCalled();
++    let selectionArg = onSelectionChangeId.mock.calls[0][0];
++
++    expect([...selectionArg]).toEqual([itemsWithId[0].id]);
++
++    await act(async () => {
++      await user.click(wrapperWithId.getByRole("option", {name: itemsWithId[1].value}));
++    });
++    expect(onSelectionChangeId).toHaveBeenCalledTimes(2);
++    selectionArg = onSelectionChangeId.mock.calls[1][0];
++    expect([...selectionArg]).toEqual([itemsWithId[1].id]);
++  });
++
++  it("onSelectionChange should be called with a Set of item keys upon selection", async () => {
++    const itemsWithKey = [
++      {key: 1, value: "penguin"},
++      {key: 2, value: "zebra"},
++      {key: 3, value: "shark"},
++    ];
++
++    const onSelectionChangeKey = jest.fn();
++    const wrapperWithKey = render(
++      <Select
++        isOpen
++        items={itemsWithKey}
++        label="Test with Key"
++        onSelectionChange={onSelectionChangeKey}
++      >
++        {(item) => <SelectItem>{item.value}</SelectItem>}
++      </Select>,
++    );
++
++    const listbox = wrapperWithKey.getByRole("listbox");
++
++    expect(listbox).toBeInTheDocument();
++
++    // Select item and check the correct key is passed to the callback
++    await act(async () => {
++      await user.click(wrapperWithKey.getByRole("option", {name: itemsWithKey[0].value}));
++    });
++    expect(onSelectionChangeKey).toHaveBeenCalled();
++    let selectionArg = onSelectionChangeKey.mock.calls[0][0];
++
++    expect([...selectionArg]).toEqual([itemsWithKey[0].key]);
++
++    await act(async () => {
++      await user.click(wrapperWithKey.getByRole("option", {name: itemsWithKey[1].value}));
++    });
++    expect(onSelectionChangeKey).toHaveBeenCalledTimes(2);
++    selectionArg = onSelectionChangeKey.mock.calls[1][0];
++    expect([...selectionArg]).toEqual([itemsWithKey[1].key]);
++  });
++
++  it("should display selected items as comma-separated string inside the select", async () => {
++    const wrapper = render(
++      <Select
++        isDisabled
++        aria-label="Favorite Animal"
++        data-testid="test-select"
++        selectedKeys={["penguin", "zebra"]}
++        selectionMode="multiple"
++      >
++        <SelectItem key="penguin">Penguin</SelectItem>
++        <SelectItem key="zebra">Zebra</SelectItem>
++        <SelectItem key="shark">Shark</SelectItem>
++      </Select>,
++    );
++    const select = wrapper.getByTestId("test-select");
++    const displayedText = select?.textContent?.trim();
++
++    expect(displayedText).toBe("Penguin, Zebra");
++  });
+ });\n- packages/components/select/src/select.tsx (modified, 6 changes)\n  Patch: @@ -129,10 +129,8 @@ function Select<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLSelectE
+           {!isOutsideLeft ? labelContent : null}
+           <div {...getInnerWrapperProps()}>
+             {startContent}
+-            <span {...getValueProps()}>
+-              {renderSelectedItem}
+-              {state.selectedItems && <VisuallyHidden>,</VisuallyHidden>}
+-            </span>
++            <span {...getValueProps()}>{renderSelectedItem}</span>
++            {endContent && state.selectedItems && <VisuallyHidden>,</VisuallyHidden>}
+             {endContent}
+           </div>
+           {renderIndicator}\n- packages/hooks/use-aria-multiselect/src/use-multiselect-list-state.ts (modified, 4 changes)\n  Patch: @@ -32,7 +32,7 @@ export function useMultiSelectListState<T extends object>(
+     if (!props.isLoading && selectedKeys.size !== 0) {
+       return Array.from(selectedKeys)
+         .filter(Boolean)
+-        .filter((key) => !collection.getItem(`${key}`));
++        .filter((key) => !collection.getItem(key));
+     }
+ 
+     return [];
+@@ -42,7 +42,7 @@ export function useMultiSelectListState<T extends object>(
+     selectedKeys.size !== 0
+       ? Array.from(selectedKeys)
+           .map((key) => {
+-            return collection.getItem(`${key}`);
++            return collection.getItem(key);
+           })
+           // Remove undefined values when some keys are not present in the collection
+           .filter(Boolean)\n

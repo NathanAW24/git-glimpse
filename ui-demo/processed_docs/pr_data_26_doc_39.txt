@@ -1,0 +1,72 @@
+Pull Request Number: 678
+Title: Disabled `<Input/>` autofill highlighting.
+Base Branch: next
+Head Branch: input-autofill-fix
+Author: psyirius
+URL: https://github.com/nextui-org/nextui/pull/678
+State: MERGED
+Created At: 2022-08-19T15:23:19Z
+Merged At: 2022-11-06T18:46:35Z
+Participants: psyirius, Clovel, jrgarciadev, tianenpang
+
+Description:
+Closes: The issue mentioned below.
+📝 Description
+This PR disables the highlighting from the user-agent-stylesheet of browser's like chrome for input element's autofill.
+⛳️ Current behavior (updates)
+https://nextui.org/docs/components/input#clearable
+
+🚀 New behavior
+http://localhost:6006/?path=/story/general-input--password (of-fixed-sb)
+
+💣 Is this a breaking change (Yes/No):
+AFAIK, No!
+📝 Additional Information
+Not sure if this will bring any security issues that the browsers intended prevent with some strict highlighting.
+But anyway it was annoying to see a boxy-rectangle covers the text where the whole experience is curvy-fluid.
+Thus this PR!
+
+Commits:
+- Disabled `<Input/>` autofill highlighting.\n- Merge branch 'main' into input-autofill-fix\n
+
+Labels:
+
+
+Comments:
+- vercel: @psyirius is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2264f2085fd9c4c58b14d7237f8ed6072068b7916a%22%7D%2C%22id%22%3A%22QmWne1aHzVMBKHcdiP8ewHErgZB75QLzFeh1c4oG463ziF%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A678%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/hsHd6gZMYcNnB5zpdbVjMBJY7Dvo)) | [Visit Preview](https://nextui-storybook-git-fork-psyirius-input-auto-ce033a-nextui-org.vercel.app) | Nov 6, 2022 at 6:45PM (UTC) |
+
+\n- Clovel: I was wondering about this ! I hope you PR get's approved. \n- jrgarciadev: Hey @tianenpang could you please help me on reviewing this? 🙏🏻\n- jrgarciadev: Huge thanks! @psyirius 🙌🏼\n
+
+Files Changed:
+- packages/react/src/input/input.styles.ts (modified, 14 changes)\n  Patch: @@ -166,9 +166,23 @@ export const StyledInputMainContainer = styled("div", {
+   },
+ });
+ 
++const inputAutofillStyles = {
++  WebkitTextFillColor: "$$inputTextColor",
++  WebkitBackgroundClip: "text !important",
++  caretColor: "$$inputTextColor",
++};
++
+ export const StyledInputContainer = styled("div", {
+   width: "100%",
+   br: "$$inputBorderRadius",
++  input: {
++    "&:-webkit-autofill": {
++      ...inputAutofillStyles,
++      "&:hover": inputAutofillStyles,
++      "&:focus": inputAutofillStyles,
++      "&:active": inputAutofillStyles,
++    },
++  },
+   "@motion": {
+     transition: "none",
+   },\n

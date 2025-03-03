@@ -1,0 +1,183 @@
+Pull Request Number: 466
+Title: fix(react-user): prop and link warnings
+Base Branch: next
+Head Branch: fix/user-prop-tag
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/466
+State: MERGED
+Created At: 2022-05-10T12:25:37Z
+Merged At: 2022-06-06T18:00:19Z
+Participants: tianenpang, codecov-commenter, jrgarciadev, Cow258
+
+Description:
+Closes #474
+📝 Description
+
+passed unnecessary props to StyledUser
+
+
+Warning: Received true for a non-boolean attribute zoomed
+Warning: Received true for a non-boolean attribute pointer
+
+
+StyledUserLink and Link both use the a tag
+
+
+Warning: validateDOMNesting(...): <a> cannot appear as a descendant of <a>
+
+⛳️ Current behavior (updates)
+
+
+structure props in order to pass the correct otherProps
+
+
+change the a tag of StyledUserLink to span
+
+
+
+💣 Is this a breaking change (Yes/No):
+No
+
+Commits:
+- fix: user prop and user link warnings\n- fix(react-user): remove styled-user-link and use link directly\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/466?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#466](https://codecov.io/gh/nextui-org/nextui/pull/466?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (b1b2c35) into [main](https://codecov.io/gh/nextui-org/nextui/commit/777a0068f9f1f22ea01d76223e188c56504c6942?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (777a006) will **not change** coverage.
+> The diff coverage is `100.00%`.
+
+```diff
+@@           Coverage Diff           @@
+##             main     #466   +/-   ##
+=======================================
+  Coverage   74.95%   74.95%           
+=======================================
+  Files         183      183           
+  Lines        2831     2831           
+  Branches      843      843           
+=======================================
+  Hits         2122     2122           
+  Misses        698      698           
+  Partials       11       11           
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/466?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/react/src/user/user.tsx](https://codecov.io/gh/nextui-org/nextui/pull/466/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3VzZXIvdXNlci50c3g=) | `100.00% <ø> (ø)` | |
+| [packages/react/src/user/user.styles.ts](https://codecov.io/gh/nextui-org/nextui/pull/466/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvcmVhY3Qvc3JjL3VzZXIvdXNlci5zdHlsZXMudHM=) | `100.00% <100.00%> (ø)` | |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/466?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/466?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [777a006...b1b2c35](https://codecov.io/gh/nextui-org/nextui/pull/466?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n- jrgarciadev: Huge thanks! @tianenpang 🙏🏻 \n
+
+Files Changed:
+- packages/react/src/user/index.ts (modified, 3 changes)\n  Patch: @@ -10,8 +10,7 @@ export {
+   StyledUser,
+   StyledUserInfo,
+   StyledUserName,
+-  StyledUserDesc,
+-  StyledUserLink
++  StyledUserDesc
+ } from './user.styles';
+ 
+ export default User;\n- packages/react/src/user/user-link.tsx (modified, 52 changes)\n  Patch: @@ -1,35 +1,37 @@
+ import React from 'react';
+ import Link from '../link';
+-import { StyledUserLink } from './user.styles';
+-import { CSS } from '../theme/stitches.config';
++import clsx from '../utils/clsx';
+ import { __DEV__ } from '../utils/assertion';
++import type { LinkProps } from '../link';
+ 
+ interface Props {
+-  href?: string;
++  children?: React.ReactNode;
+ }
+-type NativeAttrs = Omit<React.AnchorHTMLAttributes<unknown>, keyof Props>;
+-export type UserLinkProps = Props & NativeAttrs & { css?: CSS };
+-
+-const UserLink = React.forwardRef<
+-  HTMLAnchorElement,
+-  React.PropsWithChildren<UserLinkProps>
+->(
+-  (
+-    { href, className, children, ...props },
+-    ref: React.Ref<HTMLAnchorElement>
+-  ) => {
++
++export type UserLinkProps = Props & Omit<LinkProps, 'icon'>;
++
++const UserLink = React.forwardRef<HTMLAnchorElement, UserLinkProps>(
++  (props: UserLinkProps, ref: React.Ref<HTMLAnchorElement>) => {
++    const {
++      rel = 'noopener',
++      color = 'primary',
++      target = '_blank',
++      className,
++      children,
++      ...otherProps
++    } = props;
++
+     return (
+-      <StyledUserLink {...props}>
+-        <Link
+-          ref={ref}
+-          href={href}
+-          color="primary"
+-          target="_blank"
+-          rel="noopener"
+-        >
+-          {children}
+-        </Link>
+-      </StyledUserLink>
++      <Link
++        ref={ref}
++        rel={rel}
++        color={color}
++        target={target}
++        className={clsx('nextui-user-link', className)}
++        {...otherProps}
++      >
++        {children}
++      </Link>
+     );
+   }
+ );\n- packages/react/src/user/user.styles.ts (modified, 8 changes)\n  Patch: @@ -37,11 +37,3 @@ export const StyledUserDesc = styled('span', {
+     mb: 0
+   }
+ });
+-
+-export const StyledUserLink = styled('a', {
+-  a: {
+-    '&:hover': {
+-      opacity: 0.7
+-    }
+-  }
+-});\n- packages/react/src/user/user.tsx (modified, 6 changes)\n  Patch: @@ -55,6 +55,8 @@ export const User = React.forwardRef(
+       bordered,
+       size,
+       description,
++      zoomed,
++      pointer,
+       ...otherProps
+     } = props;
+ 
+@@ -67,8 +69,8 @@ export const User = React.forwardRef(
+           src={src}
+           color={color}
+           squared={squared}
+-          zoomed={props.zoomed}
+-          pointer={props.pointer}
++          zoomed={zoomed}
++          pointer={pointer}
+           bordered={bordered}
+           text={text}
+           size={size}\n

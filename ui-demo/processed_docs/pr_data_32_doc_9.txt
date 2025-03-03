@@ -1,0 +1,141 @@
+Pull Request Number: 59
+Title: Fix 57/cumulative layout shift
+Base Branch: main
+Head Branch: fix_57/cumulative-layout-shift
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/59
+State: MERGED
+Created At: 2021-10-02T21:34:30Z
+Merged At: 2021-10-02T21:44:17Z
+Participants: jrgarciadev, codecov-commenter
+
+Description:
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+
+
+
+Screenshots - Animations
+
+Commits:
+- chore: prepare script added to automatically run after install packages\n- fix: reduce the number of fonts because it was not using\n- fix: blinking styles load\n- chore: styled-jsx version increased that solve in a better way the CLS problem\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/59?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#59](https://codecov.io/gh/nextui-org/nextui/pull/59?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (e014756) into [main](https://codecov.io/gh/nextui-org/nextui/commit/45b20d68927ef0df90b141b944636ed7004e9e80?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (45b20d6) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/59/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/59?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main      #59   +/-   ##
+=======================================
+  Coverage   86.73%   86.73%           
+=======================================
+  Files          93       93           
+  Lines        1546     1546           
+  Branches      525      525           
+=======================================
+  Hits         1341     1341           
+  Misses        200      200           
+  Partials        5        5           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/59?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/59?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [45b20d6...e014756](https://codecov.io/gh/nextui-org/nextui/pull/59?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- package.json (modified, 1 changes)\n  Patch: @@ -11,6 +11,7 @@
+     },
+     "scripts": {
+         "dev": "run-p dev:docs sb",
++        "prepare": "run-s build:nextui",
+         "dev:docs": "yarn workspace @nextui-org/docs dev",
+         "start:docs": "yarn workspace @nextui-org/docs start",
+         "pre-publish:nextui": "yarn workspace @nextui-org/react pre-publish",\n- packages/docs/package.json (modified, 2 changes)\n  Patch: @@ -34,7 +34,7 @@
+     "react-markdown": "^6.0.2",
+     "remark-autolink-headings": "^6.0.1",
+     "remark-slug": "^6.0.0",
+-    "styled-jsx": "^3.4.4",
++    "styled-jsx": "^4.0.1",
+     "util.promisify": "^1.1.1"
+   },
+   "devDependencies": {\n- packages/docs/src/layouts/header.tsx (modified, 2 changes)\n  Patch: @@ -86,7 +86,7 @@ const Header: React.FC<HeaderProps> = ({ title, description, image, url }) => {
+       />
+       <link rel="preconnect" href="https://fonts.gstatic.com" />
+       <link
+-        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
++        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap"
+         rel="stylesheet"
+       />
+       {isProd && (\n- packages/docs/src/pages/_document.tsx (modified, 1 changes)\n  Patch: @@ -12,7 +12,6 @@ class MyDocument extends Document {
+   static async getInitialProps(ctx: DocumentContext) {
+     const initialProps = await Document.getInitialProps(ctx);
+     const styles = CssBaseline.flush();
+-
+     return {
+       ...initialProps,
+       styles: (\n- yarn.lock (modified, 24 changes)\n  Patch: @@ -463,13 +463,6 @@
+   dependencies:
+     "@babel/types" "^7.15.4"
+ 
+-"@babel/helper-module-imports@7.12.5":
+-  version "7.12.5"
+-  resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.12.5.tgz#1bfc0229f794988f76ed0a4d4e90860850b54dfb"
+-  integrity sha512-SR713Ogqg6++uexFRORf/+nPXMmWIn80TALu0uaFb+iQIUoR7bOC7zBWyzBs5b3tBBJXuyD0cRu1F15GyzjOWA==
+-  dependencies:
+-    "@babel/types" "^7.12.5"
+-
+ "@babel/helper-module-imports@^7.0.0", "@babel/helper-module-imports@^7.12.13", "@babel/helper-module-imports@^7.14.5":
+   version "7.14.5"
+   resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.14.5.tgz#6d1a44df6a38c957aa7c312da076429f11b422f3"
+@@ -1957,7 +1950,7 @@
+     lodash "^4.17.13"
+     to-fast-properties "^2.0.0"
+ 
+-"@babel/types@^7.0.0", "@babel/types@^7.12.5", "@babel/types@^7.12.7", "@babel/types@^7.14.5", "@babel/types@^7.2.0", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4":
++"@babel/types@^7.0.0", "@babel/types@^7.12.7", "@babel/types@^7.14.5", "@babel/types@^7.2.0", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4":
+   version "7.14.5"
+   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.14.5.tgz#3bb997ba829a2104cedb20689c4a5b8121d383ff"
+   integrity sha512-M/NzBpEL95I5Hh4dwhin5JlE7EzO5PHMAuzjxss3tiOBD46KfQvVedN/3jEPZvdRvtsK2222XfdHogNIttFgcg==
+@@ -16908,21 +16901,6 @@ styled-jsx@3.3.2:
+     stylis "3.5.4"
+     stylis-rule-sheet "0.0.10"
+ 
+-styled-jsx@^3.4.4:
+-  version "3.4.4"
+-  resolved "https://registry.yarnpkg.com/styled-jsx/-/styled-jsx-3.4.4.tgz#d5012cac2ed22be0b72e28932f3eece8d83b695c"
+-  integrity sha512-PkZi/col7R4cpwSPY2n4JjpcTYfBgaWg/1mt0+1E/pmkXL+Pik5Kr/snYMWj90+N3kDw+BqfnJOogdRw4621GQ==
+-  dependencies:
+-    "@babel/helper-module-imports" "7.12.5"
+-    "@babel/types" "7.8.3"
+-    babel-plugin-syntax-jsx "6.18.0"
+-    convert-source-map "1.7.0"
+-    loader-utils "1.2.3"
+-    source-map "0.7.3"
+-    string-hash "1.1.3"
+-    stylis "3.5.4"
+-    stylis-rule-sheet "0.0.10"
+-
+ stylis-rule-sheet@0.0.10:
+   version "0.0.10"
+   resolved "https://registry.yarnpkg.com/stylis-rule-sheet/-/stylis-rule-sheet-0.0.10.tgz#44e64a2b076643f4b52e5ff71efc04d8c3c4a430"\n

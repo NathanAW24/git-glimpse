@@ -1,0 +1,944 @@
+Pull Request Number: 3789
+Title: fix(date-picker): month and year picker scroller
+Base Branch: canary
+Head Branch: fix/date-picker-month-and-year-scroller
+Author: buchananwill
+URL: https://github.com/nextui-org/nextui/pull/3789
+State: OPEN
+Created At: 2024-09-22T23:17:08Z
+Merged At: None
+Participants: buchananwill, wingkwong, ryo-manba, luka-on-gh
+
+Description:
+Closes #3785
+📝 Description
+
+Fixing the month/year UI sync bug.
+
+⛳️ Current behavior (updates)
+
+The month and year were incorrectly updating due to a UI rectangle intersection error. This has been removed and the data is updated directly from the value attribute.
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+No.
+📝 Additional Information
+
+Summary by CodeRabbit
+Summary by CodeRabbit
+
+New Features
+
+Introduced the AccordionTree component for hierarchical data representation.
+Added an aria label for the month/year picker toggle button to enhance accessibility.
+Enhanced keyboard interaction capabilities in the calendar picker component.
+Added a new custom hook for managing key press states and scroll events.
+
+
+Bug Fixes
+
+Improved user interface and data synchronization for the month/year picker component.
+
+
+Refactor
+
+Simplified scrolling behavior and focused date management in the calendar picker component.
+
+
+Chores
+
+Updated versions for @nextui-org/accordion and @nextui-org/calendar packages.
+Added a new test case for the month and year picker functionality in the DatePicker component.
+
+Commits:
+- accordion tree\n- Rename accordionTree.tsx to accordion-tree.tsx
+
+Conforming to name convention.\n- Update accordion-tree.tsx
+
+Removing clsx.\n- fix(use-calendar-picker): fixed the UI month/year sync (#3785)\n- fix(use-calendar-picker): fixed the UI month/year sync (#3785)\n- fix(use-calendar-picker): added test for the fixed behaviour (#3785)\n- fix(use-calendar-picker): changeset (#3785)\n- Delete .changeset/serious-snails-count.md
+
+Accordion no longer changed.\n- Update sixty-weeks-help.md
+
+Narrowed scope.\n- fix(use-calendar-picker): swapped the aria label for data-slot="header" in the test\n- fix(use-calendar-picker): added scrollTo(nextValue, list) into the keyboard callback\n- fix(use-calendar-picker): prevent default behaviour for scroll keys\n- fix(use-calendar-picker): add a key up event to further fix #3789\n- fix(use-calendar-picker): changed the home/end values to 1 and 12\n- fix(use-calendar-picker): sourced the mix/max values from the state\n- fix(use-calendar-picker): useCallback for the getBoundaryValue\n- fix(use-calendar-picker): blocking repeat key strokes for home and end\n- fix(use-calendar-picker): inlined arrow function\n- fix(use-calendar-picker): simplified control structure\n- fix(use-calendar-picker): change the execution order to avoid stale listeners\n
+
+Labels:
+🚧 Status: Changes Requested
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 214385fd9b329bcc62d86b38d825bdcc62a19fcf
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 3 packages</summary>
+
+  | Name                    | Type  |
+| ----------------------- | ----- |
+| @nextui-org/calendar    | Patch |
+| @nextui-org/date-picker | Patch |
+| @nextui-org/react       | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/buchananwill/nextui-wb-dev/new/fix/date-picker-month-and-year-scroller?filename=.changeset/famous-zoos-shake.md&value=---%0A%22%40nextui-org%2Fcalendar%22%3A%20patch%0A%22%40nextui-org%2Fdate-picker%22%3A%20patch%0A---%0A%0Afix(date-picker)%3A%20month%20and%20year%20picker%20scroller%0A)
+
+\n- vercel: @buchananwill is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2266108cd8068f0fc8d394818ba6c5d0388b478661%22%7D%2C%22id%22%3A%22QmP2XDxGf9Y2TDVq1gtR72Lo9Ewo4UAPf3JVoz65ezEEWB%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3789%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+This pull request introduces updates to three packages: `@nextui-org/accordion`, `@nextui-org/calendar`, and `@nextui-org/date-picker`. The `@nextui-org/accordion` package has received a minor version update, while the `@nextui-org/calendar` package has been patched. A new component, `AccordionTree`, has been added to support hierarchical data. Additionally, significant refactoring has been performed on the `useCalendarPicker` function, simplifying the scrolling behavior and focused date management. Accessibility improvements have also been made to the date picker component.
+
+## Changes
+
+| File Path                                      | Change Summary                                                                                                                                                           |
+|------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| .changeset/serious-snails-count.md             | Documented minor version update for `@nextui-org/accordion` and patch update for `@nextui-org/calendar`. Noted a fix related to the month/year picker component.    |
+| packages/components/accordion/src/accordion-tree.tsx | Introduced `AccordionTree` component with interfaces `AccordionTreeItemProps` and `AccordionTreeProps` for hierarchical data support.                                |
+| packages/components/calendar/src/calendar-header.tsx | Added constant `monthAndYearPickerToggle` for the `aria-label` of the month/year picker toggle button, enhancing accessibility.                                        |
+| packages/components/calendar/src/calendar-picker-item.tsx | Updated `CalendarPickerItem` to include `onKeyUp` prop for handling key-up events.                                                                                   |
+| packages/components/calendar/src/calendar-picker.tsx | Introduced `onPickerItemKeyUp` event handler for enhanced keyboard interaction in the calendar picker.                                                                  |
+| packages/components/calendar/src/use-calendar-picker.ts | Removed `handleListScroll` function and debounced scroll event listeners, simplifying the logic for updating the focused date in the calendar picker component.          |
+| packages/components/date-picker/__tests__/date-picker.test.tsx | Introduced a new test case for the month and year picker functionality, verifying button interactions and visibility of the dialog.                                     |
+
+## Assessment against linked issues
+
+| Objective                                           | Addressed | Explanation                           |
+|----------------------------------------------------|-----------|---------------------------------------|
+| Ensure highlighted, focused, and selected values are consistent in Date Picker (#3785) | ❓         | Changes simplify scrolling but do not explicitly confirm resolution of the issue. |
+
+## Possibly related PRs
+- **#2845**: Addresses issues in the DatePicker component, specifically related to the month and year pickers, which aligns with the main PR's focus on enhancing the date picker functionality.
+- **#3088**: Prevents changes in the year and month when toggling the month and year pickers, directly relating to the updates made in the main PR regarding the date picker component.
+- **#3331**: Resolves a bug related to incorrect year display in the `showMonthAndYearPickers` component, which is pertinent to the main PR's updates on the date picker.
+- **#3416**: Resolves a width clipping issue in the DatePicker, which is relevant to the overall functionality and user experience improvements noted in the main PR.
+- **#3773**: Enhances the DatePicker by ensuring that classNames from `calendarProps` are correctly applied, which is related to the styling updates in the main PR.
+
+## Suggested labels
+`📋 Scope : Docs`
+
+## Suggested reviewers
+- wingkwong
+- jrgarciadev
+- ryo-manba
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+.changeset/serious-snails-count.md:
+
+"""
+## AI-generated summary of changes
+
+A new markdown file has been introduced that documents changes to three packages: `@nextui-org/accordion`, `@nextui-org/calendar`, and `@nextui-org/date-picker`. The `@nextui-org/accordion` package has undergone a minor version update, while the `@nextui-org/calendar` package has received a patch update. Additionally, the file notes that there has been a fix related to the user interface and data synchronization for the month/year picker component. The update also includes the addition of an aria label and a test label for the picker toggle functionality, enhancing accessibility and testing capabilities for the date picker component.
+
+## Alterations to the declarations of exported or public entities
+
+- Package version updated: `@nextui-org/accordion` from unspecified to minor
+- Package version updated: `@nextui-org/calendar` from unspecified to patch
+"""
+
+---
+
+packages/components/accordion/src/accordion-tree.tsx:
+
+"""
+## AI-generated summary of changes
+
+The new file `accordion-tree.tsx` introduces a component called `AccordionTree`, which is a specialized version of an accordion that supports hierarchical data structures. It defines two interfaces: `AccordionTreeItemProps` and `AccordionTreeProps`. The `AccordionTreeItemProps` interface extends `AccordionItemProps`, omitting the `children` property and adding `contentMain` for the main content and `contentChildren` for nested items. The `AccordionTreeProps` interface extends `AccordionProps`, requiring an array of `items` of type `AccordionTreeItemProps`.
+
+The `AccordionTree` component is implemented using `forwardRef`, allowing it to accept a ref for the outermost div element. It destructures its props to extract `items`, `itemClasses`, `className`, `isCompact`, and `selectionMode`, while also providing default values for `isCompact` and `selectionMode`. The itemClasses object is constructed to ensure default styling for the accordion items.
+
+Inside the component, the `Accordion` is rendered, passing down the relevant props, including the `items` array. The component maps over the `items`, rendering an `AccordionItem` for each one. For each item, it checks for `contentMain` and `contentChildren`. If `contentChildren` exists, it recursively renders another `AccordionTree`, allowing for nested accordions. The component concludes by exporting `AccordionTree` as the default export.
+
+## Alterations to the declarations of exported or public entities
+
+- Interface added: `AccordionTreeItemProps` in `accordion-tree.tsx`
+- Interface added: `AccordionTreeProps` in `accordion-tree.tsx`
+- Component added: `AccordionTree` in `accordion-tree.tsx`
+"""
+
+---
+
+packages/components/calendar/src/calendar-header.tsx:
+
+"""
+## AI-generated summary of changes
+
+The diff introduces a new constant `monthAndYearPickerToggle` with the value "Month and year picker toggle" in the `calendar-header.tsx` file. This constant is then utilized as the `aria-label` for a `Button` component within the `CalendarHeader` function. The addition of the `aria-label` enhances accessibility by providing a descriptive label for screen readers when the month and year picker toggle button is rendered.
+
+## Alterations to the declarations of exported or public entities
+
+- Constant added: `monthAndYearPickerToggle` in `calendar-header.tsx` with the value "Month and year picker toggle".
+"""
+
+---
+
+packages/components/calendar/src/calendar-picker-item.tsx:
+
+"""
+## AI-generated summary of changes
+
+The diff introduces a modification to the `CalendarPickerItem` component in the `calendar-picker-item.tsx` file. The primary change is the addition of the `onKeyUp` prop to the component's function signature. This allows the component to handle the `onKeyUp` event in addition to the existing `onKeyDown` event. The `onKeyUp` prop is passed to the `useAriaButton` hook, which now includes it in the `buttonProps` returned. The rest of the component's logic, including the handling of focus, hover, and other props, remains unchanged.
+
+## Alterations to the declarations of exported or public entities
+
+- Method signature updated: `CalendarPickerItem` function component in `packages/components/calendar/src/calendar-picker-item.tsx` now includes `onKeyUp` in its props: `({children, autoFocus, isDisabled, onKeyDown, ...otherProps}, ref)` → `({children, autoFocus, isDisabled, onKeyDown, onKeyUp, ...otherProps}, ref)`
+"""
+
+---
+
+packages/components/calendar/src/calendar-picker.tsx:
+
+"""
+## AI-generated summary of changes
+
+The diff introduces a new event handler, `onPickerItemKeyUp`, to the `CalendarPicker` component, enhancing its keyboard interaction capabilities. This handler is added to the `CalendarPickerItem` components for both months and years, allowing the component to respond to the key-up event in addition to the existing key-down and press events. The `onPickerItemKeyUp` function is destructured from the `useCalendarPicker` hook, indicating that it is part of the state management for the calendar picker. The overall structure of the component remains unchanged, but the addition of this event handler improves the responsiveness of the picker to user input.
+
+## Alterations to the declarations of exported or public entities
+
+- Property added: `onPickerItemKeyUp` in the function `CalendarPicker` in `packages/components/calendar/src/calendar-picker.tsx`
+"""
+
+---
+
+packages/components/calendar/src/use-calendar-picker.ts:
+
+"""
+## AI-generated summary of changes
+
+The diff introduces significant modifications to the `useCalendarPicker` function in the `use-calendar-picker.ts` file. The `handleListScroll` function has been removed, along with the `SCROLL_DEBOUNCE_TIME` constant, indicating a change in how scrolling is managed. A new constant, `DEFAULT_BOUNDARY_VALUE`, has been added to define the minimum and maximum values for months and years. The `LISTENED_NAVIGATION_KEYS` constant has been introduced to specify keys that prevent default behavior when pressed.
+
+The `onPickerItemKeyDown` function has been updated to incorporate the new key handling logic, utilizing the `getBoundaryValue` function to determine boundary values for the "Home" and "End" keys. The `onPickerItemKeyUp` function has been added to handle key up events, ensuring the triggering element is scrolled into view. Additionally, two new hooks, `useScrollEndCallback` and `useKeyRepeatBlocker`, have been integrated to manage scroll end events and key repeat behavior, respectively.
+
+The overall structure of the `useCalendarPicker` function has been streamlined, with a focus on simplifying the management of focused dates and scrolling behavior. The removal of the `handleListScroll` function and the addition of new constants and hooks reflect a shift in the approach to handling user interactions within the calendar picker.
+
+## Alterations to the declarations of exported or public entities
+
+- Method added: `onPickerItemKeyUp` in function `useCalendarPicker` in `packages/components/calendar/src/use-calendar-picker.ts`
+- Method signature updated: `onPickerItemKeyDown` in function `useCalendarPicker` in `packages/components/calendar/src/use-calendar-picker.ts` (new key handling logic added)
+"""
+
+---
+
+packages/components/calendar/src/use-key-repeat-blocker.ts:
+
+"""
+## AI-generated summary of changes
+
+A new custom React hook named `useKeyRepeatBlocker` has been introduced in the file `use-key-repeat-blocker.ts`. This hook is designed to manage the state of key presses for a specified list of blocked keys. It provides an API that includes three functions: `handleKeyDown`, `handleKeyUp`, and `isKeyDown`. 
+
+The hook utilizes a mutable reference, `keyPressedRef`, to keep track of the pressed state of keys. The `handleKeyDown` function checks if a key is in the `blockedKeys` array and whether it is already marked as pressed. If the key is not already pressed, it updates the state to indicate that the key is now pressed. The `handleKeyUp` function similarly checks if a key is blocked and updates the state to mark it as not pressed when the key is released. 
+
+The `isKeyDown` function allows consumers of the hook to check if a specific key is currently pressed by accessing the state stored in `keyPressedRef`. The hook returns an object containing these three functions, enabling components to effectively manage key press events for the specified blocked keys.
+
+## Alterations to the declarations of exported or public entities
+
+- New hook added: `export const useKeyRepeatBlocker = (blockedKeys: string[]): UseKeyRepeatBlockerReturn` in `packages/components/calendar/src/use-key-repeat-blocker.ts`
+- New interface added: `interface UseKeyRepeatBlockerReturn` in `packages/components/calendar/src/use-key-repeat-blocker.ts
+"""
+
+---
+
+packages/components/calendar/src/use-scroll-end-callback.ts:
+
+"""
+## AI-generated summary of changes
+
+The file `use-scroll-end-callback.ts` introduces a custom React hook named `useScrollEndCallback`. This hook manages scroll event listeners on a specified HTML element, executing a callback function after scrolling has stopped, utilizing a debounce mechanism to prevent premature execution. 
+
+The hook employs several React features, including `useRef` to maintain references for the timeout, the element, and the scroll event handler. The `clearListener` function is defined to remove the scroll event listener and clear any active timeout when the component using the hook unmounts. This function is invoked within a `useEffect` hook to ensure proper cleanup.
+
+The core functionality is encapsulated in the `onScrollEnd` function, which accepts an HTML element and a callback function as parameters. It first checks for a valid element, then sets up the scroll event listener. The event handler clears any existing timeout to avoid triggering the callback too soon and sets a new timeout to call the callback after the specified debounce duration. The `abort` function is defined to clear the timeout if necessary.
+
+The hook returns an object containing the `onScrollEnd` function and a reference to the `abort` function, allowing the caller to manage the scroll event listener effectively.
+
+## Alterations to the declarations of exported or public entities
+
+- Function added: `function useScrollEndCallback(debounce: number)` in `packages/components/calendar/src/use-scroll-end-callback.ts`
+- Exported default: `export default useScrollEndCallback` in `packages/components/calendar/src/use-scroll-end-callback.ts
+"""
+
+---
+
+packages/components/date-picker/__tests__/date-picker.test.tsx:
+
+"""
+## AI-generated summary of changes
+
+The diff introduces a new test case within the `DatePicker` component's test suite, specifically focusing on the functionality of the month and year picker. A new spy function, `valueChangeSpy`, is added to monitor changes in the date selection. The test case verifies that when the month and year buttons are pressed, the dialog becomes visible, and the correct month and year values are displayed. It checks that the previously selected month and year buttons are disabled (with `tabindex` set to `-1`) and ensures that pressing these buttons does not trigger the `valueChangeSpy`. The test confirms that the buttons for the previous month and year are correctly updated to be focusable (with `tabindex` set to `0`) after interaction. Additionally, the order of imports has been rearranged.
+
+## Alterations to the declarations of exported or public entities
+
+- New spy function added: `const valueChangeSpy = jest.fn();` in the test suite for `DatePicker` in `packages/components/date-picker/__tests__/date-picker.test.tsx
+"""
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(date-picker): month and year picker scroller" was created by the user buchananwill and is identified by the number 3789. The primary objective of this PR is to resolve a synchronization issue between the month and year in the date picker UI, which was causing incorrect updates due to a UI rectangle intersection error. This error has been addressed by removing the intersection issue and ensuring that the data is updated directly from the value attribute.
+
+The PR does not introduce any breaking changes, as confirmed by the author. It also closes the related issue #3785, which reported a bug where the date picker displayed conflicting year values. The changes aim to enhance the functionality of the date picker by fixing the synchronization bug, thereby improving the user experience.
+
+## Objectives from Linked Issues
+
+The linked issue #3785 describes a bug in the date picker where the displayed year did not match the selected year, leading to confusion for users. The issue was illustrated with screenshots showing discrepancies between the scroller and the focused year. The expected behavior was for the highlighted, focused, and selected values to be consistent. The issue was particularly noted in a scenario using react-hook-form, where the controlled value for the date picker was not syncing correctly. The objective of the linked issue was to ensure that the date picker accurately reflects the selected date, thereby improving clarity and usability for users.
+
+## Comments Summary
+
+In the comments section, the author, buchananwill, provides several updates and clarifications regarding the pull request. They reference the related issue #3785 and share links to before-and-after images demonstrating the changes made to the date picker UI. The first comment includes a link to the issue and an image that illustrates the UI changes, showcasing the improvements made.
+
+Buchananwill also mentions that they have parked the accordion-tree on a different branch and deleted that file in the current commit, indicating a restructuring of the codebase to streamline the changes related to the date picker. This suggests a focus on maintaining clarity and organization within the project.
+
+Additionally, the author notes that they have added a test to ensure that the tabindex is correctly modified, specifically highlighting that it is uniquely set to 0 for the focused month/year in the picker. This addition aims to enhance the accessibility and usability of the date picker component, ensuring that it meets user interaction standards.
+
+In response to a query about the changeset, buchananwill confirms that they have kept only one changeset file where no accordion is mentioned, indicating that the pull request has been refined to focus solely on the date picker issue. This reflects a commitment to maintaining a clear and concise codebase.
+
+Another contributor, wingkwong, suggests an alternative method for marking the component in tests, recommending the use of `container.querySelector("[data-slot='header']")` to locate the header element. This feedback is aimed at improving the test implementation and ensuring that it aligns with best practices.
+
+Buchananwill also discusses the implementation of additional hooks to manage different behaviors for navigation keys, specifically addressing the Home/End keys. They express concerns about the complexity of the solution and its potential performance implications, inviting feedback from others with more experience in writing imperative DOM events.
+
+Overall, the comments reflect a collaborative effort to ensure the pull request is clear, focused, and includes necessary tests to validate the changes made, ultimately enhancing the functionality and reliability of the date picker component.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 66108cd8068f0fc8d394818ba6c5d0388b478661 -->
+<!-- e30ae3ca081db9d20702254bc21f0f657b46d55c -->
+<!-- cb2d7fe38d0781f73ca21f4bef06408e6f9cd3f3 -->
+<!-- 928237b70776c651dfe7d010fca5473a863815dc -->
+<!-- 5bc25d5a68443cd38df18e9d072885d6e8be9e16 -->
+<!-- e6a2f99880fbff2c5f342dbf0ab24c32aef8f3d9 -->
+<!-- 0a2c4c95c713293e04bd0b9a09342fd10cc529d6 -->
+<!-- 5ec489b0a7aa718b58362b953325a06d62a1eabf -->
+<!-- b96542afbcf4800130bfd1b68a482f0978b4c55f -->
+<!-- 214385fd9b329bcc62d86b38d825bdcc62a19fcf -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- buchananwill: 1. BEFORE: https://github.com/nextui-org/nextui/issues/3785#issuecomment-2366931481 AFTER: 
+
+https://github.com/user-attachments/assets/82b59fea-ef1c-434d-92af-58f87cdbc65f
+
+
+2. Issue: [https://github.com/nextui-org/nextui/issues/3785](url)
+3. I've parked the accordion-tree on a different branch and delete that file in this commit.
+4. I added a test that checks the tabindex is correctly being modified, as that is uniquely 0 for the focused month/year in the picker.
+\n- buchananwill: > just keep one changeset file where no accordion is mentioned
+
+Is that correct now?\n- vercel: [vc]: #lz5GVznrl3FzPOf8446BFOyW3R7urnwx7hVZC1coc0M=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvOFA4NDVBUHhKVWJlRGRyQTYzWURWQ0RFY2hRRiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWJ1Y2hhbmFud2lsbC1maXgtNmU3NTU0LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLWJ1Y2hhbmFud2lsbC1maXgtNmU3NTU0LW5leHR1aS1vcmcudmVyY2VsLmFwcCJ9fSx7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi81OWRvdkVqOWl2Tm1UR3ZYN05VNnRkOXNSeFc2IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLWJ1Y2hhbmFud2lsbC1maXgtZGF0ZS1jNTAwMTAtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mb3JrLWJ1Y2hhbmFud2lsbC1maXgtZGF0ZS1jNTAwMTAtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/59dovEj9ivNmTGvX7NU6td9sRxW6)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-buchananwill-fix-date-c50010-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-fork-buchananwill-fix-date-c50010-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 25, 2024 0:44am |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/8P845APxJUbeDdrA63YDVCDEchQF)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-buchananwill-fix-6e7554-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-buchananwill-fix-6e7554-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 25, 2024 0:44am |
+
+
+\n- buchananwill: Please suggest an alternative way to mark this component so the test can
+find it.
+
+On Wed, 25 Sept 2024, 14:04 աӄա, ***@***.***> wrote:
+
+> ***@***.**** requested changes on this pull request.
+> ------------------------------
+>
+> In packages/components/calendar/src/calendar-header.tsx
+> <https://github.com/nextui-org/nextui/pull/3789#discussion_r1775134096>:
+>
+> > @@ -99,6 +101,7 @@ export function CalendarHeader(props: CalendarHeaderProps) {
+>    return showMonthAndYearPickers ? (
+>      <Button
+>        {...headerProps}
+> +      aria-label={monthAndYearPickerToggle}
+>
+> we don't hardcode aria-label internally. We can take it from users' side
+> tho.
+>
+> —
+> Reply to this email directly, view it on GitHub
+> <https://github.com/nextui-org/nextui/pull/3789#pullrequestreview-2328101810>,
+> or unsubscribe
+> <https://github.com/notifications/unsubscribe-auth/BBL2M6NRIQAJMCWW6L6TKF3ZYKYEDAVCNFSM6AAAAABOU7COTKVHI2DSMVQWIX3LMV43YUDVNRWFEZLROVSXG5CSMV3GSZLXHMZDGMRYGEYDCOBRGA>
+> .
+> You are receiving this because you were mentioned.Message ID:
+> ***@***.***>
+>
+\n- wingkwong: In the test, you can simply get the element by `container.querySelector("[data-slot='header']")`\n- ryo-manba: Please include the content of this comment in the PR description.
+https://github.com/nextui-org/nextui/pull/3789#issuecomment-2367949681\n- wingkwong: @buchananwill please click re-request review once it's ready for review.\n- buchananwill: I had one more idea, which I've added. The PickerItems now also have a keyUp listener, which just calls the scrollIntoView function. This seems to be a bullet proof way of ensuring that if you've been holding down any of the directional keys, then whatever was the last key to fire (and thus has focus) is scrolled to the desired position.
+
+I have to confess my weaker experience with writing imperative DOM events, so please if anyone with that could ponder whether this broad-brush fix could have any unexpected side-effects?
+
+I also changed the home/end values of the keyDown event to 1 and 12, since months are 1-indexed, not zero indexed. These buttons don't work for the year picker, since 1 and 12 aren't valid years within the available range. Couldn't see an obvious way to pass in the max/min years that would be dynamically set (since it could vary with locale etc.).
+
+Hopefully this wraps up the functionality of this component & hook?\n- ryo-manba: The Home/End keys seem to already function in the [original implementation](https://nextui.org/docs/components/date-picker#with-month-and-year-pickers). Where did you find the information about the month's index?
+
+> I also changed the home/end values of the keyDown event to 1 and 12, since months are 1-indexed, not zero indexed. These buttons don't work for the year picker, since 1 and 12 aren't valid years within the available range.
+\n- buchananwill: I added two additional hooks to cover the different behaviours needed for the different navigation keys:
+
+1. Home/End use a deferred focus that only triggers when the scroll ends. Otherwise, the focus event overrides the scrolling, and the element immediately snaps into view.
+2. Home/End also use a repeated key blocker, to prevent the value from receiving more than one update from these keys, since 
+    a. repetition of this event is meaningless
+    b. it was playing havoc with the other scrolling/focus events/behaviours.
+
+If you have existing hooks with the required API already in the codebase, feel free to swap them in. Equally, feel free to migrate them to a different (generic) hook folder if you want to centralize them for other scenarios to use.
+
+I can't find any more bugs in this component.
+
+On a side note, I prefer the simpler version where home/end cause the instant scrolling. I get that this is a minor inconsistency in the style of the UI, but the two extra control flow checks to defer the focus update _and_ block repeat key strokes seems overly convoluted. I wouldn't be surprised to find it has negative performance implications or introduces other bugs on different systems from my own...
+
+Let me know what you think! :-)\n- buchananwill: Yep there was one more bug where the listener wasn't clearing correctly. Fixed that now. *cries in open source*\n- ryo-manba: > On a side note, I prefer the simpler version where home/end cause the instant scrolling. I get that this is a minor inconsistency in the style of the UI, but the two extra control flow checks to defer the focus update and block repeat key strokes seems overly convoluted. I wouldn't be surprised to find it has negative performance implications or introduces other bugs on different systems from my own...
+
+This seems to be a separate issue from the current one. If you'd like to address it, please open a new issue for further discussion.\n- luka-on-gh: Any updates on this PR?\n
+
+Files Changed:
+- .changeset/sixty-weeks-help.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/calendar": patch
++"@nextui-org/date-picker": patch
++---
++
++Added an aria and test label for the picker toggle.\n- packages/components/calendar/src/calendar-picker-item.tsx (modified, 3 changes)\n  Patch: @@ -12,14 +12,15 @@ import {mergeProps} from "@react-aria/utils";
+ const CalendarPickerItem = forwardRef<
+   HTMLButtonElement,
+   HTMLNextUIProps<"button"> & AriaButtonProps
+->(({children, autoFocus, isDisabled, onKeyDown, ...otherProps}, ref) => {
++>(({children, autoFocus, isDisabled, onKeyDown, onKeyUp, ...otherProps}, ref) => {
+   const domRef = useDOMRef(ref);
+ 
+   const {buttonProps: ariaButtonProps, isPressed} = useAriaButton(
+     {
+       elementType: "button",
+       isDisabled,
+       onKeyDown,
++      onKeyUp,
+       ...otherProps,
+     } as AriaButtonProps,
+     domRef,\n- packages/components/calendar/src/calendar-picker.tsx (modified, 3 changes)\n  Patch: @@ -27,6 +27,7 @@ export function CalendarPicker(props: CalendarPickerProps) {
+     isHeaderExpanded,
+     onPickerItemPressed,
+     onPickerItemKeyDown,
++    onPickerItemKeyUp,
+   } = useCalendarPicker(props);
+ 
+   const EmptyItem = useCallback(
+@@ -89,6 +90,7 @@ export function CalendarPicker(props: CalendarPickerProps) {
+               data-value={month.value}
+               tabIndex={!isHeaderExpanded || state.focusedDate?.month !== month.value ? -1 : 0}
+               onKeyDown={(e) => onPickerItemKeyDown(e, month.value, "months")}
++              onKeyUp={(e) => onPickerItemKeyUp(e, month.value, "months")}
+               onPress={(e) => onPickerItemPressed(e, "months")}
+             >
+               {month.label}
+@@ -110,6 +112,7 @@ export function CalendarPicker(props: CalendarPickerProps) {
+               data-value={year.value}
+               tabIndex={!isHeaderExpanded || state.focusedDate?.year !== year.value ? -1 : 0}
+               onKeyDown={(e) => onPickerItemKeyDown(e, year.value, "years")}
++              onKeyUp={(e) => onPickerItemKeyUp(e, year.value, "years")}
+               onPress={(e) => onPickerItemPressed(e, "years")}
+             >
+               {year.label}\n- packages/components/calendar/src/use-calendar-picker.ts (modified, 166 changes)\n  Patch: @@ -3,18 +3,19 @@ import type {PressEvent} from "@react-types/shared";
+ 
+ import {useDateFormatter} from "@react-aria/i18n";
+ import {HTMLNextUIProps} from "@nextui-org/system";
+-import {useCallback, useRef, useEffect} from "react";
+-import debounce from "lodash.debounce";
+-import {areRectsIntersecting} from "@nextui-org/react-utils";
++import {useCallback, useEffect, useRef} from "react";
+ import scrollIntoView from "scroll-into-view-if-needed";
+ 
+ import {getMonthsInYear, getYearRange} from "./utils";
+ import {useCalendarContext} from "./calendar-context";
++import useScrollEndCallback from "./use-scroll-end-callback";
++import {useKeyRepeatBlocker} from "./use-key-repeat-blocker";
+ 
+ export type PickerValue = {
+   value: string;
+   label: string;
+ };
++
+ export interface CalendarPickerProps extends HTMLNextUIProps<"div"> {
+   date: CalendarDate;
+   currentMonth: CalendarDate;
+@@ -23,7 +24,30 @@ export interface CalendarPickerProps extends HTMLNextUIProps<"div"> {
+ type ItemsRefMap = Map<number, HTMLElement>;
+ type CalendarPickerListType = "months" | "years";
+ 
+-const SCROLL_DEBOUNCE_TIME = 200;
++const DEFAULT_BOUNDARY_VALUE = {
++  max: {months: 12, years: 2099},
++  min: {months: 1, years: 1900},
++} as const;
++
++const LISTENED_NAVIGATION_KEYS = [
++  "ArrowDown",
++  "ArrowUp",
++  "Home",
++  "End",
++  "PageUp",
++  "PageDown",
++  "Escape",
++  "Enter",
++  " ",
++];
++
++const OF_100_MILLISECONDS = 100;
++
++const HOME_AND_END_NEED_DEFERRED_FOCUS = ["Home", "End"];
++
++function needsDeferredFocus(e: React.KeyboardEvent<HTMLElement>) {
++  return HOME_AND_END_NEED_DEFERRED_FOCUS.includes(e.key);
++}
+ 
+ export function useCalendarPicker(props: CalendarPickerProps) {
+   const {date, currentMonth} = props;
+@@ -83,36 +107,6 @@ export function useCalendarPicker(props: CalendarPickerProps) {
+     }
+   }
+ 
+-  const handleListScroll = useCallback(
+-    (e: Event, highlightEl: HTMLElement | null, list: CalendarPickerListType) => {
+-      if (!(e.target instanceof HTMLElement)) return;
+-
+-      const map = getItemsRefMap(list === "months" ? monthsItemsRef : yearsItemsRef);
+-
+-      const items = Array.from(map.values());
+-
+-      const item = items.find((itemEl) => {
+-        const rect1 = itemEl.getBoundingClientRect();
+-        const rect2 = highlightEl?.getBoundingClientRect();
+-
+-        if (!rect2) {
+-          return false;
+-        }
+-
+-        return areRectsIntersecting(rect1, rect2);
+-      });
+-
+-      const itemValue = Number(item?.getAttribute("data-value"));
+-
+-      if (!itemValue) return;
+-
+-      let date = state.focusedDate.set(list === "months" ? {month: itemValue} : {year: itemValue});
+-
+-      state.setFocusedDate(date);
+-    },
+-    [state, isHeaderExpanded],
+-  );
+-
+   // scroll to the selected month/year when the component is mounted/opened/closed
+   useEffect(() => {
+     if (!isHeaderExpanded) return;
+@@ -121,36 +115,6 @@ export function useCalendarPicker(props: CalendarPickerProps) {
+     scrollTo(date.year, "years", false);
+   }, [isHeaderExpanded]);
+ 
+-  useEffect(() => {
+-    // add scroll event listener to monthsListRef
+-    const monthsList = monthsListRef.current;
+-    const yearsList = yearsListRef.current;
+-    const highlightEl = highlightRef.current;
+-
+-    if (!highlightEl) return;
+-
+-    const debouncedHandleMonthsScroll = debounce(
+-      (e: Event) => handleListScroll(e, highlightEl, "months"),
+-      SCROLL_DEBOUNCE_TIME,
+-    );
+-    const debouncedHandleYearsScroll = debounce(
+-      (e: Event) => handleListScroll(e, highlightEl, "years"),
+-      SCROLL_DEBOUNCE_TIME,
+-    );
+-
+-    monthsList?.addEventListener("scroll", debouncedHandleMonthsScroll);
+-    yearsList?.addEventListener("scroll", debouncedHandleYearsScroll);
+-
+-    return () => {
+-      if (debouncedHandleMonthsScroll) {
+-        monthsList?.removeEventListener("scroll", debouncedHandleMonthsScroll);
+-      }
+-      if (debouncedHandleYearsScroll) {
+-        yearsList?.removeEventListener("scroll", debouncedHandleYearsScroll);
+-      }
+-    };
+-  }, [handleListScroll]);
+-
+   function scrollTo(value: number, list: CalendarPickerListType, smooth = true) {
+     const mapListRef = list === "months" ? monthsItemsRef : yearsItemsRef;
+     const listRef = list === "months" ? monthsListRef : yearsListRef;
+@@ -160,6 +124,9 @@ export function useCalendarPicker(props: CalendarPickerProps) {
+     const node = map.get(value);
+ 
+     if (!node) return;
++    let date = state.focusedDate.set(list === "months" ? {month: value} : {year: value});
++
++    state.setFocusedDate(date);
+ 
+     // scroll picker list to the selected item
+     scrollIntoView(node, {
+@@ -181,10 +148,32 @@ export function useCalendarPicker(props: CalendarPickerProps) {
+     [state],
+   );
+ 
++  const {onScrollEnd, abortRef} = useScrollEndCallback(OF_100_MILLISECONDS);
++  const {handleKeyDown, handleKeyUp, isKeyDown} = useKeyRepeatBlocker(
++    HOME_AND_END_NEED_DEFERRED_FOCUS,
++  );
++
++  // Destructure before useCallback to ring-fence the dependency
++  const {maxValue, minValue} = state;
++
++  const getBoundaryValue = useCallback(
++    (list: CalendarPickerListType, bound: "min" | "max") => {
++      let boundaryDate = bound === "min" ? minValue : maxValue;
++      const fromState = list === "months" ? boundaryDate?.month : boundaryDate?.year;
++
++      return fromState ?? DEFAULT_BOUNDARY_VALUE[bound][list];
++    },
++    [minValue, maxValue],
++  );
++
+   const onPickerItemKeyDown = useCallback(
+     (e: React.KeyboardEvent<HTMLElement>, value: number, list: CalendarPickerListType) => {
+       const map = getItemsRefMap(list === "months" ? monthsItemsRef : yearsItemsRef);
+ 
++      if (LISTENED_NAVIGATION_KEYS.includes(e.key)) {
++        e.preventDefault();
++      }
++
+       const node = map.get(value);
+ 
+       if (!node) return;
+@@ -199,10 +188,10 @@ export function useCalendarPicker(props: CalendarPickerProps) {
+           nextValue = value - 1;
+           break;
+         case "Home":
+-          nextValue = 0;
++          nextValue = getBoundaryValue(list, "min");
+           break;
+         case "End":
+-          nextValue = months.length - 1;
++          nextValue = getBoundaryValue(list, "max");
+           break;
+         case "PageUp":
+           nextValue = value - 3;
+@@ -221,7 +210,49 @@ export function useCalendarPicker(props: CalendarPickerProps) {
+ 
+       const nextItem = map.get(nextValue);
+ 
+-      nextItem?.focus();
++      if (needsDeferredFocus(e)) {
++        if (!isKeyDown(e.key)) {
++          scrollTo(nextValue, list);
++          if (abortRef.current) {
++            abortRef.current();
++          }
++          onScrollEnd(list === "months" ? monthsListRef.current : yearsListRef.current, () => {
++            nextItem?.focus();
++          });
++          handleKeyDown(e.key);
++        }
++      } else {
++        scrollTo(nextValue, list);
++        if (abortRef.current) {
++          abortRef.current();
++        }
++        nextItem?.focus();
++      }
++    },
++    [state, handleKeyDown, isKeyDown],
++  );
++
++  const onPickerItemKeyUp = useCallback(
++    (e: React.KeyboardEvent<HTMLElement>, value: number, list: CalendarPickerListType) => {
++      const listRef = list === "months" ? monthsListRef : yearsListRef;
++
++      if (LISTENED_NAVIGATION_KEYS.includes(e.key)) {
++        e.preventDefault();
++      }
++
++      // When the key up events fires we do a safety scroll to the element that fired it.
++      // Part of fixing issue #3789
++      if (e.currentTarget) {
++        if (needsDeferredFocus(e)) {
++          handleKeyUp(e.key);
++        } else {
++          scrollIntoView(e.currentTarget, {
++            scrollMode: "always",
++            behavior: "smooth",
++            boundary: listRef.current,
++          });
++        }
++      }
+     },
+     [state],
+   );
+@@ -239,6 +270,7 @@ export function useCalendarPicker(props: CalendarPickerProps) {
+     isHeaderExpanded,
+     onPickerItemPressed,
+     onPickerItemKeyDown,
++    onPickerItemKeyUp,
+   };
+ }
+ \n- packages/components/calendar/src/use-key-repeat-blocker.ts (added, 51 changes)\n  Patch: @@ -0,0 +1,51 @@
++import {useCallback, useRef} from "react";
++
++// Type for the return API
++interface UseKeyRepeatBlockerReturn {
++  handleKeyDown: (key: string) => void;
++  handleKeyUp: (key: string) => void;
++  isKeyDown: (key: string) => boolean;
++}
++
++export const useKeyRepeatBlocker = (blockedKeys: string[]): UseKeyRepeatBlockerReturn => {
++  // Ref to store the mutable map of key pressed states
++  const keyPressedRef = useRef<Record<string, boolean>>({});
++
++  // useCallback to ensure stable function references
++  const handleKeyDown = useCallback(
++    (key: string) => {
++      if (blockedKeys.includes(key)) {
++        // If the key is already pressed, do nothing
++        if (keyPressedRef.current[key]) {
++          return;
++        }
++
++        // Mark the key as pressed
++        keyPressedRef.current[key] = true;
++      }
++    },
++    [blockedKeys],
++  );
++
++  const handleKeyUp = useCallback(
++    (key: string) => {
++      if (blockedKeys.includes(key)) {
++        // Mark the key as not pressed
++        keyPressedRef.current[key] = false;
++      }
++    },
++    [blockedKeys],
++  );
++
++  // Function to check if a given key is already pressed
++  const isKeyDown = useCallback((key: string): boolean => {
++    return keyPressedRef.current[key];
++  }, []);
++
++  // Return the API
++  return {
++    handleKeyDown,
++    handleKeyUp,
++    isKeyDown,
++  };
++};\n- packages/components/calendar/src/use-scroll-end-callback.ts (added, 69 changes)\n  Patch: @@ -0,0 +1,69 @@
++import {useCallback, useEffect, useRef} from "react";
++
++function useScrollEndCallback(debounce: number) {
++  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
++  const elementRef = useRef<HTMLElement | null>(null);
++  const abortRef = useRef<(() => void) | null>();
++  const onScrollRef = useRef<(() => void) | null>();
++
++  const clearListener = useCallback(() => {
++    if (elementRef.current && onScrollRef.current) {
++      elementRef.current.removeEventListener("scroll", onScrollRef.current);
++    }
++    // Remove the event listener and clear timeout when the component unmounts
++    if (abortRef.current) {
++      abortRef.current();
++    }
++    abortRef.current = null;
++    onScrollRef.current = null;
++    elementRef.current = null;
++  }, [elementRef]);
++
++  // Cleanup on unmount
++  useEffect(() => {
++    return () => {
++      clearListener();
++    };
++  }, []);
++
++  const onScrollEnd = useCallback(
++    (element: HTMLElement | null, callback: () => void) => {
++      if (!element) return;
++      clearListener();
++      elementRef.current = element;
++
++      // Clear the timeout if already set
++      const abort = () => {
++        if (timeoutRef.current) {
++          clearTimeout(timeoutRef.current);
++          timeoutRef.current = null;
++        }
++      };
++
++      const onScroll = () => {
++        // Clear previous timeout to prevent firing too early
++        abort();
++
++        // Set new timeout to trigger the callback after scrolling stops
++        timeoutRef.current = setTimeout(() => {
++          callback();
++          clearListener();
++        }, debounce); // You can adjust the delay as necessary
++      };
++
++      onScrollRef.current = onScroll;
++
++      // Add the scroll event listener to the element
++      element.addEventListener("scroll", onScroll);
++
++      // onScroll();
++
++      abortRef.current = abort;
++    },
++    [debounce],
++  );
++
++  return {onScrollEnd, abortRef};
++}
++
++export default useScrollEndCallback;\n- packages/components/date-picker/__tests__/date-picker.test.tsx (modified, 45 changes)\n  Patch: @@ -1,6 +1,6 @@
+ /* eslint-disable jsx-a11y/no-autofocus */
+ import * as React from "react";
+-import {render, act, fireEvent, waitFor} from "@testing-library/react";
++import {act, fireEvent, render, waitFor} from "@testing-library/react";
+ import {pointerMap, triggerPress} from "@nextui-org/test-utils";
+ import userEvent from "@testing-library/user-event";
+ import {CalendarDate, CalendarDateTime} from "@internationalized/date";
+@@ -524,6 +524,7 @@ describe("DatePicker", () => {
+ 
+   describe("Month and Year Picker", () => {
+     const onHeaderExpandedChangeSpy = jest.fn();
++    const valueChangeSpy = jest.fn();
+ 
+     afterEach(() => {
+       onHeaderExpandedChangeSpy.mockClear();
+@@ -600,6 +601,48 @@ describe("DatePicker", () => {
+       expect(onHeaderExpandedChangeSpy).not.toHaveBeenCalled();
+     });
+ 
++    it("should focus the month and year when pressed in the picker", () => {
++      const {getByRole} = render(
++        <DatePicker
++          showMonthAndYearPickers
++          calendarProps={{
++            isHeaderExpanded: true,
++            onChange: valueChangeSpy,
++          }}
++          defaultValue={new CalendarDate(2024, 4, 26)}
++          label="Date"
++        />,
++      );
++      const dialogButton = getByRole("button");
++
++      triggerPress(dialogButton);
++
++      const dialog = getByRole("dialog");
++      const month = getByRole("button", {name: "April"});
++      const year = getByRole("button", {name: "2024"});
++
++      expect(dialog).toBeVisible();
++      expect(month).toHaveAttribute("data-value", "4");
++      expect(year).toHaveAttribute("data-value", "2024");
++
++      const button = document.querySelector<HTMLButtonElement>(`button[data-slot="header"]`)!;
++
++      triggerPress(button);
++
++      const monthBefore = getByRole("button", {name: "March"});
++      const yearBefore = getByRole("button", {name: "2023"});
++
++      expect(monthBefore).toHaveAttribute("data-value", "3");
++      expect(yearBefore).toHaveAttribute("data-value", "2023");
++      expect(monthBefore).toHaveAttribute("tabindex", "-1");
++      expect(yearBefore).toHaveAttribute("tabindex", "-1");
++      triggerPress(monthBefore);
++      triggerPress(yearBefore);
++      expect(valueChangeSpy).not.toHaveBeenCalled();
++      expect(monthBefore).toHaveAttribute("tabindex", "0");
++      expect(yearBefore).toHaveAttribute("tabindex", "0");
++    });
++
+     it("CalendarBottomContent should render correctly", () => {
+       const {getByRole, getByTestId} = render(
+         <DatePicker\n

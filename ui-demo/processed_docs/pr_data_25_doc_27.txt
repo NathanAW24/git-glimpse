@@ -1,0 +1,130 @@
+Pull Request Number: 934
+Title: fix: added focus indicator to buttons that have a shadow
+Base Branch: next
+Head Branch: fix/added-focus-indicator-to-buttons-that-have-a-shadow
+Author: jguddas
+URL: https://github.com/nextui-org/nextui/pull/934
+State: MERGED
+Created At: 2022-12-03T16:13:57Z
+Merged At: 2023-01-04T01:38:55Z
+Participants: jguddas, jrgarciadev
+
+Description:
+Now a focus indicatior is shown for buttons who have shadows.
+📝 Description
+
+Add a brief description
+
+⛳️ Current behavior (updates)
+
+Please describe the current behavior that you are modifying
+
+🚀 New behavior
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No):
+
+📝 Additional Information
+
+  
+    
+    
+
+    simplescreenrecorder-2022-12-03_17.14.11.mp4
+
+Commits:
+- fix: navbar link does not respect parent size\n- Merge pull request #805 from yuriwithowsky/fix/navbar-link
+
+fix: navbar link does not respect parent size\n- fix: added focus indicator to buttons that have a shadow\n
+
+Labels:
+
+
+Comments:
+- vercel: @jguddas is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2205d2f72bb49102cb2a59caaee80e93e83caadbef%22%7D%2C%22id%22%3A%22QmPJ5m6pCE7YwtFpmKisPz9KYJ7Ui2KzPNcukmNBddwqvm%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A934%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs/GAzEX4tZLTcUZeZtfBF6rQyPpWb9)) | [Visit Preview](https://nextui-docs-git-fork-jguddas-fix-added-focus-4c3cb5-nextui-org.vercel.app) | 💬 [**Add your feedback**](https://vercel.live/open-feedback/nextui-docs-git-fork-jguddas-fix-added-focus-4c3cb5-nextui-org.vercel.app) | Jan 4, 2023 at 1:19AM (UTC) |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/ACWNU2iAFJtY2hfZbd1XH5UVgJSV)) | [Visit Preview](https://nextui-storybook-git-fork-jguddas-fix-added-f-772c92-nextui-org.vercel.app) |  | Jan 4, 2023 at 1:19AM (UTC) |
+
+
+\n
+
+Files Changed:
+- packages/react/src/button/button.styles.ts (modified, 8 changes)\n  Patch: @@ -210,6 +210,7 @@ export const StyledButton = styled(
+           height: "$$buttonHeight",
+         },
+       },
++      isFocusVisible: {true: {}, false: {}},
+     },
+     compoundVariants: [
+       // isPressed && animated
+@@ -269,48 +270,55 @@ export const StyledButton = styled(
+       // shadow / color
+       {
+         shadow: true,
++        isFocusVisible: false,
+         color: "default",
+         css: {
+           normalShadow: "$primaryShadow",
+         },
+       },
+       {
+         shadow: true,
++        isFocusVisible: false,
+         color: "primary",
+         css: {
+           normalShadow: "$primaryShadow",
+         },
+       },
+       {
+         shadow: true,
++        isFocusVisible: false,
+         color: "secondary",
+         css: {
+           normalShadow: "$secondaryShadow",
+         },
+       },
+       {
+         shadow: true,
++        isFocusVisible: false,
+         color: "warning",
+         css: {
+           normalShadow: "$warningShadow",
+         },
+       },
+       {
+         shadow: true,
++        isFocusVisible: false,
+         color: "success",
+         css: {
+           normalShadow: "$successShadow",
+         },
+       },
+       {
+         shadow: true,
++        isFocusVisible: false,
+         color: "error",
+         css: {
+           normalShadow: "$errorShadow",
+         },
+       },
+       {
+         shadow: true,
++        isFocusVisible: false,
+         color: "gradient",
+         css: {
+           normalShadow: "$primaryShadow",\n- packages/react/src/navbar/navbar-link.tsx (modified, 1 changes)\n  Patch: @@ -46,6 +46,7 @@ const NavbarLink = forwardRef<NavbarLinkProps, "a">((props, ref) => {
+     return {
+       color: "inherit",
+       height: "100%",
++      width: "fit-content",
+       ...css,
+     };
+   }, [color, css]);\n

@@ -1,0 +1,75 @@
+Pull Request Number: 1720
+Title: fix: fix double react import in Input example
+Base Branch: main
+Head Branch: 1717--fix-double-react-import
+Author: navedqb
+URL: https://github.com/nextui-org/nextui/pull/1720
+State: CLOSED
+Created At: 2023-09-30T13:48:45Z
+Merged At: None
+Participants: navedqb, jrgarciadev, jguddas
+
+Description:
+Fixes #1717
+
+Commits:
+- Fixes double react import\n- Merge pull request #4 from navedqb/1717--fix-double-react-import
+
+fix: fix double react import\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: f0faf225d426f77ea4dafbcb78f1848db0538bcc
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/qburst/nextui/new/1717--fix-double-react-import?filename=.changeset/sixty-seahorses-wait.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A---%0A%0Afix%3A%20fix%20double%20react%20import%20in%20Input%20example%0A)
+
+\n- vercel: [vc]: #dQ7FORFLVUDcf+g2fl6z5H8OWDRl/KUWtq+kJNvLUlI=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvSkIzWUVDUHE3eWp2NktYdHU4b21CM2dWNE1udyIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1mb3JrLXFidXJzdC0xNzE3LWZpeC0wNWFlZmEtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZvcmstcWJ1cnN0LTE3MTctZml4LTA1YWVmYS1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/JB3YECPq7yjv6KXtu8omB3gV4Mnw)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-qburst-1717-fix-05aefa-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-fork-qburst-1717-fix-05aefa-nextui-org.vercel.app?via=pr-comment-feedback-link) | Sep 30, 2023 1:50pm |
+
+\n- vercel: @navedqb is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%22f0faf225d426f77ea4dafbcb78f1848db0538bcc%22%7D%2C%22id%22%3A%22QmVMJkob1AbzMU7a37PFbrJ6U8oJkw6wBsWduDP3k9m92J%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A1720%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- jrgarciadev: Hey @navedqb thank you for contributing to NextUI, however, I already fixed this issue, it was in the sandpack hook
+
+https://github.com/nextui-org/nextui/pull/1720/files\n
+
+Files Changed:
+- apps/docs/content/components/input/custom-impl.ts (modified, 6 changes)\n  Patch: @@ -43,9 +43,7 @@ const CloseFilledIcon = `export const CloseFilledIcon = (props) => (
+   </svg>
+ );`;
+ 
+-const App = `import React, {forwardRef} from "react";
+-import {useInput} from "@nextui-org/react";
+-
++const App = `import {useInput} from "@nextui-org/react";
+ 
+ import {SearchIcon} from "./SearchIcon";
+ import {CloseFilledIcon} from "./CloseFilledIcon";
+@@ -72,7 +70,7 @@ const styles = {
+   ],
+ };
+ 
+-const MyInput = forwardRef((props, ref) => {
++const MyInput = React.forwardRef((props, ref) => {
+   const {
+     Component,
+     label,\n

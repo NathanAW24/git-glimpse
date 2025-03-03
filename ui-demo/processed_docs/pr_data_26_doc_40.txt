@@ -1,0 +1,52 @@
+Pull Request Number: 670
+Title: Pass input value to onContentClick handler
+Base Branch: main
+Head Branch: input-value
+Author: peteole
+URL: https://github.com/nextui-org/nextui/pull/670
+State: CLOSED
+Created At: 2022-08-14T07:52:53Z
+Merged At: None
+Participants: peteole, jrgarciadev
+
+Description:
+I think it would be really convenient to pass the current value of an input field to the onContentClick handler for the use case that the content is a button that should submit the input value. I know there are other ways to solve this but directly passing the value in the handler seems by far the most simple version to me.
+
+Commits:
+- Pass input value to onContentClick handler\n
+
+Labels:
+
+
+Comments:
+- vercel: @peteole is attempting to deploy a commit to the **NextUI** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%221e07e8fbff7f2f4c5b9734f02a559d51d841fc91%22%7D%2C%22id%22%3A%22QmbCL9X2UsH1XzgStTRKTzqpQ2MirNRxDj2RLCz7JG6AEM%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A670%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- vercel: **The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated |
+| :--- | :----- | :------ | :------ |
+| **nextui-storybook** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook/AJvGZ4TvaFL9pHZprVezgfYfWq6H)) | [Visit Preview](https://nextui-storybook-git-fork-peteole-input-value-nextui-org.vercel.app) | Aug 14, 2022 at 7:53AM (UTC) |
+
+\n- peteole: What do you think about it?\n- jrgarciadev: Hey @peteole I really appreciate your contribution, however, the input value is already being sent through the `onChange` function, on the other hand, the content element render will probably change once we migrate the input to `react-aria`, stay tuned 🙌🏼\n- peteole: Ok, I get it. The idea was that the content would be used as a submit-button and then it would be useful to pass the text to be submitted to the callback. Maybe you can consider this in the migration.\n
+
+Files Changed:
+- packages/react/src/input/input-props.ts (modified, 3 changes)\n  Patch: @@ -48,7 +48,8 @@ export interface Props
+   onBlur?: (e: React.FocusEvent<FormElement>) => void;
+   onContentClick?: (
+     key: ContentPosition,
+-    e: React.MouseEvent<HTMLDivElement>
++    e: React.MouseEvent<HTMLDivElement>,
++    inputValue: string
+   ) => void;
+   autoComplete?: string;
+ }\n- packages/react/src/input/input.tsx (modified, 2 changes)\n  Patch: @@ -169,7 +169,7 @@ const Input = React.forwardRef<FormElement, InputProps>(
+       e: React.MouseEvent<HTMLDivElement>
+     ) => {
+       if (disabled) return;
+-      onContentClick && onContentClick(key, e);
++      onContentClick && onContentClick(key, e, selfValue);
+     };
+ 
+     useEffect(() => {\n

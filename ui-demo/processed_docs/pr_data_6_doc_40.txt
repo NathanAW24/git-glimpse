@@ -1,0 +1,274 @@
+Pull Request Number: 3559
+Title: fix(system-rsc): missing StringToBoolean<keyof V[K]>[]
+Base Branch: canary
+Head Branch: fix/core-extended-variant
+Author: awesome-pro
+URL: https://github.com/nextui-org/nextui/pull/3559
+State: MERGED
+Created At: 2024-07-25T17:26:58Z
+Merged At: 2024-08-29T02:26:26Z
+Participants: awesome-pro, wingkwong, jrgarciadev
+
+Description:
+Closes #3530
+📝 Description
+
+Updated the type VariantVal
+
+Typescript error on using the following code
+'use client';
+
+import { Button as BaseButton, extendVariants } from '@nextui-org/react';
+
+const Button = extendVariants(BaseButton, {
+  // Must define default variants before extending them
+  defaultVariants: { size: 'md', variant: 'solid', color: 'default' },
+  compoundVariants: [
+    {
+      variant: ['solid'], // <-- ERROR: Type 'string[]' is not assignable to type '"solid" | "bordered" | "light" | "flat" | "faded" | "shadow" | "ghost" | undefined'.
+      color: 'default',
+      class: 'text-white'
+    }
+  ],
+});
+
+export default Button;
+
+Please describe the current behavior that you are modifying
+
+string | string[] | undefined. can be accepted by accepted by compoundVariants.variant
+
+Please describe the behavior or changes this PR adds
+
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Summary by CodeRabbit
+
+
+New Features
+
+Enhanced flexibility for defining component variants by allowing the variant property to accept an array of strings.
+Improved versatility of VariantValue and Options types for better handling of variants.
+
+
+
+Bug Fixes
+
+Resolved issues with the handling of multiple variant options, ensuring correct processing and application within the system.
+
+Commits:
+- fix(navbar): fixed the height when style h-full\n- fix(navbar): fixed the height when style h-full\n- Merge branch 'nextui-org:canary' into canary\n- Merge branch 'nextui-org:canary' into canary\n- fix(core): string[] accepted by compoundVariants.variant\n- Delete .changeset/brown-days-applaud.md\n- chore(changeset): revise changeset message\n- fix(system-rsc): incorrect VariantValue typing and typo in Options\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: c4592c9a0489d38681ca023ffe26cbf917664fff
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 27 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/system-rsc   | Patch |
+| @nextui-org/code         | Patch |
+| @nextui-org/divider      | Patch |
+| @nextui-org/kbd          | Patch |
+| @nextui-org/spacer       | Patch |
+| @nextui-org/spinner      | Patch |
+| @nextui-org/system       | Patch |
+| @nextui-org/react        | Patch |
+| @nextui-org/accordion    | Patch |
+| @nextui-org/listbox      | Patch |
+| @nextui-org/menu         | Patch |
+| @nextui-org/table        | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/button       | Patch |
+| @nextui-org/select       | Patch |
+| @nextui-org/calendar     | Patch |
+| @nextui-org/date-picker  | Patch |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/modal        | Patch |
+| @nextui-org/navbar       | Patch |
+| @nextui-org/popover      | Patch |
+| @nextui-org/slider       | Patch |
+| @nextui-org/snippet      | Patch |
+| @nextui-org/tabs         | Patch |
+| @nextui-org/tooltip      | Patch |
+| @nextui-org/aria-utils   | Patch |
+| @nextui-org/framer-utils | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/awesome-pro/nextui/new/fix/core-extended-variant?filename=.changeset/healthy-zoos-walk.md&value=---%0A%22%40nextui-org%2Fsystem-rsc%22%3A%20patch%0A---%0A%0Afix(system-rsc)%3A%20missing%20StringToBoolean%3Ckeyof%20V%5BK%5D%3E%5B%5D%0A)
+
+\n- vercel: @abhinandan-verma is attempting to deploy a commit to the **NextUI Inc** Team on [Vercel](https://vercel.com).
+
+A member of the Team first needs to [authorize it](https://vercel.com/git/authorize?team=NextUI%20Inc&type=github&job=%7B%22headInfo%22%3A%7B%22sha%22%3A%2297a40af28276e2acf55bb9637f6f9b78d4af41b5%22%7D%2C%22id%22%3A%22QmbabnCG7jgDfucsy4SBorBUPJtSUAwMNPmaJVoXVe1jiU%22%2C%22org%22%3A%22nextui-org%22%2C%22prId%22%3A3559%2C%22repo%22%3A%22nextui%22%7D).
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+
+This update enhances the `@nextui-org/system-rsc` package by allowing the `compoundVariants.variant` to accept an array of strings, improving its flexibility for defining component styles. Additionally, it modifies the `VariantValue` type in TypeScript to accommodate both single and array values for variant keys, enhancing type versatility. These changes address a specific TypeScript limitation while improving usability for developers working with variants.
+
+## Changes
+
+| Files                                               | Change Summary                                                                     |
+|-----------------------------------------------------|-----------------------------------------------------------------------------------|
+| .changeset/nice-beans-thank.md                     | Introduced patch for `compoundVariants.variant` to accept `string[]`.            |
+| packages/core/system-rsc/src/extend-variants.d.ts  | Updated `VariantValue` type to support arrays for variant keys, and minor doc fix in `Options` type. |
+
+## Assessment against linked issues
+
+| Objective                                                | Addressed | Explanation                                     |
+|----------------------------------------------------------|-----------|-------------------------------------------------|
+| Allow `variant` property to accept `string[]` ( #3530 ) | ✅        |                                                 |
+| Resolve TypeScript error with variant array ( #3530 )   | ✅        |                                                 |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+
+<!--
+
+```
+.changeset/nice-beans-thank.md: ## AI-generated summary of changes
+
+This update introduces a patch for the `@nextui-org/system-rsc` package, specifically addressing an issue with the `compoundVariants.variant` functionality and enhancing type definitions. The modification allows the `variant` property to accept an array of strings, improving its flexibility and usability. Additionally, a missing type declaration `StringToBoolean<keyof V[K]>[]` is added, enhancing type safety and ensuring that the system can correctly interpret and handle arrays of boolean values derived from string keys. The changes likely optimize type inference and enhance the overall robustness of the type system within the package.
+
+Modifications to the `VariantValue` type definition within the TypeScript declaration file are introduced, allowing the value associated with keys in `V` to be either a `StringToBoolean` type or an array of `StringToBoolean` types. This broadens the potential structure of the variants, accommodating scenarios where multiple boolean interpretations for a given key are necessary. A minor grammatical correction is made in the `Options` type documentation, changing "It's avoid" to "It avoids," improving clarity.
+
+## Alterations to the declarations of exported or public entities
+
+- `compoundVariants.variant` in `@nextui-org/system-rsc` → `compoundVariants.variant` accepts `string[]` in `@nextui-org/system-rsc`
+- `type VariantValue<V, SV>` in `packages/core/system-rsc/src/extend-variants.d.ts` → `type VariantValue<V, SV>` with an additional union type for keys in `V`: `| (K extends keyof V ? StringToBoolean<keyof V[K]>[] : never)` in `packages/core/system-rsc/src/extend-variants.d.ts` (modified internal logic)
+- `StringToBoolean<keyof V[K]>[]` added in `@nextui-org/system-rsc`
+- `type Options` in `packages/core/system-rsc/src/extend-variants.d.ts` → `type Options` in `packages/core/system-rsc/src/extend-variants.d.ts` (minor documentation change)
+```
+
+-->
+
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: pr objectives by coderabbit.ai -->
+
+<!--
+
+## PR Summary
+
+The pull request titled "fix(system-rsc): missing StringToBoolean<keyof V[K]>[]" addresses a TypeScript type error encountered when using the `extendVariants` function from the `@nextui-org/react` library. The issue arises when attempting to pass an array of strings (e.g., `['solid']`) to the `variant` property within the `compoundVariants` array. The current type definition restricts `variant` to a union of specific string literals (`"solid" | "bordered" | "light" | "flat" | "faded" | "shadow" | "ghost" | undefined`), which does not accommodate arrays of strings, resulting in a TypeScript error.
+
+This pull request updates the type definition of `VariantVal` to allow `string | string[] | undefined` for the `compoundVariants.variant` property. This change enables developers to use arrays of string variants without encountering type errors. The PR does not introduce any breaking changes, ensuring compatibility with existing implementations.
+
+## Objectives from Linked Issues
+
+The linked issue, titled "[BUG] - Typescript, extendVariants not allowed variant array," describes a specific bug related to TypeScript type definitions in the NextUI library. The user reports being unable to use an array of strings for the `variant` property when extending variants using the `extendVariants` function. The issue emphasizes that while the code functions correctly when using `any` to bypass type checking, this is not the expected behavior.
+
+The primary objective of the linked issue is to enable the use of string arrays for the `variant` property in `compoundVariants`, thereby resolving the TypeScript error. The user expects the type definitions to accommodate this usage without errors, promoting a more flexible and developer-friendly API.
+
+-->
+
+<!-- end of auto-generated comment: pr objectives by coderabbit.ai --><!-- commit_ids_reviewed_start -->
+
+<!-- 8db51572eb900b06015052f2a05e2c20bd974a72 -->
+<!-- c4592c9a0489d38681ca023ffe26cbf917664fff -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configuration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n
+
+Files Changed:
+- .changeset/nice-beans-thank.md (added, 5 changes)\n  Patch: @@ -0,0 +1,5 @@
++---
++"@nextui-org/system-rsc": patch
++---
++
++added missing `StringToBoolean<keyof V[K]>[]` (#3530)\n- packages/core/system-rsc/src/extend-variants.d.ts (modified, 3 changes)\n  Patch: @@ -33,6 +33,7 @@ type ComposeVariants<CP, S> = SuggestedVariants<CP, S> | Variants<S>;
+ type VariantValue<V, SV> = {
+   [K in keyof V | keyof SV]?:
+     | (K extends keyof V ? StringToBoolean<keyof V[K]> : never)
++    | (K extends keyof V ? StringToBoolean<keyof V[K]>[] : never)
+     | (K extends keyof SV
+         ? ValidateSubtype<SV[K], object> extends "true"
+           ? keyof OmitUndefined<SV[K]>
+@@ -47,7 +48,7 @@ type CompoundVariants<V, SV> = Array<VariantValue<V, SV> & ClassProp<ClassValue>
+ type Options = {
+   /**
+    * Whether to merge the class names with `tailwind-merge` library.
+-   * It's avoid to have duplicate tailwind classes. (Recommended)
++   * It avoids to have duplicate tailwind classes. (Recommended)
+    * @see https://github.com/dcastil/tailwind-merge/blob/v1.8.1/README.md
+    * @default true
+    */\n

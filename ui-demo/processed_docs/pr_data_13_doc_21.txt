@@ -1,0 +1,741 @@
+Pull Request Number: 2695
+Title: feat: new gitflow
+Base Branch: main
+Head Branch: refactor/eng-614
+Author: wingkwong
+URL: https://github.com/nextui-org/nextui/pull/2695
+State: MERGED
+Created At: 2024-04-12T11:33:11Z
+Merged At: 2024-04-28T14:35:45Z
+Participants: wingkwong, jrgarciadev
+
+Description:
+📝 Description
+
+introduce a new canary branch (all PRs should be merged into this branch instead)
+canary branch will be set as a default branch
+users can install dev packages from the code in canary branch
+keep a snapshot of the latest published code in main branch
+docs & storybook deployment remain unchanged (i.e. merging to canary won't deploy them to production. only deploy when pushing to main.)
+
+Git Flow for general changes:
+
+branch out from canary, says feat/foo
+make some changes, then make a PR to canary
+when the PR is approved and merged, it will
+
+create canary release &
+create / update the release PR (changeset-release/canary -> canary)
+
+if we merge this PR, it will publish the corresponding packages to NPM (i.e. publish to production)
+automatically trigger sync_canary_to_main to sync all the changes to main branch
+
+
+
+
+
+Git Flow for Docs / Storybook Urgent Changes:
+
+branch out from canary, says docs/urgent-foo
+make some changes, then make a PR to main
+sync back to canary after merged
+
+
+Summary by CodeRabbit
+
+
+Chores
+
+Updated the base and trigger branches from "main" to "canary" in configuration and workflow files for improved development workflows.
+
+
+
+New Features
+
+Introduced automated synchronization of changes from Canary to Main branch using GitHub Actions workflows.
+
+
+
+Documentation
+
+Updated contribution guidelines to direct development through the "canary" branch for better organization and efficiency.
+
+Commits:
+- chore(docs): use develop branch instead of main\n- chore(workflows): change to develop\n- chore(.changeset): change baseBranch to develop\n- feat(workflows): trigger sync-develop-to-main workflow after publish\n- feat(workflow): add sync develop to main workflow\n- Merge branch 'main' into refactor/eng-614\n- chore(workflows): add back "or Publish to NPM"\n- refactor(workflows): rename tag name from dev to canary\n- refactor: rename dev to canary\n- refactor: reaname develop to canary\n- refactor(workflows): change from develop to canary\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-614/new-oss-gitflow">ENG-614 New OSS Gitflow</a></p>\n- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: 1b016a1311c2c6fcaf98800e8ee61d1b3b6b81ee
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/refactor/eng-614?filename=.changeset/violet-peaches-hide.md&value=---%0A%0A---%0A%0Afeat%3A%20new%20gitflow%0A)
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The recent updates streamline development activities by shifting the primary branch from `main` to `canary`. This transition impacts various configurations and workflows to align with the new branch structure. Notably, workflows are now tailored to synchronize changes between the `canary` and `main` branches, enhancing the development and release processes.
+
+## Changes
+
+| Files                          | Change Summary |
+|--------------------------------|----------------|
+| `.changeset/config.json`<br>`.github/workflows/QA.yaml`<br>`.coderabbit.yaml` | Updated base branches and trigger branches from `main` to `canary`. |
+| `.github/workflows/release.yaml` | Adjusted branch references for workflow triggers and enhanced release process for `canary` and `main` branches. |
+| `.github/workflows/sync-develop-to-main.yaml`<br>`.github/workflows/sync-canary-to-main.yaml` | Introduced workflows to automate synchronization from `develop`/`canary` to `main`, creating PRs for review. |
+| `CONTRIBUTING.md`              | Directed development efforts to `canary`, updated branch naming conventions, and PR guidelines accordingly. |
+| `package.json`                 | Updated versioning and releasing scripts to use `canary` instead of `dev-v2`. |
+
+<!-- walkthrough_end --><!-- This is an auto-generated comment: raw summary by coderabbit.ai -->
+<!--
+
+
+.changeset/config.json: The change in functionality involves switching the `baseBranch` value from `"main"` to `"canary"` in the configuration file.
+
+---
+
+.coderabbit.yaml: The change in functionality involves updating the base branches configuration in the `reviews` section of the `.coderabbit.yaml` file. Specifically, the `develop` branch has been replaced with `canary`.
+
+---
+
+.github/workflows/QA.yaml: The change in functionality for the `.github/workflows/QA.yaml` file involves switching the trigger branch from `main` to `canary`.
+
+---
+
+.github/workflows/release.yaml: The change in functionality involves adjusting the branch references for triggering workflows and modifying the release process to differentiate between canary and main branches. Specifically, the workflow now syncs files from the canary to the main branch upon a publish event and creates releases accordingly.
+
+---
+
+.github/workflows/sync-develop-to-main.yaml: This new file introduces a GitHub Actions workflow named "Sync Develop to Main" that automates the synchronization of changes from the Develop branch to the Main branch. It creates a pull request with detailed information about the changes and prompts for review and merging.
+
+---
+
+.github/workflows/sync-canary-to-main.yaml: This new file, `sync-canary-to-main.yaml`, introduces a GitHub Actions workflow named "Sync Canary to Main" that automates the synchronization of changes from the Canary branch to the Main branch. It creates a pull request with detailed information about the changes and prompts for review and merging.
+
+---
+
+CONTRIBUTING.md: The main branch is now referred to as the latest production version instead of the latest stable version. Development is required to be done in dedicated branches and merged to the `canary` branch. The branch naming convention for creating new branches has been updated to start from the `canary` branch instead of the `main` branch. Additionally, the instructions for running tests and building have been adjusted to reflect the use of the `canary` branch instead of `main`. Pull requests are now to be sent to the `canary` branch for review and merging by maintainers.
+
+---
+
+package.json: The functionality change involves updating the scripts for versioning and releasing in the `package.json` file to use `canary` instead of `dev-v2`, affecting the `version:canary` and `release:canary` scripts.
+
+-->
+<!-- end of auto-generated comment: raw summary by coderabbit.ai --><!-- This is an auto-generated comment: short summary by coderabbit.ai -->
+<!--
+
+
+### PR Objectives
+
+This pull request aims to implement a new Git workflow by introducing a `canary` branch as the default branch for development activities. The key objectives include:
+
+1. **Branch Structure**:
+   - Creation of the `canary` branch to receive all PRs and development changes.
+   - Designation of the `main` branch to hold the latest published code for production.
+
+2. **Development Process**:
+   - Developers branch out from `canary` for general changes and create PRs to `canary`.
+   - Approval and merging of PRs trigger canary releases and update release PRs for NPM package publication.
+   - Automatic synchronization of changes from `canary` to `main` through the `sync_canary_to_main` process.
+
+3. **Urgent Changes**:
+   - For urgent documentation or Storybook updates, branching from `canary` to `main` is allowed, followed by synchronization back to `canary`.
+
+4. **Deployment Strategy**:
+   - Documentation and Storybook deployments remain tied to pushes to the `main` branch for production releases.
+
+These changes aim to enhance development efficiency, streamline release processes, and maintain a clear separation between development and production-ready code.
+
+### AI-generated Summary of Generated Summaries
+
+The PR introduces a new Git workflow by establishing the `canary` branch as the focal point for development activities. Key changes include:
+
+- **Workflow Adjustments**:
+  - Updates in various files like `.coderabbit.yaml` and `.github/workflows` to switch base branches to `canary`, aligning with the new development strategy.
+
+- **Synchronization Workflows**:
+  - Introduction of `sync-develop-to-main.yaml` and `sync-canary-to-main.yaml` workflows to automate syncing changes from `develop` and `canary` branches to `main`, ensuring production branch consistency.
+
+- **Documentation Updates**:
+  - `CONTRIBUTING.md` revisions emphasize branching from `canary` for development, reflecting the shift from `main` as the default branch.
+
+These changes support a structured release process, enabling continuous development on `canary` while maintaining a stable `main` branch for production releases.
+
+-->
+<!-- end of auto-generated comment: short summary by coderabbit.ai -->
+
+---
+
+<details>
+
+<summary>Recent Review Details</summary>
+
+**Configuration used: .coderabbit.yaml**
+**Review profile: CHILL**
+
+<details>
+<summary>Commits</summary>
+Files that changed from the base of the PR and between ec3ca9c010f01478c65b19c33dd7b9c45def3214 and 1b016a1311c2c6fcaf98800e8ee61d1b3b6b81ee.
+</details>
+
+
+<details>
+<summary>Files selected for processing (7)</summary>
+
+* .changeset/config.json (1 hunks)
+* .coderabbit.yaml (1 hunks)
+* .github/workflows/QA.yaml (1 hunks)
+* .github/workflows/release.yaml (2 hunks)
+* .github/workflows/sync-canary-to-main.yaml (1 hunks)
+* CONTRIBUTING.md (3 hunks)
+* package.json (1 hunks)
+
+</details>
+
+
+
+
+
+
+<details>
+<summary>Additional Context Used</summary>
+
+<details><summary>LanguageTool (47)</summary><blockquote>
+
+<details><summary>CONTRIBUTING.md (47)</summary><blockquote>
+
+Near line 16: Possible spelling mistake found.
+Context: ...becoming-a-maintainer)  ### Tooling  - [PNPM](https://pnpm.io/) to manage packages a...
+
+---
+
+Near line 16: Unpaired symbol: ‘[’ seems to be missing
+Context: ...ming-a-maintainer)  ### Tooling  - [PNPM](https://pnpm.io/) to manage packages an...
+
+---
+
+Near line 17: Possible spelling mistake found.
+Context: ... to manage packages and dependencies - [Tsup](https://tsup.egoist.sh/) to bundle pac...
+
+---
+
+Near line 17: Unpaired symbol: ‘[’ seems to be missing
+Context: ...manage packages and dependencies - [Tsup](https://tsup.egoist.sh/) to bundle pack...
+
+---
+
+Near line 18: Unpaired symbol: ‘[’ seems to be missing
+Context: ...ist.sh/) to bundle packages - [Storybook](https://storybook.js.org/) for rapid UI...
+
+---
+
+Near line 19: Possible typo: you repeated a word
+Context: ...or rapid UI component development and   testing - [Testing Library](https://testing-library.com/) ...
+
+---
+
+Near line 20: Unpaired symbol: ‘[’ seems to be missing
+Context: ...lopment and   testing - [Testing Library](https://testing-library.com/) for testi...
+
+---
+
+Near line 22: Possible spelling mistake found.
+Context: ...) for testing components and   hooks - [Changeset](https://github.com/atlassian/changeset...
+
+---
+
+Near line 22: Unpaired symbol: ‘[’ seems to be missing
+Context: ...ting components and   hooks - [Changeset](https://github.com/atlassian/changesets...
+
+---
+
+Near line 31: Possible missing comma found.
+Context: ... in this repository.  When you create a commit we kindly ask you to follow the convent...
+
+---
+
+Near line 31: It appears that a white space is missing.
+Context: ...kindly ask you to follow the convention `category(scope or module): message` in your commi...
+
+---
+
+Near line 35: Loose punctuation mark.
+Context: ...ollowing categories:  - `feat / feature`: all changes that introduce completely n...
+
+---
+
+Near line 35: Consider using a different adverb to strengthen your wording.
+Context: ... / feature`: all changes that introduce completely new code or new   features - `fix`: cha...
+
+---
+
+Near line 41: Possible spelling mistake found.
+Context: ...e. README, docs for   usage of a lib or cli usage) - `build`: all changes regarding...
+
+---
+
+Near line 47: The official name of this software platform is spelled with a capital “H”.
+Context: ...ation of continuous integration (i.e.   github actions, ci system) - `chore`: all chan...
+
+---
+
+Near line 47: Possible spelling mistake found.
+Context: ...ous integration (i.e.   github actions, ci system) - `chore`: all changes to the r...
+
+---
+
+Near line 54: It seems that a comma is missing.
+Context: ...  If you are interested in the detailed specification you can visit https://www.conventionalc...
+
+---
+
+Near line 61: The official name of this software platform is spelled with a capital “H”.
+Context: ...ed to `canary` branch. - Make sure that Github Actions are green - It is good to have ...
+
+---
+
+Near line 67: Possible spelling mistake found.
+Context: ...l problem, add (fix #xxxx [, # xxx]) (# xxxx is the problem identification) in your ...
+
+---
+
+Near line 74: Possible spelling mistake found.
+Context: ...able.   ### Steps to PR  1. Fork of the nextui repository and clone your fork  2. Crea...
+
+---
+
+Near line 77: After the expression ‘for example’ a comma is usually used.
+Context: ...w the convention    `[type/scope]`. For example `fix/dropdown-hook` or `docs/menu-typo`...
+
+---
+
+Near line 79: This abbreviation for “identification” is spelled all-uppercase.
+Context: ...   commit type. `scope` is just a short id that describes the scope of work.  3. M...
+
+---
+
+Near line 82: Possible typo: you repeated a whitespace
+Context: ...ain/CONTRIBUTING.md#commit-convention).    As you canary, you can run `pnpm build -...
+
+---
+
+Near line 83: Possible spelling mistake found.
+Context: ...vention).    As you canary, you can run `pnpm build --filter=<module>` and    `pnpm t...
+
+---
+
+Near line 83: Possible spelling mistake found.
+Context: ... run `pnpm build --filter=<module>` and    `pnpm test packages/<module>/<pkg>` e.g. `pnp...
+
+---
+
+Near line 84: Possible spelling mistake found.
+Context: ...pnpm test packages/<module>/<pkg>` e.g. `pnpm build --filter=avatar & pnpm test packa...
+
+---
+
+Near line 86: Possible spelling mistake found.
+Context: ...the `--filter` option, please check the turborepo [docs](https://turborepo.org/docs/core-...
+
+---
+
+Near line 88: Possible spelling mistake found.
+Context: .../docs/core-concepts/filtering).  4. Run `pnpm changeset` to create a detailed descrip...
+
+---
+
+Near line 89: Possible typo: you repeated a whitespace
+Context: ... a changelog when we publish an update.    [Learn more about Changeset](https://git...
+
+---
+
+Near line 90: Possible spelling mistake found.
+Context: ...publish an update.    [Learn more about Changeset](https://github.com/atlassian/changeset...
+
+---
+
+Near line 90: Possible typo: you repeated a whitespace
+Context: ...n/changesets/tree/master/packages/cli).    Please note that you might have to run `...
+
+---
+
+Near line 92: Possible spelling mistake found.
+Context: ...gin will be your fork on GitHub) before `pnpm changeset` works. 5. Also, if you provi...
+
+---
+
+Near line 93: File types are normally capitalized.
+Context: ...angeset` works. 5. Also, if you provide `jsx` snippets to the changeset, please turn...
+
+---
+
+Near line 93: Possible spelling mistake found.
+Context: ...o, if you provide `jsx` snippets to the changeset, please turn off the    live preview by...
+
+---
+
+Near line 97: In American English, abbreviations like “etc.” require a period.
+Context: ...minor changes like CI config, prettier, etc, you can run > `pnpm changeset add --em...
+
+---
+
+Near line 97: Possible spelling mistake found.
+Context: ...e CI config, prettier, etc, you can run > `pnpm changeset add --empty` to generate an e...
+
+---
+
+Near line 98: Possible spelling mistake found.
+Context: ...geset add --empty` to generate an empty changeset file to document > your changes.  ## De...
+
+---
+
+Near line 130: Possible spelling mistake found.
+Context: ...just on the documentation source code / mdx, you can use the following commands to ...
+
+---
+
+Near line 131: Possible spelling mistake found.
+Context: ...n use the following commands to build   NextUI components and then start the next.js d...
+
+---
+
+Near line 204: In contexts where ‘if’ is followed by ‘or’, using ‘whether’ may be more appropriate (and formal).
+Context: ...tainers and the maintainers will decide if it is accepted or not - Once the pull r...
+
+---
+
+Near line 213: Possible spelling mistake found.
+Context: ...stand the desired change easier.  Until NextUI has a stable release new components wil...
+
+---
+
+Near line 219: Possible spelling mistake found.
+Context: ...t` folder, the project uses MDX and all `NextUI` are already imported.  ## Breaking cha...
+
+---
+
+Near line 223: The usual collocation for “accompany” is “by”, not “with”.
+Context: ...ing changes  Breaking changes should be accompanied with deprecations of removed functionality. ...
+
+---
+
+Near line 227: Possible spelling mistake found.
+Context: ...er  If you are interested in becoming a NextUI maintainer, start by reviewing issues a...
+
+---
+
+Near line 232: Use a comma before ‘or’ if it connects two independent clauses (unless they are closely connected and short).
+Context: ...each out and ask you if you want to join or you can ask one of the current maintain...
+
+---
+
+Near line 236: The phrase ‘feel free to’ is used quite frequently. Consider using a less frequent alternative to set your writing apart from others and make it sound more professional.
+Context: ...t you are a member of the organization. Please feel free to change that setting for yourself so oth...
+
+---
+
+Near line 236: Use a comma before ‘so’ if it connects two independent clauses (unless they are closely connected and short).
+Context: ...free to change that setting for yourself so others will know who's helping out. Tha...
+
+</blockquote></details>
+
+</blockquote></details>
+
+</details>
+<details><summary>Additional comments not posted (11)</summary><blockquote>
+<details><summary>.coderabbit.yaml (1)</summary><blockquote>
+
+`17-17`: The addition of "canary" to the base branches is correctly implemented and aligns with the new Git workflow strategy.
+
+</blockquote></details>
+<details><summary>.changeset/config.json (1)</summary><blockquote>
+
+`11-11`: The update of `baseBranch` to "canary" is correctly implemented and aligns with the new Git workflow strategy.
+
+</blockquote></details>
+<details><summary>.github/workflows/QA.yaml (1)</summary><blockquote>
+
+`6-6`: The update to trigger QA workflows on pull requests to "canary" is correctly implemented and aligns with the new Git workflow strategy.
+
+</blockquote></details>
+<details><summary>.github/workflows/release.yaml (3)</summary><blockquote>
+
+`9-9`: The update to trigger the release workflow on pushes to "canary" is correctly implemented and aligns with the new Git workflow strategy.
+
+---
+
+`44-52`: The addition of steps to sync files from "canary" to "main" upon publishing is correctly implemented and supports the automated synchronization objective.
+
+---
+
+`53-58`: The steps to create canary releases when not publishing to NPM are correctly implemented and align with the continuous development strategy on "canary".
+
+</blockquote></details>
+<details><summary>.github/workflows/sync-canary-to-main.yaml (1)</summary><blockquote>
+
+`1-43`: The workflow for syncing changes from "canary" to "main" is correctly set up and aligns with the new Git workflow strategy.
+
+</blockquote></details>
+<details><summary>package.json (1)</summary><blockquote>
+
+`49-50`: The updates to the versioning and releasing scripts to use "canary" are correctly implemented and support the continuous development strategy on "canary".
+
+</blockquote></details>
+<details><summary>CONTRIBUTING.md (3)</summary><blockquote>
+
+`60-60`: The update to refer to "canary" instead of "main" for development and pull requests is correctly implemented and aligns with the new Git workflow strategy.
+
+---
+
+`76-76`: The instructions for creating new branches from "canary" and the updated commit and build/test procedures reflect the shift to "canary" as the development branch.
+
+---
+
+`203-205`: The final steps for sending and merging pull requests to "canary" are correctly updated to align with the continuous development strategy on "canary".
+
+</blockquote></details></blockquote></details>
+
+
+
+</details><!-- commit_ids_reviewed_start -->
+
+<!-- ec3ca9c010f01478c65b19c33dd7b9c45def3214 -->
+<!-- 1b016a1311c2c6fcaf98800e8ee61d1b3b6b81ee -->
+
+<!-- commit_ids_reviewed_end --><!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger a review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+### Documentation and Community
+
+- Visit our [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](https://discord.com/invite/GsXnASn26c) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- vercel: [vc]: #xR1mUDIrr99B1yEM6NSkJUD82U67OV6p5JZt5lrki1k=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi9FNU53MXlnY0Q1aHh3cHBNdGdpYTdUMnZuOU1rIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1yZWZhY3Rvci1lbmctNjE0LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJERVBMT1lFRCIsImxpdmVGZWVkYmFjayI6eyJyZXNvbHZlZCI6MCwidW5yZXNvbHZlZCI6MCwidG90YWwiOjAsImxpbmsiOiJuZXh0dWktZG9jcy12Mi1naXQtcmVmYWN0b3ItZW5nLTYxNC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX0seyJuYW1lIjoibmV4dHVpLXN0b3J5Ym9vay12MiIsInJvb3REaXJlY3RvcnkiOiJwYWNrYWdlcy9zdG9yeWJvb2siLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktc3Rvcnlib29rLXYyL0RFeTNUZFY2MlFOM0RudlR1VldaVTZieXdCQ2ciLCJwcmV2aWV3VXJsIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtcmVmYWN0b3ItZW5nLTYxNC1uZXh0dWktb3JnLnZlcmNlbC5hcHAiLCJuZXh0Q29tbWl0U3RhdHVzIjoiREVQTE9ZRUQiLCJsaXZlRmVlZGJhY2siOnsicmVzb2x2ZWQiOjAsInVucmVzb2x2ZWQiOjAsInRvdGFsIjowLCJsaW5rIjoibmV4dHVpLXN0b3J5Ym9vay12Mi1naXQtcmVmYWN0b3ItZW5nLTYxNC1uZXh0dWktb3JnLnZlcmNlbC5hcHAifX1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/E5Nw1ygcD5hxwppMtgia7T2vn9Mk)) | [Visit Preview](https://vercel.live/open-feedback/nextui-docs-v2-git-refactor-eng-614-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-refactor-eng-614-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 25, 2024 2:53pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/DEy3TdV62QN3DnvTuVWZU6bywBCg)) | [Visit Preview](https://vercel.live/open-feedback/nextui-storybook-v2-git-refactor-eng-614-nextui-org.vercel.app?via=pr-comment-visit-preview-link&passThrough=1) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-refactor-eng-614-nextui-org.vercel.app?via=pr-comment-feedback-link) | Apr 25, 2024 2:53pm |
+
+
+\n
+
+Files Changed:
+- .changeset/config.json (modified, 2 changes)\n  Patch: @@ -8,7 +8,7 @@
+   "fixed": [],
+   "linked": [],
+   "access": "public",
+-  "baseBranch": "main",
++  "baseBranch": "canary",
+   "updateInternalDependencies": "patch",
+   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+     "onlyUpdatePeerDependentsWhenOutOfRange": true\n- .coderabbit.yaml (modified, 2 changes)\n  Patch: @@ -14,7 +14,7 @@ reviews:
+       drafts: false
+       base_branches:
+         - "main"
+-        - "develop"
++        - "canary"
+         - "fix/.*"
+         - "chore/.*"
+         - "feat/.*"\n- .github/workflows/QA.yaml (modified, 2 changes)\n  Patch: @@ -3,7 +3,7 @@ name: QA
+ on:
+   pull_request:
+     branches:
+-      - main
++      - canary
+ 
+ jobs:
+   build:\n- .github/workflows/release.yaml (modified, 19 changes)\n  Patch: @@ -6,7 +6,7 @@ on:
+       - ".changeset/**"
+       - "packages/**"
+     branches:
+-      - main
++      - canary
+ 
+ concurrency:
+   group: ${{ github.workflow }}-${{ github.ref }}
+@@ -41,12 +41,21 @@ jobs:
+           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ 
+-      - name: Create @dev release
++      - name: Sync files from canary to main branch if a publish happens
++        if: steps.changesets.outputs.published == 'true'
++        run: |
++          curl -X POST \
++            -H "Accept: application/vnd.github.v3+json" \
++            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
++            https://api.github.com/repos/owner/repo/dispatches \
++            -d '{"event_type":"sync-canary-to-main"}'
++
++      - name: Create canary release
+         if: steps.changesets.outputs.published != 'true'
+         run: |
+-          git checkout main
+-          pnpm version:dev
+-          pnpm release:dev
++          git checkout canary
++          pnpm version:canary
++          pnpm release:canary
+         env:
+           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n- .github/workflows/sync-canary-to-main.yaml (added, 43 changes)\n  Patch: @@ -0,0 +1,43 @@
++name: Sync Canary to Main
++
++on:
++  # triggered manually in Github
++  workflow_dispatch:
++  # triggered by the type "sync-canary-to-main" (e.g. from release action after publishing)
++  repository_dispatch:
++    types: [sync-canary-to-main]
++
++jobs:
++  create_pull_request:
++    runs-on: ubuntu-latest
++    steps:
++      - name: Checkout code
++        uses: actions/checkout@v3
++        with:
++          fetch-depth: 0  # Ensure all history is fetched
++
++      - name: Create Pull Request
++        uses: repo-sync/pull-request@v2
++        with:
++          github_token: ${{ secrets.GITHUB_TOKEN }}
++          source_branch: "canary"
++          destination_branch: "main"
++          pr_title: "Auto-sync Canary to Main"
++          pr_body: |
++            ## Automated: Sync from Canary to Main
++
++            This Pull Request is automatically generated to sync the changes from the Canary branch to the Main branch. Below are the included updates:
++
++            ###  Triggered by a Direct Push to Canary:
++            - Please check the recent commits on the Canary branch directly as this sync may include multiple changes.
++
++            ### Triggered by a Pull Request Merge:
++            - Merged Pull Request: [PR#${{ github.event.pull_request.number }}](${{ github.event.pull_request.html_url }}) - ${{ github.event.pull_request.title }}
++              - PR Description: ${{ github.event.pull_request.body }}
++              - Merged by: ${{ github.event.pull_request.merged_by.login }}
++
++            ### Action Required:
++            - Please review the changes carefully.
++            - Approve and merge the Pull Request if everything is in order.
++
++            Thank you for maintaining the Main branch updated and clean.\n- CONTRIBUTING.md (modified, 10 changes)\n  Patch: @@ -57,7 +57,7 @@ https://www.conventionalcommits.org/ or check out the
+ 
+ ## Pull Request Guidelines
+ 
+-- The `main` branch is basically a snapshot of the latest stable version. All development must be done in dedicated branches.
++- The `main` branch is basically a snapshot of the latest production version. All development must be done in dedicated branches and will be merged to `canary` branch.
+ - Make sure that Github Actions are green
+ - It is good to have multiple small commits while working on the PR. We'll let GitHub squash it automatically before the merge.
+ - If you add a new feature:
+@@ -73,14 +73,14 @@ https://www.conventionalcommits.org/ or check out the
+ 
+ 1. Fork of the nextui repository and clone your fork
+ 
+-2. Create a new branch out of the `main` branch. We follow the convention
++2. Create a new branch out of the `canary` branch. We follow the convention
+    `[type/scope]`. For example `fix/dropdown-hook` or `docs/menu-typo`. `type`
+    can be either `docs`, `fix`, `feat`, `build`, or any other conventional
+    commit type. `scope` is just a short id that describes the scope of work.
+ 
+ 3. Make and commit your changes following the
+    [commit convention](https://github.com/nextui-org/nextui/blob/main/CONTRIBUTING.md#commit-convention).
+-   As you develop, you can run `pnpm build --filter=<module>` and
++   As you canary, you can run `pnpm build --filter=<module>` and
+    `pnpm test packages/<module>/<pkg>` e.g. `pnpm build --filter=avatar & pnpm test packages/components/avatar` to make sure everything works as expected.
+ 
+    > To know more about the `--filter` option, please check the turborepo [docs](https://turborepo.org/docs/core-concepts/filtering).
+@@ -200,9 +200,9 @@ npm run build
+ 
+ 6. Send your pull request:
+ 
+-- Send your pull request to the `main` branch
++- Send your pull request to the `canary` branch
+ - Your pull request will be reviewed by the maintainers and the maintainers will decide if it is accepted or not
+-- Once the pull request is accepted, the maintainers will merge it to the `main` branch
++- Once the pull request is accepted, the maintainers will merge it to the `canary` branch
+ 
+ ## Visual Changes
+ \n- package.json (modified, 4 changes)\n  Patch: @@ -46,8 +46,8 @@
+     "create:hook": "plop hook",
+     "version": "changeset version",
+     "release": "changeset publish",
+-    "version:dev": "changeset version --snapshot dev-v2",
+-    "release:dev": "changeset publish --snapshot --no-git-tag --tag dev-v2",
++    "version:canary": "changeset version --snapshot canary",
++    "release:canary": "changeset publish --snapshot --no-git-tag --tag canary",
+     "postinstall": "husky install && pnpm --filter @nextui-org/theme build"
+   },
+   "devDependencies": {\n

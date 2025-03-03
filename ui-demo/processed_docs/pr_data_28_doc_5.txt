@@ -1,0 +1,51 @@
+Pull Request Number: 493
+Title: fix(docs): navbar background transparent after refresh
+Base Branch: main
+Head Branch: fix/docs-navbar-transparent
+Author: tianenpang
+URL: https://github.com/nextui-org/nextui/pull/493
+State: MERGED
+Created At: 2022-05-26T11:30:43Z
+Merged At: 2022-05-26T13:23:04Z
+Participants: tianenpang, jrgarciadev
+
+Description:
+Closes #489
+📝 Description
+Fix navbar background transparent after scroll down and refresh.
+⛳️ Current behavior (updates)
+Set scrollPosition when navbar component mounted.
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+Screenshot after scrolling down and refreshing
+
+Commits:
+- fix(docs): navbar background transparent after refresh\n
+
+Labels:
+
+
+Comments:
+No comments.
+
+Files Changed:
+- apps/docs/src/layouts/navbar.tsx (modified, 7 changes)\n  Patch: @@ -56,13 +56,14 @@ const Navbar: React.FC<Props> = ({ isHome, hasNotify, routes }) => {
+   const router = useRouter();
+   const isMobile = useMediaQuery(960);
+   const [, setBodyHidden] = useBodyScroll(null, { scrollLayer: true });
+-  const [scrollPosition, setScrollPosition] = useState(
+-    (typeof window !== 'undefined' && window.pageYOffset) || 0
+-  );
++  const [scrollPosition, setScrollPosition] = useState(0);
+ 
+   const detached = hasNotify ? scrollPosition > 30 : scrollPosition > 0;
+ 
+   useEffect(() => {
++    setScrollPosition(
++      (typeof window !== 'undefined' && window.pageYOffset) || 0
++    );
+     window.addEventListener('scroll', onScroll.bind(this));
+     return () => {
+       window.removeEventListener('scroll', onScroll.bind(this));\n

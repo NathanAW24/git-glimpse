@@ -1,0 +1,141 @@
+Pull Request Number: 53
+Title: Fix/add readme to bundled pkg
+Base Branch: main
+Head Branch: fix/add_readme_to_bundled_pkg
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/53
+State: MERGED
+Created At: 2021-10-02T01:25:31Z
+Merged At: 2021-10-02T01:31:14Z
+Participants: jrgarciadev, codecov-commenter
+
+Description:
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+The package build was generating and publishing on npm without the README and LICENSE
+
+Commits:
+- fix: storybook css baseline import\n- Merge branch 'main' of github.com:nextui-org/nextui\n- fix: README.md and LICENSE files are now in the build folder after run pre-publish script\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/53?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#53](https://codecov.io/gh/nextui-org/nextui/pull/53?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (4542d00) into [main](https://codecov.io/gh/nextui-org/nextui/commit/9128dfb3ff1eb415f4fce00f3cee122642afb3d2?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (9128dfb) will **decrease** coverage by `0.00%`.
+> The diff coverage is `100.00%`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/53/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/53?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@            Coverage Diff             @@
+##             main      #53      +/-   ##
+==========================================
+- Coverage   86.74%   86.73%   -0.01%     
+==========================================
+  Files          93       93              
+  Lines        1547     1546       -1     
+  Branches      525      525              
+==========================================
+- Hits         1342     1341       -1     
+  Misses        200      200              
+  Partials        5        5              
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/53?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/nextui/src/loading/loading.tsx](https://codecov.io/gh/nextui-org/nextui/pull/53/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvbmV4dHVpL3NyYy9sb2FkaW5nL2xvYWRpbmcudHN4) | `95.45% <100.00%> (-0.20%)` | :arrow_down: |
+| [packages/nextui/src/switch/switch.tsx](https://codecov.io/gh/nextui-org/nextui/pull/53/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvbmV4dHVpL3NyYy9zd2l0Y2gvc3dpdGNoLnRzeA==) | `91.11% <0.00%> (ø)` | |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/53?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/53?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [9128dfb...4542d00](https://codecov.io/gh/nextui-org/nextui/pull/53?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- packages/nextui/.babelrc.js (modified, 2 changes)\n  Patch: @@ -33,7 +33,7 @@ module.exports = (api) => {
+           ],
+           '@babel/preset-typescript',
+         ]
+-      : ['@babel/env', '@babel/react', '@babel/preset-typescript'];
++      : ['@babel/preset-env', '@babel/react', '@babel/preset-typescript'];
+ 
+   const plugins =
+     env !== 'test' ? ['styled-jsx/babel'] : ['styled-jsx/babel-test'];\n- packages/nextui/.storybook/preview.js (modified, 7 changes)\n  Patch: @@ -1,10 +1,5 @@
+ import React from 'react';
+-import CssBaseline from '../src/components/css-baseline';
+-import _JSXStyle from 'styled-jsx/style';
+-
+-if (typeof global !== 'undefined') {
+-  Object.assign(global, { _JSXStyle });
+-}
++import CssBaseline from '../src/css-baseline';
+ 
+ export const decorators = [
+   (Story) => (\n- packages/nextui/scripts/pre-publish.js (modified, 10 changes)\n  Patch: @@ -1,24 +1,30 @@
+ const setupPackage = require('./setup-package');
+ const path = require('path');
+-const fs = require('fs-extra');
++const fse = require('fs-extra');
+ const shell = require('./utils').shell;
+ const step = require('./utils').step;
+ const error = require('./utils').error;
+ const libRoot = path.join(__dirname, '../lib');
++const rootDir = path.join(__dirname, '../');
+ 
+ const buildPkg = step('build pkg...', () => shell(`yarn build`));
+ 
+ const printPkg = step('print pkg...', () => {
+-  const genPkgJson = fs
++  const genPkgJson = fse
+     .readFileSync(`${libRoot}/package.json`)
+     .toString('utf-8');
+   console.log(JSON.parse(genPkgJson));
+ });
+ 
++const copyFromRoot = (file) =>
++  fse.copySync(`${rootDir}/${file}`, `${libRoot}/${file}`, { overwrite: true });
++
+ Promise.resolve(true)
+   .then(buildPkg)
+   .then(() => {
+     setupPackage();
+     printPkg();
++    copyFromRoot('README.md');
++    copyFromRoot('LICENSE');
+   })
+   .catch(error);\n- packages/nextui/src/input/input.stories.tsx (modified, 2 changes)\n  Patch: @@ -12,7 +12,7 @@ import {
+   Sun,
+   Moon,
+ } from '../utils/icons';
+-import { useTheme } from '../../hooks';
++import useTheme from '../use-theme';
+ 
+ export default {
+   title: 'General/Input',\n- packages/nextui/src/loading/loading.tsx (modified, 8 changes)\n  Patch: @@ -45,10 +45,10 @@ const Loading: React.FC<React.PropsWithChildren<LoadingProps>> = ({
+         : getLoaderBorder(size),
+     [size]
+   );
+-  const labelColor = useMemo(
+-    () => getNormalColor(textColor, theme.palette),
+-    [color, theme.palette]
+-  );
++  const labelColor = useMemo(() => getNormalColor(textColor, theme.palette), [
++    color,
++    theme.palette,
++  ]);
+   const labelStyle = useMemo(
+     () => getLabelStyle(type, theme, labelColor)[size],
+     [type, size, theme, labelColor]\n

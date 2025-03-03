@@ -1,0 +1,117 @@
+Pull Request Number: 94
+Title: fix: ssr on docs
+Base Branch: main
+Head Branch: fix/docs-ssr
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/94
+State: MERGED
+Created At: 2021-10-23T15:10:52Z
+Merged At: 2021-10-23T15:15:13Z
+Participants: jrgarciadev, codecov-commenter
+
+Description:
+[docs]/[ssr]
+Types of changes
+
+
+ Bug fix (non-breaking change which fixes an issue)
+ New feature (non-breaking change which adds functionality)
+ Breaking change (fix or feature that would cause existing functionality to not work as expected)
+ Documentation Only
+ Refactor
+
+Description, Motivation and Context
+The mounted state was removed to avoid losing the ssr
+
+
+
+Screenshots - Animations
+
+Commits:
+- fix: ssr on docs\n
+
+Labels:
+🐛 Type: Bug
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/94?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#94](https://codecov.io/gh/nextui-org/nextui/pull/94?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (28ce8ad) into [main](https://codecov.io/gh/nextui-org/nextui/commit/a86e86b911a4625a4a42bc873b194365336639da?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (a86e86b) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+[![Impacted file tree graph](https://codecov.io/gh/nextui-org/nextui/pull/94/graphs/tree.svg?width=650&height=150&src=pr&token=We4e5sFK8O&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)](https://codecov.io/gh/nextui-org/nextui/pull/94?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+
+```diff
+@@           Coverage Diff           @@
+##             main      #94   +/-   ##
+=======================================
+  Coverage   84.60%   84.60%           
+=======================================
+  Files         109      109           
+  Lines        1916     1916           
+  Branches      647      647           
+=======================================
+  Hits         1621     1621           
+  Misses        285      285           
+  Partials       10       10           
+```
+
+
+| [Impacted Files](https://codecov.io/gh/nextui-org/nextui/pull/94?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) | Coverage Δ | |
+|---|---|---|
+| [packages/nextui/src/text/text.tsx](https://codecov.io/gh/nextui-org/nextui/pull/94/diff?src=pr&el=tree&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None#diff-cGFja2FnZXMvbmV4dHVpL3NyYy90ZXh0L3RleHQudHN4) | `100.00% <ø> (ø)` | |
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/94?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/94?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [a86e86b...28ce8ad](https://codecov.io/gh/nextui-org/nextui/pull/94?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- package.json (modified, 4 changes)\n  Patch: @@ -14,12 +14,12 @@
+         "dev:docs": "yarn workspace @nextui-org/docs dev",
+         "start:docs": "yarn workspace @nextui-org/docs start",
+         "pre-publish:nextui": "yarn workspace @nextui-org/react pre-publish",
++        "build": "run-s build:nextui build:docs",
+         "build:docs": "yarn workspace @nextui-org/docs build",
+         "deploy:docs": "yarn workspace @nextui-org/docs deploy",
+         "deploy:stage-docs": "yarn workspace @nextui-org/docs deploy:stage",
+         "build:nextui": "SKIP_PREFLIGHT_CHECK=true yarn workspace @nextui-org/react build",
+-        "build": "run-s build:nextui build:docs",
+-        "build:watch": "yarn workspace @nextui-org/react watch",
++        "watch:nextui": "yarn workspace @nextui-org/react watch",
+         "lint": "yarn workspace @nextui-org/docs lint && yarn workspace @nextui-org/react lint",
+         "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'",
+         "prettier": "prettier --write .",\n- packages/docs/src/pages/_app.tsx (modified, 4 changes)\n  Patch: @@ -28,7 +28,6 @@ const KbarComponent = dynamic(() => import('../components/kbar'), {
+ });
+ 
+ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
+-  const [mounted, setMounted] = useState(false);
+   const [customTheme, setCustomTheme] = useState<DeepPartial<NextUIThemes>>({
+     ...sharedTheme
+   });
+@@ -63,7 +62,6 @@ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
+       ...prevTheme,
+       type: savedTheme || 'dark'
+     }));
+-    setMounted(true);
+   }, []);
+ 
+   return (
+@@ -80,7 +78,7 @@ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
+           }}
+         >
+           <KbarComponent />
+-          {mounted && <Component {...pageProps} />}
++          <Component {...pageProps} />
+         </KBarProvider>
+         <style global jsx>{`
+           .noselect {\n- packages/nextui/src/text/text.tsx (modified, 1 changes)\n  Patch: @@ -37,7 +37,6 @@ const defaultProps = {
+   b: false,
+   small: false,
+   transform: 'none' as TextTransforms,
+-  upperCase: false,
+   i: false,
+   span: false,
+   del: false,\n

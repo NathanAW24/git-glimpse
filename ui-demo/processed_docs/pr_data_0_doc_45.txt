@@ -1,0 +1,738 @@
+Pull Request Number: 4206
+Title: feat(listbox): virtualization
+Base Branch: canary
+Head Branch: feat/eng-1632-virtualization-for-listbox
+Author: vinroger
+URL: https://github.com/nextui-org/nextui/pull/4206
+State: MERGED
+Created At: 2024-12-01T16:52:44Z
+Merged At: 2024-12-01T20:19:22Z
+Participants: vinroger, jrgarciadev, wingkwong, winchesHe
+
+Description:
+Closes #3047
+Closes #3189
+📝 Description
+This PR adds virtualization support for the Listbox component, enabling efficient handling of large datasets by rendering only visible items. The updates focus on improving performance and enhancing the usability of dropdowns with extensive data.
+⛳️ Current behavior (updates)
+The current Listbox component renders all items in the DOM, leading to potential performance issues when handling large datasets.
+🚀 New behavior
+
+Virtualization Support:
+
+Efficient rendering of only visible items in the viewport with the isVirtualized property.
+Configuration options through the virtualization prop, including:
+
+maxListboxHeight: Set maximum listbox height.
+itemHeight: Define fixed height for each listbox item.
+
+
+
+
+Examples:
+
+Virtualized dropdowns with 1,000 and 10,000 items.
+Custom configurations for item height and listbox height.
+
+
+
+💣 Is this a breaking change (Yes/No):
+No
+📝 Additional Information
+The virtualization implementation is based on the @tanstack/react-virtual library. This update also includes new documentation examples and stories to guide developers in using the enhanced Listbox component.
+
+Summary by CodeRabbit
+Release Notes
+
+
+New Features
+
+Introduced virtualization support for the Listbox and Menu components, enhancing performance when rendering large datasets.
+Added new properties for the Listbox component: isVirtualized and virtualization for improved rendering control.
+New React components for handling large datasets in the Listbox, capable of displaying up to 10,000 items efficiently.
+
+
+
+Documentation
+
+Updated documentation to include a new section on virtualization for the Listbox component, along with examples for handling large datasets.
+
+
+
+Bug Fixes
+
+Improved type safety and encapsulation in various components to prevent unintended usage of internal types.
+
+
+
+Chores
+
+Updated routes in documentation to reflect recent changes and enhancements.
+
+Commits:
+- fix: should not export list item internal variables type\n- feat: changeset\n- fix: type error\n- fix: code block type error\n- feat: virtualization feature, docs for listbox\n- chore: update routes.json\n- fix: fix code-demo for typecheck\n- Merge branch 'fix/intertype-should-not-expoort' into feat/eng-1632-virtualization-for-listbox\n- chore: rollback for files\n- Merge branch 'canary' of github.com:nextui-org/nextui into feat/eng-1632-virtualization-for-listbox\n- chore: props omitted in the component itself\n- fix: menu item types\n- fix: tupecheck\n
+
+Labels:
+
+
+Comments:
+- linear: <p><a href="https://linear.app/nextui-inc/issue/ENG-1632/virtualization-for-listbox">ENG-1632 Virtualization for Listbox</a></p>\n- changeset-bot: ###  🦋  Changeset detected
+
+Latest commit: 30b62e262dad8652bc06bcba62de30b24aa7c221
+
+**The changes in this PR will be included in the next version bump.**
+
+<details><summary>This PR includes changesets to release 17 packages</summary>
+
+  | Name                     | Type  |
+| ------------------------ | ----- |
+| @nextui-org/dropdown     | Patch |
+| @nextui-org/listbox      | Patch |
+| @nextui-org/popover      | Patch |
+| @nextui-org/modal        | Patch |
+| @nextui-org/menu         | Patch |
+| @nextui-org/theme        | Patch |
+| @nextui-org/react        | Patch |
+| @nextui-org/autocomplete | Patch |
+| @nextui-org/select       | Patch |
+| @nextui-org/date-picker  | Patch |
+| @nextui-org/drawer       | Patch |
+| @nextui-org/checkbox     | Patch |
+| @nextui-org/date-input   | Patch |
+| @nextui-org/form         | Patch |
+| @nextui-org/input        | Patch |
+| @nextui-org/radio        | Patch |
+| @nextui-org/table        | Patch |
+
+</details>
+
+Not sure what this means? [Click here  to learn what changesets are](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add another changeset to this PR](https://github.com/nextui-org/nextui/new/feat/eng-1632-virtualization-for-listbox?filename=.changeset/angry-rice-promise.md&value=---%0A%22%40nextui-org%2Fdocs%22%3A%20patch%0A%22%40nextui-org%2Fdropdown%22%3A%20patch%0A%22%40nextui-org%2Flistbox%22%3A%20patch%0A%22%40nextui-org%2Fmenu%22%3A%20patch%0A%22%40nextui-org%2Fpopover%22%3A%20patch%0A---%0A%0Afeat(listbox)%3A%20virtualization%0A)
+
+\n- vercel: [vc]: #6se7yUjSPZJox8XBZ49UQ86SvQm669VXUp0sVGBJU2o=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi82d0FHQzFOTVBvSzlpbUN6UkdVbWlVekxNYTU1IiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1mZWF0LWVuZy0xNjMyLXZpcnR1YWxpemF0aS05MTBjMmQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1kb2NzLXYyLWdpdC1mZWF0LWVuZy0xNjMyLXZpcnR1YWxpemF0aS05MTBjMmQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19LHsibmFtZSI6Im5leHR1aS1zdG9yeWJvb2stdjIiLCJyb290RGlyZWN0b3J5IjoicGFja2FnZXMvc3Rvcnlib29rIiwiaW5zcGVjdG9yVXJsIjoiaHR0cHM6Ly92ZXJjZWwuY29tL25leHR1aS1vcmcvbmV4dHVpLXN0b3J5Ym9vay12Mi8yWGhYQ3d2TFlkQnVOU3BmbmkxWERaV0RoY3RzIiwicHJldmlld1VybCI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZlYXQtZW5nLTE2MzItdmlydHVhbC0wZDdlMTAtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IkRFUExPWUVEIiwibGl2ZUZlZWRiYWNrIjp7InJlc29sdmVkIjowLCJ1bnJlc29sdmVkIjowLCJ0b3RhbCI6MCwibGluayI6Im5leHR1aS1zdG9yeWJvb2stdjItZ2l0LWZlYXQtZW5nLTE2MzItdmlydHVhbC0wZDdlMTAtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIn19XX0=
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Comments | Updated (UTC) |
+| :--- | :----- | :------ | :------- | :------ |
+| **nextui-docs-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/6wAGC1NMPoK9imCzRGUmiUzLMa55)) | [Visit Preview](https://nextui-docs-v2-git-feat-eng-1632-virtualizati-910c2d-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-docs-v2-git-feat-eng-1632-virtualizati-910c2d-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 1, 2024 8:19pm |
+| **nextui-storybook-v2** | ✅ Ready ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/2XhXCwvLYdBuNSpfni1XDZWDhcts)) | [Visit Preview](https://nextui-storybook-v2-git-feat-eng-1632-virtual-0d7e10-nextui-org.vercel.app) | 💬 [**Add feedback**](https://vercel.live/open-feedback/nextui-storybook-v2-git-feat-eng-1632-virtual-0d7e10-nextui-org.vercel.app?via=pr-comment-feedback-link) | Dec 1, 2024 8:19pm |
+
+
+\n- coderabbitai: <!-- This is an auto-generated comment: summarize by coderabbit.ai -->
+<!-- walkthrough_start -->
+
+## Walkthrough
+The pull request introduces enhancements to the Listbox component and related functionalities, focusing on virtualization support for improved performance when handling large datasets. New properties and components are added to facilitate this feature, including the integration of new React components and updates to the documentation. Additionally, type definitions are refined to enhance type safety and clarity across various components.
+
+## Changes
+
+| File                                                                                          | Change Summary                                                                                                   |
+|-----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| `apps/docs/content/components/listbox/index.ts`                                              | Added new imports `virtualization` and `virtualizationTenThousand` to `listboxContent`.                        |
+| `apps/docs/content/components/listbox/virtualization-ten-thousand.raw.jsx`                   | Introduced a new component `App` for a virtualized listbox displaying 1000 items; added `generateItems` function. |
+| `apps/docs/content/components/listbox/virtualization-ten-thousand.ts`                        | Created a new file exporting the `App` component from the raw JSX file.                                        |
+| `apps/docs/content/components/listbox/virtualization.raw.jsx`                                 | Added a new component `App` for a virtualized listbox with 1000 items.                                          |
+| `apps/docs/content/components/listbox/virtualization.ts`                                     | Created a new file exporting the `App` component from the raw JSX file.                                        |
+| `apps/docs/content/docs/components/listbox.mdx`                                              | Updated documentation to include new virtualization features and properties.                                     |
+| `packages/components/listbox/stories/listbox.stories.tsx`                                   | Added `LargeDatasetSchema` interface and `generateLargeDataset` function; created templates for large datasets.  |
+| `apps/docs/config/routes.json`                                                                | Updated routes for documentation, marking several as `updated` and adding new posts.                           |
+| `.changeset/ninety-mails-yell.md`                                                            | Adjusted internal variable types for encapsulation.                                                              |
+| `apps/docs/components/docs/components/code-demo/react-live-demo.tsx`                         | Updated `ReactLiveDemoProps` to use `SandpackFiles` for file handling.                                         |
+| `packages/components/listbox/src/use-listbox-item.ts`                                        | Enhanced type definitions by adding `MenuItemVariantProps`.                                                    |
+| `packages/components/menu/src/menu.tsx`                                                      | Modified `MenuProps` to include all properties from `Props<T>`.                                               |
+| `packages/components/menu/src/use-menu-item.ts`                                              | Improved type handling in `mapPropsVariants` function.                                                         |
+| `packages/components/listbox/src/base/listbox-item-base.tsx`                                 | Updated `ListboxItemBaseProps` to omit specific properties.                                                    |
+| `packages/components/listbox/src/listbox-item.tsx`                                           | Modified `ListboxItemProps` to omit certain properties from `UseListboxItemProps`.                             |
+| `packages/components/menu/src/base/menu-item-base.tsx`                                       | Altered `MenuItemBaseProps` to omit specific properties.                                                       |
+| `packages/components/menu/src/menu-item.tsx`                                                | Updated `MenuItemProps` to exclude certain properties from `UseMenuItemProps`.                                 |
+
+## Assessment against linked issues
+
+| Objective                                                                                     | Addressed | Explanation                               |
+|-----------------------------------------------------------------------------------------------|-----------|-------------------------------------------|
+| Implement virtualization for large datasets in Listbox component (#3189)                     | ✅        |                                           |
+| Optimize Select and Autocomplete components for large options (#3047)                        | ❌       | Changes focused primarily on Listbox.    |
+
+## Possibly related PRs
+- **#3119**: Addresses an issue with the `Listbox` component, which is directly connected to the changes made in the main PR that involves modifications to the `listboxContent` object and its properties.
+- **#3762**: This PR fixes an issue with the Dropdown component, which is related to the overall functionality of dropdown-like components, including the Listbox, as they share similar interaction patterns and behaviors.
+- **#4198**: This PR focuses on ensuring that `forwardRef` render functions correctly utilize the `ref` parameter, which is relevant to the Listbox and other components modified in the main PR, enhancing their integration and functionality.
+
+## Suggested labels
+`👀 Status: In Review`, `📋 Scope : Docs`
+
+## Suggested reviewers
+- wingkwong
+
+<!-- walkthrough_end -->
+<!-- This is an auto-generated comment: rate limited by coderabbit.ai -->
+
+> [!WARNING]
+> ## Rate limit exceeded
+> 
+> @jrgarciadev has exceeded the limit for the number of commits or files that can be reviewed per hour. Please wait **16 minutes and 31 seconds** before requesting another review.
+> 
+> <details>
+> <summary>⌛ How to resolve this issue?</summary>
+> 
+> After the wait time has elapsed, a review can be triggered using the `@coderabbitai review` command as a PR comment. Alternatively, push new commits to this PR.
+> 
+> We recommend that you space out your commits to avoid hitting the rate limit.
+> 
+> </details>
+> 
+> 
+> <details>
+> <summary>🚦 How do rate limits work?</summary>
+> 
+> CodeRabbit enforces hourly rate limits for each developer per organization.
+> 
+> Our paid plans have higher rate limits than the trial, open-source and free plans. In all cases, we re-allow further reviews after a brief timeout.
+> 
+> Please see our [FAQ](https://docs.coderabbit.ai/faq) for further information.
+> 
+> </details>
+> 
+> <details>
+> <summary>📥 Commits</summary>
+> 
+> Reviewing files that changed from the base of the PR and between 5e8281bdb29f38c93918e1e95564f8403debf349 and 30b62e262dad8652bc06bcba62de30b24aa7c221.
+> 
+> </details>
+
+<!-- end of auto-generated comment: rate limited by coderabbit.ai -->
+
+
+
+
+<!-- internal state start -->
+
+
+<!-- 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 -->
+
+<!-- internal state end -->
+<!-- tips_start -->
+
+---
+
+Thank you for using CodeRabbit. We offer it for free to the OSS community and would appreciate your support in helping us grow. If you find it useful, would you consider giving us a shout-out on your favorite social media?
+
+<details>
+<summary>❤️ Share</summary>
+
+- [X](https://twitter.com/intent/tweet?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A&url=https%3A//coderabbit.ai)
+- [Mastodon](https://mastodon.social/share?text=I%20just%20used%20%40coderabbitai%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20the%20proprietary%20code.%20Check%20it%20out%3A%20https%3A%2F%2Fcoderabbit.ai)
+- [Reddit](https://www.reddit.com/submit?title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&text=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code.%20Check%20it%20out%3A%20https%3A//coderabbit.ai)
+- [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcoderabbit.ai&mini=true&title=Great%20tool%20for%20code%20review%20-%20CodeRabbit&summary=I%20just%20used%20CodeRabbit%20for%20my%20code%20review%2C%20and%20it%27s%20fantastic%21%20It%27s%20free%20for%20OSS%20and%20offers%20a%20free%20trial%20for%20proprietary%20code)
+
+</details>
+
+<details>
+<summary>🪧 Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+  - `I pushed a fix in commit <commit_id>, please review it.`
+  - `Generate unit testing code for this file.`
+  - `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+  - `@coderabbitai generate unit testing code for this file.`
+  -	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+  - `@coderabbitai gather interesting stats about this repository and render them as a table. Additionally, render a pie chart showing the language distribution in the codebase.`
+  - `@coderabbitai read src/utils.ts and generate unit testing code.`
+  - `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+  - `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (Invoked using PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+### Other keywords and placeholders
+
+- Add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+- Add `@coderabbitai summary` to generate the high-level summary at a specific location in the PR description.
+- Add `@coderabbitai` anywhere in the PR title to generate the title automatically.
+
+### Documentation and Community
+
+- Visit our [Documentation](https://docs.coderabbit.ai) for detailed information on how to use CodeRabbit.
+- Join our [Discord Community](http://discord.gg/coderabbit) to get help, request features, and share feedback.
+- Follow us on [X/Twitter](https://twitter.com/coderabbitai) for updates and announcements.
+
+</details>
+
+<!-- tips_end -->\n- jrgarciadev: Thank you! @vinroger \n
+
+Files Changed:
+- .changeset/dull-coats-crash.md (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++---
++"@nextui-org/dropdown": patch
++"@nextui-org/listbox": patch
++"@nextui-org/popover": patch
++"@nextui-org/modal": patch
++"@nextui-org/menu": patch
++---
++
++Fix typecheck\n- .changeset/ninety-mails-yell.md (added, 6 changes)\n  Patch: @@ -0,0 +1,6 @@
++---
++"@nextui-org/menu": patch
++"@nextui-org/theme": patch
++---
++
++Fix should not export list item internal variables type\n- .changeset/ten-experts-happen.md (added, 7 changes)\n  Patch: @@ -0,0 +1,7 @@
++---
++"@nextui-org/listbox": patch
++"@nextui-org/menu": patch
++"@nextui-org/theme": patch
++---
++
++Virtualization support added to Listbox and Menu\n- apps/docs/components/docs/components/code-demo/react-live-demo.tsx (modified, 5 changes)\n  Patch: @@ -5,14 +5,15 @@ import * as Components from "@nextui-org/react";
+ import * as intlDateUtils from "@internationalized/date";
+ import * as reactAriaI18n from "@react-aria/i18n";
+ import * as reactHookForm from "react-hook-form";
++import {SandpackFiles} from "@codesandbox/sandpack-react/types";
+ 
+ import {BgGridContainer} from "@/components/bg-grid-container";
+ import {GradientBox, GradientBoxProps} from "@/components/gradient-box";
+ import {CopyButton} from "@/components/copy-button";
+ 
+ export interface ReactLiveDemoProps {
+   code: string;
+-  files: string[];
++  files: SandpackFiles;
+   noInline?: boolean;
+   height?: string | number;
+   isCentered?: boolean;
+@@ -47,7 +48,7 @@ export const ReactLiveDemo: React.FC<ReactLiveDemoProps> = ({
+         <div className="absolute top-[-28px] right-[-8px]">
+           <CopyButton
+             className="opacity-0 group-hover/code-demo:opacity-100 transition-opacity text-zinc-400"
+-            value={files?.[DEFAULT_FILE]}
++            value={files?.[DEFAULT_FILE] as string}
+           />
+         </div>
+       )}\n- apps/docs/config/routes.json (modified, 3 changes)\n  Patch: @@ -302,7 +302,8 @@
+           "key": "listbox",
+           "title": "Listbox",
+           "keywords": "listbox, selection, option list, multiple choice",
+-          "path": "/docs/components/listbox.mdx"
++          "path": "/docs/components/listbox.mdx",
++          "updated": true
+         },
+         {
+           "key": "modal",\n- apps/docs/content/components/listbox/index.ts (modified, 4 changes)\n  Patch: @@ -9,6 +9,8 @@ import description from "./description";
+ import sections from "./sections";
+ import customStyles from "./custom-styles";
+ import topContent from "./top-content";
++import virtualization from "./virtualization";
++import virtualizationTenThousand from "./virtualization-ten-thousand";
+ 
+ export const listboxContent = {
+   usage,
+@@ -22,4 +24,6 @@ export const listboxContent = {
+   sections,
+   customStyles,
+   topContent,
++  virtualization,
++  virtualizationTenThousand,
+ };\n- apps/docs/content/components/listbox/virtualization-ten-thousand.raw.jsx (added, 57 changes)\n  Patch: @@ -0,0 +1,57 @@
++import {Listbox, ListboxItem} from "@nextui-org/react";
++
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(1000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Listbox
++        isVirtualized
++        label={"Select from 10000 items"}
++        placeholder="Select..."
++        virtualization={{
++          maxListboxHeight: 400,
++          itemHeight: 40,
++        }}
++      >
++        {items.map((item, index) => (
++          <ListboxItem key={index} value={item.value}>
++            {item.label}
++          </ListboxItem>
++        ))}
++      </Listbox>
++    </div>
++  );
++}\n- apps/docs/content/components/listbox/virtualization-ten-thousand.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./virtualization-ten-thousand.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/components/listbox/virtualization.raw.jsx (added, 56 changes)\n  Patch: @@ -0,0 +1,56 @@
++import {Listbox, ListboxItem} from "@nextui-org/react";
++const generateItems = (n) => {
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  const dataset = [];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++};
++
++export default function App() {
++  const items = generateItems(1000);
++
++  return (
++    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
++      <Listbox
++        isVirtualized
++        label={"Select from 1000 items"}
++        placeholder="Select..."
++        virtualization={{
++          maxListboxHeight: 400,
++          itemHeight: 40,
++        }}
++      >
++        {items.map((item, index) => (
++          <ListboxItem key={index} value={item.value}>
++            {item.label}
++          </ListboxItem>
++        ))}
++      </Listbox>
++    </div>
++  );
++}\n- apps/docs/content/components/listbox/virtualization.ts (added, 9 changes)\n  Patch: @@ -0,0 +1,9 @@
++import App from "./virtualization.raw.jsx?raw";
++
++const react = {
++  "/App.jsx": App,
++};
++
++export default {
++  ...react,
++};\n- apps/docs/content/docs/components/listbox.mdx (modified, 28 changes)\n  Patch: @@ -151,6 +151,22 @@ function App() {
+ }
+ ```
+ 
++### Virtualization
++
++Select supports virtualization, which allows efficient rendering of large lists by only rendering items that are visible in the viewport. You can enable virtualization by setting the `isVirtualized` prop to `true`.
++
++<CodeDemo
++  title="Virtualization"
++  files={listboxContent.virtualization}
++/>
++
++> **Note**: The virtualization strategy is based on the [@tanstack/react-virtual](https://tanstack.com/virtual/latest) package, which provides efficient rendering of large lists by only rendering items that are visible in the viewport.
++#### Ten Thousand Items
++
++Here's an example of using virtualization with 10,000 items.
++
++<CodeDemo title="Ten Thousand Items" files={listboxContent.virtualizationTenThousand} />
++
+ ## Slots
+ 
+ Listbox has 3 components with slots the base one `Listbox`, `ListboxItem` and `ListboxSection` components.
+@@ -328,6 +344,18 @@ You can customize the `Listbox` items style by using the `itemClasses` prop and
+       type: "boolean",
+       description: "Whether keyboard navigation is circular.",
+       default: "false"
++    },   
++    {
++      attribute: "isVirtualized",
++      type: "boolean",
++      description: "Whether to enable virtualization.",
++      default: "false"
++    },
++    {
++      attribute: "virtualization",
++      type: "Record<\"maxListboxHeight\" & \"itemHeight\", number>",
++      description: "Configuration for virtualization, optimizing rendering for large datasets. Required if isVirtualized is set to true.",
++      default: "-",
+     },
+     {
+       attribute: "hideEmptyContent",\n- packages/components/dropdown/src/dropdown-trigger.tsx (modified, 2 changes)\n  Patch: @@ -4,6 +4,8 @@ import {useDropdownContext} from "./dropdown-context";
+ 
+ export interface DropdownTriggerProps {
+   children?: React.ReactNode;
++  className?: string;
++  [key: string]: any;
+ }
+ 
+ /**\n- packages/components/listbox/src/base/listbox-item-base.tsx (modified, 2 changes)\n  Patch: @@ -90,7 +90,7 @@ interface Props<T extends object = {}> extends Omit<ItemProps<"li", T>, "childre
+ }
+ 
+ export type ListboxItemBaseProps<T extends object = {}> = Props<T> &
+-  ListboxItemVariantProps &
++  Omit<ListboxItemVariantProps, "hasDescriptionTextChild" | "hasTitleTextChild"> &
+   Omit<AriaOptionProps, "key"> &
+   FocusableProps &
+   PressEvents;\n- packages/components/listbox/src/listbox-item.tsx (modified, 3 changes)\n  Patch: @@ -3,7 +3,8 @@ import {useMemo, ReactNode} from "react";
+ import {UseListboxItemProps, useListboxItem} from "./use-listbox-item";
+ import {ListboxSelectedIcon} from "./listbox-selected-icon";
+ 
+-export interface ListboxItemProps<T extends object = object> extends UseListboxItemProps<T> {}
++export interface ListboxItemProps<T extends object = object>
++  extends Omit<UseListboxItemProps<T>, "hasDescriptionTextChild" | "hasTitleTextChild"> {}
+ 
+ /**
+  * @internal\n- packages/components/listbox/src/use-listbox-item.ts (modified, 4 changes)\n  Patch: @@ -1,4 +1,5 @@
+ import type {ListboxItemBaseProps} from "./base/listbox-item-base";
++import type {MenuItemVariantProps} from "@nextui-org/theme";
+ 
+ import {useMemo, useRef, useCallback, Fragment} from "react";
+ import {listboxItem} from "@nextui-org/theme";
+@@ -24,7 +25,8 @@ interface Props<T extends object> extends ListboxItemBaseProps<T> {
+ }
+ 
+ export type UseListboxItemProps<T extends object> = Props<T> &
+-  Omit<HTMLNextUIProps<"li">, keyof Props<T>>;
++  Omit<HTMLNextUIProps<"li">, keyof Props<T>> &
++  MenuItemVariantProps;
+ 
+ export function useListboxItem<T extends object>(originalProps: UseListboxItemProps<T>) {
+   const globalContext = useProviderContext();\n- packages/components/listbox/stories/listbox.stories.tsx (modified, 105 changes)\n  Patch: @@ -679,6 +679,59 @@ const CustomWithClassNamesTemplate = ({color, variant, disableAnimation, ...args
+   );
+ };
+ 
++interface LargeDatasetSchema {
++  label: string;
++  value: string;
++  description: string;
++}
++
++function generateLargeDataset(n: number): LargeDatasetSchema[] {
++  const dataset: LargeDatasetSchema[] = [];
++  const items = [
++    "Cat",
++    "Dog",
++    "Elephant",
++    "Lion",
++    "Tiger",
++    "Giraffe",
++    "Dolphin",
++    "Penguin",
++    "Zebra",
++    "Shark",
++    "Whale",
++    "Otter",
++    "Crocodile",
++  ];
++
++  for (let i = 0; i < n; i++) {
++    const item = items[i % items.length];
++
++    dataset.push({
++      label: `${item}${i}`,
++      value: `${item.toLowerCase()}${i}`,
++      description: "Sample description",
++    });
++  }
++
++  return dataset;
++}
++
++const LargeDatasetTemplate = (args: ListboxProps & {numItems: number}) => {
++  const largeDataset = generateLargeDataset(args.numItems);
++
++  return (
++    <div className="flex w-full max-w-full py-20 px-20">
++      <Listbox label={`Select from ${args.numItems} items`} {...args}>
++        {largeDataset.map((item, index) => (
++          <ListboxItem key={index} value={item.value}>
++            {item.label}
++          </ListboxItem>
++        ))}
++      </Listbox>
++    </div>
++  );
++};
++
+ export const Default = {
+   render: Template,
+   args: {
+@@ -782,3 +835,55 @@ export const CustomWithClassNames = {
+     ...defaultProps,
+   },
+ };
++
++export const OneThousandList = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    numItems: 1000,
++    isVirtualized: true,
++    virtualization: {
++      maxListboxHeight: 400,
++      itemHeight: 20,
++    },
++  },
++};
++
++export const TenThousandList = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    numItems: 10000,
++    isVirtualized: true,
++    virtualization: {
++      maxListboxHeight: 400,
++      itemHeight: 20,
++    },
++  },
++};
++
++export const CustomMaxListboxHeight = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    numItems: 1000,
++    isVirtualized: true,
++    virtualization: {
++      maxListboxHeight: 600,
++      itemHeight: 20,
++    },
++  },
++};
++
++export const CustomItemHeight = {
++  render: LargeDatasetTemplate,
++  args: {
++    ...defaultProps,
++    numItems: 1000,
++    isVirtualized: true,
++    virtualization: {
++      itemHeight: 40,
++      maxListboxHeight: 600,
++    },
++  },
++};\n- packages/components/menu/src/base/menu-item-base.tsx (modified, 2 changes)\n  Patch: @@ -89,7 +89,7 @@ interface Props<T extends object = {}> extends Omit<ItemProps<"li", T>, "childre
+ }
+ 
+ export type MenuItemBaseProps<T extends object = {}> = Props<T> &
+-  MenuItemVariantProps &
++  Omit<MenuItemVariantProps, "hasDescriptionTextChild" | "hasTitleTextChild"> &
+   AriaMenuItemProps &
+   FocusableProps &
+   PressEvents;\n- packages/components/menu/src/menu-item.tsx (modified, 3 changes)\n  Patch: @@ -3,7 +3,8 @@ import {useMemo, ReactNode} from "react";
+ import {UseMenuItemProps, useMenuItem} from "./use-menu-item";
+ import {MenuSelectedIcon} from "./menu-selected-icon";
+ 
+-export interface MenuItemProps<T extends object = object> extends UseMenuItemProps<T> {}
++export interface MenuItemProps<T extends object = object>
++  extends Omit<UseMenuItemProps<T>, "hasDescriptionTextChild" | "hasTitleTextChild"> {}
+ 
+ /**
+  * @internal\n- packages/components/menu/src/menu.tsx (modified, 5 changes)\n  Patch: @@ -74,10 +74,7 @@ function Menu<T extends object>(props: Props<T>, ref: ForwardedRef<HTMLUListElem
+   );
+ }
+ 
+-export type MenuProps<T extends object = object> = Omit<
+-  Props<T>,
+-  "hasChildItems" | "hasTitleTextChild" | "hasDescriptionTextChild"
+-> & {ref?: Ref<HTMLElement>};
++export type MenuProps<T extends object = object> = Props<T> & {ref?: Ref<HTMLElement>};
+ 
+ // forwardRef doesn't support generic parameters, so cast the result to the correct type
+ export default forwardRef(Menu) as <T extends object>(props: MenuProps<T>) => ReactElement;\n- packages/components/menu/src/use-menu-item.ts (modified, 4 changes)\n  Patch: @@ -1,4 +1,5 @@
+ import type {MenuItemBaseProps} from "./base/menu-item-base";
++import type {MenuItemVariantProps} from "@nextui-org/theme";
+ import type {Node} from "@react-types/shared";
+ 
+ import {useMemo, useRef, useCallback, Fragment} from "react";
+@@ -24,7 +25,8 @@ interface Props<T extends object> extends MenuItemBaseProps<T> {
+ }
+ 
+ export type UseMenuItemProps<T extends object> = Props<T> &
+-  Omit<HTMLNextUIProps<"li">, keyof Props<T>>;
++  Omit<HTMLNextUIProps<"li">, keyof Props<T>> &
++  MenuItemVariantProps;
+ 
+ export function useMenuItem<T extends object>(originalProps: UseMenuItemProps<T>) {
+   const globalContext = useProviderContext();\n- packages/components/popover/src/popover-trigger.tsx (modified, 2 changes)\n  Patch: @@ -8,6 +8,8 @@ import {usePopoverContext} from "./popover-context";
+ 
+ export interface PopoverTriggerProps {
+   children?: React.ReactNode;
++  className?: string;
++  [key: string]: any;
+ }
+ 
+ /**\n- pnpm-lock.yaml (modified, 2 changes)\n  Patch: @@ -22124,7 +22124,7 @@ snapshots:
+       doctrine: 2.1.0
+       eslint: 7.32.0
+       eslint-import-resolver-node: 0.3.9
+-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0)(eslint@7.32.0))(eslint@7.32.0)
++      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@7.32.0))(eslint@7.32.0)
+       hasown: 2.0.2
+       is-core-module: 2.15.1
+       is-glob: 4.0.3\n

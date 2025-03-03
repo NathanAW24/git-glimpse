@@ -1,0 +1,103 @@
+Pull Request Number: 526
+Title: fix(react-spacer): spacer stories
+Base Branch: main
+Head Branch: spacer-story
+Author: cyanxiao
+URL: https://github.com/nextui-org/nextui/pull/526
+State: MERGED
+Created At: 2022-06-09T05:52:20Z
+Merged At: 2022-06-09T13:02:16Z
+Participants: cyanxiao, codecov-commenter, jrgarciadev
+
+Description:
+📝 Description
+
+Add a brief description
+
+Spacer component storybook not working.
+
+Please describe the current behavior that you are modifying
+
+Spacer storybook prompted
+undefined is not an object (evaluating 'theme.palette.primary')
+
+
+Please describe the behavior or changes this PR adds
+
+Theme object is correctly imported and storybook works.
+💣 Is this a breaking change (Yes/No): No
+
+📝 Additional Information
+
+Commits:
+- fix: spacer stories\n
+
+Labels:
+
+
+Comments:
+- codecov-commenter: # [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/526?src=pr&el=h1&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) Report
+> Merging [#526](https://codecov.io/gh/nextui-org/nextui/pull/526?src=pr&el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (93a5da7) into [main](https://codecov.io/gh/nextui-org/nextui/commit/cf55e672946e02fc3f4ddc213e11cf403b360513?el=desc&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None) (cf55e67) will **not change** coverage.
+> The diff coverage is `n/a`.
+
+```diff
+@@           Coverage Diff           @@
+##             main     #526   +/-   ##
+=======================================
+  Coverage   74.75%   74.75%           
+=======================================
+  Files         200      200           
+  Lines        3090     3090           
+  Branches      952      952           
+=======================================
+  Hits         2310     2310           
+  Misses        765      765           
+  Partials       15       15           
+```
+
+
+
+------
+
+[Continue to review full report at Codecov](https://codecov.io/gh/nextui-org/nextui/pull/526?src=pr&el=continue&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+> **Legend** - [Click here to learn more](https://docs.codecov.io/docs/codecov-delta?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None)
+> `Δ = absolute <relative> (impact)`, `ø = not affected`, `? = missing data`
+> Powered by [Codecov](https://codecov.io/gh/nextui-org/nextui/pull/526?src=pr&el=footer&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Last update [cf55e67...93a5da7](https://codecov.io/gh/nextui-org/nextui/pull/526?src=pr&el=lastupdated&utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None). Read the [comment docs](https://docs.codecov.io/docs/pull-request-comments?utm_medium=referral&utm_source=github&utm_content=comment&utm_campaign=pr+comments&utm_term=None).
+\n
+
+Files Changed:
+- packages/react/src/spacer/spacer.stories.tsx (modified, 10 changes)\n  Patch: @@ -5,7 +5,7 @@ import useTheme from '../use-theme';
+ 
+ export default {
+   title: 'Layout/Spacer',
+-  component: Spacer,
++  component: Spacer
+ } as Meta;
+ 
+ // eslint-disable-next-line @typescript-eslint/no-explicit-any
+@@ -17,7 +17,7 @@ const Container = ({ children, vertical }: any) => (
+       justifyContent: 'space-between',
+       width: '100%',
+       maxWidth: '50%',
+-      minWidth: '50%',
++      minWidth: '50%'
+     }}
+   >
+     {children}
+@@ -26,13 +26,13 @@ const Container = ({ children, vertical }: any) => (
+ 
+ // eslint-disable-next-line @typescript-eslint/no-explicit-any
+ const SpacerContainer = ({ children }: any) => {
+-  const theme = useTheme();
++  const { theme } = useTheme();
+   return (
+     <div
+       style={{
+         width: '100%',
+-        background: theme.palette.primary,
+-        borderRadius: '8px',
++        background: theme?.colors.primary.value,
++        borderRadius: '8px'
+       }}
+     >
+       {children}\n

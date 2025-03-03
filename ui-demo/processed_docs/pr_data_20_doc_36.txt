@@ -1,0 +1,83 @@
+Pull Request Number: 1553
+Title: Revert "fix: fixed pagination scale animation"
+Base Branch: main
+Head Branch: revert-1552-fix/fixed-pagination-scale-animation
+Author: jrgarciadev
+URL: https://github.com/nextui-org/nextui/pull/1553
+State: MERGED
+Created At: 2023-09-02T20:45:42Z
+Merged At: 2023-09-02T20:45:50Z
+Participants: jrgarciadev
+
+Description:
+Reverts #1552
+
+Commits:
+- Revert "fix: fixed pagination scale animation (#1552)"
+
+This reverts commit 8fcc8b37670fc1c7823d2ef78ad459078d6c76f4.\n
+
+Labels:
+
+
+Comments:
+- changeset-bot: ###  ⚠️  No Changeset found
+
+Latest commit: b7cbade3f544983f6a97fb22ac247cf687372889
+
+Merging this PR will not cause a version bump for any packages. If these changes should not result in a new version, you're good to go. **If these changes should result in a version bump, you need to add a changeset.**
+
+<details><summary>This PR includes no changesets</summary>
+
+  When changesets are added to this PR, you'll see the packages that this PR includes changesets for and the associated semver types
+
+</details>
+
+[Click here to learn what changesets are, and how to add one](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+[Click here if you're a maintainer who wants to add a changeset to this PR](https://github.com/nextui-org/nextui/new/revert-1552-fix/fixed-pagination-scale-animation?filename=.changeset/eight-papayas-smile.md&value=---%0A%22%40nextui-org%2Fpagination%22%3A%20patch%0A---%0A%0ARevert%20%22fix%3A%20fixed%20pagination%20scale%20animation%22%0A)
+
+\n- vercel: [vc]: #TEDbwoIQZAVkhKuNEHt60h0TT2tzHgnDqSoU+SoZR3k=:eyJpc01vbm9yZXBvIjp0cnVlLCJ0eXBlIjoiZ2l0aHViIiwicHJvamVjdHMiOlt7Im5hbWUiOiJuZXh0dWktZG9jcy12MiIsInJvb3REaXJlY3RvcnkiOiJhcHBzL2RvY3MiLCJpbnNwZWN0b3JVcmwiOiJodHRwczovL3ZlcmNlbC5jb20vbmV4dHVpLW9yZy9uZXh0dWktZG9jcy12Mi8zTkp2VXNlRHNSNWRMNFB5ZDVNUkRRTDlZb0RQIiwicHJldmlld1VybCI6Im5leHR1aS1kb2NzLXYyLWdpdC1yZXZlcnQtMTU1Mi1maXgtZml4ZWQtcGFnaS1hYTYzZjQtbmV4dHVpLW9yZy52ZXJjZWwuYXBwIiwibmV4dENvbW1pdFN0YXR1cyI6IlBFTkRJTkcifSx7Im5hbWUiOiJuZXh0dWktc3Rvcnlib29rLXYyIiwicm9vdERpcmVjdG9yeSI6InBhY2thZ2VzL3N0b3J5Ym9vayIsImluc3BlY3RvclVybCI6Imh0dHBzOi8vdmVyY2VsLmNvbS9uZXh0dWktb3JnL25leHR1aS1zdG9yeWJvb2stdjIvRDFiYkhGd1RKR1dnUk1qczVQMlBTQXBhRGlOUiIsInByZXZpZXdVcmwiOiJuZXh0dWktc3Rvcnlib29rLXYyLWdpdC1yZXZlcnQtMTU1Mi1maXgtZml4ZWQtODc4YTY2LW5leHR1aS1vcmcudmVyY2VsLmFwcCIsIm5leHRDb21taXRTdGF0dXMiOiJQRU5ESU5HIn1dfQ==
+**The latest updates on your projects**. Learn more about [Vercel for Git ↗︎](https://vercel.link/github-learn-more)
+
+| Name | Status | Preview | Updated (UTC) |
+| :--- | :----- | :------ | :------ |
+| **nextui-docs-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-docs-v2/3NJvUseDsR5dL4Pyd5MRDQL9YoDP)) | [Visit Preview](https://nextui-docs-v2-git-revert-1552-fix-fixed-pagi-aa63f4-nextui-org.vercel.app) | Sep 2, 2023 8:45pm |
+| **nextui-storybook-v2** | 🔄 Building ([Inspect](https://vercel.com/nextui-org/nextui-storybook-v2/D1bbHFwTJGWgRMjs5P2PSApaDiNR)) | [Visit Preview](https://nextui-storybook-v2-git-revert-1552-fix-fixed-878a66-nextui-org.vercel.app) | Sep 2, 2023 8:45pm |
+
+
+\n
+
+Files Changed:
+- packages/components/pagination/src/use-pagination.ts (modified, 9 changes)\n  Patch: @@ -201,7 +201,6 @@ export function usePagination(originalProps: UsePaginationProps) {
+     if (skipAnimation) {
+       cursorRef.current.setAttribute("data-moving", "false");
+       cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1)`;
+-
+       return;
+     }
+ 
+@@ -212,13 +211,10 @@ export function usePagination(originalProps: UsePaginationProps) {
+     cursorTimer.current = setTimeout(() => {
+       // reset the scale of the cursor
+       if (cursorRef.current) {
++        cursorRef.current.setAttribute("data-moving", "false");
+         cursorRef.current.style.transform = `translateX(${offsetLeft}px) scale(1)`;
+       }
+-      cursorTimer.current = setTimeout(() => {
+-        // remove the data-moving attribute
+-        cursorRef.current?.setAttribute("data-moving", "false");
+-        cursorTimer.current && clearTimeout(cursorTimer.current);
+-      }, CURSOR_TRANSITION_TIMEOUT);
++      cursorTimer.current && clearTimeout(cursorTimer.current);
+     }, CURSOR_TRANSITION_TIMEOUT);
+   }
+ 
+@@ -233,7 +229,6 @@ export function usePagination(originalProps: UsePaginationProps) {
+   });
+ 
+   const activePageRef = useRef(activePage);
+-
+   useEffect(() => {
+     if (activePage && !originalProps.disableAnimation) {
+       scrollTo(activePage, activePage === activePageRef.current);\n
