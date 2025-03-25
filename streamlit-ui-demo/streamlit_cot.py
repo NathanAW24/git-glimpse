@@ -3,33 +3,33 @@ import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 
-import evaluate
-from langchain_core.prompts import PromptTemplate
-from langchain.schema import Document
-from langchain_chroma import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
-from bm25 import BM25Retriever, _read_documents_from_folder
-from sentence_transformers import CrossEncoder
-import numpy as np
-from pydantic import BaseModel, Field
-from langchain_openai import ChatOpenAI
-from transformers import GPT2LMHeadModel, GPT2TokenizerFast
-import torch
-from bert_score import score as bert_score
-from nltk.translate.meteor_score import meteor_score
-from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
-import nltk
-from typing import List
-import glob
-from statistics import mean
-import json
-from concurrent.futures import ThreadPoolExecutor
-import openai
-from retriever import EnsembleRetriever
-from dotenv import load_dotenv
-import os
-import re
 import streamlit as st
+import re
+import os
+from dotenv import load_dotenv
+from retriever import EnsembleRetriever
+import openai
+from concurrent.futures import ThreadPoolExecutor
+import json
+from statistics import mean
+import glob
+from typing import List
+import nltk
+from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
+from nltk.translate.meteor_score import meteor_score
+from bert_score import score as bert_score
+import torch
+from transformers import GPT2LMHeadModel, GPT2TokenizerFast
+from langchain_openai import ChatOpenAI
+from pydantic import BaseModel, Field
+import numpy as np
+from sentence_transformers import CrossEncoder
+from bm25 import BM25Retriever, _read_documents_from_folder
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_chroma import Chroma
+from langchain.schema import Document
+from langchain_core.prompts import PromptTemplate
+import evaluate
 
 # LangChain imports for retrieval
 
@@ -113,7 +113,7 @@ structured_llm = model_eval.with_structured_output(RelevanceScore)
 
 def compute_accuracy_llm(pred: str, ref: str) -> float:
     prompt = f"""
-You are tasked with evaluating the accuracy of a predicted answer compared to a reference answer. 
+You are tasked with evaluating the accuracy of a predicted answer compared to a reference answer.
 Provide a relevance score from 0 to 10 based on the following criteria:
 Matching/Accurate = the information is correct (investigation + code to be examined + proposed solutions)
 
@@ -183,17 +183,19 @@ class EvaluationResults:
 #########################################
 # Retrieval Setup
 #########################################
-qna_folder = "./QnA"
+qna_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "QnA")
 question_files = sorted(glob.glob(os.path.join(qna_folder, "question_*.txt")))
 answer_files = sorted(glob.glob(os.path.join(qna_folder, "answer_*.txt")))
 
-folder_path = "processed_docs"
+folder_path = os.path.join(os.path.dirname(
+    os.path.abspath(__file__)), "processed_docs")
 documents = _read_documents_from_folder(folder_path)
 doc_dict = {doc[0]: doc[1] for doc in documents}
 
 bm25_retriever = BM25Retriever(documents)
 
-VECTOR_DB_DIR = "final_all-MiniLM-L6-v2"
+VECTOR_DB_DIR = os.path.join(os.path.dirname(
+    os.path.abspath(__file__)), "final_all-MiniLM-L6-v2")
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 embedding_model = HuggingFaceEmbeddings(
     model_name=MODEL_NAME,
@@ -443,7 +445,7 @@ def replace_citations_with_links(text):
 
 
 template = """
-Now generate the answer in this format. 
+Now generate the answer in this format.
 (Do not put “purpose” again in your response, The purpose is for your reference.)
 
 General Answer Structure
@@ -484,7 +486,7 @@ st.markdown("""
      - **Thought 2**: Based on current context & partial answer, generate more queries, get more docs, refine partial answer.
      - **Thought 3**: Repeat process, further refining partial answer.
    - Finally, produce a final comprehensive answer and add citations.
-   
+
 You will see the chain-of-thought steps and partial answers as we go.
 """)
 
@@ -659,11 +661,16 @@ if run_button:
             })
 
     evaluation_data = evaluator.to_dict()
-    with open("evaluation_results_chain_of_thought.json", "w") as f:
+    eval_results_path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "evaluation_results_chain_of_thought.json")
+    logs_path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "logs_chain_of_thought.json")
+
+    with open(eval_results_path, "w") as f:
         json.dump(evaluation_data, f, indent=2)
 
-    with open("logs_chain_of_thought.json", "w") as f:
+    with open(logs_path, "w") as f:
         json.dump(logs, f, indent=2)
-
+    
     st.write("Evaluation results stored in evaluation_results_chain_of_thought.json")
     st.write("Logs stored in logs_chain_of_thought.json")

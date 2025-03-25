@@ -48,7 +48,8 @@ class BM25Retriever:
 # Example Usage
 if __name__ == "__main__":
     # Replace with the path to your folder containing .txt files
-    folder_path = "processed_docs"
+    folder_path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "processed_docs")
 
     # Load documents from the folder
     documents = _read_documents_from_folder(folder_path)

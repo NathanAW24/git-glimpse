@@ -104,8 +104,10 @@ class EnsembleRetriever:
 
 # Usage example
 if __name__ == "__main__":
-    folder_path = "processed_docs"
-    vector_db_dir = "vector_db"
+    folder_path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "processed_docs")
+    vector_db_dir = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "vector_db")
     model_name = "thenlper/gte-small"
 
     retriever = EnsembleRetriever(folder_path, vector_db_dir, model_name)
