@@ -1,32 +1,37 @@
-import streamlit as st
-import re
-import os
-from dotenv import load_dotenv
-from retriever import EnsembleRetriever
-import openai
-from concurrent.futures import ThreadPoolExecutor
-import json
-from statistics import mean
-import glob
-from typing import List
-import nltk
-from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
-from nltk.translate.meteor_score import meteor_score
-from bert_score import score as bert_score
-import torch
-from transformers import GPT2LMHeadModel, GPT2TokenizerFast
-from langchain_openai import ChatOpenAI
-from pydantic import BaseModel, Field
-import numpy as np
+import evaluate
+from langchain_core.prompts import PromptTemplate
+from langchain.schema import Document
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_chroma import Chroma
+from bm25 import BM25Retriever, _read_documents_from_folder
 from sentence_transformers import CrossEncoder
+import numpy as np
+from pydantic import BaseModel, Field
+from langchain_openai import ChatOpenAI
+from transformers import GPT2LMHeadModel, GPT2TokenizerFast
+import torch
+from bert_score import score as bert_score
+from nltk.translate.meteor_score import meteor_score
+from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
+import nltk
+from typing import List
+import glob
+from statistics import mean
+import json
+from concurrent.futures import ThreadPoolExecutor
+import openai
+from retriever import EnsembleRetriever
+from dotenv import load_dotenv
+import os
+import re
+import streamlit as st
+import sys
+
+__import__('pysqlite3')
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 
 # LangChain imports for retrieval
-from bm25 import BM25Retriever, _read_documents_from_folder
-from langchain_chroma import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain.schema import Document
-from langchain_core.prompts import PromptTemplate
-import evaluate
 
 nltk.download('wordnet', quiet=True)  # Ensure wordnet is downloaded for METEOR
 
