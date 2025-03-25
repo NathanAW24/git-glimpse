@@ -551,7 +551,7 @@ if run_button:
                     summaries[i] = summary
 
             # Display summaries
-            st.markdown(f"**Summaries for query: {q}**")
+            st.markdown(f"**SUMMARIES FOR QUERY: {q}**")
             for i, fname in enumerate(doc_names):
                 st.markdown(f"**Document: {fname}**")
                 with st.expander("View Summary"):
