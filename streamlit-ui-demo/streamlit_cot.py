@@ -2,12 +2,6 @@ import evaluate
 from langchain_core.prompts import PromptTemplate
 from langchain.schema import Document
 from langchain_huggingface import HuggingFaceEmbeddings
-
-__import__('pysqlite3')
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-
-
-from langchain_chroma import Chroma
 from bm25 import BM25Retriever, _read_documents_from_folder
 from sentence_transformers import CrossEncoder
 import numpy as np
@@ -31,6 +25,13 @@ import os
 import re
 import streamlit as st
 import sys
+
+
+__import__('pysqlite3')
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
+
+from langchain_chroma import Chroma
 
 # LangChain imports for retrieval
 
