@@ -1,3 +1,4 @@
+# # WORKAROUND For Streamlit Cloud
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
@@ -197,9 +198,13 @@ bm25_retriever = BM25Retriever(documents)
 VECTOR_DB_DIR = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), "final_all-MiniLM-L6-v2")
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+
+# FOR DEPLOYMENT NOT RUNNING ON MAC
+device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+
 embedding_model = HuggingFaceEmbeddings(
     model_name=MODEL_NAME,
-    model_kwargs={"device": "mps"},
+    model_kwargs={"device": device},
     encode_kwargs={"normalize_embeddings": True}
 )
 vectorstore = Chroma(
@@ -671,6 +676,6 @@ if run_button:
 
     with open(logs_path, "w") as f:
         json.dump(logs, f, indent=2)
-    
+
     st.write("Evaluation results stored in evaluation_results_chain_of_thought.json")
     st.write("Logs stored in logs_chain_of_thought.json")
